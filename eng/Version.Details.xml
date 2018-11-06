@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dependencies>
+  <ProductDependencies></ProductDependencies>
+  <ToolsetDependencies>
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.18526.8">
+      <Uri>https://github.com/dotnet/arcade</Uri>
+      <Sha>ef208f75c0494f47bf79a317773adcb398c35f92</Sha>
+    </Dependency>
+  </ToolsetDependencies>
+</Dependencies>

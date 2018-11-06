@@ -1,0 +1,109 @@
+variables:
+  Build.Repository.Clean: true
+  _HelixType: build/product
+  _HelixSource: pr/dotnet/arcade-minimalci-sample/$(Build.SourceBranch)
+ 
+resources:
+  containers:
+  - container: LinuxContainer
+    image: microsoft/dotnet-buildtools-prereqs:ubuntu-14.04-cross-0cd4667-20170319080304
+
+trigger:
+- master
+
+# To be added in the future when VSTS supports this feature
+# pr:
+# - master
+
+# Three phases for each of the three OSes we want to run on
+phases:
+- template: /eng/common/templates/phases/base.yml
+  parameters:
+    name: Windows_NT
+    enableTelemetry: true
+    queue:
+      name: dotnet-external-temp
+      parallel: 99
+      matrix:
+        debug_configuration:
+          _BuildConfig: Debug
+        release_configuration:
+          _BuildConfig: Release
+    steps:
+    - script: eng\common\cibuild.cmd
+        -configuration $(_BuildConfig)
+        -prepareMachine
+      name: Build
+      displayName: Build
+      condition: succeeded()
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Logs to VSTS
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/artifacts/log/$(_BuildConfig)'
+        PublishLocation: Container
+        ArtifactName: $(Agent.Os)_$(Agent.JobName)
+      continueOnError: true
+      condition: always()
+    variables:
+      _HelixBuildConfig: $(_BuildConfig)
+
+- template: /eng/common/templates/phases/base.yml
+  parameters:
+    name: OSX
+    enableTelemetry: true
+    queue:
+      name: Hosted macOS Preview
+      parallel: 99
+      matrix:
+        debug_configuration:
+          _BuildConfig: Debug
+        release_configuration:
+          _BuildConfig: Release
+    steps:
+    - script: eng/common/cibuild.sh
+        --configuration $(_BuildConfig)
+        --prepareMachine
+      name: Build
+      displayName: Build
+      condition: succeeded()
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Logs to VSTS
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/artifacts/log/$(_BuildConfig)'
+        PublishLocation: Container
+        ArtifactName: $(Agent.Os)_$(Agent.JobName)
+      continueOnError: true
+      condition: always()
+    variables:
+      _HelixBuildConfig: $(_BuildConfig)
+
+- template: /eng/common/templates/phases/base.yml
+  parameters:
+    name: Linux
+    enableTelemetry: true
+    queue:
+      name: Hosted Ubuntu 1604
+      parallel: 99
+      container: LinuxContainer
+      matrix:
+        debug_configuration:
+          _BuildConfig: Debug
+        release_configuration:
+          _BuildConfig: Release
+    steps:
+    - script: eng/common/cibuild.sh
+        --configuration $(_BuildConfig)
+        --prepareMachine
+      name: Build
+      displayName: Build
+      condition: succeeded()
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Logs to VSTS
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/artifacts/log/$(_BuildConfig)'
+        PublishLocation: Container
+        ArtifactName: $(Agent.Os)_$(Agent.JobName)
+      continueOnError: true
+      condition: always()
+    variables:
+      _HelixBuildConfig: $(_BuildConfig)

@@ -1,0 +1,38 @@
+parameters:
+
+  # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+  # Defaults to dotnet-external-temp
+  # TODO: CHANGE THIS TO dotnet-external-temp ONCE THE GITHUB REPO GOES PUBLIC
+  agentPool: dotnet-internal-temp
+
+  # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
+  # Defaults to true
+  runAsPublic: true
+
+# Call build.yml, which runs common build tasks
+phases:
+- template: /eng/build.yml
+  parameters:
+    name: Windows_NT
+    runAsPublic: ${{ parameters.runAsPublic }}
+    queue:
+      name: ${{ parameters.agentPool }}
+      parallel: 99
+      matrix:
+        Build_Debug:
+          _BuildConfig: netcoreapp-Windows_NT-Debug
+          # overwrite some values when building debug
+          _PublishType: none
+          _SignType: test
+          _DotNetPublishToBlobFeed : false
+        Build_Release:
+          _BuildConfig: netcoreapp-Windows_NT-Release
+
+# only publish build assets if we're running internally
+- ${{ if eq(parameters.runAsPublic, 'false') }}:
+  - template: /eng/common/templates/phases/publish-build-assets.yml
+    parameters:
+      dependsOn: Windows_NT
+      queue:
+        name: Hosted VS2017
+      configuration: netcoreapp-Windows_NT-Debug

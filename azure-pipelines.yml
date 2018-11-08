@@ -1,73 +1,47 @@
+# This is a simple wrapper for eng/ci.yml to get around the limitation of
+# user-defined variables not being available in yaml template expressions.
+
+# Parameters ARE available in template expressions, and parameters can have default values,
+# so they can be used to control yaml flow.
+
 variables:
-  _HelixType: build/product
-  ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-    _HelixSource: pr/dotnet/arcade/$(Build.SourceBranch)
-  ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+
+  # clean the local repo on the build agents
+  Build.Repository.Clean: true
+  
+  # Set some variables based on build conditions
+  # TODO: Remove the Build.DefinitionName check once the github repo goes public
+  ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.DefinitionName'], 'github')) }}:
+    _HelixType: build/product
+    _HelixSource: pr/dotnet/winforms/$(Build.SourceBranch)
+    _PublishType: none
+    _SignType: test
+    _DotNetPublishToBlobFeed: false
+  # else
+  # TODO: Remove the Build.DefinitionName check once the github repo goes public
+  ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), not(contains(variables['Build.DefinitionName'], 'github'))) }}:
     _TeamName: DotNetCore
-    _HelixSource: official/dotnet/arcade/$(Build.SourceBranch)
+    _HelixSource: official/dotnet/winforms/$(Build.SourceBranch)
+    _PublishType: blob
+    _SignType: real
+    _DotNetPublishToBlobFeed: true
 
-resources:
-  containers:
-  - container: LinuxContainer
-    image: microsoft/dotnet-buildtools-prereqs:ubuntu-14.04-cross-0cd4667-20170319080304
+# only trigger ci builds for the master branch
+trigger:
+- master
 
+# To be added in the future when VSTS supports this feature
+# only trigger pull request builds for the master branch
+# pr:
+# - master
+
+# Call the pipeline.yml template, which does the real work
 phases:
-  - template: /eng/build.yml
-    parameters:
-      name: Windows_NT
-      queue:
-        # For public or PR jobs, use the hosted pool.  For internal jobs use the internal pool.
-        # Will eventually change this to two BYOC pools.
-        ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-          name: dotnet-external-temp
-        ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-          name: dotnet-internal-temp
-        parallel: 2
-        matrix:
-          Build_Debug:
-            _BuildConfig: Debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
-          Build_Release:
-            _BuildConfig: Release
-            # PRs or external builds are not signed.
-            ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-              _PublishType: none
-              _SignType: test
-              _DotNetPublishToBlobFeed : false
-            ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-              _PublishType: blob
-              _SignType: real
-              _DotNetPublishToBlobFeed : true
-
-  - template: /eng/build.yml
-    parameters:
-      name: Linux
-      queue:
-        container: LinuxContainer
-        ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-          name: dnceng-linux-external-temp
-        ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-          name: dnceng-linux-internal-temp
-        parallel: 2
-        matrix:
-          Build_Debug:
-            _BuildConfig: Debug
-            _PublishType: none
-            _SignType: none
-            _DotNetPublishToBlobFeed : false
-          Build_Release:
-            _BuildConfig: Release
-            _PublishType: none
-            _SignType: none
-            _DotNetPublishToBlobFeed : false
-
-  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    - template: /eng/common/templates/phases/publish-build-assets.yml
-      parameters:
-        dependsOn:
-          - Windows_NT
-          - Linux
-        queue:
-          name: Hosted VS2017
+- template: /eng/pipeline.yml
+  parameters:
+    # TODO: Remove the Build.DefinitionName check once the github repo goes public
+    ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), not(contains(variables['Build.DefinitionName'], 'github'))) }}:
+      # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+      agentPool: dotnet-internal-temp
+      # runAsPublic is used in expressions, which can't read from user-defined variables
+      runAsPublic: false

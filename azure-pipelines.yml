@@ -13,7 +13,7 @@ variables:
   # TODO: Remove the Build.DefinitionName check once the github repo goes public
   ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.DefinitionName'], 'github')) }}:
     _HelixType: build/product
-    _HelixSource: pr/dotnet/winforms/$(Build.SourceBranch)
+    _HelixSource: pr/dotnet/wpf/$(Build.SourceBranch)
     _PublishType: none
     _SignType: test
     _DotNetPublishToBlobFeed: false
@@ -21,7 +21,7 @@ variables:
   # TODO: Remove the Build.DefinitionName check once the github repo goes public
   ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), not(contains(variables['Build.DefinitionName'], 'github'))) }}:
     _TeamName: DotNetCore
-    _HelixSource: official/dotnet/winforms/$(Build.SourceBranch)
+    _HelixSource: official/dotnet/wpf/$(Build.SourceBranch)
     _PublishType: blob
     _SignType: real
     _DotNetPublishToBlobFeed: true

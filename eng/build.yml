@@ -3,13 +3,13 @@ parameters:
   # send telemetry
   enableTelemetry: true
   # install Microbuild plugin if not a public build
-  enableMicrobuild: false
+  enableMicrobuild: true
   # queue YAML object - https://github.com/Microsoft/vsts-agent/blob/master/docs/preview/yamlgettingstarted-schema.md#queue
   queue: {}
   # variables YAML object - https://github.com/Microsoft/vsts-agent/blob/master/docs/preview/yamlgettingstarted-schema.md#phase
   variables: {}
   # run this build as a public build, even in the internal project
-  runAsPublic: false
+  runAsPublic: true
 
 # Common conditionals:  There are a number of common conditionals that are useful.  Generally these are used to decide what resources can be accessed,
 #                       or what logic should be applied based on the context the build is being run in.

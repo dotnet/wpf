@@ -20,13 +20,13 @@ phases:
       parallel: 99
       matrix:
         Build_Debug:
-          _BuildConfig: netcoreapp-Windows_NT-Debug
+          _BuildConfig: Debug
           # overwrite some values when building debug
           _PublishType: none
           _SignType: test
           _DotNetPublishToBlobFeed : false
         Build_Release:
-          _BuildConfig: netcoreapp-Windows_NT-Release
+          _BuildConfig: Release
 
 # only publish build assets if we're running internally
 - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -35,4 +35,4 @@ phases:
       dependsOn: Windows_NT
       queue:
         name: Hosted VS2017
-      configuration: netcoreapp-Windows_NT-Debug
+      configuration: Debug

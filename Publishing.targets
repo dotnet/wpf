@@ -1,0 +1,3 @@
+<Project>
+  <Target Name="_CorePublish" DependsOnTargets="Publish" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+</Project>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ItemDefinitionGroup>
+    <EmbeddedResource>
+      <GenerateSource>true</GenerateSource>
+      <ManifestResourceName>FxResources.$(AssemblyName).SR</ManifestResourceName>
+      <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
+
+      <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationTypes'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='System.Windows.Input.Manipulations'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='ReachFramework'">System.Windows.Xps.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationFramework'">System.Windows.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>
+      <Classname Condition="'%(ClassName)'==''">System.SRID</Classname>
+    </EmbeddedResource>
+  </ItemDefinitionGroup>
+</Project>
+

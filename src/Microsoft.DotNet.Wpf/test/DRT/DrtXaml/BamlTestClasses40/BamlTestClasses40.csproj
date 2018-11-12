@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Wpf">
+  <PropertyGroup>
+    <AssemblyName>BamlTestClasses40</AssemblyName>
+    <RootNamespace>BamlTestClasses40</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Page Include="*.xaml" />
+    <Compile Include="*.cs" />
+    <ApplicationDefinition Include="App.xaml" Condition="Exists('App.xaml')" />
+  </ItemGroup>
+</Project>

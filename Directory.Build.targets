@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(MSBuildThisFileDirectory)Packaging.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)Publishing.targets" />
 </Project>

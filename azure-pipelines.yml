@@ -17,6 +17,7 @@ variables:
     _PublishType: none
     _SignType: test
     _DotNetPublishToBlobFeed: false
+    _IsShipping: false
   # else
   # TODO: Remove the Build.DefinitionName check once the github repo goes public
   ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), not(contains(variables['Build.DefinitionName'], 'github'))) }}:
@@ -25,6 +26,7 @@ variables:
     _PublishType: blob
     _SignType: real
     _DotNetPublishToBlobFeed: true
+    _IsShipping: true
 
 # only trigger ci builds for the master branch
 trigger:

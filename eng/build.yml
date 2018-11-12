@@ -40,7 +40,7 @@ phases:
         # Right now a manual build of a random branch would get published alongside the normal branch artifacts.
         _PublishBlobFeedUrl: https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
         _SignArgs: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
-        _PublishArgs: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1) 
+        _PublishArgs: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
           /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl) 
           /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
           /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
@@ -67,17 +67,9 @@ phases:
         $(_PublishArgs)
         $(_SignArgs)
         $(_OfficialBuildIdArgs)
+        /p:IsShipping=$(_IsShipping) 
       displayName: Windows Build / Publish
       condition: and(succeeded(), eq(variables['Agent.Os'], 'Windows_NT'))
-
-    - script: eng/common/cibuild.sh
-        --configuration $(_BuildConfig)
-        --prepareMachine
-        $(_PublishArgs)
-        $(_SignArgs)
-        $(_OfficialBuildIdArgs)
-      displayName: Unix Build / Publish
-      condition: and(succeeded(), ne(variables['Agent.Os'], 'Windows_NT'))
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Logs to VSTS

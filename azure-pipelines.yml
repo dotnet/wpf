@@ -9,6 +9,9 @@ variables:
   # clean the local repo on the build agents
   Build.Repository.Clean: true
   
+  # This project only builds a transport package
+  _IsShipping: false
+
   # Set some variables based on build conditions
   # TODO: Remove the Build.DefinitionName check once the github repo goes public
   ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.DefinitionName'], 'github')) }}:
@@ -17,7 +20,6 @@ variables:
     _PublishType: none
     _SignType: test
     _DotNetPublishToBlobFeed: false
-    _IsShipping: false
   # else
   # TODO: Remove the Build.DefinitionName check once the github repo goes public
   ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), not(contains(variables['Build.DefinitionName'], 'github'))) }}:
@@ -26,7 +28,6 @@ variables:
     _PublishType: blob
     _SignType: real
     _DotNetPublishToBlobFeed: true
-    _IsShipping: true
 
 # only trigger ci builds for the master branch
 trigger:

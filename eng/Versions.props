@@ -4,7 +4,6 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>prerelease</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    
     <SystemSecurityVersion>4.5.0</SystemSecurityVersion>
     <SystemReflectionEmitVersion>4.3.0</SystemReflectionEmitVersion>
     <XUnitVersion>2.4.0</XUnitVersion>

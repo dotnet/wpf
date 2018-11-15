@@ -89,6 +89,7 @@ try {
     /p:PerformanceTest=$performanceTest `
     /p:Sign=$sign `
     /p:Publish=$publish `
+    /p:Execute=$execute `
     /p:ContinuousIntegrationBuild=$ci `
     @properties
 

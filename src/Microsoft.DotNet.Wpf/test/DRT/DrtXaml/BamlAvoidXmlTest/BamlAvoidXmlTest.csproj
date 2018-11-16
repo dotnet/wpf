@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Wpf">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <AssemblyName>BamlAvoidXmlTest</AssemblyName>
     <RootNamespace>BamlAvoidXmlTest</RootNamespace>

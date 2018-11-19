@@ -4,7 +4,7 @@ This repo contains the open-source components of Windows Presentation Foundation
 Currently, only a subset of the full WPF Framework is available as open-source (`System.Xaml` and related tests); more code will be pushed to the repo over the coming months. 
 
 # Using the code
-To get started use WPF on .NET Core 3, follow the [Getting Started instructions](https://github.com/dotnet/samples/tree/master/wpf). The WPF APIs are documented on MSDN in the [.NET API Browser)[https://docs.microsoft.com/en-us/dotnet/api/?view=netstandard-2.0] (*note that this URL doesn't exist yet - I assume 3.0 will come online soon?*).
+To get started use WPF on .NET Core 3, follow the [Getting Started instructions](https://github.com/dotnet/samples/tree/master/wpf). The WPF APIs are documented on MSDN in the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netstandard-2.0) (*note that this URL doesn't exist yet - I assume 3.0 will come online soon?*).
 
 All WPF features are available on .NET Core 3, but some .NET Framework features (such as remoting or AppDomains) are not supported. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info
 

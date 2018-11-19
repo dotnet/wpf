@@ -1,8 +1,4 @@
-﻿//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
-
-namespace Test.Elements
+﻿namespace Test.Elements
 {
     using System;
     using System.IO;

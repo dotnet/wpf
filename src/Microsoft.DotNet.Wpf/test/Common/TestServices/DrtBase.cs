@@ -2712,7 +2712,13 @@ namespace DRT
                         _logFile.Flush();
                     }
 
-                    _output.WriteLine($"{value}");
+                    try
+                    {
+                        _output.WriteLine($"{value}");
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
@@ -2733,7 +2739,11 @@ namespace DRT
 
                     var sb = new StringBuilder();
                     sb.Append(buffer, index, count);
-                    _output.WriteLine(sb.ToString());
+                    try
+                    {
+                        _output.WriteLine(sb.ToString());
+                    }
+                    catch { }
                 }
             }
 
@@ -2764,7 +2774,11 @@ namespace DRT
                         _logFile.Flush();
                     }
 
-                    _output.WriteLine(value);
+                    try
+                    {
+                        _output.WriteLine(value);
+                    }
+                    catch { }
                 }
             }
 

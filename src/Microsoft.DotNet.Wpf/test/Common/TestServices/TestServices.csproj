@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Wpf">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
         <AssemblyName>TestServices</AssemblyName>
         <RootNamespace>TestServices</RootNamespace>
@@ -6,5 +6,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <NoWarn>$(NoWarn);CS0618</NoWarn>
         <Platforms>AnyCPU;x64</Platforms>
+        <UseWPF>true</UseWPF>
     </PropertyGroup>
 </Project>

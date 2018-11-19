@@ -3,6 +3,7 @@
     <AssemblyName>BamlAvoidXmlTest</AssemblyName>
     <RootNamespace>BamlAvoidXmlTest</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup>

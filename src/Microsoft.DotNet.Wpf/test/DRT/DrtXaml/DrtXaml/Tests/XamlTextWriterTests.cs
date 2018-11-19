@@ -1,8 +1,3 @@
-
-//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
-
 namespace DrtXaml.Tests
 {
     using System;

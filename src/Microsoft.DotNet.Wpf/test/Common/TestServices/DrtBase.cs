@@ -1,11 +1,3 @@
-//
-// Copyright (C) Microsoft Corporation.  All rights reserved.
-//
-// File: DrtBase.cs
-//
-// Description: Framework for DRT tests
-//
-
 using System;
 using System.ComponentModel;
 using System.Reflection;
@@ -68,8 +60,6 @@ Follow this example:
         private MyDRTClass()
         {
             WindowTitle = "My DRT";
-            TeamContact = "myTeam";
-            Contact = "myName";
             Suites = new DrtTestSuite[]{
                         new MyFirstTestSuite(),
                         new MySecondTestSuite(),    // repeat as needed
@@ -135,8 +125,6 @@ Follow this example:
     {
         public MyTestSuite() : base("MySuiteName")
         {
-            TeamContact = "myTeam";     // if different from DRT
-            Contact = "myName";         // if different from DRT
         }
 
         public override DrtTest[] PrepareTests()
@@ -356,8 +344,6 @@ namespace DRT
 
                 _drt = this;
                 _drtStarted = true;
-
-                Console.WriteLine("{0} (owner: {1} [{2} team])", DrtName, Contact, TeamContact);
 
                 SetConsoleOutput();
 
@@ -764,16 +750,6 @@ namespace DRT
             get { return _topMost; }
             set { _topMost = value; }
         }
-
-        /// <summary>
-        /// The team that owns the entire DRT
-        /// </summary>
-        public string TeamContact { get { return _teamContact; } set { _teamContact = value; } }
-
-        /// <summary>
-        /// The individual that owns the entire DRT
-        /// </summary>
-        public string Contact { get { return _contact; } set { _contact = value; } }
 
         #endregion
 
@@ -1932,7 +1908,7 @@ namespace DRT
                     // reset "test priority" to default.  Suite can override this in PrepareTests
                     _testPriority = DispatcherPriority.ApplicationIdle;
 
-                    ConsoleOut.WriteLine(" >Suite (owner: {0,-8}): {1}", suite.Contact, suite.Name);
+                    ConsoleOut.WriteLine(" >Suite: {0}", suite.Name);
                     suite.DRT = this;
                     _currentSuite = suite;
                     _suiteInfoReported = false;
@@ -2129,7 +2105,6 @@ namespace DRT
             {
                 Console.WriteLine();
                 Console.WriteLine(">>> DRT Information:");
-                Console.WriteLine("Contact: {0} or the {1} team", Contact, TeamContact);
 
                 Console.WriteLine("Assemblies used (make sure these come from the expected location):");
                 IDictionaryEnumerator ie = _assemblies.GetEnumerator();
@@ -2147,9 +2122,6 @@ namespace DRT
             {
                 Console.WriteLine("  >> Suite Information:");
                 Console.WriteLine("  currently running suite '{0}'", _currentSuite.Name);
-                Console.WriteLine("  Contact: {0} or the {1} team",
-                                    (_currentSuite.Contact != null) ? _currentSuite.Contact : "(" + Contact + ")",
-                                    (_currentSuite.TeamContact != null) ? _currentSuite.TeamContact : "(" + TeamContact + ")");
                 Console.WriteLine("  << End of suite Information");
                 _suiteInfoReported = true;
             }
@@ -2740,13 +2712,7 @@ namespace DRT
                         _logFile.Flush();
                     }
 
-                    try
-                    {
-                        _output.WriteLine($"{value}");
-                    }
-                    catch
-                    {
-                    }
+                    _output.WriteLine($"{value}");
                 }
             }
 
@@ -2767,11 +2733,7 @@ namespace DRT
 
                     var sb = new StringBuilder();
                     sb.Append(buffer, index, count);
-                    try
-                    {
-                        _output.WriteLine(sb.ToString());
-                    }
-                    catch { }
+                    _output.WriteLine(sb.ToString());
                 }
             }
 
@@ -2802,11 +2764,7 @@ namespace DRT
                         _logFile.Flush();
                     }
 
-                    try
-                    {
-                        _output.WriteLine(value);
-                    }
-                    catch { }
+                    _output.WriteLine(value);
                 }
             }
 
@@ -2977,8 +2935,6 @@ namespace DRT
         private DrtTestSuite[] _suites = new DrtTestSuite[0];
         private DrtTest[] _test = new DrtTest[0];
         private Stack _resumeStack = new Stack();
-        private string _teamContact = "(unknown)";
-        private string _contact = "(unknown)";
         private bool _drtInfoReported;
         private bool _suiteInfoReported;
 
@@ -3066,18 +3022,6 @@ namespace DRT
         string _name;
 
         /// <summary>
-        /// The team that owns the suite.
-        /// </summary>
-        public string TeamContact { get { return _teamContact; } set { _teamContact = value; } }
-        string _teamContact;
-
-        /// <summary>
-        /// The individual that owns the suite.
-        /// </summary>
-        public string Contact { get { return _contact; } set { _contact = value; } }
-        string _contact;
-
-        /// <summary>
         /// The DrtBase that is running this suite.
         /// </summary>
         public DrtBase DRT { get { return _drt; } set { _drt = value; } }
@@ -3149,4 +3093,3 @@ namespace DRT
     // the delegate to use for an individual "test"
     public delegate void DrtTest();
 }
-

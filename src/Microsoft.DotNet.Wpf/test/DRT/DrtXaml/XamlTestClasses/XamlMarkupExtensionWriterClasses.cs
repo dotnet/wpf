@@ -1,7 +1,3 @@
-//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
-
 namespace Test.Elements
 {
     using System;

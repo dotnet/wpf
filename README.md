@@ -8,6 +8,10 @@ To get started use WPF on .NET Core 3, follow the [Getting Started instructions]
 
 All WPF features are available on .NET Core 3, but some .NET Framework features (such as remoting or AppDomains) are not supported. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info
 
+# Known issues
+* WPF relies on the VCRuntime redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. You can [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for more information.
+* There is currently no XAML Designer support for WPF on .NET Core. If you wantto use the XAML Designer, you will need to do that in the context of a .NET Framework (Desktop) project. 
+
 # How to build the code
 Currently, this repo only contains the `System.XAML` assembly and its related tests. It is not sufficient to build a complete version of WPF. 
 

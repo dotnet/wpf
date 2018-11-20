@@ -4,9 +4,11 @@ This repo contains the open-source components of Windows Presentation Foundation
 Currently, only a subset of the full WPF Framework is available as open-source (`System.Xaml` and related tests); more code will be pushed to the repo over the coming months. 
 
 # Using the code
-To get started use WPF on .NET Core 3, follow the [Getting Started instructions](https://github.com/dotnet/samples/tree/master/wpf). The WPF APIs are documented on MSDN in the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netstandard-2.0) (*note that this URL doesn't exist yet - I assume 3.0 will come online soon?*).
+To get started use WPF on .NET Core 3, follow the [Getting Started instructions](https://github.com/dotnet/samples/tree/master/wpf). The WPF APIs are documented on MSDN in the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netstandard-2.0).
 
-All WPF features are available on .NET Core 3, but some .NET Framework features (such as remoting or AppDomains) are not supported. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info
+> note that this URL doesn't exist yet - I assume 3.0 will come online soon?
+
+Most of the [conceptual documentation for WPF on Desktop](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF on .NET Core 3. The main differences are around project structure and lack of Designer support (see **Known issues**, below). All WPF features are available on .NET Core 3, but some .NET Framework features (such as remoting or AppDomains) are not supported. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info
 
 # Known issues
 * WPF relies on the VCRuntime redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. You can [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for more information.

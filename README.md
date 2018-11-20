@@ -13,14 +13,24 @@ All WPF features are available on .NET Core 3, but some .NET Framework features 
 * There is currently no XAML Designer support for WPF on .NET Core. If you wantto use the XAML Designer, you will need to do that in the context of a .NET Framework (Desktop) project. 
 
 # How to build the code
-Currently, this repo only contains the `System.XAML` assembly and its related tests. It is not sufficient to build a complete version of WPF. 
+Currently, this repo only contains the `System.Xaml` assembly and its related tests. It is not sufficient to build a complete version of WPF, but you can rebuild `System.Xaml.dll` and run the associated tests.
 
-**Can you do anything useful with it?**
+## To build `System.Xaml`
+
+* In the root of your repo, run `build` (or `build -verbose` for logs).
+
+## To run the tests
+
+* In the root of your repo, run `test` or open the solution file `src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml.sln` ("DRT" is an internal name used for unit tests).
 
 # Contribution guidelines
-We are not accepting pull requests to WPF for this Preview release; we will udpate this section with contribution guidelines as we move closer to an initial full release of the code.
+## Issues
+* If you have feedback (bug report, feature suggestion, etc.)  *specifically* about WPF on .NET Core 3, please [open a new issue here](https://github.com/dotnet/wpf/issues/). 
+* If you have more general feedback about .NET Core 3, please use the [dotnet/core](https://github.com/dotnet/core) repo.
+* If you have feedback about WPF on the Desktop Framework, please report it using the Feedback Hub on Windows 10 (Category: *Developer Platfornm*, sub-category *UI frameworks and controls* and make it clear your feedback is for WPF, not UWP XAML).
 
-If you have a feedback (bug, suggestion, etc.)  *specifically* about WPF on .NET Core 3, please [open a new issue here](https://github.com/dotnet/wpf/issues/). If you have more general feedback about .NET Core 3, please use the [dotnet/core](https://github.com/dotnet/core) repo.
+## Code
+We are not accepting pull requests to WPF at this time; we will udpate this section with contribution guidelines as we move closer to an initial full release of the code.
 
 # Code of conduct
 The WPF repo follows the [.NET Foundation Code of Condut](http://www.dotnetfoundation.org/code-of-conduct).

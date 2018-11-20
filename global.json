@@ -4,6 +4,6 @@
     "vswhere": "2.5.2"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.18568.1"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.18569.4"
   }
 }

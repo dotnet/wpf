@@ -8,7 +8,9 @@ To get started using WPF on .NET Core 3, follow the [Getting Started instruction
 
 > note that this URL doesn't exist yet - I assume 3.0 will come online soon?
 
-Most of the [conceptual documentation for WPF on Desktop](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF on .NET Core 3. The main differences are around project structure and lack of Designer support (see **Known issues**, below). There are also some WPF features, such as [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) that are not supported on .NET Core 3. A full list of supported / unsupported features will be available in a future update. Additionally, some .NET Framework features (such as remoting or AppDomains) are not supported. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info
+Most of the [conceptual documentation for WPF on Desktop](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF on .NET Core 3. The main differences are around project structure and lack of Designer support (see **Known issues**, below). There are also some WPF features, such as [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) that are not supported on .NET Core 3. A full list of supported / unsupported features will be available in a future update. 
+
+Additionally, some .NET Framework features (such as partial-trust applications, speech, remoting, and AppDomains) are not supported at this time on .NET Core. See [**insert some link to .NET Core docs**](http://msdn.microsoft.com) for more info.
 
 # Known issues
 * WPF relies on the VCRuntime redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. See the Visual C++ section of [the Visual Studio 2017 redistributable files list](https://docs.microsoft.com/en-us/visualstudio/productinfo/2017-redistribution-vs#VisualStudio) for more information. You can also [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for future updates.
@@ -23,7 +25,7 @@ Currently, this repo only contains the `System.Xaml` assembly and its related te
 
 ## To run the tests
 
-* In the root of your repo, run `test` or open the solution file `src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml.sln` ("DRT" is an internal name used for unit tests).
+* In the root of your repo, run `test` or open the solution file `src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml.sln` ("DRT" is an internal name used for unit tests). Note that this will test the version of `System.Xaml.dll` currently installed in your shared framework; if you rebuild `System.Xaml.dll` and want to test your changes, you will need to replace the current DLL with your own (be sure to make a backup first).
 
 # Contribution guidelines
 ## Issues

@@ -34,7 +34,7 @@ Currently, this repo only contains the `System.Xaml` assembly and its related te
 * If you have feedback about WPF on the Desktop Framework, please report it using the Feedback Hub on Windows 10 (Category: *Developer Platfornm*, sub-category *UI frameworks and controls* and make it clear your feedback is for WPF, not UWP XAML).
 
 ## Code
-We are not accepting pull requests to WPF at this time; we will update this section with contribution guidelines as we move closer to an initial full release of the code.
+We are not accepting pull requests to WPF at this time; we will update this section with contribution guidelines as we move closer to an initial full release of the code. In the meantime, if you have any suggestions for changes to WPF please [open an issue](https://github.com/dotnet/wpf/issues/) where we can discuss potential future updates.
 
 # Code of conduct
 The WPF repo follows the [.NET Foundation Code of Condut](http://www.dotnetfoundation.org/code-of-conduct).

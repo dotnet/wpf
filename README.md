@@ -14,7 +14,7 @@ Additionally, some .NET Framework features (such as partial-trust applications, 
 
 # Known issues
 * WPF relies on the VCRuntime redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. See the Visual C++ section of [the Visual Studio 2017 redistributable files list](https://docs.microsoft.com/en-us/visualstudio/productinfo/2017-redistribution-vs#VisualStudio) for more information. You can also [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for future updates.
-* There is currently no XAML Designer support for WPF on .NET Core. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework (Desktop) project. 
+* There is currently no XAML Designer support for WPF on .NET Core. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework (Desktop) project, eg by "linking" the .NET Core files into a .NET Framework project. 
 
 # How to build the code
 Currently, this repo only contains the `System.Xaml` assembly and its related tests. It is not sufficient to build a complete version of WPF, but you can rebuild `System.Xaml.dll` and run the associated tests.

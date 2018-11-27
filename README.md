@@ -25,16 +25,16 @@ Currently, this repo only contains the `System.Xaml` assembly and its related te
 
 ## To run the tests
 
-* In the root of your repo, run `test` or open the solution file `src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml.sln` ("DRT" is an internal name used for unit tests). Note that this will test the version of `System.Xaml.dll` currently installed in your shared framework; if you rebuild `System.Xaml.dll` and want to test your changes, you will need to replace the current DLL with your own (be sure to make a backup first).
+* In the root of your repo, run `test` or open the solution file `src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml.sln` ("DRT" is an internal name used for unit tests). *Note that this will test the version of `System.Xaml.dll` currently installed in your shared framework;* if you rebuild `System.Xaml.dll` and want to test your changes, you will need to replace the current DLL with your own (be sure to make a backup first).
 
 # Contribution guidelines
 ## Issues
 * If you have feedback (bug report, feature suggestion, etc.)  *specifically* about WPF on .NET Core 3, please [open a new issue here](https://github.com/dotnet/wpf/issues/). 
 * If you have more general feedback about .NET Core 3, please use the [dotnet/core](https://github.com/dotnet/core) repo.
-* If you have feedback about WPF on the Desktop Framework, please report it using the Feedback Hub on Windows 10 (Category: *Developer Platfornm*, sub-category *UI frameworks and controls* and make it clear your feedback is for WPF, not UWP XAML).
+* If you have feedback about WPF on the Desktop Framework, please report it using the Feedback Hub on Windows 10 (Category: *Developer Platfornm*, sub-category *UI frameworks and controls* and make it clear your feedback is for WPF, not WinUI XAML).
 
 ## Code
-We are not accepting pull requests to WPF at this time; we will update this section with contribution guidelines as we move closer to an initial full release of the code. In the meantime, if you have any suggestions for changes to WPF please [open an issue](https://github.com/dotnet/wpf/issues/) where we can discuss potential future updates.
+We will not be merging any pull requests to WPF at this time; we will update this section with contribution guidelines as we move closer to an initial full release of the code. In the meantime, if you have any suggestions for changes to WPF please [open an issue](https://github.com/dotnet/wpf/issues/) where we can discuss potential future updates.
 
 # Code of conduct
 The WPF repo follows the [.NET Foundation Code of Condut](http://www.dotnetfoundation.org/code-of-conduct).

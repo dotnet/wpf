@@ -106,7 +106,9 @@ Feel free to use other labels if it helps your triage efforts (e.g. **needs-more
 
 ### PR guidance
 
-1. Dont't set any  labels on PRs. They are superfluous and not needed (exceptions: **NO MERGE**).
+Each PR has to have reviewer approval from at least one WPF team member who is not author of the change, before it can be merged.
+
+1. Don't set any  labels on PRs. They are superfluous and not needed (exceptions: **NO MERGE**).
     * Motivation: All the important info (*issue type* label, API approval label, etc.) is already captured on the associated issue.
 1. Push PRs forward, don't let them go stale (response every 5+ days, ideally no PRs older than 2 weeks).
 1. Close stuck or long-term blocked PRs (e.g. due to missing API approval, etc.) and reopen them once they are unstuck.

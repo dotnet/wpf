@@ -40,7 +40,7 @@ We use GitHub [labels](https://github.com/dotnet/wpf/labels) on our issues in or
 * **Other**:
     * [up-for-grabs](https://github.com/dotnet/wpf/labels/up-for-grabs): Smaller sections of work which we believe are well scoped. These sorts of issues are a good place to start if you are new. Anyone is free to work on these issues.
     * [needs-more-info](https://github.com/dotnet/wpf/labels/needs-more-info): Issues which need more information to be actionable. Usually this will be because we can't reproduce a reported bug. We'll close these issues after a little bit if we haven't gotten actionable information, but we welcome folks who have acquired more information to reopen the issue.
-    * [tenet-compatibility](https://github.com/dotnet/wpf/labels/tenet-compatibility): Incompatibility between relesed versions or with WPF for .NET Framework.
+    * [tenet-compatibility](https://github.com/dotnet/wpf/labels/tenet-compatibility): Incompatibility between released versions or with WPF for .NET Framework.
 
 
 

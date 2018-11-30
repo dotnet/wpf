@@ -67,9 +67,12 @@ For general .NET Core 3 issues (not specific to WPF), use the [.NET Core repo](h
 
 ### Contributing Guide
 
-**TODO**
+Read our detailed [contributing guide](Documentation/contributing-guide.md) which covers:
 
-For more details, take a look at the [.NET Core Contribution Guidelines](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md).
+* Which kind of PRs we accept/reject for .NET Core 3.0 release
+* Coding style
+* PR style preferences (squashing vs. merging, etc.)
+* Developer guide for building and testing locally
 
 ### Community
 

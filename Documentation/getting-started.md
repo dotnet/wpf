@@ -9,9 +9,12 @@ Choose one of these options:
 1. Official public preview [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download), or
 2. [Daily build](https://aka.ms/netcore3sdk) (for more installer options see [dotnet/code-sdk repo](https://github.com/dotnet/core-sdk)).
 
-**WARNING:** There is currently no XAML Designer support for WPF for .NET Core.
-If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by "linking" the .NET Core source files into a .NET Framework project.
 
+## Known issues
+
+There is currently no XAML Designer support for WPF for .NET Core. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by "linking" the .NET Core source files into a .NET Framework project.
+
+WPF relies on the `VCRuntime` redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. See the Visual C++ section of [the Visual Studio 2017 redistributable files list](https://docs.microsoft.com/en-us/visualstudio/productinfo/2017-redistribution-vs#VisualStudio) for more information. You can also [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for future updates.
 
 
 ## Creating new applications

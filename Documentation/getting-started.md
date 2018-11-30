@@ -9,7 +9,7 @@ Choose one of these options:
 1. Official public preview [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download), or
 2. [Daily build](https://aka.ms/netcore3sdk) (for more installer options see [dotnet/code-sdk repo](https://github.com/dotnet/core-sdk)).
 
-**WARNING:** There is currently no XAML Designer support for WPF on .NET Core.
+**WARNING:** There is currently no XAML Designer support for WPF for .NET Core.
 If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by "linking" the .NET Core source files into a .NET Framework project.
 
 

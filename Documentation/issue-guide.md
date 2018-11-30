@@ -14,9 +14,9 @@ You can help us streamline our response time to your feedback and ideas by filin
 
 ### High-quality bugs
 
-In general, try to be specific. Get straight to the main point. Leave additional details, options and alternatives to the end (hint: separate them visually). Don't write too long bug reports, unless you have to.
+In general, try to be specific. Get straight to the main point. Leave additional details, options and alternatives to the end (hint: separate them visually). Don't write long bug reports, unless you have to.
 
-* Include minimal repro in your bug if at all possible (chop off dependencies, remove as much code as possible). If it is not possible, say why.
+* Include a minimal repro in your bug if at all possible (chop off dependencies, remove as much code as possible). If it is not possible, say why.
     * Note: Yes, it may take some time to minimize a repro from your larger app - but that is exactly what we would do in most cases anyway. Issues with clear small repros are easier for us to reproduce/investigate and therefore have higher chance to be addressed quickly.
 * Include callstacks, symptom description, or what is the difference between actual and expected behavior.
 

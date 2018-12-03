@@ -1,7 +1,7 @@
 # Contributing Guide
 
-Primary focus of .NET Core 3.0 release is to achieve parity with WPF for .NET Framework.
-Since we're currently still porting parts of WPF codebase (incl. tests) to GitHub (see progress at [../README.md#port-status]),
+The primary focus of .NET Core 3.0 release is to achieve parity with WPF for .NET Framework.
+Since we're currently still porting parts of WPF codebase (incl. tests) to GitHub (see [Status](../README.md#port-status) for details),
 we're not ready to handle non-trivial or larger contributions beyond parity fixes yet.
 
 We plan to accept these kind of contributions during 3.0 release:
@@ -9,7 +9,7 @@ We plan to accept these kind of contributions during 3.0 release:
 * Low-risk changes, which are easy to review (e.g. typos, comment changes, documentation improvements, etc.).
 * Test fixes, test improvements and new tests increasing code coverage.
 * Infrastructure fixes and improvements, which are aligned with achieving our goal to ship high quality .NET Core 3.0 release.
-* Bug fixes for differences between WinForms for .NET Core and .NET Framework.
+* Bug fixes for differences between WPF for .NET Core and .NET Framework.
 
 If you have a **larger change** falling into any of these categories, we recommend to **check with our team members** prior to creating a PR.
 We recommend to first create a [new issue](https://github.com/dotnet/wpf/issues), where you can describe your intent and help us understand the change you plan to contribute.

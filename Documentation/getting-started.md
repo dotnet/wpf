@@ -41,7 +41,7 @@ Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tr
     * This is tracked by an [open issue](https://github.com/dotnet/wpf/issues/37).
 
 
-### Missing features
+## Missing features
 
 * In this initial preview, WPF for .NET Core doesn't support the XAML Designer. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by linking your .NET Core source files into a .NET Framework project.
     * You can see examples of how to do this in the [WPF Samples repo](https://github.com/Microsoft/WPF-Samples).

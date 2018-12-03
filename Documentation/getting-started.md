@@ -1,20 +1,12 @@
 # Getting started with WPF for .NET Core
 
 
-
 ## Installation
 
 Choose one of these options:
 
 1. Official public preview [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download), or
 2. [Daily build](https://aka.ms/netcore3sdk) (for more installer options see [dotnet/code-sdk repo](https://github.com/dotnet/core-sdk)).
-
-
-## Known issues
-
-There is currently no XAML Designer support for WPF for .NET Core. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by "linking" the .NET Core source files into a .NET Framework project.
-
-WPF relies on the `VCRuntime` redistributable package. For this initial release, you will need to install the VCRuntime redistributable on any machines where you want WPF applications to run. See the Visual C++ section of [the Visual Studio 2017 redistributable files list](https://docs.microsoft.com/en-us/visualstudio/productinfo/2017-redistribution-vs#VisualStudio) for more information. You can also [follow this issue in /dotnet/core-setup](https://github.com/dotnet/core-sdk/issues/160#issuecomment-440103176) for future updates.
 
 
 ## Creating new applications
@@ -41,4 +33,14 @@ There are also some WPF features, such as [XAML Browser applications (XBAPs)](ht
 
 ## Samples
 
-Check out the .NET Core 3.0 WPF [samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld examples and more advanced scenarios.
+Check out the [.NET Core 3.0 WPF samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld example. The existing [WPF for .NET Framework samples](https://github.com/Microsoft/WPF-Samples) have also been updated to dual-target .NET Framework and .NET Core 3.
+
+
+
+## Known issues
+
+* There is currently no XAML Designer support for WPF for .NET Core. If you want to use the XAML Designer, you will need to do that in the context of a .NET Framework project, e.g. by "linking" the .NET Core source files into a .NET Framework project.
+    * You can see examples of how to do this in the [WPF Samples repo](https://github.com/Microsoft/WPF-Samples).
+* WPF Applications crash with `System.TypeLoadException` when the Visual C++ Redistributable for Visual Studio 2017 is not installed. The latest version of VC++ redistributable can be obtained from [Microsoft Support](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads). This dependency will be removed prior to .NET Core 3.0 final release.
+    * This is tracked by [an open issue](https://github.com/dotnet/wpf/issues/37).
+

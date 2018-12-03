@@ -13,20 +13,20 @@ As we complete those goals, we'll update our roadmap to include additional featu
 ## Timeline for Open Source
 | Milestone | Release Date |
 |---|---|
-|Initial launch of WPF for .NET Core repository (with System.Xaml open source)|Dec 4, 2018|
-|Ability to accept PRs from community for open sourced assemblies|Early 2019|
+|Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
+|Ability to accept PRs from community|Early 2019|
 |Roadmap update for feature focus areas|Early 2019|
-|Add remaining WPF for .NET Core assemblies to repository as open source|Continues thru 2019|
+|Add remaining WPF for .NET Core libraries to repository|Continues thru 2019|
 
 ## Feedback
-The best way to give feedback is to [create issues in the dotnet/wpf repo](https://github.com/dotnet/wpf/issues/).  Double-check to see if you're creating your issue in the appropriate place:
+The best way to give feedback is to [create issues in the dotnet/wpf repo](https://github.com/dotnet/wpf/issues/).  Please read through the [Issue Guide](https://github.com/dotnet/wpf/blob/master/Documentation/issue-guide.md), and also double-check to see if you're creating your issue in the appropriate place:
 
 * This repo is specifically focused on WPF for .NET Core, which is separate from WPF that runs on the Desktop Framework.  If you have feedback for the latter, please report it on [developercommunity.visualstudio.com](https://developercommunity.visualstudio.com/) using the "Report a problem" or "Suggest a feature" buttons.
 * If you have general feedback about .NET Core 3, please use the [dotnet/core](https://github.com/dotnet/core) repo or one of the other [.NET Core repos](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md) suitable for the topic you'd like to discuss.
 
 Some of the feedback we find most valuable is feedback on:
 
-* Existing features that are missing some capability or otherwise don't work well enough.
+* Existing features that are missing some capability or otherwise don't work well enough on .NET Core.
 * Missing features that should be added to the product.
 * Design choices for a feature that is currently in-progress.
 * Which WPF assemblies we should prioritize making available as open source as quickly as possible.

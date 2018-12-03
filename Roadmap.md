@@ -2,7 +2,13 @@
 
 With the introduction of .NET Core 3, WPF exists as one of [several layers](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md) of .NET Core.  Although .NET Core is cross-platform, the WPF framework relies heavily on Windows-specific platform pieces.  This roadmap communicates priorities for evolving and extending the scope of WPF on .NET Core.
 
-At present, our team's primary focus is making additional components of WPF available as open source in this repo, and adding the ability to run tests publicly so we can accept PRs from the WPF community.  As we progress in this effort, we'll update our roadmap to include additional feature/capability areas we will focus the project on.
+At present, our primary focus is enabling the following for .NET Core 3.0:
+
+* Achieve WPF functional and performance parity compared to .NET Framework
+* Publish remaining WPF components to the repo
+* Publish (and write) more WPF tests to the repo
+
+As we complete those goals, we'll update our roadmap to include additional feature/capability areas we will focus on next.
 
 ## Timeline for Open Source
 | Milestone | Release Date |

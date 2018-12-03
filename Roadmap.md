@@ -14,7 +14,7 @@ As we complete those goals, we'll update our roadmap to include additional featu
 | Milestone | Release Date |
 |---|---|
 |Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
-|Ability to accept PRs from community|Early 2019|
+|Ability to merge PRs from community|Early 2019|
 |Roadmap update for feature focus areas|Early 2019|
 |Add remaining WPF for .NET Core libraries to repository|Continues thru 2019|
 

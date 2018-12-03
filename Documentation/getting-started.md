@@ -37,8 +37,8 @@ Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tr
 
 ## Known issues
 
-* WPF Applications crash with `System.TypeLoadException` when the Visual C++ Redistributable for Visual Studio 2017 is not installed. The latest version of VC++ redistributable can be obtained from [Microsoft Support](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads). This dependency will be removed prior to .NET Core 3.0 final release.
-    * This is tracked by an [open issue](https://github.com/dotnet/wpf/issues/37).
+* WPF Applications crash with `System.TypeLoadException` when the Visual C++ Redistributable for Visual Studio 2017 is not installed. The latest version of VC++ redistributable can be obtained from [the Visual C++ downloads page](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads). This dependency will be removed prior to .NET Core 3.0 final release.
+    * This is tracked by [#37](https://github.com/dotnet/wpf/issues/37).
 
 
 ## Missing features

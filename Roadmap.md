@@ -1,6 +1,6 @@
 # WPF for .NET Core Roadmap
 
-With the introduction of .NET Core 3, WPF exists as one of [several layers](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md) of .NET Core.  Although .NET Core is cross-platform, the WPF framework relies heavily on Windows-specific platform pieces.  This roadmap communicates priorities for evolving and extending the scope of WPF for .NET Core.
+This roadmap communicates priorities for evolving and extending the scope of WPF for .NET Core.
 
 At present, our primary focus is enabling the following for .NET Core 3.0:
 

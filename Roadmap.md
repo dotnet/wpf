@@ -18,21 +18,13 @@ As we complete those goals, we'll update our roadmap to include additional featu
 |Roadmap update for feature focus areas|Early 2019|
 |Add remaining WPF for .NET Core libraries to repository|Continues thru 2019|
 
-## Feedback
-The best way to give feedback is to [create issues in the dotnet/wpf repo](https://github.com/dotnet/wpf/issues/).  Please read through the [Issue Guide](https://github.com/dotnet/wpf/blob/master/Documentation/issue-guide.md), and also double-check to see if you're creating your issue in the appropriate place:
+## Porting Status
 
-* This repo is specifically focused on WPF for .NET Core, which is separate from WPF that runs on the Desktop Framework.  If you have feedback for the latter, please report it on [developercommunity.visualstudio.com](https://developercommunity.visualstudio.com/) using the "Report a problem" or "Suggest a feature" buttons.
-* If you have general feedback about .NET Core 3, please use the [dotnet/core](https://github.com/dotnet/core) repo or one of the other [.NET Core repos](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md) suitable for the topic you'd like to discuss.
+The port from WPF for .NET Framework is still in progress. Currently this repository contains these components:
 
-Some of the feedback we find most valuable is feedback on:
+* Binaries:
+  * System.Xaml
+* Tests:
+  * DrtXaml
 
-* Existing features that are missing some capability or otherwise don't work well enough on .NET Core.
-* Missing features that should be added to the product.
-* Design choices for a feature that is currently in-progress.
-* Which WPF assemblies we should prioritize making available as open source as quickly as possible.
-
-Some important caveats / notes:
-
-* It's best to give design feedback quickly for improvements that are in-development.  We're unlikely to hold a feature being part of a release on late feedback.
-* We are most likely to include improvements that either have a positive impact on a broad scenario or have very significant positive impact on a niche scenario.  We are less likely to prioritize modest improvements to niche scenarios.
-* Compatibility will almost always be given a higher priority than improvements.
+Binaries in this repository eventually roll up to the `Microsoft.NET.Sdk.WindowsDesktop` SDK.

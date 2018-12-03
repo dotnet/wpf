@@ -26,14 +26,14 @@ dotnet run
 
 For WPF reference documentation (types, properties, methods, etc.) see the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netcore-3.0). <!-- note that this URL doesn't exist yet - I assume 3.0 will go live at the announce? -->
 
-For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF on Desktop](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF on .NET Core 3. The main differences are around project structure and lack of Designer support. 
+For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support. 
 
-There are also some WPF features, such as [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) that are not supported on .NET Core 3. A full list of supported / unsupported features will be available in a future update. Additionally, some .NET Framework features (such as partial-trust applications, speech, remoting, and AppDomains) are not supported at this time on .NET Core. You can use the [.NET API Portability Analyzer](https://github.com/microsoft/dotnet-apiport) to see if your existing code can run on .NET Core 3.
+There are also some WPF features, such as [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) that are not supported for .NET Core 3. A full list of supported / unsupported features will be available in a future update. Additionally, some .NET Framework features (such as partial-trust applications, speech, remoting, and AppDomains) are not supported at this time for .NET Core. You can use the [.NET API Portability Analyzer](https://github.com/microsoft/dotnet-apiport) to see if your existing code can run on .NET Core 3.
 
 
 ## Samples
 
-Check out the [.NET Core 3.0 WPF samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld example. The existing [WPF for .NET Framework samples](https://github.com/Microsoft/WPF-Samples) have also been updated to dual-target .NET Framework and .NET Core 3.
+Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld example. The existing [WPF for .NET Framework samples](https://github.com/Microsoft/WPF-Samples) have also been updated to dual-target .NET Framework and .NET Core 3.
 
 
 

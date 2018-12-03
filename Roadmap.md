@@ -16,15 +16,15 @@ As we complete those goals, we'll update our roadmap to include additional featu
 |Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
 |Ability to merge PRs from community|Early 2019|
 |Roadmap update for feature focus areas|Early 2019|
-|Add remaining WPF for .NET Core libraries to repository|Continues thru 2019|
+|Add remaining WPF for .NET Core components to repository|Continues thru 2019|
 
 ## Porting Status
 
 The port from WPF for .NET Framework is still in progress. Currently this repository contains these components:
 
-* Binaries:
+* Components:
   * System.Xaml
 * Tests:
   * DrtXaml
 
-Binaries in this repository eventually roll up to the `Microsoft.NET.Sdk.WindowsDesktop` SDK.
+Components in this repository eventually roll up to the `Microsoft.NET.Sdk.WindowsDesktop` SDK.

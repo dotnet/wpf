@@ -124,7 +124,7 @@ namespace System.Windows.Markup
             // Build up the format string to be used in DateTime.ToString()
             StringBuilder formatString = new StringBuilder("yyyy-MM-dd");
             
-            if (dateTime.TimeOfDay.TotalSeconds == 0)
+            if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
                 // The time portion of this DateTime is exactly at midnight.  
                 // We don't include the time component if the Kind is unspecified.

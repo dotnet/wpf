@@ -18,12 +18,12 @@ WPF applications are based on a vector graphics architecture. This enables appli
 
 ## Status
 
-We are in the process of doing four projects with Windows Forms:
+We are in the process of doing four projects with WPF:
 
 * Port WPF to .NET Core.
 * Publish source to GitHub.
 * Publish (and in some cases write) tests to GitHub and enable automated testing infrastructure.
-* Enable the Visual Studio WPF designer to work with Windows Forms running on .NET Core.
+* Enable the Visual Studio WPF designer to work with WPF running on .NET Core.
 
 We are part-away through porting WPF to .NET Core, and will complete that for .NET Core 3.0. We intend to bring the codebase up to functionality and performance parity with .NET Framework, except for a small number of scenarios we do not intend to support (for example, [XBAPs](https://docs.microsoft.com/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview)).
 
@@ -63,11 +63,11 @@ Also see info about related [Microsoft .NET Core and ASP.NET Core Bug Bounty Pro
 
 ## License
 
-.NET Core (including WinForms repo) is licensed under the [MIT license](LICENSE.TXT).
+.NET Core (including WPF repo) is licensed under the [MIT license](LICENSE.TXT).
 
 ## .NET Foundation
 
-.NET Core WinForms is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
+.NET Core WPF is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
 
 There are many .NET related projects on GitHub.
 

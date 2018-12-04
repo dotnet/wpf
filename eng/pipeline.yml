@@ -2,8 +2,7 @@ parameters:
 
   # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
   # Defaults to dotnet-external-temp
-  # TODO: CHANGE THIS TO dotnet-external-temp ONCE THE GITHUB REPO GOES PUBLIC
-  agentPool: dotnet-internal-temp
+  agentPool: dotnet-external-temp
 
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true

@@ -64,18 +64,18 @@ If the issue is already assigned to someone, please coordinate with the assignee
 
 
 
-## Upvotes on issues
+## Prioritization & Upvoting
 
-Upvotes on first post of each issue are useful hint for our prioritization.
+* Upvotes on first post of each issue are useful hint for our prioritization.
 We can [sort issues by number of upvotes](https://github.com/dotnet/wpf/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) and we will review the top list on regular basis.
-
+* We're most likely to include improvements that either have a positive impact on a broad scenario or have very significant positive impact on a niche scenario. We're less likely to prioritize modest improvements to niche scenarios.
+* Compatibility will almost always be given a higher priority than improvements.
 
 
 ## Escalations
 
 If you think some issue or PR is not getting the right attention, or if you notice some [Code of Conduct](https://dotnetfoundation.org/code-of-conduct) violation we might miss, 
 you can escalate to WPF team by tagging some of us (e.g. [@fabiant3](https://github.com/fabiant3), [@karelz](https://github.com/karelz)). Please do not overuse it.
-
 
 
 ## Triage rules

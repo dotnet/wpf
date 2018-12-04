@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-#if NETCOREAPP3_0
+#if !NETSTANDARD2_0
 [assembly:TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
 #else
 namespace System.Windows.Markup

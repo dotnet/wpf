@@ -139,7 +139,7 @@ namespace System.Xaml
             if (settings != null)
             {
                 runtimeSettings = new XamlRuntimeSettings { IgnoreCanConvert = settings.IgnoreCanConvert };
-#if !TARGETTING35SP1 && NETCOREAPP3_0
+#if !TARGETTING35SP1 && !NETSTANDARD2_0
                 if (settings.AccessLevel != null)
                 {
                     result = new PartialTrustTolerantRuntime(runtimeSettings, settings.AccessLevel, schemaContext);

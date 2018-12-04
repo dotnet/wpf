@@ -14,7 +14,7 @@ using System.Xaml;
 using System.Xaml.Schema;
 using System.Xaml.Permissions;
 
-#if NETCOREAPP3_0
+#if !NETSTANDARD2_0
 namespace MS.Internal.Xaml.Runtime
 {
     // Perf notes

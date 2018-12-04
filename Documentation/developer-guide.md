@@ -21,7 +21,7 @@ WPF requires the following workloads and  components be selected when installing
 
 We use the following workflow for building and testing features and fixes.
 
-You first need to [Fork](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#fork-the-repository) and [Clone](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#clone-the-repository) this WinForms repository. This is a one-time task.
+You first need to [Fork](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#fork-the-repository) and [Clone](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#clone-the-repository) this WPF repository. This is a one-time task.
 
 -- add more content here --
 

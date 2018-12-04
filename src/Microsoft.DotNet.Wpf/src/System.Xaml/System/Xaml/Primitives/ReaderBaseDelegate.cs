@@ -6,7 +6,7 @@ using System;
 
 namespace System.Xaml
 {
-    // This is the base class for the simpliest implementation of a
+    // This is the base class for the simplest implementation of a
     // Node based XamlReader.
     // It serves up the values of the current node.
     // Advancing to the next node with Read() is left to be defined

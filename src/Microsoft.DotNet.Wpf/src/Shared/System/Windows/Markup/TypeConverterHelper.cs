@@ -28,7 +28,7 @@ namespace System.Windows.Markup
 {
 
     /// <summary>
-    /// Class that provides fucntionality to obtain a TypeConverter from a property or the
+    /// Class that provides functionality to obtain a TypeConverter from a property or the
     /// type of the property, based on logic similar to TypeDescriptor.GetConverter.
     /// </summary>
     internal static class TypeConverterHelper

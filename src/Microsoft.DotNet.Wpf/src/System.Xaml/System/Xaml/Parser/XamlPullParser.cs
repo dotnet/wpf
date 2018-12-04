@@ -442,7 +442,7 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
 
-                // Don't immediatly emit the prefix Definitions.
+                // Don't immediately emit the prefix Definitions.
                 // buffer them for moment because if this is the first object
                 // in a collection, we may need to jam an implicit _Items property
                 // on Content Property in before the PrefixDef's and then the ObjectType.
@@ -480,7 +480,7 @@ namespace MS.Internal.Xaml.Parser
                             isContentProperty = true;
                         }
                         // If there have been "real" properties then we are forced to use the
-                        // Consturctor.  Otherwise we can consider a TypeConverter on the TEXT.
+                        // Constructor.  Otherwise we can consider a TypeConverter on the TEXT.
                         else if (!_context.CurrentForcedToUseConstructor
                                 && !_xamlScanner.TextContent.IsEmpty
                                 && currentType.TypeConverter != null)
@@ -643,7 +643,7 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
 
-                // Don't immediatly emit the prefix Definitions.
+                // Don't immediately emit the prefix Definitions.
                 // buffer them for moment because if this is the first object
                 // in a collection, we may need to jam an implicit _Items property
                 // in before the PrefixDef's and then the ObjectType.
@@ -1122,7 +1122,7 @@ namespace MS.Internal.Xaml.Parser
                         else if (_context.CurrentType.ContentProperty != null)
                         {
                             prop = _context.CurrentType.ContentProperty;
-                            // For backcompat we need to suppport CPs of type object here.
+                            // For backcompat we need to support CPs of type object here.
                             // Theoretically we'd also like to support all type-convertible CPs.
                             // However, for non-string CPs, 3.0 only surfaced whitespace as text if
                             // the CP hadn't already been set. For string, it surfaced it in all cases.

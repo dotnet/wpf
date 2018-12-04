@@ -41,7 +41,7 @@ namespace System.Xaml
         AllValid     = 0xFFFF << 16
     }
 
-    // Use this intead of a Nullable<bool> when a single-word read is needed for thread safety
+    // Use this instead of a Nullable<bool> when a single-word read is needed for thread safety
     internal enum ThreeValuedBool : byte
     {
         NotSet,

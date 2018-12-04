@@ -26,7 +26,7 @@ namespace System.Windows.Markup
         /// </summary>
         public MarkupExtensionReturnTypeAttribute(Type returnType)
         {
-            _returnType = returnType;
+            ReturnType = returnType;
         }
 
         [Obsolete("The expressionType argument is not used by the XAML parser. To specify the expected return type, " +
@@ -34,8 +34,8 @@ namespace System.Windows.Markup
             "XamlSetMarkupExtensionAttribute.")]
         public MarkupExtensionReturnTypeAttribute(Type returnType, Type expressionType)
         {
-            _returnType = returnType;
-            _expressionType = expressionType;
+            ReturnType = returnType;
+            ExpressionType = expressionType;
         }
 
         /// <summary>
@@ -46,18 +46,9 @@ namespace System.Windows.Markup
 
         /// <summary>
         /// </summary>
-        public Type ReturnType
-        { 
-            get { return _returnType; } 
-        }
+        public Type ReturnType { get; }
 
         [Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
-        public Type ExpressionType
-        { 
-            get { return _expressionType; } 
-        }
-
-        private Type _returnType;
-        private Type _expressionType;
+        public Type ExpressionType { get; }
     }
 }

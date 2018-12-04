@@ -15,9 +15,9 @@ namespace MS.Internal.Xaml.Context
     //  2) it is <T>, and avoids activator.createinstance with the creationDelegate
     class XamlContextStack<T> where T : XamlFrame
     {
-        private int _depth = -1;
-        T _currentFrame = null;
-        T _recycledFrame = null;
+        private int _depth;
+        T _currentFrame;
+        T _recycledFrame;
         Func<T> _creationDelegate;
 
         public XamlContextStack(Func<T> creationDelegate)

@@ -1123,7 +1123,11 @@ namespace System.Xaml.Schema
                 }
             }
 
+#if !NETSTANDARD2_0
             public new V TryAdd(K name, V member)
+#else
+            public V TryAdd(K name, V member)
+#endif
             {
                 // This instance is always held in a private field, safe to lock on
                 lock (this)

@@ -7,7 +7,7 @@ We need the most help with the following types of changes:
 * Test fixes, test improvements and new tests increasing code coverage.
 * Bug fixes that specifically target partity between .NET Core and .NET Framework.
 
-Please [file an issue](https://github.com/dotnet/winforms/issues) for any larger change you would like to propose.
+Please [file an issue](https://github.com/dotnet/wpf/issues) for any larger change you would like to propose.
 
 See [Developer Guide](developer-guide.md) to learn how to develop changes for this repo.
 

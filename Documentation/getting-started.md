@@ -6,8 +6,8 @@ This document describes the experience of using WPF on .NET Core. The [Developer
 
 Choose one of these options:
 
-1. [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download), or
-2. [.NET Core 3.0 daily build](https://github.com/dotnet/core/blob/master/daily-builds.md).
+1. [.NET Core 3.0 SDK Preview 1 (recommended)](https://www.microsoft.com/net/download)
+2. [.NET Core 3.0 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/master/daily-builds.md)
 
 ## Creating new applications
 

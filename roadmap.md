@@ -13,10 +13,10 @@ At present, our primary focus is enabling the following for .NET Core 3.0:
 As we complete those goals, we'll update our roadmap to include additional feature/capability areas we will focus on next.
 
 ## Timeline for Open Source
-| Milestone | Release Date |
+| Milestone | Date |
 |---|---|
 |Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
-|Ability to merge PRs from community|Early 2019|
+|Add adequate tests that enable validating and merging community PRs|Early 2019|
 |Roadmap update for feature focus areas|Early 2019|
 |Add remaining WPF for .NET Core components to repository|Continues thru 2019|
 
@@ -25,6 +25,6 @@ As we complete those goals, we'll update our roadmap to include additional featu
 The port from WPF for .NET Framework is still in progress. Currently this repository contains these components:
 
 * Components:
-  * System.Xaml
+  * [System.Xaml](src/Microsoft.DotNet.Wpf/src/System.Xaml)
 * Tests:
-  * DrtXaml
+  * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)

@@ -8,6 +8,8 @@ At present, our primary focus is enabling the following for .NET Core 3.0:
 * Publish remaining WPF components to the repo
 * Publish (and write) more WPF tests to the repo
 
+> Note: There are some specific .NET Framework features will not be supported, such as [XBAPs](https://docs.microsoft.com/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview).
+
 As we complete those goals, we'll update our roadmap to include additional feature/capability areas we will focus on next.
 
 ## Timeline for Open Source
@@ -26,5 +28,3 @@ The port from WPF for .NET Framework is still in progress. Currently this reposi
   * System.Xaml
 * Tests:
   * DrtXaml
-
-Components in this repository eventually roll up to the `Microsoft.NET.Sdk.WindowsDesktop` SDK.

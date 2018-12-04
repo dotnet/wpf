@@ -66,7 +66,7 @@ If the issue is already assigned to someone, please coordinate with the assignee
 
 ## Prioritization & Upvoting
 
-* Upvotes on first post of each issue are useful hint for our prioritization.
+* Upvotes on first post of each issue are a useful hint for our prioritization.
 We can [sort issues by number of upvotes](https://github.com/dotnet/wpf/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) and we will review the top list on regular basis.
 * We're most likely to include improvements that either have a positive impact on a broad scenario or have very significant positive impact on a niche scenario. We're less likely to prioritize modest improvements to niche scenarios.
 * Compatibility will almost always be given a higher priority than improvements.

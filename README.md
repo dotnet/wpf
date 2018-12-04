@@ -31,7 +31,7 @@ We are part-away through porting WPF to .NET Core, and will complete that for .N
 
 We have published only a small part of the WPF source. We will continue to publish WPF components as part of the .NET Core 3 project. We will publish source and tests at the same time for each component.
 
-See [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
+See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
 We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase converage and help us validate PRs more easily.
 
@@ -65,7 +65,7 @@ Also see info about related [Microsoft .NET Core and ASP.NET Core Bug Bounty Pro
 
 ## License
 
-.NET Core (including WPF repo) is licensed under the [MIT license](LICENSE.TXT).
+.NET Core (including the WPF repo) is licensed under the [MIT license](LICENSE.TXT).
 
 ## .NET Foundation
 

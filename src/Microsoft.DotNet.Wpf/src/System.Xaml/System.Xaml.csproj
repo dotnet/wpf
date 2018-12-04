@@ -70,7 +70,7 @@
   
   <ItemGroup>
     <Compile Remove="System\Xaml\XamlProperty.cs" />
-    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'!='netstandard2.0'"/>
+    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'!='netstandard2.0'" />
     <Compile Remove="System\Xaml\Schema\ClrProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ImplicitProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ClrAttachableEvent.cs" />

@@ -6,9 +6,9 @@ Windows Presentation Foundation (WPF) is a UI framework for building Windows des
 
 WPF applications are based on a vector graphics architecture. This enables applications to look great on high DPI monitors, as they can be infinitely scaled. WPF also includes a flexible hosting model, which makes it straightforward to host a video in a button, for example. The visual designer provided in Visual Studio makes it easy to build WPF application, with drag-in-drop and/or direct editing of XAML markup.
 
-> Note: The visual designer is not yet available and will be part of a Visual Studio 2019 update.
+> Note: The WPF visual designer is not yet available and will be part of a Visual Studio 2019 update.
 
-Consult the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
+See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
 
 [WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use Visual Studio 2019 Preview 1 to use WPF and WinForms with .NET Core.
 

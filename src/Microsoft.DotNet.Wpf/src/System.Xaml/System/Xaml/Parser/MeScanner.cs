@@ -265,7 +265,7 @@ namespace MS.Internal.Xaml.Parser
                 idx = value.IndexOf(Backslash, start);
                 if (idx < 0)
                 {
-                    builder.Append(value.Substring(start));
+                    builder.Append(value, start, value.Length - start);
                     break;
                 }
                 else
@@ -273,7 +273,7 @@ namespace MS.Internal.Xaml.Parser
                     int clearTextLength = idx - start;
 
                     // Copy Clear Text
-                    builder.Append(value.Substring(start, clearTextLength));
+                    builder.Append(value, start, clearTextLength);
 
                     // Add the character after the backslash
                     if (idx + 1 < value.Length)

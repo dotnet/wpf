@@ -17,9 +17,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-#if !NETSTANDARD2_0
-[assembly:TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
-#else
+#if NETSTANDARD2_0
 namespace System.Windows.Markup
 {
     /// <summary>
@@ -81,4 +79,6 @@ namespace System.Windows.Markup
         }
     }
 }
+#else
+[assembly:TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
 #endif

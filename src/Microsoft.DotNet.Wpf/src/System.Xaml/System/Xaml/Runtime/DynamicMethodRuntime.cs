@@ -50,7 +50,7 @@ namespace MS.Internal.Xaml.Runtime
         delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
 
         /// <SecurityNote>
-        /// Critical: this is the permision that we demand to allow use of our delegate cache, so
+        /// Critical: this is the permission that we demand to allow use of our delegate cache, so
         ///           shouldn't be changed once we've started creating delegates
         /// </SecurityNote>
         XamlLoadPermission _xamlLoadPermission;
@@ -72,7 +72,7 @@ namespace MS.Internal.Xaml.Runtime
         //    XamlMember equivalence would introduce functional differences between ClrObjectRuntime
         //    and DynamicMethodRuntime.
         // 2. In the typical case where the MemberInfo is a Runtime Member, it is never GCed, and so
-        //    we don't have to worry that we're keeping it rooted. If this ever bcomes a concern,
+        //    we don't have to worry that we're keeping it rooted. If this ever becomes a concern,
         //    we can switch to a ConditionalWeakTable here.
 
         /// <SecurityNote>

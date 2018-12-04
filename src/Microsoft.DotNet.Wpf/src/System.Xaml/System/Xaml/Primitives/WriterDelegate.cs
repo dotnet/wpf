@@ -4,7 +4,7 @@
 
 namespace System.Xaml
 {
-    // This is the simpliest implementation of a Node based XamlWriter.
+    // This is the simplest implementation of a Node based XamlWriter.
     // It turns XamlWriter calls into nodes and passes them up to the
     // provided _addDelegate.
     //

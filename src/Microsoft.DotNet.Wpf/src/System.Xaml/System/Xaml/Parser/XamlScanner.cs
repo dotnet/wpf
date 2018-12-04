@@ -408,7 +408,7 @@ namespace MS.Internal.Xaml.Parser
         private void ReadPropertyElement(XamlPropertyName name, XamlType tagType, string tagNamespace, bool isEmptyTag)
         {
             // <Button>   <== currentElement
-            //   <FrameworkElement.Width>   <== FramworkElement is ownerType
+            //   <FrameworkElement.Width>   <== FrameworkElement is ownerType
 
             XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
 
@@ -478,7 +478,7 @@ namespace MS.Internal.Xaml.Parser
             if (_scannerStack.CurrentProperty != null)
             {
                 _scannerStack.CurrentProperty = null;
-                // List of Content is considered seperatly for each property.
+                // List of Content is considered separately for each property.
                 _scannerStack.CurrentlyInContent = false;
             }
             else

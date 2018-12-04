@@ -2394,7 +2394,7 @@ namespace System.Xaml
         //            // See comment in ReferenceSerializationInfo.Write()
         //            //
         //            // We are only attributable if we will not maybe be the one that is choosen to be
-        //            // writen out as a 'reference', note that this means that for sibling properties
+        //            // written out as a 'reference', note that this means that for sibling properties
         //            // which both refer to the same object one will be written as a reference in
         //            // element form.
         //            //

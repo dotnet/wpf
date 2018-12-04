@@ -520,7 +520,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        // SetXmlInstance:  recieves the value as "object" so the calling code doesn't
+        // SetXmlInstance: receives the value as "object" so the calling code doesn't
         // need to load System.Xml.dll types to make the call.
         public override void SetXmlInstance(object inst, XamlMember property, XAML3.XData xData)
         {

@@ -19,7 +19,7 @@ namespace MS.Internal.Xaml.Runtime
     // Perf notes
     // - Need a perf test to decide whether it's faster to check for public visibility, or just always 
     //   fall through to the elevated case once we've determined we don't have MemberAccess permission.
-    // - Consider checking ctor visiblity in CreateInstance
+    // - Consider checking ctor visibility in CreateInstance
     // - Consider checking method visibility in CreateWithFactoryMethod
 
     // This class wraps two runtimes: a transparent runtime (typically ClrObjectRuntime)

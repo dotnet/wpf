@@ -907,7 +907,7 @@ namespace System.Xaml
                 // is non-null; a derived class can use AttributeProvider to override attribute lookup
 
                 // Volatile read/write of CustomAttributeProvider to make sure that threads that see
-                // CusomAttributeProviderIsSet == true also see the write to _reflector.UnderlyingMember
+                // CustomAttributeProviderIsSet == true also see the write to _reflector.UnderlyingMember
                 if (!_reflector.CustomAttributeProviderIsSetVolatile)
                 {
                     ICustomAttributeProvider attrProvider = LookupCustomAttributeProvider();

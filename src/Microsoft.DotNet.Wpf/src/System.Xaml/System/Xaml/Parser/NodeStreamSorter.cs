@@ -282,10 +282,10 @@ namespace MS.Internal.Xaml
             ReadAheadToFirstInstancingProperty();
         }
 
-        // This reads from immediatly after a start object and queues all the
+        // This reads from immediately after a start object and queues all the
         // nodes to the end of the attributes.
         // returns true if read End of Attributes.
-        // rerutns false if read End Object.
+        // returns false if read End Object.
         private void ReadAheadToEndOfAttributes()
         {
             XamlNode node;
@@ -343,7 +343,7 @@ namespace MS.Internal.Xaml
         }
 
         // After the End of Attributes is found continue to buffer nodes
-        // until the first real property.  Carefull there may be real objects
+        // until the first real property.  Careful, there may be real objects
         // with real properties inside of Directives.
         private void ReadAheadToFirstInstancingProperty()
         {

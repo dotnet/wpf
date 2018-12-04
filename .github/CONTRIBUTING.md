@@ -1,6 +1,6 @@
 # Contributing
 
-See [Contributing Guide](../Documentation/contributing-guide.md) for information about:
+See [Contributing Guide](../Documentation/contributing.md) for information about:
 
 * Which kind of PRs we accept/reject for .NET Core 3.0 release
 * Coding style

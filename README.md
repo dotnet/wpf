@@ -16,7 +16,7 @@ Consult the [WPF Roadmap](roadmap.md) to learn about project priorities, status 
 
 * [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download)
 * [Getting started instructions](Documentation/getting-started.md)
-* [Contributing guide](Documentation/contributing-guide.md)
+* [Contributing guide](Documentation/contributing.md)
 
 ## Status
 
@@ -41,7 +41,7 @@ The Visual Studio WPF designer is not yet available. In short, we need to move t
 
 Some of the best ways to contribute are to try things out, file bugs, join in design conversations, and fix issues.
 
-* This repo defines [contributing guidelines](Documentation/contributing-guide.md) and also follows the more general[.NET Core contributing guide](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md).
+* This repo defines [contributing guidelines](Documentation/contributing.md) and also follows the more general[.NET Core contributing guide](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md).
 * If you have a question or have found a bug, [file an issue](https://github.com/dotnet/wpf/issues/new).
 * Use [daily builds](Documentation/getting-started.md#installation) if you want to contribute and stay up to date with the team.
 

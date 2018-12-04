@@ -5,15 +5,17 @@
 Windows Presentation Foundation (WPF) is a UI framework for building Windows desktop applications. WPF supports a broad set of application development features, including an application model, resources, controls, graphics, layout, data binding and documents. WPF uses the Extensible Application Markup Language (XAML) to provide a declarative model for application programming.
 
 WPF applications are based on a vector graphics architecture. This enables applications to look great on high DPI monitors, as they can be infinitely scaled. WPF also includes a flexible hosting model, which makes it straightforward to host a video in a button, for example. The visual designer provided in Visual Studio makes it easy to build WPF application, with drag-in-drop and/or direct editing of XAML markup.
- 
+
 > Note: The visual designer is not yet available and will be part of a Visual Studio 2019 update.
 
-[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK.
+Consult the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
+
+[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use Visual Studio 2019 Preview 1 to use WPF and WinForms with .NET Core.
 
 ## Getting started
 
-* [Getting started instructions](Documentation/getting-started.md)
 * [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download)
+* [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing-guide.md)
 
 ## Status
@@ -25,7 +27,7 @@ We are in the process of doing four projects with WPF:
 * Publish (and in some cases write) tests to GitHub and enable automated testing infrastructure.
 * Enable the Visual Studio WPF designer to work with WPF running on .NET Core.
 
-We are part-away through porting WPF to .NET Core, and will complete that for .NET Core 3.0. We intend to bring the codebase up to functionality and performance parity with .NET Framework, except for a small number of scenarios we do not intend to support (for example, [XBAPs](https://docs.microsoft.com/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview)).
+We are part-away through porting WPF to .NET Core, and will complete that for .NET Core 3.0. We intend to bring the codebase up to functionality and performance parity with .NET Framework.
 
 We have published only a small part of the WPF source. We will continue to publish WPF components as part of the .NET Core 3 project. We will publish source and tests at the same time for each component.
 
@@ -69,8 +71,4 @@ Also see info about related [Microsoft .NET Core and ASP.NET Core Bug Bounty Pro
 
 .NET Core WPF is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
 
-There are many .NET related projects on GitHub.
-
-- [.NET home repo](https://github.com/Microsoft/dotnet) - links to 100s of .NET
-  projects, from Microsoft and the community.
-x
+See the [.NET home repo](https://github.com/Microsoft/dotnet) to find other .NET-related projects.

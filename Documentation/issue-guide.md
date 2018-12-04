@@ -6,8 +6,6 @@ It may be as simple as a small product or test bug or as large as the work track
 
 We will keep issues open even if the WPF team internally has no plans to address them in an upcoming release, as long as we believe they are in line with our direction.
 
-
-
 ## How to file issues
 
 You can help us streamline our response time to your feedback and ideas by filing high-quality reports.
@@ -27,8 +25,6 @@ Ideally, assume that the reader has minimal knowledge and experience with writin
 
 For API suggestions, check [API review process](https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/api-review-process.md), especially [example of good API proposals](https://github.com/dotnet/corefx/issues/271).
 
-
-
 ## Labels
 
 We use GitHub [labels](https://github.com/dotnet/wpf/labels) on our issues in order to classify them. We have the following categories per issue:
@@ -42,8 +38,6 @@ We use GitHub [labels](https://github.com/dotnet/wpf/labels) on our issues in or
     * [needs-more-info](https://github.com/dotnet/wpf/labels/needs-more-info): Issues which need more information to be actionable. Usually this will be because we can't reproduce a reported bug. We'll close these issues after a little bit if we haven't gotten actionable information, but we welcome folks who have acquired more information to reopen the issue.
     * [tenet-compatibility](https://github.com/dotnet/wpf/labels/tenet-compatibility): Incompatibility between released versions or with WPF for .NET Framework.
 
-
-
 ## Milestones
 
 We use [milestones](https://github.com/dotnet/wpf/milestones) to prioritize work for each upcoming release.
@@ -54,15 +48,11 @@ We use [milestones](https://github.com/dotnet/wpf/milestones) to prioritize work
 * **Future** milestone tracks all potential future work (which may or may not happen). When we are done with 3.0 release, we will move some of these issues into the next immediate milestone.
     * Please do not start discussions about next post-3.0 milestone until we are close to final 3.0 release. If you want to express your opinion on prioritization, please [upvote first post of the issue](#upvotes-on-issues) instead.
 
-
-
 ## Assignee
 
 We assign each issue to assignee, when the assignee is ready to pick up the work and start working on it.
 If the issue is not assigned to anyone and you want to pick it up, please say so - we will assign the issue to you.
 If the issue is already assigned to someone, please coordinate with the assignee before you start working on it.
-
-
 
 ## Prioritization & Upvoting
 
@@ -70,13 +60,6 @@ If the issue is already assigned to someone, please coordinate with the assignee
 We can [sort issues by number of upvotes](https://github.com/dotnet/wpf/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) and we will review the top list on regular basis.
 * We're most likely to include improvements that either have a positive impact on a broad scenario or have very significant positive impact on a niche scenario. We're less likely to prioritize modest improvements to niche scenarios.
 * Compatibility will almost always be given a higher priority than improvements.
-
-
-## Escalations
-
-If you think some issue or PR is not getting the right attention, or if you notice some [Code of Conduct](https://dotnetfoundation.org/code-of-conduct) violation we might miss, 
-you can escalate to WPF team by tagging some of us (e.g. [@fabiant3](https://github.com/fabiant3), [@karelz](https://github.com/karelz)). Please do not overuse it.
-
 
 ## Triage rules
 

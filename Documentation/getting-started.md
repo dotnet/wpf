@@ -1,13 +1,13 @@
 # Getting started with WPF for .NET Core
 
+This document describes the experience of using WPF on .NET Core. The [Developer Guide](developer-guide.md) describes how to develop features and fixes for WPF.
 
 ## Installation
 
 Choose one of these options:
 
-1. Official public preview [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download), or
-2. [Daily build](https://aka.ms/netcore3sdk) (for more installer options see [dotnet/code-sdk repo](https://github.com/dotnet/core-sdk)).
-
+1. [.NET Core 3.0 SDK Preview 1 (recommended)](https://www.microsoft.com/net/download)
+2. [.NET Core 3.0 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/master/daily-builds.md)
 
 ## Creating new applications
 
@@ -21,25 +21,21 @@ cd MyWPFApp
 dotnet run
 ```
 
-
-## WPF documentation
-
-For WPF reference documentation (types, properties, methods, etc.) see the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netcore-3.0). <!-- note that this URL doesn't exist yet - I assume 3.0 will go live at the announce? -->
-
-For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support. 
-
-
 ## Samples
 
 Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld example. The existing [WPF for .NET Framework samples](https://github.com/Microsoft/WPF-Samples) have also been updated to dual-target .NET Framework and .NET Core 3.
 
 
+## Documentation
+
+For WPF API documentation, see the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netcore-3.0).
+
+For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support.
 
 ## Known issues
 
 * WPF Applications crash with `System.TypeLoadException` when the Visual C++ Redistributable for Visual Studio 2017 is not installed. The latest version of VC++ redistributable can be obtained from [the Visual C++ downloads page](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads). This dependency will be removed prior to .NET Core 3.0 final release.
     * This is tracked by [#37](https://github.com/dotnet/wpf/issues/37).
-
 
 ## Missing features
 

@@ -1,6 +1,6 @@
 # Developer Guide
 
-The following document describes the setup and workflow that is recommended for working on the WPF project. It assumes that you have read the [contributing doc](contributing-guide.md).
+The following document describes the setup and workflow that is recommended for working on the WPF project. It assumes that you have read the [contributing guide](contributing.md).
 
 The [Issue Guide](issue-guide.md) describes our approach to using GitHub issues.
 

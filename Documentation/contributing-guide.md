@@ -1,6 +1,6 @@
 # Contributing Guide
 
-The primary focus of .NET Core 3.0 release for WPF is to achieve parity with .NET Framework. Priority will be given to changes that align with that goal. See the [../roadmap.md] to understand project goals.
+The primary focus of .NET Core 3.0 release for WPF is to achieve parity with .NET Framework. Priority will be given to changes that align with that goal. See the [roadmap](../roadmap.md) to understand project goals.
 
 We need the most help with the following types of changes:
 

@@ -595,7 +595,7 @@ namespace MS.Internal.Xaml
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 nextMember = _originalNodesInOrder[originalIdx].Member;
-            };
+            }
             return true;
         }
 
@@ -615,7 +615,7 @@ namespace MS.Internal.Xaml
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 member = _originalNodesInOrder[originalIdx].Member;
-            };
+            }
             return true;
         }
 

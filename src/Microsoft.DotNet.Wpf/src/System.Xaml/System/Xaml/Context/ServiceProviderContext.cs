@@ -140,7 +140,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (property == null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));;
+                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));
                 }
             }
 

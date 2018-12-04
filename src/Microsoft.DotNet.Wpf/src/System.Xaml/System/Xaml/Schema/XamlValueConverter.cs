@@ -121,7 +121,7 @@ namespace System.Xaml.Schema
 
         public override int GetHashCode()
         {
-            int result = Name.GetHashCode();;
+            int result = Name.GetHashCode();
             if (ConverterType != null)
             {
                 result ^= ConverterType.GetHashCode();

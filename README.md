@@ -45,13 +45,17 @@ Some of the best ways to contribute are to try things out, file bugs, join in de
 * If you have a question or have found a bug, [file an issue](https://github.com/dotnet/wpf/issues/new).
 * Use [daily builds](Documentation/getting-started.md#installation) if you want to contribute and stay up to date with the team.
 
+### .NET Framework issues
+
+Issues with WPF for .NET Framework should be filed via Feedback Hub on Windows 10 (Category: _Developer Platform_, sub-category _UI frameworks and controls_), 
+or [Product Support](https://support.microsoft.com/en-us/contactus?ws=support).
+They should not be filed on this repo.
+
 ## Relationship to .NET Framework
 
 This code base is a fork of the WPF code in the .NET Framework. We intend to release .NET Core 3.0 with WPF having parity with the .NET Framework version. Over time, the two implementations may diverge.
 
 The [Update on .NET Core 3.0 and .NET Framework 4.8](https://blogs.msdn.microsoft.com/dotnet/2018/10/04/update-on-net-core-3-0-and-net-framework-4-8/) provides a good description of the forward-looking differences between .NET Core and .NET Framework.
-
-Issues with .NET Framework, including WPF, should be filed on [VS developer community](https://developercommunity.visualstudio.com/spaces/61/index.html), or [Product Support](https://support.microsoft.com/en-us/contactus?ws=support). They should not be filed on this repo.
 
 ## Code of Conduct
 

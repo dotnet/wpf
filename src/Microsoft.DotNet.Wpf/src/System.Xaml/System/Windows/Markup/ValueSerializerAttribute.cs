@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NETCOREAPP2_0 || NETCOREAPP2_1
 namespace System.Windows.Markup
 {
     /// <summary>

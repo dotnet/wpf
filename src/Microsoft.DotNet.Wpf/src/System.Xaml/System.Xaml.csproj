@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.0;netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     
     <NoWarn>$(NoWarn);0618;NU5125</NoWarn>
@@ -70,7 +70,7 @@
   
   <ItemGroup>
     <Compile Remove="System\Xaml\XamlProperty.cs" />
-    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'!='netstandard2.0'" />
+    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'=='net461' OR '$(TargetFramework)'=='netcoreapp3.0'" />
     <Compile Remove="System\Xaml\Schema\ClrProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ImplicitProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ClrAttachableEvent.cs" />

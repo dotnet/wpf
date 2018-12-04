@@ -1123,7 +1123,7 @@ namespace System.Xaml.Schema
                 }
             }
 
-#if NETCOREAPP3_0
+#if NETCOREAPP2_0 || NETCOREAPP2_1 || NETCOREAPP3_0
             public new V TryAdd(K name, V member)
 #else
             public V TryAdd(K name, V member)

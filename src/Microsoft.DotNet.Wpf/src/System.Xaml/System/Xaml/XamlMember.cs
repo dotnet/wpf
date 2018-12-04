@@ -28,7 +28,7 @@ namespace System.Xaml
         // Initialized in constructor
         private string _name;
         private XamlType _declaringType;
-        private MemberType _memberType;
+        private readonly MemberType _memberType;
 
         // Idempotent
         private ThreeValuedBool _isNameValid;

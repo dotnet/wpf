@@ -26,9 +26,9 @@ namespace System.Xaml
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
-        string _name;
+        readonly string _name;
         XamlSchemaContext _schemaContext;
-        IList<XamlType> _typeArguments;
+        readonly IList<XamlType> _typeArguments;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
         TypeReflector _reflector;

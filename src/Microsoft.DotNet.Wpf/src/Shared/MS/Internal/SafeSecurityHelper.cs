@@ -498,7 +498,7 @@ namespace System.Xaml
             return !(left == right);
         }
 
-        int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
+        readonly int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
     }
 
     // This cleanup token will be immediately thrown away and as a result it will

@@ -14,6 +14,7 @@ using System.Xaml;
 using System.Xaml.Schema;
 using System.Xaml.Permissions;
 
+#if !NETSTANDARD2_0
 namespace MS.Internal.Xaml.Runtime
 {
     // Perf notes
@@ -464,3 +465,4 @@ namespace MS.Internal.Xaml.Runtime
         }
     }
 }
+#endif

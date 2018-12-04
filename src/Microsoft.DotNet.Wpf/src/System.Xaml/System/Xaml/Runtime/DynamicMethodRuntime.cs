@@ -17,6 +17,7 @@ using System.Xaml.Schema;
 using System.Xaml.Permissions;
 using System.Xaml.MS.Impl;
 
+#if !NETSTANDARD2_0
 namespace MS.Internal.Xaml.Runtime
 {
 
@@ -744,3 +745,4 @@ namespace MS.Internal.Xaml.Runtime
         }
     }
 }
+#endif

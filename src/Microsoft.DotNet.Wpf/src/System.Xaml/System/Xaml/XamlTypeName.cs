@@ -11,7 +11,7 @@ using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml.Schema
 {
-    [DebuggerDisplay("{{{Namespace}}}{Name}{TypeArgStringForDebugger}")]
+    [DebuggerDisplay("{ToString()}")]
     public class XamlTypeName
     {
         List<XamlTypeName> _typeArguments;

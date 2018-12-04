@@ -11,7 +11,7 @@ using System.Xaml;
 
 namespace MS.Internal.Xaml.Parser
 {
-    [DebuggerDisplay("{_nodeType}")]
+    [DebuggerDisplay("{NodeType}")]
     internal class XamlScannerNode
     {
         public XamlScannerNode(IXmlLineInfo lineInfo)

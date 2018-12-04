@@ -580,7 +580,7 @@ namespace MS.Internal.Xaml.Parser
                     if (isXDataText)
                     {
                         yield return Logic_EndMember();
-                        yield return Logic_EndObject(); ;
+                        yield return Logic_EndObject();
                     }
                 }
                 else
@@ -707,7 +707,7 @@ namespace MS.Internal.Xaml.Parser
                         if (isTextXML)
                         {
                             yield return Logic_EndMember();
-                            yield return Logic_EndObject(); ;
+                            yield return Logic_EndObject();
                         }
                     }
                     else

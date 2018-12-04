@@ -654,8 +654,7 @@ namespace System.Xaml
 
         void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
         {
-            string chosenNamespace;
-            string prefix = LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
+            string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = XamlXmlWriter.GetTypeName(type);
             string typeNamePrefixed = (prefix == String.Empty) ? typeName : prefix + ":" + typeName;
 

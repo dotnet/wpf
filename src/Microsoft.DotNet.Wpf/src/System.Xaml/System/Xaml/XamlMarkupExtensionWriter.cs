@@ -92,8 +92,7 @@ namespace System.Xaml
 
         string LookupPrefix(XamlType type)
         {
-            string chosenNamespace;
-            string prefix = this.xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
+            string prefix = this.xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {
@@ -110,8 +109,7 @@ namespace System.Xaml
 
         string LookupPrefix(XamlMember property)
         {
-            string chosenNamespace;
-            string prefix = this.xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out chosenNamespace);
+            string prefix = this.xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {

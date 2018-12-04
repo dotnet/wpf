@@ -150,8 +150,7 @@ namespace System.Xaml.Schema
                 throw new ArgumentNullException("namespaceResolver");
             }
 
-            string error;
-            result = ParseInternal(typeName, namespaceResolver.GetNamespace, out error);
+            result = ParseInternal(typeName, namespaceResolver.GetNamespace, out _);
             return (result != null);
         }
 
@@ -167,8 +166,7 @@ namespace System.Xaml.Schema
                 throw new ArgumentNullException("namespaceResolver");
             }
 
-            string error;
-            result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out error);
+            result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out _);
             return (result != null);
         }
 

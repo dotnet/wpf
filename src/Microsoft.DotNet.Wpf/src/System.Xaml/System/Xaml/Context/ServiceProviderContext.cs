@@ -282,8 +282,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IXamlNameResolver.Resolve(string name)
         {
-            bool isFullyInitialized;
-            return _xamlContext.ResolveName(name, out isFullyInitialized);
+            return _xamlContext.ResolveName(name, out _);
         }
 
         object IXamlNameResolver.Resolve(string name, out bool isFullyInitialized)

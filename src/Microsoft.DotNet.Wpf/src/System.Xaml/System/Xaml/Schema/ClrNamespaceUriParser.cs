@@ -18,8 +18,7 @@ namespace System.Xaml.Schema
 
         public static bool TryParseUri(string uriInput, out string clrNs, out string assemblyName)
         {
-            string error;
-            return TryParseUri(uriInput, out clrNs, out assemblyName, out error, false);
+            return TryParseUri(uriInput, out clrNs, out assemblyName, out _, false);
         }
 
         private static bool TryParseUri(string uriInput, out string clrNs, out string assemblyName,

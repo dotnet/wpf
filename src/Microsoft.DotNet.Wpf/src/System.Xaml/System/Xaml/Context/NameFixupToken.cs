@@ -189,8 +189,7 @@ namespace MS.Internal.Xaml.Context
             else
             {
                 TargetContext.IsInitializedCallback = null;
-                bool isFullyInitialized;
-                namedObject = TargetContext.ResolveName(name, out isFullyInitialized);
+                namedObject = TargetContext.ResolveName(name, out _);
             }
             return namedObject;
         }

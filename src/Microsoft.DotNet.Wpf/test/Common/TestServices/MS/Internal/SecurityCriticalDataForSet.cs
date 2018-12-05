@@ -1,9 +1,8 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 //---------------------------------------------------------------------------
-//
-// <copyright file="SecurityCriticalDataForSet.cs" company="Microsoft">
-//    Copyright (C) Microsoft Corporation.  All rights reserved.
-// </copyright>
-// 
 // Description:
 //              This is a helper class to facilate the storage of data that's Critical for set.
 //              The data itself is not information disclosure but the value controls a critical
@@ -14,7 +13,6 @@
 //
 // History:
 //  01/30/05 : prasadt Created. 
-//
 //---------------------------------------------------------------------------
 using System ; 
 using System.Security ;

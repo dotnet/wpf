@@ -1,13 +1,6 @@
-/***************************************************************************\
-*
-* File: Maps.cs
-*
-* Description:
-* Contains specialized data structures for mapping a key to data.
-* 
-* Copyright (C) 2002 by Microsoft Corporation.  All rights reserved.
-*
-\***************************************************************************/
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections;

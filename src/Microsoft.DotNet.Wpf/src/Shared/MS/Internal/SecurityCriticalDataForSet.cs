@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description:
 //              This is a helper class to facilate the storage of data that's Critical for set.
 //              The data itself is not information disclosure but the value controls a critical
@@ -11,10 +9,7 @@
 //
 //              For example a filepath variable might control what part of the file system the
 //              code gets access to.
-//
-// History:
-//  01/30/05 : Microsoft Created. 
-//
+
 using System ; 
 using System.Security ;
 

@@ -47,7 +47,7 @@ Some of the best ways to contribute are to try things out, file bugs, join in de
 
 ### .NET Framework issues
 
-Issues with WPF for .NET Framework should be filed via Feedback Hub on Windows 10 (Category: _Developer Platform_, sub-category _UI frameworks and controls_), 
+Issues with .NET Framework, including WPF, should be filed on [VS developer community](https://developercommunity.visualstudio.com/spaces/61/index.html), 
 or [Product Support](https://support.microsoft.com/en-us/contactus?ws=support).
 They should not be filed on this repo.
 

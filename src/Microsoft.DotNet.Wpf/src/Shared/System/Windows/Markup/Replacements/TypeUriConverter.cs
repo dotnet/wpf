@@ -118,8 +118,7 @@ namespace System.Xaml.Replacements
             var uriString = value as string;
             if (uriString != null)
             {
-                Uri result = null;
-                return Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out result);
+                return Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out _);
             }
 
             return value is Uri;

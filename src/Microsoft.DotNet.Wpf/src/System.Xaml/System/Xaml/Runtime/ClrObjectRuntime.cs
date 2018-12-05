@@ -132,9 +132,8 @@ namespace MS.Internal.Xaml.Runtime
 
         protected MethodBase BindToMethod(BindingFlags bindingFlags, MethodBase[] candidates, object[] args)
         {
-            object state;
             return Type.DefaultBinder.BindToMethod(
-                bindingFlags, candidates, ref args, null, null, null, out state);
+                bindingFlags, candidates, ref args, null, null, null, out _);
         }
 
         //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter

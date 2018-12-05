@@ -1024,8 +1024,7 @@ namespace System.Xaml
             string result = null;
             if (AreAttributesAvailable)
             {
-                bool checkedInherited;
-                result = _reflector.GetAttributeString(typeof(ConstructorArgumentAttribute), out checkedInherited);
+                result = _reflector.GetAttributeString(typeof(ConstructorArgumentAttribute), out _);
             }
             return result;
         }

@@ -60,7 +60,7 @@ namespace System.Xaml
         ///                      We limit this call to only call this function with a 2 as the count of elements.
         ///                      Thereby containing any potential for the call to Win32 to cause a buffer overrun.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
+        [SecurityCritical, SecurityTreatAsSafe]
         internal static void TransformLocalRectToScreen(HandleRef hwnd, ref NativeMethods.RECT rcWindowCoords)
         {
             int retval = MS.Internal.WindowsBase.NativeMethodsSetLastError.MapWindowPoints(hwnd , new HandleRef(null, IntPtr.Zero), ref rcWindowCoords, 2);

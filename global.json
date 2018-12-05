@@ -1,7 +1,6 @@
 {
   "tools": {
     "dotnet": "3.0.100-preview-009764",
-    "vswhere": "2.5.2",
     "vs": {
       "version": "15.9"
     }

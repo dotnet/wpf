@@ -15,7 +15,7 @@ This project follows the general [.NET Core Contribution Guidelines](https://git
 
 ## Contribution "Bar"
 
-Project maintainers will consider changes that improve the product or fix know bugs (please file issues to make bugs "known").
+Project maintainers will consider changes that improve the product or fix known bugs (please file issues to make bugs "known").
 
 Maintainers will not merge changes that have narrowly-defined benefits due to compatibility risk or complexity added to the product. We may revert changes if they are found to be breaking.
 

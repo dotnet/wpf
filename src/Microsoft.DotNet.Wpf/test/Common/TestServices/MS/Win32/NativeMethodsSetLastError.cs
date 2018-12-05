@@ -1,12 +1,9 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 //---------------------------------------------------------------------------
-//
-// <copyright file="NativeMethodsSetLastError.cs" company="Microsoft">
-//    Copyright (C) Microsoft Corporation.  All rights reserved.
-// </copyright>
-//
-//
 // Description: P/Invokes for methods that need to call SetLastError(0)
-//
 //---------------------------------------------------------------------------
 
 // The NativeMethodsSetLastError class differs between assemblies and could not actually be

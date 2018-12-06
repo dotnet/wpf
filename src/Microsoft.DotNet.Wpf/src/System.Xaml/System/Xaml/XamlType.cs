@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Text;
@@ -895,13 +896,8 @@ namespace System.Xaml
             {
                 return true;
             }
-            // Look for constructors
-            foreach (ConstructorInfo ctor in GetConstructors())
-            {
-                // found one, that's all we need
-                return true;
-            }
-            return false;
+            // Look for constructors (one constructor is all we need)
+            return GetConstructors().Any();
         }
 
         protected virtual XamlTypeInvoker LookupInvoker()

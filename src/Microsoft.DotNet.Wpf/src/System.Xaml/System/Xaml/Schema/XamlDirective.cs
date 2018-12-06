@@ -16,7 +16,7 @@ namespace System.Xaml
     public class XamlDirective : XamlMember
     {
         private AllowedMemberLocations _allowedLocation;
-        private IList<string> _xamlNamespaces;
+        private readonly IList<string> _xamlNamespaces;
 
         internal XamlDirective(IEnumerable<string> xamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
             : base(name, reflector) 

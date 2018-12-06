@@ -89,7 +89,7 @@ namespace System.Xaml
         {
             AssemblyName name = new AssemblyName(assembly.FullName);
             string partialName = name.Name;
-            return (partialName != null) ? partialName : String.Empty;
+            return (partialName != null) ? partialName : string.Empty;
         }
 #endif
 

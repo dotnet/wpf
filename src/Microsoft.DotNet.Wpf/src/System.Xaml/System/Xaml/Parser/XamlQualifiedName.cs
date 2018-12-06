@@ -71,8 +71,8 @@ namespace MS.Internal.Xaml.Parser
             int start = 0;
             int colonIdx = longName.IndexOf(':');
 
-            prefix = String.Empty;
-            name = String.Empty;
+            prefix = string.Empty;
+            name = string.Empty;
 
             if (colonIdx != -1)
             {

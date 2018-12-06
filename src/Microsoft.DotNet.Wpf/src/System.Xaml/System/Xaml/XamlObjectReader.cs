@@ -899,7 +899,7 @@ namespace System.Xaml
                         context.Instance = null;
 
                         // duplicate 3.0 behavior by replacing null value with String.Empty
-                        valueInfo = new ValueMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.Value, propertyValue ?? String.Empty) };
+                        valueInfo = new ValueMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.Value, propertyValue ?? string.Empty) };
                     }
                     else if (propertyValue is string)
                     {
@@ -1355,7 +1355,7 @@ namespace System.Xaml
                         TypeConverter converter = TypeConverterExtensions.GetConverterInstance(paramXamlType.TypeConverter);
 
                         ObjectMarkupInfo objectInfo = null;
-                        Object meObject = argument;
+                        object meObject = argument;
 
                         context.Instance = argument;
                         if (converter != null && valueSerializer != null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, argument))
@@ -2090,7 +2090,7 @@ namespace System.Xaml
                 };
 
                 // we want to treat all null values returned by TCs as String.Empty
-                value = value ?? String.Empty;
+                value = value ?? string.Empty;
 
                 objectInfo.Properties.Add(new MemberMarkupInfo()
                 {
@@ -2110,7 +2110,7 @@ namespace System.Xaml
                     var valueInfo = propertyInfo.Children[0] as ValueMarkupInfo;
                     if (valueInfo != null)
                     {
-                        return String.Equals(valueInfo.XamlNode.Value, String.Empty);
+                        return string.Equals(valueInfo.XamlNode.Value, string.Empty);
                     }
                 }
 
@@ -2546,8 +2546,8 @@ namespace System.Xaml
                 string ns = GetXamlType(obj.GetType()).PreferredXamlNamespace;
                 if (ns != XamlLanguage.Xaml2006Namespace)
                 {
-                    this.namespaceToPrefixMap.Add(ns, String.Empty);
-                    this.prefixToNamespaceMap.Add(String.Empty, ns);
+                    this.namespaceToPrefixMap.Add(ns, string.Empty);
+                    this.prefixToNamespaceMap.Add(string.Empty, ns);
                 }
             }
 
@@ -2633,9 +2633,9 @@ namespace System.Xaml
 
                 string basePrefix = SchemaContext.GetPreferredPrefix(ns);
 
-                if (basePrefix != XamlLanguage.PreferredPrefix && !namespaceToPrefixMap.ContainsValue(String.Empty))
+                if (basePrefix != XamlLanguage.PreferredPrefix && !namespaceToPrefixMap.ContainsValue(string.Empty))
                 {
-                    prefix = String.Empty;
+                    prefix = string.Empty;
                 }
 
                 if (prefix == null)
@@ -2650,7 +2650,7 @@ namespace System.Xaml
                         prefix = basePrefix + index.ToString(TypeConverterHelper.InvariantEnglishUS);
                     }
 
-                    if (prefix != String.Empty)
+                    if (prefix != string.Empty)
                     {
                         XmlConvert.VerifyNCName(prefix);
                     }

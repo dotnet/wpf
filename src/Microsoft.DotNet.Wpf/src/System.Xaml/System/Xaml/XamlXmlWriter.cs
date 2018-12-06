@@ -62,7 +62,7 @@ namespace System.Xaml
                 throw new ArgumentNullException("stream");
             }
 
-            if (settings != null && settings.CloseOutput == true)
+            if (settings != null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -84,7 +84,7 @@ namespace System.Xaml
                 throw new ArgumentNullException("textWriter");
             }
 
-            if (settings != null && settings.CloseOutput == true)
+            if (settings != null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(textWriter, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }

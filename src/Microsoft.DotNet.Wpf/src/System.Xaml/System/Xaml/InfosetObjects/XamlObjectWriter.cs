@@ -1397,7 +1397,7 @@ namespace System.Xaml
                             eventArgs.CurrentType = declaringType;
 
                             declaringType.SetTypeConverterHandler(ctx.ParentInstance, eventArgs);
-                            if (eventArgs.Handled == true)
+                            if (eventArgs.Handled)
                             {
                                 return false;
                             }
@@ -1718,7 +1718,7 @@ namespace System.Xaml
                         var eventArgs = new XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
                         eventArgs.CurrentType = declaringType;
                         declaringType.SetMarkupExtensionHandler(parentInstance, eventArgs);
-                        if (eventArgs.Handled == true)
+                        if (eventArgs.Handled)
                         {
                             return true;
                         }

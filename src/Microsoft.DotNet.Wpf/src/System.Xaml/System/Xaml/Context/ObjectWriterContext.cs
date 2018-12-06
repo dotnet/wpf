@@ -391,7 +391,7 @@ namespace MS.Internal.Xaml.Context
                                     // One last thing to check:  If the object we are inside is a ME
                                     // then we are inside a call to ProvideValue and we don't want to
                                     // return a reference to ourselves to ourselves.
-                                    if (!typeof(MarkupExtension).IsAssignableFrom(lowerFrame.Instance.GetType()))
+                                    if (!lowerFrame.Instance is MarkupExtension)
                                     {
                                         returnAmbientValue = true;
                                         value = lowerFrame.Instance;

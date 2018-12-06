@@ -27,6 +27,7 @@ namespace System.Xaml
         AllValid                            = 0xFFFF << 16
     }
 
+    [Flags]
     internal enum BoolMemberBits
     {
         ReadOnly     = 0x0001,

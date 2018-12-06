@@ -3,14 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 using System.Xaml;
-using MS.Internal.Xaml.Context;
 using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Parser;
 
 namespace MS.Internal.Xaml

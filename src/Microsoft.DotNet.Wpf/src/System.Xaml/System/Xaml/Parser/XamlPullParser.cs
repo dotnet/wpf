@@ -3,15 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.IO;
-using System.Xaml;
-using System.Xml;
 using System.Collections.Generic;
-using System.Diagnostics;
-using MS.Internal.Xaml.Context;
+using System.Runtime.Serialization;
+using System.Xaml;
 using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
-using System.Collections;
+using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -1192,8 +1188,8 @@ namespace MS.Internal.Xaml.Parser
         public XamlUnexpectedParseException(XamlScanner xamlScanner, ScannerNodeType nodetype, string parseRule)
             : base(xamlScanner, SR.Get(SRID.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }
 
-        protected XamlUnexpectedParseException(System.Runtime.Serialization.SerializationInfo info,
-                                               System.Runtime.Serialization.StreamingContext context)
+        protected XamlUnexpectedParseException(SerializationInfo info,
+                                               StreamingContext context)
             : base(info, context) { }
     }
 }

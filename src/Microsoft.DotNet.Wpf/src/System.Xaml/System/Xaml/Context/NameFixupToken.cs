@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using XAML3 = System.Windows.Markup;
-using System.ComponentModel;
-using System.Windows.Markup;
 using System.Diagnostics;
 using System.Xaml;
 using MS.Internal.Xaml.Runtime;
+using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -103,12 +101,12 @@ namespace MS.Internal.Xaml.Context
     internal class NameFixupToken : IAddLineInfo
     {
         List<string> _names;
-        List<INameScopeDictionary> _nameScopeDictionaryList;
+        List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
         public NameFixupToken()
         {
             _names = new List<string>();
-            _nameScopeDictionaryList = new List<INameScopeDictionary>();
+            _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
             Target = new FixupTarget();
             Target.TemporaryCollectionIndex = -1;
             Target.InstanceIsOnTheStack = true;
@@ -154,7 +152,7 @@ namespace MS.Internal.Xaml.Context
         /// <summary>
         /// Saved List of Name Scopes.   With simple fixups we don't have a full context stack.
         /// </summary>
-        public List<INameScopeDictionary> NameScopeDictionaryList
+        public List<XAML3.INameScopeDictionary> NameScopeDictionaryList
         {
             get { return _nameScopeDictionaryList; }
         }
@@ -177,7 +175,7 @@ namespace MS.Internal.Xaml.Context
             object namedObject = null;
             if (CanAssignDirectly)
             {
-                foreach (INameScopeDictionary nameScope in NameScopeDictionaryList)
+                foreach (XAML3.INameScopeDictionary nameScope in NameScopeDictionaryList)
                 {
                     namedObject = nameScope.FindName(name);
                     if (namedObject != null)

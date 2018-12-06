@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 
@@ -51,7 +51,7 @@ namespace System.Xaml.Permissions
 
 #if NETCOREAPP3_0
 
-        [Runtime.InteropServices.ComVisible(false)]
+        [ComVisible(false)]
         public override bool Equals(object obj)
         {
             IPermission perm = obj as IPermission;
@@ -83,7 +83,7 @@ namespace System.Xaml.Permissions
             return true;
         }
 
-        [Runtime.InteropServices.ComVisible(false)]
+        [ComVisible(false)]
         public override int GetHashCode()
         {
             // This implementation is only to silence a compiler warning

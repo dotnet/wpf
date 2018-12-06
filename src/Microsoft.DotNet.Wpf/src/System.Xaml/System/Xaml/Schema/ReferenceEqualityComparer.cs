@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Collections;
 
 namespace System.Xaml.Schema
 {
@@ -15,7 +14,7 @@ namespace System.Xaml.Schema
 
         public override bool Equals(T x, T y)
         {
-            return object.ReferenceEquals(x, y);
+            return ReferenceEquals(x, y);
         }
 
         public override int GetHashCode(T obj)

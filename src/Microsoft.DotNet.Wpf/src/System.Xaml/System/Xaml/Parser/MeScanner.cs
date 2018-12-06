@@ -3,15 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Text;
-using System.Diagnostics;
-using System.Xaml;
-using MS.Internal.Xaml.Context;
-using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Text;
+using System.Xaml;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -405,7 +403,7 @@ namespace MS.Internal.Xaml.Parser
                             throw new XamlParseException(this, SR.Get(SRID.InvalidClosingBracketCharacers, ch.ToString()));
                         }
                     }
-                    else if (ch == MeScanner.Backslash)
+                    else if (ch == Backslash)
                     {
                         escaped = true;
                     }

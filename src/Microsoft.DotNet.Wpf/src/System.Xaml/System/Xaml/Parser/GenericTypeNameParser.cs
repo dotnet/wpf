@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xaml;
-using System.Xaml.Schema;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Parser
 {

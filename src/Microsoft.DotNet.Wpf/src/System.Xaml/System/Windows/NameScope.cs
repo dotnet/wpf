@@ -5,16 +5,10 @@
 // Used to store mapping information for names occuring 
 // within the logical tree section.
 
-using System;
-using System.Windows;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Globalization;
-using System.Windows.Markup;
-using System.ComponentModel;
 using System.Collections.Generic;
-using MS.Internal;
-using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
+using System.Windows.Markup;
 
 namespace System.Xaml
 {

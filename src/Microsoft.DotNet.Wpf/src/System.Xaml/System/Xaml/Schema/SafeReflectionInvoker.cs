@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Permissions;
 
@@ -248,8 +247,8 @@ namespace System.Xaml.Schema
         /// The reason it's marked NoInlining|NoOptimization is so that the call
         /// isn't optimized back into a critical caller.
         /// </SecurityNote>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining |
-                                                    System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining |
+                                                    MethodImplOptions.NoOptimization)]
         internal static Delegate CreateDelegateCritical(Type delegateType, Type targetType, string methodName)
         {
             return Delegate.CreateDelegate(delegateType, targetType, methodName);
@@ -277,8 +276,8 @@ namespace System.Xaml.Schema
         /// The reason it's marked NoInlining|NoOptimization is so that the call
         /// isn't optimized back into a critical caller.
         /// </SecurityNote>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining |
-                                                    System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining |
+                                                    MethodImplOptions.NoOptimization)]
         internal static Delegate CreateDelegateCritical(Type delegateType, object target, string methodName)
         {
             return Delegate.CreateDelegate(delegateType, target, methodName);
@@ -310,8 +309,8 @@ namespace System.Xaml.Schema
         /// members into demands for full trust; if that change goes through, then this method will
         /// become unnecessary.
         /// </SecurityNote>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining |
-                                                    System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining |
+                                                    MethodImplOptions.NoOptimization)]
         internal static object CreateInstanceCritical(Type type, object[] arguments)
         {
             return Activator.CreateInstance(type, arguments);
@@ -359,8 +358,8 @@ namespace System.Xaml.Schema
         /// members into demands for full trust; if that change goes through, then this method will
         /// become unnecessary.
         /// </SecurityNote>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining |
-                                                    System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining |
+                                                    MethodImplOptions.NoOptimization)]
         internal static object InvokeMethodCritical(MethodInfo method, object instance, object[] args)
         {
             return method.Invoke(instance, args);

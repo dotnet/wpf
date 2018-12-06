@@ -5,11 +5,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Markup;
 using System.Xaml;
 using System.Xaml.Schema;
-using System.IO;
-using System.ComponentModel;
 
 namespace MS.Internal.Xaml.Runtime
 {

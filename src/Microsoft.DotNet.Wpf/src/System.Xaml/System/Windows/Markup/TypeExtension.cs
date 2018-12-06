@@ -9,11 +9,9 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Windows;
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {

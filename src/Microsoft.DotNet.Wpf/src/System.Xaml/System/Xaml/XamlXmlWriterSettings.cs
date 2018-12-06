@@ -4,8 +4,6 @@
 
 namespace System.Xaml
 {
-    using System;
-
     public class XamlXmlWriterSettings : XamlWriterSettings
     {
         public bool AssumeValidInput

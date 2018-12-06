@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {

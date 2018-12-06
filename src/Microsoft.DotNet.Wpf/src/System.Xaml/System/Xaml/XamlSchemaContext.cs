@@ -2,25 +2,19 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-
+using System.Security;
+using System.Text;
+using System.Threading;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using MS.Internal.Xaml.Parser;
 #if !TARGETTING35SP1
 using System.Collections.Concurrent;
 #endif
-
-using System.Xaml;
-using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
-using System.Collections.ObjectModel;
-using System.Security;
-using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
 {
@@ -1012,7 +1006,7 @@ namespace System.Xaml
             {
                 foreach (var asm in _referenceAssemblies)
                 {
-                    if (Object.ReferenceEquals(asm, assembly))
+                    if (ReferenceEquals(asm, assembly))
                     {
                         isReferenced = true;
                         break;
@@ -1504,7 +1498,7 @@ namespace System.Xaml
                 return Enumerate().GetEnumerator();
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return ((IEnumerable<T>)this).GetEnumerator();
             }

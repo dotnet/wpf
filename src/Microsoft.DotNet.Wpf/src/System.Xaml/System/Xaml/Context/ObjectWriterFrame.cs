@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using XAML3 = System.Windows.Markup;
 using System.Xaml;
 using System.Xaml.MS.Impl;
-using System.Windows.Markup;
+using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -134,7 +132,7 @@ namespace MS.Internal.Xaml.Context
             set { SetFlag(ObjectWriterFrameFlags.ShouldNotConvertChildKeys, value); }
         }
 
-        public INameScopeDictionary NameScopeDictionary { get; set; }
+        public XAML3.INameScopeDictionary NameScopeDictionary { get; set; }
         public object[] PositionalCtorArgs { get; set; }
         public object Key
         {

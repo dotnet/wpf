@@ -3,10 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Xaml.MS.Impl;
 using System.Diagnostics;
 using System.Xaml;
+using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
 
@@ -109,7 +110,7 @@ namespace MS.Internal.Xaml
             get { return _current; }
         }
 
-        object System.Collections.IEnumerator.Current
+        object IEnumerator.Current
         {
             get { return _current; }
         }

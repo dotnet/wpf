@@ -4,14 +4,13 @@
 
 //  Contents:  Limited converter for string <--> System.Uri
 
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
+
 namespace System.Xaml.Replacements
 {
-    using System;
-    using System.ComponentModel;
-    using System.ComponentModel.Design.Serialization;
-    using System.Globalization;
-    using System.Reflection;
-
     internal class TypeUriConverter : TypeConverter
     {
         public TypeUriConverter()

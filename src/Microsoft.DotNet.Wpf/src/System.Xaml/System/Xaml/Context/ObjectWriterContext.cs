@@ -4,20 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Security;
-using XAML3 = System.Windows.Markup;
 using System.Xaml;
-using MS.Internal.Xaml.Runtime;
 using System.Xaml.Schema;
-using MS.Internal.Xaml.Parser;
-using System.Xaml.MS.Impl;
-using System.Xaml.Permissions;
-using System.IO;
-using System.Windows.Markup;
-using System.Windows;
+using MS.Internal.Xaml.Runtime;
+using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -35,7 +27,7 @@ namespace MS.Internal.Xaml.Context
         List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
         public ObjectWriterContext(XamlSavedContext savedContext, 
-            XamlObjectWriterSettings settings, INameScope rootNameScope, XamlRuntime runtime)
+            XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
             : base(savedContext.SchemaContext)
         {
             _stack = new XamlContextStack<ObjectWriterFrame>(savedContext.Stack, false);
@@ -51,7 +43,7 @@ namespace MS.Internal.Xaml.Context
             {
             case SavedContextType.Template:
                 // Templates always need a root namescope, to isolate them from the rest of the doc
-                INameScopeDictionary rootNameScopeDictionary = null;
+                XAML3.INameScopeDictionary rootNameScopeDictionary = null;
                 if (rootNameScope == null)
                 {
 #if TARGETTING35SP1
@@ -62,7 +54,7 @@ namespace MS.Internal.Xaml.Context
                 }
                 else
                 {
-                    rootNameScopeDictionary = rootNameScope as INameScopeDictionary;
+                    rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
 
                     if (rootNameScopeDictionary == null)
                     {
@@ -88,12 +80,12 @@ namespace MS.Internal.Xaml.Context
         }
 
         public ObjectWriterContext(XamlSchemaContext schemaContext,
-            XamlObjectWriterSettings settings, INameScope rootNameScope, XamlRuntime runtime)
+            XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
             : base(schemaContext)
         {
             _stack = new XamlContextStack<ObjectWriterFrame>(() => new ObjectWriterFrame());
 
-            INameScopeDictionary rootNameScopeDictionary = null;
+            XAML3.INameScopeDictionary rootNameScopeDictionary = null;
             if (rootNameScope == null)
             {
 #if TARGETTING35SP1
@@ -104,7 +96,7 @@ namespace MS.Internal.Xaml.Context
             }
             else
             {
-                rootNameScopeDictionary = rootNameScope as INameScopeDictionary;
+                rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
 
                 if (rootNameScopeDictionary == null)
                 {
@@ -391,7 +383,7 @@ namespace MS.Internal.Xaml.Context
                                     // One last thing to check:  If the object we are inside is a ME
                                     // then we are inside a call to ProvideValue and we don't want to
                                     // return a reference to ourselves to ourselves.
-                                    if (!typeof(MarkupExtension).IsAssignableFrom(lowerFrame.Instance.GetType()))
+                                    if (!typeof(XAML3.MarkupExtension).IsAssignableFrom(lowerFrame.Instance.GetType()))
                                     {
                                         returnAmbientValue = true;
                                         value = lowerFrame.Instance;
@@ -402,7 +394,7 @@ namespace MS.Internal.Xaml.Context
 
                                     // FIRST: Ask the object (via IQueryAmbient interface) if it has a value for this property.
                                     // This is usefull to prevent needless creation of empty lazy properties.
-                                    var ambientCtrl = inst as IQueryAmbient;
+                                    var ambientCtrl = inst as XAML3.IQueryAmbient;
 
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
                                     if (ambientCtrl == null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
@@ -683,7 +675,7 @@ namespace MS.Internal.Xaml.Context
         // This specifically stores the start line position for a start object for consistency
         public int LinePosition_StartObject { get; set; }
 
-        public INameScopeDictionary CurrentNameScope
+        public XAML3.INameScopeDictionary CurrentNameScope
         {
             get
             {
@@ -691,7 +683,7 @@ namespace MS.Internal.Xaml.Context
             }
         }
 
-        public INameScopeDictionary ParentNameScope
+        public XAML3.INameScopeDictionary ParentNameScope
         {
             get
             {
@@ -699,7 +691,7 @@ namespace MS.Internal.Xaml.Context
             }
         }
 
-        public INameScopeDictionary GrandParentNameScope
+        public XAML3.INameScopeDictionary GrandParentNameScope
         {
             get
             {
@@ -707,7 +699,7 @@ namespace MS.Internal.Xaml.Context
             }
         }
 
-        public INameScopeDictionary RootNameScope
+        public XAML3.INameScopeDictionary RootNameScope
         {
             get
             {
@@ -809,13 +801,13 @@ namespace MS.Internal.Xaml.Context
             return (ObjectWriterFrame)frame;
         }
 
-        private INameScopeDictionary LookupNameScopeDictionary(ObjectWriterFrame frame)
+        private XAML3.INameScopeDictionary LookupNameScopeDictionary(ObjectWriterFrame frame)
         {
             if (frame.NameScopeDictionary == null)
             {
                 if (frame.XamlType != null && frame.XamlType.IsNameScope)
                 {
-                    frame.NameScopeDictionary = frame.Instance as INameScopeDictionary ?? new NameScopeDictionary(frame.Instance as INameScope);
+                    frame.NameScopeDictionary = frame.Instance as XAML3.INameScopeDictionary ?? new NameScopeDictionary(frame.Instance as XAML3.INameScope);
                 }
                 if (frame.NameScopeDictionary == null)
                 {
@@ -847,13 +839,13 @@ namespace MS.Internal.Xaml.Context
             return frame.NameScopeDictionary;
         }
 
-        public IEnumerable<INameScopeDictionary> StackWalkOfNameScopes
+        public IEnumerable<XAML3.INameScopeDictionary> StackWalkOfNameScopes
         {
             get
             {
                 var frame = (ObjectWriterFrame)_stack.CurrentFrame;
-                INameScopeDictionary previousNameScopeDictionary = null;
-                INameScopeDictionary nameScopeDictionary = null;
+                XAML3.INameScopeDictionary previousNameScopeDictionary = null;
+                XAML3.INameScopeDictionary nameScopeDictionary = null;
                 while (frame.Depth > 0)
                 {
                     nameScopeDictionary = LookupNameScopeDictionary(frame);
@@ -887,7 +879,7 @@ namespace MS.Internal.Xaml.Context
             return false;
         }
 
-        private INameScopeDictionary HuntAroundForARootNameScope(ObjectWriterFrame rootFrame)
+        private XAML3.INameScopeDictionary HuntAroundForARootNameScope(ObjectWriterFrame rootFrame)
         {
             Debug.Assert(rootFrame.Depth == 1);
 
@@ -897,13 +889,13 @@ namespace MS.Internal.Xaml.Context
                 throw new InvalidOperationException(SR.Get(SRID.NameScopeOnRootInstance));
             }
 
-            INameScopeDictionary nameScopeDictionary = null;
+            XAML3.INameScopeDictionary nameScopeDictionary = null;
 
-            nameScopeDictionary = inst as INameScopeDictionary;
+            nameScopeDictionary = inst as XAML3.INameScopeDictionary;
 
             if (nameScopeDictionary == null)
             {
-                INameScope nameScope = inst as INameScope;
+                XAML3.INameScope nameScope = inst as XAML3.INameScope;
                 if (nameScope != null)
                 {
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
@@ -923,7 +915,7 @@ namespace MS.Internal.Xaml.Context
                     {
                         // Read the value of the property.  If it is an object we are good.
                         // if it is null create a stock name scope dictionary object and assign it back.
-                        INameScope nameScope = (INameScope)_runtime.GetValue(inst, nameScopeProperty, false);
+                        XAML3.INameScope nameScope = (XAML3.INameScope)_runtime.GetValue(inst, nameScopeProperty, false);
                         if (nameScope == null)
                         {
 #if TARGETTING35SP1
@@ -935,7 +927,7 @@ namespace MS.Internal.Xaml.Context
                         }
                         else
                         {
-                            nameScopeDictionary = nameScope as INameScopeDictionary;
+                            nameScopeDictionary = nameScope as XAML3.INameScopeDictionary;
                             if (nameScopeDictionary == null)
                             {
                                 nameScopeDictionary = new NameScopeDictionary(nameScope);
@@ -986,7 +978,7 @@ namespace MS.Internal.Xaml.Context
         {
             isFullyInitialized = false;
             object value = null;
-            foreach (INameScope nameScope in StackWalkOfNameScopes)
+            foreach (XAML3.INameScope nameScope in StackWalkOfNameScopes)
             {
                 object obj = nameScope.FindName(name);
                 if (obj != null)
@@ -1013,7 +1005,7 @@ namespace MS.Internal.Xaml.Context
             // from each, calculating the total size required, pre-allocating the final collection, and then
             // inserting the names and values from each name scope into it.
             // However unless we have a lot of namescopes in the graph, which doesn't seem likely, this seems like overkill
-            foreach (INameScopeDictionary nameScopeDictionary in StackWalkOfNameScopes)
+            foreach (XAML3.INameScopeDictionary nameScopeDictionary in StackWalkOfNameScopes)
             {
                 foreach (KeyValuePair<string, object> nameValuePair in nameScopeDictionary)
                 {
@@ -1064,14 +1056,14 @@ namespace MS.Internal.Xaml.Context
 
         internal class NameScopeInitializationCompleteSubscriber
         {
-            List<INameScopeDictionary> _nameScopeDictionaryList = new List<INameScopeDictionary>();
+            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
 
             public EventHandler Handler
             {
                 get; set;
             }
 
-            public List<INameScopeDictionary> NameScopeDictionaryList
+            public List<XAML3.INameScopeDictionary> NameScopeDictionaryList
             {
                 get { return _nameScopeDictionaryList; }
             }
@@ -1079,9 +1071,9 @@ namespace MS.Internal.Xaml.Context
 
         private class StackWalkNameResolver : IXamlNameResolver
         {
-            List<INameScopeDictionary> _nameScopeDictionaryList;
+            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
-            public StackWalkNameResolver(List<INameScopeDictionary> nameScopeDictionaryList)
+            public StackWalkNameResolver(List<XAML3.INameScopeDictionary> nameScopeDictionaryList)
             {
                 _nameScopeDictionaryList = nameScopeDictionaryList;
             }
@@ -1120,7 +1112,7 @@ namespace MS.Internal.Xaml.Context
             public object Resolve(string name)
             {
                 object value = null;
-                foreach (INameScopeDictionary nameScope in _nameScopeDictionaryList)
+                foreach (XAML3.INameScopeDictionary nameScope in _nameScopeDictionaryList)
                 {
                     object obj = nameScope.FindName(name);
                     if (obj != null)
@@ -1145,7 +1137,7 @@ namespace MS.Internal.Xaml.Context
             {
                 List<KeyValuePair<string, object>> allNamesAndValues = new List<KeyValuePair<string, object>>();
 
-                foreach (INameScopeDictionary nameScopeDictionary in _nameScopeDictionaryList)
+                foreach (XAML3.INameScopeDictionary nameScopeDictionary in _nameScopeDictionaryList)
                 {
                     foreach (KeyValuePair<string, object> nameValuePair in nameScopeDictionary)
                     {

@@ -28,7 +28,7 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException("allowedAccess");
             }
-            Init(false, new XamlAccessLevel[] { allowedAccess });
+            Init(false, new[] { allowedAccess });
         }
 
         public XamlLoadPermission(IEnumerable<XamlAccessLevel> allowedAccess)

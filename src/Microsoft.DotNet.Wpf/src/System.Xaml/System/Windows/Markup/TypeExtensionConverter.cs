@@ -46,7 +46,7 @@ namespace System.Windows.Markup
                 {
                     throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TypeExtension")); 
                 }
-                return new InstanceDescriptor(typeof(TypeExtension).GetConstructor(new Type[] { typeof(Type) }),
+                return new InstanceDescriptor(typeof(TypeExtension).GetConstructor(new[] { typeof(Type) }),
                                               new object[] { typeExtension.Type });
             }
             return base.ConvertTo(context, culture, value, destinationType);

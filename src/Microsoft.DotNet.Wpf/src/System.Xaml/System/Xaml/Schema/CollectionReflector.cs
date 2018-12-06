@@ -231,7 +231,7 @@ namespace System.Xaml.Schema
 
         internal static MethodInfo GetAddMethod(Type type, Type contentType)
         {
-            return GetMethod(type, KnownStrings.Add, new Type[] { contentType });
+            return GetMethod(type, KnownStrings.Add, new[] { contentType });
         }
 
         internal static MethodInfo GetEnumeratorMethod(Type type)
@@ -364,7 +364,7 @@ namespace System.Xaml.Schema
             {
                 if (s_typeOfObjectArray == null)
                 {
-                    s_typeOfObjectArray = new Type[] { typeof(object) };
+                    s_typeOfObjectArray = new[] { typeof(object) };
                 }
                 return s_typeOfObjectArray;
             }
@@ -376,7 +376,7 @@ namespace System.Xaml.Schema
             {
                 if (s_typeOfTwoObjectArray == null)
                 {
-                    s_typeOfTwoObjectArray = new Type[] { typeof(object), typeof(object) };
+                    s_typeOfTwoObjectArray = new[] { typeof(object), typeof(object) };
                 }
                 return s_typeOfTwoObjectArray;
             }

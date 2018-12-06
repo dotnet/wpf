@@ -349,7 +349,7 @@ namespace MS.Internal.Xaml.Runtime
             // If it's not present, we just return a wrapper around Delegate.CreateDelegate, which
             // will fail if we the _localAssembly doesn't have RestrictedMemberAccess permission
             MethodInfo helper = targetType.GetMethod(KnownStrings.CreateDelegateHelper,
-                helperFlags, null, new Type[] { typeof(Type), typeof(string) }, null);
+                helperFlags, null, new[] { typeof(Type), typeof(string) }, null);
             if (helper == null)
             {
                 if (_delegateCreatorWithoutHelper == null)
@@ -388,7 +388,7 @@ namespace MS.Internal.Xaml.Runtime
             ilGenerator.Emit(OpCodes.Ldarg_2);
             MethodInfo method = typeof(Delegate).GetMethod(KnownStrings.CreateDelegate,
                 BindingFlags.Static | BindingFlags.Public, null, 
-                new Type[] { typeof(Type), typeof(object), typeof(string) }, null);
+                new[] { typeof(Type), typeof(object), typeof(string) }, null);
             ilGenerator.Emit(OpCodes.Call, method);
             ilGenerator.Emit(OpCodes.Ret);
 
@@ -723,7 +723,7 @@ namespace MS.Internal.Xaml.Runtime
             if (s_InvokeMemberMethod == null)
             {
                 s_InvokeMemberMethod = typeof(Type).GetMethod(KnownStrings.InvokeMember,
-                    new Type[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(object), typeof(object[]) });
+                    new[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(object), typeof(object[]) });
             }
             ilGenerator.Emit(OpCodes.Callvirt, s_InvokeMemberMethod);
         }
@@ -738,7 +738,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 s_GetTypeFromHandleMethod = typeof(Type).GetMethod(
                     KnownStrings.GetTypeFromHandle, BindingFlags.Public | BindingFlags.Static,
-                    null, new Type[] { typeof(RuntimeTypeHandle) }, null);
+                    null, new[] { typeof(RuntimeTypeHandle) }, null);
             }
             ilGenerator.Emit(OpCodes.Call, s_GetTypeFromHandleMethod);
         }

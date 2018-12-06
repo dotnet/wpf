@@ -254,7 +254,7 @@ namespace System.Xaml.Schema
                 XamlDeferLoadAttribute tca = (XamlDeferLoadAttribute)attributes[0];
                 Type converterType = XamlNamespace.GetTypeFromFullTypeName(tca.LoaderTypeName);
                 Type contentType = XamlNamespace.GetTypeFromFullTypeName(tca.ContentTypeName);
-                return new Type[] { converterType, contentType };
+                return new[] { converterType, contentType };
             }
             try
             {

@@ -51,9 +51,9 @@ namespace System.Xaml
         private const string xml_Base = "base";
 
         private static ReadOnlyCollection<string> s_xamlNamespaces =
-            new ReadOnlyCollection<string>(new string[] { Xaml2006Namespace });
+            new ReadOnlyCollection<string>(new[] { Xaml2006Namespace });
         private static ReadOnlyCollection<string> s_xmlNamespaces =
-            new ReadOnlyCollection<string>(new string[] { Xml1998Namespace });
+            new ReadOnlyCollection<string>(new[] { Xml1998Namespace });
 
         private static Lazy<XamlSchemaContext> s_schemaContext =
             new Lazy<XamlSchemaContext>(GetSchemaContext);

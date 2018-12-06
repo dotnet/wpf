@@ -190,7 +190,7 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException("xamlNamespace");
             }
-            return new ReadOnlyCollection<string>(new string[] { xamlNamespace });
+            return new ReadOnlyCollection<string>(new[] { xamlNamespace });
         }
 
         private static ReadOnlyCollection<string> GetReadOnly(IEnumerable<string> xamlNamespaces)

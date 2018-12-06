@@ -57,7 +57,7 @@ namespace System.Xaml.Replacements
                         .GetConstructor(
                             BindingFlags.Public | BindingFlags.Instance, 
                             null, 
-                            new Type[] { typeof(string), typeof(UriKind) }, 
+                            new[] { typeof(string), typeof(UriKind) }, 
                             null);
                     return 
                         new InstanceDescriptor(

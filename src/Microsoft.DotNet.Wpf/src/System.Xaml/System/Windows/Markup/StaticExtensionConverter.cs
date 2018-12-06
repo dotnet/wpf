@@ -44,7 +44,7 @@ namespace System.Windows.Markup
                 StaticExtension staticExtension = value as StaticExtension;
                 if (staticExtension == null)
                     throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "StaticExtension")); 
-                return new InstanceDescriptor(typeof(StaticExtension).GetConstructor(new Type[] { typeof(string) }),
+                return new InstanceDescriptor(typeof(StaticExtension).GetConstructor(new[] { typeof(string) }),
                     new object[] { staticExtension.Member });
             }
             return base.ConvertTo(context, culture, value, destinationType);

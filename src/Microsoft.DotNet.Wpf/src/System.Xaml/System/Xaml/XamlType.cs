@@ -77,7 +77,7 @@ namespace System.Xaml
                 throw new ArgumentNullException("schemaContext");
             }
             _name = unknownTypeName;
-            _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
+            _namespaces = new ReadOnlyCollection<string>(new[] { unknownTypeNamespace });
             _schemaContext = schemaContext;
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
@@ -508,7 +508,7 @@ namespace System.Xaml
                 _namespaces = _schemaContext.GetXamlNamespaces(this);
                 if (_namespaces == null)
                 {
-                    _namespaces = new ReadOnlyCollection<string>(new string[] { string.Empty });
+                    _namespaces = new ReadOnlyCollection<string>(new[] { string.Empty });
                 }
             }
             return _namespaces;

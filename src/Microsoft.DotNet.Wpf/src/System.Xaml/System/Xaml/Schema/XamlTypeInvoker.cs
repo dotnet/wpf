@@ -120,7 +120,7 @@ namespace System.Xaml.Schema
             {
                 throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { item });
+            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
@@ -155,7 +155,7 @@ namespace System.Xaml.Schema
             {
                 throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { key, item });
+            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new[] { key, item });
         }
 
         public virtual object CreateInstance(object[] arguments)
@@ -336,7 +336,7 @@ namespace System.Xaml.Schema
         {
             private static ThreeValuedBool s_securityFailureWithCtorDelegate;
             private static ConstructorInfo s_actionCtor =
-                typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
+                typeof(Action<object>).GetConstructor(new[] { typeof(Object), typeof(IntPtr) });
 
 
             public static object CreateInstance(XamlTypeInvoker type)

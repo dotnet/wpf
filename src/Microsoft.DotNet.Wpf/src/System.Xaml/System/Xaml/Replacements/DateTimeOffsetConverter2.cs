@@ -55,7 +55,7 @@ namespace System.Windows.Markup
 
                 Type intType = typeof(int);
                 ConstructorInfo constructor = typeof(DateTimeOffset).GetConstructor(
-                    new Type[] {
+                    new[] {
                         intType,
                         intType,
                         intType,

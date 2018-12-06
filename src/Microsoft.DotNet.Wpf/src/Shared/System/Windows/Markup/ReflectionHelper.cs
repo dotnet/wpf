@@ -78,7 +78,7 @@ namespace System.Xaml
         {
             // ISSUE: we only parse the assembly name and type name
             // all other Type.GetType() type fragments (version, culture info, pub key token etc) are ignored!!!
-            string[] nameFrags = typeName.Split(new Char[] { ',' }, 2);
+            string[] nameFrags = typeName.Split(new[] { ',' }, 2);
             Type type = null;
             if (nameFrags.Length == 1)
             {

@@ -84,7 +84,7 @@ namespace System.Xaml.Schema
         {
             if (UnderlyingGetter.IsStatic)
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new object[] { instance });
+                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new[] { instance });
             }
             else
             {
@@ -115,11 +115,11 @@ namespace System.Xaml.Schema
         {
             if (UnderlyingSetter.IsStatic)
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new object[] { instance, value });
+                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new[] { instance, value });
             }
             else
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new object[] { value });
+                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new[] { value });
             }
         }
 
@@ -152,7 +152,7 @@ namespace System.Xaml.Schema
                 Type[] args;
                 if (_member.IsAttachable)
                 {
-                    args = new Type[] { _member.TargetType.UnderlyingType ?? typeof(object) };
+                    args = new[] { _member.TargetType.UnderlyingType ?? typeof(object) };
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace System.Xaml.Schema
                 bool result;
                 if (_member.IsAttachable)
                 {
-                    result = (bool)shouldSerializeMethod.Invoke(null, new object[] { instance });
+                    result = (bool)shouldSerializeMethod.Invoke(null, new[] { instance });
                 }
                 else
                 {

@@ -67,7 +67,7 @@ namespace System.Windows.Markup
         ///<param name="value">
         /// Object to add to the end of the array.
         ///</param>
-        public void AddChild(Object value)
+        public void AddChild(object value)
         {
             _arrayList.Add(value);
         }

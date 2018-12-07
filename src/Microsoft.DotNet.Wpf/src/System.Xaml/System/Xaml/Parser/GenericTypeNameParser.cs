@@ -43,14 +43,14 @@ namespace MS.Internal.Xaml.Parser
             int bracketIdx = text.IndexOf('[');
             if (parenIdx != -1 || bracketIdx != -1)
             {
-                error = String.Empty;
+                error = string.Empty;
                 return null;
             }
 
             string prefix;
             string simpleName;
 
-            error = String.Empty;
+            error = string.Empty;
             if (!XamlQualifiedName.Parse(text, out prefix, out simpleName))
             {
                 error = SR.Get(SRID.InvalidTypeString, text);
@@ -69,7 +69,7 @@ namespace MS.Internal.Xaml.Parser
 
         public XamlTypeName ParseName(string text, out string error)
         {
-            error = String.Empty;
+            error = string.Empty;
             _scanner = new GenericTypeNameScanner(text);
             _inputText = text;
 
@@ -103,7 +103,7 @@ namespace MS.Internal.Xaml.Parser
             _inputText = text;
             StartStack();
 
-            error = String.Empty;
+            error = string.Empty;
             try
             {
                 _scanner.Read();
@@ -167,7 +167,7 @@ namespace MS.Internal.Xaml.Parser
             // caller checks this.
             Debug.Assert(_scanner.Token == GenericTypeNameScannerToken.NAME);
 
-            string prefix = String.Empty;
+            string prefix = string.Empty;
             string name = _scanner.MultiCharTokenText;
             _scanner.Read();
 

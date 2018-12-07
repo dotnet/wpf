@@ -562,23 +562,23 @@ namespace MS.Internal.Xaml.Context
             get { return _stack.PreviousPreviousFrame.Member; }
         }
 
-        public Object CurrentInstance
+        public object CurrentInstance
         {
             get { return _stack.CurrentFrame.Instance; }
             set { _stack.CurrentFrame.Instance = value; }
         }
 
-        public Object ParentInstance
+        public object ParentInstance
         {
             get { return _stack.PreviousFrame.Instance; }
         }
 
-        public Object GrandParentInstance
+        public object GrandParentInstance
         {
             get { return (_stack.PreviousPreviousFrame != null) ? _stack.PreviousPreviousFrame.Instance : null; }
         }
 
-        public Object CurrentCollection
+        public object CurrentCollection
         {
             get { return _stack.CurrentFrame.Collection; }
             set { _stack.CurrentFrame.Collection = value; }

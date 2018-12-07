@@ -33,7 +33,7 @@ We have published only a small part of the WPF source. We will continue to publi
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
-We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase converage and help us validate PRs more easily.
+We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase coverage and help us validate PRs more easily.
 
 The Visual Studio WPF designer is not yet available. In short, we need to move to an out-of-proc model (relative to Visual Studio) with the designer. This work will be part of Visual Studio 2019.
 

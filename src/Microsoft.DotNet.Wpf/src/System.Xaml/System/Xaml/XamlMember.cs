@@ -28,7 +28,7 @@ namespace System.Xaml
         // Initialized in constructor
         private string _name;
         private XamlType _declaringType;
-        private MemberType _memberType;
+        private readonly MemberType _memberType;
 
         // Idempotent
         private ThreeValuedBool _isNameValid;
@@ -907,7 +907,7 @@ namespace System.Xaml
                 // is non-null; a derived class can use AttributeProvider to override attribute lookup
 
                 // Volatile read/write of CustomAttributeProvider to make sure that threads that see
-                // CusomAttributeProviderIsSet == true also see the write to _reflector.UnderlyingMember
+                // CustomAttributeProviderIsSet == true also see the write to _reflector.UnderlyingMember
                 if (!_reflector.CustomAttributeProviderIsSetVolatile)
                 {
                     ICustomAttributeProvider attrProvider = LookupCustomAttributeProvider();
@@ -1024,8 +1024,7 @@ namespace System.Xaml
             string result = null;
             if (AreAttributesAvailable)
             {
-                bool checkedInherited;
-                result = _reflector.GetAttributeString(typeof(ConstructorArgumentAttribute), out checkedInherited);
+                result = _reflector.GetAttributeString(typeof(ConstructorArgumentAttribute), out _);
             }
             return result;
         }

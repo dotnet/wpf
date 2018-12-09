@@ -17,10 +17,10 @@ namespace MS.Internal.Xaml.Parser
             if (owner != null)
             {
                 this.Owner = owner;
-                this._prefix = owner.Prefix ?? String.Empty;
+                this._prefix = owner.Prefix ?? string.Empty;
             }
             else
-                this._prefix = prefix ?? String.Empty;
+                this._prefix = prefix ?? string.Empty;
         }
 
         public readonly XamlName Owner;
@@ -41,7 +41,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             int start = 0;
-            string owner = String.Empty;
+            string owner = string.Empty;
 
             int dotIdx = dottedName.IndexOf('.');
             if (dotIdx != -1)
@@ -91,7 +91,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return IsDotted ?
                     Owner.Name :
-                    String.Empty;
+                    string.Empty;
             }
         }
 

@@ -75,6 +75,6 @@ namespace System.Windows.Markup
         }
 
 
-        private Type _contentWrapper;
+        private readonly Type _contentWrapper;
     }
 }

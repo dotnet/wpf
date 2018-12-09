@@ -32,7 +32,7 @@ namespace System.Xaml.Schema
     /// The dynamic assembly technique turns out to have perf implications - it loads
     /// parts of mscorlib and clr that are otherwise unneeded (for Reflection.Emit et al.),
     /// and requires JIT compilation of the resulting IL.  We don't need the elaborate
-    /// techinique in full-trust scenarios (a malicious full-trust app can already
+    /// technique in full-trust scenarios (a malicious full-trust app can already
     /// invoke internals just by calling reflection directly).  So in full-trust we
     /// use the old code.
     /// </SecurityNote>

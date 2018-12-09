@@ -25,9 +25,9 @@ namespace System.Xaml.Schema
 
         private volatile bool _instanceIsSet; // volatile for the same reason as valid flags in TypeReflector/MemberReflector
 
-        public string Name { get; private set; }
-        public Type ConverterType { get; private set; }
-        public XamlType TargetType { get; private set; }
+        public string Name { get; }
+        public Type ConverterType { get; }
+        public XamlType TargetType { get; }
 
         public XamlValueConverter(Type converterType, XamlType targetType)
             :this(converterType, targetType, null)
@@ -121,7 +121,7 @@ namespace System.Xaml.Schema
 
         public override int GetHashCode()
         {
-            int result = Name.GetHashCode();;
+            int result = Name.GetHashCode();
             if (ConverterType != null)
             {
                 result ^= ConverterType.GetHashCode();

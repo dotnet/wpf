@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 //  Contents:  Limited converter for string <--> System.Uri
-//
-//
 
 namespace System.Xaml.Replacements
 {
@@ -123,8 +118,7 @@ namespace System.Xaml.Replacements
             var uriString = value as string;
             if (uriString != null)
             {
-                Uri result = null;
-                return Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out result);
+                return Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out _);
             }
 
             return value is Uri;

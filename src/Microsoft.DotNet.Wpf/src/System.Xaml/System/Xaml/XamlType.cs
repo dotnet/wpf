@@ -26,9 +26,9 @@ namespace System.Xaml
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
-        string _name;
+        readonly string _name;
         XamlSchemaContext _schemaContext;
-        IList<XamlType> _typeArguments;
+        readonly IList<XamlType> _typeArguments;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
         TypeReflector _reflector;
@@ -42,7 +42,7 @@ namespace System.Xaml
         [SecurityCritical]
         private NullableReference<Type> _underlyingType;
         
-        // Lazy init: null until initiailized
+        // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
         ReadOnlyCollection<string> _namespaces;
         ThreeValuedBool _isNameValid;
@@ -1604,7 +1604,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(this.GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properites");
+                    Debug.Assert(this.GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
                 }
             }
             return new ReadOnlyCollection<XamlMember>(result);
@@ -1716,7 +1716,7 @@ namespace System.Xaml
         }
 
         // Walks up the inheritance hierarchy to find the string contents of an attribute.
-        // Returns true if the entire type hierarchy was walked succesfully, false if not
+        // Returns true if the entire type hierarchy was walked successfully, false if not
         //   (e.g. because one of the base types doesn't have an underlying CLR type).
         // Result is null if attribute wasn't found, string.Empty if attribute string was null or empty.
         //

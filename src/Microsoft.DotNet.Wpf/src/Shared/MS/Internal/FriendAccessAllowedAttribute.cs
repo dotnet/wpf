@@ -5,7 +5,6 @@
 // Description: Implementation of a FriendAccessAllowedAttribute attribute that is used to mark internal metadata
 //              that is allowed to be accessed from friend assemblies.
 
-
 using System;
 
 #if WINDOWS_BASE

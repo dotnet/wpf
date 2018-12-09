@@ -878,8 +878,7 @@ namespace System.Xaml
                         else
                         {
                             // ConcurrentDictionary returns a copy of its keys, so it's safe to delete while enumerating
-                            XmlNsInfo value;
-                            _xmlnsInfoForDynamicAssemblies.TryRemove(weakRefKey, out value);
+                            _xmlnsInfoForDynamicAssemblies.TryRemove(weakRefKey, out _);
                         }
                     }
                 }

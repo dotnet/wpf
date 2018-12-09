@@ -140,7 +140,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (property == null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));;
+                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));
                 }
             }
 
@@ -282,8 +282,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IXamlNameResolver.Resolve(string name)
         {
-            bool isFullyInitialized;
-            return _xamlContext.ResolveName(name, out isFullyInitialized);
+            return _xamlContext.ResolveName(name, out _);
         }
 
         object IXamlNameResolver.Resolve(string name, out bool isFullyInitialized)

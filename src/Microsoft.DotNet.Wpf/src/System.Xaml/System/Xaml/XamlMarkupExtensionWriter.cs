@@ -92,8 +92,7 @@ namespace System.Xaml
 
         string LookupPrefix(XamlType type)
         {
-            string chosenNamespace;
-            string prefix = this.xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
+            string prefix = this.xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {
@@ -101,7 +100,7 @@ namespace System.Xaml
                 {
                     // the prefix is not found and curly syntax has no way of defining a prefix
                     failed = true;
-                    return String.Empty; // what we return here is not important, since Failed has set to be true
+                    return string.Empty; // what we return here is not important, since Failed has set to be true
                 }
             }
 
@@ -110,8 +109,7 @@ namespace System.Xaml
 
         string LookupPrefix(XamlMember property)
         {
-            string chosenNamespace;
-            string prefix = this.xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out chosenNamespace);
+            string prefix = this.xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {
@@ -119,7 +117,7 @@ namespace System.Xaml
                 {
                     failed = true;
                     // the prefix is not found and curly syntax has no way of defining a prefix
-                    return String.Empty; // what we return here is not important, since Failed has set to be true
+                    return string.Empty; // what we return here is not important, since Failed has set to be true
                 }
             }
 
@@ -283,7 +281,7 @@ namespace System.Xaml
 
             public void WriteString(XamlMarkupExtensionWriter writer, string value)
             {
-                if (ContainCharacterToEscape(value) || value == String.Empty)
+                if (ContainCharacterToEscape(value) || value == string.Empty)
                 {
                     value = FormatStringInCorrectSyntax(value);
                 }

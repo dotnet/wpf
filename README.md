@@ -1,6 +1,6 @@
-# Windows Presentation Framework (WPF)
+# Windows Presentation Foundation (WPF)
 
-[![Build Status](https://dnceng.visualstudio.com/internal/_apis/build/status/dotnet.wpf)](https://dnceng.visualstudio.com/internal/_build/latest?definitionId=234)
+[![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)
 
 Windows Presentation Foundation (WPF) is a UI framework for building Windows desktop applications. WPF supports a broad set of application development features, including an application model, resources, controls, graphics, layout, data binding and documents. WPF uses the Extensible Application Markup Language (XAML) to provide a declarative model for application programming.
 
@@ -33,7 +33,7 @@ We have published only a small part of the WPF source. We will continue to publi
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
-We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase converage and help us validate PRs more easily.
+We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase coverage and help us validate PRs more easily.
 
 The Visual Studio WPF designer is not yet available. In short, we need to move to an out-of-proc model (relative to Visual Studio) with the designer. This work will be part of Visual Studio 2019.
 
@@ -41,17 +41,21 @@ The Visual Studio WPF designer is not yet available. In short, we need to move t
 
 Some of the best ways to contribute are to try things out, file bugs, join in design conversations, and fix issues.
 
-* This repo defines [contributing guidelines](Documentation/contributing.md) and also follows the more general[.NET Core contributing guide](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md).
+* This repo defines [contributing guidelines](Documentation/contributing.md) and also follows the more general [.NET Core contributing guide](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md).
 * If you have a question or have found a bug, [file an issue](https://github.com/dotnet/wpf/issues/new).
 * Use [daily builds](Documentation/getting-started.md#installation) if you want to contribute and stay up to date with the team.
+
+### .NET Framework issues
+
+Issues with .NET Framework, including WPF, should be filed on [VS developer community](https://developercommunity.visualstudio.com/spaces/61/index.html), 
+or [Product Support](https://support.microsoft.com/en-us/contactus?ws=support).
+They should not be filed on this repo.
 
 ## Relationship to .NET Framework
 
 This code base is a fork of the WPF code in the .NET Framework. We intend to release .NET Core 3.0 with WPF having parity with the .NET Framework version. Over time, the two implementations may diverge.
 
 The [Update on .NET Core 3.0 and .NET Framework 4.8](https://blogs.msdn.microsoft.com/dotnet/2018/10/04/update-on-net-core-3-0-and-net-framework-4-8/) provides a good description of the forward-looking differences between .NET Core and .NET Framework.
-
-Issues with .NET Framework, including WPF, should be filed on [VS developer community](https://developercommunity.visualstudio.com/spaces/61/index.html), or [Product Support](https://support.microsoft.com/en-us/contactus?ws=support). They should not be filed on this repo.
 
 ## Code of Conduct
 

@@ -1,7 +1,7 @@
-//------------------------------------------------------------------------------
-//  Microsoft Avalon
-//  Copyright (c) Microsoft Corporation, 2004
-//
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 //  File: SafeSystemMetrics.cs
 //  This class is copied from the system metrics class in frameworks. The
 //  reason it exists is to consolidate all system metric calls through one layer
@@ -9,7 +9,7 @@
 //  mertrics on a need basis. The caching code is removed since the original calls 
 //  that were moved here do not rely on caching. If there is a percieved perf. problem
 //  we can work on enabling this.
-//------------------------------------------------------------------------------
+
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;

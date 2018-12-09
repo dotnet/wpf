@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
 using MS.Internal.Xaml.Runtime;
 
 namespace System.Xaml
@@ -50,18 +51,12 @@ namespace System.Xaml
 
         public XamlObjectReader(object instance, XamlSchemaContext schemaContext, XamlObjectReaderSettings settings)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-
-            this.schemaContext = schemaContext;
+            this.schemaContext = schemaContext ?? throw new ArgumentNullException("schemaContext");
             this.settings = settings ?? new XamlObjectReaderSettings();
             this.nodes = new Stack<MarkupInfo>();
             this.currentXamlNode = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
 
-            var context = new SerializerContext(schemaContext, this.settings);
-            context.RootType = instance == null ? null : instance.GetType();
+            var context = new SerializerContext(schemaContext, this.settings) { RootType = instance?.GetType() };
 
             var rootObject = ObjectMarkupInfo.ForObject(instance, context, null, true);
 
@@ -190,11 +185,7 @@ namespace System.Xaml
         {
             get
             {
-                if (this.currentXamlNode.NodeType == XamlNodeType.StartObject)
-                {
-                    return this.currentInstance;
-                }
-                return null;
+                return this.currentXamlNode.NodeType == XamlNodeType.StartObject ? this.currentInstance : null;
             }
         }
 
@@ -307,8 +298,7 @@ namespace System.Xaml
                     {
                         foreach (var child in this.children)
                         {
-                            var objectInfo = child as ObjectMarkupInfo;
-                            if (objectInfo != null && !objectInfo.IsAttributableMarkupExtension)
+                            if (child is ObjectMarkupInfo objectInfo && !objectInfo.IsAttributableMarkupExtension)
                             {
                                 Debug.Assert(false); //should never reach here
                                 return false;
@@ -803,7 +793,7 @@ namespace System.Xaml
                         }
                     }
 
-                    if (unwrappedItemInfo == null || !(unwrappedItemInfo is ValueMarkupInfo))
+                    if (!(unwrappedItemInfo is ValueMarkupInfo))
                     {
                         isPreviousItemValue = false;
                     }
@@ -899,7 +889,7 @@ namespace System.Xaml
                         context.Instance = null;
 
                         // duplicate 3.0 behavior by replacing null value with String.Empty
-                        valueInfo = new ValueMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.Value, propertyValue ?? String.Empty) };
+                        valueInfo = new ValueMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.Value, propertyValue ?? string.Empty) };
                     }
                     else if (propertyValue is string)
                     {
@@ -965,8 +955,8 @@ namespace System.Xaml
                     // that read-only properties must be attributed with DesignerSerializationVisibility.Content
                     // to visible. Unless RequireExplicitContentVisibility is set to true, we don't require that
                     // for readonly collection/dictionary/xdata.
-                    return context.Settings.RequireExplicitContentVisibility ?
-                        GetSerializationVisibility(property) == DesignerSerializationVisibility.Content : true;
+                    return !context.Settings.RequireExplicitContentVisibility || 
+                           GetSerializationVisibility(property) == DesignerSerializationVisibility.Content;
                 }
             }
         }
@@ -1355,7 +1345,7 @@ namespace System.Xaml
                         TypeConverter converter = TypeConverterExtensions.GetConverterInstance(paramXamlType.TypeConverter);
 
                         ObjectMarkupInfo objectInfo = null;
-                        Object meObject = argument;
+                        object meObject = argument;
 
                         context.Instance = argument;
                         if (converter != null && valueSerializer != null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, argument))
@@ -1520,7 +1510,7 @@ namespace System.Xaml
                     if (property == xamlType.GetAliasedProperty(XamlLanguage.Name))
                     {
                         // We have special handling of RuntimeNameProperty where we skip it if it is Null
-                        if (IsNull(propertyInfo, context) || IsEmptyString(propertyInfo))
+                        if (IsNull(propertyInfo) || IsEmptyString(propertyInfo))
                         {
                             continue;
                         }
@@ -1994,10 +1984,10 @@ namespace System.Xaml
 
                     objectInfo = ForObject(value, context);
                 }
-                else if (value is Type)
+                else if (value is Type type)
                 {
                     context.Instance = null;
-                    objectInfo = ForObject(new TypeExtension((Type)value), context);
+                    objectInfo = ForObject(new TypeExtension(type), context);
                 }
                 else if (converter != null && context.CanRoundTripString(converter))
                 {
@@ -2090,7 +2080,7 @@ namespace System.Xaml
                 };
 
                 // we want to treat all null values returned by TCs as String.Empty
-                value = value ?? String.Empty;
+                value = value ?? string.Empty;
 
                 objectInfo.Properties.Add(new MemberMarkupInfo()
                 {
@@ -2107,28 +2097,20 @@ namespace System.Xaml
             {
                 if (propertyInfo.Children.Count == 1)
                 {
-                    var valueInfo = propertyInfo.Children[0] as ValueMarkupInfo;
-                    if (valueInfo != null)
+                    if (propertyInfo.Children[0] is ValueMarkupInfo valueInfo)
                     {
-                        return String.Equals(valueInfo.XamlNode.Value, String.Empty);
+                        return string.Equals(valueInfo.XamlNode.Value, string.Empty);
                     }
                 }
 
                 return false;
             }
 
-            static bool IsNull(MemberMarkupInfo propertyInfo, SerializerContext context)
+            static bool IsNull(MemberMarkupInfo propertyInfo)
             {
-                if (propertyInfo.Children.Count == 1)
-                {
-                    var objectInfo = propertyInfo.Children[0] as ObjectMarkupInfo;
-                    if (objectInfo != null)
-                    {
-                        return objectInfo.XamlNode.XamlType == XamlLanguage.Null;
-                    }
-                }
-
-                return false;
+                return propertyInfo.Children.Count == 1 && 
+                       propertyInfo.Children[0] is ObjectMarkupInfo objectInfo &&
+                       objectInfo.XamlNode.XamlType == XamlLanguage.Null;
             }
 
             static bool PropertyUsedInMethodSignature(XamlMember property, ParameterInfo[] methodParameters)
@@ -2137,14 +2119,9 @@ namespace System.Xaml
                 {
                     if (!string.IsNullOrEmpty(GetConstructorArgument(property)))
                     {
-                        foreach (var parameter in methodParameters)
-                        {
-                            if (parameter.Name == GetConstructorArgument(property) &&
-                                property.Type.UnderlyingType == parameter.ParameterType)
-                            {
-                                return true;
-                            }
-                        }
+                        return methodParameters.Any(parameter => 
+                            parameter.Name == GetConstructorArgument(property) && 
+                            parameter.ParameterType == property.Type.UnderlyingType);
                     }
                 }
 
@@ -2159,13 +2136,9 @@ namespace System.Xaml
                 if (propertyInfo.Children.Count == 1)
                 {
                     var valueInfo = propertyInfo.Children[0] as ValueMarkupInfo;
-                    if (valueInfo != null)
+                    if (valueInfo?.XamlNode.Value is string name)
                     {
-                        var name = valueInfo.XamlNode.Value as string;
-                        if (name != null)
-                        {
-                            return name;
-                        }
+                        return name;
                     }
                 }
                 XamlMember property = propertyInfo.XamlNode.Member;
@@ -2394,7 +2367,7 @@ namespace System.Xaml
         //            // See comment in ReferenceSerializationInfo.Write()
         //            //
         //            // We are only attributable if we will not maybe be the one that is choosen to be
-        //            // writen out as a 'reference', note that this means that for sibling properties
+        //            // written out as a 'reference', note that this means that for sibling properties
         //            // which both refer to the same object one will be written as a reference in
         //            // element form.
         //            //
@@ -2546,8 +2519,8 @@ namespace System.Xaml
                 string ns = GetXamlType(obj.GetType()).PreferredXamlNamespace;
                 if (ns != XamlLanguage.Xaml2006Namespace)
                 {
-                    this.namespaceToPrefixMap.Add(ns, String.Empty);
-                    this.prefixToNamespaceMap.Add(String.Empty, ns);
+                    this.namespaceToPrefixMap.Add(ns, string.Empty);
+                    this.prefixToNamespaceMap.Add(string.Empty, ns);
                 }
             }
 
@@ -2633,9 +2606,9 @@ namespace System.Xaml
 
                 string basePrefix = SchemaContext.GetPreferredPrefix(ns);
 
-                if (basePrefix != XamlLanguage.PreferredPrefix && !namespaceToPrefixMap.ContainsValue(String.Empty))
+                if (basePrefix != XamlLanguage.PreferredPrefix && !namespaceToPrefixMap.ContainsValue(string.Empty))
                 {
-                    prefix = String.Empty;
+                    prefix = string.Empty;
                 }
 
                 if (prefix == null)
@@ -2650,7 +2623,7 @@ namespace System.Xaml
                         prefix = basePrefix + index.ToString(TypeConverterHelper.InvariantEnglishUS);
                     }
 
-                    if (prefix != String.Empty)
+                    if (prefix != string.Empty)
                     {
                         XmlConvert.VerifyNCName(prefix);
                     }

@@ -132,9 +132,8 @@ namespace MS.Internal.Xaml.Runtime
 
         protected MethodBase BindToMethod(BindingFlags bindingFlags, MethodBase[] candidates, object[] args)
         {
-            object state;
             return Type.DefaultBinder.BindToMethod(
-                bindingFlags, candidates, ref args, null, null, null, out state);
+                bindingFlags, candidates, ref args, null, null, null, out _);
         }
 
         //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
@@ -232,7 +231,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        public override object GetValue(Object obj, XamlMember property, bool failIfWriteOnly)
+        public override object GetValue(object obj, XamlMember property, bool failIfWriteOnly)
         {
             object value;
             try
@@ -273,7 +272,7 @@ namespace MS.Internal.Xaml.Runtime
             return member.Invoker.GetValue(obj);
         }
 
-        public override void SetValue(Object inst, XamlMember property, object value)
+        public override void SetValue(object inst, XamlMember property, object value)
         {
             try
             {
@@ -520,7 +519,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        // SetXmlInstance:  recieves the value as "object" so the calling code doesn't
+        // SetXmlInstance: receives the value as "object" so the calling code doesn't
         // need to load System.Xml.dll types to make the call.
         public override void SetXmlInstance(object inst, XamlMember property, XAML3.XData xData)
         {

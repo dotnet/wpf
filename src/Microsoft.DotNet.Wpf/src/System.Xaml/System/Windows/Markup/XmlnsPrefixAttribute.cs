@@ -11,8 +11,6 @@
 //  Created:   04/28/2005 Microsoft
 //
 
-using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -49,49 +47,19 @@ namespace System.Windows.Markup
         /// <param name="prefix">recommended prefix</param>
         public XmlnsPrefixAttribute(string xmlNamespace, string prefix)
         {
-            // Validate Input Arguments
-            if (xmlNamespace == null)
-            {
-                throw new ArgumentNullException("xmlNamespace");
-            }
-
-            if (prefix == null)
-            {
-                throw new ArgumentNullException("prefix");
-            }
-
-            _xmlNamespace = xmlNamespace;
-            _prefix= prefix;
+            XmlNamespace = xmlNamespace ?? throw new ArgumentNullException(nameof(xmlNamespace));
+            Prefix= prefix ?? throw new ArgumentNullException(nameof(prefix));
         }
-
-        #region public properties
 
         /// <summary>
         /// XML Namespace
         /// </summary>
-        public string XmlNamespace 
-        {
-            get { return _xmlNamespace; }
-        }
+        public string XmlNamespace { get; }
 
         /// <summary>
         /// New Xml Namespace
         /// </summary>
-        public string Prefix
-        {
-            get { return _prefix; }
-        }
-
-        #endregion public properties
-
-  
-        #region Private Fields
-
-        private string _xmlNamespace;
-        private string _prefix;
-
-        #endregion Private Fields
-
+        public string Prefix { get; }
    }
 }
 

@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
-//
 
 using System;
 using System.Reflection;
@@ -28,7 +23,7 @@ namespace System.Windows.Markup
 {
 
     /// <summary>
-    /// Class that provides fucntionality to obtain a TypeConverter from a property or the
+    /// Class that provides functionality to obtain a TypeConverter from a property or the
     /// type of the property, based on logic similar to TypeDescriptor.GetConverter.
     /// </summary>
     internal static class TypeConverterHelper

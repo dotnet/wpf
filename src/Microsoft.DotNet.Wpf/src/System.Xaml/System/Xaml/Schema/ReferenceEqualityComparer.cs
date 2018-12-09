@@ -11,7 +11,7 @@ namespace System.Xaml.Schema
 {
     internal class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
     {
-        internal static ReferenceEqualityComparer<T> Singleton = new ReferenceEqualityComparer<T>();
+        internal static readonly ReferenceEqualityComparer<T> Singleton = new ReferenceEqualityComparer<T>();
 
         public override bool Equals(T x, T y)
         {

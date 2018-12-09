@@ -116,8 +116,8 @@ namespace MS.Internal.Xaml.Parser
 
         internal bool CheckIsXmlNamespaceDefinition(out string definingPrefix, out string uri)
         {
-            uri = String.Empty;
-            definingPrefix = String.Empty;
+            uri = string.Empty;
+            definingPrefix = string.Empty;
 
             // case where:  xmlns:pre="ValueUri"
             if (KS.Eq(Name.Prefix, KnownStrings.XmlNsPrefix))
@@ -132,7 +132,7 @@ namespace MS.Internal.Xaml.Parser
             if (String.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
             {
                 uri = Value;
-                definingPrefix = String.Empty;
+                definingPrefix = string.Empty;
                 return true;
             }
             return false;

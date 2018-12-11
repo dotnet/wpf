@@ -47,9 +47,11 @@ namespace System.Windows.Markup
         /// Override of Attribute.TypeId
         /// </summary>
         public override object TypeId
+        {
             // this allows multiple DependsOn attributes to show up in the
             // PropertyDescriptor.Attributes collection.
-            => this;
+            get => this;
+        }
 
         /// <summary>
         /// The name of the property that is declared to depend on

@@ -46,13 +46,13 @@ namespace System.Windows.Markup
         /// <summary>
         /// Override to ensure AttributeCollection perserves all instances
         /// </summary>
-        public override object TypeId=> this; 
+        public override object TypeId => this;
 
         /// <summary>
         ///     Overrides Object.Equals to implement correct equality semantics for this
         ///     attribute.
         /// </summary>
-        public override bool Equals(object obj) 
+        public override bool Equals(object obj)
         {
             var other = obj as ContentWrapperAttribute;
             if (other == null) return false;
@@ -62,7 +62,7 @@ namespace System.Windows.Markup
         /// <summary>
         ///     Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
             return ContentWrapper.GetHashCode();
         }

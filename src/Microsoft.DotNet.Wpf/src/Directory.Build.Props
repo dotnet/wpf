@@ -7,4 +7,11 @@
     <WpfSharedDir>$(MSBuildThisFileDirectory)Shared\</WpfSharedDir>
     <WpfCommonDir>$(MSBuildThisFileDirectory)Common\</WpfCommonDir>
   </PropertyGroup>
+
+  <!-- Localization -->
+  <PropertyGroup>
+    <EnableXlfLocalization>true</EnableXlfLocalization>
+  </PropertyGroup>
+
+  <Import Project="Localization.targets"/>
 </Project>

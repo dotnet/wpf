@@ -6,9 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-#if SYSTEM_XAML
-
-#else
+#if !SYSTEM_XAML
 using MS.Internal.WindowsBase;
 #endif
 

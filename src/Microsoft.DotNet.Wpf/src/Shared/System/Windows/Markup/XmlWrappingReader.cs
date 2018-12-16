@@ -51,7 +51,7 @@ namespace System.Windows.Markup
         public override XmlSpace XmlSpace           { get { return _reader.XmlSpace; } }
         public override string XmlLang              { get { return _reader.XmlLang; } }
         public override IXmlSchemaInfo SchemaInfo   { get { return _reader.SchemaInfo; } }
-        public override Type ValueType       { get { return _reader.ValueType; } }
+        public override Type ValueType              { get { return _reader.ValueType; } }
         public override int AttributeCount          { get { return _reader.AttributeCount; } }
         public override string this [ int i ]       { get { return _reader[i]; } }
         public override string this [ string name ] { get { return _reader[ name ];}}

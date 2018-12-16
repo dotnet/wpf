@@ -8,9 +8,6 @@ using System.Globalization;
 using System.Text;
 using System.Xml;
 
-#if SYSTEM_XAML
-#endif
-
 #if PBTCOMPILER
 using MS.Utility;
 namespace MS.Internal.Markup

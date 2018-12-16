@@ -150,7 +150,7 @@ namespace System.Xaml
             return result;
         }
 
-        protected virtual void OnAfterBeginInit(Object value)
+        protected virtual void OnAfterBeginInit(object value)
         {
             if (_afterBeginInitHandler != null)
             {
@@ -164,7 +164,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnBeforeProperties(Object value)
+        protected virtual void OnBeforeProperties(object value)
         {
             if (_beforePropertiesHandler != null)
             {
@@ -172,7 +172,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnAfterProperties(Object value)
+        protected virtual void OnAfterProperties(object value)
         {
             if (_afterPropertiesHandler != null)
             {
@@ -180,7 +180,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnAfterEndInit(Object value)
+        protected virtual void OnAfterEndInit(object value)
         {
             if (_afterEndInitHandler != null)
             {
@@ -1393,7 +1393,7 @@ namespace System.Xaml
                             eventArgs.CurrentType = declaringType;
 
                             declaringType.SetTypeConverterHandler(ctx.ParentInstance, eventArgs);
-                            if (eventArgs.Handled == true)
+                            if (eventArgs.Handled)
                             {
                                 return false;
                             }
@@ -1714,7 +1714,7 @@ namespace System.Xaml
                         var eventArgs = new XAML3.XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
                         eventArgs.CurrentType = declaringType;
                         declaringType.SetMarkupExtensionHandler(parentInstance, eventArgs);
-                        if (eventArgs.Handled == true)
+                        if (eventArgs.Handled)
                         {
                             return true;
                         }
@@ -2193,7 +2193,7 @@ namespace System.Xaml
             Runtime.SetConnectionId(rootInstance, connectionId, instance);
         }
 
-        private void SetValue(Object inst, XamlMember property, object value)
+        private void SetValue(object inst, XamlMember property, object value)
         {
 #if !TARGETTING35SP1
             if (!property.IsDirective)

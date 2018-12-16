@@ -47,14 +47,14 @@ namespace MS.Internal.Xaml.Runtime
                                                 XamlValueConverter<XamlDeferringLoader> deferringLoader,
                                                 object value);
 
-        public object GetValue(Object obj, XamlMember property)
+        public object GetValue(object obj, XamlMember property)
         {
             return GetValue(obj, property, true);
         }
 
-        abstract public object GetValue(Object obj, XamlMember property, bool failIfWriteOnly);
+        abstract public object GetValue(object obj, XamlMember property, bool failIfWriteOnly);
 
-        abstract public void SetValue(Object obj, XamlMember property, object value);
+        abstract public void SetValue(object obj, XamlMember property, object value);
 
         abstract public void SetUriBase(XamlType xamlType, object obj, Uri baseUri);
 

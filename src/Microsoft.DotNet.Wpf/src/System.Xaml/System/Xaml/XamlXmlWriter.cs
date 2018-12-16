@@ -55,7 +55,7 @@ namespace System.Xaml
                 throw new ArgumentNullException("stream");
             }
 
-            if (settings != null && settings.CloseOutput == true)
+            if (settings != null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -77,7 +77,7 @@ namespace System.Xaml
                 throw new ArgumentNullException("textWriter");
             }
 
-            if (settings != null && settings.CloseOutput == true)
+            if (settings != null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(textWriter, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -312,7 +312,7 @@ namespace System.Xaml
 
         internal static bool HasSignificantWhitespace(string s)
         {
-            if (s == String.Empty)
+            if (s == string.Empty)
             {
                 return false;
             }
@@ -482,9 +482,9 @@ namespace System.Xaml
         string DefinePrefix(string ns)
         {
             // default namespace takes precedance if it has not been used, or has been used for the same namespace
-            if (!IsPrefixEverUsedForAnotherNamespace(String.Empty, ns))
+            if (!IsPrefixEverUsedForAnotherNamespace(string.Empty, ns))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             string basePrefix = SchemaContext.GetPreferredPrefix(ns);
@@ -499,7 +499,7 @@ namespace System.Xaml
                 prefix = basePrefix + index.ToString(TypeConverterHelper.InvariantEnglishUS);
             }
 
-            if (prefix != String.Empty)
+            if (prefix != string.Empty)
             {
                 XmlConvert.VerifyNCName(prefix);
             }
@@ -649,7 +649,7 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = (prefix == String.Empty) ? typeName : prefix + ":" + typeName;
+            string typeNamePrefixed = (prefix == string.Empty) ? typeName : prefix + ":" + typeName;
 
             // save the subscript
             string subscript;
@@ -891,7 +891,7 @@ namespace System.Xaml
 
             static void WriteStartAttribute(XamlXmlWriter writer, string prefix, string local, string ns)
             {
-                if (prefix == String.Empty)
+                if (prefix == string.Empty)
                 {
                     writer.output.WriteStartAttribute(local);
                 }

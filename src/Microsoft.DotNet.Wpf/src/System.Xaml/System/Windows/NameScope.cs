@@ -33,7 +33,7 @@ namespace System.Xaml
             if (scopedElement == null)
                 throw new ArgumentNullException("scopedElement");
 
-            if (name == String.Empty)
+            if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
@@ -78,7 +78,7 @@ namespace System.Xaml
             if (name == null)
                 throw new ArgumentNullException("name");
 
-            if (name == String.Empty)
+            if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (_nameMap != null && _nameMap[name] != null)
@@ -104,7 +104,7 @@ namespace System.Xaml
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || name == null || name == String.Empty)
+            if (_nameMap == null || name == null || name == string.Empty)
                 return null;
 
             return _nameMap[name];

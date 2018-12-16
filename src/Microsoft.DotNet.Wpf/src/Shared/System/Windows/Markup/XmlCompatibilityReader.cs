@@ -637,12 +637,12 @@ namespace System.Windows.Markup
             get
             {
                 // Look for xmlns
-                if (String.Equals(XmlnsDeclaration, Reader.LocalName, StringComparison.Ordinal))
+                if (string.Equals(XmlnsDeclaration, Reader.LocalName, StringComparison.Ordinal))
                 {
-                    return LookupNamespace(String.Empty);
+                    return LookupNamespace(string.Empty);
                 }
                 // Look for xmlns: ...
-                else if (String.Equals(XmlnsDeclaration, Reader.Prefix, StringComparison.Ordinal))
+                else if (string.Equals(XmlnsDeclaration, Reader.Prefix, StringComparison.Ordinal))
                 {
                     return LookupNamespace(Reader.LocalName);
                 }

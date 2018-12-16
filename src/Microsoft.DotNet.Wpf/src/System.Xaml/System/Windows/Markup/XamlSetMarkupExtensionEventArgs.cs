@@ -19,14 +19,14 @@ namespace System.Windows.Markup
         public IServiceProvider ServiceProvider { get; private set; }
 
         internal XamlSetMarkupExtensionEventArgs(XamlMember member,
-            MarkupExtension value, IServiceProvider serviceProvider, Object targetObject)
+            MarkupExtension value, IServiceProvider serviceProvider, object targetObject)
             : this(member, value, serviceProvider)
         {
             TargetObject = targetObject;
         }
 
         internal XamlType CurrentType { get; set; }
-        internal Object TargetObject { get; private set; }
+        internal object TargetObject { get; private set; }
 
         public override void CallBase()
         {

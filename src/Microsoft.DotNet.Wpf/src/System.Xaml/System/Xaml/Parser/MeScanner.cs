@@ -138,7 +138,7 @@ namespace MS.Internal.Xaml.Parser
             bool isQuotedMarkupExtension = false;
             bool readString = false;
 
-            _tokenText = String.Empty;
+            _tokenText = string.Empty;
             _tokenXamlType = null;
             _tokenProperty = null;
             _tokenNamespace = null;

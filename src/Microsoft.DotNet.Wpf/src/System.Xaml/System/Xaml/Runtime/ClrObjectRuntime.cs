@@ -227,7 +227,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        public override object GetValue(Object obj, XamlMember property, bool failIfWriteOnly)
+        public override object GetValue(object obj, XamlMember property, bool failIfWriteOnly)
         {
             object value;
             try
@@ -268,7 +268,7 @@ namespace MS.Internal.Xaml.Runtime
             return member.Invoker.GetValue(obj);
         }
 
-        public override void SetValue(Object inst, XamlMember property, object value)
+        public override void SetValue(object inst, XamlMember property, object value)
         {
             try
             {

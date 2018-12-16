@@ -99,7 +99,7 @@ namespace System.Xaml
                 {
                     // the prefix is not found and curly syntax has no way of defining a prefix
                     failed = true;
-                    return String.Empty; // what we return here is not important, since Failed has set to be true
+                    return string.Empty; // what we return here is not important, since Failed has set to be true
                 }
             }
 
@@ -116,7 +116,7 @@ namespace System.Xaml
                 {
                     failed = true;
                     // the prefix is not found and curly syntax has no way of defining a prefix
-                    return String.Empty; // what we return here is not important, since Failed has set to be true
+                    return string.Empty; // what we return here is not important, since Failed has set to be true
                 }
             }
 
@@ -280,7 +280,7 @@ namespace System.Xaml
 
             public void WriteString(XamlMarkupExtensionWriter writer, string value)
             {
-                if (ContainCharacterToEscape(value) || value == String.Empty)
+                if (ContainCharacterToEscape(value) || value == string.Empty)
                 {
                     value = FormatStringInCorrectSyntax(value);
                 }

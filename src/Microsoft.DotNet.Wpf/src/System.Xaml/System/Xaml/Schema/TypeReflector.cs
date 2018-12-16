@@ -1100,7 +1100,7 @@ namespace System.Xaml.Schema
                 get { return _isComplete; }
                 set
                 {
-                    Debug.Assert(value == true);
+                    Debug.Assert(value);
                     // This instance is always held in a private field, safe to lock on
                     lock (this)
                     {

@@ -223,7 +223,7 @@ namespace MS.Internal.Xaml
         {
             string xmlNs = _context.FindNamespaceByPrefix(KnownStrings.XmlPrefix);
             XamlSchemaContext schemaContext = _context.SchemaContext;
-            if (_settings.XmlSpacePreserve == true)
+            if (_settings.XmlSpacePreserve)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }

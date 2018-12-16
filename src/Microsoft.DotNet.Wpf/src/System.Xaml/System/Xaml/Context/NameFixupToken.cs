@@ -22,12 +22,12 @@ namespace MS.Internal.Xaml.Context
 
     internal class FixupTargetKeyHolder
     {
-        public FixupTargetKeyHolder(Object key)
+        public FixupTargetKeyHolder(object key)
         {
             Key = key;
         }
 
-        public Object Key { get; set; }
+        public object Key { get; set; }
     }
 
     internal class FixupTarget : IAddLineInfo
@@ -42,7 +42,7 @@ namespace MS.Internal.Xaml.Context
         /// <summary>
         /// The Instance the Property is on.
         /// </summary>
-        public Object Instance { get; set; }
+        public object Instance { get; set; }
 
         /// <summary>
         /// The x:Name, if any, of Instance. May not be set yet if InstanceIsOnTheStack is still true.

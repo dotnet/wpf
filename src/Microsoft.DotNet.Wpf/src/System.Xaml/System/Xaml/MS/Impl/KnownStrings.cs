@@ -73,7 +73,7 @@ namespace System.Xaml.MS.Impl
         // Standard String Compare operation.
         public static bool Eq(String a, String b)
         {
-            return String.Equals(a, b, StringComparison.Ordinal);
+            return string.Equals(a, b, StringComparison.Ordinal);
         }
 
         // Standard String Compare operation.  (ignore case)

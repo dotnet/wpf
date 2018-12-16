@@ -553,7 +553,7 @@ namespace MS.Internal.Xaml.Parser
                         yield return Logic_LineInfo();
                     }
 
-                    if (trimmed == String.Empty)
+                    if (trimmed == string.Empty)
                     {
                         break;
                     }
@@ -605,7 +605,7 @@ namespace MS.Internal.Xaml.Parser
         {
             ScannerNodeType nodeType = _xamlScanner.NodeType;
             List<XamlNode> _savedPrefixDefinitions = null;
-            string trimmed = String.Empty;
+            string trimmed = string.Empty;
             bool isTextXML = false;
 
             switch (nodeType)
@@ -620,7 +620,7 @@ namespace MS.Internal.Xaml.Parser
 
                     if (Logic_IsDiscardableWhitespace(text))
                     {
-                        trimmed = String.Empty;
+                        trimmed = string.Empty;
                     }
                     else
                     {
@@ -633,7 +633,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return Logic_LineInfo();
                     }
-                    if (trimmed == String.Empty)
+                    if (trimmed == string.Empty)
                     {
                         break;
                     }

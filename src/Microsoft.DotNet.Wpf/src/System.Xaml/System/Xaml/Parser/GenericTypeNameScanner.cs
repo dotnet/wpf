@@ -53,7 +53,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             _token = GenericTypeNameScannerToken.NONE;
-            _tokenText = String.Empty;
+            _tokenText = string.Empty;
             _multiCharTokenStartIdx = -1;
             _multiCharTokenLength = 0;
 

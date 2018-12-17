@@ -3,12 +3,6 @@
   <PropertyGroup>
     <ImportNetSdkFromRepoToolset>false</ImportNetSdkFromRepoToolset>
     
-    <!-- This repo builds a transport package - we don't ship from here -->
-    <IsShipping Condition="'$(IsShipping)'==''">false</IsShipping>
-    
-    <!-- Disable localization - re-enable this later when localization is needed --> 
-    <EnableXlfLocalization>false</EnableXlfLocalization>
-    
     <PublishWindowsPdb>true</PublishWindowsPdb>
   </PropertyGroup>
 

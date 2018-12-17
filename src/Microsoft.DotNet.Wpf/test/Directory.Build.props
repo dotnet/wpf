@@ -3,6 +3,9 @@
   <PropertyGroup>
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
     <SignAssembly>false</SignAssembly>
+    <IsTestProject>false</IsTestProject>
+    <IsShipping>false</IsShipping>
+    <EnableXlfLocalization>false</EnableXlfLocalization>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <EmbeddedResource>

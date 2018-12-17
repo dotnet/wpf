@@ -3,7 +3,7 @@
   <PropertyGroup>
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
     <SignAssembly>false</SignAssembly>
-    <IsTestProject>false</IsTestProject>
+    <IsTestProject>true</IsTestProject>
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>
   </PropertyGroup>

@@ -6,12 +6,7 @@
     <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
     <WpfSharedDir>$(MSBuildThisFileDirectory)Shared\</WpfSharedDir>
     <WpfCommonDir>$(MSBuildThisFileDirectory)Common\</WpfCommonDir>
-  </PropertyGroup>
-
-  <!-- Localization -->
-  <PropertyGroup>
+    <IsShipping>true</IsShipping>
     <EnableXlfLocalization>true</EnableXlfLocalization>
   </PropertyGroup>
-
-  <Import Project="Localization.targets"/>
 </Project>

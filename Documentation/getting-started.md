@@ -36,6 +36,8 @@ For conceptual documentation (architecture, how-tos, etc.) most of the [document
 
 * WPF Applications crash with `System.TypeLoadException` when the Visual C++ Redistributable for Visual Studio 2017 is not installed. The latest version of VC++ redistributable can be obtained from [the Visual C++ downloads page](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads). This dependency will be removed prior to .NET Core 3.0 final release.
     * This is tracked by [#37](https://github.com/dotnet/wpf/issues/37).
+* WPF Applications crash with 'Module not found' with a stack originating from wpfgfx_cor3.dll (see [#167](https://github.com/dotnet/wpf/issues/167)).  This is due to a dependency on d3d_compiler.dll added in .NET Framework 4.7.  The workarounds linked [here](https://support.microsoft.com/en-us/help/4020302/the-net-framework-4-7-installation-is-blocked-on-windows-7-windows-ser) will fix this issue.  This dependency will be handled prior to .NET Core 3.0 final release.
+  * This is tracked by [#189](https://github.com/dotnet/wpf/issues/189)
 
 ## Missing features
 

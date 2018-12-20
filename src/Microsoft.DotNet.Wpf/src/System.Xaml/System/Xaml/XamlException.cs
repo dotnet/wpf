@@ -73,7 +73,7 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             LineNumber = info.GetInt32("Line");
             LinePosition = info.GetInt32("Offset");
@@ -92,7 +92,7 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
 
             info.AddValue("Line", LineNumber);
@@ -175,7 +175,7 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             DuplicateMember = (XamlMember)info.GetValue("DuplicateMember", typeof(XamlMember));
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
@@ -194,7 +194,7 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             info.AddValue("DuplicateMember", DuplicateMember);
             info.AddValue("ParentType", ParentType);

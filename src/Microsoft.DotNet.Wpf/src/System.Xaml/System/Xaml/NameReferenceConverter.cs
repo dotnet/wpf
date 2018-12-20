@@ -27,7 +27,7 @@ namespace System.Windows.Markup
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
             
             var nameResolver = (IXamlNameResolver)context.GetService(typeof(IXamlNameResolver));
@@ -70,7 +70,7 @@ namespace System.Windows.Markup
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var nameProvider = (IXamlNameProvider)context.GetService(typeof(IXamlNameProvider));

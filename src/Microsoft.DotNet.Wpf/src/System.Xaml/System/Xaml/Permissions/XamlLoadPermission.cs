@@ -26,7 +26,7 @@ namespace System.Xaml.Permissions
         {
             if (allowedAccess == null)
             {
-                throw new ArgumentNullException("allowedAccess");
+                throw new ArgumentNullException(nameof(allowedAccess));
             }
             Init(false, new XamlAccessLevel[] { allowedAccess });
         }
@@ -35,7 +35,7 @@ namespace System.Xaml.Permissions
         {
             if (allowedAccess == null)
             {
-                throw new ArgumentNullException("allowedAccess");
+                throw new ArgumentNullException(nameof(allowedAccess));
             }
             List<XamlAccessLevel> accessList = new List<XamlAccessLevel>(allowedAccess);
             foreach (XamlAccessLevel accessLevel in allowedAccess)
@@ -130,23 +130,23 @@ namespace System.Xaml.Permissions
         {
             if (elem == null)
             {
-                throw new ArgumentNullException("elem");
+                throw new ArgumentNullException(nameof(elem));
             }
             if (elem.Tag != XmlConstants.IPermission)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.IPermission), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.IPermission), nameof(elem));
             }
 
             string className = elem.Attribute(XmlConstants.Class);
             if (!className.StartsWith(GetType().FullName, false, TypeConverterHelper.InvariantEnglishUS))
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Class, GetType().FullName), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Class, GetType().FullName), nameof(elem));
             }
 
             string version = elem.Attribute(XmlConstants.Version);
             if (version != null && version != XmlConstants.VersionNumber)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Version, XmlConstants.VersionNumber), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Version, XmlConstants.VersionNumber), nameof(elem));
             }
 
             string unrestricted = elem.Attribute(XmlConstants.Unrestricted);
@@ -173,7 +173,7 @@ namespace System.Xaml.Permissions
         {
             if (requestedAccess == null)
             {
-                throw new ArgumentNullException("requestedAccess");
+                throw new ArgumentNullException(nameof(requestedAccess));
             }
             if (_isUnrestricted)
             {

@@ -19,11 +19,11 @@ namespace System.Windows.Markup
         {
             if (loaderType == null)
             {
-                throw new ArgumentNullException("loaderType");
+                throw new ArgumentNullException(nameof(loaderType));
             }
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             _loaderTypeName = loaderType.AssemblyQualifiedName;
             _contentTypeName = contentType.AssemblyQualifiedName;
@@ -35,11 +35,11 @@ namespace System.Windows.Markup
         {
             if (loaderType == null)
             {
-                throw new ArgumentNullException("loaderType");
+                throw new ArgumentNullException(nameof(loaderType));
             }
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             _loaderTypeName = loaderType;
             _contentTypeName = contentType;

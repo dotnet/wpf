@@ -49,11 +49,11 @@ namespace System.Xaml
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
             if (declaringType == null)
             {
-                throw new ArgumentNullException("declaringType");
+                throw new ArgumentNullException(nameof(declaringType));
             }
 
             _name = name;
@@ -81,11 +81,11 @@ namespace System.Xaml
         {
             if (propertyInfo == null)
             {
-                throw new ArgumentNullException("propertyInfo");
+                throw new ArgumentNullException(nameof(propertyInfo));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = propertyInfo.Name;
             _declaringType = schemaContext.GetXamlType(propertyInfo.DeclaringType);
@@ -115,11 +115,11 @@ namespace System.Xaml
         {
             if (eventInfo == null)
             {
-                throw new ArgumentNullException("eventInfo");
+                throw new ArgumentNullException(nameof(eventInfo));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = eventInfo.Name;
             _declaringType = schemaContext.GetXamlType(eventInfo.DeclaringType);
@@ -152,11 +152,11 @@ namespace System.Xaml
         {
             if (attachablePropertyName == null)
             {
-                throw new ArgumentNullException("attachablePropertyName");
+                throw new ArgumentNullException(nameof(attachablePropertyName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
@@ -196,15 +196,15 @@ namespace System.Xaml
         {
             if (attachableEventName == null)
             {
-                throw new ArgumentNullException("attachableEventName");
+                throw new ArgumentNullException(nameof(attachableEventName));
             }
             if (adder == null)
             {
-                throw new ArgumentNullException("adder");
+                throw new ArgumentNullException(nameof(adder));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             ValidateSetter(adder, "adder");
 

@@ -209,7 +209,7 @@ namespace MS.Internal.Xaml.Context
         {
             if (!xamlMember.IsAmbient)
             {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), "xamlMember");
+                throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(xamlMember));
             }
         }
 
@@ -217,7 +217,7 @@ namespace MS.Internal.Xaml.Context
         {
             if (!xamlType.IsAmbient)
             {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), "xamlType");
+                throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), nameof(xamlType));
             }
         }
 

@@ -5,7 +5,7 @@
 using System.Xaml;
 
 namespace System.Windows.Markup
-{   
+{
     public class XamlSetValueEventArgs : EventArgs
     {
         public XamlSetValueEventArgs(XamlMember member, object value)
@@ -14,8 +14,8 @@ namespace System.Windows.Markup
             Member = member;
         }
 
-        public XamlMember Member { get; private set; }
-        public object Value { get; private set; }
+        public XamlMember Member { get; }
+        public object Value { get; }
 
         public bool Handled { get; set; }
 

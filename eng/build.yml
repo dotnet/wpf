@@ -67,7 +67,7 @@ phases:
         $(_PublishArgs)
         $(_SignArgs)
         $(_OfficialBuildIdArgs)
-        /p:Platform=$(_Platform) /p:IsShipping=$(_IsShipping) 
+        /p:Platform=$(_Platform)
       displayName: Windows Build / Publish
       condition: and(succeeded(), eq(variables['Agent.Os'], 'Windows_NT'))
 

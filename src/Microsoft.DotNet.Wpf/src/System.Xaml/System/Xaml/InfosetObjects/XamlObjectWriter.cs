@@ -49,7 +49,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, (XamlSavedContext)null, (XamlObjectWriterSettings)null);
         }
@@ -58,7 +58,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, (XamlSavedContext)null, settings);
         }
@@ -67,11 +67,11 @@ namespace System.Xaml
         {
             if (savedContext == null)
             {
-                throw new ArgumentNullException("savedContext");
+                throw new ArgumentNullException(nameof(savedContext));
             }
             if (savedContext.SchemaContext == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextNull), "savedContext");
+                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextNull), nameof(savedContext));
             }
             Initialize(savedContext.SchemaContext, savedContext, settings);
         }
@@ -83,11 +83,11 @@ namespace System.Xaml
             //will create one if a null SchemaContext was passed in.
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             if (savedContext != null && schemaContext != savedContext.SchemaContext)
             {
-                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextMismatch), "schemaContext");
+                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextMismatch), nameof(schemaContext));
             }
 
             if (settings != null)
@@ -328,7 +328,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
 
             // Deferring Checking
@@ -582,7 +582,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (property == null)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
 
             // Deferring Checking
@@ -900,7 +900,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (namespaceDeclaration == null)
             {
-                throw new ArgumentNullException("namespaceDeclaration");
+                throw new ArgumentNullException(nameof(namespaceDeclaration));
             }
             if(namespaceDeclaration.Prefix == null)
             {

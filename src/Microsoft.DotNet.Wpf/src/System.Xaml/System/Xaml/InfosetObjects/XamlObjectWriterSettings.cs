@@ -17,7 +17,7 @@ namespace System.Xaml
         {
             if (settings == null)
             {
-                throw new ArgumentNullException("settings");
+                throw new ArgumentNullException(nameof(settings));
             }
             AfterBeginInitHandler = settings.AfterBeginInitHandler;
             BeforePropertiesHandler = settings.BeforePropertiesHandler;

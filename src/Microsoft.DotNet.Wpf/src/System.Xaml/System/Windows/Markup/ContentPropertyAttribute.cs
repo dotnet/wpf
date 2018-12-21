@@ -40,16 +40,12 @@ namespace System.Windows.Markup
         /// <param name="name">The property to associate to direct XAML content</param>
         public ContentPropertyAttribute(string name)
         {
-            _name = name;
+            Name = name;
         }
 
         /// <summary>
         /// The name of the property that is associated with direct XAML content
         /// </summary>
-        public string Name { 
-            get { return _name; } 
-        }
-
-        private string _name;
+        public string Name { get; }
     }
 }

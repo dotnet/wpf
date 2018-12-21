@@ -39,7 +39,7 @@ namespace System.Windows.Markup
         {
             if (arrayType == null)
             {
-                throw new ArgumentNullException("arrayType");
+                throw new ArgumentNullException(nameof(arrayType));
             }
             _arrayType = arrayType;
         }
@@ -52,7 +52,7 @@ namespace System.Windows.Markup
         {
             if (elements == null)
             {
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
             }
 
             _arrayList.AddRange(elements);

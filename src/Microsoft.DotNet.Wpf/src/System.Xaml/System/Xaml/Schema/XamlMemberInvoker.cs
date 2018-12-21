@@ -31,7 +31,7 @@ namespace System.Xaml.Schema
         {
             if (member == null)
             {
-                throw new ArgumentNullException("member");
+                throw new ArgumentNullException(nameof(member));
             }
             _member = member;
         }
@@ -62,7 +62,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
@@ -93,7 +93,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingSetter == null)

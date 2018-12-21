@@ -121,7 +121,7 @@ namespace System.Windows.Markup
         public static ValueSerializer GetSerializerFor(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             object value = _valueSerializers[type];
             if (value != null)
@@ -180,7 +180,7 @@ namespace System.Windows.Markup
             ValueSerializer result;
             if (descriptor == null)
             {
-                throw new ArgumentNullException("descriptor");
+                throw new ArgumentNullException(nameof(descriptor));
             }
             
             #pragma warning suppress 6506 // descriptor is obviously not null

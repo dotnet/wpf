@@ -155,7 +155,7 @@ namespace System.Xaml
         {
             if (xmlns == null)
             {
-                throw new ArgumentNullException("xmlns");
+                throw new ArgumentNullException(nameof(xmlns));
             }
             UpdateXmlNsInfo();
             if (_preferredPrefixes == null)
@@ -269,11 +269,11 @@ namespace System.Xaml
         {
             if (xamlNamespace == null)
             {
-                throw new ArgumentNullException("xamlNamespace");
+                throw new ArgumentNullException(nameof(xamlNamespace));
             }
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (XamlLanguage.XamlNamespaces.Contains(xamlNamespace))
@@ -291,15 +291,15 @@ namespace System.Xaml
         {
             if (xamlTypeName == null)
             {
-                throw new ArgumentNullException("xamlTypeName");
+                throw new ArgumentNullException(nameof(xamlTypeName));
             }
             if (xamlTypeName.Name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), "xamlTypeName");
+                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
             if (xamlTypeName.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), "xamlTypeName");
+                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
 
             XamlType[] typeArgs = null;
@@ -326,11 +326,11 @@ namespace System.Xaml
         {
             if (xamlNamespace == null)
             {
-                throw new ArgumentNullException("xamlNamespace");
+                throw new ArgumentNullException(nameof(xamlNamespace));
             }
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
             if (typeArguments != null)
             {
@@ -401,7 +401,7 @@ namespace System.Xaml
         {
             if (xamlNamespace == null)
             {
-                throw new ArgumentNullException("xamlNamespace");
+                throw new ArgumentNullException(nameof(xamlNamespace));
             }
 
             // Note: this method has order-dependent behavior for backcompat.
@@ -566,7 +566,7 @@ namespace System.Xaml
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
             XamlType xamlType = null;
             if (!MasterTypeList.TryGetValue(type, out xamlType))

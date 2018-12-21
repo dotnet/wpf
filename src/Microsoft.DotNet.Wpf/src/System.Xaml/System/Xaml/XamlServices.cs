@@ -19,7 +19,7 @@ namespace System.Xaml
         {
             if (xaml == null)
             {
-                throw new ArgumentNullException("xaml");
+                throw new ArgumentNullException(nameof(xaml));
             }
 
             StringReader stringReader = new StringReader(xaml);
@@ -34,7 +34,7 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (XmlReader xmlReader = XmlReader.Create(fileName))
@@ -48,7 +48,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (XmlReader xmlReader = XmlReader.Create(stream))
@@ -62,7 +62,7 @@ namespace System.Xaml
         {
             if (textReader == null)
             {
-                throw new ArgumentNullException("textReader");
+                throw new ArgumentNullException(nameof(textReader));
             }
 
             using (XmlReader xmlReader = XmlReader.Create(textReader))
@@ -76,7 +76,7 @@ namespace System.Xaml
         {
             if (xmlReader == null)
             {
-                throw new ArgumentNullException("xmlReader");
+                throw new ArgumentNullException(nameof(xmlReader));
             }
 
             using (XamlXmlReader xamlReader = new XamlXmlReader(xmlReader))
@@ -91,7 +91,7 @@ namespace System.Xaml
         {
             if (xamlReader == null)
             {
-                throw new ArgumentNullException("xamlReader");
+                throw new ArgumentNullException(nameof(xamlReader));
             }
 
             XamlObjectWriter objectWriter = new XamlObjectWriter(xamlReader.SchemaContext);
@@ -111,12 +111,12 @@ namespace System.Xaml
         {
             if (xamlReader == null)
             {
-                throw new ArgumentNullException("xamlReader");
+                throw new ArgumentNullException(nameof(xamlReader));
             }
 
             if (xamlWriter == null)
             {
-                throw new ArgumentNullException("xamlWriter");
+                throw new ArgumentNullException(nameof(xamlWriter));
             }
 
             IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
@@ -161,13 +161,13 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
             //
             // At this point it can only be empty
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException(SR.Get(SRID.StringIsNullOrEmpty), "fileName");
+                throw new ArgumentException(SR.Get(SRID.StringIsNullOrEmpty), nameof(fileName));
             }
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
@@ -180,7 +180,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
@@ -193,7 +193,7 @@ namespace System.Xaml
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
             using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
@@ -206,7 +206,7 @@ namespace System.Xaml
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
             using (XamlXmlWriter xamlWriter = new XamlXmlWriter(writer, new XamlSchemaContext()))
             {
@@ -218,7 +218,7 @@ namespace System.Xaml
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             XamlObjectReader objectReader = new XamlObjectReader(instance, writer.SchemaContext);

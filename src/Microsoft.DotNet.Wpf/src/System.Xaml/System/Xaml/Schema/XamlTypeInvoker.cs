@@ -58,7 +58,7 @@ namespace System.Xaml.Schema
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
             _xamlType = type;
         }
@@ -89,7 +89,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IList list = instance as IList;
             if (list != null)
@@ -124,7 +124,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IDictionary dictionary = instance as IDictionary;
             if (dictionary != null)
@@ -178,7 +178,7 @@ namespace System.Xaml.Schema
         {
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             if (IsUnknown || _xamlType.ItemType == null)
             {
@@ -248,7 +248,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IEnumerable enumerable = instance as IEnumerable;
             if (enumerable != null)

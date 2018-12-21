@@ -50,11 +50,11 @@ namespace System.Xaml
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = typeName;
             _schemaContext = schemaContext;
@@ -65,15 +65,15 @@ namespace System.Xaml
         {
             if (unknownTypeNamespace == null)
             {
-                throw new ArgumentNullException("unknownTypeNamespace");
+                throw new ArgumentNullException(nameof(unknownTypeNamespace));
             }
             if (unknownTypeName == null)
             {
-                throw new ArgumentNullException("unknownTypeName");
+                throw new ArgumentNullException(nameof(unknownTypeName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = unknownTypeName;
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
@@ -101,11 +101,11 @@ namespace System.Xaml
         {
             if (underlyingType == null)
             {
-                throw new ArgumentNullException("underlyingType");
+                throw new ArgumentNullException(nameof(underlyingType));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);

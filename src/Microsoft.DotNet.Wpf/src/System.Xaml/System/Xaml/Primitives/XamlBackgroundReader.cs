@@ -39,7 +39,7 @@ namespace System.Xaml
         {
             if (wrappedReader == null)
             {
-                throw new ArgumentNullException("wrappedReader");
+                throw new ArgumentNullException(nameof(wrappedReader));
             }
             Initialize(wrappedReader, 64);
         }

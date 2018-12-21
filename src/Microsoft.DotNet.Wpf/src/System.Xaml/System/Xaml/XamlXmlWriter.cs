@@ -52,7 +52,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (settings != null && settings.CloseOutput)
@@ -74,7 +74,7 @@ namespace System.Xaml
         {
             if (textWriter == null)
             {
-                throw new ArgumentNullException("textWriter");
+                throw new ArgumentNullException(nameof(textWriter));
             }
 
             if (settings != null && settings.CloseOutput)
@@ -96,7 +96,7 @@ namespace System.Xaml
         {
             if (xmlWriter == null)
             {
-                throw new ArgumentNullException("xmlWriter");
+                throw new ArgumentNullException(nameof(xmlWriter));
             }
 
             InitializeXamlXmlWriter(xmlWriter, schemaContext, settings);
@@ -106,7 +106,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             this.schemaContext = schemaContext;
 
@@ -175,12 +175,12 @@ namespace System.Xaml
 
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (!type.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), "type");
+                throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), nameof(type));
             }
 
             this.currentState.WriteObject(this, type, false);
@@ -203,12 +203,12 @@ namespace System.Xaml
 
             if (property == null)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
 
             if (!property.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), "property");
+                throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), nameof(property));
             }
 
             this.currentState.WriteStartMember(this, property);
@@ -233,7 +233,7 @@ namespace System.Xaml
                 string s = value as string;
                 if (s == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), "value");
+                    throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), nameof(value));
                 }
                 this.currentState.WriteValue(this, s);
             }
@@ -245,22 +245,22 @@ namespace System.Xaml
 
             if (namespaceDeclaration == null)
             {
-                throw new ArgumentNullException("namespaceDeclaration");
+                throw new ArgumentNullException(nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Prefix == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationPrefixCannotBeNull), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationPrefixCannotBeNull), nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationNamespaceCannotBeNull), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationNamespaceCannotBeNull), nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Prefix == "xml")
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), nameof(namespaceDeclaration));
             }
 
             this.currentState.WriteNamespace(this, namespaceDeclaration);

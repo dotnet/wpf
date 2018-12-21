@@ -41,7 +41,7 @@ namespace System.Xaml.Schema
         {
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
             this.Name = xamlType.Name;
             this.Namespace = xamlType.GetXamlNamespaces()[0];
@@ -87,11 +87,11 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (prefixLookup == null)
             {
-                throw new ArgumentNullException("prefixLookup");
+                throw new ArgumentNullException(nameof(prefixLookup));
             }
             return ConvertListToStringInternal(typeNameList, prefixLookup.LookupPrefix);
         }
@@ -100,11 +100,11 @@ namespace System.Xaml.Schema
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             string error;
@@ -120,11 +120,11 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             string error;
@@ -141,11 +141,11 @@ namespace System.Xaml.Schema
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             result = ParseInternal(typeName, namespaceResolver.GetNamespace, out _);
@@ -157,11 +157,11 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out _);

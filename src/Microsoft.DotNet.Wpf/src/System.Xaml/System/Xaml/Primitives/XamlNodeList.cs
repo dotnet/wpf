@@ -24,7 +24,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, 0);
         }
@@ -33,7 +33,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, size);
         }

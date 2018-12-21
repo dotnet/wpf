@@ -31,7 +31,7 @@ namespace System.Xaml
         {
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
 
             _xamlNamespaces = GetReadOnly(xamlNamespaces);
@@ -188,7 +188,7 @@ namespace System.Xaml
         {
             if (xamlNamespace == null)
             {
-                throw new ArgumentNullException("xamlNamespace");
+                throw new ArgumentNullException(nameof(xamlNamespace));
             }
             return new ReadOnlyCollection<string>(new string[] { xamlNamespace });
         }
@@ -197,7 +197,7 @@ namespace System.Xaml
         {
             if (xamlNamespaces == null)
             {
-                throw new ArgumentNullException("xamlNamespaces");
+                throw new ArgumentNullException(nameof(xamlNamespaces));
             }
             List<string> nsList = new List<string>(xamlNamespaces);
             foreach (string ns in nsList)

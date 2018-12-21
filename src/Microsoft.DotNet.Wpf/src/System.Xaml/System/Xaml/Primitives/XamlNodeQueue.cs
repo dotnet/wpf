@@ -28,7 +28,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _nodeQueue = new Queue<XamlNode>();
             _endOfStreamNode = new XamlNode(XamlNode.InternalNodeType.EndOfStream);

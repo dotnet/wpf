@@ -23,7 +23,7 @@ namespace System.Xaml
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             switch (reader.NodeType)

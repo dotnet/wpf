@@ -51,7 +51,7 @@ namespace System.Xaml
 
         public XamlObjectReader(object instance, XamlSchemaContext schemaContext, XamlObjectReaderSettings settings)
         {
-            this.schemaContext = schemaContext ?? throw new ArgumentNullException("schemaContext");
+            this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             this.settings = settings ?? new XamlObjectReaderSettings();
             this.nodes = new Stack<MarkupInfo>();
             this.currentXamlNode = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
@@ -2864,7 +2864,7 @@ namespace System.Xaml
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 return this.context.GetName(value);
             }

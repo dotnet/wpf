@@ -32,7 +32,7 @@ namespace System.Xaml
         {
             if (underlyingNameScope == null)
             {
-                throw new ArgumentNullException("underlyingNameScope");
+                throw new ArgumentNullException(nameof(underlyingNameScope));
             }
 
             _names = new FrugalObjectList<string>();
@@ -42,10 +42,10 @@ namespace System.Xaml
         public void RegisterName(string name, object scopedElement)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (scopedElement == null)
-                throw new ArgumentNullException("scopedElement");
+                throw new ArgumentNullException(nameof(scopedElement));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -86,7 +86,7 @@ namespace System.Xaml
         public void UnregisterName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -112,7 +112,7 @@ namespace System.Xaml
         public object FindName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));

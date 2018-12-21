@@ -457,7 +457,7 @@ namespace System.Windows.Markup
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             TypeConverter typeConverter = GetCoreConverterFromCoreType(type);

@@ -14,7 +14,7 @@ namespace System.Xaml
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             Instance = instance;

@@ -4,7 +4,6 @@
 
 using System.Runtime.CompilerServices;
 
-
 namespace System.Windows.Markup
 {
 

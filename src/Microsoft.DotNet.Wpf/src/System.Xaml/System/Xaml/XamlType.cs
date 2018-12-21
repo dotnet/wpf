@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,9 +10,9 @@ using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading;
+using System.Windows.Markup;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
-using System.Windows.Markup;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -457,7 +456,7 @@ namespace System.Xaml
 
         public virtual bool CanAssignTo(XamlType xamlType)
         {
-            if (object.ReferenceEquals(xamlType, null))
+            if (ReferenceEquals(xamlType, null))
             {
                 return false;
             }
@@ -1799,11 +1798,11 @@ namespace System.Xaml
         // name/namespace fallback for known non-CLR types
         public static bool operator ==(XamlType xamlType1, XamlType xamlType2)
         {
-            if (object.ReferenceEquals(xamlType1, xamlType2))
+            if (ReferenceEquals(xamlType1, xamlType2))
             {
                 return true;
             }
-            if (object.ReferenceEquals(xamlType1, null) || object.ReferenceEquals(xamlType2, null))
+            if (ReferenceEquals(xamlType1, null) || ReferenceEquals(xamlType2, null))
             {
                 return false;
             }

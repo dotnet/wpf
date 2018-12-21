@@ -6,8 +6,6 @@
 //   This attribute is placed on a class to identify the property that will
 //   function as an Name for the given class
 
-using System;
-using System.Globalization;
 using SRCS = System.Runtime.CompilerServices;
 
 #if PBTCOMPILER

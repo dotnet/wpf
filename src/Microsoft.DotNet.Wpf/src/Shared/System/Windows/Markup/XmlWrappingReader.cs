@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml;
 using System.Xml.Schema;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Security.Policy;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -53,7 +51,7 @@ namespace System.Windows.Markup
         public override XmlSpace XmlSpace           { get { return _reader.XmlSpace; } }
         public override string XmlLang              { get { return _reader.XmlLang; } }
         public override IXmlSchemaInfo SchemaInfo   { get { return _reader.SchemaInfo; } }
-        public override System.Type ValueType       { get { return _reader.ValueType; } }
+        public override Type ValueType              { get { return _reader.ValueType; } }
         public override int AttributeCount          { get { return _reader.AttributeCount; } }
         public override string this [ int i ]       { get { return _reader[i]; } }
         public override string this [ string name ] { get { return _reader[ name ];}}

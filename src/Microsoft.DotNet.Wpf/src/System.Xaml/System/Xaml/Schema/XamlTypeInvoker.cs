@@ -4,14 +4,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Markup;
-using System.Xaml;
 
 namespace System.Xaml.Schema
 {

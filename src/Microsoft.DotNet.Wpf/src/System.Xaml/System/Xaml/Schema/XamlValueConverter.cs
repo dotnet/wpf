@@ -2,17 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Markup;
-using System.Security.Permissions;
-using System.Threading;
-using System.Xaml.MS.Impl;
-using System.Xaml.Schema;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
+using System.Threading;
 
 namespace System.Xaml.Schema
 {
@@ -112,7 +103,7 @@ namespace System.Xaml.Schema
         public override bool Equals(object obj)
         {
             XamlValueConverter<TConverterBase> other = obj as XamlValueConverter<TConverterBase>;
-            if (object.ReferenceEquals(other, null))
+            if (ReferenceEquals(other, null))
             {
                 return false;
             }
@@ -140,11 +131,11 @@ namespace System.Xaml.Schema
 
         public static bool operator ==(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
         {
-            if (object.ReferenceEquals(converter1, null))
+            if (ReferenceEquals(converter1, null))
             {
-                return object.ReferenceEquals(converter2, null);
+                return ReferenceEquals(converter2, null);
             }
-            if (object.ReferenceEquals(converter2, null))
+            if (ReferenceEquals(converter2, null))
             {
                 return false;
             }

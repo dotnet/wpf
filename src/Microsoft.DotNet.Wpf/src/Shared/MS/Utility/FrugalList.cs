@@ -2,15 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows;
-using System.Diagnostics.CodeAnalysis;
-#if SYSTEM_XAML
-using System.Xaml;
-#else
+using System.Diagnostics;
+
+#if !SYSTEM_XAML
 using MS.Internal.WindowsBase;
 #endif
 
@@ -1596,7 +1592,7 @@ namespace MS.Utility
         }
 
         // array-based implementation - compacts in-place or into a new array
-        internal class ArrayCompacter : FrugalListBase<T>.Compacter
+        internal class ArrayCompacter : Compacter
         {
             public ArrayCompacter(ArrayItemList<T> store, int newCount)
                 : base(store, newCount)

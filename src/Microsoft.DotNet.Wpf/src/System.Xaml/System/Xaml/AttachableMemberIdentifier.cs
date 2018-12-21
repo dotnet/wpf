@@ -4,8 +4,6 @@
 
 namespace System.Xaml
 {
-    using System;
-
     public class AttachableMemberIdentifier : IEquatable<AttachableMemberIdentifier>
     {
         readonly Type declaringType;
@@ -40,9 +38,9 @@ namespace System.Xaml
 
         public static bool operator ==(AttachableMemberIdentifier left, AttachableMemberIdentifier right)
         {
-            if (object.ReferenceEquals(left, null))
+            if (ReferenceEquals(left, null))
             {
-                return object.ReferenceEquals(right, null);
+                return ReferenceEquals(right, null);
             }
             return left.Equals(right);
         }

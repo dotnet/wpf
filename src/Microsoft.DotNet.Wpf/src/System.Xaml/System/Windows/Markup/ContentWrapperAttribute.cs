@@ -13,11 +13,10 @@
 //  Created:     06/07/2005 Microsoft
 //
 
+using System.Runtime.CompilerServices;
+
 namespace System.Windows.Markup
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// Can be specified on a collection type to indicate which 
     /// types are used to wrap content foreign content such as 

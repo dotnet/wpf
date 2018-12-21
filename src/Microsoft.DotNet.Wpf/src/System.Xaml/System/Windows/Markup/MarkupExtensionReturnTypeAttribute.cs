@@ -11,8 +11,6 @@
 //  Created:     11/17/2005
 //
 
-using System;
-
 namespace System.Windows.Markup
 {
 

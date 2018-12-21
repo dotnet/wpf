@@ -2,18 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
 using System.Xml;
 using MS.Internal.Xaml;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
-using System.Xaml.MS.Impl;
-using System.Windows.Markup;
-using System.Xaml;
-using System.Xaml.Schema;
-using System.Diagnostics;
-using System.IO;
 
 namespace System.Xaml
 {

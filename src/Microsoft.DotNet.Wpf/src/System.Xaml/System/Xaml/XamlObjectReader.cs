@@ -2,29 +2,26 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Security;
+using System.Security.Permissions;
+using System.Text;
+using System.Windows.Markup;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using System.Xml;
+using System.Xml.Serialization;
 using MS.Internal.Xaml.Runtime;
 
 namespace System.Xaml
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
-    using System.Windows.Markup;
-    using System.Xml;
-    using System.Xaml.MS.Impl;
-    using System.Xml.Serialization;
-    using System.Reflection;
-    using System.Collections;
-    using System.Globalization;
-    using System.Xaml.Schema;
-    using System.ComponentModel.Design.Serialization;
-    using REPLACEMENT = System.Xaml.Replacements;
-    using System.Diagnostics;
-    using System.Security;
-    using System.Security.Permissions;
+    using REPLACEMENT = Replacements;
 
     public class XamlObjectReader : XamlReader
     {
@@ -239,7 +236,7 @@ namespace System.Xaml
         {
             new public bool Equals(object x, object y)
             {
-                return Object.ReferenceEquals(x, y);
+                return ReferenceEquals(x, y);
             }
 
             public int GetHashCode(object obj)
@@ -934,7 +931,7 @@ namespace System.Xaml
                     if (GetDefaultValue(property, out defaultValue))
                     {
                         object actualValue = context.Runtime.GetValue(source, property);
-                        return !object.Equals(defaultValue, actualValue);
+                        return !Equals(defaultValue, actualValue);
                     }
                 }
 
@@ -1318,7 +1315,7 @@ namespace System.Xaml
 
                     foreach (var argument in arguments)
                     {
-                        argumentsProperty.Children.Add(ObjectMarkupInfo.ForObject(argument, context));
+                        argumentsProperty.Children.Add(ForObject(argument, context));
                     }
 
                     this.Properties.Add(argumentsProperty);
@@ -1824,7 +1821,7 @@ namespace System.Xaml
                 var items = new MemberMarkupInfo { XamlNode = new XamlNode(XamlNodeType.StartMember, XamlLanguage.Items) };
                 foreach (object item in value)
                 {
-                    items.Children.Add(ObjectMarkupInfo.ForObject(item, context));
+                    items.Children.Add(ForObject(item, context));
                 }
 
                 var objectInfo = new ObjectMarkupInfo()
@@ -2099,7 +2096,7 @@ namespace System.Xaml
                 {
                     if (propertyInfo.Children[0] is ValueMarkupInfo valueInfo)
                     {
-                        return string.Equals(valueInfo.XamlNode.Value, string.Empty);
+                        return Equals(valueInfo.XamlNode.Value, string.Empty);
                     }
                 }
 

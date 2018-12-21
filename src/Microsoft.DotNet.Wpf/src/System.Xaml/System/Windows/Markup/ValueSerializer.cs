@@ -12,13 +12,17 @@
 //  Created:   04/28/2005 Microsoft
 //
 
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
-using MS.Internal.Serialization;
-using System.Xaml.Replacements; //DateTimeConverter2
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Xaml;
-using System.Runtime.CompilerServices; //SRID
+using System.Xaml.Replacements;
+using MS.Internal.Serialization;
+
+//DateTimeConverter2
+
+//SRID
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

@@ -3,9 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
 namespace MS.Internal.Xaml.Context
 {

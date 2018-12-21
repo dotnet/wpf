@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading;
+using System;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -32,9 +29,9 @@ namespace MS.Internal
             return ex is NullReferenceException ||
                    ex is StackOverflowException ||
                    ex is OutOfMemoryException   ||
-                   ex is ThreadAbortException ||
-                   ex is SEHException ||
-                   ex is SecurityException;
+                   ex is System.Threading.ThreadAbortException ||
+                   ex is System.Runtime.InteropServices.SEHException ||
+                   ex is System.Security.SecurityException;
         }
 
         // these are exceptions that we should treat as critical when they
@@ -60,7 +57,7 @@ namespace MS.Internal
             // for certain types of exceptions, we care more about the inner
             // exception
             while (ex.InnerException != null &&
-                    (   ex is TargetInvocationException
+                    (   ex is System.Reflection.TargetInvocationException
                     ))
             {
                 ex = ex.InnerException;

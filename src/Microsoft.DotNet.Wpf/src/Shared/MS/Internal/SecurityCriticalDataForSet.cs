@@ -10,9 +10,9 @@
 //              For example a filepath variable might control what part of the file system the
 //              code gets access to.
 
-using System;
-using System.Diagnostics;
-using System.Security;
+using System ; 
+using System.Security ;
+
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
@@ -61,7 +61,7 @@ namespace MS.Internal
         internal T Value 
         {
         #if DEBUG
-            [DebuggerStepThrough]
+            [System.Diagnostics.DebuggerStepThrough]
         #endif
             [SecurityCritical, SecurityTreatAsSafe]
             get
@@ -70,7 +70,7 @@ namespace MS.Internal
             }
 
         #if DEBUG
-            [DebuggerStepThrough]
+            [System.Diagnostics.DebuggerStepThrough]
         #endif
             [SecurityCritical]
             set

@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Xml;
 using System.Xaml;
-using MS.Internal.Xaml.Context;
-using System.Xaml.Schema;
 using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using System.Xml;
+using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {

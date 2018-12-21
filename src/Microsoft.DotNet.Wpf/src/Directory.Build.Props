@@ -6,5 +6,7 @@
     <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
     <WpfSharedDir>$(MSBuildThisFileDirectory)Shared\</WpfSharedDir>
     <WpfCommonDir>$(MSBuildThisFileDirectory)Common\</WpfCommonDir>
+    <IsShipping>true</IsShipping>
+    <EnableXlfLocalization>true</EnableXlfLocalization>
   </PropertyGroup>
 </Project>

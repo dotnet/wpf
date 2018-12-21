@@ -4,11 +4,10 @@
 
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
 
-using System;
-using System.Reflection;
 using System.ComponentModel;
-using System.Globalization;
 using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
 #if SYSTEM_XAML
 using System.Xaml.Replacements;
 #endif
@@ -255,71 +254,71 @@ namespace System.Windows.Markup
             TypeConverter typeConverter = null;
             if (type == typeof(Int32))
             {
-                typeConverter = new System.ComponentModel.Int32Converter();
+                typeConverter = new Int32Converter();
             }
             else if (type == typeof(Int16))
             {
-                typeConverter = new System.ComponentModel.Int16Converter();
+                typeConverter = new Int16Converter();
             }
             else if (type == typeof(Int64))
             {
-                typeConverter = new System.ComponentModel.Int64Converter();
+                typeConverter = new Int64Converter();
             }
             else if (type == typeof(UInt32))
             {
-                typeConverter = new System.ComponentModel.UInt32Converter();
+                typeConverter = new UInt32Converter();
             }
             else if (type == typeof(UInt16))
             {
-                typeConverter = new System.ComponentModel.UInt16Converter();
+                typeConverter = new UInt16Converter();
             }
             else if (type == typeof(UInt64))
             {
-                typeConverter = new System.ComponentModel.UInt64Converter();
+                typeConverter = new UInt64Converter();
             }
             else if (type == typeof(Boolean))
             {
-                typeConverter = new System.ComponentModel.BooleanConverter();
+                typeConverter = new BooleanConverter();
             }
             else if (type == typeof(Double))
             {
-                typeConverter = new System.ComponentModel.DoubleConverter();
+                typeConverter = new DoubleConverter();
             }
             else if (type == typeof(Single))
             {
-                typeConverter = new System.ComponentModel.SingleConverter();
+                typeConverter = new SingleConverter();
             }
             else if (type == typeof(Byte))
             {
-                typeConverter = new System.ComponentModel.ByteConverter();
+                typeConverter = new ByteConverter();
             }
             else if (type == typeof(SByte))
             {
-                typeConverter = new System.ComponentModel.SByteConverter();
+                typeConverter = new SByteConverter();
             }
             else if (type == typeof(Char))
             {
-                typeConverter = new System.ComponentModel.CharConverter();
+                typeConverter = new CharConverter();
             }
             else if (type == typeof(Decimal))
             {
-                typeConverter = new System.ComponentModel.DecimalConverter();
+                typeConverter = new DecimalConverter();
             }
             else if (type == typeof(TimeSpan))
             {
-                typeConverter = new System.ComponentModel.TimeSpanConverter();
+                typeConverter = new TimeSpanConverter();
             }
             else if (type == typeof(Guid))
             {
-                typeConverter = new System.ComponentModel.GuidConverter();
+                typeConverter = new GuidConverter();
             }
             else if (type == typeof(String))
             {
-                typeConverter = new System.ComponentModel.StringConverter();
+                typeConverter = new StringConverter();
             }
             else if (type == typeof(CultureInfo))
             {
-                typeConverter = new System.ComponentModel.CultureInfoConverter();
+                typeConverter = new CultureInfoConverter();
             }
 #if !SYSTEM_XAML
             else if (type == typeof(Type))
@@ -329,7 +328,7 @@ namespace System.Windows.Markup
 #else
             else if (type == typeof(Type))
             {
-                typeConverter = new System.Xaml.Replacements.TypeTypeConverter();
+                typeConverter = new TypeTypeConverter();
             }
 #endif
             else if (type == typeof(DateTime))
@@ -338,7 +337,7 @@ namespace System.Windows.Markup
             }
             else if (ReflectionHelper.IsNullableType(type))
             {
-                typeConverter = new System.ComponentModel.NullableConverter(type);
+                typeConverter = new NullableConverter(type);
             }
 
             return typeConverter;
@@ -351,75 +350,75 @@ namespace System.Windows.Markup
             {
                 // Need to handle Enums types specially as they require a ctor that
                 // takes the underlying type.
-                typeConverter = new System.ComponentModel.EnumConverter(type);
+                typeConverter = new EnumConverter(type);
             }
             else if (typeof(Int32).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.Int32Converter();
+                typeConverter = new Int32Converter();
             }
             else if (typeof(Int16).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.Int16Converter();
+                typeConverter = new Int16Converter();
             }
             else if (typeof(Int64).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.Int64Converter();
+                typeConverter = new Int64Converter();
             }
             else if (typeof(UInt32).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.UInt32Converter();
+                typeConverter = new UInt32Converter();
             }
             else if (typeof(UInt16).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.UInt16Converter();
+                typeConverter = new UInt16Converter();
             }
             else if (typeof(UInt64).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.UInt64Converter();
+                typeConverter = new UInt64Converter();
             }
             else if (typeof(Boolean).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.BooleanConverter();
+                typeConverter = new BooleanConverter();
             }
             else if (typeof(Double).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.DoubleConverter();
+                typeConverter = new DoubleConverter();
             }
             else if (typeof(Single).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.SingleConverter();
+                typeConverter = new SingleConverter();
             }
             else if (typeof(Byte).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.ByteConverter();
+                typeConverter = new ByteConverter();
             }
             else if (typeof(SByte).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.SByteConverter();
+                typeConverter = new SByteConverter();
             }
             else if (typeof(Char).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.CharConverter();
+                typeConverter = new CharConverter();
             }
             else if (typeof(Decimal).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.DecimalConverter();
+                typeConverter = new DecimalConverter();
             }
             else if (typeof(TimeSpan).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.TimeSpanConverter();
+                typeConverter = new TimeSpanConverter();
             }
             else if (typeof(Guid).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.GuidConverter();
+                typeConverter = new GuidConverter();
             }
             else if (typeof(String).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.StringConverter();
+                typeConverter = new StringConverter();
             }
             else if (typeof(CultureInfo).IsAssignableFrom(type))
             {
-                typeConverter = new System.ComponentModel.CultureInfoConverter();
+                typeConverter = new CultureInfoConverter();
             }
 #if !SYSTEM_XAML
             else if (typeof(Type).IsAssignableFrom(type))
@@ -429,7 +428,7 @@ namespace System.Windows.Markup
 #else
             else if (type == typeof(Type))
             {
-                typeConverter = new System.Xaml.Replacements.TypeTypeConverter();
+                typeConverter = new TypeTypeConverter();
             }
 #endif
             else if (typeof(DateTime).IsAssignableFrom(type))
@@ -438,7 +437,7 @@ namespace System.Windows.Markup
             }
             else if (typeof(Uri).IsAssignableFrom(type))
             {
-                typeConverter = new System.Xaml.Replacements.TypeUriConverter();
+                typeConverter = new TypeUriConverter();
             }
 
             return typeConverter;
@@ -457,7 +456,7 @@ namespace System.Windows.Markup
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             TypeConverter typeConverter = GetCoreConverterFromCoreType(type);

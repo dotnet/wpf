@@ -8,8 +8,6 @@
 //
 //  Contents: Namespace compatiblity support 
 
-using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

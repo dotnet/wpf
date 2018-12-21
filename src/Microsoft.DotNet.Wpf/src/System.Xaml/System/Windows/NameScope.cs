@@ -5,16 +5,10 @@
 // Used to store mapping information for names occuring 
 // within the logical tree section.
 
-using System;
-using System.Windows;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Globalization;
-using System.Windows.Markup;
-using System.ComponentModel;
 using System.Collections.Generic;
-using MS.Internal;
-using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
+using System.Windows.Markup;
 
 namespace System.Xaml
 {
@@ -34,10 +28,10 @@ namespace System.Xaml
         public void RegisterName(string name, object scopedElement)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (scopedElement == null)
-                throw new ArgumentNullException("scopedElement");
+                throw new ArgumentNullException(nameof(scopedElement));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -82,7 +76,7 @@ namespace System.Xaml
         public void UnregisterName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -202,11 +196,11 @@ namespace System.Xaml
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), nameof(item));
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Value"), nameof(item));
             }
 
             Add(item.Key, item.Value);
@@ -216,7 +210,7 @@ namespace System.Xaml
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), nameof(item));
             }
             return ContainsKey(item.Key);
         }
@@ -229,7 +223,7 @@ namespace System.Xaml
             {
                 if (key == null)
                 {
-                    throw new ArgumentNullException("key");
+                    throw new ArgumentNullException(nameof(key));
                 }
                 return FindName(key);
             }
@@ -237,12 +231,12 @@ namespace System.Xaml
             {
                 if (key == null)
                 {
-                    throw new ArgumentNullException("key");
+                    throw new ArgumentNullException(nameof(key));
                 }
 
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 RegisterName(key, value);
@@ -253,7 +247,7 @@ namespace System.Xaml
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             RegisterName(key, value);
@@ -263,7 +257,7 @@ namespace System.Xaml
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             object value = FindName(key);

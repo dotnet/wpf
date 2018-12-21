@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-
 namespace System.Windows.Markup
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
@@ -19,11 +14,11 @@ namespace System.Windows.Markup
         {
             if (loaderType == null)
             {
-                throw new ArgumentNullException("loaderType");
+                throw new ArgumentNullException(nameof(loaderType));
             }
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             _loaderTypeName = loaderType.AssemblyQualifiedName;
             _contentTypeName = contentType.AssemblyQualifiedName;
@@ -35,11 +30,11 @@ namespace System.Windows.Markup
         {
             if (loaderType == null)
             {
-                throw new ArgumentNullException("loaderType");
+                throw new ArgumentNullException(nameof(loaderType));
             }
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             _loaderTypeName = loaderType;
             _contentTypeName = contentType;

@@ -2,24 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Xaml.MS.Impl;
+using System.Xml;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Collections;
-    using System.Text;
-    using System.Globalization;
-    using System.Xaml.MS.Impl;
-    using System.Reflection;
-    using System.ComponentModel;
-    using System.Windows.Markup;
-    using System.Xaml.Schema;
-
     public class XamlXmlWriter : XamlWriter
     {
         // Each state of the writer is represented by a singleton that
@@ -59,7 +52,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (settings != null && settings.CloseOutput)
@@ -81,7 +74,7 @@ namespace System.Xaml
         {
             if (textWriter == null)
             {
-                throw new ArgumentNullException("textWriter");
+                throw new ArgumentNullException(nameof(textWriter));
             }
 
             if (settings != null && settings.CloseOutput)
@@ -103,7 +96,7 @@ namespace System.Xaml
         {
             if (xmlWriter == null)
             {
-                throw new ArgumentNullException("xmlWriter");
+                throw new ArgumentNullException(nameof(xmlWriter));
             }
 
             InitializeXamlXmlWriter(xmlWriter, schemaContext, settings);
@@ -113,7 +106,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             this.schemaContext = schemaContext;
 
@@ -182,12 +175,12 @@ namespace System.Xaml
 
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (!type.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), "type");
+                throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), nameof(type));
             }
 
             this.currentState.WriteObject(this, type, false);
@@ -210,12 +203,12 @@ namespace System.Xaml
 
             if (property == null)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
 
             if (!property.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), "property");
+                throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), nameof(property));
             }
 
             this.currentState.WriteStartMember(this, property);
@@ -240,7 +233,7 @@ namespace System.Xaml
                 string s = value as string;
                 if (s == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), "value");
+                    throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), nameof(value));
                 }
                 this.currentState.WriteValue(this, s);
             }
@@ -252,22 +245,22 @@ namespace System.Xaml
 
             if (namespaceDeclaration == null)
             {
-                throw new ArgumentNullException("namespaceDeclaration");
+                throw new ArgumentNullException(nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Prefix == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationPrefixCannotBeNull), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationPrefixCannotBeNull), nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationNamespaceCannotBeNull), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationNamespaceCannotBeNull), nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Prefix == "xml")
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), "namespaceDeclaration");
+                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), nameof(namespaceDeclaration));
             }
 
             this.currentState.WriteNamespace(this, namespaceDeclaration);
@@ -655,7 +648,7 @@ namespace System.Xaml
         void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
-            string typeName = XamlXmlWriter.GetTypeName(type);
+            string typeName = GetTypeName(type);
             string typeNamePrefixed = (prefix == string.Empty) ? typeName : prefix + ":" + typeName;
 
             // save the subscript
@@ -842,7 +835,7 @@ namespace System.Xaml
 
                 XamlType xamlType = property.IsAttachable ? property.DeclaringType : type;
                 string prefix = property.IsAttachable || property.IsDirective ? writer.FindPrefix(property.GetXamlNamespaces(), out ns) : writer.FindPrefix(type.GetXamlNamespaces(), out ns);
-                string local = (property.IsDirective) ? property.Name : XamlXmlWriter.GetTypeName(xamlType) + "." + property.Name;
+                string local = (property.IsDirective) ? property.Name : GetTypeName(xamlType) + "." + property.Name;
                 writer.output.WriteStartElement(prefix, local, ns);
             }
 
@@ -876,7 +869,7 @@ namespace System.Xaml
                     }
                     else
                     {
-                        local = XamlXmlWriter.GetTypeName(property.DeclaringType) + "." + property.Name;
+                        local = GetTypeName(property.DeclaringType) + "." + property.Name;
                     }
                     WriteStartAttribute(writer, prefix, local, ns);
                 }
@@ -888,7 +881,7 @@ namespace System.Xaml
 
             protected static void WriteStartElementForObject(XamlXmlWriter writer, XamlType type)
             {
-                string local = XamlXmlWriter.GetTypeName(type);
+                string local = GetTypeName(type);
 
                 string ns;
                 string prefix = writer.FindPrefix(type.GetXamlNamespaces(), out ns);
@@ -1091,7 +1084,7 @@ namespace System.Xaml
                         throw new XamlXmlWriterException(SR.Get(SRID.ExpandPositionalParametersinTypeWithNoDefaultConstructor));
                     }
 
-                    writer.ppStateInfo.ReturnState = InRecord.State;
+                    writer.ppStateInfo.ReturnState = State;
                     writer.currentState = ExpandPositionalParameters.State;
                 }
                 else
@@ -1199,7 +1192,7 @@ namespace System.Xaml
                         throw new XamlXmlWriterException(SR.Get(SRID.ExpandPositionalParametersinTypeWithNoDefaultConstructor));
                     }
 
-                    writer.ppStateInfo.ReturnState = InRecordTryAttributes.State;
+                    writer.ppStateInfo.ReturnState = State;
                     writer.currentState = ExpandPositionalParameters.State;
                 }
                 else if (IsImplicit(property))
@@ -1368,7 +1361,7 @@ namespace System.Xaml
                             continue;
                         }
                         var member = frame.Member;
-                        if (XamlXmlWriter.IsImplicit(member))
+                        if (IsImplicit(member))
                         {
                             continue;
                         }

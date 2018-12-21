@@ -8,8 +8,8 @@
 \***************************************************************************/
 
 using System.Globalization;
-using System.Text;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xaml;
 
 namespace System.Windows.Markup

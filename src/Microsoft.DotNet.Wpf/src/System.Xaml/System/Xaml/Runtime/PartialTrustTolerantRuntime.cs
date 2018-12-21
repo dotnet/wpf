@@ -6,13 +6,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Security;
 using System.Windows.Markup;
 using System.Xaml;
-using System.Xaml.Schema;
 using System.Xaml.Permissions;
+using System.Xaml.Schema;
 
 #if !NETSTANDARD2_0
 namespace MS.Internal.Xaml.Runtime
@@ -71,7 +69,7 @@ namespace MS.Internal.Xaml.Runtime
             _transparentRuntime.AddToDictionary(collection, dictionaryType, value, valueXamlType, key);
         }
 
-        public override object CallProvideValue(System.Windows.Markup.MarkupExtension me, IServiceProvider serviceProvider)
+        public override object CallProvideValue(MarkupExtension me, IServiceProvider serviceProvider)
         {
             // Once the ME is instantiated, invocation is always a public method call
             return _transparentRuntime.CallProvideValue(me, serviceProvider);
@@ -372,7 +370,7 @@ namespace MS.Internal.Xaml.Runtime
             _elevatedRuntime.SetValue(obj, property, value);
         }
 
-        public override void SetXmlInstance(object inst, XamlMember property, System.Windows.Markup.XData xData)
+        public override void SetXmlInstance(object inst, XamlMember property, XData xData)
         {
             if (!MemberAccessPermissionDenied || property.IsReadPublic)
             {
@@ -448,13 +446,13 @@ namespace MS.Internal.Xaml.Runtime
         // We should avoid keying off the type of the invoker here
         private static bool HasDefaultInvoker(XamlType xamlType)
         {
-            return xamlType.Invoker.GetType() == typeof(System.Xaml.Schema.XamlTypeInvoker);
+            return xamlType.Invoker.GetType() == typeof(XamlTypeInvoker);
         }
 
         // We should avoid keying off the type of the invoker here
         private static bool HasDefaultInvoker(XamlMember xamlMember)
         {
-            return xamlMember.Invoker.GetType() == typeof(System.Xaml.Schema.XamlMemberInvoker);
+            return xamlMember.Invoker.GetType() == typeof(XamlMemberInvoker);
         }
 
         // We should avoid keying off the type of the converter here

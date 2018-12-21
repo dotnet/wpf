@@ -4,16 +4,14 @@
 
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
 
-using System;
-using System.IO;
-using System.Reflection;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.CompilerServices;
-using MS.Internal;
+using System.IO;
+using System.Reflection;
+using System.Security;
 
 #if PBTCOMPILER
 using MS.Utility;
@@ -122,7 +120,7 @@ namespace System.Xaml
                     {
                         a = null;
                     }
-                    catch (System.Security.SecurityException)
+                    catch (SecurityException)
                     {
                         a = null;
                     }
@@ -479,7 +477,7 @@ namespace System.Xaml
                         {
                             retassem = Assembly.Load(assemblyGivenName);
                         }
-                        catch (System.IO.FileNotFoundException)
+                        catch (FileNotFoundException)
                         {
                             // This may be a locally defined assembly that has not been created yet.
                             // To support these cases, just set a null assembly and return.  This

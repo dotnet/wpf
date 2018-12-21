@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -37,7 +34,7 @@ namespace System.Windows.Markup
         {
             if (member == null)
             {
-                throw new ArgumentNullException("member");
+                throw new ArgumentNullException(nameof(member));
             }
             _member = member;
         }
@@ -91,7 +88,7 @@ namespace System.Windows.Markup
 
                 if (serviceProvider == null)
                 {
-                    throw new ArgumentNullException("serviceProvider");
+                    throw new ArgumentNullException(nameof(serviceProvider));
                 }
 
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
@@ -182,7 +179,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 _member = value;
             }
@@ -196,7 +193,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 _memberType = value;
             }

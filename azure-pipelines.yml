@@ -9,9 +9,6 @@ variables:
   # clean the local repo on the build agents
   Build.Repository.Clean: true
   
-  # This project only builds a transport package
-  _IsShipping: false
-
   # Set some variables based on build conditions
   ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
     _HelixType: build/product

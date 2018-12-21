@@ -2,17 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Threading;
-using System.Xaml.Schema;
-using System.Windows.Markup;
+using System.Diagnostics;
+using System.Reflection;
 using System.Security;
-using System.Xaml;
-using System.Xaml.MS.Impl;
+using System.Threading;
+using System.Windows.Markup;
+using System.Xaml.Schema;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -49,11 +46,11 @@ namespace System.Xaml
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
             if (declaringType == null)
             {
-                throw new ArgumentNullException("declaringType");
+                throw new ArgumentNullException(nameof(declaringType));
             }
 
             _name = name;
@@ -81,11 +78,11 @@ namespace System.Xaml
         {
             if (propertyInfo == null)
             {
-                throw new ArgumentNullException("propertyInfo");
+                throw new ArgumentNullException(nameof(propertyInfo));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = propertyInfo.Name;
             _declaringType = schemaContext.GetXamlType(propertyInfo.DeclaringType);
@@ -115,11 +112,11 @@ namespace System.Xaml
         {
             if (eventInfo == null)
             {
-                throw new ArgumentNullException("eventInfo");
+                throw new ArgumentNullException(nameof(eventInfo));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             _name = eventInfo.Name;
             _declaringType = schemaContext.GetXamlType(eventInfo.DeclaringType);
@@ -152,11 +149,11 @@ namespace System.Xaml
         {
             if (attachablePropertyName == null)
             {
-                throw new ArgumentNullException("attachablePropertyName");
+                throw new ArgumentNullException(nameof(attachablePropertyName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
@@ -196,15 +193,15 @@ namespace System.Xaml
         {
             if (attachableEventName == null)
             {
-                throw new ArgumentNullException("attachableEventName");
+                throw new ArgumentNullException(nameof(attachableEventName));
             }
             if (adder == null)
             {
-                throw new ArgumentNullException("adder");
+                throw new ArgumentNullException(nameof(adder));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             ValidateSetter(adder, "adder");
 
@@ -1079,11 +1076,11 @@ namespace System.Xaml
 
         public static bool operator ==(XamlMember xamlMember1, XamlMember xamlMember2)
         {
-            if (object.ReferenceEquals(xamlMember1, xamlMember2))
+            if (ReferenceEquals(xamlMember1, xamlMember2))
             {
                 return true;
             }
-            if (object.ReferenceEquals(xamlMember1, null) || object.ReferenceEquals(xamlMember2, null))
+            if (ReferenceEquals(xamlMember1, null) || ReferenceEquals(xamlMember2, null))
             {
                 return false;
             }

@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 
@@ -26,7 +26,7 @@ namespace System.Xaml.Permissions
         {
             if (allowedAccess == null)
             {
-                throw new ArgumentNullException("allowedAccess");
+                throw new ArgumentNullException(nameof(allowedAccess));
             }
             Init(false, new XamlAccessLevel[] { allowedAccess });
         }
@@ -35,7 +35,7 @@ namespace System.Xaml.Permissions
         {
             if (allowedAccess == null)
             {
-                throw new ArgumentNullException("allowedAccess");
+                throw new ArgumentNullException(nameof(allowedAccess));
             }
             List<XamlAccessLevel> accessList = new List<XamlAccessLevel>(allowedAccess);
             foreach (XamlAccessLevel accessLevel in allowedAccess)
@@ -51,7 +51,7 @@ namespace System.Xaml.Permissions
 
 #if NETCOREAPP3_0
 
-        [Runtime.InteropServices.ComVisible(false)]
+        [ComVisible(false)]
         public override bool Equals(object obj)
         {
             IPermission perm = obj as IPermission;
@@ -83,7 +83,7 @@ namespace System.Xaml.Permissions
             return true;
         }
 
-        [Runtime.InteropServices.ComVisible(false)]
+        [ComVisible(false)]
         public override int GetHashCode()
         {
             // This implementation is only to silence a compiler warning
@@ -130,23 +130,23 @@ namespace System.Xaml.Permissions
         {
             if (elem == null)
             {
-                throw new ArgumentNullException("elem");
+                throw new ArgumentNullException(nameof(elem));
             }
             if (elem.Tag != XmlConstants.IPermission)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.IPermission), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.IPermission), nameof(elem));
             }
 
             string className = elem.Attribute(XmlConstants.Class);
             if (!className.StartsWith(GetType().FullName, false, TypeConverterHelper.InvariantEnglishUS))
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Class, GetType().FullName), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Class, GetType().FullName), nameof(elem));
             }
 
             string version = elem.Attribute(XmlConstants.Version);
             if (version != null && version != XmlConstants.VersionNumber)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Version, XmlConstants.VersionNumber), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Version, XmlConstants.VersionNumber), nameof(elem));
             }
 
             string unrestricted = elem.Attribute(XmlConstants.Unrestricted);
@@ -173,7 +173,7 @@ namespace System.Xaml.Permissions
         {
             if (requestedAccess == null)
             {
-                throw new ArgumentNullException("requestedAccess");
+                throw new ArgumentNullException(nameof(requestedAccess));
             }
             if (_isUnrestricted)
             {

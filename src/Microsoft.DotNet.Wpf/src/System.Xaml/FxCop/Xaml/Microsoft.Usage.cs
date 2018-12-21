@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 //***************************************************************************************************************************
-// Ignoring the return is intentional in all of the cases below.  Successful ETW registration isn’t critical for the app to continue running since it’s just for diagnostic purposes.
+// Ignoring the return is intentional in all of the cases below.  Successful ETW registration isnâ€™t critical for the app to continue running since itâ€™s just for diagnostic purposes.
 //***************************************************************************************************************************
 [module: SuppressMessage("Microsoft.Usage","CA1806:DoNotIgnoreMethodResults", MessageId="MS.Win32.ClassicEtw.UnregisterTraceGuids(System.UInt64)", Scope="member", Target="MS.Internal.Xaml.ClassicTraceProvider.#Finalize()")]
 [module: SuppressMessage("Microsoft.Usage","CA1806:DoNotIgnoreMethodResults", MessageId="MS.Win32.ClassicEtw.RegisterTraceGuidsW(MS.Win32.ClassicEtw+ControlCallback,System.IntPtr,System.Guid@,System.Int32,MS.Win32.ClassicEtw+TRACE_GUID_REGISTRATION@,System.String,System.String,System.UInt64@)", Scope="member", Target="MS.Internal.Xaml.ClassicTraceProvider.#Register(System.Guid)")]

@@ -12,13 +12,17 @@
 //  Created:   04/28/2005 Microsoft
 //
 
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
-using MS.Internal.Serialization;
-using System.Xaml.Replacements; //DateTimeConverter2
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Xaml;
-using System.Runtime.CompilerServices; //SRID
+using System.Xaml.Replacements;
+using MS.Internal.Serialization;
+
+//DateTimeConverter2
+
+//SRID
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -117,7 +121,7 @@ namespace System.Windows.Markup
         public static ValueSerializer GetSerializerFor(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             object value = _valueSerializers[type];
             if (value != null)
@@ -176,7 +180,7 @@ namespace System.Windows.Markup
             ValueSerializer result;
             if (descriptor == null)
             {
-                throw new ArgumentNullException("descriptor");
+                throw new ArgumentNullException(nameof(descriptor));
             }
             
             #pragma warning suppress 6506 // descriptor is obviously not null

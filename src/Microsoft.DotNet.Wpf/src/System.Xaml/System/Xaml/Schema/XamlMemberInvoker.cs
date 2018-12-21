@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
-using System.Xaml;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
@@ -34,7 +31,7 @@ namespace System.Xaml.Schema
         {
             if (member == null)
             {
-                throw new ArgumentNullException("member");
+                throw new ArgumentNullException(nameof(member));
             }
             _member = member;
         }
@@ -65,7 +62,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
@@ -96,7 +93,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingSetter == null)

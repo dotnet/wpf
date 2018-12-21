@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Reflection;
 using System.Security;
 
@@ -26,7 +25,7 @@ namespace System.Xaml.Permissions
         {
             if (assembly == null)
             {
-                throw new ArgumentNullException("assembly");
+                throw new ArgumentNullException(nameof(assembly));
             }
             return new XamlAccessLevel(assembly.FullName, null);
         }
@@ -35,7 +34,7 @@ namespace System.Xaml.Permissions
         {
             if (assemblyName == null)
             {
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
             }
             ValidateAssemblyName(assemblyName, "assemblyName");
             return new XamlAccessLevel(assemblyName.FullName, null);
@@ -45,7 +44,7 @@ namespace System.Xaml.Permissions
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
             return new XamlAccessLevel(type.Assembly.FullName, type.FullName);
         }
@@ -54,12 +53,12 @@ namespace System.Xaml.Permissions
         {
             if (assemblyQualifiedTypeName == null)
             {
-                throw new ArgumentNullException("assemblyQualifiedTypeName");
+                throw new ArgumentNullException(nameof(assemblyQualifiedTypeName));
             }
             int nameBoundary = assemblyQualifiedTypeName.IndexOf(',');
             if (nameBoundary < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedQualifiedTypeName, assemblyQualifiedTypeName), "assemblyQualifiedTypeName");
+                throw new ArgumentException(SR.Get(SRID.ExpectedQualifiedTypeName, assemblyQualifiedTypeName), nameof(assemblyQualifiedTypeName));
             }
             
             string typeName = assemblyQualifiedTypeName.Substring(0, nameBoundary).Trim();
@@ -95,13 +94,13 @@ namespace System.Xaml.Permissions
         {
             if (elem.Tag != XmlConstants.XamlAccessLevel)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.XamlAccessLevel), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.XamlAccessLevel), nameof(elem));
             }
             
             string assemblyNameString = elem.Attribute(XmlConstants.AssemblyName);
             if (assemblyNameString == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlMissingAttribute, XmlConstants.AssemblyName), "elem");
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlMissingAttribute, XmlConstants.AssemblyName), nameof(elem));
             }
             AssemblyName assemblyName = new AssemblyName(assemblyNameString);
             ValidateAssemblyName(assemblyName, "elem");

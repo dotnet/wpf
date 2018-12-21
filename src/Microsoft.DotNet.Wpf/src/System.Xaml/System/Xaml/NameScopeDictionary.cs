@@ -2,15 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Windows.Markup;
+using System.Xaml.MS.Impl;
+
 namespace System.Xaml
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Xaml.MS.Impl;
-    using System.Windows.Markup;
-
     //
     // The implementation for this class is taken directly from the source of NameScope, including the use
     // of HybridDictionary to match the performance semantics of 3.0 for the time being 
@@ -32,7 +31,7 @@ namespace System.Xaml
         {
             if (underlyingNameScope == null)
             {
-                throw new ArgumentNullException("underlyingNameScope");
+                throw new ArgumentNullException(nameof(underlyingNameScope));
             }
 
             _names = new FrugalObjectList<string>();
@@ -42,10 +41,10 @@ namespace System.Xaml
         public void RegisterName(string name, object scopedElement)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (scopedElement == null)
-                throw new ArgumentNullException("scopedElement");
+                throw new ArgumentNullException(nameof(scopedElement));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -86,7 +85,7 @@ namespace System.Xaml
         public void UnregisterName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
@@ -112,7 +111,7 @@ namespace System.Xaml
         public object FindName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name == string.Empty)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));

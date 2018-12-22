@@ -42,7 +42,10 @@ namespace System.Xaml.Replacements
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            return _dateTimeValueSerializer.ConvertFromString( value as string, _valueSerializerContext );
+            string stringValue = value as string;
+            if (stringValue == null)
+                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "String"));
+            return _dateTimeValueSerializer.ConvertFromString(stringValue, _valueSerializerContext );
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)

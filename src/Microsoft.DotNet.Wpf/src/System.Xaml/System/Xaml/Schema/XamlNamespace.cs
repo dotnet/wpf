@@ -11,7 +11,7 @@ using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml.Schema
 {
-    class XamlNamespace
+    internal class XamlNamespace
     {
         public readonly XamlSchemaContext SchemaContext;
 
@@ -46,21 +46,9 @@ namespace System.Xaml.Schema
             _typeCache = XamlSchemaContext.CreateDictionary<string, XamlType>();
         }
 
-        public bool IsResolved
-        {
-            get { return (null != _assemblyNamespaces); }
-        }
+        public bool IsResolved => _assemblyNamespaces != null;
 
-        public ICollection<XamlType> GetAllXamlTypes()
-        {
-            if (_allPublicTypes == null)
-            {
-                _allPublicTypes = LookupAllTypes();
-            }
-            return _allPublicTypes;
-        }
-
-        #region GetXamlType
+        public ICollection<XamlType> GetAllXamlTypes() => _allPublicTypes ??= LookupAllTypes();
 
         public XamlType GetXamlType(string typeName, params XamlType[] typeArgs)
         {
@@ -73,11 +61,9 @@ namespace System.Xaml.Schema
             {
                 return TryGetXamlType(typeName) ?? TryGetXamlType(GetTypeExtensionName(typeName));
             }
-            else
-            {
-                Type[] clrTypeArgs = ConvertArrayOfXamlTypesToTypes(typeArgs);
-                return TryGetXamlType(typeName, clrTypeArgs) ?? TryGetXamlType(GetTypeExtensionName(typeName), clrTypeArgs);
-            }
+            
+            Type[] clrTypeArgs = ConvertArrayOfXamlTypesToTypes(typeArgs);
+            return TryGetXamlType(typeName, clrTypeArgs) ?? TryGetXamlType(GetTypeExtensionName(typeName), clrTypeArgs);
         }
 
         private XamlType TryGetXamlType(string typeName)
@@ -98,43 +84,44 @@ namespace System.Xaml.Schema
 
             // And save it in our cache
             xamlType = SchemaContext.GetXamlType(type);
-            if (xamlType != null)
+            if (xamlType == null)
             {
-                xamlType = XamlSchemaContext.TryAdd(_typeCache, typeName, xamlType);
+                return null;
             }
-            return xamlType;
+
+            return XamlSchemaContext.TryAdd(_typeCache, typeName, xamlType);
         }
 
         private XamlType TryGetXamlType(string typeName, Type[] typeArgs)
         {
-            // Can't get an array of open generic and then call MakeGenericType on it.
-            // So we need to process subscripts on generics ourselves.
+            Debug.Assert(typeArgs.Length > 0, "This method should only be called for generic types.");
+
+            // It is not possible to get an array of open generic and then call
+            // MakeGenericType on it so we need to process array subscripts.
             string subscript;
             typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
             typeName = MangleGenericTypeName(typeName, typeArgs.Length);
 
-            // Get the open generic
-            Type openType = null;
+            // Get the open generic type.
             XamlType openXamlType = TryGetXamlType(typeName);
-            if (openXamlType != null)
-            {
-                openType = openXamlType.UnderlyingType;
-            }
+            Type openType = openXamlType?.UnderlyingType;
             if (openType == null)
             {
                 return null;
             }
 
-            // Close it
+            // Close the open generic type.
             Type closedType = openType.MakeGenericType(typeArgs);
             if (!string.IsNullOrEmpty(subscript))
             {
                 closedType = MakeArrayType(closedType, subscript);
                 if (closedType == null)
                 {
-                    return null; // invalid subscript
+                    // Invalid array subscript.
+                    return null;
                 }
             }
+
             return SchemaContext.GetXamlType(closedType);
         }
 
@@ -147,8 +134,10 @@ namespace System.Xaml.Schema
                 int rank = GenericTypeNameScanner.ParseSubscriptSegment(subscript, ref pos);
                 if (rank == 0)
                 {
-                    return null; // subscript parse error
+                    // Invalid array subscript.
+                    return null;
                 }
+
                 type = (rank == 1) ? type.MakeArrayType() : type.MakeArrayType(rank);
             }
             while (pos < subscript.Length);
@@ -157,12 +146,12 @@ namespace System.Xaml.Schema
 
         private static string MangleGenericTypeName(string typeName, int paramNum)
         {
-            return (paramNum == 0) ? null : typeName + KnownStrings.GraveQuote + paramNum;
+            return typeName + KnownStrings.GraveQuote + paramNum;
         }
 
         private Type[] ConvertArrayOfXamlTypesToTypes(XamlType[] typeArgs)
         {
-            Type[] clrTypeArgs = new Type[typeArgs.Length];
+            var clrTypeArgs = new Type[typeArgs.Length];
             for (int n = 0; n < typeArgs.Length; n++)
             {
                 // Checking for nulls and unknowns is done in public API layer before we ever get here
@@ -174,23 +163,12 @@ namespace System.Xaml.Schema
             return clrTypeArgs;
         }
 
-        #endregion
-
         internal int RevisionNumber
         {
             // The only external mutation we allow is adding new namespaces. So the count of
             // namespaces also serves as a revision number.
-            get { return (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0; }
+            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0;
         }
-
-        // ================ Internal Static functions ======================================
-
-        internal static Type GetTypeFromFullTypeName(string fullName)
-        {
-            return Type.GetType(fullName);
-        }
-
-        // ======================================================
 
         private Type TryGetType(string typeName)
         {
@@ -275,7 +253,9 @@ namespace System.Xaml.Schema
 
                 Type type = asm.GetType(longName);
                 if (type != null)
+                {
                     return type;
+                }
             }
             return null;
         }
@@ -301,9 +281,6 @@ namespace System.Xaml.Schema
             _assemblyNamespaces = assemblyNamespacesCopy;
         }
 
-        private string GetTypeExtensionName(string typeName)
-        {
-            return typeName + KnownStrings.Extension;
-        }
+        private string GetTypeExtensionName(string typeName) => typeName + KnownStrings.Extension;
     }
 }

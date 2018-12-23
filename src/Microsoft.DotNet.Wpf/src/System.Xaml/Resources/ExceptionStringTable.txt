@@ -161,11 +161,6 @@ ElementBodyRuleException=ElementBody ::= ATTRIBUTE* ( PropertyElement | Content 
 NonemptyPropertyElementRuleException=NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.
 PropertyElementRuleException=PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement
 
-
-; ClrNamespaceUriParser
-MissingTagInNamespace=Missing '{0}' in URI '{1}'.
-AssemblyTagMissing=Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.
-
 ; TypeReflector
 UnknownAttributeProperty=['{0}'('{1}')] on '{2}' is not a known property.
 NotDeclaringTypeAttributeProperty=['{0}'('{1}')] on '{2}' is not a property declared on this type.

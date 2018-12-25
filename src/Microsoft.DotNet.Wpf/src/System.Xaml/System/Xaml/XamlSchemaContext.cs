@@ -646,7 +646,7 @@ namespace System.Xaml
             return (XamlValueConverter<TConverterBase>)result;
         }
 
-        public virtual XamlMember GetProperty(PropertyInfo pi)
+        internal virtual XamlMember GetProperty(PropertyInfo pi)
         {
             var xpik = new ReferenceEqualityTuple<MemberInfo, MemberInfo>(pi, null);
             XamlMember member;
@@ -671,7 +671,7 @@ namespace System.Xaml
         }
 
         // Caller responsible for ensuring getter and setter not null
-        public virtual XamlMember GetAttachableProperty(string name, MethodInfo getter, MethodInfo setter)
+        internal virtual XamlMember GetAttachableProperty(string name, MethodInfo getter, MethodInfo setter)
         {
             XamlMember property;
             var xpik = new ReferenceEqualityTuple<MemberInfo, MemberInfo>(getter, setter);

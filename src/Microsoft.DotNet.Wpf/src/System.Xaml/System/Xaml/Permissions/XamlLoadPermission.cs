@@ -17,6 +17,12 @@ namespace System.Xaml.Permissions
         private static IList<XamlAccessLevel> s_emptyAccessLevel;
         private bool _isUnrestricted;
 
+        private const string IPermissionTagName = "IPermission";
+        private const string ClassAttributeName = "class";
+        private const string VersionAttributeName = "version";
+        private const string VersionNumber = "1";
+        private const string UnrestrictedAttributeName = "Unrestricted";
+
         public XamlLoadPermission(PermissionState state)
         {
             Init(state == PermissionState.Unrestricted, null);
@@ -28,6 +34,7 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException(nameof(allowedAccess));
             }
+
             Init(false, new XamlAccessLevel[] { allowedAccess });
         }
 
@@ -37,20 +44,21 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException(nameof(allowedAccess));
             }
-            List<XamlAccessLevel> accessList = new List<XamlAccessLevel>(allowedAccess);
+
+            var accessList = new List<XamlAccessLevel>(allowedAccess);
             foreach (XamlAccessLevel accessLevel in allowedAccess)
             {
                 if (accessLevel == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "allowedAccess"));
+                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, nameof(allowedAccess)), nameof(allowedAccess));
                 }
+
                 accessList.Add(accessLevel);
             }
             Init(false, accessList);
         }
 
 #if NETCOREAPP3_0
-
         [ComVisible(false)]
         public override bool Equals(object obj)
         {
@@ -84,12 +92,7 @@ namespace System.Xaml.Permissions
         }
 
         [ComVisible(false)]
-        public override int GetHashCode()
-        {
-            // This implementation is only to silence a compiler warning
-            return base.GetHashCode();
-        }
-
+        public override int GetHashCode() => base.GetHashCode();
 #endif 
 
         // copy ctor. We can reuse the list of the existing instance, because it is a
@@ -98,7 +101,7 @@ namespace System.Xaml.Permissions
         private XamlLoadPermission(XamlLoadPermission other)
         {
             _isUnrestricted = other._isUnrestricted;
-            this.AllowedAccess = other.AllowedAccess;
+            AllowedAccess = other.AllowedAccess;
         }
 
         private void Init(bool isUnrestricted, IList<XamlAccessLevel> allowedAccess)
@@ -121,10 +124,7 @@ namespace System.Xaml.Permissions
 
         public IList<XamlAccessLevel> AllowedAccess { get; private set; } // ReadOnlyCollection
 
-        public override IPermission Copy()
-        {
-            return new XamlLoadPermission(this);
-        }
+        public override IPermission Copy() => new XamlLoadPermission(this);
 
         public override void FromXml(SecurityElement elem)
         {
@@ -132,24 +132,24 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException(nameof(elem));
             }
-            if (elem.Tag != XmlConstants.IPermission)
+            if (elem.Tag != IPermissionTagName)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.IPermission), nameof(elem));
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, IPermissionTagName), nameof(elem));
             }
 
-            string className = elem.Attribute(XmlConstants.Class);
+            string className = elem.Attribute(ClassAttributeName);
             if (!className.StartsWith(GetType().FullName, false, TypeConverterHelper.InvariantEnglishUS))
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Class, GetType().FullName), nameof(elem));
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, ClassAttributeName, GetType().FullName), nameof(elem));
             }
 
-            string version = elem.Attribute(XmlConstants.Version);
-            if (version != null && version != XmlConstants.VersionNumber)
+            string version = elem.Attribute(VersionAttributeName);
+            if (version != null && version != VersionNumber)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, XmlConstants.Version, XmlConstants.VersionNumber), nameof(elem));
+                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, VersionAttributeName, VersionNumber), nameof(elem));
             }
 
-            string unrestricted = elem.Attribute(XmlConstants.Unrestricted);
+            string unrestricted = elem.Attribute(UnrestrictedAttributeName);
             if (unrestricted != null && bool.Parse(unrestricted))
             {
                 Init(true, null);
@@ -175,6 +175,7 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException(nameof(requestedAccess));
             }
+
             if (_isUnrestricted)
             {
                 return true;
@@ -195,20 +196,21 @@ namespace System.Xaml.Permissions
             {
                 return null;
             }
-            XamlLoadPermission other = CastPermission(target, "target");
+
+            XamlLoadPermission other = CastPermission(target, nameof(target));
             if (other.IsUnrestricted())
             {
-                return this.Copy();
+                return Copy();
             }
-            if (this.IsUnrestricted())
+            if (IsUnrestricted())
             {
                 return other.Copy();
             }
 
-            List<XamlAccessLevel> result = new List<XamlAccessLevel>();
+            var result = new List<XamlAccessLevel>();
             // We could optimize this with a hash, but we don't expect people to be creating
             // large unions of access levels.
-            foreach (XamlAccessLevel accessLevel in this.AllowedAccess)
+            foreach (XamlAccessLevel accessLevel in AllowedAccess)
             {
                 // First try the full access level
                 if (other.Includes(accessLevel))
@@ -232,20 +234,20 @@ namespace System.Xaml.Permissions
         {
             if (target == null)
             {
-                bool isEmpty = !IsUnrestricted() && AllowedAccess.Count == 0;
-                return isEmpty;
+                return !IsUnrestricted() && AllowedAccess.Count == 0;
             }
-            XamlLoadPermission other = CastPermission(target, "target");
+
+            XamlLoadPermission other = CastPermission(target, nameof(target));
             if (other.IsUnrestricted())
             {
                 return true;
             }
-            if (this.IsUnrestricted())
+            if (IsUnrestricted())
             {
                 return false;
             }
 
-            foreach (XamlAccessLevel accessLevel in this.AllowedAccess)
+            foreach (XamlAccessLevel accessLevel in AllowedAccess)
             {
                 if (!other.Includes(accessLevel))
                 {
@@ -257,41 +259,42 @@ namespace System.Xaml.Permissions
 
         public override SecurityElement ToXml()
         {
-            SecurityElement securityElement = new SecurityElement(XmlConstants.IPermission);
-            securityElement.AddAttribute(XmlConstants.Class, this.GetType().AssemblyQualifiedName);
-            securityElement.AddAttribute(XmlConstants.Version, XmlConstants.VersionNumber);
+            var element = new SecurityElement(IPermissionTagName);
+            element.AddAttribute(ClassAttributeName, GetType().AssemblyQualifiedName);
+            element.AddAttribute(VersionAttributeName, VersionNumber);
 
             if (IsUnrestricted())
             {
-                securityElement.AddAttribute(XmlConstants.Unrestricted, Boolean.TrueString);
+                element.AddAttribute(UnrestrictedAttributeName, Boolean.TrueString);
             }
             else
             {
                 foreach (XamlAccessLevel accessLevel in AllowedAccess)
                 {
-                    securityElement.AddChild(accessLevel.ToXml());
+                    element.AddChild(accessLevel.ToXml());
                 }
             }
 
-            return securityElement;
+            return element;
         }
 
         public override IPermission Union(IPermission other)
         {
             if (other == null)
             {
-                return this.Copy();
+                return Copy();
             }
-            XamlLoadPermission xamlOther = CastPermission(other, "other");
+
+            XamlLoadPermission xamlOther = CastPermission(other, nameof(other));
             if (IsUnrestricted() || xamlOther.IsUnrestricted())
             {
                 return new XamlLoadPermission(PermissionState.Unrestricted);
             }
 
-            List<XamlAccessLevel> mergedAccess = new List<XamlAccessLevel>(this.AllowedAccess);
+            var mergedAccess = new List<XamlAccessLevel>(AllowedAccess);
             foreach (XamlAccessLevel accessLevel in xamlOther.AllowedAccess)
             {
-                if (!this.Includes(accessLevel))
+                if (!Includes(accessLevel))
                 {
                     mergedAccess.Add(accessLevel);
                     if (accessLevel.PrivateAccessToTypeName != null)
@@ -312,29 +315,16 @@ namespace System.Xaml.Permissions
             return new XamlLoadPermission(mergedAccess);
         }
         
-        public bool IsUnrestricted()
-        {
-            return _isUnrestricted;
-        }
+        public bool IsUnrestricted() => _isUnrestricted;
 
         private static XamlLoadPermission CastPermission(IPermission other, string argName)
         {
-            XamlLoadPermission result = other as XamlLoadPermission;
-            if (result == null)
+            if (!(other is XamlLoadPermission result))
             {
                 throw new ArgumentException(SR.Get(SRID.ExpectedLoadPermission), argName);
             }
+
             return result;
         }
-
-        private static class XmlConstants
-        {
-            public const string IPermission = "IPermission";
-            public const string Class = "class";
-            public const string Version = "version";
-            public const string VersionNumber = "1";
-            public const string Unrestricted = "Unrestricted";
-        }
     }
-
 }

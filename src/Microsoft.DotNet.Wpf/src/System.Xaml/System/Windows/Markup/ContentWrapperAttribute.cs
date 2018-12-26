@@ -50,6 +50,6 @@ namespace System.Windows.Markup
         /// <summary>
         /// Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() => ContentWrapper.GetHashCode();
+        public override int GetHashCode() => ContentWrapper?.GetHashCode() ?? 0;
     }
 }

@@ -138,7 +138,7 @@ namespace System.Xaml.Permissions
             }
 
             string className = elem.Attribute(ClassAttributeName);
-            if (!className.StartsWith(GetType().FullName, false, TypeConverterHelper.InvariantEnglishUS))
+            if (className == null || !className.StartsWith(GetType().FullName, false, TypeConverterHelper.InvariantEnglishUS))
             {
                 throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedValue, className, ClassAttributeName, GetType().FullName), nameof(elem));
             }

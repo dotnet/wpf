@@ -190,14 +190,13 @@ namespace System.Xaml.Schema
         [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
-            ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
+            ref bool? methodIsSystemXamlNonPublic, MethodInfo method)
         {
-            if (methodIsSystemXamlNonPublic == ThreeValuedBool.NotSet)
+            if (!methodIsSystemXamlNonPublic.HasValue)
             {
-                bool result = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
-                methodIsSystemXamlNonPublic = result ? ThreeValuedBool.True : ThreeValuedBool.False;
+                methodIsSystemXamlNonPublic = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
             }
-            return methodIsSystemXamlNonPublic == ThreeValuedBool.True;
+            return methodIsSystemXamlNonPublic.Value;
         }
         // ^^^^^----- End of unused members.  -----^^^^^
 

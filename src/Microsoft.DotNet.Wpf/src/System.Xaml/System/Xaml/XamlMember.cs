@@ -28,7 +28,7 @@ namespace System.Xaml
         private readonly MemberType _memberType;
 
         // Idempotent
-        private ThreeValuedBool _isNameValid;
+        private bool? _isNameValid;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
         private MemberReflector _reflector;
@@ -262,11 +262,11 @@ namespace System.Xaml
         {
             get
             {
-                if (_isNameValid == ThreeValuedBool.NotSet)
+                if (!_isNameValid.HasValue)
                 {
-                    _isNameValid = XamlName.IsValidXamlName(_name) ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isNameValid = XamlName.IsValidXamlName(_name);
                 }
-                return _isNameValid == ThreeValuedBool.True;
+                return _isNameValid.Value;
             }
         }
 

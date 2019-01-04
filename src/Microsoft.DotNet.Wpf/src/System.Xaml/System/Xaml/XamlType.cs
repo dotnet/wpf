@@ -43,8 +43,8 @@ namespace System.Xaml
         
         // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
-        ReadOnlyCollection<string> _namespaces;
-        ThreeValuedBool _isNameValid;
+        private ReadOnlyCollection<string> _namespaces;
+        private bool? _isNameValid;
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
@@ -145,11 +145,11 @@ namespace System.Xaml
         {
             get
             {
-                if (_isNameValid == ThreeValuedBool.NotSet)
+                if (!_isNameValid.HasValue)
                 {
-                    _isNameValid = XamlName.IsValidXamlName(_name) ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isNameValid = XamlName.IsValidXamlName(_name);
                 }
-                return _isNameValid == ThreeValuedBool.True;
+                return _isNameValid.Value;
             }
         }
 

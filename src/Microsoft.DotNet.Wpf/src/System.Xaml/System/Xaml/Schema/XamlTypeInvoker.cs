@@ -40,14 +40,14 @@ namespace System.Xaml.Schema
         ///           and thus bypass security checks.
         /// </SecurityNote>
         [SecurityCritical]
-        private ThreeValuedBool _isPublic;
+        private bool? _isPublic;
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
         /// <SecurityNote>
         /// Critical: Used to determine whether we need to demand ReflectionPermission before instantiating this type
         /// </SecurityNote>
         [SecurityCritical]
-        private ThreeValuedBool _isInSystemXaml;
+        private bool? _isInSystemXaml;
         // ^^^^^----- End of unused members.  -----^^^^^
 
         protected XamlTypeInvoker()
@@ -276,13 +276,12 @@ namespace System.Xaml.Schema
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
             get
             {
-                if (_isInSystemXaml == ThreeValuedBool.NotSet)
+                if (!_isInSystemXaml.HasValue)
                 {
                     Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
-                    bool result = SafeReflectionInvoker.IsInSystemXaml(type);
-                    _isInSystemXaml = result ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isInSystemXaml = SafeReflectionInvoker.IsInSystemXaml(type);
                 }
-                return _isInSystemXaml == ThreeValuedBool.True;
+                return _isInSystemXaml.Value;
             }
         }
         // ^^^^^----- End of unused members.  -----^^^^^
@@ -297,12 +296,11 @@ namespace System.Xaml.Schema
             [SecuritySafeCritical]
             get
             {
-                if (_isPublic == ThreeValuedBool.NotSet)
+                if (!_isPublic.HasValue)
                 {
-                    Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
-                    _isPublic = type.IsVisible ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isPublic = _xamlType.UnderlyingType.UnderlyingSystemType.IsVisible;
                 }
-                return _isPublic == ThreeValuedBool.True;
+                return _isPublic.Value;
             }
         }
 
@@ -331,7 +329,7 @@ namespace System.Xaml.Schema
 
         private static class DefaultCtorXamlActivator
         {
-            private static ThreeValuedBool s_securityFailureWithCtorDelegate;
+            private static bool? s_securityFailureWithCtorDelegate;
             private static ConstructorInfo s_actionCtor =
                 typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
 
@@ -392,16 +390,15 @@ namespace System.Xaml.Schema
                 {
                     return false;
                 }
-                if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
+                if (!s_securityFailureWithCtorDelegate.HasValue)
                 {
-                    s_securityFailureWithCtorDelegate =
 #if PARTIALTRUST
-                        !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted() ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    s_securityFailureWithCtorDelegate = !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted();
 #else
-                        ThreeValuedBool.False;
+                    s_securityFailureWithCtorDelegate = false;
 #endif
                 }
-                if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
+                if (s_securityFailureWithCtorDelegate == true)
                 {
                     return false;
                 }
@@ -422,7 +419,7 @@ namespace System.Xaml.Schema
                     {
                         // We don't want to bypass security checks for a critical or demanding ctor,
                         // so just treat it as if it were non-public
-                        type._isPublic = ThreeValuedBool.False;
+                        type._isPublic = false;
                         return false;
                     }
                     IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
@@ -435,7 +432,7 @@ namespace System.Xaml.Schema
                 }
                 catch (SecurityException)
                 {
-                    s_securityFailureWithCtorDelegate = ThreeValuedBool.True;
+                    s_securityFailureWithCtorDelegate = true;
                     return false;
                 }
             }

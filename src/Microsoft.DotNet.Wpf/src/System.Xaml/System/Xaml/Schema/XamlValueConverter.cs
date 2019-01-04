@@ -12,7 +12,7 @@ namespace System.Xaml.Schema
     {
         // Assignment should be idempotent
         private TConverterBase _instance;
-        private ThreeValuedBool _isPublic;
+        private bool? _isPublic;
 
         private volatile bool _instanceIsSet; // volatile for the same reason as valid flags in TypeReflector/MemberReflector
 
@@ -58,11 +58,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_isPublic == ThreeValuedBool.NotSet)
+                if (!_isPublic.HasValue)
                 {
-                    _isPublic = (ConverterType == null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isPublic = ConverterType == null || ConverterType.IsVisible;
                 }
-                return _isPublic == ThreeValuedBool.True;
+                return _isPublic.Value;
             }
         }
 

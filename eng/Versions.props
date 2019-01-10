@@ -4,10 +4,32 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>prerelease</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemSecurityVersion>4.5.0</SystemSecurityVersion>
-    <SystemReflectionEmitVersion>4.3.0</SystemReflectionEmitVersion>
-    <XUnitVersion>2.4.0</XUnitVersion>
+  </PropertyGroup>
+  <!-- NuGet Package Versions -->
+  <PropertyGroup>
+    <!-- Packages that come from https://github.com/dotnet/corefx -->
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview.19060.1</MicrosoftWin32RegistryPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview.19060.1</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview.19060.1</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview.19060.1</SystemReflectionEmitPackageVersion>
+    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview.19060.1</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview.19060.1</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview.19060.1</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview.19060.1</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview.19060.1</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview.19060.1</SystemWindowsExtensionsPackageVersion>
+    <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+    <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
+    <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+    <SystemCodeDomPackageVersion>4.4.0</SystemCodeDomPackageVersion>
+    <!-- Other Packages that require manual updating-->
+    <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
+    <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
+    <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
+    <SystemReflectionPackageVersion>4.3.0</SystemReflectionPackageVersion>
+    <SystemSecurityPackageVersion>4.5.0</SystemSecurityPackageVersion>
     <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
+    <XUnitVersion>2.4.0</XUnitVersion>
   </PropertyGroup>
 </Project>

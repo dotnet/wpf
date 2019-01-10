@@ -32,4 +32,8 @@
     <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- This is required to restore System.Reflection.Typeloader successfully -->
+    <RestoreSources>$(RestoreSources);https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json</RestoreSources>
+  </PropertyGroup>
 </Project>

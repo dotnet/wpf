@@ -13,6 +13,10 @@ See [Developer Guide](developer-guide.md) to learn how to develop changes for th
 
 This project follows the general [.NET Core Contribution Guidelines](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/contributing.md). The contribution bar from the general contribution guidelines is copied below.
 
+## Do not change files in the `Shared` directory
+
+The directory [`src/Microsoft.DotNet.Wpf/src/Shared`](https://github.com/dotnet/wpf/tree/master/src/Microsoft.DotNet.Wpf/src/Shared) contains files that are shared between the public GitHub repo and the internal WPF repos. Changes to files in this directory will *not* be accepted since they also affect internal code. Once all the appropriate source has been published to the public repo, this restriction will no longer be needed.
+
 ## Contribution "Bar"
 
 Project maintainers will consider changes that improve the product or fix known bugs (please file issues to make bugs "known").

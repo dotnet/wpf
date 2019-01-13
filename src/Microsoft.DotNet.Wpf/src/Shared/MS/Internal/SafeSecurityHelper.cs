@@ -6,12 +6,15 @@
 // History:
 //   10/15/04:    Microsoft        Created
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security;
+using System.Security.Permissions;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
-
 #if SYSTEM_XAML
 using TypeConverterHelper = System.Xaml.TypeConverterHelper;
 #else
@@ -483,9 +486,9 @@ namespace System.Xaml
 
         public static bool operator ==(WeakRefKey left, WeakRefKey right)
         {
-            if (ReferenceEquals(left, null))
+            if (object.ReferenceEquals(left, null))
             {
-                return ReferenceEquals(right, null);
+                return object.ReferenceEquals(right, null);
             }
             return left.Equals(right);
         }

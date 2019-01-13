@@ -37,11 +37,6 @@
         <target state="new">Array Add method is not implemented.</target>
         <note />
       </trans-unit>
-      <trans-unit id="AssemblyTagMissing">
-        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
-        <target state="new">Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="AttachableEventNotImplemented">
         <source>Attachable events are not implemented.</source>
         <target state="new">Attachable events are not implemented.</target>
@@ -640,11 +635,6 @@
       <trans-unit id="MissingPropertyCaseClrType">
         <source>Missing case in ClrType 'Member' lookup.</source>
         <target state="new">Missing case in ClrType 'Member' lookup.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MissingTagInNamespace">
-        <source>Missing '{0}' in URI '{1}'.</source>
-        <target state="new">Missing '{0}' in URI '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingTypeConverter">

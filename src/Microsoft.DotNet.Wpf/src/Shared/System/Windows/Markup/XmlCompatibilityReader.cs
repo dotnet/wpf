@@ -2,16 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
+using System;
 using System.Xml;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Diagnostics;
+using System.Threading;
+
+#if SYSTEM_XAML
+using System.Xaml;
+#endif
 
 #if PBTCOMPILER
 using MS.Utility;
 namespace MS.Internal.Markup
 #elif SYSTEM_XAML
+using System.Windows;
 
 namespace System.Xaml
 #else
@@ -218,7 +225,7 @@ namespace System.Windows.Markup
             string namespaceName = NamespaceURI;
             bool result = false;
 
-            if (ReferenceEquals(namespaceName, CompatibilityUri))
+            if (object.ReferenceEquals(namespaceName, CompatibilityUri))
             {
                 // if the element is a markup-compatibility element, we get the appropriate handler for
                 // the element type, and call the appropriate delegate.  If the element is not recognized
@@ -304,12 +311,12 @@ namespace System.Windows.Markup
             string namespaceName = NamespaceURI;
             bool result = false;  // return value
 
-            if (ReferenceEquals(namespaceName, CompatibilityUri))
+            if (object.ReferenceEquals(namespaceName, CompatibilityUri))
             {
                 // if the element is a markup-compatibility element, pop a scope, decrement the
                 // depth offset and read the next element.
                 string elementName = Reader.LocalName;
-                if (ReferenceEquals(elementName, AlternateContent))
+                if (object.ReferenceEquals(elementName, AlternateContent))
                 {
                     if (!Scope.ChoiceSeen)
                     {
@@ -717,14 +724,14 @@ namespace System.Windows.Markup
         /// <summary>
         /// Answer the encoding of the underlying xaml stream
         /// </summary>
-        internal Encoding Encoding
+        internal System.Text.Encoding Encoding
         {
             get
             {
                 XmlTextReader textReader = Reader as XmlTextReader;
                 if (textReader == null)
                 {
-                    return new UTF8Encoding(true, true);
+                    return new System.Text.UTF8Encoding(true, true);
                 }
                 else
                 {
@@ -921,7 +928,7 @@ namespace System.Windows.Markup
             bool result;
             if (IsNamespaceKnown(namespaceName))
             {
-                result = ReferenceEquals(namespaceName, CompatibilityUri);
+                result = object.ReferenceEquals(namespaceName, CompatibilityUri);
             }
             else
             {
@@ -1063,7 +1070,7 @@ namespace System.Windows.Markup
                     if (ShouldIgnoreNamespace(namespaceName))
                     {
                         // check each attribute's namespace to see if it should be ignored
-                        if (ReferenceEquals(namespaceName, CompatibilityUri))
+                        if (object.ReferenceEquals(namespaceName, CompatibilityUri))
                         {
                             // if the attribute is in the markup-compatibility namespace
                             // find and call the appropriate attribute handler callback.

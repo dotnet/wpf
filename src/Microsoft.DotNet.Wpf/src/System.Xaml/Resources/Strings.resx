@@ -507,12 +507,6 @@
   <data name="PropertyElementRuleException" xml:space="preserve">
     <value>PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</value>
   </data>
-  <data name="MissingTagInNamespace" xml:space="preserve">
-    <value>Missing '{0}' in URI '{1}'.</value>
-  </data>
-  <data name="AssemblyTagMissing" xml:space="preserve">
-    <value>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</value>
-  </data>
   <data name="UnknownAttributeProperty" xml:space="preserve">
     <value>['{0}'('{1}')] on '{2}' is not a known property.</value>
   </data>

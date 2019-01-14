@@ -18,16 +18,15 @@
     <SystemSecurityPermissionsPackageVersion>4.6.0-preview.19060.1</SystemSecurityPermissionsPackageVersion>
     <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview.19060.1</SystemSecurityPrincipalWindowsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>4.6.0-preview.19060.1</SystemWindowsExtensionsPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview.19060.1</SystemCodeDomPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/corefxlab -->
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
-    <SystemCodeDomPackageVersion>4.4.0</SystemCodeDomPackageVersion>
+    <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
     <!-- Other Packages that require manual updating-->
     <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <SystemReflectionPackageVersion>4.3.0</SystemReflectionPackageVersion>
-    <SystemSecurityPackageVersion>4.5.0</SystemSecurityPackageVersion>
     <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.4.0</XUnitVersion>

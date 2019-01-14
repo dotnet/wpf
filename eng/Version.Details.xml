@@ -46,5 +46,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha></Sha>
     </Dependency>
+      <Dependency Name="System.CodeDom" Version="4.6.0-preview.19060.1">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha></Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

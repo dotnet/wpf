@@ -8,42 +8,83 @@ parameters:
   # Defaults to true
   runAsPublic: true
 
-# Call build.yml, which runs common build tasks
-phases:
-- template: /eng/build.yml
+jobs:
+- template: /eng/common/templates/jobs/job.yml
   parameters:
-    name: Windows_NT
-    runAsPublic: ${{ parameters.runAsPublic }}
-    queue:
-      name: ${{ parameters.agentPool }}
-      parallel: 99
-      matrix:
-        Build_Debug_x86:
-          _BuildConfig: Debug
-          # overwrite some values when building debug
-          _PublishType: none
-          _SignType: test
-          _DotNetPublishToBlobFeed : false
-          _Platform: x86
-        Build_Debug_x64:
-          _BuildConfig: Debug
-          # overwrite some values when building debug
-          _PublishType: none
-          _SignType: test
-          _DotNetPublishToBlobFeed : false
-          _Platform: x64
-        Build_Release_x86:
-          _BuildConfig: Release
-          _Platform: x86
-        Build_Release_x64:
-          _BuildConfig: Release
-          _Platform: x64
+    enableMicrobuild: true
+    enablePublishBuildArtifacts: true
+    enablePublishTestResults: true
+    enablePublishBuildAssets: true
+    enableTelemetry: true
+    helixRepo: dotnet/wpf
 
-# only publish build assets if we're running internally
-- ${{ if eq(parameters.runAsPublic, 'false') }}:
-  - template: /eng/common/templates/phases/publish-build-assets.yml
-    parameters:
-      dependsOn: Windows_NT
-      queue:
-        name: Hosted VS2017
-      configuration: Debug
+    jobs:
+    - job: Windows_NT
+      pool: ${{ parameters.agentPool }}
+      variables:
+        # needed for signing
+        -name: _TeamName
+         value: DotNetCore
+        -name: _SignType
+         value: test
+        -name: _SignArgs
+         value: ''
+
+        # needed for darc (dependency flow) publishing
+        -name: _PublishType
+         value: none
+        -name: _DotNetPublishToBlobFeed
+         value: false
+        -name: _PublishArgs
+         value: ''
+        -name: _OfficialBuildIdArgs
+         value: ''
+
+        # Override some values if we're building internally
+        - ${{ if eq(parameters.runAsPublic, 'false') }}:
+          # note: You have to use list syntax here (-name: value) or you will get errors about declaring the same variable multiple times
+          - name: _PublishType
+            value: blob
+          - name: _SignType
+            value: real
+          - name: _DotNetPublishToBlobFeed
+            value: true
+          - group: DotNet-Blob-Feed
+          - group: DotNet-Symbol-Server-Pats
+          - name: _PublishBlobFeedUrl
+            value: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
+
+          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
+          # until the agent is running on the machine. They can be overridden any time before they are resolved,
+          # like in the job matrix below (see Build_Debug)
+          - name: _SignArgs
+            value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
+          - name: _PublishArgs
+            value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
+              /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
+              /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+              /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
+              /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
+          - name: _OfficialBuildIdArgs
+            value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
+      strategy:
+        matrix:
+          Build_Debug:
+            _BuildConfig: Debug
+            # override some variables for debug
+            _PublishType: none
+            _SignType: test
+            _DotNetPublishToBlobFeed : false
+          Build_Release:
+            _BuildConfig: Release
+      steps:
+      - checkout: self
+        clean: true
+      # Use utility script to run script command dependent on agent OS.
+      - script: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+        displayName: Windows Build / Publish

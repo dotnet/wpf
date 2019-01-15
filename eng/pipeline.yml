@@ -9,7 +9,7 @@ parameters:
   runAsPublic: true
 
 jobs:
-- template: /eng/common/templates/jobs/job.yml
+- template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true

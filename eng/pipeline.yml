@@ -23,26 +23,26 @@ jobs:
       pool: ${{ parameters.agentPool }}
       variables:
         # needed for signing
-        -name: _TeamName
+        - name: _TeamName
          value: DotNetCore
-        -name: _SignType
+        - name: _SignType
          value: test
-        -name: _SignArgs
+        - name: _SignArgs
          value: ''
 
         # needed for darc (dependency flow) publishing
-        -name: _PublishType
+        - name: _PublishType
          value: none
-        -name: _DotNetPublishToBlobFeed
+        - name: _DotNetPublishToBlobFeed
          value: false
-        -name: _PublishArgs
+        - name: _PublishArgs
          value: ''
-        -name: _OfficialBuildIdArgs
+        - name: _OfficialBuildIdArgs
          value: ''
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
-          # note: You have to use list syntax here (-name: value) or you will get errors about declaring the same variable multiple times
+          # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _PublishType
             value: blob
           - name: _SignType

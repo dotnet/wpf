@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
-  <ProductDependencies></ProductDependencies>
-  <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19065.6">
-      <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>289a8e607ef2a7358c351ddf3d08056186d4e554</Sha>
-    </Dependency>
+  <ProductDependencies>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview.19065.3">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>db7daabdb592da062d8a80f27bbad1178c364530</Sha>
@@ -49,6 +44,12 @@
     <Dependency Name="System.CodeDom" Version="4.6.0-preview.19065.3">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>db7daabdb592da062d8a80f27bbad1178c364530</Sha>
+    </Dependency>
+  </ProductDependencies>
+  <ToolsetDependencies>
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19065.6">
+      <Uri>https://github.com/dotnet/arcade</Uri>
+      <Sha>289a8e607ef2a7358c351ddf3d08056186d4e554</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml.Tests", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\DrtXaml\DrtXaml.Tests.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "src\Microsoft.DotNet.Wpf\test\Common\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "src\Microsoft.DotNet.Wpf\test\DRT\Common\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\XamlTestClasses\XamlTestClasses.csproj", "{3C1FC36C-E3E6-4EED-9ECA-CFF2EB950486}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlTestClasses40", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\BamlTestClasses40\BamlTestClasses40.csproj", "{2127AC4D-78F4-44BE-A93F-8872EA9A8BB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlAvoidXmlTest", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHost.Tests", "src\Microsoft.DotNet.Wpf\test\UnitTest\TestHost\TestHost.Tests.csproj", "{88A7E00C-F08A-4797-B377-A64F4335591B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Xaml.Tests", "src\Microsoft.DotNet.Wpf\test\UnitTest\System.Xaml\System.Xaml.Tests.csproj", "{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,30 @@ Global
 		{9163F98E-E941-45F5-9A57-47F375F50333}.Release|x64.Build.0 = Release|x64
 		{9163F98E-E941-45F5-9A57-47F375F50333}.Release|x86.ActiveCfg = Release|Any CPU
 		{9163F98E-E941-45F5-9A57-47F375F50333}.Release|x86.Build.0 = Release|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|x64.ActiveCfg = Debug|x64
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|x64.Build.0 = Debug|x64
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Debug|x86.Build.0 = Debug|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|x64.ActiveCfg = Release|x64
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|x64.Build.0 = Release|x64
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|x86.ActiveCfg = Release|Any CPU
+		{88A7E00C-F08A-4797-B377-A64F4335591B}.Release|x86.Build.0 = Release|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|x64.ActiveCfg = Debug|x64
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|x64.Build.0 = Debug|x64
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Debug|x86.Build.0 = Debug|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|x64.ActiveCfg = Release|x64
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|x64.Build.0 = Release|x64
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7B15288-356B-48EB-BCAD-0EAEB7B60CA5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,10 @@
     <PublishWindowsPdb>true</PublishWindowsPdb>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EngDir>$(MsBuildThisFileDirectory)\eng</EngDir>
+  </PropertyGroup>
+  
   <Import Project="$(MsBuildThisFileDirectory)SystemResources.props"/>
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- 
+    This target will pickup the assembly being built from its intermediate path directly after build.  It then finds the corresponding TestHost (see TestHost.csproj) item
+    and replaces it with the locally built assembly.
+    Assemblies that want to opt in to this merely have to set BinPlaceToTestHost to true in their project files.
+    
+    NOTE: This is run after Build as the corresponding initial test host copy is done before _GenerateRestoreProjectSpec in TestHost.csproj.  This guarantees ordering.
+  -->
+  <Target Name="TestHostBinPlacing" AfterTargets="Build" Condition="'$(BinPlaceToTestHost)'=='true' and '$(TargetFramework)'!=''">
+    <ItemGroup>
+      <_ItemToBinPlace Condition="'$(_ItemToBinPlace)'=='' and $(Platform.EndsWith('64'))" Include="$(BaseIntermediateOutputPath)\$(Platform)\$(Configuration)\$(TargetFramework)\$(AssemblyName).dll" />
+      <_ItemToBinPlace Condition="'$(_ItemToBinPlace)'=='' and !$(Platform.EndsWith('64'))" Include="$(BaseIntermediateOutputPath)\$(Configuration)\$(TargetFramework)\$(AssemblyName).dll" />
+      <_ItemsToOverwrite Include="$(TestHostDir)/**/Microsoft.WindowsDesktop.App/*/$(AssemblyName).dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ItemToBinPlace)" DestinationFiles="@(_ItemsToOverwrite)" OverwriteReadOnlyFiles="true" />
+  </Target>
+</Project>

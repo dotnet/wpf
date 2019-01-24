@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Xaml", "src\Microsoft.DotNet.Wpf\src\System.Xaml\System.Xaml.csproj", "{9AC36357-34B7-40A1-95CA-FE9F46D089A7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHost", "src\Microsoft.DotNet.Wpf\src\testhost\testhost.csproj", "{F804319F-1655-4C92-BE4A-556CC7B2C9F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{9AC36357-34B7-40A1-95CA-FE9F46D089A7}.Release|x64.Build.0 = Release|x64
 		{9AC36357-34B7-40A1-95CA-FE9F46D089A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{9AC36357-34B7-40A1-95CA-FE9F46D089A7}.Release|x86.Build.0 = Release|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|x64.ActiveCfg = Debug|x64
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|x64.Build.0 = Debug|x64
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|x64.ActiveCfg = Release|x64
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|x64.Build.0 = Release|x64
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{F804319F-1655-4C92-BE4A-556CC7B2C9F1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

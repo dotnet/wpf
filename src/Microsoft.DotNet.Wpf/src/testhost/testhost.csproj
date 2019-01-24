@@ -1,0 +1,43 @@
+<!-- 
+    This project exists solely to manage the DotNet TestHost.
+    The TestHost is a local installation of .NET Core that houses everything needed to run a WPF application against
+    the assemblies building out of this repo.
+    
+    See TestHostBinPlacing.targets for information on how projects binplace into the TestHost.
+-->
+<Project Sdk="Microsoft.NET.SDK">
+  <PropertyGroup>
+    <ProjectGuid>{F804319F-1655-4C92-BE4A-556CC7B2C9F1}</ProjectGuid>
+    <AssemblyName>TestHost-Ignore</AssemblyName>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- 
+    We create the TestHost prior to the restore.  This is only done if the TestHost doesn't already exist as it can slow down the build.
+    
+    NOTE: We are using _GenerateRestoreProjectSpec because a restore on a solution runs the target in the metaproj and not the project itself.
+    _GenerateRestoreProjectSpec will trigger in both instances (restore on solution and project).
+    
+    NOTE: We currently do not support ARM(64) so this task will error out to indicate changes are needed when this is supported.
+  -->
+  <Target Name="CopyDotNetToTestHost" BeforeTargets="_GenerateRestoreProjectSpec" Condition="'$(TestHostDir)'!=''">
+    <PropertyGroup>
+      <DotNetArch Condition="$(Platform.EndsWith('64'))">x64</DotNetArch>
+      <DotNetArch Condition="!$(Platform.EndsWith('64'))">x86</DotNetArch>
+      <!-- 
+        Always run CI builds against a TestHost matching global.json.  Otherwise we risk breaking the CI build if certain
+        variables don't progagate to subsequent phases in the build yaml.  
+        See eng/common/tools.ps1:InitializeDotNetCli to see why we do this.
+      -->
+      <UseLatest Condition="'$(UseLatestSdkForTestHost)'=='true' and '$(ContinuousIntegrationBuild)'!='true'">$true</UseLatest>
+      <TestHostInstallCommand>
+        <![CDATA[powershell.exe –NonInteractive –ExecutionPolicy Unrestricted –command "& { &'$(EngDir)\install-testhost.ps1' '$(TestHostDir)' '$(DotNetArch)' $(UseLatest) }"]]>
+      </TestHostInstallCommand>
+    </PropertyGroup>
+    <Error Condition="$(Platform.EndsWith('arm64')) or $(Platform.EndsWith('arm'))" 
+           Text="This target does not support ARM builds.  The TestHost infrastructure needs to be updated as part of changes to support ARM." />
+    <Exec Command="$(TestHostInstallCommand)" />
+  </Target>
+</Project>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <AssemblyName>DrtXaml</AssemblyName>
-    <RootNamespace>DrtXaml</RootNamespace>
+    <AssemblyName>TestHost.Tests</AssemblyName>
+    <RootNamespace>TestHost</RootNamespace>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
@@ -14,15 +14,6 @@
     <IsIntegrationTestProject>true</IsIntegrationTestProject>
   </PropertyGroup>
   
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\TestServices\TestServices.csproj" />
-    <ProjectReference Include="..\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj" />
-    <ProjectReference Include="..\BamlTestClasses40\BamlTestClasses40.csproj" />
-    <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />
-    <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj" />
-    <ProjectReference Include="..\XamlTestClasses\XamlTestClasses.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <!-- This ensures that .json, .pdb, .deps.json, .runtimeconfig.json, .runtimeconfig.dev.json files that are related to referenced projects, will -->
     <!-- be copied over to the output folder when the build is completed. -->

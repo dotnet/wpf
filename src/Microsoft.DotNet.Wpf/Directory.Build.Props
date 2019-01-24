@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <Import Project="$(MSBuildThisFileDirectory)/TestHostBinPlacing.targets" />
+
+  <!-- Set directory for test host output.  This will be used to copy the test host and also to binplace individual assemblies into it on demand. -->
+  <PropertyGroup>
+    <TestHostDir Condition="'$(TestHostDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)testhost\$(Platform)\$(Configuration)\</TestHostDir>
+    <TestHostDir Condition="'$(TestHostDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)testhost\$(Configuration)\</TestHostDir>
+  </PropertyGroup>
+
 </Project>

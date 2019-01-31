@@ -779,7 +779,7 @@ namespace System.Xaml
                 bool shouldSetValue = true;
                 if (value != null)
                 {
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
+                    XAML3.IMarkupExtension me = value as XAML3.IMarkupExtension;
                     if (me != null)
                     {
                         _context.CurrentInstance = me;
@@ -1156,7 +1156,7 @@ namespace System.Xaml
                 object[] args = ctx.CurrentCtorArgs;
                 for (int i = 0; i < args.Length; i++)
                 {
-                    XAML3.MarkupExtension me = args[i] as XAML3.MarkupExtension;
+                    XAML3.IMarkupExtension me = args[i] as XAML3.IMarkupExtension;
                     if (me != null)
                     {
                         args[i] = Logic_PushAndPopAProvideValueStackFrame(ctx, XamlLanguage.PositionalParameters, me, false);
@@ -1216,7 +1216,7 @@ namespace System.Xaml
             // If UsableDuringInit, Assign to parent
             // We don't want to assign MEs to the parent since we need to call ProvideValue on them
             //   which is handled in WriteEndObject
-            if (ctx.LiveDepth > 1 && !(inst is XAML3.MarkupExtension))
+            if (ctx.LiveDepth > 1 && !(inst is XAML3.IMarkupExtension))
             {
                 if (ctx.LiveDepth > 1)
                 {
@@ -1565,7 +1565,7 @@ namespace System.Xaml
                     // so don't call ProvideValue() now on directives here.
                     // (x:Key and x:Name need their own "saved spot" outside of PreconstructionPropertyValues)
 
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
+                    XAML3.IMarkupExtension me = value as XAML3.IMarkupExtension;
                     if (me != null && !prop.IsDirective)
                     {
                         Logic_PushAndPopAProvideValueStackFrame(ctx, prop, me, true);
@@ -1578,7 +1578,7 @@ namespace System.Xaml
             }
         }
 
-        private object Logic_PushAndPopAProvideValueStackFrame(ObjectWriterContext ctx, XamlMember prop, XAML3.MarkupExtension me, bool useIRME)
+        private object Logic_PushAndPopAProvideValueStackFrame(ObjectWriterContext ctx, XamlMember prop, XAML3.IMarkupExtension me, bool useIRME)
         {
             XamlMember savedProp = ctx.CurrentProperty;
             ctx.CurrentProperty = prop;
@@ -1689,7 +1689,7 @@ namespace System.Xaml
         private bool Logic_ProvideValue(ObjectWriterContext ctx)
         {
             object inst = ctx.CurrentInstance;
-            XAML3.MarkupExtension me = (XAML3.MarkupExtension)inst;
+            XAML3.IMarkupExtension me = (XAML3.IMarkupExtension)inst;
             object parentInstance = ctx.ParentInstance;
             XamlMember parentProperty = ctx.ParentProperty;
 
@@ -1806,7 +1806,7 @@ namespace System.Xaml
                 {
                     // If Value is a Markup Extention then check the collection item type
                     // if it can hold the ME then don't call ProvideValue().
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
+                    XAML3.IMarkupExtension me = value as XAML3.IMarkupExtension;
                     if(me != null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
                     {
                         // We don't need to call Logic_ProvideValue() with the extra handler
@@ -2516,7 +2516,7 @@ namespace System.Xaml
                     break;
                 case FixupType.MarkupExtensionRerun:
                     // Logic_ProvideValue already ran the first time, no need to rerun it
-                    value = Runtime.CallProvideValue((XAML3.MarkupExtension)owc.CurrentInstance, owc.ServiceProviderContext);
+                    value = Runtime.CallProvideValue((XAML3.IMarkupExtension)owc.CurrentInstance, owc.ServiceProviderContext);
                     owc.CurrentInstance = value;
                     break;
                 case FixupType.PropertyValue:

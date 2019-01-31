@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,9 @@ using System.Runtime.CompilerServices;
 namespace System.Windows.Markup
 {
     /// <summary>
-    ///  Base class for all Xaml markup extensions.  Only subclasses can
-    ///  be instantiated.
+    /// Base interface for all Xaml markup extensions.
     /// </summary>
-    [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
-    public abstract class MarkupExtension : IMarkupExtension
+    public interface IMarkupExtension
     {
         /// <summary>
         ///  Return an object that should be set on the targetObject's targetProperty
@@ -21,8 +19,6 @@ namespace System.Windows.Markup
         /// <returns>
         ///  The object to set on this property.
         /// </returns>
-        public abstract object ProvideValue(IServiceProvider serviceProvider);
-       
+        object ProvideValue(IServiceProvider serviceProvider);
     }
 }
-

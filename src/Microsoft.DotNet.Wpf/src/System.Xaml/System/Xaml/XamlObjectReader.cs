@@ -1351,7 +1351,7 @@ namespace System.Xaml
                             context.Instance = null;
                             positionalParametersProperty.Children.Add(new ValueMarkupInfo { XamlNode = new XamlNode(XamlNodeType.Value, stringValue) });
                         }
-                        else if ((converter != null && context.TryConvertToMarkupExtension(converter, ref meObject)) || meObject is MarkupExtension)
+                        else if ((converter != null && context.TryConvertToMarkupExtension(converter, ref meObject)) || meObject is IMarkupExtension)
                         {
                             context.Instance = null;
                             objectInfo = ForObject(meObject, context);
@@ -2725,9 +2725,9 @@ namespace System.Xaml
             public bool TryConvertToMarkupExtension(TypeConverter converter, ref object value)
             {
                 if (value == null) { return false; }
-                if (!Runtime.CanConvertTo(TypeDescriptorContext, converter, typeof(MarkupExtension))) { return false; }
+                if (!Runtime.CanConvertTo(TypeDescriptorContext, converter, typeof(IMarkupExtension))) { return false; }
 
-                value = ConvertTo<MarkupExtension>(converter, value);
+                value = ConvertTo<IMarkupExtension>(converter, value);
                 return true;
             }
 

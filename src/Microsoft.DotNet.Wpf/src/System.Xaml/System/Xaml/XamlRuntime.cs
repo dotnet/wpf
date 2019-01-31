@@ -76,7 +76,7 @@ namespace MS.Internal.Xaml.Runtime
 
         abstract public void InitializationGuard(XamlType xamlType, object obj, bool begin);
 
-        abstract public object CallProvideValue(MarkupExtension me, IServiceProvider serviceProvider);
+        abstract public object CallProvideValue(IMarkupExtension me, IServiceProvider serviceProvider);
 
         abstract public ShouldSerializeResult ShouldSerialize(XamlMember member, object instance);
 

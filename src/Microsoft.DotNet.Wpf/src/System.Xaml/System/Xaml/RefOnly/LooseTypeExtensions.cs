@@ -50,11 +50,11 @@ namespace System.Xaml
             AssemblyName name1, AssemblyName name2)
         {
             AssemblyName windowsBaseName = null;
-            if (name1.Name == WindowsBase && a2 == typeof(MarkupExtension).Assembly)
+            if (name1.Name == WindowsBase && a2 == typeof(IMarkupExtension).Assembly)
             {
                 windowsBaseName = name1;
             }
-            else if (name2.Name == WindowsBase && a1 == typeof(MarkupExtension).Assembly)
+            else if (name2.Name == WindowsBase && a1 == typeof(IMarkupExtension).Assembly)
             {
                 windowsBaseName = name2;
             }

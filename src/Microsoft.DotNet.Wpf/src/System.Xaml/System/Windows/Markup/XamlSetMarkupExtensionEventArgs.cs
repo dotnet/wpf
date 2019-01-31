@@ -9,17 +9,17 @@ namespace System.Windows.Markup
     public class XamlSetMarkupExtensionEventArgs : XamlSetValueEventArgs
     {
         public XamlSetMarkupExtensionEventArgs(XamlMember member,
-            MarkupExtension value, IServiceProvider serviceProvider) :
+            IMarkupExtension value, IServiceProvider serviceProvider) :
             base(member, value)
         {
             ServiceProvider = serviceProvider;
         }
 
-        public MarkupExtension MarkupExtension { get { return Value as MarkupExtension; } }
+        public IMarkupExtension MarkupExtension { get { return Value as IMarkupExtension; } }
         public IServiceProvider ServiceProvider { get; private set; }
 
         internal XamlSetMarkupExtensionEventArgs(XamlMember member,
-            MarkupExtension value, IServiceProvider serviceProvider, object targetObject)
+            IMarkupExtension value, IServiceProvider serviceProvider, object targetObject)
             : this(member, value, serviceProvider)
         {
             TargetObject = targetObject;

@@ -54,7 +54,7 @@ namespace System.Xaml
             {
                 windowsBaseName = name1;
             }
-            else if (name2.Name == WindowsBase && a1 == typeof(IMarkupExtension).Assembly)
+            else if (name2.Name == WindowsBase && a1 == typeof(MarkupExtension).Assembly)
             {
                 windowsBaseName = name2;
             }

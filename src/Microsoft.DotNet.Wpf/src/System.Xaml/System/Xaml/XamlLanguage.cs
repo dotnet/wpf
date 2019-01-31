@@ -423,7 +423,7 @@ namespace System.Xaml
         {
             // System.Xaml and WindowsBase
             Assembly[] assemblies = new Assembly[]
-                { typeof(XamlLanguage).Assembly, typeof(IMarkupExtension).Assembly };
+                { typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly };
             XamlSchemaContextSettings settings = 
                 new XamlSchemaContextSettings { SupportMarkupExtensionsWithDuplicateArity = true };
             XamlSchemaContext result = new XamlSchemaContext(assemblies, settings);

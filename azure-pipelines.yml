@@ -8,21 +8,6 @@ variables:
 
   # clean the local repo on the build agents
   Build.Repository.Clean: true
-  
-  # Set some variables based on build conditions
-  ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-    _HelixType: build/product
-    _HelixSource: pr/dotnet/wpf/$(Build.SourceBranch)
-    _PublishType: none
-    _SignType: test
-    _DotNetPublishToBlobFeed: false
-  # else
-  ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    _TeamName: DotNetCore
-    _HelixSource: official/dotnet/wpf/$(Build.SourceBranch)
-    _PublishType: blob
-    _SignType: real
-    _DotNetPublishToBlobFeed: true
 
 # only trigger ci builds for the master branch
 trigger:
@@ -34,11 +19,11 @@ trigger:
 # - master
 
 # Call the pipeline.yml template, which does the real work
-phases:
+jobs:
 - template: /eng/pipeline.yml
   parameters:
     ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
       # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-temp
+      agentPool: dotnet-internal-temp-vs2019
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false

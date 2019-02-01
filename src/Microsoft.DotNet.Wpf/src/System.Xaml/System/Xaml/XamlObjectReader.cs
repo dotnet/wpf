@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
@@ -2116,9 +2115,14 @@ namespace System.Xaml
                 {
                     if (!string.IsNullOrEmpty(GetConstructorArgument(property)))
                     {
-                        return methodParameters.Any(parameter => 
-                            parameter.Name == GetConstructorArgument(property) && 
-                            parameter.ParameterType == property.Type.UnderlyingType);
+                        foreach (var parameter in methodParameters)
+                        {
+                            if (parameter.Name == GetConstructorArgument(property) &&
+                                property.Type.UnderlyingType == parameter.ParameterType)
+                            {
+                                return true;
+                            }
+                        }
                     }
                 }
 

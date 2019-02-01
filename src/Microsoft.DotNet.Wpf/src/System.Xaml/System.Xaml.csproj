@@ -99,6 +99,8 @@
     
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityVersion)" />
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

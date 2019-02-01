@@ -1,14 +1,14 @@
 {
   "tools": {
-    "dotnet": "3.0.100-preview-009764",
+    "dotnet": "3.0.100-preview-010024",
     "vs": {
-      "version": "15.9"
+      "version": "16.0"
     }
   },
   "sdk": {
-    "version": "3.0.100-preview-009764"
+    "version": "3.0.100-preview-010024"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19061.6"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19081.3"
   }
 }

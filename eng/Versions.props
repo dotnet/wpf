@@ -4,10 +4,35 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>prerelease</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemSecurityVersion>4.5.0</SystemSecurityVersion>
-    <SystemReflectionEmitVersion>4.3.0</SystemReflectionEmitVersion>
-    <XUnitVersion>2.4.0</XUnitVersion>
+  </PropertyGroup>
+  <!-- NuGet Package Versions -->
+  <PropertyGroup>
+    <!-- Packages that come from https://github.com/dotnet/corefx -->
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview.19081.4</MicrosoftWin32RegistryPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview.19081.4</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview.19081.4</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview.19081.4</SystemReflectionEmitPackageVersion>
+    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview.19081.4</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview.19081.4</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview.19081.4</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview.19081.4</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview.19081.4</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview.19081.4</SystemWindowsExtensionsPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview.19081.4</SystemCodeDomPackageVersion>
+    <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+    <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
+    <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+    <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
+    <!-- Other Packages that require manual updating-->
+    <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
+    <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
+    <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
+    <XUnitVersion>2.4.0</XUnitVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- This is required to restore System.Reflection.Typeloader successfully -->
+    <RestoreSources>$(RestoreSources);https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json</RestoreSources>
   </PropertyGroup>
 </Project>

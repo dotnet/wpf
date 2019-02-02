@@ -9,6 +9,6 @@
     "version": "3.0.100-preview-010024"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19081.3"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19101.16"
   }
 }

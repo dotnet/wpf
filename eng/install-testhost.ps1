@@ -7,6 +7,8 @@ Param(
 [bool]$useLatest=$false
 )
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 function Create-Directory([string[]] $path) {
   if (!(Test-Path $path)) {
     New-Item -path $path -force -itemType "Directory" | Out-Null

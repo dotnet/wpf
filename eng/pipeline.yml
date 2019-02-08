@@ -81,22 +81,22 @@ jobs:
       - checkout: self
         clean: true
       # Use utility script to run script command dependent on agent OS.
-        displayName: Windows Restore/Build
       - script: eng/build.cmd
+        displayName: Windows Restore/Build
           -configuration $(_BuildConfig) 
           -prepareMachine
           -ci
           -restore
           -build
           $(_OfficialBuildIdArgs)
-        displayName: Windows Test
       - script: eng/build.cmd
+        displayName: Windows Test
           -configuration $(_BuildConfig) 
           -ci
           -test
           $(_OfficialBuildIdArgs)
-        displayName: Windows Sign/Pack/Publish
       - script: eng/build.cmd
+        displayName: Windows Sign/Pack/Publish
           -configuration $(_BuildConfig) 
           -ci
           -sign

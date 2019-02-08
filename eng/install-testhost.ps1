@@ -7,8 +7,6 @@ Param(
 [bool]$useLatest=$false
 )
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
 function Create-Directory([string[]] $path) {
   if (!(Test-Path $path)) {
     New-Item -path $path -force -itemType "Directory" | Out-Null
@@ -19,6 +17,7 @@ function Create-Directory([string[]] $path) {
 function GetDotNetInstallScript([string] $dotnetRoot) {
   $installScript = "$dotnetRoot\dotnet-install.ps1"
   if (!(Test-Path $installScript)) {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Create-Directory $dotnetRoot
     Invoke-WebRequest "https://dot.net/v1/dotnet-install.ps1" -OutFile $installScript
   }

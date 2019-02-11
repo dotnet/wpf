@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <VersionPrefix>4.8.0</VersionPrefix>
-    <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
+    <PreReleaseVersionLabel>preview3</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->

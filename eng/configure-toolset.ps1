@@ -1,17 +1,30 @@
+# This scipt is called from eng/common/build.ps1 as an extension point for Arcade.
+# The paramaters available to build.ps1 are also available here and are used throughout the file.
+
 # If we are running a test pass, ensure that we point at the TestHost and that
-# tests are run against it.
+# tests are run against it.  $test is a switch and guaranteed to be $true or $false.
 if ($test)
 {
     # Don't look outside the TestHost to resolve best match SDKs.
     $env:DOTNET_MULTILEVEL_LOOKUP = 0
 
+    # Disable first run since we do not need all ASP.NET packages restored.
+    $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+    # Disable telemetry on CI.
+    if ($ci) 
+    {
+      $env:DOTNET_CLI_TELEMETRY_OPTOUT=1
+    }
+
     # Use dotnet as the build environment so we don't call MSBuild.
+    # This overrides the paramater in eng/common/build.ps1.
     $msbuildEngine = "dotnet"
     
     $platform = ""
 
     # Find the Platform build parameter (if it exists and is x64; x86 does not add to the path)
-    if($properties)
+    if($properties -ne $null)
     {
         foreach($prop in $properties)
         {
@@ -27,10 +40,12 @@ if ($test)
 
     # Expand the testhost directory
     $testHostDir = Join-Path $ArtifactsDir "\testhost\" 
-    if($platform)
+
+    if($platform -ne $null)
     {
         $testHostDir = Join-Path $testHostDir $platform
     }
+
     $testHostDir = Join-Path $testHostDir $configuration
     $testHostDir = Resolve-Path $testHostDir
 
@@ -41,6 +56,7 @@ if ($test)
     # Otherwise, short circuiting the eng/common/tools.ps1 script can result in
     # variables not being passed along to subsequent phases in the build yaml.
     # See eng/common/tools.ps1:InitializeDotNetCli to see why we do this.
+    # $ci is a switch and guaranteed to be $true or $false.
     if(!$ci)
     {
         # Set this in order to short circuit the eng/common/tools.ps1 script from

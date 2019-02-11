@@ -1,10 +1,10 @@
 # This file uses the canonical dotnet-install script to download the latest daily build of the SDK and install it 
-# as the TestHost.
+# as the TestHost.  This is called by testhost.csproj during Restore.
 # By default, this installs the .NET Core version specified in Global.json.  You can override this by providing "/p:UseLatestSdkForTestHost=true" during build.
 Param(
 [string]$testHostPath,
 [string]$arch="x86",
-[bool]$useLatest=$false
+[switch]$useLatest
 )
 
 function Create-Directory([string[]] $path) {
@@ -38,7 +38,7 @@ function CreateTestHost([string] $dotnetRoot, [string] $dotnetArch, [string] $ex
 # Removes the TestHost (if it exists)
 function CleanTestHost([string] $testHostPath)
 {
-    if($testHostPath)
+    if($testHostPath -ne $null)
     {
         # Just in case an invalid path gets here, we don't want to randomly delete directories
         # Use a file indicator to at least have some surety we're deleting a TestHost
@@ -77,7 +77,7 @@ function GetCurrentTestHostVersion($testHostPath)
     }
 }
 
-if($testHostPath)
+if($testHostPath -ne $null)
 {
     $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
     $EngRoot = $PSScriptRoot

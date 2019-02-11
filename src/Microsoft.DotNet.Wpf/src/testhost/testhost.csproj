@@ -31,7 +31,7 @@
         variables don't progagate to subsequent phases in the build yaml.  
         See eng/common/tools.ps1:InitializeDotNetCli to see why we do this.
       -->
-      <UseLatest Condition="'$(UseLatestSdkForTestHost)'=='true' and '$(ContinuousIntegrationBuild)'!='true'">$true</UseLatest>
+      <UseLatest Condition="'$(UseLatestSdkForTestHost)'=='true' and '$(ContinuousIntegrationBuild)'!='true'">-useLatest</UseLatest>
       <TestHostInstallCommand>
         <![CDATA[powershell.exe –NonInteractive –ExecutionPolicy Unrestricted –command "& { &'$(EngDir)\install-testhost.ps1' '$(TestHostDir)' '$(DotNetArch)' $(UseLatest) }"]]>
       </TestHostInstallCommand>

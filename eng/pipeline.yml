@@ -39,6 +39,8 @@ jobs:
           value: ''
         - name: _OfficialBuildIdArgs
           value: ''
+        - name: _Platform
+          value: x86
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -67,6 +69,8 @@ jobs:
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
+          - name: _PlatformArgs
+            value: /p:Platform=$(_Platform)
       strategy:
         matrix:
           Build_Debug_x86:
@@ -75,10 +79,8 @@ jobs:
             _PublishType: none
             _SignType: test
             _DotNetPublishToBlobFeed : false
-            _Platform: x86
           Build_Release_x86:
             _BuildConfig: Release
-            _Platform: x86
           Build_Debug_x64:
             _BuildConfig: Debug
             # override some variables for debug
@@ -99,4 +101,5 @@ jobs:
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
         displayName: Windows Build / Publish

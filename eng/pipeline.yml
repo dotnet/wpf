@@ -41,6 +41,8 @@ jobs:
           value: ''
         - name: _Platform
           value: x86
+        - name: _PlatformArgs
+          value: /p:Platform=$(_Platform)
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -69,8 +71,6 @@ jobs:
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
-          - name: _PlatformArgs
-            value: /p:Platform=$(_Platform)
       strategy:
         matrix:
           Build_Debug_x86:

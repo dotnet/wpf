@@ -12,6 +12,7 @@ variables:
 # only trigger ci builds for the master branch
 trigger:
 - master
+- release/3.0
 
 # To be added in the future when VSTS supports this feature
 # only trigger pull request builds for the master branch

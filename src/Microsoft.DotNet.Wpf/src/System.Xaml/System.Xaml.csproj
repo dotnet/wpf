@@ -15,7 +15,7 @@
     <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'!='AnyCPU'">runtime.win-$(Platform)</PackageRuntimeIdentifierPrefix>
     <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'=='AnyCPU'">runtime.win-x86</PackageRuntimeIdentifierPrefix>
     
-    <PackageId>$(PackageRuntimeIdentifierPrefix).Microsoft.DotNet.Wpf.Private</PackageId>
+    <PackageId>$(PackageRuntimeIdentifierPrefix).Microsoft.DotNet.Wpf.Private-$(PreReleaseVersionLabel)</PackageId>
     <Product>Microsoft.DotNet.Wpf</Product>
   </PropertyGroup>
   

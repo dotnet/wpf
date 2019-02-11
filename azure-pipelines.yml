@@ -11,7 +11,6 @@ variables:
 
 # only trigger ci builds for the master branch
 trigger:
-- master
 - release/3.0
 
 

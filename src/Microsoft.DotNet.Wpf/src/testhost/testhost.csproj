@@ -5,10 +5,9 @@
     
     See TestHostBinPlacing.targets for information on how projects binplace into the TestHost.
 -->
-<Project Sdk="Microsoft.NET.SDK">
+<Project Sdk="Microsoft.Build.NoTargets">
   <PropertyGroup>
     <ProjectGuid>{F804319F-1655-4C92-BE4A-556CC7B2C9F1}</ProjectGuid>
-    <AssemblyName>TestHost-Ignore</AssemblyName>
     <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <IsPackable>false</IsPackable>

@@ -9,9 +9,10 @@ variables:
   # clean the local repo on the build agents
   Build.Repository.Clean: true
 
-# only trigger ci builds for the master branch
+# only trigger ci builds for the master and release branches
 trigger:
 - master
+- release/3.0
 
 # To be added in the future when VSTS supports this feature
 # only trigger pull request builds for the master branch

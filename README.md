@@ -15,7 +15,7 @@ See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and 
 
 ## Getting started
 
-* [.NET Core 3.0 SDK Preview 2](https://www.microsoft.com/net/download)
+* [.NET Core 3.0 SDK Preview](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
 

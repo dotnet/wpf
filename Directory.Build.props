@@ -1,15 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project>
-  <PropertyGroup>
-    <ImportNetSdkFromRepoToolset>false</ImportNetSdkFromRepoToolset>
-    
-    <PublishWindowsPdb>true</PublishWindowsPdb>
-  </PropertyGroup>
-
-  <Import Project="$(MsBuildThisFileDirectory)SystemResources.props"/>
-  <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+<Project> 
+   <Import Project="$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.props"
+           Condition="Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.props') and '$(TestWpfArcadeSdk)' != 'true'"/>
   
-  <PropertyGroup>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
+          Project="Sdk.props"
+          Condition="!Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.props') Or '$(TestWpfArcadeSdk)' == 'true'"/>
 </Project>

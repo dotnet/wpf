@@ -1,0 +1,35 @@
+<Project>
+  <PropertyGroup>
+    <IsPackagingProject>true</IsPackagingProject>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <TargetName>Dummy-$(PackageName)</TargetName>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <CreateArchNeutralPackage Condition="$(MSBuildProjectName.Contains('.ArchNeutral'))">true</CreateArchNeutralPackage>
+
+    <!-- 
+      Set $(IsPackable) = true, except when
+          $(CreateArchNeutralPackage) == true && $(Platform) != x86
+        The idea here is that for arch-neutral packages, only the x86 build phase will generate the nuget package
+        The platform/RID specific packages will be generated in their respective $(Platform) specific build phases
+    -->
+    <IsPackable>true</IsPackable>
+    <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultPackageLicenseExpression>MIT</DefaultPackageLicenseExpression>
+    <DefaultPackageLicenseFile>LICENSE.TXT</DefaultPackageLicenseFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackagingContent Condition="Exists('$(RepoRoot)LICENSE.TXT')" 
+                      Include="$(RepoRoot)LICENSE.TXT" 
+                      SubFolder="root" />
+    <PackagingContent Condition="Exists('$(RepoRoot)THIRD-PARTY-NOTICES.TXT')" 
+                      Include="$(RepoRoot)THIRD-PARTY-NOTICES.TXT" 
+                      SubFolder="root" />
+  </ItemGroup>
+</Project>

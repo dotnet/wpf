@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
-  <Import Project="$(MSBuildThisFileDirectory)Packaging.targets" />
-  <Import Project="$(MSBuildThisFileDirectory)Publishing.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.targets"
+          Condition="Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.targets') and '$(TestWpfArcadeSdk)' != 'true'"/>
+
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
+          Project="Sdk.targets"
+          Condition="!Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.targets') Or '$(TestWpfArcadeSdk)' == 'true'"/>
 </Project>

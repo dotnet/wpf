@@ -1,4 +1,4 @@
-# This is a simple wrapper for eng/ci.yml to get around the limitation of
+# This is a simple wrapper for eng/pipeline.yml to get around the limitation of
 # user-defined variables not being available in yaml template expressions.
 
 # Parameters ARE available in template expressions, and parameters can have default values,
@@ -25,6 +25,6 @@ jobs:
   parameters:
     ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
       # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-temp-vs2019
+      agentPool: dotnet-internal-vs2019-preview
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false

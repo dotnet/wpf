@@ -1,8 +1,8 @@
 parameters:
 
   # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-  # Defaults to dotnet-external-temp-vs2019
-  agentPool: dotnet-external-temp-vs2019
+  # Defaults to dotnet-external-vs2019-preview
+  agentPool: dotnet-external-vs2019-preview
 
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true

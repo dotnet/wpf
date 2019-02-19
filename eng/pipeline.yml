@@ -47,10 +47,12 @@ jobs:
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
+          # note: Set _SignType:test for now. Change it back to _SignType:real when the build agent pools dotnet-external-vs2019-preview
+          #        and dotnet-internal-vs2019-preview are fully enabled for signing.
           - name: _PublishType
             value: blob
           - name: _SignType
-            value: real
+            value: test
           - name: _DotNetPublishToBlobFeed
             value: true
           - group: DotNet-Blob-Feed

@@ -14,6 +14,6 @@
     "Microsoft.DotNet.Arcade.Wpf.Sdk": "4.8.0-prerelease.19120.5"
   },
   "native-tools": {
-    "strawberry-perl": "5.28.0.1"
+    "strawberry-perl": "5.28.1.1"
   }
 }

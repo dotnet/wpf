@@ -4,6 +4,7 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <MicrosoftDotNetArcadeWpfSdkVersion>4.8.0-prerelease.19120.5</MicrosoftDotNetArcadeWpfSdkVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -34,5 +35,9 @@
   <PropertyGroup>
     <!-- This is required to restore System.Reflection.Typeloader successfully -->
     <RestoreSources>$(RestoreSources);https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json</RestoreSources>
+  </PropertyGroup>
+  <!--Package names-->
+  <PropertyGroup>
+    <MicrosoftDotNetArcadeWpfSdkPackage>Microsoft.DotNet.Arcade.Wpf.Sdk</MicrosoftDotNetArcadeWpfSdkPackage>
   </PropertyGroup>
 </Project>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <PropertyGroup>
-    <ImportNetSdkFromRepoToolset>false</ImportNetSdkFromRepoToolset>
-    
-    <PublishWindowsPdb>true</PublishWindowsPdb>
-  </PropertyGroup>
-
-  <Import Project="$(MsBuildThisFileDirectory)SystemResources.props"/>
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="SystemResources.props"/>
+
+  <PropertyGroup Condition="'$(CopyrightNetFoundation)' != ''">
+    <Copyright>$(CopyrightNetFoundation)</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
   
   <PropertyGroup>
+    <PublishWindowsPdb>true</PublishWindowsPdb>
     <DebugType>full</DebugType>
   </PropertyGroup>
 </Project>

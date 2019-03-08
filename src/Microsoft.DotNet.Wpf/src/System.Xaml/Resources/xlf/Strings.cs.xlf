@@ -312,26 +312,6 @@
         <target state="translated">Existuje konflikt v atributech XmlnsCompatibleWithAttributes v sestaveních {0} a {1} pro obor OldNamespace {2}. Změňte atributy tak, aby měly stejný obor NewNamespace, nebo v konstruktoru objektu XamlSchemaContext předejte nekonfliktní sadu referenčních sestavení.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ElementBodyRuleException">
-        <source>ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</source>
-        <target state="translated">ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ElementRuleException">
-        <source>Element ::= . EmptyElement | ( StartElement ElementBody ).</source>
-        <target state="translated">Element ::= . EmptyElement | ( StartElement ElementBody ).</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyElementRuleException">
-        <source>EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</source>
-        <target state="translated">EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyPropertyElementRuleException">
-        <source>EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</source>
-        <target state="translated">EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
         <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
         <target state="translated">Událost {0} nelze přiřadit hodnotě, která není přiřaditelná k {1}.</target>
@@ -802,11 +782,6 @@
         <target state="translated">Typ s pozičními parametry není rozšíření značek.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonemptyPropertyElementRuleException">
-        <source>NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</source>
-        <target state="translated">NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NotAmbientProperty">
         <source>'{0}'.'{1}' is not an ambient property.</source>
         <target state="translated">{0}.{1} není vedlejší vlastnost.</target>
@@ -992,11 +967,6 @@
         <target state="translated">Vlastnost {0} v {1} vám neumožňuje zadat text.</target>
         <note />
       </trans-unit>
-      <trans-unit id="PropertyElementRuleException">
-        <source>PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</source>
-        <target state="translated">PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PropertyNotImplemented">
         <source>'{0}' is not implemented.</source>
         <target state="translated">Vlastnost {0} není implementována.</target>
@@ -1115,11 +1085,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Přímo přiřaditelné opravy musí mít pouze jeden název.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StartElementRuleException">
-        <source>StartElement ::= . ELEMENT DIRECTIVE*.</source>
-        <target state="translated">StartElement ::= . ELEMENT DIRECTIVE*.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">

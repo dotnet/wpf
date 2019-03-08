@@ -312,26 +312,6 @@
         <target state="translated">'{2}' OldNamespace için '{0}' ve '{1}' derlemelerinde çakışan XmlnsCompatibleWithAttributes değerleri var. Öznitelikleri aynı NewNamespace'e sahip olacak şekilde değiştirin veya XamlSchemaContext oluşturucusuna çakışmayan bir Başvuru Derlemeleri kümesi geçirin.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ElementBodyRuleException">
-        <source>ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</source>
-        <target state="translated">ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ElementRuleException">
-        <source>Element ::= . EmptyElement | ( StartElement ElementBody ).</source>
-        <target state="translated">Element ::= . EmptyElement | ( StartElement ElementBody ).</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyElementRuleException">
-        <source>EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</source>
-        <target state="translated">EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyPropertyElementRuleException">
-        <source>EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</source>
-        <target state="translated">EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
         <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
         <target state="translated">'{0}' olayı, '{1}' öğesine atanamayan bir değeri atayamaz.</target>
@@ -802,11 +782,6 @@
         <target state="translated">Konum parametreleri içeren tür bir işaretleme uzantısı değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonemptyPropertyElementRuleException">
-        <source>NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</source>
-        <target state="translated">NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NotAmbientProperty">
         <source>'{0}'.'{1}' is not an ambient property.</source>
         <target state="translated">'{0}'.'{1}' bir ortam özelliği değil.</target>
@@ -992,11 +967,6 @@
         <target state="translated">'{1}' öğesindeki '{0}' özelliği metin belirtmenize izin vermiyor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="PropertyElementRuleException">
-        <source>PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</source>
-        <target state="translated">PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PropertyNotImplemented">
         <source>'{0}' is not implemented.</source>
         <target state="translated">'{0}' uygulanmadı.</target>
@@ -1115,11 +1085,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Doğrudan Atanabilir Düzeltmelerin tek bir adı olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StartElementRuleException">
-        <source>StartElement ::= . ELEMENT DIRECTIVE*.</source>
-        <target state="translated">StartElement ::= . ELEMENT DIRECTIVE*.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">

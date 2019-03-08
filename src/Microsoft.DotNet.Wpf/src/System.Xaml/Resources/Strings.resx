@@ -486,27 +486,6 @@
   <data name="UnexpectedNodeType" xml:space="preserve">
     <value>Unexpected '{0}' in parse rule '{1}'.</value>
   </data>
-  <data name="ElementRuleException" xml:space="preserve">
-    <value>Element ::= . EmptyElement | ( StartElement ElementBody ).</value>
-  </data>
-  <data name="EmptyElementRuleException" xml:space="preserve">
-    <value>EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</value>
-  </data>
-  <data name="EmptyPropertyElementRuleException" xml:space="preserve">
-    <value>EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</value>
-  </data>
-  <data name="StartElementRuleException" xml:space="preserve">
-    <value>StartElement ::= . ELEMENT DIRECTIVE*.</value>
-  </data>
-  <data name="ElementBodyRuleException" xml:space="preserve">
-    <value>ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</value>
-  </data>
-  <data name="NonemptyPropertyElementRuleException" xml:space="preserve">
-    <value>NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</value>
-  </data>
-  <data name="PropertyElementRuleException" xml:space="preserve">
-    <value>PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</value>
-  </data>
   <data name="UnknownAttributeProperty" xml:space="preserve">
     <value>['{0}'('{1}')] on '{2}' is not a known property.</value>
   </data>

@@ -312,26 +312,6 @@
         <target state="translated">Hay XmlnsCompatibleWithAttributes en conflicto en los ensamblados '{0}' y '{1}' para OldNamespace '{2}'. Cambie los atributos para que tengan el mismo NewNamespace, o pase un conjunto de ensamblados de referencia sin conflictos en el constructor XamlSchemaContext.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ElementBodyRuleException">
-        <source>ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</source>
-        <target state="translated">ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ElementRuleException">
-        <source>Element ::= . EmptyElement | ( StartElement ElementBody ).</source>
-        <target state="translated">Element ::= . EmptyElement | ( StartElement ElementBody ).</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyElementRuleException">
-        <source>EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</source>
-        <target state="translated">EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="EmptyPropertyElementRuleException">
-        <source>EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</source>
-        <target state="translated">EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
         <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
         <target state="translated">Al evento '{0}' no se le puede asignar un valor que no se pueda asignar a '{1}'.</target>
@@ -802,11 +782,6 @@
         <target state="translated">El tipo con parámetros posicionales no es una extensión de marcado.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonemptyPropertyElementRuleException">
-        <source>NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</source>
-        <target state="translated">NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NotAmbientProperty">
         <source>'{0}'.'{1}' is not an ambient property.</source>
         <target state="translated">'{0}'.'{1}' no es una propiedad ambiente.</target>
@@ -992,11 +967,6 @@
         <target state="translated">La propiedad '{0}' en '{1}' no permite especificar texto.</target>
         <note />
       </trans-unit>
-      <trans-unit id="PropertyElementRuleException">
-        <source>PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</source>
-        <target state="translated">PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PropertyNotImplemented">
         <source>'{0}' is not implemented.</source>
         <target state="translated">'{0}' no está implementado.</target>
@@ -1115,11 +1085,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Las correcciones directamente asignables deben tener solo un nombre.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StartElementRuleException">
-        <source>StartElement ::= . ELEMENT DIRECTIVE*.</source>
-        <target state="translated">StartElement ::= . ELEMENT DIRECTIVE*.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">

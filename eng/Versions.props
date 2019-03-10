@@ -8,17 +8,17 @@
   <!-- NuGet Package Versions -->
   <PropertyGroup>
     <!-- Packages that come from https://github.com/dotnet/corefx -->
-    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview4.19158.7</MicrosoftWin32RegistryPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview4.19158.7</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview4.19158.7</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>4.6.0-preview4.19158.7</SystemReflectionEmitPackageVersion>
-    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19158.7</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>4.6.0-preview4.19158.7</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview4.19158.7</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>4.6.0-preview4.19158.7</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview4.19158.7</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>4.6.0-preview4.19158.7</SystemWindowsExtensionsPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview4.19158.7</SystemCodeDomPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview4.19160.1</MicrosoftWin32RegistryPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview4.19160.1</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview4.19160.1</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview4.19160.1</SystemReflectionEmitPackageVersion>
+    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19160.1</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview4.19160.1</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview4.19160.1</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview4.19160.1</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview4.19160.1</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview4.19160.1</SystemWindowsExtensionsPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview4.19160.1</SystemCodeDomPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/corefxlab -->
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->

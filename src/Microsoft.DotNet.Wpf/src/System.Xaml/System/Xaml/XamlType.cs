@@ -48,16 +48,8 @@ namespace System.Xaml
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
-            _name = typeName;
-            _schemaContext = schemaContext;
+            _name = typeName ?? throw new ArgumentNullException(nameof(typeName));
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
         }
 
@@ -67,17 +59,10 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(nameof(unknownTypeNamespace));
             }
-            if (unknownTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(unknownTypeName));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
-            _name = unknownTypeName;
+
+            _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
         }        
@@ -103,13 +88,10 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(nameof(underlyingType));
             }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(underlyingType, schemaContext);
             _underlyingType.Value = underlyingType;
             _reflector.Invoker = invoker;
@@ -456,7 +438,7 @@ namespace System.Xaml
 
         public virtual bool CanAssignTo(XamlType xamlType)
         {
-            if (ReferenceEquals(xamlType, null))
+            if (xamlType is null)
             {
                 return false;
             }
@@ -1603,7 +1585,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(this.GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
+                    Debug.Assert(GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
                 }
             }
             return new ReadOnlyCollection<XamlMember>(result);
@@ -1802,7 +1784,7 @@ namespace System.Xaml
             {
                 return true;
             }
-            if (ReferenceEquals(xamlType1, null) || ReferenceEquals(xamlType2, null))
+            if (xamlType1 is null || xamlType2 is null)
             {
                 return false;
             }
@@ -1863,7 +1845,7 @@ namespace System.Xaml
         internal static class EmptyList<T>
         {
             public static readonly ReadOnlyCollection<T> Value =
-                new ReadOnlyCollection<T>(new T[0]);
+                new ReadOnlyCollection<T>(Array.Empty<T>());
         }
     }
 }

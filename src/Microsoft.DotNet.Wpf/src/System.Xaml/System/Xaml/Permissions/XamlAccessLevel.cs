@@ -116,8 +116,8 @@ namespace System.Xaml.Permissions
 
         internal bool Includes(XamlAccessLevel other)
         {
-            return other.AssemblyNameString == this.AssemblyNameString &&
-                (other.PrivateAccessToTypeName == null || other.PrivateAccessToTypeName == this.PrivateAccessToTypeName);
+            return other.AssemblyNameString == AssemblyNameString &&
+                (other.PrivateAccessToTypeName == null || other.PrivateAccessToTypeName == PrivateAccessToTypeName);
         }
 
         internal SecurityElement ToXml()

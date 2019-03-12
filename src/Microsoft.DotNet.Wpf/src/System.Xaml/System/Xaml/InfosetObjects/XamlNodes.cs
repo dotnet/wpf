@@ -113,7 +113,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", this.NodeType);
+            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", NodeType);
             switch(NodeType)
             {
             case XamlNodeType.StartObject:

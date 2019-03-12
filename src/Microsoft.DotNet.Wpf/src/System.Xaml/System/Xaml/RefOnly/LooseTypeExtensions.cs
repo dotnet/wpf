@@ -16,12 +16,12 @@ namespace System.Xaml
         // names, namespaces, assembly short names, culture infos, and public keys match.
         internal static bool AssemblyQualifiedNameEquals(Type t1, Type t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return ReferenceEquals(t2, null);
+                return t2 is null;
             }
 
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }

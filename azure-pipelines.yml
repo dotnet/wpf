@@ -3,11 +3,22 @@
 
 # Parameters ARE available in template expressions, and parameters can have default values,
 # so they can be used to control yaml flow.
+#
+# TODO:
+#   BuildMsBuildSdkPackages, _BuildMsBuildSdkPackages, _BuildMsBuildSdkPackagesArgs should be removed eventually, when 
+#   Microsoft.DotNet.Arcade.Wpf.Sdk is moved from dnceng/dotnet-wpf-int to github/dotnet/wpf. 
+#   When that move happens, there would be no need to suppress the Sdk build by default. Currently, 
+#   allowing the Sdk to build every time will result in an infinite loop that triggers a dotnet/wpf built,
 
 variables:
 
   # clean the local repo on the build agents
   Build.Repository.Clean: true
+  # When set to true in a manual built, it produces and publishes 
+  # Microsoft.DotNet.Arcade.Wpf.Sdk
+  BuildMsBuildSdkPackages: false
+  _PublishUsingPipelines: false
+  _DotNetArtifactsCategory: .NETCore
 
 # only trigger ci builds for the master and release branches
 trigger:

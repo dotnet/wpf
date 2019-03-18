@@ -1,0 +1,81 @@
+<Project>
+  <Target
+    Name="LimitNetCoreAppReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="@(ReferencePath)"
+    Condition="'@(NetCoreReference)'!='' and '@(ReferencePath)' != ''">
+
+
+    <!-- 
+      Example
+      <NetCoreReference Include="Microsoft.CSharp" /> 
+    -->
+
+    <!-- Save Microsoft.NETCore.App assemblies, and remove those from @(ReferencePath) -->
+    <ItemGroup>
+      <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
+      <_netCoreAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
+      
+      <ReferencePath Remove="@(_netCoreAppSdkReference)" />
+    </ItemGroup>
+    
+    <!-- Transform _netCoreAppSdkReference's Identity to its FileName. This will help us do a Remove against @(NetCoreReference) directly -->
+    <ItemGroup>
+      <_netCoreAppSdkUnwantedRefNormalized Remove="@(_netCoreAppSdkUnwantedRefNormalized)" />
+      <_netCoreAppSdkUnwantedRefNormalized Include="@(_netCoreAppSdkReference->'%(FileName)')" />
+      <_netCoreAppSdkUnwantedRefNormalized Remove="@(NetCoreReference)"  />
+    </ItemGroup>
+
+    <!-- Convert the Identity metadata of _netCoreAppSdkUnwantedRefNormalized back to it's Original value -->
+    <ItemGroup>
+      <_netCoreAppSdkUnwantedRef Remove="@(_netCoreAppSdkUnwantedRef)" />
+      <_netCoreAppSdkUnwantedRef Include="@(_netCoreAppSdkUnwantedRefNormalized->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+    
+    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
+    <ItemGroup>
+      <ReferencePath 
+        Include="@(_netCoreAppSdkReference)" 
+        Exclude="@(_netCoreAppSdkUnwantedRef)"/>
+    </ItemGroup>
+  </Target>
+  
+  <Target
+    Name="LimitWindowsDekstopAppReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="@(ReferencePath)"
+    Condition="'@(WindowsDesktopReference)'!='' and '@(ReferencePath)' != ''">
+    <!-- 
+      Example
+      <WindowsDesktopReference Include="PresentationCore" /> 
+    -->
+
+    <!-- Save Microsoft.WindowsDesktop.App assemblies, and remove those from @(ReferencePath) -->
+    <ItemGroup>
+      <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
+      <_windowsDesktopAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.WindowsDesktop.App'"/>
+
+      <ReferencePath Remove="@(_windowsDesktopAppSdkReference)" />
+    </ItemGroup>
+
+    <!-- Transform _windowsDesktopAppSdkReference's Identity to its FileName. This will help us do a Remove against @(NetCoreReference) directly -->
+    <ItemGroup>
+      <_windowsDesktopAppSdkUnwantedRefNormalized Remove="@(_windowsDesktopAppSdkUnwantedRefNormalized)" />
+      <_windowsDesktopAppSdkUnwantedRefNormalized Include="@(_windowsDesktopAppSdkReference->'%(FileName)')" />
+      <_windowsDesktopAppSdkUnwantedRefNormalized Remove="@(WindowsDesktopReference)"  />
+    </ItemGroup>
+
+    <!-- Convert the Identity metadata of _windowsDesktopAppSdkUnwantedRefNormalized back to it's Original value -->
+    <ItemGroup>
+      <_windowsDesktopAppSdkUnwantedRef Remove="@(_windowsDesktopAppSdkUnwantedRef)" />
+      <_windowsDesktopAppSdkUnwantedRef Include="@(_windowsDesktopAppSdkUnwantedRefNormalized->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+
+    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
+    <ItemGroup>
+      <ReferencePath
+        Include="@(_windowsDesktopAppSdkReference)"
+        Exclude="@(_windowsDesktopAppSdkUnwantedRef)"/>
+    </ItemGroup>
+  </Target>
+</Project>

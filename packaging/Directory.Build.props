@@ -1,6 +1,10 @@
 <Project>
   <PropertyGroup>
     <IsPackagingProject>true</IsPackagingProject>
+
+    <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->
+    <NoTargets>true</NoTargets>
+    <MsBuildSdkPackage Condition="$(MSBuildProjectName.Contains('.Sdk'))">true</MsBuildSdkPackage>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
@@ -17,18 +21,27 @@
     -->
     <IsPackable>true</IsPackable>
     <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
+    <IsPackable Condition="'$(MsBuildSdkPackage)'=='true' and '$(BuildMsBuildSdkPackages)'!='true'">false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultPackageLicenseExpression>MIT</DefaultPackageLicenseExpression>
+    
     <DefaultPackageLicenseFile>LICENSE.TXT</DefaultPackageLicenseFile>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackagingContent Condition="Exists('$(RepoRoot)LICENSE.TXT')" 
+    <!-- 
+      We want these files to be included and copied by exactly one project per package. Sometimes, there is more than one project per 
+      package - and ArchNeutral project, and a RID-specific project. Including these in both projects can result in build-time
+      failures, so scope it to just the ArchNeutral projects
+      
+      The ArchNeutral projects are only Packed in x86/AnyCPU builds, but PreparePackageAssets target - which copies these assets - always
+      runs in either build-platform.
+    -->
+    <PackagingContent Condition="Exists('$(RepoRoot)LICENSE.TXT') And $(MSBuildProjectName.Contains('.ArchNeutral'))" 
                       Include="$(RepoRoot)LICENSE.TXT" 
                       SubFolder="root" />
-    <PackagingContent Condition="Exists('$(RepoRoot)THIRD-PARTY-NOTICES.TXT')" 
+    <PackagingContent Condition="Exists('$(RepoRoot)THIRD-PARTY-NOTICES.TXT') And $(MSBuildProjectName.Contains('.ArchNeutral'))" 
                       Include="$(RepoRoot)THIRD-PARTY-NOTICES.TXT" 
                       SubFolder="root" />
   </ItemGroup>

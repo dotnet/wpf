@@ -1,0 +1,15 @@
+<Project>
+  <!-- This workaround fixes an issue with ResolveAssemblyReferences task where it 
+       removes a reference to *project* WindowsBase.dll because *sdk reference* 
+       WindowsBase.dll exists in the list of references it resolves. -->
+  <Target Name="FixupProjectReferences" AfterTargets="ResolveAssemblyReferences">
+    <CallTarget Targets="ResolveProjectReferences" />
+    <ItemGroup>
+      <ReferencePath Remove="@(_ResolvedNativeProjectReferencePaths)" />
+      <ReferencePath Include="@(_ResolvedNativeProjectReferencePaths)" />
+
+      <ReferencePath Remove="@(_ResolvedProjectReferencePaths)" />
+      <ReferencePath Include="@(_ResolvedProjectReferencePaths)" />
+    </ItemGroup>
+  </Target>
+</Project>

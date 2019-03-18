@@ -1,8 +1,18 @@
+#
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+#
+# 
+# TODO:
+#   BuildMsBuildSdkPackages, _BuildMsBuildSdkPackages, _BuildMsBuildSdkPackagesArgs should be removed eventually, when 
+#   Microsoft.DotNet.Arcade.Wpf.Sdk is moved from dnceng/dotnet-wpf-int to github/dotnet/wpf. 
+#   When that move happens, there would be no need to suppress the Sdk build by default. Currently, 
+#   allowing the Sdk to build every time will result in an infinite loop that triggers a dotnet/wpf built,
+#   which in turn triggers a dotnet-wpf int build, and so on. 
 parameters:
 
   # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-  # Defaults to dotnet-external-vs2019-preview
-  agentPool: dotnet-external-vs2019-preview
+  # Defaults to dotnet-internal-vs2019-preview
+  agentPool: dotnet-internal-vs2019-preview
 
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
@@ -16,7 +26,7 @@ jobs:
     enablePublishTestResults: true
     enablePublishBuildAssets: true
     enableTelemetry: true
-    helixRepo: dotnet/wpf
+    helixRepo: dnceng/dotnet-wpf-int
 
     jobs:
     - job: Windows_NT
@@ -43,12 +53,15 @@ jobs:
           value: x86
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
+        - name: _BuildMsBuildSdkPackages
+          value: $(BuildMsBuildSdkPackages)
+        - name: _BuildMsBuildSdkPackagesArgs
+          value: /p:BuildMsBuildSdkPackages=$(_BuildMsBuildSdkPackages)
 
         # Override some values if we're building internally
+        # TODO: Change _SignType to real when the repo is ready to go live 
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
-          # note: Set _SignType:test for now. Change it back to _SignType:real when the build agent pools dotnet-external-vs2019-preview
-          #        and dotnet-internal-vs2019-preview are fully enabled for signing.
           - name: _PublishType
             value: blob
           - name: _SignType
@@ -69,6 +82,8 @@ jobs:
             value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
               /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
               /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+              /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
+              /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
               /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
@@ -104,4 +119,5 @@ jobs:
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
+          $(_BuildMsBuildSdkPackagesArgs)
         displayName: Windows Build / Publish

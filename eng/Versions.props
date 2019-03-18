@@ -4,22 +4,26 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <MicrosoftDotNetArcadeWpfSdkVersion>4.8.0-prerelease.19168.11</MicrosoftDotNetArcadeWpfSdkVersion>
+    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview4.19162.2</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19161.10</MicrosoftPrivateWinformsVersion>
+    <SystemDrawingCommonVersion>4.6.0-preview4.19162.2</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>4.6.0-preview4.19162.2</SystemDirectoryServicesVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
     <!-- Packages that come from https://github.com/dotnet/corefx -->
-    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview4.19164.7</MicrosoftWin32RegistryPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview4.19164.7</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview4.19164.7</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>4.6.0-preview4.19164.7</SystemReflectionEmitPackageVersion>
-    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19164.7</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>4.6.0-preview4.19164.7</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview4.19164.7</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>4.6.0-preview4.19164.7</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview4.19164.7</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>4.6.0-preview4.19164.7</SystemWindowsExtensionsPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview4.19164.7</SystemCodeDomPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview4.19162.2</MicrosoftWin32RegistryPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview4.19162.2</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview4.19162.2</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview4.19162.2</SystemReflectionEmitPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview4.19162.2</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview4.19162.2</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview4.19162.2</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview4.19162.2</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview4.19162.2</SystemWindowsExtensionsPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview4.19162.2</SystemCodeDomPackageVersion>
+    <!-- Packages that come from https://github.com/dotnet/arcade -->
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19167.10</MicrosoftDotNetCodeAnalysisPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/corefxlab -->
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
@@ -28,16 +32,23 @@
     <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
+    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
     <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- This is required to restore System.Reflection.Typeloader successfully -->
-    <RestoreSources>$(RestoreSources);https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json</RestoreSources>
+    <RestoreSources>
+      $(RestoreSources);
+      https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
+      https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
+    </RestoreSources>
   </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>
-    <MicrosoftDotNetArcadeWpfSdkPackage>Microsoft.DotNet.Arcade.Wpf.Sdk</MicrosoftDotNetArcadeWpfSdkPackage>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
+    <MicrosoftPrivateWinformsPackage>Microsoft.Private.Winforms</MicrosoftPrivateWinformsPackage>
+    <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
+    <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,57 @@
+<Project>
+  <PropertyGroup>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
+
+    <!-- We like using RID prefix when generating nuget package names -->
+    <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">runtime.win-$(Platform)</PackageRuntimeIdentifierPrefix>
+    <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">runtime.win-x86</PackageRuntimeIdentifierPrefix>
+
+    <!-- By default, everything is set to $(IsPackable) = false                 -->
+    <!-- We have a few special projects that are used to orchestrate packaging  -->
+    <!-- that will have $(IsPackable) = true                                    -->
+    <IsPackable Condition="'$(IsPackable)'==''">false</IsPackable>
+
+
+    <!-- This repo builds a transport package - we don't ship from here -->
+    <IsShippingPackage>false</IsShippingPackage>
+    
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright Condition="'$(CopyrightNetFoundation)' != ''">$(CopyrightNetFoundation)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
+    <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
+  </PropertyGroup>
+
+  <!-- 
+      $(RepoLocation) is defined in ShippingProjects.props 
+      Values can be:
+        Internal
+        External
+  -->
+  <PropertyGroup>
+    <!-- Built out of internal repo -->
+    <PackageName Condition="'$(RepoLocation)'=='Internal'">$(DncEngTransportPackageName)</PackageName>
+
+    <!-- Built out of https://www.github.com/dotnet/wpf -->
+    <PackageName Condition="'$(RepoLocation)'=='External'">$(GitHubTransportPackageName)</PackageName>
+  </PropertyGroup>
+
+
+
+  <!-- Projects that consume our packages should not be forced to consume our dependencies as well  -->
+  <!-- Set PrivateAssets=All to mark contentfiles;analyzers;build as private                        -->
+  <ItemDefinitionGroup>
+    <PackageReference>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <!-- Do not copy Nuget references to output folder                                        -->
+    <!-- This will in turn prevent packaging of nuget-referneces into the transport packages  -->
+    <CopyLocalLockFileAssemblies Condition="'$(IsTestProject)'!='true'">false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+</Project>

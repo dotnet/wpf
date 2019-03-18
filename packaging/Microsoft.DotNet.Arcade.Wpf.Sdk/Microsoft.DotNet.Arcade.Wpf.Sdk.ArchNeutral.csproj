@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{B73BB4AB-68DE-4B91-BBB0-AB4F2D504AC3}</ProjectGuid>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      PlatformIndependentPackage = true means that this package does
+      not require the automatic generation of a runtime.json file using
+      the Bait & Switch technique to reference RID specific packages
+    -->
+    <PlatformIndependentPackage>true</PlatformIndependentPackage>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <NuspecFile>$(ArtifactsPackagingDir)$(MSBuildProjectName).nuspec</NuspecFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\Sdk\*" SubFolder="root\Sdk" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\*" SubFolder="root\tools" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\AvTrace\*" SubFolder="root\tools\AvTrace" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\*" SubFolder="root\tools\WppConfig" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\rev1\*" SubFolder="root\tools\WppConfig\rev1" />
+  </ItemGroup>
+</Project>

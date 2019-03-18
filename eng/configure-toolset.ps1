@@ -10,3 +10,4 @@ if (($properties -eq $null) -or (-not ($properties -icontains '/nowarn:D9035')))
 
 # Always generate binary logs
 $binaryLog = $true
+$DoNotAbortNativeToolsInstallationOnFailure = $true

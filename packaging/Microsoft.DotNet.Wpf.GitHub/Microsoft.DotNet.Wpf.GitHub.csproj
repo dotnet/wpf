@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.Build.NoTargets">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>c847934a-828c-4ebb-a004-b0e97c8313f4</ProjectGuid>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
     <NuspecFile>$(ArtifactsPackagingDir)$(MSBuildProjectName).nuspec</NuspecFile>

@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <PbtTfm Condition="'$(MSBuildRuntimeType)'=='Core'">netcoreapp2.1</PbtTfm>
+    <PbtTfm Condition="'$(MSBuildRuntimeType)'!='Core'">net472</PbtTfm>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PbtDir>$(ArtifactsTmpDir)PresentationBuildTasks\$(PbtTfm)\</PbtDir>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,36 @@
+<Project>
+  <Target Name="EnsureReferenceDestination" BeforeTargets="CoreCompile">
+    <!-- Create and export properties used in Reference assembly generation                       -->
+    <!--                                                                                          -->
+    <!-- $(ArtifactsReferenceAssemblyDir) = $(ArtifactsDir)ref\                                   -->
+    <!-- $(BaseReferenceAssemblyDir) = $(ArtifactsReferenceAssemblyDir)$(AssemblyName)\           -->
+    <!-- $(ReferenceAssemblyDir) = $(BaseReferenceAssemblyDir)$(Configuration)$(TargetFramework)\ -->
+    <!--                                                                                          -->
+    <!-- $(TargetRefPath) = $(ReferenceAssemblyDir)\<AssemblyName>                                -->
+    <CreateProperty Condition="'$(ArtifactsReferenceAssemblyDir)'==''" Value="$(ArtifactsDir)ref\">
+      <Output PropertyName="ArtifactsReferenceAssemblyDir" TaskParameter="Value"/>
+    </CreateProperty>
+    
+    <CreateProperty Condition="'$(BaseReferenceAssemblyDir)'==''" Value="$(ArtifactsReferenceAssemblyDir)$(AssemblyName)\">
+      <Output PropertyName="BaseReferenceAssemblyDir" TaskParameter="Value"/>
+    </CreateProperty>
+    
+    <CreateProperty Condition="'$(ReferenceAssemblyDir)'==''" Value="$(BaseReferenceAssemblyDir)$(Configuration)\$(TargetFramework)\">
+      <Output PropertyName="ReferenceAssemblyDir" TaskParameter="Value"/>
+    </CreateProperty>
+
+    <MakeDir Condition="'$(ProduceReferenceAssembly)'=='true' and !Exists('$(ReferenceAssemblyDir)')" Directories="$(ReferenceAssemblyDir)" />
+
+    <ItemGroup>
+      <!-- Conditioning this on '$(ProduceReferenceAssembly)'=='true'  ensures that the next <Error> task will never trigger when -->
+      <!-- reference-assembly generation is not requested                                                                         -->
+      <RefAssemblies Condition="'$(ProduceReferenceAssembly)'=='true'" Include="@(IntermediateRefAssembly->'$(ReferenceAssemblyDir)%(Filename)%(Extension)')" />
+    </ItemGroup>
+
+    <Error Condition="@(RefAssemblies->Count()) &gt; 1" Text="More than one reference assembly is produced at the same time!" />
+
+    <PropertyGroup>
+      <TargetRefPath>@(RefAssemblies)</TargetRefPath>
+    </PropertyGroup>
+  </Target>
+</Project>

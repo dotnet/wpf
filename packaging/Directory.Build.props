@@ -21,7 +21,6 @@
     -->
     <IsPackable>true</IsPackable>
     <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
-    <IsPackable Condition="'$(MsBuildSdkPackage)'=='true' and '$(BuildMsBuildSdkPackages)'!='true'">false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

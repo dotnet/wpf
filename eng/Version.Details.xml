@@ -47,11 +47,11 @@
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19121.5">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19167.10">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>660f6cd006b276edb3764f4d7d726cedf6c29d8e</Sha>
+      <Sha>de7be3ba62b92e5c48c36876c851a14f154444af</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Wpf.Sdk" Version="4.8.0-prerelease.19121.7">
+    <Dependency Name="Microsoft.DotNet.Arcade.Wpf.Sdk" Version="4.8.0-prerelease.19168.11">
       <Uri>https://dnceng.visualstudio.com/internal/_git/dotnet-wpf-int</Uri>
       <Sha>355e79da935226c4d80d1ca687b00568fcd99208</Sha>
     </Dependency>

@@ -4,7 +4,7 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <MicrosoftDotNetArcadeWpfSdkVersion>4.8.0-prerelease.19121.7</MicrosoftDotNetArcadeWpfSdkVersion>
+    <MicrosoftDotNetArcadeWpfSdkVersion>4.8.0-prerelease.19168.11</MicrosoftDotNetArcadeWpfSdkVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>

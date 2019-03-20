@@ -9,6 +9,9 @@ variables:
   # clean the local repo on the build agents
   Build.Repository.Clean: true
 
+  _PublishUsingPipelines: false
+  _DotNetArtifactsCategory: .NETCore
+
 # only trigger ci builds for the master and release branches
 trigger:
 - master

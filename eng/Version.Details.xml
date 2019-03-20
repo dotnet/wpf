@@ -2,9 +2,10 @@
 <Dependencies>
   <ProductDependencies></ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19167.10">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19170.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>de7be3ba62b92e5c48c36876c851a14f154444af</Sha>
+      <Sha>901d4168c96095ee385c4e9a0ea8bfb691f39fc9</Sha>
+      <SourceBuildId>5844</SourceBuildId>
     </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview4.19162.2">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -62,9 +63,10 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>7c36280bd83b85bf5b3f229d3c1a293f00ef59dd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19167.10">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19170.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>de7be3ba62b92e5c48c36876c851a14f154444af</Sha>
+      <Sha>901d4168c96095ee385c4e9a0ea8bfb691f39fc9</Sha>
+      <SourceBuildId>5844</SourceBuildId>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

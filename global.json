@@ -9,7 +9,7 @@
     "version": "3.0.100-preview-009764"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19170.3",
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19170.2",
     "Microsoft.DotNet.Arcade.Wpf.Sdk": "4.8.0-prerelease.19168.11"
   },
   "native-tools": {

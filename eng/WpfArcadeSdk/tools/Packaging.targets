@@ -299,8 +299,7 @@ $(PreparePackageAssetsDependsOn):
       <RuntimeJsonLine Remove="@(RuntimeJsonLine)" />
       <RuntimeJsonLine Include="Json">
         <Text>
-          <![CDATA[
-{
+          <![CDATA[{
   "runtimes": {
     "win-x64": {
       "$(PackageName)": {

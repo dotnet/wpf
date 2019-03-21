@@ -237,7 +237,7 @@ $(PreparePackageAssetsDependsOn):
       <NuSpec Include="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;" />
       <NuSpec Include="&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd&quot;&gt;" />
       <NuSpec Include="    &lt;metadata&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true'" Include="        &lt;id&gt;$(PackageRuntimeIdentifierPrefix)-$(PackageName)&lt;/id&gt;" />
+      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true'" Include="        &lt;id&gt;$(PackageRuntimeIdentifierPrefix).$(PackageName)&lt;/id&gt;" />
       <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true'" Include="        &lt;id&gt;$(PackageName)&lt;/id&gt;" />
       <NuSpec Include="        &lt;version&gt;$(PackageVersion)&lt;/version&gt;" />
       <NuSpec Include="        &lt;authors&gt;$(Authors)&lt;/authors&gt;" />

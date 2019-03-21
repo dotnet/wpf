@@ -55,6 +55,10 @@
       EnsureWpfProjectReference;
       $(ResolveReferencesDependsOn)
       </ResolveReferencesDependsOn>
+    <MarkupCompilePass1DependsOn>
+      EnsureWpfProjectReference;
+      $(MarkupCompilePass1DependsOn)
+    </MarkupCompilePass1DependsOn>
   </PropertyGroup>
   
 

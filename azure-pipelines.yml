@@ -37,6 +37,7 @@ jobs:
   parameters:
     ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
       # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-vs2019-preview
+      # Temporarily change from dotnet-internal-vs2019-preview to dotnet-internal-temp-vs2019 to ensure signing works correctly.
+      agentPool: dotnet-internal-temp-vs2019
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false

@@ -50,6 +50,14 @@
     <NoTargetsTargets>$(WpfArcadeSdkToolsDir)NoTargets.targets</NoTargetsTargets>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!--
+      Temporarily suppress NU3027
+      https://github.com/dotnet/arcade/issues/2304
+    -->
+    <NoWarn>$(NoWarn);NU3027</NoWarn>
+  </PropertyGroup>
+
   <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->
   <Import Project="$(NoTargetsProps)" Condition="'$(NoTargets)'=='true'"/>
 </Project>

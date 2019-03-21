@@ -3,6 +3,10 @@
     <ExternalShippingProjects>
       System.Xaml
     </ExternalShippingProjects>
+
+    <WindowsDesktopSdkShippingProject>
+      PresentationBuildTasks
+    </WindowsDesktopSdkShippingProject>
     
     <InternalShippingProjects>
       PresentationBuildTasks;
@@ -58,6 +62,8 @@
 
     <RepoLocation Condition="$(InternalShippingProjects.Contains('$(MSBuildProjectName)'))">Internal</RepoLocation>
     <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(MSBuildProjectName)'))">External</RepoLocation>
+    <!-- WindowsDesktopSdk overrides Internal, External etc. -->
+    <RepoLocation Condition="$(WindowsDesktopSdkShippingProject.Contains('$(MSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
   </PropertyGroup>
   
 </Project>

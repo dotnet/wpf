@@ -23,6 +23,9 @@
   <PropertyGroup>
     <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
     <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
+    
+    <!-- When ready to go live, remove .private suffix -->
+    <WindowsDesktopSdkPackageName>Microsoft.DotNet.Sdk.WindowsDesktop.Private</WindowsDesktopSdkPackageName>
   </PropertyGroup>
 
   <!-- 
@@ -37,6 +40,9 @@
 
     <!-- Built out of https://www.github.com/dotnet/wpf -->
     <PackageName Condition="'$(RepoLocation)'=='External'">$(GitHubTransportPackageName)</PackageName>
+
+    <!-- Built out of https://www.github.com/dotnet/wpf -->
+    <PackageName Condition="'$(RepoLocation)'=='WindowsDesktopSdk'">$(WindowsDesktopSdkPackageName)</PackageName>
   </PropertyGroup>
 
 

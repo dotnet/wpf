@@ -1,6 +1,3 @@
 <Project>
-  <PropertyGroup>
-    <WpfSourceDir>$(MSBuildThisFileDirectory)src\</WpfSourceDir>
-  </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 </Project>

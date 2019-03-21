@@ -65,7 +65,7 @@ jobs:
           - name: _PublishType
             value: blob
           - name: _SignType
-            value: test
+            value: real
           - name: _DotNetPublishToBlobFeed
             value: true
           - group: DotNet-Blob-Feed

@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <CodeAnalysisRuleset Condition="'$(IsTestProject)'!='true'">$(MSBuildThisFileDirectory)CodeAnalysis\WpfCodeAnalysis.ruleset</CodeAnalysisRuleset>
+    <CodeAnalysisRuleset Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">$(MSBuildThisFileDirectory)CodeAnalysis\WpfCodeAnalysis.ruleset</CodeAnalysisRuleset>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">

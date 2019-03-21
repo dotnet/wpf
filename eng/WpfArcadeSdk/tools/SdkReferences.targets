@@ -78,4 +78,65 @@
         Exclude="@(_windowsDesktopAppSdkUnwantedRef)"/>
     </ItemGroup>
   </Target>
+
+  <Target
+    Name="LimitMicrosoftDotNetWpfGitHubReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="@(ReferencePath)"
+    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' and '@(ReferencePath)' != '' and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
+    <!-- 
+      This target is called by WpfProjectReference.targets and should not be invoked directly
+      Example
+      <MicrosoftDotNetWpfGitHubReference Include="System.Xaml" /> 
+    -->
+
+    <!-- Save Microsoft.DotNet.Wpf.GitHub assemblies, and remove those from @(ReferencePath) -->
+    <ItemGroup>
+      <_microsoftDotNetWpfGithubRef Remove="@(_microsoftDotNetWpfGithubRef)" />
+      <_microsoftDotNetWpfGithubRef Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
+
+      <ReferencePath Remove="@(_microsoftDotNetWpfGithubRef)" />
+    </ItemGroup>
+
+    <!-- Transform _microsoftDotNetWpfGithubRef's Identity to its FileName. This will help us do a Remove against @(MicrosoftDotNetWpfGitHubReference) directly -->
+    <ItemGroup>
+      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Remove="@(_microsoftDotNetWpfGithubUnwantedReferenceNormalized)" />
+      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Include="@(_microsoftDotNetWpfGithubRef->'%(FileName)')" />
+      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Remove="@(MicrosoftDotNetWpfGitHubReference)"  />
+      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Include="@(MicrosoftDotNetWpfGitHubReference)"
+                                                            Condition="'%(MicrosoftDotNetWpfGitHubReference.ReferenceOutputAssembly)'=='false'" />
+    </ItemGroup>
+
+    <!-- Convert the Identity metadata of _microsoftDotNetWpfGithubUnwantedReferenceNormalized back to it's Original value -->
+    <ItemGroup>
+      <_microsoftDotNetWpfGithubUnwantedRef Remove="@(_microsoftDotNetWpfGithubUnwantedRef)" />
+      <_microsoftDotNetWpfGithubUnwantedRef Include="@(_microsoftDotNetWpfGithubUnwantedReferenceNormalized->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+
+    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
+    <ItemGroup>
+      <ReferencePath
+        Include="@(_microsoftDotNetWpfGithubRef)"
+        Exclude="@(_microsoftDotNetWpfGithubUnwantedRef)" />
+    </ItemGroup>
+
+    <!-- 
+      If any items in @(MicrosoftDotNetWpfGitHubReference) have OutputItemType and Define metadata, then
+      produce another itemgroup based on that
+    -->
+    <!-- First, merge the metadata for the items we want from _microsoftDotNetWpfGithubRef -->
+    <FilterItem1ByItem2 Item1="@(MicrosoftDotNetWpfGitHubReference)"
+                        PreserveItem1Metadata="true"
+                        Item2="@(_microsoftDotNetWpfGithubRef->'%(FileName)')"
+                        PreserveItem2Metadata="true"
+                        Metadata2="Identity">
+      <Output ItemName="_microsoftDotNetWpfGithubRefNormalized" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <CreateItem Include="@(_microsoftDotNetWpfGithubRefNormalized->'%(HintPath)')"
+                PreserveExistingMetadata="true"
+                Condition="'%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)'!=''">
+      <Output TaskParameter="Include" ItemName="%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)" />
+    </CreateItem>
+  </Target>
 </Project>

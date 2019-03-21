@@ -1,5 +1,6 @@
 <Project>
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenerateAvTraceMessages.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.targets" />
@@ -9,6 +10,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)FixupProjectReferences.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)WpfProjectReference.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
   

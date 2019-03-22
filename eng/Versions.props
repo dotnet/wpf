@@ -29,7 +29,6 @@
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
     <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
     <!-- Other Packages that require manual updating-->
-    <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>

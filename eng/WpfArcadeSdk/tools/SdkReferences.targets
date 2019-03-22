@@ -1,4 +1,12 @@
 <Project>
+  <ItemGroup>
+    <PackageReference Include="$(MicrosoftPrivateWinformsPackage)"
+                      Version="$(MicrosoftPrivateWinformsVersion)"
+                      ExcludeAssets="All"
+                      GeneratePathProperty="True"
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftPrivateWinformsReference)'!='true'"/>
+  </ItemGroup>
+  
   <Target
     Name="LimitNetCoreAppReferences"
     AfterTargets="ResolveAssemblyReferences"
@@ -138,5 +146,30 @@
                 Condition="'%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)'!=''">
       <Output TaskParameter="Include" ItemName="%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)" />
     </CreateItem>
+  </Target>
+
+  <PropertyGroup>
+    <ResolveAssemblyReferencesDependsOn>
+      ResolveWinFormsReferences;
+      $(ResolveAssemblyReferencesDependsOn)
+    </ResolveAssemblyReferencesDependsOn>
+  </PropertyGroup>
+
+  <!-- 
+    In your project, Add a references to WinForms transport package like this:
+      <ItemGroup>
+        <MicrosoftPrivateWinFormsReference Include="Accessbility" />
+      </ItemGroup>
+      
+    It will get translated into something like this:
+      <ItemGroup>
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.private.winforms\4.8.0-preview4.19170.4\lib\netcoreapp3.0\Accessibility.dll" />
+      </ItemGroup>
+  -->
+  <Target Name="ResolveWinFormsReferences"
+          Condition="'@(MicrosoftPrivateWinFormsReference)'!='' And $(TargetFramework.StartsWith('netcoreapp3'))">
+    <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll" />
+    </ItemGroup>
   </Target>
 </Project>

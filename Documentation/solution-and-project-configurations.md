@@ -3,43 +3,43 @@
 Solutions configurations are mapped to Project configurations in the following manner.
 
 <font face="consolas">
-	<table>
-	 <tr>
-	  <th>Solution</th>
-	  <th>Managed Projects</th>
-	  <th>Native Projects</th>
-	 </tr>
-	 <tr>
-	  <td>Debug|AnyCPU</td>
+    <table>
+     <tr>
+      <th>Solution</th>
+      <th>Managed Projects</th>
+      <th>Native Projects</th>
+     </tr>
+     <tr>
+      <td>Debug|AnyCPU</td>
       <td>Debug|AnyCPU</td>
       <td>Debug|<font color="red">Win32</font></td>
-	 </tr>
-	 <tr>
-	  <td>Debug|x86</td>
+     </tr>
+     <tr>
+      <td>Debug|x86</td>
       <td>Debug|<font color="red">AnyCPU</font></td>
       <td>Debug|<font color="blue">Win32</font></td>
-	 </tr>
-	 <tr>
-	  <td>Debug|x64</td>
-	  <td>Debug|x64</td>
-	  <td>Debug|x64</td>
-	 </tr>
-	 <tr>
-	  <td>Release|AnyCPU</td>
-	  <td>Release|AnyCPU</td>
-	  <td>Release|<font color="red">Win32</font></td>
-	 </tr>
-	 <tr>
-	  <td>Release|x86</td>
+     </tr>
+     <tr>
+      <td>Debug|x64</td>
+      <td>Debug|x64</td>
+      <td>Debug|x64</td>
+     </tr>
+     <tr>
+      <td>Release|AnyCPU</td>
+      <td>Release|AnyCPU</td>
+      <td>Release|<font color="red">Win32</font></td>
+     </tr>
+     <tr>
+      <td>Release|x86</td>
       <td>Release|<font color="red">AnyCPU</red></td>
-	  <td>Release|<font color="blue">Win32</font></td>
-	 </tr>
-	 <tr>
-	  <td>Release|x64</td>
+      <td>Release|<font color="blue">Win32</font></td>
+     </tr>
+     <tr>
       <td>Release|x64</td>
       <td>Release|x64</td>
-	 </tr>
-	</table>
+      <td>Release|x64</td>
+     </tr>
+    </table>
 </font>
 
 

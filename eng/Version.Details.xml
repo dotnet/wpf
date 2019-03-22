@@ -61,10 +61,10 @@
       <Sha>d6a30736858f91b297fdd3ed4e3d1dfde67bdbdb</Sha>
       <SourceBuildId>5589</SourceBuildId>
     </Dependency>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview4.19170.4" CoherentParentDependency="Microsoft.NETCore.App">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview4.19172.5" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>666ca26fa9c98fbb86b158d30870bd2350ea6f1c</Sha>
-      <SourceBuildId>5845</SourceBuildId>
+      <Sha>314b7af5aadd1366e2d7371686857caa472ecf40</Sha>
+      <SourceBuildId>6035</SourceBuildId>
     </Dependency>
     <Dependency Name="System.Drawing.Common" Version="4.6.0-preview4.19164.7" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -80,6 +80,11 @@
       <Uri>https://github.com/dotnet/arcade</Uri>
       <Sha>f70fa34786cff993625a4548ae0125335eabe82e</Sha>
       <SourceBuildId>5832</SourceBuildId>
+    </Dependency>
+    <Dependency Name="System.IO.Packaging" Version="4.6.0-preview4.19164.7" CoherentParentDependency="Microsoft.NETCore.App">
+      <SourceBuildId>5589</SourceBuildId>
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>d6a30736858f91b297fdd3ed4e3d1dfde67bdbdb</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

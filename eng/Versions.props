@@ -5,9 +5,10 @@
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemReflectionMetadataLoadContextVersion>4.6.0-preview4.19164.7</SystemReflectionMetadataLoadContextVersion>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19170.4</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19172.5</MicrosoftPrivateWinformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview4.19164.7</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview4.19164.7</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>4.6.0-preview4.19164.7</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -49,5 +50,6 @@
     <MicrosoftPrivateWinformsPackage>Microsoft.Private.Winforms</MicrosoftPrivateWinformsPackage>
     <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
     <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
+    <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
   </PropertyGroup>
 </Project>

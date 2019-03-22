@@ -1,6 +1,11 @@
 <Project>
   <!-- Dummy 'Pack' target for 'vcxproj' -->
   <Target Name="Pack" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" />
+
+  <PropertyGroup>
+    <!-- Projects can override the name of the 'lib' folder to something else - for e.g., 'tools'-->
+    <LibFolder Condition="'$(LibFolder)'==''">lib</LibFolder>
+  </PropertyGroup>
   
   <!-- 
    Target: PreparePackageAssets                                                                   
@@ -24,7 +29,10 @@
                           of the package.
                           <PackagingContent Include"sdk\*.props" Subfolder="root\sdk" /> will result in
                           relevant *.props files to be placed under the 'sdk' sub-folder in the package.
-                          
+   $(ExcludeRefAssemblies) - true/false to include/exclude ref assemblies from packaging. 
+                             default is true.
+   $(ExcludePdbs)  - true/false to include/exclude PDB's from packaging
+                     default is true
 $(PreparePackageAssetsDependsOn):                                                              
                       List of targets that PreparePackageAssets would depend on                   
                       This is an extensibility point                                              
@@ -48,6 +56,7 @@ $(PreparePackageAssetsDependsOn):
       <TargetFrameworkOrRuntimeIdentifier Condition="'$(Platform)'=='x64'">win-x64</TargetFrameworkOrRuntimeIdentifier>
     </PropertyGroup>
 
+   
     <!--
         Instead of showing an error when $(TargetFrameworkOrRuntimeIdentifier) cannot be identified
         we simply do no further work
@@ -69,23 +78,23 @@ $(PreparePackageAssetsDependsOn):
     </ItemGroup>
     -->
     <CreateItem Include="$(OutDir)*.dll" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.exe" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
+                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(ReferenceAssemblyDir)*.dll" 
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\ref\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
+                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 
@@ -102,7 +111,7 @@ $(PreparePackageAssetsDependsOn):
       <PackageAssetCultures Remove="$(PackageAssetCultures)" />
       <PackageAssetCultures Include="$(XlfLanguages)" />
       
-      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)\%(PackageAssetCultures.Identity)" />
+      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)\%(PackageAssetCultures.Identity)" />
     </ItemGroup>
     
     <ItemGroup Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!=''">
@@ -185,6 +194,12 @@ $(PreparePackageAssetsDependsOn):
       WPF projects will opt into PreparePackageAssets target by specifying $(PackageName) 
       Special packaging-only projects will be used to orchestrate the actual packaging    
                                                                                           
+      Also, if an "ArchNeutral" package sets $(IncludeAssembliesInArchNeutralPackage)=true, 
+      then it will include 'lib\**\*' files in it anyway. 
+      This can be combined with $(PlatformIndependentPackage)=true (which controls the generation
+      of runtime.json file) to generate an AnyCPU Sdk package containing ref + lib assemblies alongwith 
+      all the props and targets.
+                                                                                          
    The following properties are of interest to this target                                                                    
    $(PackageName):  The name of the package                                                                                   
    $(PackageVersion): The package version                                                                                     
@@ -253,11 +268,11 @@ $(PreparePackageAssetsDependsOn):
       <NuSpec Include="		&lt;requireLicenseAcceptance&gt;$(PackageRequireLicenseAcceptance)&lt;/requireLicenseAcceptance&gt;" />
       <NuSpec Include="    &lt;/metadata&gt;" />
       <NuSpec Include="	&lt;files&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and Exists('$(ArtifactsPackagingDir)$(PackageName)\lib\')" Include="	    &lt;file src=&quot;$(PackageName)\lib\**\*.dll&quot; target=&quot;lib&quot; /&gt;	" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and Exists('$(ArtifactsPackagingDir)$(PackageName)\lib\')" Include="		&lt;file src=&quot;$(PackageName)\lib\**\*.exe&quot; target=&quot;lib&quot; /&gt;	" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and Exists('$(ArtifactsPackagingDir)$(PackageName)\lib\')" Include="		&lt;file src=&quot;$(PackageName)\lib\**\*.pdb&quot; target=&quot;lib&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="	    &lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
       <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(PackageName)\ref\')" Include="		&lt;file src=&quot;$(PackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and Exists('$(ArtifactsPackagingDir)$(PackageName)\content\')" Include="		&lt;file src=&quot;$(PackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\content\')" Include="		&lt;file src=&quot;$(PackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
       <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; exclude=&quot;$(PackageName)\runtime.json&quot; /&gt;" /> 
       <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; /&gt;" />
       <NuSpec Condition="'@(PackagingRootFolderSubFolders)'!=''" Include="		&lt;file src=&quot;$(PackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />

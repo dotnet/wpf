@@ -4,10 +4,6 @@
       System.Xaml
     </ExternalShippingProjects>
 
-    <WindowsDesktopSdkShippingProject>
-      PresentationBuildTasks
-    </WindowsDesktopSdkShippingProject>
-    
     <InternalShippingProjects>
       PresentationBuildTasks;
       PresentationCore;
@@ -49,6 +45,10 @@
       D3DCompiler;
       VCRuntime
     </ExcludeFromXlfLocalization>
+
+    <WindowsDesktopSdkProject>
+      PresentationBuildTasks
+    </WindowsDesktopSdkProject>
     
   </PropertyGroup>
 
@@ -62,8 +62,9 @@
 
     <RepoLocation Condition="$(InternalShippingProjects.Contains('$(MSBuildProjectName)'))">Internal</RepoLocation>
     <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(MSBuildProjectName)'))">External</RepoLocation>
+    
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
-    <RepoLocation Condition="$(WindowsDesktopSdkShippingProject.Contains('$(MSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(MSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
   </PropertyGroup>
   
 </Project>

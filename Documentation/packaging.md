@@ -20,7 +20,7 @@ Packaging is implemented in the following files:
         
 ```
  
- - The `ArchNeutral` packages are build only during the `x86` (i.e., `AnyCPU`) build phase
+ - The `ArchNeutral` packages are built only during the `x86` (i.e., `AnyCPU`) build phase
     - Normally, the `ArchNeutral` packages will contain a `runtime.json` file that incorporates the *Bait & Switch* technique for referencing RID-specific packages automatically. 
     - `runtime.json` functionality is turned off when a packaging project requests so by setting `$(PlatformIndependentPackage)=true`.
       - See [Improve documentation - bait and switch pattern, other #1282 ](https://github.com/NuGet/docs.microsoft.com-nuget/issues/1282)
@@ -31,19 +31,14 @@ Packaging is implemented in the following files:
  
 #### Package Names
 
-There are two main *transport* packages and one internal *MsBuild Sdk* produced out of this repo:
+There are two packages produced out of this repo, a *transport* package and an *MsBuild Sdk* package:
 
 - `Microsoft.DotNet.Wpf.Github`
-  - This contains assemblies and corresponding reference binaries that are currently built out of Github ([https://www.github.com/dotnet/wpf](https://www.github.com/dotnet/wpf)). 
-  - Eventually, this will be moved over to [https://www.github.com/dotnet/wpf](https://www.github.com/dotnet/wpf)
-- `Microsoft.DotNet.Wpf.DncEng`
-  - This is a package for all the content that is being built out of the *internal* (i.e., not-yet open-sourced) repository (*this* repository).
+  - This contains assemblies and corresponding reference binaries that are currently built out of this repo ([https://www.github.com/dotnet/wpf](https://www.github.com/dotnet/wpf)). 
 - `Microsoft.DotNet.Arcade.Wpf.Sdk`
   - This is an *MsBuild Sdk*, and is and extension to [Microsoft.DotNet.Arcade.Sdk](https://www.github.com/dotnet/arcade).
   - This Sdk contains all the build props, targets and scripts needed to build WPF. 
   - Since WPF's build is split across two repos, we build this Sdk out of one repo, and consume it as an *MsBuild Sdk* in the other repo. 
-    - At present, Microsoft.DotNet.Arcade.Sdk is built out of `dotnet-wpf-int`, and consumed by https://www.github.com/dotnet/wpf.
-
 
 #### Opting into a package
 

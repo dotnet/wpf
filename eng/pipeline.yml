@@ -2,12 +2,6 @@
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
 #
 # 
-# TODO:
-#   BuildMsBuildSdkPackages, _BuildMsBuildSdkPackages, _BuildMsBuildSdkPackagesArgs should be removed eventually, when 
-#   Microsoft.DotNet.Arcade.Wpf.Sdk is moved from dnceng/dotnet-wpf-int to github/dotnet/wpf. 
-#   When that move happens, there would be no need to suppress the Sdk build by default. Currently, 
-#   allowing the Sdk to build every time will result in an infinite loop that triggers a dotnet/wpf built,
-#   which in turn triggers a dotnet-wpf int build, and so on. 
 parameters:
 
   # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
@@ -26,7 +20,7 @@ jobs:
     enablePublishTestResults: true
     enablePublishBuildAssets: true
     enableTelemetry: true
-    helixRepo: dnceng/dotnet-wpf-int
+    helixRepo: dnceng/wpf
 
     jobs:
     - job: Windows_NT
@@ -53,10 +47,6 @@ jobs:
           value: x86
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
-        - name: _BuildMsBuildSdkPackages
-          value: $(BuildMsBuildSdkPackages)
-        - name: _BuildMsBuildSdkPackagesArgs
-          value: /p:BuildMsBuildSdkPackages=$(_BuildMsBuildSdkPackages)
 
         # Override some values if we're building internally
         # TODO: Change _SignType to real when the repo is ready to go live 
@@ -119,5 +109,4 @@ jobs:
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
-          $(_BuildMsBuildSdkPackagesArgs)
         displayName: Windows Build / Publish

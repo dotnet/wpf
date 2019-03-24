@@ -1,9 +1,9 @@
 <Project>
 
+  <Import Project="$(ArcadeWpfSdkTargets)"
+          Condition="Exists('$(ArcadeWpfSdkProps)') And Exists('$(ArcadeWpfSdkTargets)')"/>
+
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.targets"
-          Condition="!Exists('$(TestArcadeWpfSdk)')"/>
-
-  <Import Project="$(TestArcadeWpfSdk)\Sdk\Sdk.targets"
-          Condition="Exists('$(TestArcadeWpfSdk)')"/>
+          Condition="!Exists('$(ArcadeWpfSdkProps)') Or !Exists('$(ArcadeWpfSdkTargets)')"/>
 </Project>

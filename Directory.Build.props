@@ -1,9 +1,25 @@
-<Project> 
-  
-  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
-          Project="Sdk.props"
-          Condition="!Exists('$(TestArcadeWpfSdk)')"/>
+<Project>
+  <!-- Normalize $(TestArcadeWpfSdkPath) by appending a '\' to it if one is missing -->
+  <PropertyGroup Condition="'$(TestArcadeWpfSdkPath)'!=''">
+    <TestArcadeWpfSdkPath Condition="!$(TestArcadeWpfSdkPath.EndsWith('\'))">$(TestArcadeWpfSdkPath)\</TestArcadeWpfSdkPath>
+  </PropertyGroup>
 
-  <Import Project="$(TestArcadeWpfSdk)\Sdk\Sdk.props"
-          Condition="Exists('$(TestArcadeWpfSdk)')"/>
+  <!-- Select Sdk.props from test location or eng\WpfArcadeSdk\. If neither exists, then fall back to the use of one 
+      obtained using MSBuild's Sdk resolver -->
+  <PropertyGroup Condition="'$(TestArcadeWpfSdkPath)'!='' And Exists('$(TestArcadeWpfSdkPath)')">
+    <ArcadeWpfSdkProps>$(TestArcadeWpfSdkPath)Sdk\Sdk.props</ArcadeWpfSdkProps>
+    <ArcadeWpfSdkTargets>$(TestArcadeWpfSdkPath)Sdk\Sdk.targets</ArcadeWpfSdkTargets>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="!Exists('$(TestArcadeWpfSdkPath)') And Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\')">
+    <ArcadeWpfSdkProps>$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.props</ArcadeWpfSdkProps>
+    <ArcadeWpfSdkTargets>$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\Sdk\Sdk.targets</ArcadeWpfSdkTargets>
+  </PropertyGroup>
+  
+  <Import Project="$(ArcadeWpfSdkProps)"
+          Condition="Exists('$(ArcadeWpfSdkProps)') And Exists('$(ArcadeWpfSdkTargets)')"/>
+
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
+          Project="Sdk.props"
+          Condition="!Exists('$(ArcadeWpfSdkProps)') Or !Exists('$(ArcadeWpfSdkTargets)')"/>
 </Project>

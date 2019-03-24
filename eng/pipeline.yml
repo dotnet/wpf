@@ -49,7 +49,6 @@ jobs:
           value: /p:Platform=$(_Platform)
 
         # Override some values if we're building internally
-        # TODO: Change _SignType to real when the repo is ready to go live 
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _PublishType

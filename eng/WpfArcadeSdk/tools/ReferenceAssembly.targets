@@ -1,5 +1,15 @@
 <Project>
-  <Target Name="EnsureReferenceDestination" BeforeTargets="CoreCompile">
+  <PropertyGroup>
+    <CoreBuildDependsOn>
+      EnsureReferenceDestination;
+      $(CoreBuildDependsOn)
+    </CoreBuildDependsOn>
+    <ResolveReferencesDependsOn>
+      EnsureReferenceDestination;
+      $(ResolveReferencesDependsOn)
+    </ResolveReferencesDependsOn>
+  </PropertyGroup>
+  <Target Name="EnsureReferenceDestination" >
     <!-- Create and export properties used in Reference assembly generation                       -->
     <!--                                                                                          -->
     <!-- $(ArtifactsReferenceAssemblyDir) = $(ArtifactsDir)ref\                                   -->
@@ -10,11 +20,11 @@
     <CreateProperty Condition="'$(ArtifactsReferenceAssemblyDir)'==''" Value="$(ArtifactsDir)ref\">
       <Output PropertyName="ArtifactsReferenceAssemblyDir" TaskParameter="Value"/>
     </CreateProperty>
-    
+
     <CreateProperty Condition="'$(BaseReferenceAssemblyDir)'==''" Value="$(ArtifactsReferenceAssemblyDir)$(AssemblyName)\">
       <Output PropertyName="BaseReferenceAssemblyDir" TaskParameter="Value"/>
     </CreateProperty>
-    
+
     <CreateProperty Condition="'$(ReferenceAssemblyDir)'==''" Value="$(BaseReferenceAssemblyDir)$(Configuration)\$(TargetFramework)\">
       <Output PropertyName="ReferenceAssemblyDir" TaskParameter="Value"/>
     </CreateProperty>

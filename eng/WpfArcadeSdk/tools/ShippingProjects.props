@@ -10,6 +10,11 @@
       DirectWriteForwarder;
       PresentationCore-CommonResources;
       PresentationFramework;
+      PresentationFramework-SystemCore;
+      PresentationFramework-SystemData;
+      PresentationFramework-SystemDrawing;
+      PresentationFramework-SystemXml;
+      PresentationFramework-SystemXmlLinq;
       PresentationUI;
       ReachFramework;
       System.Printing;

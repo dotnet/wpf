@@ -7,6 +7,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Publishing.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ReferenceAssembly.targets"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)ProjectReferences.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)SdkReferences.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)FixupProjectReferences.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.targets" />

@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <PrepareForRunDependsOn>
+      ClearReferenceCopyLocalPaths;
+      $(PrepareForRunDependsOn)
+    </PrepareForRunDependsOn>
+  </PropertyGroup>
+  <Target Name="ClearReferenceCopyLocalPaths"
+          Returns="@(ReferenceCopyLocalPaths)"
+          Condition="'$(CopyLocalLockFileAssemblies)'!='true'">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+    </ItemGroup>
+  </Target>
+</Project>

@@ -18,6 +18,8 @@
     
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright Condition="'$(CopyrightNetFoundation)' != ''">$(CopyrightNetFoundation)</Copyright>
+
+    <PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)'!=''">false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -43,6 +45,8 @@
 
     <!-- Built out of https://www.github.com/dotnet/wpf -->
     <PackageName Condition="'$(RepoLocation)'=='WindowsDesktopSdk'">$(WindowsDesktopSdkPackageName)</PackageName>
+
+    <RepositoryUrl Condition="'$(RepoLocation)'=='Internal'">https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</RepositoryUrl>
   </PropertyGroup>
 
 

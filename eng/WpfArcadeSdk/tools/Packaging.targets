@@ -6,6 +6,13 @@
     <!-- Projects can override the name of the 'lib' folder to something else - for e.g., 'tools'-->
     <LibFolder Condition="'$(LibFolder)'==''">lib</LibFolder>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageName Condition="'$(CreateArchNeutralPackage)'!='true'">$(PackageRuntimeIdentifierPrefix).$(PackageName)</PackageName>
+    <NuspecPackageId>$(PackageName)</NuspecPackageId>
+    <DevelopmentDependency Condition="'$(MsBuildSdkPackage)'=='true'">true</DevelopmentDependency>
+    <PackageType Condition="'$(MsBuildSdkPackage)'=='true'">MSBuildSdk</PackageType>
+  </PropertyGroup>
   
   <!-- 
    Target: PreparePackageAssets                                                                   
@@ -219,7 +226,23 @@ $(PreparePackageAssetsDependsOn):
     made:                                                                                                                     
       Package name : A RID is not prefixed onto the package name                                                              
       Files      - : Only ref\ and root-level content files are included
-  -->                                                      
+      
+  Microsoft.DotNet.Arcade.Sdk\tools\WorkArounds.targets - InitializeStandardNuspecProperties populates $(_CommonMetadataElements)
+  with the following metadata information:
+    id
+    description
+    version
+    authors
+    requireLicenseAcceptance
+    license type=
+    projectUrl
+    copyright
+    developmentDependency
+    serviceable
+    repository type= url= commit=
+  In effect, it provides us with all the relevant package metadata we need. We can simply reuse that 
+  information here within <metadata>
+  -->
   <Target Condition="'$(PackageName)'!='' and '$(IsPackable)'=='true'"
         Name="CreateNuspec"
         BeforeTargets="GenerateNuspec"
@@ -237,52 +260,41 @@ $(PreparePackageAssetsDependsOn):
       <RootFolderContents Include="$(ArtifactsPackagingDir)$(PackageName)\*.*"/>
     </ItemGroup>
 
-    <!-- Helper Itemgroup to find the path to license filename -->
-    <ItemGroup>
-      <License Remove="@(License)" />
-      <License Condition="'%(RootFolderContents.Filename)%(RootFolderContents.Extension)'=='$(DefaultPackageLicenseFile)'" Include="@(RootFolderContents)" />
-    </ItemGroup>
-
-    <PropertyGroup>
-      <PackageLicenseFile Condition="'@(License)'!=''">$(DefaultPackageLicenseFile)</PackageLicenseFile>
-    </PropertyGroup>
 
     <ItemGroup>
       <NuSpec Remove="@(NuSpec)" />
       <NuSpec Include="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;" />
       <NuSpec Include="&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd&quot;&gt;" />
       <NuSpec Include="    &lt;metadata&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true'" Include="        &lt;id&gt;$(PackageRuntimeIdentifierPrefix).$(PackageName)&lt;/id&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true'" Include="        &lt;id&gt;$(PackageName)&lt;/id&gt;" />
-      <NuSpec Include="        &lt;version&gt;$(PackageVersion)&lt;/version&gt;" />
-      <NuSpec Include="        &lt;authors&gt;$(Authors)&lt;/authors&gt;" />
-      <NuSpec Include="        &lt;description&gt;$(PackageDescription)&lt;/description&gt;" />
-      <NuSpec Include="        &lt;language&gt;$(BuildCulture)&lt;/language&gt;" />
-      <NuSpec Include="        &lt;projectUrl&gt;$(RepositoryUrl)&lt;/projectUrl&gt;" />
-      <NuSpec Condition="'$(MsBuildSdkPackage)'=='true'" Include="        &lt;developmentDependency&gt;true&lt;/developmentDependency&gt;" />
-      <NuSpec Condition="'$(MsBuildSdkPackage)'=='true'" Include="&lt;packageTypes&gt;"/>
-      <NuSpec Condition="'$(MsBuildSdkPackage)'=='true'" Include="&lt;packageType name=&quot;MSBuildSdk&quot; /&gt;" />
-      <NuSpec Condition="'$(MsBuildSdkPackage)'=='true'" Include="&lt;/packageTypes&gt;" />
-      <NuSpec Condition="'$(PackageLicenseFile)'!=''" Include="        &lt;license type=&quot;file&quot;&gt;$(PackageLicenseFile)&lt;/license&gt;" />
-      <NuSpec Condition="'$(PackageLicenseFile)'==''" Include="        &lt;license type=&quot;expression&quot;&gt;$(PackageLicenseExpression)&lt;/license&gt;" />
-      <NuSpec Include="		&lt;requireLicenseAcceptance&gt;$(PackageRequireLicenseAcceptance)&lt;/requireLicenseAcceptance&gt;" />
+      <Nuspec Include="$(_CommonMetadataElements)" />
       <NuSpec Include="    &lt;/metadata&gt;" />
+      
       <NuSpec Include="	&lt;files&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="	    &lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
-      <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(PackageName)\ref\')" Include="		&lt;file src=&quot;$(PackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\content\')" Include="		&lt;file src=&quot;$(PackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; exclude=&quot;$(PackageName)\runtime.json&quot; /&gt;" /> 
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; /&gt;" />
-      <NuSpec Condition="'@(PackagingRootFolderSubFolders)'!=''" Include="		&lt;file src=&quot;$(PackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
+              Include="	    &lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
+              Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
+              Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
+      <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(PackageName)\ref\')" 
+              Include="		&lt;file src=&quot;$(PackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\content\')" 
+              Include="		&lt;file src=&quot;$(PackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
+      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" 
+              Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; exclude=&quot;$(PackageName)\runtime.json&quot; /&gt;" /> 
+      <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" 
+              Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; /&gt;" />
+      <NuSpec Condition="'@(PackagingRootFolderSubFolders)'!=''" 
+              Include="		&lt;file src=&quot;$(PackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />
       <NuSpec Include="	&lt;/files&gt;" />
-
+      
       <NuSpec Include="&lt;/package&gt;" />
     </ItemGroup>
 
+    
     <Delete Condition="Exists('$(NuspecFile)')" Files="$(NuspecFile)" />
     <WriteLinesToFile Lines="@(NuSpec)" File="$(NuspecFile)"/>
+    
   </Target>
 
   <!-- Create version.txt containing latest commit ID -->

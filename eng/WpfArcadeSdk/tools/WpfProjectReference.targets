@@ -91,6 +91,31 @@
       <ProjectReference Include="@(_wpfProjectReference)" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_unmatchedProjectReferenceWithConfiguration Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+      <_unmatched_ProjectReferenceWithConfiguration Remove="@(_unmatched_ProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(ProjectReferenceWithConfiguration)"
+                        PreserveItem1Metadata="true"
+                        Item2="@(_wpfProjectPathAvailableLocally)"
+                        Metadata2="ProjectPath"
+                        TreatItemsAsPaths="true">
+      <Output ItemName="_unmatchedProjectReferenceWithConfiguration" TaskParameter="UnmatchedReferences" />
+    </FilterItem1ByItem2>
+    <FilterItem1ByItem2 Item1="@(_ProjectReferenceWithConfiguration)"
+                    PreserveItem1Metadata="true"
+                    Item2="@(_wpfProjectPathAvailableLocally)"
+                    Metadata2="ProjectPath"
+                    TreatItemsAsPaths="true">
+      <Output ItemName="_unmatched_ProjectReferenceWithConfiguration" TaskParameter="UnmatchedReferences" />
+    </FilterItem1ByItem2>
+    <ItemGroup>
+      <ProjectReferenceWithConfiguration Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+      <_ProjectReferenceWithConfiguration Remove="@(_unmatched_ProjectReferenceWithConfiguration)" />
+      <_MSBuildProjectReferenceNonExistent Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+    
+
     <FilterItem1ByItem2 Item1="@(_unmatchedProjectReference)"
                         PreserveItem1Metadata="true"
                         Item2="@(WpfProjectPath)"

@@ -81,10 +81,5 @@
       <Sha>002cce7e8e3e043c50acae673741ee3962411e10</Sha>
       <SourceBuildId>6162</SourceBuildId>
     </Dependency>
-    <Dependency Name="System.IO.Packaging" Version="4.6.0-preview4.19164.7" CoherentParentDependency="Microsoft.NETCore.App">
-      <SourceBuildId>5589</SourceBuildId>
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>d6a30736858f91b297fdd3ed4e3d1dfde67bdbdb</Sha>
-    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

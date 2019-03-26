@@ -9,6 +9,7 @@
 
   <PropertyGroup>
     <PackageName Condition="'$(CreateArchNeutralPackage)'!='true'">$(PackageRuntimeIdentifierPrefix).$(PackageName)</PackageName>
+    <NormalizedPackageName>$(PackageName.Replace('$(PackageRuntimeIdentifierPrefix).',''))</NormalizedPackageName>
     <NuspecPackageId>$(PackageName)</NuspecPackageId>
     <DevelopmentDependency Condition="'$(MsBuildSdkPackage)'=='true'">true</DevelopmentDependency>
     <PackageType Condition="'$(MsBuildSdkPackage)'=='true'">MSBuildSdk</PackageType>
@@ -63,7 +64,6 @@ $(PreparePackageAssetsDependsOn):
       <TargetFrameworkOrRuntimeIdentifier Condition="'$(Platform)'=='x64'">win-x64</TargetFrameworkOrRuntimeIdentifier>
     </PropertyGroup>
 
-   
     <!--
         Instead of showing an error when $(TargetFrameworkOrRuntimeIdentifier) cannot be identified
         we simply do no further work
@@ -85,22 +85,22 @@ $(PreparePackageAssetsDependsOn):
     </ItemGroup>
     -->
     <CreateItem Include="$(OutDir)*.dll" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.exe" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(ReferenceAssemblyDir)*.dll" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(PackageName)\ref\$(TargetFrameworkOrRuntimeIdentifier)"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFrameworkOrRuntimeIdentifier)"
                 Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
@@ -118,7 +118,7 @@ $(PreparePackageAssetsDependsOn):
       <PackageAssetCultures Remove="$(PackageAssetCultures)" />
       <PackageAssetCultures Include="$(XlfLanguages)" />
       
-      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)\%(PackageAssetCultures.Identity)" />
+      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll" RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)\%(PackageAssetCultures.Identity)" />
     </ItemGroup>
     
     <ItemGroup Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!=''">
@@ -126,11 +126,11 @@ $(PreparePackageAssetsDependsOn):
       <!-- %(PackagingContent.SubFolder) not StartsWith 'root' -->
       <PackageAsset Condition="'%(PackagingContent.SubFolder)'!='' And !$([System.String]::Copy(&quot;%(PackagingContent.SubFolder)&quot;).StartsWith(&quot;root&quot;))"
               Include="%(PackagingContent.Identity)"
-              RelativePath="$(ArtifactsPackagingDir)$(PackageName)\content\%(PackagingContent.SubFolder)"/>
+              RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\%(PackagingContent.SubFolder)"/>
       
       <PackageAsset Condition="'%(PackagingContent.SubFolder)'==''" 
                     Include="%(PackagingContent.Identity)" 
-                    RelativePath="$(ArtifactsPackagingDir)$(PackageName)\content"/>
+                    RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content"/>
 
       <!-- 
           %(PackagingContent.SubFolder) StartsWith 'root' 
@@ -156,11 +156,11 @@ $(PreparePackageAssetsDependsOn):
       -->
       <PackageAsset Condition="$([System.String]::Copy(&quot;%(PackagingContent.SubFolder)&quot;).StartsWith(&quot;root&quot;))"
                     Include="%(PackagingContent.Identity)"
-                    RelativePath="$(ArtifactsPackagingDir)$(PackageName)$([System.String]::Copy('%(PackagingContent.SubFolder)').SubString(4))"/>
+                    RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)$([System.String]::Copy('%(PackagingContent.SubFolder)').SubString(4))"/>
 
       <PackagingRootFolderSubFolders Condition="$([System.String]::Copy(&quot;%(PackagingContent.SubFolder)&quot;).StartsWith(&quot;root\&quot;))"
                                      Include="$([System.String]::Copy('%(PackagingContent.SubFolder)').SubString(5))">
-        <PackageName>$(PackageName)</PackageName>
+        <PackageName>$(NormalizedPackageName)</PackageName>
       </PackagingRootFolderSubFolders>
     </ItemGroup>
 
@@ -252,12 +252,12 @@ $(PreparePackageAssetsDependsOn):
       <BuildCulture Condition="'$(TargetCulture)'!='' and '$(TargetCulture)'!='*'">$(TargetCulture)</BuildCulture>
       <BuildCulture Condition="'$(BuildCulture)'==''">$(NeutralLanguage)</BuildCulture>
     </PropertyGroup>
-    
+
     <!-- Used to test whether there are any files immediately under $(ArtifactsPackagingDir)$(PackageName)  -->
     <!-- ('@(RootFolderContents)'=='') would be False when there are files available to be packed           -->
     <ItemGroup>
       <RootFolderContents Remove="@(RootFolderContents)" />
-      <RootFolderContents Include="$(ArtifactsPackagingDir)$(PackageName)\*.*"/>
+      <RootFolderContents Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\*.*"/>
     </ItemGroup>
 
 
@@ -270,22 +270,22 @@ $(PreparePackageAssetsDependsOn):
       <NuSpec Include="    &lt;/metadata&gt;" />
       
       <NuSpec Include="	&lt;files&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
-              Include="	    &lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
-              Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\$(LibFolder)\')" 
-              Include="		&lt;file src=&quot;$(PackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
-      <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(PackageName)\ref\')" 
-              Include="		&lt;file src=&quot;$(PackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(PackageName)\content\')" 
-              Include="		&lt;file src=&quot;$(PackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
+              Include="	    &lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
+      <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')" 
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
+      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\')" 
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
       <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" 
-              Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; exclude=&quot;$(PackageName)\runtime.json&quot; /&gt;" /> 
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\*.*&quot; exclude=&quot;$(NormalizedPackageName)\runtime.json&quot; /&gt;" /> 
       <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" 
-              Include="		&lt;file src=&quot;$(PackageName)\*.*&quot; /&gt;" />
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\*.*&quot; /&gt;" />
       <NuSpec Condition="'@(PackagingRootFolderSubFolders)'!=''" 
-              Include="		&lt;file src=&quot;$(PackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />
+              Include="		&lt;file src=&quot;$(NormalizedPackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />
       <NuSpec Include="	&lt;/files&gt;" />
       
       <NuSpec Include="&lt;/package&gt;" />
@@ -299,16 +299,16 @@ $(PreparePackageAssetsDependsOn):
 
   <!-- Create version.txt containing latest commit ID -->
   <Target Name="GenerateVersionFileWithRepositoryCommit"  
-          Condition="'$(RepositoryCommit)'!='' and '$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(PackageName)\version.txt')" 
+          Condition="'$(RepositoryCommit)'!='' and '$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')" 
           BeforeTargets="CreateNuspec" 
-          Outputs="$(ArtifactsPackagingDir)$(PackageName)\version.txt">
+          Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt">
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
       <RepoCommitVersionFileLines Include="$(RepositoryCommit)" />
     </ItemGroup>
 
     <PropertyGroup>
-      <RepoCommitVersionFileDir>$(ArtifactsPackagingDir)$(PackageName)\</RepoCommitVersionFileDir>
+      <RepoCommitVersionFileDir>$(ArtifactsPackagingDir)$(NormalizedPackageName)\</RepoCommitVersionFileDir>
       <RepoCommitVersionFile>$(RepoCommitVersionFileDir)version.txt</RepoCommitVersionFile>
     </PropertyGroup>
 
@@ -320,7 +320,7 @@ $(PreparePackageAssetsDependsOn):
   <Target Name="GenerateRuntimeJson"
           Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and '$(PlatformIndependentPackage)'!='true'"
           BeforeTargets="CreateNuSpec"
-          Outputs="$(ArtifactsPackagingDir)$(PackageName)\runtime.json">
+          Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtime.json">
 
     <ItemGroup>
       <RuntimeJsonLine Remove="@(RuntimeJsonLine)" />
@@ -329,12 +329,12 @@ $(PreparePackageAssetsDependsOn):
           <![CDATA[{
   "runtimes": {
     "win-x64": {
-      "$(PackageName)": {
+      "$(NormalizedPackageName)": {
         "runtime.win-x64.$(PackageName)": "$(PackageVersion)"
       }
     },
     "win-x86": {
-      "$(PackageName)": {
+      "$(NormalizedPackageName)": {
         "runtime.win-x86.$(PackageName)": "$(PackageVersion)"
       }
     }
@@ -350,7 +350,7 @@ $(PreparePackageAssetsDependsOn):
     </ItemGroup>
 
     <PropertyGroup>
-      <RuntimeJsonFileDir>$(ArtifactsPackagingDir)$(PackageName)\</RuntimeJsonFileDir>
+      <RuntimeJsonFileDir>$(ArtifactsPackagingDir)$(NormalizedPackageName)\</RuntimeJsonFileDir>
       <RuntimeJsonFile>$(RuntimeJsonFileDir)runtime.json</RuntimeJsonFile>
     </PropertyGroup>
 

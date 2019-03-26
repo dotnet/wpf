@@ -1,4 +1,4 @@
-<Project>  
+<Project>
   <PropertyGroup>
     <NativeVersionFile Condition="'$(NativeVersionFile)'==''">$(IntermediateOutputPath)NativeVersion.rc</NativeVersionFile>
     <NativeVersionFileDirectory>$([System.IO.Path]::GetDirectoryName($(NativeVersionFile)))</NativeVersionFileDirectory>
@@ -17,8 +17,8 @@
       <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  
-  
+
+
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
@@ -27,7 +27,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  
+
   <!-- 
     Support for /linkrepro
   -->
@@ -43,7 +43,7 @@
       CreateLinkReproFolder
     </BeforeLinkTargets>
   </PropertyGroup>
-  
+
   <Target Name="CreateLinkReproFolder"
           Condition="'$(LinkRepro)'=='true'"
           Returns="$(LinkReproFolder)">
@@ -56,8 +56,8 @@
     <Message Text="LINK_REPRO files will be created at $(LinkReproFolder)"
              Importance="high" />
   </Target>
-  
-  
+
+
   <Target Name="CreateNativeVersionFile" BeforeTargets="ResourceCompile" Outputs="$(NativeVersionFile)" Condition="!Exists('$(NativeVersionFile)')">
     <CallTarget Targets="GenerateNativeVersionFile" />
   </Target>
@@ -70,7 +70,7 @@
       Additional assembly scope attributes besides TargetFrameworkAttribute are added here 
   -->
   <Target Name="GenerateTargetFrameworkMonikerAttribute2"
-      Condition="'$(ManagedCxx)'=='true'" 
+      Condition="'$(ManagedCxx)'=='true'"
           BeforeTargets="SetMscorlibAdditionalUsingDirectory"
           DependsOnTargets="PrepareForBuild;GetReferenceAssemblyPaths;InitializeAssemblyAttributeInformation"
           Outputs="$(TargetFrameworkMonikerAssemblyAttributesPath)">
@@ -78,7 +78,7 @@
     <ItemGroup>
       <AssemblyInfoFile Include="Always">
         <Text>
-  <![CDATA[
+          <![CDATA[
 #using <mscorlib.dll>
 
 using namespace System;
@@ -96,39 +96,44 @@ using namespace System::Runtime::Versioning;
 [assembly:AssemblyFileVersion("$(FileVersion)")];
 [assembly:AssemblyInformationalVersion("$(AssemblyInformationalVersion)")];
 [assembly:TargetFramework("$(TargetFrameworkMoniker)", FrameworkDisplayName="$(TargetFrameworkMonikerDisplayName)")];
-        ]]></Text>
+        ]]>
+        </Text>
       </AssemblyInfoFile>
       <AssemblyInfoFile Include="CLSCompliantAttribute" Condition="'$(CLSCompliant)'=='true'">
-        <Text><![CDATA[
+        <Text>
+          <![CDATA[
 [assembly:CLSCompliant(true)];        
         ]]>
         </Text>
       </AssemblyInfoFile>
       <AssemblyInfoFile Include="COMVisibleAttribute" Condition="'$(AssemblyComVisible)'!=''">
-        <Text><![CDATA[
+        <Text>
+          <![CDATA[
 [assembly:ComVisible($(AssemblyComVisible))];        
         ]]>
         </Text>
       </AssemblyInfoFile>
       <AssemblyInfoFile Include="AssemblyMetadataAttribute" Condition="'$(SkipFrameworkAssemblyMetadata)'!='true' and '@(AssemblyMetadata)'!=''">
-        <Text><![CDATA[
+        <Text>
+          <![CDATA[
 [assembly:AssemblyMetadata("%(AssemblyMetadata.Identity)", "%(AssemblyMetadata.Value)")];    
         ]]>
         </Text>
-      </AssemblyInfoFile>  
+      </AssemblyInfoFile>
       <AssemblyInfoFile Include="DllSafeSearchPathAttribute" Condition="'$(IncludeDllSafeSearchPathAttribute)'=='true'">
-        <Text><![CDATA[
+        <Text>
+          <![CDATA[
 [assembly:DefaultDllImportSearchPathsAttribute(DllImportSearchPath::AssemblyDirectory | DllImportSearchPath::System32)];
         ]]>
         </Text>
-      </AssemblyInfoFile>          
+      </AssemblyInfoFile>
     </ItemGroup>
 
     <Delete Condition="Exists('$(TargetFrameworkMonikerAssemblyAttributesPath)')"
             Files="$(TargetFrameworkMonikerAssemblyAttributesPath)" />
-    
-    <WriteLinesToFile Lines="@(AssemblyInfoFile->'%(Text)')" 
-                      File="$(TargetFrameworkMonikerAssemblyAttributesPath)" 
+
+    <WriteLinesToFile Lines="@(AssemblyInfoFile->'%(Text)')"
+                      File="$(TargetFrameworkMonikerAssemblyAttributesPath)"
                       Overwrite="true" />
     <ItemGroup>
       <ClCompile Include="$(TargetFrameworkMonikerAssemblyAttributesPath)">
@@ -138,9 +143,9 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
-  <!-- Remove mscorlib from AdditionalExplicitAssemblyReferences -->  
-  <Target Name="RemoveMscoreLib"  
-          AfterTargets="_PrepareForReferenceResolution" 
+  <!-- Remove mscorlib from AdditionalExplicitAssemblyReferences -->
+  <Target Name="RemoveMscoreLib"
+          AfterTargets="_PrepareForReferenceResolution"
           DependsOnTargets="$(RemoveMscoreLibDependsOn)"
           Condition="('$(ManagedCxx)'=='true') and $(TargetFramework.StartsWith('netcoreapp'))">
     <ItemGroup>
@@ -153,8 +158,8 @@ using namespace System::Runtime::Versioning;
   </Target>
 
   <!-- Add the directory where mscorlib is located to AdditionalUsingDirectories -->
- <Target Name="SetMscorlibAdditionalUsingDirectory" DependsOnTargets="ResolveAssemblyReferences"
-         Condition="('$(ManagedCxx)'=='true') and ('$(SetMscorlibAdditionalUsingDirectory)' != 'true')" >
+  <Target Name="SetMscorlibAdditionalUsingDirectory" DependsOnTargets="ResolveAssemblyReferences"
+          Condition="('$(ManagedCxx)'=='true') and ('$(SetMscorlibAdditionalUsingDirectory)' != 'true')" >
     <PropertyGroup>
       <_mscorlibDirectory Condition="'%(ReferencePath.FileName)%(ReferencePath.Extension)' == 'mscorlib.dll'">%(ReferencePath.RootDir)%(ReferencePath.Directory)</_mscorlibDirectory>
     </PropertyGroup>
@@ -199,7 +204,7 @@ using namespace System::Runtime::Versioning;
     <PropertyGroup>
       <CppCliHelperProject>$(ArtifactsTmpDir)CppClrSupport.csproj</CppCliHelperProject>
     </PropertyGroup>
-    
+
     <ItemGroup>
       <CppClrSupportProject Include="Project">
         <!-- 
@@ -207,26 +212,40 @@ using namespace System::Runtime::Versioning;
               %40 ~= @
               %25 ~= % 
               %3B ~= ;
+              %24 ~= $
           -->
         <Text>
           <![CDATA[
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" InitialTargets="EnumerateAdditionalNugetReference">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU%3Bx64</Platforms>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
-    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
   
   <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run -->
   <PropertyGroup>
     <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
   </PropertyGroup>
+  
+  <Target Name="EnumerateAdditionalNugetReference"
+          BeforeTargets="_GenerateRestoreGraph"
+          Condition="'%24(AdditionalPackages)'!=''"
+          Returns="%40(PackageReference)">
+     <ItemGroup>
+       <_AdditionalPackages Remove="%40(_AdditionalPackages)" />
+       <_AdditionalPackages Include="%24(AdditionalPackages)" />
+       
+       <PackageReference Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" 
+                         Version="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[1])" />
+       
+       <AdditionalNugetIds Remove="%40(AdditionalNugetIds)" />
+       <AdditionalNugetIds Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" />
+     </ItemGroup>
+  </Target>
   
 <Target
     Name="IdentifyNugetReferences"
@@ -242,15 +261,25 @@ using namespace System::Runtime::Versioning;
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='System.IO.Packaging'"/>
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
     </ItemGroup>
+    <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
+                        PreserveItem1Metadata="true"
+                        Item2="%40(AdditionalNugetIds)"
+                        Metadata2="Identity">
+      <Output ItemName="_NugetReferencesForCppCli" TaskParameter="Result" />
+    </FilterItem1ByItem2>
   </Target>
+  <ItemGroup>
+    <NugetReferencesForCppCli Include="%40(_NugetReferencesForCppCli->'%25(OriginalItemSpec)')" />
+  </ItemGroup>
 </Project>
-        ]]></Text>
+        ]]>
+        </Text>
       </CppClrSupportProject>
     </ItemGroup>
 
     <MakeDir Condition="!Exists('$(ArtifactsTmpDir)')"
              Directories="$(ArtifactsTmpDir)" />
-    
+
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
                       File="$(CppCliHelperProject)"
                       Condition="!Exists('$(CppCliHelperProject)')" />
@@ -259,7 +288,13 @@ using namespace System::Runtime::Versioning;
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information
     we are looking for, namely the list of .NET Core Sdk references. 
     -->
-    <MSBuild Projects="$(CppCliHelperProject)"
+    <ItemGroup>
+      <ProjectToBuild Remove="@(ProjectToBuild)" />
+      <ProjectToBuild Include="$(CppCliHelperProject)">
+        <AdditionalProperties>AdditionalPackages=@(AdditionalPackageReference->'%(Identity)+%(Version)')</AdditionalProperties>
+      </ProjectToBuild>
+    </ItemGroup>
+    <MSBuild Projects="@(ProjectToBuild)"
              Targets="Restore;ResolveReferences;IdentifyNugetReferences"
              Properties="TargetFramework=$(TargetFramework);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
       <Output  TaskParameter="TargetOutputs" ItemName="NugetReferencesForCppCli" />
@@ -285,12 +320,12 @@ using namespace System::Runtime::Versioning;
       EnsureLinkReproFolder
     </BeforeLinkTargets>
   </PropertyGroup>
-  
+
   <Target Name="EnsureLinkReproFolder">
     <RemoveDir Condition="Exists('$(IntermediateOutputPath)LinkRepro\')" Directories="$(IntermediateOutputPath)LinkRepro\" />
     <MakeDir Directories="$(IntermediateOutputPath)LinkRepro\" />
   </Target>
-    
+
   <!-- Disable the portions of MSBuild that insist on a targeting pack directory to represent a target framework -->
   <Import Project="..\targets\Microsoft.NET.DisableStandardFrameworkResolution.targets" Sdk="Microsoft.NET.Sdk"
           Condition="'$(ManagedCxx)'=='true'" />

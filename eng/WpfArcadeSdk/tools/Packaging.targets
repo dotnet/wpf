@@ -37,6 +37,11 @@
                           of the package.
                           <PackagingContent Include"sdk\*.props" Subfolder="root\sdk" /> will result in
                           relevant *.props files to be placed under the 'sdk' sub-folder in the package.
+                          
+   @(PackagingAssemblyContent) - 
+                        A way to specify which files under $(OutDir) should be packaged. 
+                        If this list is set, then we will only carry assemblies specified in this set
+                        an no others.
    $(ExcludeRefAssemblies) - true/false to include/exclude ref assemblies from packaging. 
                              default is true.
    $(ExcludePdbs)  - true/false to include/exclude PDB's from packaging
@@ -86,17 +91,17 @@ $(PreparePackageAssetsDependsOn):
     -->
     <CreateItem Include="$(OutDir)*.dll" 
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
+                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.exe" 
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
+                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb" 
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true'">
+                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(ReferenceAssemblyDir)*.dll" 
@@ -105,6 +110,11 @@ $(PreparePackageAssetsDependsOn):
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 
+    <CreateItem Include="$(OutDir)%(PackagingAssemblyContent.Identity)"
+            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
+            Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'!=''">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
     <!-- 
         $(XlfLanguages) is defined by XliffTasks.
         The conversion of .resx files to .xlf files, and the building of resource assemblies (.resources.dll) and 

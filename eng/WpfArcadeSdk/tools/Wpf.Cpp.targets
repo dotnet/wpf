@@ -195,14 +195,16 @@ using namespace System::Runtime::Versioning;
     can remain a simple and one-size-fits-all target for now. 
     
     If additional Nuget references need to be discovered and passed along for builds (for existing, or new) of
-    C++/CLI projects, they just need to be added into the CDATA text below following the existing pattern. 
+    C++/CLI projects, they just need to be added to the vcxproj project file like this:
+    
+      <AdditionalPackageReference Include="Microsoft.Win32.Registry" Version="<version>" />
   -->
   <Target Name="CppCliHelper"
           Returns="@(Reference)"
           Condition="'$(ManagedCxx)' == 'true'">
 
     <PropertyGroup>
-      <CppCliHelperProject>$(ArtifactsTmpDir)CppClrSupport.csproj</CppCliHelperProject>
+      <CppCliHelperProject>$(IntermediateOutputPath)CppCliSupport\CppClrSupport_$(MSBuildProjectName).csproj</CppCliHelperProject>
     </PropertyGroup>
 
     <ItemGroup>
@@ -277,12 +279,12 @@ using namespace System::Runtime::Versioning;
       </CppClrSupportProject>
     </ItemGroup>
 
-    <MakeDir Condition="!Exists('$(ArtifactsTmpDir)')"
-             Directories="$(ArtifactsTmpDir)" />
+    <MakeDir Condition="!Exists('$(IntermediateOutputPath)CppCliSupport\')"
+             Directories="$(IntermediateOutputPath)CppCliSupport\" />
 
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
-                      File="$(CppCliHelperProject)"
-                      Condition="!Exists('$(CppCliHelperProject)')" />
+                      File="$(CppCliHelperProject)" 
+                      Overwrite="true"/>
 
     <!-- 
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information

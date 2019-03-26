@@ -87,73 +87,36 @@
     </ItemGroup>
   </Target>
 
-  <Target
-    Name="LimitMicrosoftDotNetWpfGitHubReferences"
-    AfterTargets="ResolveAssemblyReferences"
-    Returns="@(ReferencePath)"
-    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' and '@(ReferencePath)' != '' and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
-    <!-- 
-      This target is called by WpfProjectReference.targets and should not be invoked directly
-      Example
-      <MicrosoftDotNetWpfGitHubReference Include="System.Xaml" /> 
-    -->
-
-    <!-- Save Microsoft.DotNet.Wpf.GitHub assemblies, and remove those from @(ReferencePath) -->
-    <ItemGroup>
-      <_microsoftDotNetWpfGithubRef Remove="@(_microsoftDotNetWpfGithubRef)" />
-      <_microsoftDotNetWpfGithubRef Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
-
-      <ReferencePath Remove="@(_microsoftDotNetWpfGithubRef)" />
-    </ItemGroup>
-
-    <!-- Transform _microsoftDotNetWpfGithubRef's Identity to its FileName. This will help us do a Remove against @(MicrosoftDotNetWpfGitHubReference) directly -->
-    <ItemGroup>
-      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Remove="@(_microsoftDotNetWpfGithubUnwantedReferenceNormalized)" />
-      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Include="@(_microsoftDotNetWpfGithubRef->'%(FileName)')" />
-      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Remove="@(MicrosoftDotNetWpfGitHubReference)"  />
-      <_microsoftDotNetWpfGithubUnwantedReferenceNormalized Include="@(MicrosoftDotNetWpfGitHubReference)"
-                                                            Condition="'%(MicrosoftDotNetWpfGitHubReference.ReferenceOutputAssembly)'=='false'" />
-    </ItemGroup>
-
-    <!-- Convert the Identity metadata of _microsoftDotNetWpfGithubUnwantedReferenceNormalized back to it's Original value -->
-    <ItemGroup>
-      <_microsoftDotNetWpfGithubUnwantedRef Remove="@(_microsoftDotNetWpfGithubUnwantedRef)" />
-      <_microsoftDotNetWpfGithubUnwantedRef Include="@(_microsoftDotNetWpfGithubUnwantedReferenceNormalized->'%(OriginalItemSpec)')" />
-    </ItemGroup>
-
-    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
-    <ItemGroup>
-      <ReferencePath
-        Include="@(_microsoftDotNetWpfGithubRef)"
-        Exclude="@(_microsoftDotNetWpfGithubUnwantedRef)" />
-    </ItemGroup>
-
-    <!-- 
-      If any items in @(MicrosoftDotNetWpfGitHubReference) have OutputItemType and Define metadata, then
-      produce another itemgroup based on that
-    -->
-    <!-- First, merge the metadata for the items we want from _microsoftDotNetWpfGithubRef -->
-    <FilterItem1ByItem2 Item1="@(MicrosoftDotNetWpfGitHubReference)"
-                        PreserveItem1Metadata="true"
-                        Item2="@(_microsoftDotNetWpfGithubRef->'%(FileName)')"
-                        PreserveItem2Metadata="true"
-                        Metadata2="Identity">
-      <Output ItemName="_microsoftDotNetWpfGithubRefNormalized" TaskParameter="Result" />
-    </FilterItem1ByItem2>
-
-    <CreateItem Include="@(_microsoftDotNetWpfGithubRefNormalized->'%(HintPath)')"
-                PreserveExistingMetadata="true"
-                Condition="'%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)'!=''">
-      <Output TaskParameter="Include" ItemName="%(_microsoftDotNetWpfGithubRefNormalized.OutputItemType)" />
-    </CreateItem>
-  </Target>
-
+  
   <PropertyGroup>
     <ResolveAssemblyReferencesDependsOn>
+      ResolveMicrosoftDotNetWpfGitHubReferences;
       ResolveWinFormsReferences;
       $(ResolveAssemblyReferencesDependsOn)
     </ResolveAssemblyReferencesDependsOn>
   </PropertyGroup>
+  
+  <Target
+    Name="ResolveMicrosoftDotNetWpfGitHubReferences"
+    Returns="@(ReferencePath)"
+    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' and $(TargetFramework.StartsWith('netcoreapp3')) and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
+    <!-- 
+    In your project, Add a references to WPF GitHub transport package like this:
+      <ItemGroup>
+        <MicrosoftDotNetWpfGitHubReference Include="System.Xaml" />
+      </ItemGroup>
+      
+    It will get translated into something like this:
+      <ItemGroup>
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\ref\netcoreapp3.0\System.Xaml.dll" />
+      </ItemGroup>
+  -->
+    <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll" 
+                 Condition="Exists('$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')"/>
+    </ItemGroup>
+  </Target>
+
 
   <!-- 
     In your project, Add a references to WinForms transport package like this:
@@ -169,7 +132,8 @@
   <Target Name="ResolveWinFormsReferences"
           Condition="'@(MicrosoftPrivateWinFormsReference)'!='' And $(TargetFramework.StartsWith('netcoreapp3'))">
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll" />
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll" 
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')"/>
     </ItemGroup>
   </Target>
 </Project>

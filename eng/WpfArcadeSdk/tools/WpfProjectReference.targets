@@ -2,8 +2,9 @@
   <ItemGroup>
     <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" 
                       Version="$(MicrosoftDotNetWpfGitHubVersion)" 
+                      ExcludeAssets="All"
+                      GeneratePathProperty="True"
                       Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'"/>
-    <MicrosoftDotNetWpfGitHubReference Include="None" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,10 @@
       EnsureWpfProjectReference;
       $(CoreBuildDependsOn)
     </CoreBuildDependsOn>
+    <CoreCompileDependsOn>
+      EnsureWpfProjectReference;
+      $(CoreCompileDependsOn)
+    </CoreCompileDependsOn>
     <ResolveReferencesDependsOn>
       EnsureWpfProjectReference;
       $(ResolveReferencesDependsOn)

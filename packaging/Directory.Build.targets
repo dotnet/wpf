@@ -1,9 +1,3 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
-  
-  <Target Name="UpdatePackageLicenseUrl" BeforeTargets="CreateNuspec">
-    <CreateProperty Value="$(ScmRepositoryUrl)/blob/master/LICENSE.TXT">
-      <Output PropertyName="PackageLicenseUrl" TaskParameter="Value"/>
-    </CreateProperty>
-  </Target>
 </Project>

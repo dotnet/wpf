@@ -1,4 +1,4 @@
-<Project>
+<Project InitialTargets="EnsureCreateContentFolderRunsBeforeNuspecDependsOn">
   <!-- Dummy 'Pack' target for 'vcxproj' -->
   <Target Name="Pack" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" />
 
@@ -147,7 +147,7 @@ $(PreparePackageAssetsDependsOn):
             Package content under sub-folder %(PackagingContent.SubFolder).TrimLeft('root')
             
             Keep track of such sub-folders that exist immediately under root in a special ItemGroup - PackagingRootFolderSubFolders
-            PackagingRootFolderSubFolders will be used later in CreateNuspec
+            PackagingRootFolderSubFolders will be used later in CreateContentFolder
             
             Implementation Note:
               SubFolder string looks like this: "root\subfolder1\subfolder2"
@@ -180,32 +180,9 @@ $(PreparePackageAssetsDependsOn):
           DestinationFolder="%(PackageAsset.RelativePath)" />
   </Target>
 
-  <!-- Target:  CreateNuspec -->
-  <!--            Dynamically creates a nuspec file that looks somewhat like this -->
-  <!-- 
-      <?xml version="1.0" encoding="utf-8"?>
-      <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-          <metadata>
-              <id>$(PackageRuntimeIdentifierPrefix)-$(PackageName)/id>
-              <version>$(PackageVersion)</version>
-              <authors>$(Authors)</authors>
-              <description>$(PackageDescription)</description>
-              <language>$(BuildCulture)</language>
-              <projectUrl>$(RepositoryUrl)</projectUrl>
-              <license type="file">%(License.Filename)%(License.Extension)</license>
-              <requireLicenseAcceptance>$(PackageRequireLicenseAcceptance)</requireLicenseAcceptance>
-          </metadata>
-          <files>
-              <file src="$(PackageName)\lib\**\*.dll" target="lib" />
-              <file src="$(PackageName)\lib\**\*.exe" target="lib" />
-              <file src="$(PackageName)\lib\**\*.pdb" target="lib" />
-              <file src="$(PackageName)\ref\**\*.dll" target="ref" />
-              <file src="$(PackageName)\content\**\*.*" target="content" />
-              <file src="$(PackageName)\*.*" />
-          </files>
-      </package>
-  -->
-  <!--
+  <!-- Target:  CreateContentFolder -->
+  <!--            Dynamically populates  @(Content) for packaging  -->
+   <!--
     This target is only run for projects which specify $(IsPackable) = true               
       By convention, NO WPF projects will specify $(IsPackable) = true                    
       WPF projects will opt into PreparePackageAssets target by specifying $(PackageName) 
@@ -225,14 +202,14 @@ $(PreparePackageAssetsDependsOn):
    $(TargetCulture): culture/language of the build. If not specified (or '*'), then $(NeutralLanguage) will be used instead   
    $(RepositoryUrl): Repo Url                                                                                                 
    $(PackageRequireLicenseAcceptance): true/false indicating whether license file acceptance is required                       
-   $(MsBuildSdkPackage): true/false indicating whether the nupkd is an MSBuild SDK package. When set to true, the nuspec produces
+   $(MsBuildSdkPackage): true/false indicating whether the nupkg is an MSBuild SDK package. When set to true, the nuspec produces
                          additional content indicating that the package is an Sdk.
                                                                                                                               
    We expect to find $(DefaultPackageLicenseFile) (typically defined as 'LICENSE.TXT' in nupkg\Directory.Build.props) at the  
    root of the packaging content folder . If a $(DefaultPackageLicenseFile) file is not found, we will fallback to            
-   $(PackageLicenseExpression) license (typically defined as 'MIT' in nupkg\Directory.Build.props)                     
+   $(PackageLicenseExpression) license (typically defined as 'MIT')                     
                                                                                                                               
-   When building a .nuspec for a bait-and-switch package ($(CreateArchNeutralPackage)==true), the following changes are     
+   When building a nupkg for a bait-and-switch package ($(CreateArchNeutralPackage)==true), the following changes are     
     made:                                                                                                                     
       Package name : A RID is not prefixed onto the package name                                                              
       Files      - : Only ref\ and root-level content files are included
@@ -254,9 +231,7 @@ $(PreparePackageAssetsDependsOn):
   information here within <metadata>
   -->
   <Target Condition="'$(PackageName)'!='' and '$(IsPackable)'=='true'"
-        Name="CreateNuspec"
-        BeforeTargets="GenerateNuspec"
-        Outputs="$(NuspecFile)">
+          Name="CreateContentFolder">
     <!-- Use $(TargetCulture) or fallback to $(NeutralLanguage) -->
     <PropertyGroup>
       <BuildCulture Condition="'$(TargetCulture)'!='' and '$(TargetCulture)'!='*'">$(TargetCulture)</BuildCulture>
@@ -270,47 +245,78 @@ $(PreparePackageAssetsDependsOn):
       <RootFolderContents Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\*.*"/>
     </ItemGroup>
 
-
     <ItemGroup>
-      <NuSpec Remove="@(NuSpec)" />
-      <NuSpec Include="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;" />
-      <NuSpec Include="&lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd&quot;&gt;" />
-      <NuSpec Include="    &lt;metadata&gt;" />
-      <Nuspec Include="$(_CommonMetadataElements)" />
-      <NuSpec Include="    &lt;/metadata&gt;" />
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.dll"
+               Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+        <Pack>true</Pack>
+        <PackagePath>$(LibFolder)</PackagePath>
+      </Content>
       
-      <NuSpec Include="	&lt;files&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
-              Include="	    &lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.dll&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.exe&quot; target=&quot;$(LibFolder)&quot; /&gt;	" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\$(LibFolder)\**\*.pdb&quot; target=&quot;$(LibFolder)&quot; /&gt;" />
-      <NuSpec Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\ref\**\*.dll&quot; target=&quot;ref&quot; /&gt;" />
-      <NuSpec Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\')" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\content\**\*.*&quot; target=&quot;content&quot; /&gt;" />
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\*.*&quot; exclude=&quot;$(NormalizedPackageName)\runtime.json&quot; /&gt;" /> 
-      <NuSpec Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\*.*&quot; /&gt;" />
-      <NuSpec Condition="'@(PackagingRootFolderSubFolders)'!=''" 
-              Include="		&lt;file src=&quot;$(NormalizedPackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*&quot; target=&quot;%(PackagingRootFolderSubFolders.Identity)&quot; /&gt;" />
-      <NuSpec Include="	&lt;/files&gt;" />
-      
-      <NuSpec Include="&lt;/package&gt;" />
-    </ItemGroup>
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.exe"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+        <Pack>true</Pack>
+        <PackagePath>$(LibFolder)</PackagePath>
+      </Content>
 
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.pdb"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+        <Pack>true</Pack>
+        <PackagePath>$(LibFolder)</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\**\*.dll"
+         Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')">
+        <Pack>true</Pack>
+        <PackagePath>ref</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\**\*.*"
+               Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\')" >
+        <Pack>true</Pack>
+        <PackagePath>content</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\*.*"
+               Exclude="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtime.json"
+              Condition="'$(CreateArchNeutralPackage)'!='true' and '@(RootFolderContents)'!=''" >
+        <Pack>true</Pack>
+        <PackagePath></PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\*.*"
+               Condition="'$(CreateArchNeutralPackage)'=='true' and '@(RootFolderContents)'!=''" >
+        <Pack>true</Pack>
+        <PackagePath>.</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\%(PackagingRootFolderSubFolders.Identity)\*.*"
+               Condition="'@(PackagingRootFolderSubFolders)'!=''">
+        <Pack>true</Pack>
+        <PackagePath>%(PackagingRootFolderSubFolders.Identity)</PackagePath>
+      </Content>
+    </ItemGroup>
     
-    <Delete Condition="Exists('$(NuspecFile)')" Files="$(NuspecFile)" />
-    <WriteLinesToFile Lines="@(NuSpec)" File="$(NuspecFile)"/>
-    
+  </Target>
+  
+    <!-- 
+    We can't reliably insert CreatecontentFolder
+    at the head of GenerateNuspecDependsOn during 
+    static imports of props/targets, so we do it
+    dynamically from within a target
+  -->
+  <Target Name="EnsureCreateContentFolderRunsBeforeNuspecDependsOn">
+    <PropertyGroup>
+      <GenerateNuspecDependsOn>
+        CreateContentFolder;
+        $(GenerateNuspecDependsOn)
+      </GenerateNuspecDependsOn>
+    </PropertyGroup>
   </Target>
 
   <!-- Create version.txt containing latest commit ID -->
   <Target Name="GenerateVersionFileWithRepositoryCommit"  
           Condition="'$(RepositoryCommit)'!='' and '$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')" 
-          BeforeTargets="CreateNuspec" 
+          BeforeTargets="CreateContentFolder" 
           Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt">
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
@@ -329,7 +335,7 @@ $(PreparePackageAssetsDependsOn):
   <!--  Generate runtime.json for embedding in the arch-neutral package that uses the Bait & Switch technique -->
   <Target Name="GenerateRuntimeJson"
           Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and '$(PlatformIndependentPackage)'!='true'"
-          BeforeTargets="CreateNuSpec"
+          BeforeTargets="CreateContentFolder"
           Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtime.json">
 
     <ItemGroup>

@@ -18,7 +18,6 @@
     <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
     <PackageDescription>WPF Build props/targets transport package shared between dotnet/wpf and dotnet-wpf-int</PackageDescription>
-    <NuspecFile>$(ArtifactsPackagingDir)$(MSBuildProjectName).nuspec</NuspecFile>
   </PropertyGroup>
 
   <ItemGroup>

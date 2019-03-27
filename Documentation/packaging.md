@@ -56,46 +56,16 @@ In practice, this is not needed. *Shipping* assemblies are already enumerated in
 
 - *`PreparePackageAssets`* target is defined in `$(WpfArcadeSdkToolsDir)Packaging.targets`
 - It runs after *`Build`*, and copies all project outputs, symbols, reference assemblies, satellite assemblies, and content files (defined in *`@(PackageContent)`* `ItemGroup`) to `$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)\` 
+- If `@(PackagingAssemblyContent)` is populated, then only those files from `$(OutDir)` would be copied and packaged further - and none others would be included.
 - At the end of this target, all files that need to be packed would have been laid out in the right folder hierarchy, and ready to be packed. 
 
-##### Create a custom `.nuspec` file (*`CreateNuSpec`* target)
+##### Populate the `@(Content)` itemgroup with custom lsit of package-assets (*`CreateContentFolder`* target)
 
-- *`CreateNuSpec`* is defined in `$(WpfArcadeSdkToolsDir)Packaging.targets`
-- It runs just before `GenerateNuspec` target, and creates a custom `.nuspec` file that has (roughly) the following outline:
-
-``
-
-	<?xml version="1.0" encoding="utf-8"?>
-	<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">  
-	  <metadata>
-	      <id>$(PackageRuntimeIdentifierPrefix)-$(PackageName)/id>
-	      <version>$(PackageVersion)</version>
-	      <authors>$(Authors)</authors>
-	      <description>$(PackageDescription)</description>
-	      <language>$(BuildCulture)</language>
-	      <projectUrl>$(RepositoryUrl)</projectUrl>
-	      <license type="file">%(License.Filename)%(License.Extension)</license>
-	      <requireLicenseAcceptance>$(</requireLicenseAcceptance>
-	  </metadata>
-	  <files>
-	      <file src="$(PackageName)\lib\**\*.dll" target="lib" />
-	      <file src="$(PackageName)\lib\**\*.exe" target="lib" />
-	      <file src="$(PackageName)\lib\**\*.pdb" target="lib" />
-	      <file src="$(PackageName)\ref\**\*.dll" target="ref" />
-	      <file src="$(PackageName)\content\**\*.*" target="content" />
-	      <file src="$(PackageLicenseFile)" />
-	  </files>
-	</package>
-``
+- *`CreateContentFolder`* is defined in `$(WpfArcadeSdkToolsDir)Packaging.targets`
+- It runs just before *`GenerateNuspec`* target, and populates `@(Content)` with files that were copied during *`PreparePackageAssets`*
+- This is consume by NuGet `PackTask` to create the package. 
 
 ##### Create a Nuget Package 
 
 - The projects under `$(RepoRoot)\packaging` are the only ones with `$(IsPackable)=true`
-- Instead of packing their outputs, they are supplied a `$(NuspecFile)` property like this:
- 
-     ```xml
-    <NuspecFile>$(ArtifactsPackagingDir)$(PackageName).nuspec</NuspecFile>
-    ```
-
-- This `.nuspec` file, which was produced by the `CreateNuspec` target, is consumed by the `Pack` target, and the Nuget packages are created as requested.
 - The layout of the generated package is identical to the layout under `$(ArtifactsPackagindir)$(PackageName)\`

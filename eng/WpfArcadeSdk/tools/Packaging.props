@@ -27,7 +27,7 @@
     <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
     
     <!-- When ready to go live, remove .private suffix -->
-    <WindowsDesktopSdkPackageName>Microsoft.DotNet.Sdk.WindowsDesktop.Private</WindowsDesktopSdkPackageName>
+    <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
   </PropertyGroup>
 
   <!-- 

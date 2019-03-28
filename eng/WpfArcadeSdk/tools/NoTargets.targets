@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  
+  Licensed under the MIT license.
+  
+  https://github.com/Microsoft/MSBuildSdks/tree/master/src/NoTargets
+-->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(CustomBeforeNoTargets)" Condition="'$(CustomBeforeNoTargets)' != '' and Exists('$(CustomBeforeNoTargets)')" />
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" Condition=" '$(CommonTargetsPath)' == '' " />
+
+  <ItemGroup>
+    <IntermediateAssembly Remove="@(IntermediateAssembly)" />
+    <IntermediateRefAssembly Remove="@(IntermediateRefAssembly)" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!--
+      This property must be overridden to remove a few targets that compile assemblies
+    -->
+    <CoreBuildDependsOn>
+      BuildOnlySettings;
+      PrepareForBuild;
+      PreBuildEvent;
+      ResolveReferences;
+      GetTargetPath;
+      PrepareForRun;
+      IncrementalClean;
+      PostBuildEvent
+    </CoreBuildDependsOn>
+  </PropertyGroup>
+
+  <Import Project="$(CustomAfterNoTargets)" Condition="'$(CustomAfterNoTargets)' != '' and Exists('$(CustomAfterNoTargets)')" />
+</Project>

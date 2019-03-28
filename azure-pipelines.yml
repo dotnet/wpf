@@ -1,14 +1,22 @@
-# This is a simple wrapper for eng/ci.yml to get around the limitation of
+# This is a simple wrapper for eng/pipeline.yml to get around the limitation of
 # user-defined variables not being available in yaml template expressions.
 
 # Parameters ARE available in template expressions, and parameters can have default values,
 # so they can be used to control yaml flow.
+#
+# TODO:
+#   BuildMsBuildSdkPackages, _BuildMsBuildSdkPackages, _BuildMsBuildSdkPackagesArgs should be removed eventually, when 
+#   Microsoft.DotNet.Arcade.Wpf.Sdk is moved from dnceng/dotnet-wpf-int to github/dotnet/wpf. 
+#   When that move happens, there would be no need to suppress the Sdk build by default. Currently, 
+#   allowing the Sdk to build every time will result in an infinite loop that triggers a dotnet/wpf built,
 
 variables:
 
   # clean the local repo on the build agents
   Build.Repository.Clean: true
-
+  # When set to true in a manual built, it produces and publishes 
+  # Microsoft.DotNet.Arcade.Wpf.Sdk
+  BuildMsBuildSdkPackages: false
   _PublishUsingPipelines: false
   _DotNetArtifactsCategory: .NETCore
 
@@ -16,6 +24,7 @@ variables:
 trigger:
 - master
 - release/3.0
+- arcade
 
 # To be added in the future when VSTS supports this feature
 # only trigger pull request builds for the master branch
@@ -28,6 +37,6 @@ jobs:
   parameters:
     ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
       # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-temp-vs2019
+      agentPool: dotnet-internal-vs2019-preview
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false

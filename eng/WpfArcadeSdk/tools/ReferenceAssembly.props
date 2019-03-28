@@ -1,0 +1,12 @@
+<Project>
+  
+  <PropertyGroup>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <ArtifactsReferenceAssemblyDir Condition="'$(ArtifactsReferenceAssemblyDir)'==''">$(ArtifactsDir)ref\</ArtifactsReferenceAssemblyDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShipping)'!='false' and '$(IsPackagingProject)'!='true' and '$(IsRedistProject)'!='true'">
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>

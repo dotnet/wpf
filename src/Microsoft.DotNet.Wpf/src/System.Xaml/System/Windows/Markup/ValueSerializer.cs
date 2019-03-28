@@ -29,7 +29,7 @@ using MS.Internal.Serialization;
 namespace System.Windows.Markup
 {
     /// <summary>
-    /// ValueSerializer allows a type to declare a serializer to control how the type is serializer to and from string 
+    /// ValueSerializer allows a type to declare a serializer to control how the type is serialized to and from strings. 
     /// If a TypeConverter is declared for a type that converts to and from a string, a default value serializer will 
     /// be created for the type. The string values must be loss-less (i.e. converting to and from a string doesn't loose 
     /// data) and must be stable (i.e. returns the same string for the same value). If a type converter doesn't  meet 

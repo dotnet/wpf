@@ -12,7 +12,7 @@
     initialized first
   -->
   <Target Name="InitializeAssemblyAttributeInformation"
-          DependsOnTargets="_InitializeAssemblyVersion;_InitializeSourceControlInformationFromSourceControlManager"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformation"
           Condition="'$(SourceControlInformationFeatureSupported)' == 'true'">
     <PropertyGroup>
       <AssemblyTitle Condition="'$(AssemblyTitle)'==''">$(AssemblyName)</AssemblyTitle>

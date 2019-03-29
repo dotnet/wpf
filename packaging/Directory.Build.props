@@ -9,7 +9,6 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
     <TargetName>Dummy-$(PackageName)</TargetName>
-    <NoBuild>true</NoBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <CreateArchNeutralPackage Condition="$(MSBuildProjectName.Contains('.ArchNeutral'))">true</CreateArchNeutralPackage>
 

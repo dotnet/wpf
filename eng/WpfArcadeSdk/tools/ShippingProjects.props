@@ -1,0 +1,75 @@
+<Project>
+  <PropertyGroup>
+    <ExternalShippingProjects>
+      System.Xaml
+    </ExternalShippingProjects>
+
+    <InternalShippingProjects>
+      PresentationBuildTasks;
+      PresentationCore;
+      DirectWriteForwarder;
+      PresentationCore-CommonResources;
+      PresentationFramework;
+      PresentationFramework-SystemCore;
+      PresentationFramework-SystemData;
+      PresentationFramework-SystemDrawing;
+      PresentationFramework-SystemXml;
+      PresentationFramework-SystemXmlLinq;
+      PresentationUI;
+      ReachFramework;
+      System.Printing;
+      System.Windows.Controls.Ribbon;
+      System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      WindowsFormsIntegration;
+      PenImc;
+      PresentationNative;
+      WpfGfx;
+      D3DCompiler;
+      VCRuntime
+    </InternalShippingProjects>
+
+    <ShippingProjects>
+      $(ExternalShippingProjects);
+      $(InternalShippingProjects)
+    </ShippingProjects>
+
+    <ExcludeFromXlfLocalization>
+      PresentationBuildTasks;
+      D3DCompiler;
+      VCRuntime
+    </ExcludeFromXlfLocalization>
+
+    <WindowsDesktopSdkProject>
+      PresentationBuildTasks
+    </WindowsDesktopSdkProject>
+    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsShipping>false</IsShipping>
+    <IsShipping Condition="$(ShippingProjects.Contains('$(MSBuildProjectName)'))">true</IsShipping>
+    <IsShipping Condition="'$(IsPackagingProject)'=='true'">true</IsShipping>
+
+    <EnableXlfLocalization>false</EnableXlfLocalization>
+    <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(MSBuildProjectName)'))">true</EnableXlfLocalization>
+
+    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(MSBuildProjectName)'))">Internal</RepoLocation>
+    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(MSBuildProjectName)'))">External</RepoLocation>
+    
+    <!-- WindowsDesktopSdk overrides Internal, External etc. -->
+    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(MSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+  </PropertyGroup>
+  
+</Project>

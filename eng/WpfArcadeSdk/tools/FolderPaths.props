@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
+    <WpfSourceDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\</WpfSourceDir>
+    <WpfSharedDir>$(WpfSourceDir)shared\</WpfSharedDir>
+  </PropertyGroup>
+</Project>

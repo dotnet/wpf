@@ -17,6 +17,8 @@ namespace MS.Internal.PresentationFramework
 namespace MS.Internal.ReachFramework
 #elif UIAUTOMATIONTYPES
 namespace MS.Internal.UIAutomationTypes
+#elif DIRECTWRITE_FORWARDER
+namespace MS.Internal.DirectWriteForwarder
 #else
 namespace Microsoft.Internal
 #endif
@@ -32,6 +34,7 @@ namespace Microsoft.Internal
         internal const string DEVDIV_PUBLIC_KEY_TOKEN = "b77a5c561934e089";
 
         // Constants to prevent hardcoding in InternalsVisibleTo attribute
+        internal const string DirectWriteForwarder = "DirectWriteForwarder, PublicKey=" + WCP_PUBLIC_KEY_STRING;
         internal const string PresentationCore = "PresentationCore, PublicKey="+ WCP_PUBLIC_KEY_STRING;
         internal const string PresentationCFFRasterizer = "PresentationCFFRasterizer, PublicKey="+ WCP_PUBLIC_KEY_STRING;
         internal const string PresentationFramework = "PresentationFramework, PublicKey="+ WCP_PUBLIC_KEY_STRING;

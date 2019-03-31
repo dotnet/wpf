@@ -2,21 +2,24 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-#if CUSTOM_SR_NAMESPACE
-namespace #CUSTOM_SR_NAMESPACE#
+#if WINDOWS_BASE
+namespace MS.Internal.WindowsBase
+#elif PRESENTATION_CORE
+namespace MS.Internal.PresentationCore
+#elif PBTCOMPILER
+namespace MS.Utility
+#elif AUTOMATION
+namespace MS.Internal.Automation
 #else
 namespace System
 #endif
 {
-#if CUSTOM_SR_CLASSNAME
-    internal partial class #CUSTOM_SR_CLASSNAME#
-#else
 
     internal partial class SR
-#endif
     {
         private static ResourceManager ResourceManager => SRID.ResourceManager;
 

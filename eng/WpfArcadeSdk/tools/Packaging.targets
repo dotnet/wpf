@@ -333,9 +333,6 @@ $(PreparePackageAssetsDependsOn):
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
       <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />
     </ItemGroup>
-    <CreateItem Include="$(SourceRevisionId)">
-      <Output TaskParameter="Include" ItemName="RepoCommitVersionFileLines"/>
-    </CreateItem>
 
     <PropertyGroup>
       <RepoCommitVersionFileDir>$(ArtifactsPackagingDir)$(NormalizedPackageName)\</RepoCommitVersionFileDir>

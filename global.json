@@ -13,6 +13,6 @@
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",
-    "msvcurt-c1xx": "0.0.0.3"
+    "msvcurt-c1xx": "0.0.0.4"
   }
 }

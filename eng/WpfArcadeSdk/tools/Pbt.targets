@@ -7,7 +7,16 @@
       It is also OK for a DLL to NOT exist at the time <UsingTask> is encountered against this assembly path. 
       We must ensure that an actual DLL exists at this location prior to the very first execution of a Task from within this assembly.
     -->
-    <_PresentationBuildTasksAssembly Condition="'$(InternalMarkupCompilation)'=='true'">$(PbtDir)PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
+    <_PresentationBuildTasksAssembly Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')">$(PbtDir)PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
+
+    <!-- 
+     When PresentationBuildTasks project is not present locally (presumably because in our split-repo build model, it has been moved off of the repo
+     being built (typically, dotnet-wpf-int) over to GitHub (dotnet/wpf), we will leverage WindowsDesktop Sdk package directly as a 'transport package'
+     for providing PresentationBuildTasks.dll and related props+targets. These targets require UseWpf=true to be set. 
+     
+     Also see additional note in Pbt.props
+    -->
+    <UseWpf Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)')"></UseWpf>
   </PropertyGroup>
   <!-- 
     Internal PBT compilation requires that we use <NetCoreReference> 
@@ -23,7 +32,7 @@
     <NetCoreReference Include="System.Runtime" />
   </ItemGroup>
   
-  <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true'">
+  <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')">
     <PrepareResourceNamesDependsOn>
       $(PrepareResourceNamesDependsOn);
       EnsurePbtPath
@@ -43,14 +52,14 @@
       (d) This is all done prior to the first ever use of a task from within this assembly by Microsoft.WinFx.targets
   -->
   <Target Name="EnsurePbtPath"
-          Condition="'$(InternalMarkupCompilation)'=='true'"
+          Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')"
           DependsOnTargets="$(EnsurePbtPathDependsOn)"
           BeforeTargets="ResolveProjectReferences">
     <MakeDir Condition="!Exists('$(PbtDir)')"
              Directories="$(PbtDir)" />
     
     <MSBuild Projects="$(WpfSourceDir)PresentationBuildTasks\PresentationBuildTasks.csproj"
-             Condition="!Exists('$(_PresentationBuildTasksAssembly)')"
+             Condition="!Exists('$(_PresentationBuildTasksAssembly)') And Exists('$(LocalMicrosoftWinFXTargets)')"
              Properties="CopyTransitiveReferences=true;PublishDir=$(PbtDir);TargetFramework=$(PbtTfm);Platform=AnyCPU"
              Targets="Clean;Build;Publish" />
   </Target>
@@ -73,6 +82,14 @@
     </ItemGroup>
   </Target>
 
+  <!-- 
+    If local PresentationBuildTasks project is present, then import WinFX.targets from local sources;
+    otherwise import Microsoft.NET.Sdk.WindowsDesktop.targets from Microsoft.NET.Sdk.WindowsDesktop
+  -->
   <Import Project="$(WpfSourceDir)PresentationBuildTasks\Microsoft.WinFX.targets" 
-          Condition="'$(InternalMarkupCompilation)'=='true'"/>
+          Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)') "/>
+  
+  <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
+          Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"
+          Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') "/>
 </Project>

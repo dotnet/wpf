@@ -315,12 +315,23 @@ $(PreparePackageAssetsDependsOn):
 
   <!-- Create version.txt containing latest commit ID -->
   <Target Name="GenerateVersionFileWithRepositoryCommit"  
-          Condition="'$(RepositoryCommit)'!='' and '$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')" 
+          Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')" 
           BeforeTargets="CreateContentFolder" 
           Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt">
+    <!-- 
+      Workaround 
+        Ensure that SourceRevisionId is obtained if it has not already been read in 
+        Reuse tasks from Microsoft.Build.Tasks.Git.targets
+    --> 
+    <Microsoft.Build.Tasks.Git.LocateRepository Directory="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
+      <Output TaskParameter="Id" PropertyName="_GitRepositoryRoot" />
+    </Microsoft.Build.Tasks.Git.LocateRepository>
+    <Microsoft.Build.Tasks.Git.GetSourceRevisionId Root="$(_GitRepositoryRoot)" Condition="'$(SourceRevisionId)' == ''">
+      <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
+    </Microsoft.Build.Tasks.Git.GetSourceRevisionId>
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
-      <RepoCommitVersionFileLines Include="$(RepositoryCommit)" />
+      <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />
     </ItemGroup>
 
     <PropertyGroup>

@@ -29,6 +29,8 @@
   -->
   <ItemGroup Condition="'$(InternalMarkupCompilation)'=='true'">
     <NetCoreReference Include="mscorlib" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Runtime" />
   </ItemGroup>
   

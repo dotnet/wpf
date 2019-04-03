@@ -67,9 +67,9 @@
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19202.13">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19203.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>764f362c8e92e41905fe5f6c782ab9980c86c909</Sha>
+      <Sha>f324bd668aa12d9859935093ed310e72a1b0bfed</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19201.12" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/arcade</Uri>

@@ -10,12 +10,14 @@ namespace MS.Win32 {
     using System;
     using System.Security.Permissions;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Text;
     using MS.Internal;
 #if !DRT && !UIAUTOMATIONTYPES
     using MS.Internal.Interop;
+    using MS.Utility;
 #endif
     using Microsoft.Win32;
     using System.Security;
@@ -583,6 +585,7 @@ namespace MS.Win32 {
         E_NOINTERFACE = unchecked((int)0x80004002),
         E_FAIL = unchecked((int)0x80004005),
         E_ABORT = unchecked((int)0x80004004),
+        E_ACCESSDENIED = unchecked((int)0x80070005),
         E_UNEXPECTED = unchecked((int)0x8000FFFF),
         INET_E_DEFAULT_ACTION = unchecked((int)0x800C0011),
         ETO_OPAQUE = 0x0002,
@@ -7305,6 +7308,250 @@ namespace MS.Win32 {
         /// Specifies the current session (SessionId)
         /// </summary>
         public const int WTS_CURRENT_SESSION = -1;
+
+        /// <summary>
+        /// Equivalent to Win32 PROCESS_DPI_AWARENESS
+        /// Identifies dots per inch (dpi) awareness values. DPI awareness
+        /// indicates how much scaling work an application performs for DPI
+        /// versus how much is done by the system.
+        /// </summary>
+        /// <remarks>
+        /// Currently, the DPI awareness is defined on an individual thread, 
+        /// window or process level and is indicated by the DPI_AWARENESS (
+        /// which is very similar to, but slightly different from, 
+        /// PROCESS_DPI_AWARENESS) returned by functions like 
+        /// GetThreadDpiAwareness or GetWindowDpiAwareness. 
+        /// 
+        /// The old recommendation was to define DPI awareness level in the
+        /// application manifest using the setting <i>dpiAware</i>. Now that
+        /// DPI awareness is tied to threads and windows instead of an entire
+        /// application, the new setting <i>dpiAwareness</i> is introduced, 
+        /// which will overridden any <i>dpiAware</i> entries in the application
+        /// manifest. 
+        /// 
+        /// While it is still recommended to use the manifest, the DPI awareness 
+        /// can be changed while the app is running by using 
+        /// SetThreadDpiAwarenessContext. Windows within the application that have
+        /// DPI_AWARENESS_PER_MONITOR_AWARE are the responsibility of the application
+        /// to update by keeping track of WM_DPICHANGED.
+        /// </remarks>
+        internal enum PROCESS_DPI_AWARENESS
+        {
+            /// <summary>
+            /// PROCESS_DPI_UNAWARE
+            /// This app does not scale for DPI changes and is 
+            /// always assumed to have a scale factor of 100% (96 DPI). It 
+            /// will be automatically scaled by the system on any other DPI
+            /// setting.
+            /// </summary>
+            PROCESS_DPI_UNAWARE = 0,
+
+            /// <summary>
+            /// PROCESS_SYSTEM_DPI_AWARE
+            /// The app does not scale for DPI changes. It will query for the DPI once
+            /// and use that value for the lifetime of the app. If the DPI changes, 
+            /// the app will not adjust to the new DPI value. It will be automatically scaled
+            /// up or down by the system when the DPI changes from the system value
+            /// </summary>
+            PROCESS_SYSTEM_DPI_AWARE = 1,
+
+            /// <summary>
+            /// PROCESS_PER_MONITOR_DPI_AWARE
+            /// This app checks for the DPI when it is created and adjusts the scale factor
+            /// whenever the DPI changes. These applications are not automatically scaled
+            /// by the system.
+            /// </summary>
+            PROCESS_PER_MONITOR_DPI_AWARE = 2,
+        }
+
+        /// <summary>
+        /// Identifies the dots per inch (dpi) setting for a thread, process
+        /// or window
+        /// </summary>
+        /// <remarks>DPI_AWARENESS  enumeration</remarks>
+        internal enum DPI_AWARENESS : int
+        {
+            /// <summary>
+            /// Invalid DPI awareness. This is an invalid DPI awareness value
+            /// </summary>
+            /// <remarks>DPI_AWARENESS_INVALID</remarks>
+            DPI_AWARENESS_INVALID = -1,
+
+            /// <summary>
+            /// DPI unaware. This process does not scale for DPI changes and 
+            /// is always assumed to have a scale factor of 100% (96 DPI). 
+            /// It will be automatically scaled by the system on any other DPI setting.
+            /// </summary>
+            /// <remarks>DPI_AWARENESS_UNAWARE</remarks>
+            DPI_AWARENESS_UNAWARE = 0,
+
+            /// <summary>
+            /// System DPI aware. This process does not scale for DPI changes. 
+            /// It will query for the DPI once and use that value for the lifetime 
+            /// of the process. If the DPI changes, the process will not adjust to 
+            /// the new DPI value. It will be automatically scaled up or down by 
+            /// the system when the DPI changes from the system value.
+            /// </summary>
+            /// <remarks>DPI_AWARENESS_SYSTEM_AWARE</remarks>
+            DPI_AWARENESS_SYSTEM_AWARE = 1,
+
+            /// <summary>
+            /// Per monitor DPI aware. This process checks for the DPI when it is 
+            /// created and adjusts the scale factor whenever the DPI changes.
+            /// These processes are not automatically scaled by the system.
+            /// </summary>
+            /// <remarks>DPI_AWARENESS_PER_MONITOR_AWARE</remarks>
+            DPI_AWARENESS_PER_MONITOR_AWARE = 2
+        }
+
+        /// <summary>
+        /// Identifies the DPI hosting behavior for a window. This behavior allows windows
+        /// created in the thread to host child windows with a different DPI_AWARENESS_CONTEXT
+        /// </summary>
+        internal enum DPI_HOSTING_BEHAVIOR : int
+        {
+            /// <summary>
+            /// Invalid DPI hosting behavior. This usually occurs if the
+            /// previous SetThreadDpiHostingBehavior call used an invalid parameter.
+            /// </summary>
+            DPI_HOSTING_BEHAVIOR_INVALID = -1,
+
+            /// <summary>
+            /// Default DPI hosting behavior. The associated window behaves as normal,
+            /// and cannot create or re-parent child windows with a different DPI_AWARENESS_CONTEXT.
+            /// </summary>
+            DPI_HOSTING_BEHAVIOR_DEFAULT = 0,
+
+            /// <summary>
+            /// Mixed DPI hosting behavior. This enables the creation and re-parenting of child
+            /// windows with different DPI_AWARENESS_CONTEXT. These child windows will be independently scaled by the OS.
+            /// </summary>
+            DPI_HOSTING_BEHAVIOR_MIXED = 1
+        }
+
+#if !DRT && !UIAUTOMATIONTYPES
+
+        /// <summary>
+        /// DPI unaware. This windows do not scale for DPI changes and
+        /// is always assumed to have a scale factor of 100% (96 DPI).
+        /// </summary>
+        /// <remarks>
+        /// <code><![CDATA[#define DPI_AWARENESS_CONTEXT_UNAWARE              ((DPI_AWARENESS_CONTEXT)-1)]]></code>
+        /// </remarks>
+        internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_UNAWARE = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_UNAWARE;
+
+        /// <summary>
+        /// System DPI aware. This window does not scale for DPI changes. It will 
+        /// query for the DPI once and use that value for the lifetime of the
+        /// process. If the DPI changes, the process will not adjust to the new DPI
+        /// value.
+        /// </summary>
+        /// <remarks>
+        /// <code><![CDATA[#define DPI_AWARENESS_CONTEXT_SYSTEM_AWARE         ((DPI_AWARENESS_CONTEXT)-2)]]></code>
+        /// </remarks>
+        internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE;
+
+        /// <summary>
+        /// Per monitor DPI aware. This window checks for the DPI when it is created
+        /// and adjusts the scale factor whenever the DPI changes. These processes
+        /// are not automatically scaled by the system.
+        /// </summary>
+        /// <remarks>
+        /// <code><![CDATA[#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE    ((DPI_AWARENESS_CONTEXT)-3)]]></code>
+        /// </remarks>
+        internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE;
+
+        /// <summary>
+        /// Also known as Per Monitor v2, this is an advancement over the original
+        /// per-monitor DPI awareness mode, which enables applications to access new DPI
+        /// related scaling behaviors on a per top-level window basis. Per Monitor v2 was
+        /// made available in the Creators Update of Windows 10 (v1703). The additional 
+        /// behaviors available are as follows:
+        /// - Child window DPI change notifications
+        /// - Automatic scaling of non-client area
+        /// - Scaling of Win32 menus
+        /// - Dialog scaling
+        /// - Improved scaling of ComCtl32 controls
+        /// - Improved theming behavior
+        /// </summary>
+        /// <remarks>
+        /// <code><![CDATA[#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 ((DPI_AWARENESS_CONTEXT)-4)]]></code>
+        /// </remarks>
+        internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2;
+
+#endif
+
+        /// <summary>
+        /// A MonitorEnumProc function is an application-defined callback function that
+        /// is called by the EnumDisplayMonitors function.
+        /// A value of type MONITORENUMPROC is a pointer to a MonitorEnumProc function.
+        /// </summary>
+        /// <param name="hMonitor">A handle to the display monitor. This value will always be non-NULL.</param>
+        /// <param name="hdcMonitor">
+        /// A handle to a device context.
+        /// 
+        /// The device context has color attributes that are appropriate for the display monitor identified
+        /// by hMonitor.The clipping area of the device context is set to the intersection of the visible
+        /// region of the device context identified by the hdc parameter of EnumDisplayMonitors, the
+        /// rectangle pointed to by the lprcClip parameter of EnumDisplayMonitors, and the display monitor
+        /// rectangle.
+        /// 
+        /// This value is NULL if the hdc parameter of EnumDisplayMonitors was NULL.
+        /// </param>
+        /// <param name="lprcMonitor">
+        /// A pointer to a RECT structure.
+        /// 
+        /// If hdcMonitor is non-NULL, this rectangle is the intersection of the clipping area of the device
+        /// context identified by hdcMonitor and the display monitor rectangle.The rectangle coordinates are
+        /// device-context coordinates.
+        /// 
+        /// If hdcMonitor is NULL, this rectangle is the display monitor rectangle. The rectangle coordinates
+        /// are virtual-screen coordinates.
+        /// </param>
+        /// <param name="dwData">
+        /// Application-defined data that EnumDisplayMonitors passes directly to
+        /// the enumeration function.
+        /// </param>
+        /// <returns>
+        /// To continue the enumeration, return true.
+        /// To stop the enumeration, return false.
+        /// </returns>
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
+
+        /// <summary>
+        /// Identifies the dots per inch (dpi) setting for a monitor.
+        /// </summary>
+        internal enum MONITOR_DPI_TYPE : int
+        {
+            /// <summary>
+            /// The effective DPI. This value should be used when determining the
+            /// correct scale factor for scaling UI elements. This incorporates the
+            /// scale factor set by the user for this specific display.
+            /// </summary>
+            MDT_EFFECTIVE_DPI = 0,
+
+            /// <summary>
+            /// The angular DPI. This DPI ensures rendering at a compliant angular
+            /// resolution on the screen. This does not include the scale factor set
+            /// by the user for this specific display.
+            /// </summary>
+            MDT_ANGULAR_DPI = 1,
+
+            /// <summary>
+            /// The raw DPI. This value is the linear DPI of the screen as measured
+            /// on the screen itself. Use this value when you want to read the pixel
+            /// density and not the recommended scaling setting. This does not include
+            /// the scale factor set by the user for this specific display and is not
+            /// guaranteed to be a supported DPI value.
+            /// </summary>
+            MDT_RAW_DPI = 2,
+
+            /// <summary>
+            /// The default DPI setting for a monitor is MDT_EFFECTIVE_DPI.
+            /// </summary>
+            MDT_DEFAULT = MDT_EFFECTIVE_DPI
+        }
     }
 }
 

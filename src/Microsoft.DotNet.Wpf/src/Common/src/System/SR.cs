@@ -14,11 +14,20 @@ namespace MS.Internal.PresentationCore
 namespace MS.Utility
 #elif AUTOMATION
 namespace MS.Internal.Automation
+#elif REACHFRAMEWORK
+namespace System.Windows.Xps
+#elif PRESENTATIONFRAMEWORK
+namespace System.Windows
+#elif PRESENTATIONUI
+namespace System.Windows.TrustUI
+#elif WINDOWSFORMSINTEGRATION
+namespace System.Windows
+#elif RIBBON_IN_FRAMEWORK
+namespace Microsoft.Windows.Controls
 #else
 namespace System
 #endif
 {
-
     internal partial class SR
     {
         private static ResourceManager ResourceManager => SRID.ResourceManager;

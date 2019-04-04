@@ -31,6 +31,7 @@ namespace MS.Win32
         public const string Olepro32 = "olepro32.dll";
         public const string Penimc ="PenIMC_cor3.dll";
         public const string PresentationCore = "PresentationCore.dll";
+        public const string PresentationCoreCommonResources = "PresentationCore-CommonResources.dll";        
         public const string PresentationFramework = "PresentationFramework.dll";
         public const string PresentationHostDll = "PresentationHost_cor3.dll";
         public const string PresentationNativeDll = "PresentationNative_cor3.dll";
@@ -47,6 +48,7 @@ namespace MS.Win32
         public const string Wininet = "wininet.dll";
         public const string Winmm = "winmm.dll";
         public const string Winspool = "winspool.drv";
+        public const string Wldp = "wldp.dll";
         public const string WpfGfx = "WpfGfx_cor3.dll";
         public const string WtsApi32 = "wtsapi32.dll";
     }

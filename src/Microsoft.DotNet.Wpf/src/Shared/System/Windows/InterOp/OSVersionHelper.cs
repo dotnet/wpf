@@ -48,6 +48,8 @@ namespace Microsoft.Internal.Interop
     {
         #region Static OS Members
 
+        internal static bool IsOsWindows10RS5OrGreater { get; set; }
+
         internal static bool IsOsWindows10RS3OrGreater { get; set; }
 
         internal static bool IsOsWindows10RS2OrGreater { get; set; }
@@ -91,6 +93,9 @@ namespace Microsoft.Internal.Interop
         [SecurityCritical]
         static OSVersionHelper()
         {
+
+            IsOsWindows10RS5OrGreater = IsWindows10RS5OrGreater();
+
             IsOsWindows10RS3OrGreater = IsWindows10RS3OrGreater();
 
             IsOsWindows10RS2OrGreater = IsWindows10RS2OrGreater();
@@ -131,6 +136,11 @@ namespace Microsoft.Internal.Interop
         #endregion
 
         #region DLL Imports
+
+        [SecurityCritical, SuppressUnmanagedCodeSecurity]
+        [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        static extern bool IsWindows10RS5OrGreater();
 
         [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
@@ -230,6 +240,8 @@ namespace Microsoft.Internal.Interop
         {
             switch (osVer)
             {
+                case OperatingSystemVersion.Windows10RS5:
+                    return IsOsWindows10RS5OrGreater;
                 case OperatingSystemVersion.Windows10RS3:
                     return IsOsWindows10RS3OrGreater;
                 case OperatingSystemVersion.Windows10RS2:
@@ -265,7 +277,11 @@ namespace Microsoft.Internal.Interop
 
         internal static OperatingSystemVersion GetOsVersion()
         {
-            if (IsOsWindows10RS3OrGreater)
+            if (IsOsWindows10RS5OrGreater)
+            {
+                return OperatingSystemVersion.Windows10RS3;
+            }
+            else if (IsOsWindows10RS3OrGreater)
             {
                 return OperatingSystemVersion.Windows10RS3;
             }

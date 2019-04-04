@@ -1,0 +1,50 @@
+<Project>
+
+   <!-- 
+    For now, UseLegacyPresentationBuildTasks=true can be used to use the in-box framework 
+    PresentationBuildTasks and targets when running in full framework MSBuild. This is
+    just an escape hatch while the new PresentationBuildTasks bake. 
+    
+    When we remove this,we can remove the correpsonding corresponding mscorlib swap targets in
+    Microsoft.DesktopUI.App.targets, and the production of ref-mscorlib shims 
+  -->
+ <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" 
+         Condition ="'$(MSBuildRuntimeType)' != 'Core' and '$(UseLegacyPresentationBuildTasks)' == 'true'"/>
+
+ <Import Project="Microsoft.WinFX.targets" 
+         Condition="'$(MSBuildRuntimeType)' == 'Core' or '$(UseLegacyPresentationBuildTasks)' != 'true'" />
+
+  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(UseWPF)' == 'true'">
+    
+    <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
+         as Resource, Content, or None items, then remove them from the Page items. -->
+    <Page Remove="@(Resource);@(Content);@(None)"
+          Condition="'$(EnableDefaultPageItems)' != 'false'" />
+  </ItemGroup>
+
+  <!-- Generate error if there are duplicate page items.  The task comes from the .NET SDK, and this target follows
+       the pattern in the CheckForDuplicateItems task, where the .NET SDK checks for duplicate items for the item
+       types it knows about. -->
+  <Target Name="CheckForDuplicatePageItems" BeforeTargets="_CheckForInvalidConfigurationAndPlatform;CoreCompile"
+          DependsOnTargets="CheckForDuplicateItems"
+          Condition="'$(UseWPF)' == 'true'">
+
+    <CheckForDuplicateItems
+      Items="@(Page)"
+      ItemName="Page"
+      DefaultItemsEnabled="$(EnableDefaultItems)"
+      DefaultItemsOfThisTypeEnabled="$(EnableDefaultPageItems)"
+      PropertyNameToDisableDefaultItems="EnableDefaultPageItems"
+      MoreInformationLink="$(DefaultItemsMoreInformationLink)"
+      ContinueOnError="$(CheckForDuplicateItemsContinueOnError)">
+      <Output TaskParameter="DeduplicatedItems" ItemName="DeduplicatedPageItems" />
+    </CheckForDuplicateItems>
+
+    <ItemGroup Condition="'$(DesignTimeBuild)' == 'true' And '@(DeduplicatedPageItems)' != ''">
+      <Page Remove="@(Page)" />
+      <Page Include="@(DeduplicatedPageItems)" />
+    </ItemGroup>
+
+  </Target>
+
+</Project>

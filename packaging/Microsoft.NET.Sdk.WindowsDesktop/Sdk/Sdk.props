@@ -1,0 +1,29 @@
+<!--
+***********************************************************************************************
+Sdk.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+<Project>
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
+  <!-- The MicrosoftWindowsDesktopSdkPath is a hook so that you can redirect to a local version of the WPF SDK targets
+       (ie in order to test changes locally) without modifying the .NET Core SDK itself.  This should work
+       as long as there are no changes to Sdk.props and Sdk.targets themselves. -->
+  <PropertyGroup Condition="'$(MicrosoftWindowsDesktopSdkPath)' == ''">
+    <MicrosoftWindowsDesktopSdkPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\..\targets))</MicrosoftWindowsDesktopSdkPath>
+  </PropertyGroup>
+
+  <Import Project="$(MicrosoftWindowsDesktopSdkPath)\Microsoft.NET.Sdk.WindowsDesktop.props "/>
+
+</Project>

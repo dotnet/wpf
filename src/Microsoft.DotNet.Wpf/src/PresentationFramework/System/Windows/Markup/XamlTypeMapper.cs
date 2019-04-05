@@ -91,7 +91,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( "assemblyNames" );
+                throw new ArgumentNullException( nameof(assemblyNames));
             }
 
             _assemblyNames = assemblyNames;
@@ -122,11 +122,11 @@ namespace System.Windows.Markup
         {
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( "xmlNamespace" );
+                throw new ArgumentNullException( nameof(xmlNamespace));
             }
             if(null == localName)
             {
-                throw new ArgumentNullException( "localName" );
+                throw new ArgumentNullException( nameof(localName));
             }
 
             TypeAndSerializer typeAndSerializer =
@@ -202,11 +202,11 @@ namespace System.Windows.Markup
         {
             if( null == assemblyName )
             {
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
             }
             if( null == assemblyPath )
             {
-                throw new ArgumentNullException("assemblyPath");
+                throw new ArgumentNullException(nameof(assemblyPath));
             }
             if (string.IsNullOrEmpty(assemblyPath))
             {
@@ -4379,13 +4379,13 @@ namespace System.Windows.Markup
         public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
         {
             if (xmlNamespace == null)
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
 
             if (assemblyName == null)
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
 
             if (clrNamespace == null)
-                throw new ArgumentNullException("clrNamespace");
+                throw new ArgumentNullException(nameof(clrNamespace));
 
             _xmlNamespace = xmlNamespace;
             _assemblyName = assemblyName;
@@ -4423,7 +4423,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_xmlNamespace == null)
                 {
@@ -4442,7 +4442,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_assemblyName == null)
                 {
@@ -4461,7 +4461,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_clrNamespace == null)
                 {

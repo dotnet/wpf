@@ -73,13 +73,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                 VersionPair updaterVersion)
         {
             if (featureId == null)
-                throw new ArgumentNullException("featureId");
+                throw new ArgumentNullException(nameof(featureId));
             if (writerVersion == null)
-                throw new ArgumentNullException("writerVersion");
+                throw new ArgumentNullException(nameof(writerVersion));
             if (readerVersion == null)
-                throw new ArgumentNullException("readerVersion");
+                throw new ArgumentNullException(nameof(readerVersion));
             if (updaterVersion == null)
-                throw new ArgumentNullException("updaterVersion");
+                throw new ArgumentNullException(nameof(updaterVersion));
 
             if (featureId.Length == 0)
             {

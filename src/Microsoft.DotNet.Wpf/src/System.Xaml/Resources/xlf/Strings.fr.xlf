@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="fr" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -27,41 +27,6 @@
         <target state="translated">Impossible de déterminer le type d'élément du type de dictionnaire '{0}', car il possède plusieurs méthodes Add ou implémentations IDictionary&lt;K,V&gt;. Pour pouvoir utiliser ce type de dictionnaire en XAML, ajoutez une méthode Add(object,object) publique, implémentez System.Collections.IDictionary ou un System.Collections.Generic.IDictionary&lt;K,V&gt; unique.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Animation_ChildMustBeKeyFrame">
-        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
-        <target state="translated">Un enfant de KeyFrameAnimation en XAML doit être un KeyFrame de type compatible.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
-        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
-        <target state="translated">'{0}' doit avoir un TimeSpan pour son Duration ou un TimeSpan pour le KeyTime de son dernier KeyFrame. Comme '{0}' possède un Duration égal à '{1}' et un KeyTime égal à '{2}' pour son dernier KeyFrame, KeyTimes ne peut pas être résolu.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidBaseValue">
-        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
-        <target state="translated">'{0}' n'est pas une valeur valide '{1}' pour la classe '{2}'. Cette valeur doit avoir été fournie par la valeur de base de la propriété animée ou par la valeur de sortie d'une autre animation appliquée à la même propriété.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidResolvedKeyTimes">
-        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">Le KeyTime résolu pour l'image clé à l'index {1} ne peut pas être supérieur au KeyTime résolu pour l'image clé à l'index {4}. KeyFrames[{1}] possède un KeyTime spécifié '{2}', qui se résout en heure {3} ; KeyFrames[{4}] a spécifié un KeyTime '{5}', qui se résout en heure {6}. Comme certains KeyTimes sont résolus par rapport à l'heure Begin de '{0}' et d'autres par rapport à sa valeur Duration, certains ensembles de KeyTimes ne sont pas valides pour tous les Durations.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidTimeKeyTime">
-        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
-        <target state="translated">Valeur KeyTime '{2}' non valide pour l'image clé de l'index {1} de '{0}', car supérieure à la valeur Duration '{3}' de l'animation.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_Invalid_DefaultValue">
-        <source>'{0}' cannot use default {1} value of '{2}'.</source>
-        <target state="translated">'{0}' ne peut pas utiliser la valeur par défaut {1} de '{2}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_NoTextChildren">
-        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
-        <target state="translated">Les objets KeyFrameAnimation ne peuvent pas avoir des objets texte comme enfants.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ArgumentRequired">
         <source>One of the following arguments must be non-null: '{0}'.</source>
         <target state="translated">Un des arguments suivants doit être non null : '{0}'.</target>
@@ -70,11 +35,6 @@
       <trans-unit id="ArrayAddNotImplemented">
         <source>Array Add method is not implemented.</source>
         <target state="translated">La méthode Add de tableau n'est pas implémentée.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="AssemblyTagMissing">
-        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
-        <target state="translated">La partie entre le point-virgule ';' et le signe égal '=' n'est pas '{0}' URI '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="AttachableEventNotImplemented">
@@ -162,16 +122,6 @@
         <target state="translated">Dans les extensions de balisage, toutes les valeurs d'argument de constructeur doivent être des atomes. Pour l'objet de type '{0}', une ou plusieurs valeurs d'argument ne sont pas atomiques.</target>
         <note />
       </trans-unit>
-      <trans-unit id="CannotConvertStringToType">
-        <source>Cannot convert string value '{0}' to type '{1}'.</source>
-        <target state="translated">Impossible de convertir la valeur de chaîne '{0}' en type '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CannotConvertType">
-        <source>Cannot convert type '{0}' to '{1}'.</source>
-        <target state="translated">Impossible de convertir le type '{0}' en '{1}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="CannotCreateBadEventDelegate">
         <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
         <target state="translated">Impossible de créer une instance de '{0}', car XamlType n'est pas valide.</target>
@@ -187,11 +137,6 @@
         <target state="translated">Impossible de trouver l'assembly '{0}' dans l'URI '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="CannotModifyReadOnlyContainer">
-        <source>Cannot modify a read-only container.</source>
-        <target state="translated">Impossible de modifier un conteneur en lecture seule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="CannotReassignSchemaContext">
         <source>Cannot reassign a previously set SchemaContext.</source>
         <target state="translated">Impossible de réassigner un SchemaContext précédemment défini.</target>
@@ -200,11 +145,6 @@
       <trans-unit id="CannotResolveTypeForFactoryMethod">
         <source>Cannot resolve type '{0}' for method '{1}'.</source>
         <target state="translated">Impossible de résoudre le type '{0}' pour la méthode '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
-        <source>Cannot get part or part information from a write-only container.</source>
-        <target state="translated">Impossible d'obtenir tout ou partie des informations à partir d'un conteneur en lecture seule.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotSetBaseUri">
@@ -270,31 +210,6 @@
       <trans-unit id="CollectionCannotContainNulls">
         <source>Collection '{0}' cannot contain null values.</source>
         <target state="translated">La collection '{0}' ne peut pas contenir de valeurs null.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
-        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
-        <target state="translated">Le nombre d'éléments de cette collection doit être inférieur ou égal à '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_BadType">
-        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
-        <target state="translated">Impossible d'ajouter une instance de type '{1}' à une collection de type '{0}'. Seuls les éléments de type '{2}' sont autorisés.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
-        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
-        <target state="translated">Impossible de passer un tableau multidimensionnel à la méthode CopyTo d'une collection.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
-        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
-        <target state="translated">La valeur du paramètre '{0}' est supérieure ou égale à la longueur de la valeur du paramètre '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
-        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
-        <target state="translated">Le nombre d'éléments de cette collection est supérieur à l'espace disponible compris entre '{0}' et la fin de la destination '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ConstructImplicitType">
@@ -397,16 +312,6 @@
         <target state="translated">Des XmlnsCompatibleWithAttributes sont en conflit dans les assemblys '{0}' et '{1}' pour OldNamespace '{2}'. Modifiez les attributs de sorte qu'ils aient le même NewNamespace, ou passez un jeu d'assemblys de référence qui ne sont pas en conflit dans le constructeur XamlSchemaContext.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Enum_Invalid">
-        <source>'{0}' enumeration value is not valid.</source>
-        <target state="translated">Valeur d'énumération '{0}' non valide.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Enumerator_VerifyContext">
-        <source>No current object to return.</source>
-        <target state="translated">Aucun objet actif à retourner.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
         <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
         <target state="translated">Impossible d'assigner à l'événement '{0}' une valeur qui ne peut pas être assignée à '{1}'.</target>
@@ -452,16 +357,6 @@
         <target state="translated">La méthode de fabrique '{0}' qui correspond aux contraintes de liaison spécifiées a retourné une valeur null.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileFormatException">
-        <source>Input file or data stream does not conform to the expected file format specification.</source>
-        <target state="translated">Le fichier d'entrée ou le flux de données ne sont pas conformes aux spécifications de format de fichier attendues.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileFormatExceptionWithFileName">
-        <source>'{0}' file does not conform to the expected file format specification.</source>
-        <target state="translated">Le fichier '{0}' n'est pas conforme aux spécifications de format attendues.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFoundExceptionMessage">
         <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
         <target state="translated">Impossible de charger le fichier ou l'assembly '{0}' ou une de ses dépendances. Le système ne peut pas trouver le fichier spécifié.</target>
@@ -470,11 +365,6 @@
       <trans-unit id="ForwardRefDirectives">
         <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
         <target state="translated">Tentative de référencer un ou plusieurs objets nommés '{0}' qui n'ont pas encore été définis. Les références anticipées, ou les références à des objets qui contiennent des références anticipées, ne sont pas prises en charge sur les directives autres que Key.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Freezable_CantBeFrozen">
-        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
-        <target state="translated">La valeur spécifiée de type '{0}' doit avoir IsFrozen défini à la valeur false pour apporter des modifications.</target>
         <note />
       </trans-unit>
       <trans-unit id="FrugalList_CannotPromoteBeyondArray">
@@ -560,16 +450,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">Expression non valide : '{0}'</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Valeur de PermissionState '{0}' non valide pour cette autorisation.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Type d'autorisation non valide. Type attendu '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -737,11 +617,6 @@
         <target state="translated">,Cas manquant dans la recherche de ClrType 'Member'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MissingTagInNamespace">
-        <source>Missing '{0}' in URI '{1}'.</source>
-        <target state="translated">'{0}' manquant dans l'URI '{1}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MissingTypeConverter">
         <source>Creating from text without a TypeConverter is not allowed.</source>
         <target state="translated">La création de texte sans TypeConverter n'est pas autorisée.</target>
@@ -784,7 +659,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name ne peut pas être une chaîne vide.</target>
+        <target state="translated">Le nom ne peut pas être une chaîne vide.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -923,8 +798,8 @@
         <note />
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
-        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] sur '{2}' n'est pas une propriété déclarée sur ce type.</target>
+        <source>['{0}'('{1}')] on '{2}' is not a property declared on this type.</source>
+        <target state="translated">['{0}'('{1}')] sur '{2}' n'est pas une propriété déclarée sur ce type.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -988,8 +863,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Impossible de lire les objets de type �{0}�, car il aucun constructeur n'est accessible. Pour que ce type puisse être utilisé en XAML, ajoutez un constructeur par défaut, utilisez ConstructorArgumentAttribute ou fournissez un InstanceDescriptor.</target>
+        <source>Unable to read objects of the type ‘{0}’ because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Impossible de lire les objets du type '{0}', car aucun constructeur n'est accessible. Pour que ce type puisse être utilisé en XAML, ajoutez un constructeur par défaut, utilisez ConstructorArgumentAttribute ou fournissez un InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1050,11 +925,6 @@
       <trans-unit id="OpenPropertyInCurrentFrame_SM">
         <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
         <target state="translated">Flux de nœud XAML : EndMember manquant pour '{0}.{1}' avant StartMember '{2}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Le paramètre doit être supérieur ou égal à zéro.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
@@ -1147,11 +1017,6 @@
         <target state="translated">SchemaContext ne peut pas être null.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Impossible d'affecter à SandboxExternalContent la valeur true en situation de confiance partielle.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlMissingAttribute">
         <source>Invalid security XML. Missing expected attribute '{0}'.</source>
         <target state="translated">XML de sécurité non valide. Attribut attendu manquant '{0}'.</target>
@@ -1222,11 +1087,6 @@
         <target state="translated">Les corrections pouvant directement être assignées doivent avoir un seul nom.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Le paramètre ne peut pas être une chaîne nulle.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">
         <source>The string is null or empty.</source>
         <target state="translated">La chaîne est null ou vide.</target>
@@ -1245,26 +1105,6 @@
       <trans-unit id="ToStringNull">
         <source>(null)</source>
         <target state="translated">(null)</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperEmptyToken">
-        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">Jeton vide rencontré à la position {0} lors de l'analyse de '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperExtraDataEncountered">
-        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">Données supplémentaires rencontrées à la position {0} lors de l'analyse de '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperMissingEndQuote">
-        <source>Missing end quote encountered while parsing '{0}'.</source>
-        <target state="translated">Absence de guillemet fermant rencontrée lors de l'analyse de '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperPrematureStringTermination">
-        <source>Premature string termination encountered while parsing '{0}'.</source>
-        <target state="translated">Fin de chaîne prématurée rencontrée lors de l'analyse de '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TooManyAttributes">
@@ -1307,11 +1147,6 @@
         <target state="translated">Le type '{0}' n'a pas de propriété de contenu. Spécifiez le nom de la propriété à définir ou ajoutez un ContentPropertyAttribute ou un TypeConverterAttribute sur le type.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TypeMetadataCannotChangeAfterUse">
-        <source>Cannot change property metadata after it has been associated with a property.</source>
-        <target state="translated">Impossible de modifier les métadonnées de propriété une fois celles-ci associées à une propriété.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TypeNameCannotHavePeriod">
         <source>Type name '{0}' cannot have a dot '.'.</source>
         <target state="translated">Le nom de type '{0}' ne peut pas contenir de point '.'.</target>
@@ -1347,11 +1182,6 @@
         <target state="translated">'{0}' inattendu dans la règle d'analyse '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UnexpectedParameterType">
-        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
-        <target state="translated">Paramètre de type inattendu '{0}'. Le type attendu est '{1}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UnexpectedToken">
         <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
         <target state="translated">Jeton inattendu '{0}' dans la règle : '{1}', dans '{2}'.</target>
@@ -1368,8 +1198,8 @@
         <note />
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
-        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] sur '{2}' n'est pas une propriété connue.</target>
+        <source>['{0}'('{1}')] on '{2}' is not a known property.</source>
+        <target state="translated">['{0}'('{1}')] sur '{2}' n'est pas une propriété connue.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">
@@ -1420,11 +1250,6 @@
       <trans-unit id="ValueMustBeFollowedByEndMember">
         <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
         <target state="translated">Flux de nœud XAML : les nœuds de valeur doit être suivis par EndMember.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Visual_ArgumentOutOfRange">
-        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
-        <target state="translated">L'index spécifié est en dehors des limites admises ou l'enfant à l'index a la valeur null. N'appelez pas cette méthode si VisualChildrenCount renvoie la valeur zéro, ce qui signifie que le Visual n'a pas d'enfant.</target>
         <note />
       </trans-unit>
       <trans-unit id="WhiteSpaceInCollection">

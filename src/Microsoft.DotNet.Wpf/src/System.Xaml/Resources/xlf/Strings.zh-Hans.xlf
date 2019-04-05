@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
         <source>Enumerating attached properties on object '{0}' threw an exception.</source>
@@ -27,41 +27,6 @@
         <target state="translated">无法确定字典类型“{0}”的项类型，因为它有多个 Add 方法或 IDictionary&lt;K,V&gt; 实现。若要使此字典类型可在 XAML 中使用，请添加一个公共的 Add(object,object) 方法，并实现 System.Collections.IDictionary 或单个 System.Collections.Generic.IDictionary&lt;K,V&gt;。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Animation_ChildMustBeKeyFrame">
-        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
-        <target state="translated">XAML 中的 KeyFrameAnimation 的子级必须为兼容类型的 KeyFrame。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
-        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
-        <target state="translated">“{0}”的 Duration 必须有一个 TimeSpan，或者其最后一个 KeyFrame 的 KeyTime 必须有一个 TimeSpan。此“{0}”的 Duration 为“{1}”，其最后一个 KeyFrame 的 KeyTime 为“{2}”，因此无法解析 KeyTime。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidBaseValue">
-        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
-        <target state="translated">“{0}”不是类“{2}”的有效“{1}”值。该值可能已由正在进行动画处理的属性的基值提供，或者已由应用于同一属性的另一个动画的输出值提供。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidResolvedKeyTimes">
-        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">索引 {1} 处的关键帧的已解析 KeyTime 不能大于索引 {4} 处的关键帧的已解析 KeyTime。KeyFrames[{1}] 具有指定的 KeyTime“{2}”，它解析为时间 {3}；KeyFrames[{4}] 具有指定的 KeyTime“{5}”，它解析为时间 {6}。某些 KeyTime 是相对于“{0}”的 Begin 时间进行解析的，而其他的则是相对于其 Duration 进行解析的，因此某些 KeyTime 集并不是对所有 Duration 都有效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_InvalidTimeKeyTime">
-        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
-        <target state="translated">对于此“{0}”的索引 {1} 处的关键帧，“{2}”KeyTime 值无效，因为它大于动画的 Duration 值“{3}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_Invalid_DefaultValue">
-        <source>'{0}' cannot use default {1} value of '{2}'.</source>
-        <target state="translated">“{0}”无法使用“{2}”的默认 {1} 值。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Animation_NoTextChildren">
-        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
-        <target state="translated">KeyFrameAnimation 对象不能有作为子级的文本对象。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ArgumentRequired">
         <source>One of the following arguments must be non-null: '{0}'.</source>
         <target state="translated">下列参数中必须有一个不是 null:“{0}”。</target>
@@ -70,11 +35,6 @@
       <trans-unit id="ArrayAddNotImplemented">
         <source>Array Add method is not implemented.</source>
         <target state="translated">未实现数组的 Add 方法。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="AssemblyTagMissing">
-        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
-        <target state="translated">分号 ';' 和等号 '=' 之间的部分不是“{0}”URI“{1}”。</target>
         <note />
       </trans-unit>
       <trans-unit id="AttachableEventNotImplemented">
@@ -162,16 +122,6 @@
         <target state="translated">在标记扩展中，所有构造函数参数值都应是原子。对于类型为“{0}”的对象，一个或多个参数值不是原子。</target>
         <note />
       </trans-unit>
-      <trans-unit id="CannotConvertStringToType">
-        <source>Cannot convert string value '{0}' to type '{1}'.</source>
-        <target state="translated">无法将字符串值“{0}”转换为类型“{1}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CannotConvertType">
-        <source>Cannot convert type '{0}' to '{1}'.</source>
-        <target state="translated">无法将类型“{0}”转换为“{1}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="CannotCreateBadEventDelegate">
         <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
         <target state="translated">无法创建“{0}”的实例，因为 XamlType 无效。</target>
@@ -187,11 +137,6 @@
         <target state="translated">在 URI“{1}”中找不到程序集“{0}”。</target>
         <note />
       </trans-unit>
-      <trans-unit id="CannotModifyReadOnlyContainer">
-        <source>Cannot modify a read-only container.</source>
-        <target state="translated">无法修改只读容器。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="CannotReassignSchemaContext">
         <source>Cannot reassign a previously set SchemaContext.</source>
         <target state="translated">无法重新分配以前设置的 SchemaContext。</target>
@@ -200,11 +145,6 @@
       <trans-unit id="CannotResolveTypeForFactoryMethod">
         <source>Cannot resolve type '{0}' for method '{1}'.</source>
         <target state="translated">无法解析方法“{1}”的类型“{0}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
-        <source>Cannot get part or part information from a write-only container.</source>
-        <target state="translated">无法从只写容器获取部件或部件信息。</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotSetBaseUri">
@@ -270,31 +210,6 @@
       <trans-unit id="CollectionCannotContainNulls">
         <source>Collection '{0}' cannot contain null values.</source>
         <target state="translated">集合“{0}”不能包含 null 值。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
-        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
-        <target state="translated">此集合中元素的数量必须小于或等于“{0}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_BadType">
-        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
-        <target state="translated">无法将类型“{1}”的实例添加到类型“{0}”的集合。仅允许类型“{2}”的项。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
-        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
-        <target state="translated">无法将多维数组传递到集合上的 CopyTo 方法。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
-        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
-        <target state="translated">“{0}”参数值等于或大于“{1}”参数值的长度。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
-        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
-        <target state="translated">此集合中元素的数量大于从“{0}”到目标“{1}”末尾的可用空间。</target>
         <note />
       </trans-unit>
       <trans-unit id="ConstructImplicitType">
@@ -397,16 +312,6 @@
         <target state="translated">OldNamespace“{2}”的程序集“{0}”和“{1}”中的 XmlnsCompatibleWithAttributes 出现冲突。更改相应特性使其具有相同的 NewNamespace，或者在 XamlSchemaContext 构造函数中传递一组不会发生冲突的引用程序集。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Enum_Invalid">
-        <source>'{0}' enumeration value is not valid.</source>
-        <target state="translated">“{0}”枚举值无效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Enumerator_VerifyContext">
-        <source>No current object to return.</source>
-        <target state="translated">没有当前对象要返回。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
         <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
         <target state="translated">不能为“{0}”事件分配一个不可赋给“{1}”的值。</target>
@@ -452,16 +357,6 @@
         <target state="translated">符合指定绑定约束的工厂方法“{0}”返回了 null。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileFormatException">
-        <source>Input file or data stream does not conform to the expected file format specification.</source>
-        <target state="translated">输入文件或数据流不符合要求的文件格式规格。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileFormatExceptionWithFileName">
-        <source>'{0}' file does not conform to the expected file format specification.</source>
-        <target state="translated">“{0}”文件不符合要求的文件格式规格。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFoundExceptionMessage">
         <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
         <target state="translated">未能加载文件或程序集“{0}”或其依赖项之一。系统无法找到指定的文件。</target>
@@ -470,11 +365,6 @@
       <trans-unit id="ForwardRefDirectives">
         <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
         <target state="translated">尝试引用尚未定义的命名对象“{0}”。对于指令(Key 除外)，不支持前向引用或对包含前向引用的对象的引用。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Freezable_CantBeFrozen">
-        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
-        <target state="translated">指定的类型“{0}”值必须将 IsFrozen 设置为 false，以进行修改。</target>
         <note />
       </trans-unit>
       <trans-unit id="FrugalList_CannotPromoteBeyondArray">
@@ -562,16 +452,6 @@
         <target state="translated">无效的表达式:“{0}”</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 值“{0}”对于此 Permission 无效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">权限类型无效。应为“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">类型参数“{0}”不是有效的类型。</target>
@@ -589,7 +469,7 @@
       </trans-unit>
       <trans-unit id="InvalidXamlMemberName">
         <source>'{0}' is not a valid XAML member name.</source>
-        <target state="translated">“{0}”不是有效的 XAML 成员名。</target>
+        <target state="translated">“{0}”不是有效的 XAML 成员名称。</target>
         <note />
       </trans-unit>
       <trans-unit id="LateConstructionDirective">
@@ -737,11 +617,6 @@
         <target state="translated">ClrType“Member”查找中缺少事例。</target>
         <note />
       </trans-unit>
-      <trans-unit id="MissingTagInNamespace">
-        <source>Missing '{0}' in URI '{1}'.</source>
-        <target state="translated">URI“{1}”中缺少“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MissingTypeConverter">
         <source>Creating from text without a TypeConverter is not allowed.</source>
         <target state="translated">不允许从不含 TypeConverter 的文本中创建。</target>
@@ -784,7 +659,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name 不能为空字符串。</target>
+        <target state="translated">名称不能为空字符串。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -923,8 +798,8 @@
         <note />
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
-        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">“{2}”上的 ['{0}'('{1}')] 不是在此类型上声明的属性。</target>
+        <source>['{0}'('{1}')] on '{2}' is not a property declared on this type.</source>
+        <target state="translated">“{2}”上的 ['{0}'('{1}')] 不是在此类型上声明的属性。</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -988,8 +863,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">无法读取类型“{0}”的对象，因为没有可以访问的构造函数。若要允许在 XAML 中使用此类型，请添加默认构造函数，使用 ConstructorArgumentAttribute 或提供 InstanceDescriptor。</target>
+        <source>Unable to read objects of the type ‘{0}’ because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">无法读取类型“{0}”的对象，因为没有可访问的构造函数。若要允许在 XAML 中使用此类型，请添加默认构造函数，使用 ConstructorArgumentAttribute 或提供 InstanceDescriptor。</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1050,11 +925,6 @@
       <trans-unit id="OpenPropertyInCurrentFrame_SM">
         <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
         <target state="translated">XAML 节点流: StartMember“{2}”前面缺少“{0}.{1}”的 EndMember。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">参数必须大于或等于零。</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
@@ -1147,11 +1017,6 @@
         <target state="translated">SchemaContext 不能为 null。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">无法在部分信任中将 SandboxExternalContent 设置为 true。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlMissingAttribute">
         <source>Invalid security XML. Missing expected attribute '{0}'.</source>
         <target state="translated">安全 XML 无效。缺少要求的特性“{0}”。</target>
@@ -1222,11 +1087,6 @@
         <target state="translated">可直接指定的链接地址信息只能有一个名称。</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">参数不能为零长度的字符串。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">
         <source>The string is null or empty.</source>
         <target state="translated">该字符串为 null 或为空。</target>
@@ -1245,26 +1105,6 @@
       <trans-unit id="ToStringNull">
         <source>(null)</source>
         <target state="translated">(null)</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperEmptyToken">
-        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">分析“{1}”时在位置 {0} 处遇到空标记。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperExtraDataEncountered">
-        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">分析“{1}”时在位置 {0} 处遇到额外数据。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperMissingEndQuote">
-        <source>Missing end quote encountered while parsing '{0}'.</source>
-        <target state="translated">分析“{0}”时遇到缺少右引号的情况。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TokenizerHelperPrematureStringTermination">
-        <source>Premature string termination encountered while parsing '{0}'.</source>
-        <target state="translated">分析“{0}”时遇到字符串过早终止的情况。</target>
         <note />
       </trans-unit>
       <trans-unit id="TooManyAttributes">
@@ -1307,11 +1147,6 @@
         <target state="translated">类型“{0}”不具有内容属性。指定要设置的属性的名称，或者在该类型上添加 ContentPropertyAttribute 或 TypeConverterAttribute。</target>
         <note />
       </trans-unit>
-      <trans-unit id="TypeMetadataCannotChangeAfterUse">
-        <source>Cannot change property metadata after it has been associated with a property.</source>
-        <target state="translated">无法在属性元数据与属性关联以后对其进行更改。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TypeNameCannotHavePeriod">
         <source>Type name '{0}' cannot have a dot '.'.</source>
         <target state="translated">类型名称“{0}”不能包含点“.”。</target>
@@ -1347,11 +1182,6 @@
         <target state="translated">分析规则“{1}”中的意外“{0}”。</target>
         <note />
       </trans-unit>
-      <trans-unit id="UnexpectedParameterType">
-        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
-        <target state="translated">参数是意外的类型“{0}”。预期类型为“{1}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UnexpectedToken">
         <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
         <target state="translated">规则中的意外标记“{0}”:“{2}”中的“{1}”。</target>
@@ -1368,8 +1198,8 @@
         <note />
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
-        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">“{2}”上的 ['{0}'('{1}')] 是未知属性。</target>
+        <source>['{0}'('{1}')] on '{2}' is not a known property.</source>
+        <target state="translated">“{2}”上的 ['{0}'('{1}')] 是未知属性。</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">
@@ -1420,11 +1250,6 @@
       <trans-unit id="ValueMustBeFollowedByEndMember">
         <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
         <target state="translated">XAML 节点流: 值节点必须后跟 EndMember。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Visual_ArgumentOutOfRange">
-        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
-        <target state="translated">指定的索引超出范围，或索引处的子级为 null。如果 VisualChildrenCount 返回零，表示 Visual 没有子级，请不要调用此方法。</target>
         <note />
       </trans-unit>
       <trans-unit id="WhiteSpaceInCollection">

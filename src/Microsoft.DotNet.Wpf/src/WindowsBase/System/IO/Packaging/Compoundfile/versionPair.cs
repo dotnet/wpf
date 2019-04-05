@@ -50,13 +50,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (major < 0)
             {
-                throw new ArgumentOutOfRangeException("major",
+                throw new ArgumentOutOfRangeException(nameof(major),
                             SR.Get(SRID.VersionNumberComponentNegative));
             }
 
             if (minor < 0)
             {
-                throw new ArgumentOutOfRangeException("minor",
+                throw new ArgumentOutOfRangeException(nameof(minor),
                             SR.Get(SRID.VersionNumberComponentNegative));
             }
 

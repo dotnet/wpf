@@ -208,12 +208,12 @@ namespace System.Windows.Markup
             {
                 throw new ArgumentNullException("assemblyPath");
             }
-            if (assemblyPath == string.Empty)
+            if (string.IsNullOrEmpty(assemblyPath))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
                 ThrowException(SRID.ParserBadAssemblyPath);
             }
-            if (assemblyName == string.Empty)
+            if (string.IsNullOrEmpty(assemblyName))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
                 ThrowException(SRID.ParserBadAssemblyName);
@@ -698,7 +698,7 @@ namespace System.Windows.Markup
             _lineNumber = lineNumber;
             _linePosition = linePosition;
 
-            if (value == string.Empty)
+            if (string.IsNullOrEmpty(value))
             {
                 ThrowException(SRID.ParserBadName, value);
             }
@@ -731,7 +731,7 @@ namespace System.Windows.Markup
             Type          propType,
             string        attribValue)
         {
-            if (propType.IsEnum && attribValue != string.Empty)
+            if (propType.IsEnum && !string.IsNullOrEmpty(attribValue))
             {
                 // Handle enum strings of the form "one, two, three".  Check that
                 // each of the values does NOT start with a digit.  This doesn't

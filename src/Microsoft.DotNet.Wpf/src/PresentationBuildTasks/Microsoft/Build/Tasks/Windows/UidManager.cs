@@ -583,7 +583,7 @@ namespace Microsoft.Build.Tasks.Windows
                                 // there is no x:Uid found on this element, we need to resolve the
                                 // namespace prefix in order to add the Uid
                                 string prefix = nsmgr.LookupPrefix(XamlReaderHelper.DefinitionNamespaceURI);
-                                if (prefix != string.Empty)
+                                if (!string.IsNullOrEmpty(prefix))
                                     currentUid.NamespacePrefix = prefix;
                             }
 

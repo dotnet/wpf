@@ -437,7 +437,7 @@ namespace MS.Internal
                         if (xmlReader.LocalName == CLASS)
                         {
                             _class = xmlReader.Value.Trim();
-                            if (_class == string.Empty)
+                            if (string.IsNullOrEmpty(_class))
                             {
                                 // flag an error for processing later in WriteDefAttribute
                                 _class = MarkupCompiler.DOT;
@@ -472,7 +472,7 @@ namespace MS.Internal
                         else if (xmlReader.LocalName == SUBCLASS)
                         {
                             _subClass = xmlReader.Value.Trim();
-                            if (_subClass == string.Empty)
+                            if (string.IsNullOrEmpty(_subClass))
                             {
                                 // flag an error for processing later in WriteDefAttribute
                                 _subClass = MarkupCompiler.DOT;
@@ -487,7 +487,7 @@ namespace MS.Internal
                             if (!_pass2)
                             {
                                 _classModifier = xmlReader.Value.Trim();
-                                if (_classModifier == string.Empty)
+                                if (string.IsNullOrEmpty(_classModifier))
                                 {
                                     // flag an error for processing later in WriteDefAttribute
                                     _classModifier = MarkupCompiler.DOT;

@@ -981,7 +981,7 @@ namespace System.Windows.Markup
                                                  xamlProperty.PropValidType,
                                                  xamlProperty.AttributeUsage);
 
-            if (xamlProperty.AssemblyName != string.Empty && xamlProperty.TypeFullName != string.Empty)
+            if (!string.IsNullOrEmpty(xamlProperty.AssemblyName) && !string.IsNullOrEmpty(xamlProperty.TypeFullName))
             {
                 short converterOrSerializerTypeId;
                 Type  converterOrSerializerType;

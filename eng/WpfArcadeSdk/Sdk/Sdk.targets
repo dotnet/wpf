@@ -13,6 +13,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)WpfProjectReference.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
   

@@ -523,7 +523,6 @@ namespace MS.Internal.Markup
             string pathString,
             int startIndex)
         {
-            // [BreakingChange] Dev10 Bug #453199
             // We really should throw an ArgumentNullException here for context and pathString.
             
             // From original code

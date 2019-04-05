@@ -10,9 +10,6 @@
 \***************************************************************************/
 
 // set this flag to turn on whitespace collapse rules.
-// todo: need a whitespace DRT
-// todo: need to know if parent Accepts textNodes
-// todo: need to know if parent wants a TextFlow
 // #define UseValidatingReader
 
 using System;
@@ -146,9 +143,8 @@ namespace System.Windows.Markup
             // setup the _textFlow stack
             _textFlowStack = new Stack();
 
-            // push a rootLevel stack
-            // !! Todo. Need a way for caller of the parser to set how
-            // the root text should be handled. For now always use InlineBlock.
+            // push a rootLevel stack 
+            // For now always use InlineBlock.
             TextFlowStackData textFlowStackData = new TextFlowStackData();
             textFlowStackData.StripLeadingSpaces = true;
 
@@ -1336,8 +1332,6 @@ namespace System.Windows.Markup
                 }
             }
 
-            // !!!todo if not complex, collapse the text.
-
             return propertyComplex;
         }
 
@@ -1715,7 +1709,7 @@ namespace System.Windows.Markup
 
             // Known definition namespace attributes such as Key and UID should be checked for
             // first so that we avoid reflecting for properties that we know will not be found.
-            // Windows perf bug 1049597 was caused by too much reflection data being cached
+            // Performance problems were caused by too much reflection data being cached
             // if we don't do this check and there is a UID on every element.
             if (attributeNamespaceUri.Equals(DefinitionNamespaceURI))
             {
@@ -1736,8 +1730,7 @@ namespace System.Windows.Markup
             }
 
             // We have a special check for the Metro xaml namespace, which should
-            // only allow Key attributes.  Anything else is an error.  See
-            // Windows bug # 1100953
+            // only allow Key attributes.  Anything else is an error.  
             if (attributeNamespaceUri.Equals(DefinitionMetroNamespaceURI))
             {
                 if (attributeLocalName == DefinitionName)
@@ -1792,7 +1785,7 @@ namespace System.Windows.Markup
             // Technically, it should not store these values, but rather retrieve them
             // from the XamlReaderHelper.  The TypeMapper was not updating these
             // values until XamlParser called ProcessXamlNode, and even then not in
-            // all cases (Bug #1242940) (e.g. Property okay, PropertyComplex not).
+            // all cases (e.g. Property okay, PropertyComplex not).
             XamlTypeMapper.LineNumber = LineNumber;
             XamlTypeMapper.LinePosition = LinePosition;
 
@@ -1901,10 +1894,6 @@ namespace System.Windows.Markup
                 return contentProperty;
             }
 
-            //TODO: knowntypes includes all cpa attributes from our assemblies.
-            // - because of that, we won't need to check for cpa on those types.
-            //  - right now we are checking for cpa via reflection on any types that are in our assemblies but not in known types.
-            // - how to improve?
 #if !PBTCOMPILER
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
             if (attributes != null)
@@ -3544,7 +3533,7 @@ namespace System.Windows.Markup
                 return !((DependencyProperty)propertyMember).ReadOnly;
             }
 #endif
-            return true; // TODO:EV: Why do we assume that the property is writable by default? false would be more appropriate...
+            return true; 
         }
 
         #endregion // Attributes
@@ -3676,7 +3665,7 @@ namespace System.Windows.Markup
                                 {
                                     // This prevents conditions where ResourceDictionary is followed by a locally defined type,
                                     // the ParentContext needs to know that FirstChildRead is true, else there is a mismatch in
-                                    // StartElement & EndElement nodes. See Bug 131561
+                                    // StartElement & EndElement nodes. 
                                     if (ParentContext != null && !namespaceURI.Equals(DefinitionNamespaceURI))
                                     {
                                         ParentContext.FirstChildRead = true;

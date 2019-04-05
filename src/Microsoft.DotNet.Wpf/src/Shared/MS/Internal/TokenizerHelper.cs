@@ -288,7 +288,6 @@ namespace MS.Internal
 
                 // loop until hit a character that isn't
                 // an argument separator or whitespace.
-                // !!!Todo: if more than one argSet throw an exception
                 int argSepCount = 0;
                 while (_charIndex < _strLen)
                 {

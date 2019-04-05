@@ -267,9 +267,9 @@ namespace MS.Internal
 
 
         // <summary>
-        // Event hanlder for the Compiler Errors
+        // Event handler for the Compiler Errors
         // </summary>
-        // <param name="sender"></param>sd brancx
+        // <param name="sender"></param>
         // <param name="e"></param>
         private void OnCompilerError(Object sender, MarkupErrorEventArgs e)
         {

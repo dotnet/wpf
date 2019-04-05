@@ -10,7 +10,7 @@
 
 // The SecurityHelper class differs between assemblies and could not actually be
 //  shared, so it is duplicated across namespaces to prevent name collision.
-// [ChangoV, June'09] This duplication seems hardly necessary now. We should continue
+// This duplication seems hardly necessary now. We should continue
 // trying to reduce it by pushing things from Framework to Core (whenever it makes sense).
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
@@ -360,7 +360,6 @@ internal static class SecurityHelper
         ///    TreatAsSafe: The information is not exposed
         /// </SecurityNote>
         [SecuritySafeCritical]
-        //TODO: This method's name is misleading as it does no call stack check. See the new AppDomainHasPermission().
         internal static bool CallerHasPermissionWithAppDomainOptimization(params IPermission[] permissionsToCheck)
         {
 #if NETFX
@@ -885,9 +884,6 @@ internal static class SecurityHelper
         }
 
         /// <SecurityNote>
-        /// SecurityCritical is needed due to Dev10 bug 534574. This is a TEMPORARY WORKAROUND for v4.
-        /// TAS: Callers are transparent, so we need this too to keep them working.
-        ///
         /// Note that the XAML reader relies on being able to call RunClassConstructor() on non-public types.
         /// This is considered a security flaw, and a future version of the CLR will likely plug it.
         /// </SecurityNote>

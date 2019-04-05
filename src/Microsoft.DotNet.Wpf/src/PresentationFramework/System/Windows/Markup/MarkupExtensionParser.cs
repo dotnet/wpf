@@ -1355,7 +1355,6 @@ namespace System.Windows.Markup
 
                 for (int k = listIndex; k < list.Count; k+=4)
                 {
-                    // TODO - need better syntax checking here...
                     if (k > (list.Count-3) ||
                         (list[k+1] is String) ||
                         ((Char)list[k+1]) != '=')
@@ -1419,7 +1418,7 @@ namespace System.Windows.Markup
                     {
                         // For unknown extensions, no more work should be done.  
                         // In pass1, we don't yet have the context to make sense of the nested properties, 
-                        // so recursing into them would lead to spurious parse errors (Bug 1160665).  
+                        // so recursing into them would lead to spurious parse errors.
                         // In pass2 an unknown extension would have errored out before getting here.
                         return;
                     }
@@ -1440,7 +1439,7 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            // Bug: Need to check validity of property by calling GetAttributeContext here?
+                            // NOTE: Consider checking validity of property by calling GetAttributeContext here.
                             CompileAttribute(xamlNodes, nestedAttrData);
                         }
                     }

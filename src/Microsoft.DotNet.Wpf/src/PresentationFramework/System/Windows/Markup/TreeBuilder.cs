@@ -125,7 +125,6 @@ namespace System.Windows.Markup
                 // for debugging, can set the Maximum Async records to 
                 // read via markup
                 // x:AsyncRecords="3" would loop three times
-                // Todo: This should either be removed at some point
                 int maxRecords = MaxAsyncRecords;
 
                 // while there is moreData and not at the end of document.
@@ -325,7 +324,6 @@ namespace System.Windows.Markup
         
         #region Data
 
-        // TODO: Review if want user settable.
         // Timeout after .2 seconds. 
         const int AsyncLoopTimeout = (int)200;
 

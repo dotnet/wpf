@@ -47,7 +47,7 @@ namespace Microsoft.Build.Tasks.Windows
     /// </summary>
     public sealed class MarkupCompilePass1 : Task
     {
-        //  Security Concerns: hamidm 04/13/05
+        //  Security Concerns:
         //
         //  1) OutputPath property exposes the current dir and is publicly available.
         //  2) This class generates code files and copies them on the disk.
@@ -1267,8 +1267,6 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (appDomain != null)
                 {
-                    // TODO: TaskLoggingHelper does not contain a definition for MarkAsInactive
-                    // Log.MarkAsInactive();       // see Dev11 354473
                     System.Threading.Tasks.Task.Run(() => 
                     {
                         // Better GC behavior in 4.6 and later when wrapped in Task.Run().
@@ -1355,7 +1353,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             //
-            // Detect whether or not to ask Pass2 to do further handding for the InternalTypeHelper class.
+            // Detect whether or not to ask Pass2 to do further handling for the InternalTypeHelper class.
             //
             // Only when all of below conditions are true, it requires Pass2 to further handling this wrapper class:
             //
@@ -1564,7 +1562,7 @@ namespace Microsoft.Build.Tasks.Windows
 
 
         //
-        // Generate a baml TaskItem for the given xmal file, and transfer the appropriate
+        // Generate a baml TaskItem for the given xaml file, and transfer the appropriate
         // source task item's custom attributes to the generated baml item if necessary.
         // The xaml file could be an application definition file, a Markup Page.
         // The bamlFile must exist before this method is called.
@@ -1653,8 +1651,8 @@ namespace Microsoft.Build.Tasks.Windows
         // General method to handle an input xaml file item for Localization.
         //
         // If the XamlFile is localizable, generate a TaskItem for LocFile.
-        // If the XamlFile is not localizable, and if the .loc file is generated, delelet it
-        // so that it won't affec the incremental build next time.
+        // If the XamlFile is not localizable, and if the .loc file is generated, delete it
+        // so that it won't affect the incremental build next time.
         //
         private TaskItem ProcessLocFileForXamlItem(ITaskItem xamlItem)
         {

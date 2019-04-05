@@ -262,7 +262,6 @@ namespace MS.Internal.Tasks
                 _gacPaths = gacPaths;
             }
 #else
-            // TODO: PresentationBuildTasks Porting : Review and refactor. No GAC for .NET core.
             _gacPaths = new List<string>();
 #endif
             return _gacPaths;
@@ -370,7 +369,6 @@ namespace MS.Internal.Tasks
         //
         internal static CompilerWrapper CreateCompilerWrapper(bool fInSeparateDomain, ref AppDomain  appDomain)
         {
-            // TODO: PresentationBuildTasks Porting. AppDomains don't exist on .NET core. Update.  
             return new CompilerWrapper();
         }
 

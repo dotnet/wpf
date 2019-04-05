@@ -146,7 +146,6 @@ namespace System.Windows.Markup
                         &&
                         probeType.Assembly.FullName == assemblyFullName )
 #else
-                    // TODO: Relax assemby name restriction until runtime types are replaced with EcmaTypeDefinitions
                     if (probeType.Namespace == clrNamespace)
 #endif  
                     {

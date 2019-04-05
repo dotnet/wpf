@@ -377,8 +377,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Load assemblies that are in the referenced assembly list passed to the XamlTypeMapper
         /// by the compiler.  Don't load known assemblies that should already be present,
-        /// since the references may not be the correct versions (see windows bugs 927372
-        /// and 929395)
+        /// since the references may not be the correct versions.
         /// </summary>
         private bool LoadReferenceAssemblies()
         {
@@ -509,7 +508,6 @@ namespace System.Windows.Markup
         /// An Object for the attribute value is returned.
         /// Null is returned if no TypeConverter for the Property type.
         ///</returns>
-        //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         internal Object ParseProperty(
             object                 targetObject,
             Type                   propType,
@@ -1318,7 +1316,6 @@ namespace System.Windows.Markup
                                 }
                             }
 
-                            // TODO: why do we need to check for non-attached when there is a globalclassname?
                             if (memberInfo == null)
                             {
                                 // Not an attached event so try Clr event
@@ -1400,7 +1397,6 @@ namespace System.Windows.Markup
                             }
 #endif
 
-                            // TODO: why do we need to check for non-attached when there is a globalclassname?
                             if (memberInfo == null)
                             {
                                 // Not an attached property, so try clr property
@@ -1408,8 +1404,7 @@ namespace System.Windows.Markup
 
                                 // If we've found a property info, then the owner had better
                                 // be the same type as or a subclass of the objectType, or
-                                // they are in different inheritance hierarchies.  This
-                                // fixes windows bug 920135.
+                                // they are in different inheritance hierarchies.  
                                 if (memberInfo != null)
                                 {
                                     if (owner != null &&
@@ -2055,7 +2050,6 @@ namespace System.Windows.Markup
         out Type   propertyType,
         out bool   propertyCanWrite)
         {
-// TODO: Check if the code needs to go to PBT.dll
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
             if (dp != null)
@@ -2209,7 +2203,7 @@ namespace System.Windows.Markup
 
             if (namespaces == null)
             {
-                // BUGBUG  - If the namespace prefix is empty, we may not have
+                //           If the namespace prefix is empty, we may not have
                 //           loaded the default namespace.  Get this from
                 //           the token reader.  NOTE:  This is a temporary stopgap
                 //           until we figure out exact requirements for namespace
@@ -3567,10 +3561,6 @@ namespace System.Windows.Markup
 
             List<ClrNamespaceAssemblyPair> mappingArray = null;
 
-            // TODO - sramani When this is removed, please make that the compiler gets this info via
-            //        the WritePIMapping callback. Righ tnow the compiler call sthis fn directly and enumerates
-            //        the CLR namespaces
-
             if (_xmlnsCache == null)
             {
 #if PBTCOMPILER
@@ -3918,7 +3908,6 @@ namespace System.Windows.Markup
                 // fragile, but we'll fix it in M8.2. - It's end of M11 already though...
                 if (KnownTypes.Types[(int)KnownElements.LineBreak].IsAssignableFrom(type))
                 {
-                    //TODO: fix this to actually harvest the attribute during compile time instead of having hard coded behavior
                     return true;
                 }
 #endif
@@ -4344,8 +4333,6 @@ namespace System.Windows.Markup
 
 #endregion Internal
     }
-
-    // Todo: Move to a separate file.
 
     // Type of object and type of Serializer for that type.  If this type
     // also contains an [XmlLang] property, this caches the property info also.

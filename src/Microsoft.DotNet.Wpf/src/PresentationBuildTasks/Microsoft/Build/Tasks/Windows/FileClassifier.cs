@@ -48,7 +48,7 @@ namespace Microsoft.Build.Tasks.Windows
         #region Constructors
 
         /// <summary>
-        /// Constrcutor
+        /// Constructor 
         /// </summary>
         public FileClassifier()
             : base(SR.SharedResourceManager)

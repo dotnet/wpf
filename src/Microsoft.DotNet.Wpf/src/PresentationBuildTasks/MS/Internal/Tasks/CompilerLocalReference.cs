@@ -321,7 +321,7 @@ namespace MS.Internal.Tasks
         // check for this file to see if it is really required, if this file is required for the assembly,
         // Pass2 then adds it to the appropriate output Item, otherwise, Pass2 just deletes this file.
         //
-        // If the path is empty, this means Pass1 has alreay known how to handle the file correctly, 
+        // If the path is empty, this means Pass1 has already known how to handle the file correctly, 
         // no further check is required in Pass2.
         //
         internal string InternalTypeHelperFile

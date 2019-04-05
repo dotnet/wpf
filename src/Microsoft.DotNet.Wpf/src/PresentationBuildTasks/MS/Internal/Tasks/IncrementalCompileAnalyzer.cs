@@ -204,7 +204,7 @@ namespace MS.Internal.Tasks
                     }
                 }
 
-                // Below code detects which invidual xaml files are modified since last build.
+                // Below code detects which individual xaml files are modified since last build.
                 for (int i = 0; i < _mcPass1.PageMarkup.Length; i++)
                 {
                     ITaskItem taskItem = _mcPass1.PageMarkup[i];

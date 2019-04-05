@@ -140,7 +140,6 @@ namespace System.Windows.Markup
                                                parserContext.LinePosition,
                                                ex);
                             }
-                            // TODO: choose DataTemplateKey or TableTemplateKey, depending on ownerTypeId
                             key = new DataTemplateKey(dataType);
                         }
                     }

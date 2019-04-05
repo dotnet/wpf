@@ -697,8 +697,6 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (appDomain != null)
                 {
-                    // TODO: TaskLoggingHelper does not contain a definition for MarkAsInactive
-                    // Log.MarkAsInactive();       // see Dev11 354473
                     AppDomain.Unload(appDomain);
                     compilerWrapper = null;
                 }
@@ -759,7 +757,7 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         //
-        // Generate a baml TaskItem for the given xmal file, and transfer the appropriate
+        // Generate a baml TaskItem for the given xaml file, and transfer the appropriate
         // source task item's custom attributes to the generated baml item if necessary.
         // The xaml file could be an application definition file or a Markup Page
         //

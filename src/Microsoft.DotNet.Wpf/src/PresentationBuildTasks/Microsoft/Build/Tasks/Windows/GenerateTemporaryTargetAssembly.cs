@@ -49,7 +49,7 @@ namespace Microsoft.Build.Tasks.Windows
     /// 
     ///       A:  Add the generated code files (.g.cs) to Compile Item list.
     ///       B:  Replace Reference Item list with ReferenctPath item list.
-    ///           So that it doesn't need to rerun time-consuming tatk 
+    ///           So that it doesn't need to rerun time-consuming task 
     ///           ResolveAssemblyReference (RAR) again.
     /// 
     /// </summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Build.Tasks.Windows
         #region Constructors
 
         /// <summary>
-        /// Constrcutor
+        /// Constructor 
         /// </summary>
         public GenerateTemporaryTargetAssembly()
             : base(SR.SharedResourceManager)

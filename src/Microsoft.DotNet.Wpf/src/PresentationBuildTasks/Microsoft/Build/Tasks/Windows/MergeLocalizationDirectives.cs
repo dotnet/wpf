@@ -75,7 +75,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                         streamWriter.WriteLine("<" + LocComments.LocDocumentRoot + ">");
 
-                        // keey things simple and fast. Just keep appending the
+                        // keep things simple and fast. Just keep appending the
                         // xml fragments that are already outputed.
                         foreach (ITaskItem item in GeneratedLocalizationFiles)
                         {

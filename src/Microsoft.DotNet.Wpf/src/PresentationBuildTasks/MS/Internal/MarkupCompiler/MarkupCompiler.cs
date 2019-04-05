@@ -1906,12 +1906,11 @@ namespace MS.Internal
                 cDelExp = coce;
             }
 
-//            The bug that this chunk of code works around (VS#542946) was fixed but
-//            exposes a different bug (VS#572060)   To work around the second bug, we
-//            remove the workaround for the first one.  (RogerCh 20020918)
-
-//            Note that #542946 was not fixed for VB, so the code block above remains.
-
+            		
+//            The bug that this chunk of code works around was fixed but
+//            exposes a different bug. To work around the second bug, we
+//            remove the workaround for the first one.  
+//            Note that the initial bug was not fixed for VB, so the code block above remains.
 //            else if (Language == CompilerLanguage.JScript)
 //            {
 //                CodeCastExpression cce = new CodeCastExpression(mei.ei.EventHandlerType, cdce);
@@ -2096,7 +2095,6 @@ namespace MS.Internal
             return false;
         }
 
-        // TODO: remove after Extension is made a required project attribute.
         private void EnsureLanguageSourceExtension()
         {
             // If empty string is passed, use the default language source extension.

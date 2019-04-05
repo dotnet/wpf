@@ -1147,8 +1147,6 @@ namespace System.Windows.Markup
                     // if we haven't initialized the the parseMode yet set it
                     if (XamlParseMode == XamlParseMode.Uninitialized)
                     {
-                        // todo: for now hardcode the string. when finalized
-                        // should add a TypeConverter.
                         XamlParseMode = documentParseMode;
 
                     }
@@ -1395,7 +1393,7 @@ namespace System.Windows.Markup
 
         XamlReaderHelper             _xamlTokenReader;
 
-        ParserContext                _parserContext; // todo, need this for the XamlTypeMapper/resolver.
+        ParserContext                _parserContext; 
 
         XamlParseMode                _xamlParseMode;
         BamlRecordWriter             _bamlWriter;
@@ -1416,7 +1414,6 @@ namespace System.Windows.Markup
 #endif
 
         // helper method called to throw an exception.
-        // todo: update exception with lineNumbers from Node.
         internal static void ThrowException(string id, int lineNumber, int linePosition)
         {
             string message = SR.Get(id);

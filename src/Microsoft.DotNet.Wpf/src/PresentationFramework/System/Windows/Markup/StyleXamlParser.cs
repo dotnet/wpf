@@ -177,7 +177,7 @@ namespace System.Windows.Markup
 #endif
                 // It can be a fairly common error for <Style.Setters>,
                 // or <Style.Triggers> to be specified
-                // at the wrong nesting level (See Windows bug 966137).  Detect
+                // at the wrong nesting level.  Detect
                 // these cases to give more meaningful error messages.
                 if (xamlUnknownTagStartNode.Value == XamlStyleSerializer.VisualTriggersFullPropertyName ||
                     xamlUnknownTagStartNode.Value == XamlStyleSerializer.SettersFullPropertyName)
@@ -1337,7 +1337,7 @@ namespace System.Windows.Markup
                     else if (xamlPropertyNode.PropName == XamlStyleSerializer.SetterPropertyAttributeName)
                     {
                         // Property names should be trimmed since whitespace is not significant
-                        // and can affect name resolution (See Windows bug 1035621)
+                        // and can affect name resolution 
                         xamlPropertyNode.SetValue(xamlPropertyNode.Value.Trim());
                         _setterOrTriggerPropertyInfo = GetDependencyPropertyInfo(xamlPropertyNode);
                     }

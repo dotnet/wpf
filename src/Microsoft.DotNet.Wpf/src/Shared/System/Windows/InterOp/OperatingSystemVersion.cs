@@ -46,5 +46,6 @@ namespace Microsoft.Internal.Interop
         Windows10RS1,
         Windows10RS2,
         Windows10RS3,
+        Windows10RS5,
     }
 }

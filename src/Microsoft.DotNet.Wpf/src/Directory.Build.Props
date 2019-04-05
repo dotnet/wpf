@@ -6,7 +6,6 @@
   <PropertyGroup>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
-    <WpfSharedDir>$(MSBuildThisFileDirectory)Shared\</WpfSharedDir>
     <WpfCommonDir>$(MSBuildThisFileDirectory)Common\</WpfCommonDir>
     <WpfGraphicsPath>$(MSBuildThisFileDirectory)WpfGfx\</WpfGraphicsPath>
     <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>

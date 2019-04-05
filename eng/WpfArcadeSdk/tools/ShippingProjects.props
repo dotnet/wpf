@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
     <ExternalShippingProjects>
-      System.Xaml
+      System.Xaml;
+      PresentationBuildTasks
     </ExternalShippingProjects>
 
     <InternalShippingProjects>
-      PresentationBuildTasks;
       PresentationCore;
       DirectWriteForwarder;
       PresentationCore-CommonResources;

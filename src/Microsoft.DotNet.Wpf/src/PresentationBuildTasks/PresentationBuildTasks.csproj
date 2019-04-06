@@ -84,6 +84,7 @@
 
   <ItemGroup>
     <Compile Include="SR.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>

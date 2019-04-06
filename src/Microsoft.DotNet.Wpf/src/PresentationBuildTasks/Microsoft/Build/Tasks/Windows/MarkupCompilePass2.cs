@@ -373,7 +373,7 @@ namespace Microsoft.Build.Tasks.Windows
             get
             {
                if (_generatedBaml == null)
-                   _generatedBaml = new TaskItem[0];
+                   _generatedBaml = Array.Empty<TaskItem>();
                return _generatedBaml;
             }
 
@@ -570,7 +570,7 @@ namespace Microsoft.Build.Tasks.Windows
             Log.LogMessageFromResources(MessageImportance.Low, SRID.OutputType, OutputType);
 
             // Initialize the output parameters
-            localXamlPageFileList = new FileUnit[0];
+            localXamlPageFileList = Array.Empty<FileUnit>();
             localApplicationFile = FileUnit.Empty;
             referenceList = new ArrayList();
 

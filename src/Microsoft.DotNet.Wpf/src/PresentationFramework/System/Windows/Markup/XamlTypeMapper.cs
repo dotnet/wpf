@@ -4599,7 +4599,7 @@ namespace System.Windows.Markup
         // array of namespaceMaps the map an xmlns namespaceURI
         // to the assembly and urtNamespace to search in when resolving the xml
 
-        private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = { };
+        private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = Array.Empty<NamespaceMapEntry>();
 
 #endregion Data
     }

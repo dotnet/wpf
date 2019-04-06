@@ -1,10 +1,6 @@
-<Project>
-  <!-- Set the public key token after everything else has been imported -->
-  <PropertyGroup>
-    <!-- 
-      StrongNameKeyId is initialized by the Arcade SDK to MicrosoftShared. It is rarely ever set to ''
-    -->
-    <StrongNameKeyId Condition="('$(StrongNameKeyId)'=='' Or '$(StrongNameKeyId)'=='MicrosoftShared') And '$(IsShipping)'=='true'">ECMA</StrongNameKeyId>
-    <StrongNameKeyId Condition="('$(StrongNameKeyId)'=='' Or '$(StrongNameKeyId)'=='MicrosoftShared') And '$(IsShipping)'!='true'">Open</StrongNameKeyId>
-  </PropertyGroup>
+<Project InitialTargets="ValidateUniqueKeyIdRequest">
+  <Target Name="ValidateUniqueKeyIdRequest">
+    <Error Condition="'$(UseEcmaKey)'=='true' And '$(UseMicrosoftSharedKey)'=='true'"
+           Message="Both UseEcmaKey and UseMicrosoftSharedKey are set to true. Only one of these can be enabled at any one time"/>
+  </Target>
 </Project>

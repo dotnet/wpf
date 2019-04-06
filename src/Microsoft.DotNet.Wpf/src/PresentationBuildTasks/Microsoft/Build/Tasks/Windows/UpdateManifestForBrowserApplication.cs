@@ -67,6 +67,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// Add hostInBrowser element node to the application manifest file.
         /// </summary>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA3075:InsecureDTDProcessing", Justification = "None. This Needs further review.")]
         public override bool Execute()
         {
             bool successful = true;

@@ -4,14 +4,11 @@
     <AssemblyName>System.Xaml</AssemblyName>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
+    <EnableAnalyzers>true</EnableAnalyzers>
   </PropertyGroup>
 
-    
-    
-  
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)System\Windows\Markup\TypeConverterHelper.cs">
       <Link>Common\WPF\System\Windows\Markup\TypeConverterHelper.cs</Link>

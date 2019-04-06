@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Windows;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -125,7 +125,7 @@ namespace MS.Internal
 
             if (String.IsNullOrEmpty(srcFile))
             {
-                throw new ArgumentNullException("srcFile");
+                throw new ArgumentNullException(nameof(srcFile));
             }
 
             if (HostFileManager != null)
@@ -156,6 +156,7 @@ namespace MS.Internal
             return fileStream;
         }
 
+        [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 used for compat")]
         public byte[] GetChecksum(string fileName, Guid hashGuid)
         {
             byte[] hashData=null;
@@ -188,10 +189,6 @@ namespace MS.Internal
                 {
                     hashAlgorithm = SHA1.Create();
                 }
-                else if (hashGuid == s_hashMD5Guid)
-                {
-                    hashAlgorithm = MD5.Create();
-                }
                 else
                 {
                     hashAlgorithm = null;
@@ -217,7 +214,7 @@ namespace MS.Internal
 
             if (String.IsNullOrEmpty(srcFile))
             {
-                throw new ArgumentNullException("srcFile");
+                throw new ArgumentNullException(nameof(srcFile));
             }
 
             if (IsFileInHostManager(srcFile))
@@ -243,7 +240,7 @@ namespace MS.Internal
 
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (HostFileManager != null)
@@ -265,7 +262,7 @@ namespace MS.Internal
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (IsFileInHostManager(fileName))
@@ -287,12 +284,12 @@ namespace MS.Internal
         {
             if (String.IsNullOrEmpty(destinationFile))
             {
-                throw new ArgumentNullException("destinationFile");
+                throw new ArgumentNullException(nameof(destinationFile));
             }
 
             if (contentArray == null)
             {
-                throw new ArgumentNullException("contentArray");
+                throw new ArgumentNullException(nameof(contentArray));
             }
 
             UTF8Encoding utf8Encoding = new UTF8Encoding();
@@ -331,12 +328,12 @@ namespace MS.Internal
         {
             if (String.IsNullOrEmpty(destinationFileBaseName))
             {
-                throw new ArgumentNullException("destinationFileBaseName");
+                throw new ArgumentNullException(nameof(destinationFileBaseName));
             }
 
             if (contentArray == null)
             {
-                throw new ArgumentNullException("contentArray");
+                throw new ArgumentNullException(nameof(contentArray));
             }
 
             string buildFile = destinationFileBaseName + generatedExtension + languageSourceExtension;
@@ -437,7 +434,6 @@ namespace MS.Internal
         private Nullable<bool> _isRealBuild;
         private static Guid s_hashSHA256Guid = new Guid(0x8829d00f, 0x11b8, 0x4213, 0x87, 0x8b, 0x77, 0x0e, 0x85, 0x97, 0xac, 0x16);
         private static Guid s_hashSHA1Guid = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
-        private static Guid s_hashMD5Guid = new Guid(0x406ea660, 0x64cf, 0x4c82, 0xb6, 0xf0, 0x42, 0xd4, 0x81, 0x72, 0xa7, 0x99);
 
         #endregion private data field
 

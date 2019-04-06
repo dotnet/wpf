@@ -85,8 +85,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// ITask Execute method
         /// </summary>
         /// <returns></returns>
-        /// <remarks>Catching all exceptions in this method is appropriate - it will allow the build process to resume if possible after logging errors</remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA3075:InsecureDTDProcessing", Justification = "None. This Needs further review.")]
         public override bool Execute()
         {
             bool retValue = true;

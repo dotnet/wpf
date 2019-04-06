@@ -27,7 +27,7 @@ namespace System.Xaml
         {
             get
             {
-                return this.declaringType;
+                return declaringType;
             }
         }
 
@@ -38,9 +38,9 @@ namespace System.Xaml
 
         public static bool operator ==(AttachableMemberIdentifier left, AttachableMemberIdentifier right)
         {
-            if (ReferenceEquals(left, null))
+            if (left is null)
             {
-                return ReferenceEquals(right, null);
+                return right is null;
             }
             return left.Equals(right);
         }
@@ -57,24 +57,24 @@ namespace System.Xaml
                 return false;
             }
 
-            return this.declaringType == other.declaringType && this.memberName == other.memberName;
+            return declaringType == other.declaringType && memberName == other.memberName;
         }
 
         public override int GetHashCode()
         {
-            int a = this.declaringType == null ? 0 : this.declaringType.GetHashCode();
-            int b = this.memberName == null ? 0 : this.memberName.GetHashCode();
+            int a = declaringType == null ? 0 : declaringType.GetHashCode();
+            int b = memberName == null ? 0 : memberName.GetHashCode();
             return ((a << 5) + a) ^ b;
         }
 
         public override string ToString()
         {
-            if (this.declaringType == null)
+            if (declaringType == null)
             {
-                return this.memberName;
+                return memberName;
             }
 
-            return this.declaringType.ToString() + "." + memberName;
+            return declaringType.ToString() + "." + memberName;
         }
     }
 }

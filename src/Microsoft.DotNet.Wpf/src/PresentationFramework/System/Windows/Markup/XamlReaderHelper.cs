@@ -412,9 +412,9 @@ namespace System.Windows.Markup
                 }
 #if PBTCOMPILER || !STRESS
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
-                throw e;
+                throw;
             }
             catch (XmlException e)
             {
@@ -1854,7 +1854,7 @@ namespace System.Windows.Markup
                 // that is made to screen out the common case where the namespace
                 // prefix is empty.
                 string namespacePrefix = XmlReader.Prefix;
-                if (namespacePrefix != string.Empty)
+                if (!string.IsNullOrEmpty(namespacePrefix))
                 {
                     if (null == ownerName &&
                         attributeNamespaceUri != elementBaseTypeNamespaceUri &&
@@ -1929,7 +1929,7 @@ namespace System.Windows.Markup
                 baseType = baseType.BaseType;
             }
 #endif
-            if (contentProperty == string.Empty)
+            if (string.IsNullOrEmpty(contentProperty))
             {
                 contentProperty = null;
             }

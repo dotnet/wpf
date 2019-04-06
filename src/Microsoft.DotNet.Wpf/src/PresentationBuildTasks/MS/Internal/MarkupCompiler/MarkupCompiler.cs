@@ -588,6 +588,7 @@ namespace MS.Internal
             }
         }
 
+        [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 used for compat")]
         private void GenerateSource()
         {
             Debug.Assert(_codeContexts.Count == 0);
@@ -981,7 +982,7 @@ namespace MS.Internal
 
                 // eventSetter = new EventSetter();
                 //
-                CodeExpression[] esParams = {};
+                CodeExpression[] esParams = Array.Empty<CodeExpression>();
                 CodeVariableReferenceExpression cvreES = new CodeVariableReferenceExpression(EVENTSETTER);
                 CodeAssignStatement casES = new CodeAssignStatement(cvreES,
                                                                     new CodeObjectCreateExpression(KnownTypes.Types[(int)KnownElements.EventSetter],
@@ -3050,7 +3051,7 @@ namespace MS.Internal
             //
             CodeObjectCreateExpression coce;
             CodeVariableReferenceExpression cvre = new CodeVariableReferenceExpression(APPVAR);
-            CodeExpression[] ctorParams = {};
+            CodeExpression[] ctorParams = Array.Empty<CodeExpression>();
 
             coce = new CodeObjectCreateExpression(appClassName, ctorParams);
 

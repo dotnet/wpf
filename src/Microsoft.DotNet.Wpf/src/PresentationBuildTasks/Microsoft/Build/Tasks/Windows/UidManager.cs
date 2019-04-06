@@ -486,6 +486,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         /// <param name="fileName">input file</param>
         /// <returns>UidCollector containing all the information for the Uids in the file</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA3075:InsecureDTDProcessing", Justification = "None. This Needs further review.")]
         private UidCollector ParseFile(string fileName)
         {
             UidCollector collector = new UidCollector(fileName  );
@@ -583,7 +584,7 @@ namespace Microsoft.Build.Tasks.Windows
                                 // there is no x:Uid found on this element, we need to resolve the
                                 // namespace prefix in order to add the Uid
                                 string prefix = nsmgr.LookupPrefix(XamlReaderHelper.DefinitionNamespaceURI);
-                                if (prefix != string.Empty)
+                                if (!string.IsNullOrEmpty(prefix))
                                     currentUid.NamespacePrefix = prefix;
                             }
 

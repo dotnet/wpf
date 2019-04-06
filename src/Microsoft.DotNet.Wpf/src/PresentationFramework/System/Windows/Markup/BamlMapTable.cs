@@ -125,7 +125,7 @@ namespace System.Windows.Markup
             string clrNamespace,
             string typeShortName)
         {
-            if (typeShortName == string.Empty)
+            if (string.IsNullOrEmpty(typeShortName))
             {
                 return 0;
             }
@@ -1229,7 +1229,7 @@ namespace System.Windows.Markup
 
             // Create either a normal TypeInfo record, or a TypeInfoWithSerializer record, depending
             // on whether or not there is a serializer for this type.
-            if (serializerTypeFullName == string.Empty)
+            if (string.IsNullOrEmpty(serializerTypeFullName))
             {
                 bamlTypeInfoRecord = new BamlTypeInfoRecord();
             }

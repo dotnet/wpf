@@ -8,7 +8,12 @@ namespace System.Xaml
     {
         public XamlObjectEventArgs(object instance)
         {
-            Instance = instance ?? throw new ArgumentNullException(nameof(instance));
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
+            Instance = instance;
         }
 
         internal XamlObjectEventArgs(object instance, Uri sourceBamlUri, int elementLineNumber, int elementLinePosition) :

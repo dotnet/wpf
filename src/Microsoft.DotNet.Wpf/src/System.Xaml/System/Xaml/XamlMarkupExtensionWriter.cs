@@ -31,8 +31,8 @@ namespace System.Xaml
         void Initialize(XamlXmlWriter xamlXmlWriter)
         {
             this.xamlXmlWriter = xamlXmlWriter;
-            settings = xamlXmlWriter.Settings; // This will clone, only want to do this once
-            meSettings = meSettings ?? new XamlMarkupExtensionWriterSettings();
+            this.settings = xamlXmlWriter.Settings; // This will clone, only want to do this once
+            this.meSettings = this.meSettings ?? new XamlMarkupExtensionWriterSettings();
             currentState = Start.State;
             sb = new StringBuilder();
             nodes = new Stack<Node>();
@@ -48,7 +48,7 @@ namespace System.Xaml
         {
             get
             {
-                return xamlXmlWriter.SchemaContext;
+                return this.xamlXmlWriter.SchemaContext;
             }
         }
 
@@ -68,7 +68,7 @@ namespace System.Xaml
         {
             get
             {
-                if (nodes.Count == 0)
+                if (this.nodes.Count == 0)
                 {
                     return sb.ToString();
                 }
@@ -91,11 +91,11 @@ namespace System.Xaml
 
         string LookupPrefix(XamlType type)
         {
-            string prefix = xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
+            string prefix = this.xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {
-                if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
+                if (!this.meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
                     // the prefix is not found and curly syntax has no way of defining a prefix
                     failed = true;
@@ -108,11 +108,11 @@ namespace System.Xaml
 
         string LookupPrefix(XamlMember property)
         {
-            string prefix = xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
+            string prefix = this.xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
             if (prefix == null)
             {
-                if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
+                if (!this.meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
                     failed = true;
                     // the prefix is not found and curly syntax has no way of defining a prefix
@@ -125,7 +125,7 @@ namespace System.Xaml
 
         void CheckMemberForUniqueness(Node objectNode, XamlMember property)
         {
-            if (!settings.AssumeValidInput)
+            if (!this.settings.AssumeValidInput)
             {
                 if (objectNode.Members == null)
                 {
@@ -141,32 +141,32 @@ namespace System.Xaml
 
         public override void WriteStartObject(XamlType type)
         {
-            currentState.WriteStartObject(this, type);
+            this.currentState.WriteStartObject(this, type);
         }
 
         public override void WriteGetObject()
         {
-            currentState.WriteGetObject(this);
+            this.currentState.WriteGetObject(this);
         }
 
         public override void WriteEndObject()
         {
-            currentState.WriteEndObject(this);
+            this.currentState.WriteEndObject(this);
         }
 
         public override void WriteStartMember(XamlMember property)
         {
-            currentState.WriteStartMember(this, property);
+            this.currentState.WriteStartMember(this, property);
         }
 
         public override void WriteEndMember()
         {
-            currentState.WriteEndMember(this);
+            this.currentState.WriteEndMember(this);
         }
 
         public override void WriteNamespace(NamespaceDeclaration namespaceDeclaration)
         {
-            currentState.WriteNamespace(this, namespaceDeclaration);
+            this.currentState.WriteNamespace(this, namespaceDeclaration);
         }
 
         public override void WriteValue(object value)
@@ -178,7 +178,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Get(SRID.XamlMarkupExtensionWriterCannotWriteNonstringValue));
             }
 
-            currentState.WriteValue(this, s);
+            this.currentState.WriteValue(this, s);
         }
 
         class Node
@@ -271,7 +271,7 @@ namespace System.Xaml
 
             protected void WritePrefix(XamlMarkupExtensionWriter writer, string prefix)
             {
-                if (!string.IsNullOrEmpty(prefix))
+                if (prefix != "")
                 {
                     writer.sb.Append(prefix);
                     writer.sb.Append(":");
@@ -280,7 +280,7 @@ namespace System.Xaml
 
             public void WriteString(XamlMarkupExtensionWriter writer, string value)
             {
-                if (ContainCharacterToEscape(value) || value.Length == 0)
+                if (ContainCharacterToEscape(value) || value == string.Empty)
                 {
                     value = FormatStringInCorrectSyntax(value);
                 }

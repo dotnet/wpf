@@ -19,7 +19,11 @@ namespace System.Xaml
 
         protected ReaderBaseDelegate(XamlSchemaContext schemaContext)
         {
-            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));            
+            if (schemaContext == null)
+            {
+                throw new ArgumentNullException(nameof(schemaContext));
+            }
+            _schemaContext = schemaContext;            
         }
 
         public override XamlNodeType NodeType

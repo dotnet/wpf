@@ -76,7 +76,6 @@ namespace System.Windows.Markup
         /// <summary>
         /// Constructor that takes a stream and creates an XmlCompatibilityReader on it.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA3075:InsecureDTDProcessing", Justification = "None. This Needs further review.")]
         public XamlParser(
             ParserContext parserContext,
             BamlRecordWriter bamlWriter,

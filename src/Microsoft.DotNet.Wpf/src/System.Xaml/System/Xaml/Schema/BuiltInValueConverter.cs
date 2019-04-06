@@ -65,7 +65,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Int32 is null)
+                if (ReferenceEquals(s_Int32, null))
                 {
                     s_Int32 = new BuiltInValueConverter<TypeConverter>(typeof(Int32Converter), () => new Int32Converter());
                 }
@@ -77,7 +77,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_String is null)
+                if (ReferenceEquals(s_String, null))
                 {
                     s_String = new BuiltInValueConverter<TypeConverter>(typeof(StringConverter), () => new StringConverter());
                 }
@@ -89,7 +89,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Object is null)
+                if (ReferenceEquals(s_Object, null))
                 {
                     s_Object = new XamlValueConverter<TypeConverter>(null, XamlLanguage.Object);
                 }
@@ -101,7 +101,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Delegate is null)
+                if (ReferenceEquals(s_Delegate, null))
                 {
                     s_Delegate = new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
                 }
@@ -125,7 +125,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Int16) == targetType)
             {
-                if (s_Int16 is null)
+                if (ReferenceEquals(s_Int16, null))
                 {
                     s_Int16 = new BuiltInValueConverter<TypeConverter>(typeof(Int16Converter), () => new Int16Converter());
                 }
@@ -133,7 +133,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Int64) == targetType)
             {
-                if (s_Int64 is null)
+                if (ReferenceEquals(s_Int64, null))
                 {
                     s_Int64 = new BuiltInValueConverter<TypeConverter>(typeof(Int64Converter), () => new Int64Converter());
                 }
@@ -141,7 +141,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(UInt32) == targetType)
             {
-                if (s_UInt32 is null)
+                if (ReferenceEquals(s_UInt32, null))
                 {
                     s_UInt32 = new BuiltInValueConverter<TypeConverter>(typeof(UInt32Converter), () => new UInt32Converter());
                 }
@@ -149,7 +149,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(UInt16) == targetType)
             {
-                if (s_UInt16 is null)
+                if (ReferenceEquals(s_UInt16, null))
                 {
                     s_UInt16 = new BuiltInValueConverter<TypeConverter>(typeof(UInt16Converter), () => new UInt16Converter());
                 }
@@ -157,7 +157,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(UInt64) == targetType)
             {
-                if (s_UInt64 is null)
+                if (ReferenceEquals(s_UInt64, null))
                 {
                     s_UInt64 = new BuiltInValueConverter<TypeConverter>(typeof(UInt64Converter), () => new UInt64Converter());
                 }
@@ -165,7 +165,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Boolean) == targetType)
             {
-                if (s_Boolean is null)
+                if (ReferenceEquals(s_Boolean, null))
                 {
                     s_Boolean = new BuiltInValueConverter<TypeConverter>(typeof(BooleanConverter), () => new BooleanConverter());
                 }
@@ -173,7 +173,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Double) == targetType)
             {
-                if (s_Double is null)
+                if (ReferenceEquals(s_Double, null))
                 {
                     s_Double = new BuiltInValueConverter<TypeConverter>(typeof(DoubleConverter), () => new DoubleConverter());
                 }
@@ -181,7 +181,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Single) == targetType)
             {
-                if (s_Single is null)
+                if (ReferenceEquals(s_Single, null))
                 {
                     s_Single = new BuiltInValueConverter<TypeConverter>(typeof(SingleConverter), () => new SingleConverter());
                 }
@@ -189,7 +189,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Byte) == targetType)
             {
-                if (s_Byte is null)
+                if (ReferenceEquals(s_Byte, null))
                 {
                     s_Byte = new BuiltInValueConverter<TypeConverter>(typeof(ByteConverter), () => new ByteConverter());
                 }
@@ -197,7 +197,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(SByte) == targetType)
             {
-                if (s_SByte is null)
+                if (ReferenceEquals(s_SByte, null))
                 {
                     s_SByte = new BuiltInValueConverter<TypeConverter>(typeof(SByteConverter), () => new SByteConverter());
                 }
@@ -205,7 +205,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Char) == targetType)
             {
-                if (s_Char is null)
+                if (ReferenceEquals(s_Char, null))
                 {
                     s_Char = new BuiltInValueConverter<TypeConverter>(typeof(CharConverter), () => new CharConverter());
                 }
@@ -213,7 +213,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Decimal) == targetType)
             {
-                if (s_Decimal is null)
+                if (ReferenceEquals(s_Decimal, null))
                 {
                     s_Decimal = new BuiltInValueConverter<TypeConverter>(typeof(DecimalConverter), () => new DecimalConverter());
                 }
@@ -221,7 +221,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(TimeSpan) == targetType)
             {
-                if (s_TimeSpan is null)
+                if (ReferenceEquals(s_TimeSpan, null))
                 {
                     s_TimeSpan = new BuiltInValueConverter<TypeConverter>(typeof(TimeSpanConverter), () => new TimeSpanConverter());
                 }
@@ -229,7 +229,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Guid) == targetType)
             {
-                if (s_Guid is null)
+                if (ReferenceEquals(s_Guid, null))
                 {
                     s_Guid = new BuiltInValueConverter<TypeConverter>(typeof(GuidConverter), () => new GuidConverter());
                 }
@@ -237,7 +237,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Type).IsAssignableFrom(targetType))
             {
-                if (s_Type is null)
+                if (ReferenceEquals(s_Type, null))
                 {
                     s_Type = new BuiltInValueConverter<TypeConverter>(typeof(TypeTypeConverter), () => new TypeTypeConverter());
                 }
@@ -245,7 +245,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Type[]).IsAssignableFrom(targetType))
             {
-                if (s_TypeList is null)
+                if (ReferenceEquals(s_TypeList, null))
                 {
                     s_TypeList = new BuiltInValueConverter<TypeConverter>(typeof(TypeListConverter), () => new TypeListConverter());
                 }
@@ -253,7 +253,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(DateTime) == targetType)
             {
-                if (s_DateTime is null)
+                if (ReferenceEquals(s_DateTime, null))
                 {
                     s_DateTime = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeConverter2), () => new DateTimeConverter2());
                 }
@@ -261,7 +261,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(DateTimeOffset) == targetType)
             {
-                if (s_DateTimeOffset is null)
+                if (ReferenceEquals(s_DateTimeOffset, null))
                 {
                     s_DateTimeOffset = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeOffsetConverter2), () => new DateTimeOffsetConverter2());
                 }
@@ -269,7 +269,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(CultureInfo).IsAssignableFrom(targetType))
             {
-                if (s_CultureInfo is null)
+                if (ReferenceEquals(s_CultureInfo, null))
                 {
                     s_CultureInfo = new BuiltInValueConverter<TypeConverter>(typeof(CultureInfoConverter), () => new CultureInfoConverter());
                 }
@@ -277,7 +277,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Delegate).IsAssignableFrom(targetType))
             {
-                if (s_Delegate is null)
+                if (ReferenceEquals(s_Delegate, null))
                 {
                     s_Delegate = new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
                 }
@@ -285,7 +285,7 @@ namespace System.Xaml.Schema
             }
             if (typeof(Uri).IsAssignableFrom(targetType))
             {
-                if(s_Uri is null)
+                if(ReferenceEquals(s_Uri, null))
                 {
                     TypeConverter stdConverter = null;
                     try
@@ -326,7 +326,7 @@ namespace System.Xaml.Schema
         {
             if (typeof(string) == targetType)
             {
-                if (s_StringSerializer is null)
+                if (ReferenceEquals(s_StringSerializer, null))
                 {
                     // Once StringSerializer is TypeForwarded to S.X, this can be made more efficient
                     ValueSerializer stringSerializer = ValueSerializer.GetSerializerFor(typeof(string));

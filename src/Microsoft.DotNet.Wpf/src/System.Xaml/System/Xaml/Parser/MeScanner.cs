@@ -111,6 +111,13 @@ namespace MS.Internal.Xaml.Parser
             get { return _tokenProperty; }
         }
 
+        // FxCop says this is never called
+        //  (but _tokenNamespace is used internally in the Scanner)
+        //public XamlNamespace TokenNamespace
+        //{
+        //    get { return _tokenNamespace; }
+        //}
+
         public string TokenText
         {
             get { return _tokenText; }
@@ -327,9 +334,12 @@ namespace MS.Internal.Xaml.Parser
             // Regular property p
             else
             {
-                string ns = _context.GetAttributeNamespace(propName, Namespace);
+                // _tokenNamespace is always null here
+                string ns = _context.GetAttributeNamespace(propName, _tokenNamespace);
                 declaringType = _context.CurrentType;
-                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false /*tagIsRoot*/);
+
+                // _tokenNamespace is always null here
+                prop = _context.GetNoDotAttributeProperty(declaringType, propName, _tokenNamespace, ns, false /*tagIsRoot*/);
             }
             _tokenProperty = prop;
         }

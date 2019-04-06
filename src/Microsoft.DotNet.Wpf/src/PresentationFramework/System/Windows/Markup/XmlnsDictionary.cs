@@ -341,7 +341,7 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( nameof(prefix)); 
+                throw new ArgumentNullException( "prefix" ); 
             }
             
             if (_lastDecl >0)
@@ -349,8 +349,8 @@ namespace System.Windows.Markup
                 for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
                 {
                     if ((_nsDeclarations[thisDecl].Prefix == prefix) && 
-                        _nsDeclarations[thisDecl].Uri != null &&
-                        !string.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
+                        _nsDeclarations[thisDecl].Uri != null && 
+                        _nsDeclarations[thisDecl].Uri != String.Empty)
                     {
                         return _nsDeclarations[thisDecl].Uri;
                     }
@@ -614,10 +614,10 @@ namespace System.Windows.Markup
             CheckSealed();
             
             if (xmlNamespace == null)
-                throw new ArgumentNullException(nameof(xmlNamespace));
+                throw new ArgumentNullException("xmlNamespace");
 
             if (prefix == null)
-                throw new ArgumentNullException(nameof(prefix));
+                throw new ArgumentNullException("prefix");
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -664,12 +664,12 @@ namespace System.Windows.Markup
             {
                 if (xmlNamespace == null)
                 {
-                    throw new ArgumentNullException(nameof(xmlNamespace));
+                    throw new ArgumentNullException("xmlNamespace");
                 }
 
                 if (prefix == null)
                 {
-                    throw new ArgumentNullException(nameof(prefix));
+                    throw new ArgumentNullException("prefix");
                 }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;

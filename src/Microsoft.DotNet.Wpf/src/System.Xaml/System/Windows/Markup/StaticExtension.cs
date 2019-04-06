@@ -32,7 +32,11 @@ namespace System.Windows.Markup
         public StaticExtension(
             string   member)
         {
-            _member = member ?? throw new ArgumentNullException(nameof(member));
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
+            _member = member;
         }
 
         /// <summary>
@@ -75,7 +79,7 @@ namespace System.Windows.Markup
                 // Pull out the type substring (this will include any XML prefix, e.g. "av:Button")
 
                 string typeString = _member.Substring(0, dotIndex);
-                if (string.IsNullOrEmpty(typeString))
+                if (typeString == string.Empty)
                 {
                     throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
                 }
@@ -100,7 +104,7 @@ namespace System.Windows.Markup
                 // Get the member name substring
 
                 fieldString = _member.Substring(dotIndex + 1, _member.Length - dotIndex - 1);
-                if (string.IsNullOrEmpty(typeString))
+                if (fieldString == string.Empty)
                 {
                     throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
                 }
@@ -173,7 +177,11 @@ namespace System.Windows.Markup
             get { return _member; }
             set 
             {
-                _member = value ?? throw new ArgumentNullException(nameof(value));
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+                _member = value;
             }
         }
 
@@ -183,7 +191,11 @@ namespace System.Windows.Markup
             get { return _memberType; }
             set
             {
-                _memberType = value ?? throw new ArgumentNullException(nameof(value));
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+                _memberType = value;
             }
         }
 

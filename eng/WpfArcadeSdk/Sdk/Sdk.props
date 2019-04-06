@@ -33,6 +33,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)ProjectReferences.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
 

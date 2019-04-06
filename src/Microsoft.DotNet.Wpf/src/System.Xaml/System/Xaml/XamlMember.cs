@@ -44,8 +44,17 @@ namespace System.Xaml
 
         public XamlMember(string name, XamlType declaringType, bool isAttachable)
         {
-            _name = name ?? throw new ArgumentNullException(nameof(name));
-            _declaringType = declaringType ?? throw new ArgumentNullException(nameof(declaringType));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (declaringType == null)
+            {
+                throw new ArgumentNullException(nameof(declaringType));
+            }
+
+            _name = name;
+            _declaringType = declaringType;
             _memberType = isAttachable ? MemberType.Attachable : MemberType.Instance;
         }
 
@@ -138,6 +147,10 @@ namespace System.Xaml
         internal XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
+            if (attachablePropertyName == null)
+            {
+                throw new ArgumentNullException(nameof(attachablePropertyName));
+            }
             if (schemaContext == null)
             {
                 throw new ArgumentNullException(nameof(schemaContext));
@@ -150,7 +163,7 @@ namespace System.Xaml
             ValidateGetter(getter, "getter");
             ValidateSetter(setter, "setter");
 
-            _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
+            _name = attachablePropertyName;
             _declaringType = schemaContext.GetXamlType(accessor.DeclaringType);
             _reflector = reflector;
             _memberType = MemberType.Attachable;
@@ -178,6 +191,10 @@ namespace System.Xaml
         internal XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker, MemberReflector reflector)
         {
+            if (attachableEventName == null)
+            {
+                throw new ArgumentNullException(nameof(attachableEventName));
+            }
             if (adder == null)
             {
                 throw new ArgumentNullException(nameof(adder));
@@ -188,7 +205,7 @@ namespace System.Xaml
             }
             ValidateSetter(adder, "adder");
 
-            _name = attachableEventName ?? throw new ArgumentNullException(nameof(attachableEventName));
+            _name = attachableEventName;
             _declaringType = schemaContext.GetXamlType(adder.DeclaringType);
             _reflector = reflector;
             _memberType = MemberType.Attachable;
@@ -591,9 +608,9 @@ namespace System.Xaml
                     return SchemaContext.GetValueConverter<XamlDeferringLoader>(loaderTypes[0], null);
                 }
             }
-            if (Type != null)
+            if (this.Type != null)
             {
-                return Type.DeferringLoader;
+                return this.Type.DeferringLoader;
             }
             return null;
         }
@@ -731,9 +748,9 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<TypeConverter>(converterType, null);
                 }
             }
-            if (result == null && Type != null)
+            if (result == null && this.Type != null)
             {
-                result = Type.TypeConverter;
+                result = this.Type.TypeConverter;
             }
 
             return result;
@@ -750,9 +767,9 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<ValueSerializer>(converterType, null);
                 }
             }
-            if (result == null && Type != null)
+            if (result == null && this.Type != null)
             {
-                result = Type.ValueSerializer;
+                result = this.Type.ValueSerializer;
             }
             return result;
         }
@@ -1063,7 +1080,7 @@ namespace System.Xaml
             {
                 return true;
             }
-            if (xamlMember1 is null || xamlMember2 is null)
+            if (ReferenceEquals(xamlMember1, null) || ReferenceEquals(xamlMember2, null))
             {
                 return false;
             }

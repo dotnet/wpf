@@ -103,7 +103,7 @@ namespace System.Xaml.Schema
         public override bool Equals(object obj)
         {
             XamlValueConverter<TConverterBase> other = obj as XamlValueConverter<TConverterBase>;
-            if (other is null)
+            if (ReferenceEquals(other, null))
             {
                 return false;
             }
@@ -131,11 +131,11 @@ namespace System.Xaml.Schema
 
         public static bool operator ==(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
         {
-            if (converter1 is null)
+            if (ReferenceEquals(converter1, null))
             {
-                return converter2 is null;
+                return ReferenceEquals(converter2, null);
             }
-            if (converter2 is null)
+            if (ReferenceEquals(converter2, null))
             {
                 return false;
             }

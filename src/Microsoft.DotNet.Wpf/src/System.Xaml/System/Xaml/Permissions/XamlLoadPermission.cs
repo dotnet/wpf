@@ -98,7 +98,7 @@ namespace System.Xaml.Permissions
         private XamlLoadPermission(XamlLoadPermission other)
         {
             _isUnrestricted = other._isUnrestricted;
-            AllowedAccess = other.AllowedAccess;
+            this.AllowedAccess = other.AllowedAccess;
         }
 
         private void Init(bool isUnrestricted, IList<XamlAccessLevel> allowedAccess)
@@ -108,7 +108,7 @@ namespace System.Xaml.Permissions
             {
                 if (s_emptyAccessLevel == null)
                 {
-                    s_emptyAccessLevel = new ReadOnlyCollection<XamlAccessLevel>(Array.Empty<XamlAccessLevel>());
+                    s_emptyAccessLevel = new ReadOnlyCollection<XamlAccessLevel>(new XamlAccessLevel[0]);
                 }
                 AllowedAccess = s_emptyAccessLevel;
             }
@@ -198,9 +198,9 @@ namespace System.Xaml.Permissions
             XamlLoadPermission other = CastPermission(target, "target");
             if (other.IsUnrestricted())
             {
-                return Copy();
+                return this.Copy();
             }
-            if (IsUnrestricted())
+            if (this.IsUnrestricted())
             {
                 return other.Copy();
             }
@@ -208,7 +208,7 @@ namespace System.Xaml.Permissions
             List<XamlAccessLevel> result = new List<XamlAccessLevel>();
             // We could optimize this with a hash, but we don't expect people to be creating
             // large unions of access levels.
-            foreach (XamlAccessLevel accessLevel in AllowedAccess)
+            foreach (XamlAccessLevel accessLevel in this.AllowedAccess)
             {
                 // First try the full access level
                 if (other.Includes(accessLevel))
@@ -240,12 +240,12 @@ namespace System.Xaml.Permissions
             {
                 return true;
             }
-            if (IsUnrestricted())
+            if (this.IsUnrestricted())
             {
                 return false;
             }
 
-            foreach (XamlAccessLevel accessLevel in AllowedAccess)
+            foreach (XamlAccessLevel accessLevel in this.AllowedAccess)
             {
                 if (!other.Includes(accessLevel))
                 {
@@ -258,7 +258,7 @@ namespace System.Xaml.Permissions
         public override SecurityElement ToXml()
         {
             SecurityElement securityElement = new SecurityElement(XmlConstants.IPermission);
-            securityElement.AddAttribute(XmlConstants.Class, GetType().AssemblyQualifiedName);
+            securityElement.AddAttribute(XmlConstants.Class, this.GetType().AssemblyQualifiedName);
             securityElement.AddAttribute(XmlConstants.Version, XmlConstants.VersionNumber);
 
             if (IsUnrestricted())
@@ -280,7 +280,7 @@ namespace System.Xaml.Permissions
         {
             if (other == null)
             {
-                return Copy();
+                return this.Copy();
             }
             XamlLoadPermission xamlOther = CastPermission(other, "other");
             if (IsUnrestricted() || xamlOther.IsUnrestricted())
@@ -288,10 +288,10 @@ namespace System.Xaml.Permissions
                 return new XamlLoadPermission(PermissionState.Unrestricted);
             }
 
-            List<XamlAccessLevel> mergedAccess = new List<XamlAccessLevel>(AllowedAccess);
+            List<XamlAccessLevel> mergedAccess = new List<XamlAccessLevel>(this.AllowedAccess);
             foreach (XamlAccessLevel accessLevel in xamlOther.AllowedAccess)
             {
-                if (!Includes(accessLevel))
+                if (!this.Includes(accessLevel))
                 {
                     mergedAccess.Add(accessLevel);
                     if (accessLevel.PrivateAccessToTypeName != null)

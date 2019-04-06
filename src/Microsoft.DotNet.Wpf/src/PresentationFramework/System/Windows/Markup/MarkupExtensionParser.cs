@@ -510,7 +510,7 @@ namespace System.Windows.Markup
                                                 out targetFullName, out targetType, out serializerType);
 
             // propIdName is an empty string only for the case when args is a ctor param of a MarkupExtension
-            if (resolvedTag && !string.IsNullOrEmpty(propIdName))
+            if (resolvedTag && propIdName != string.Empty)
             {
                 if (propIdName == null)
                 {

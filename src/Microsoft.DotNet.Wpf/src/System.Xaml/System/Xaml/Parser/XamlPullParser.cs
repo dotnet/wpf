@@ -562,7 +562,7 @@ namespace MS.Internal.Xaml.Parser
                         yield return Logic_LineInfo();
                     }
 
-                    if (string.IsNullOrEmpty(trimmed))
+                    if (trimmed == string.Empty)
                     {
                         break;
                     }
@@ -642,7 +642,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return Logic_LineInfo();
                     }
-                    if (string.IsNullOrEmpty(trimmed))
+                    if (trimmed == string.Empty)
                     {
                         break;
                     }
@@ -1186,11 +1186,13 @@ namespace MS.Internal.Xaml.Parser
     {
         public XamlUnexpectedParseException() { }
 
-        public XamlUnexpectedParseException(string message)
-            : base(message) { }
+        // FxCop says this is never called
+        //public XamlUnexpectedParseException(string message)
+        //    : base(message) { }
 
-        public XamlUnexpectedParseException(string message, Exception innerException)
-            : base(message, innerException) { }
+        // FxCop says this is never called
+        //public XamlUnexpectedParseException(string message, Exception innerException)
+        //    : base(message, innerException) { }
 
         public XamlUnexpectedParseException(XamlScanner xamlScanner, ScannerNodeType nodetype, string parseRule)
             : base(xamlScanner, SR.Get(SRID.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }

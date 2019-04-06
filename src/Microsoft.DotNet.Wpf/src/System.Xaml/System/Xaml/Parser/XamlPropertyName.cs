@@ -13,11 +13,11 @@ namespace MS.Internal.Xaml.Parser
         {
             if (owner != null)
             {
-                Owner = owner;
-                _prefix = owner.Prefix ?? string.Empty;
+                this.Owner = owner;
+                this._prefix = owner.Prefix ?? string.Empty;
             }
             else
-                _prefix = prefix ?? string.Empty;
+                this._prefix = prefix ?? string.Empty;
         }
 
         public readonly XamlName Owner;

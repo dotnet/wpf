@@ -109,7 +109,7 @@ namespace MS.Internal.Xaml
 
             // Non-generic case, just resolve using the namespace and name
             XamlTypeName ownerTypeName = new XamlTypeName(ns, propName.Owner.Name);
-            ownerType = GetXamlType(ownerTypeName, true);
+            ownerType = this.GetXamlType(ownerTypeName, true);
             bool canAssignTagTypeToOwnerType = tagType.CanAssignTo(ownerType);
 
             if (canAssignTagTypeToOwnerType)
@@ -118,7 +118,7 @@ namespace MS.Internal.Xaml
             }
             else
             {
-                property = GetXamlAttachableProperty(ownerType, propName.Name);
+                property = this.GetXamlAttachableProperty(ownerType, propName.Name);
             }
             if (property == null)
             {
@@ -169,14 +169,14 @@ namespace MS.Internal.Xaml
                 || (tagNamespace == null && propUsageNamespace != null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
             {
                 XamlType rootTagType = tagIsRoot ? tagType : null;
-                property = GetXamlProperty(tagType, propName.Name, rootTagType);
+                property = this.GetXamlProperty(tagType, propName.Name, rootTagType);
 
                 // Sometimes Attached properties look like normal properties.
                 // [Attribute case] The above lookup fails and fall into here.
                 // <Grid> <Grid Row="0"/> </Grid>
                 if (property == null)
                 {
-                    property = GetXamlAttachableProperty(tagType, propName.Name);
+                    property = this.GetXamlAttachableProperty(tagType, propName.Name);
                 }
             }
             // Not Simple, not Attachable, look for Directives.
@@ -274,7 +274,7 @@ namespace MS.Internal.Xaml
                     typeArgs = ArrayHelper.ConvertArrayType<XamlTypeName, XamlType>(
                         typeName.TypeArguments, GetXamlTypeOrUnknown);
                 }
-                xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
+                xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, this.SchemaContext);
             }
             return xamlType;
         }
@@ -351,14 +351,14 @@ namespace MS.Internal.Xaml
 
         private XamlMember GetInstanceOrAttachableProperty(XamlType tagType, string propName, XamlType rootTagType)
         {
-            XamlMember property = GetXamlProperty(tagType, propName, rootTagType);
+            XamlMember property = this.GetXamlProperty(tagType, propName, rootTagType);
             if (property == null)
             {
                 // Sometimes Attached properties look like normal properties.
                 // The above lookup fails and fall into here.
                 // ie: <Grid> <Grid> <Grid.Row>0<Grid.Row/> </Grid> </Grid>
                 // or: <Grid> <Grid Grid.Row="0" /> </Grid>
-                property = GetXamlAttachableProperty(tagType, propName);
+                property = this.GetXamlAttachableProperty(tagType, propName);
             }
             return property;
         }

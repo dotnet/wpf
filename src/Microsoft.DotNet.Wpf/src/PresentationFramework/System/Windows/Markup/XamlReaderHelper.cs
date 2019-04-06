@@ -412,9 +412,9 @@ namespace System.Windows.Markup
                 }
 #if PBTCOMPILER || !STRESS
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
-                throw e;
+                throw;
             }
             catch (XmlException e)
             {

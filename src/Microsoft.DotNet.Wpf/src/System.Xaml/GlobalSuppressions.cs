@@ -13,7 +13,8 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Scope = "type", Target = "System.Xaml.Schema.ReferenceEqualityTuple`2<T1,T2>", Justification = "Internal Only")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Scope = "type", Target = "System.Xaml.Schema.ReferenceEqualityTuple`3<T1,T2,T3>", Justification = "Internal Only")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Not changing public API surface for .NET Core 3 release", Scope = "member", Target = "~M:System.Xaml.XamlWriter.System#IDisposable#Dispose")]
-
+[assembly: SuppressMessage("Microsoft.Design", "CA1031:Do not catch general exception types", Justification = "Don't want render thread to crash", Scope = "member", Target = "~M:System.Xaml.XamlBackgroundReader.XamlReaderThreadStart(System.Object)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1031:Do not catch general exception types", Justification = "Finalizers shouldn't throw", Scope = "member", Target = "~M:System.Xaml.XamlSchemaContext.Finalize")]
 #endregion
 
 #region Microsoft.Performance suppressions

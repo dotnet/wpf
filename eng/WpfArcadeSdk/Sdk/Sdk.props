@@ -21,8 +21,6 @@
     <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
-
-    <StrongNameKeyId Condition="'$(StrongNameKeyId)'=='' And '$(IsTestProject)'!='true'">Open</StrongNameKeyId>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)SystemResources.props"/>
@@ -36,6 +34,8 @@
   <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />
+
 
   <PropertyGroup>
     <DebugType>full</DebugType>

@@ -1,4 +1,7 @@
 <Project>
+  <!-- Import Signing.targets before Microsoft.DotNet.Arcade.Sdk -->
+  <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
+  
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />

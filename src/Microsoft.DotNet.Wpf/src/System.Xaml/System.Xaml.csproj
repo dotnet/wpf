@@ -9,9 +9,6 @@
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
   </PropertyGroup>
 
-    
-    
-  
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)System\Windows\Markup\TypeConverterHelper.cs">
       <Link>Common\WPF\System\Windows\Markup\TypeConverterHelper.cs</Link>
@@ -87,8 +84,6 @@
     <Compile Remove="System\Xaml\MS\Impl\ConcurrentDictionary.cs" />
     <Compile Remove="System\Xaml\MS\Impl\XamlPropertyInfoKey.cs" />
     
-    
-    <!-- <Compile Remove="" /> -->
    </ItemGroup>
     
   <ItemGroup>

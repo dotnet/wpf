@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Windows;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -156,6 +156,7 @@ namespace MS.Internal
             return fileStream;
         }
 
+        [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 used for compat")]
         public byte[] GetChecksum(string fileName, Guid hashGuid)
         {
             byte[] hashData=null;

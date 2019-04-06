@@ -588,6 +588,7 @@ namespace MS.Internal
             }
         }
 
+        [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 used for compat")]
         private void GenerateSource()
         {
             Debug.Assert(_codeContexts.Count == 0);

@@ -1,0 +1,10 @@
+<Project>
+  <!-- Set the public key token after everything else has been imported -->
+  <PropertyGroup>
+    <!-- 
+      StrongNameKeyId is initialized by the Arcade SDK to MicrosoftShared. It is rarely ever set to ''
+    -->
+    <StrongNameKeyId Condition="('$(StrongNameKeyId)'=='' Or '$(StrongNameKeyId)'=='MicrosoftShared') And '$(IsShipping)'=='true'">ECMA</StrongNameKeyId>
+    <StrongNameKeyId Condition="('$(StrongNameKeyId)'=='' Or '$(StrongNameKeyId)'=='MicrosoftShared') And '$(IsShipping)'!='true'">Open</StrongNameKeyId>
+  </PropertyGroup>
+</Project>

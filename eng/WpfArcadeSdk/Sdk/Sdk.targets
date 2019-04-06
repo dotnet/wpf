@@ -1,4 +1,7 @@
 <Project>
+  <!-- Import Signing.targets before Microsoft.DotNet.Arcade.Sdk -->
+  <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
+  
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
@@ -19,10 +22,4 @@
   <!-- PresentationBuildTasks related targets files -->
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.targets" Condition="'$(InternalMarkupCompilation)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)NoInternalTypeHelper.targets" />
-
-  <!-- Set the public key token after everything else has been imported -->
-  <PropertyGroup>
-    <StrongNameKeyId Condition="'$(StrongNameKeyId)'=='' And '$(IsShipping)'=='true'">ECMA</StrongNameKeyId>
-    <StrongNameKeyId Condition="'$(StrongNameKeyId)'=='' And '$(IsShipping)'!='true'">Open</StrongNameKeyId>
-  </PropertyGroup>
 </Project>

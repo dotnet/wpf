@@ -137,7 +137,7 @@ namespace System.Xaml
                         }
                     }
                     result = new ReadOnlyCollection<string>(result);
-                    _nonClrNamespaces = result;
+                    this._nonClrNamespaces = result;
                 }
             }
             return result;
@@ -163,7 +163,7 @@ namespace System.Xaml
                 InitializePreferredPrefixes();
             }
             string result;
-            if (!_preferredPrefixes.TryGetValue(xmlns, out result))
+            if (!this._preferredPrefixes.TryGetValue(xmlns, out result))
             {
                 if (XamlLanguage.XamlNamespaces.Contains(xmlns))
                 {

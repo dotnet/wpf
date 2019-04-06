@@ -18,7 +18,7 @@ namespace System.Xaml.Schema
     {
         private static XamlMemberInvoker s_Directive;
         private static XamlMemberInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = Array.Empty<object>();
+        private static object[] s_emptyObjectArray = new object[0];
 
         private XamlMember _member;
         private NullableReference<MethodInfo> _shouldSerializeMethod;
@@ -29,7 +29,11 @@ namespace System.Xaml.Schema
 
         public XamlMemberInvoker(XamlMember member)
         {
-            _member = member ?? throw new ArgumentNullException(nameof(member));
+            if (member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
+            _member = member;
         }
 
         public static XamlMemberInvoker UnknownInvoker

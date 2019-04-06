@@ -91,7 +91,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( nameof(assemblyNames));
+                throw new ArgumentNullException( "assemblyNames" );
             }
 
             _assemblyNames = assemblyNames;
@@ -122,11 +122,11 @@ namespace System.Windows.Markup
         {
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( nameof(xmlNamespace));
+                throw new ArgumentNullException( "xmlNamespace" );
             }
             if(null == localName)
             {
-                throw new ArgumentNullException( nameof(localName));
+                throw new ArgumentNullException( "localName" );
             }
 
             TypeAndSerializer typeAndSerializer =
@@ -202,18 +202,18 @@ namespace System.Windows.Markup
         {
             if( null == assemblyName )
             {
-                throw new ArgumentNullException(nameof(assemblyName));
+                throw new ArgumentNullException("assemblyName");
             }
             if( null == assemblyPath )
             {
-                throw new ArgumentNullException(nameof(assemblyPath));
+                throw new ArgumentNullException("assemblyPath");
             }
-            if (string.IsNullOrEmpty(assemblyPath))
+            if (assemblyPath == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
                 ThrowException(SRID.ParserBadAssemblyPath);
             }
-            if (string.IsNullOrEmpty(assemblyName))
+            if (assemblyName == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
                 ThrowException(SRID.ParserBadAssemblyName);
@@ -698,7 +698,7 @@ namespace System.Windows.Markup
             _lineNumber = lineNumber;
             _linePosition = linePosition;
 
-            if (string.IsNullOrEmpty(value))
+            if (value == string.Empty)
             {
                 ThrowException(SRID.ParserBadName, value);
             }
@@ -731,7 +731,7 @@ namespace System.Windows.Markup
             Type          propType,
             string        attribValue)
         {
-            if (propType.IsEnum && !string.IsNullOrEmpty(attribValue))
+            if (propType.IsEnum && attribValue != string.Empty)
             {
                 // Handle enum strings of the form "one, two, three".  Check that
                 // each of the values does NOT start with a digit.  This doesn't
@@ -4379,13 +4379,13 @@ namespace System.Windows.Markup
         public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
         {
             if (xmlNamespace == null)
-                throw new ArgumentNullException(nameof(xmlNamespace));
+                throw new ArgumentNullException("xmlNamespace");
 
             if (assemblyName == null)
-                throw new ArgumentNullException(nameof(assemblyName));
+                throw new ArgumentNullException("assemblyName");
 
             if (clrNamespace == null)
-                throw new ArgumentNullException(nameof(clrNamespace));
+                throw new ArgumentNullException("clrNamespace");
 
             _xmlNamespace = xmlNamespace;
             _assemblyName = assemblyName;
@@ -4423,7 +4423,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_xmlNamespace == null)
                 {
@@ -4442,7 +4442,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_assemblyName == null)
                 {
@@ -4461,7 +4461,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_clrNamespace == null)
                 {
@@ -4599,7 +4599,7 @@ namespace System.Windows.Markup
         // array of namespaceMaps the map an xmlns namespaceURI
         // to the assembly and urtNamespace to search in when resolving the xml
 
-        private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = Array.Empty<NamespaceMapEntry>();
+        private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = { };
 
 #endregion Data
     }

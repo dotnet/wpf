@@ -2546,9 +2546,9 @@ namespace System.Windows.Markup
         short _extensionTypeId = 0;
         short _valueId = 0;
 
-        private const short ExtensionIdMask = 0x0FFF;
-        private const short TypeExtensionValueMask = 0x4000;
-        private const short StaticExtensionValueMask = 0x2000;
+        private static readonly short ExtensionIdMask = 0x0FFF;
+        private static readonly short TypeExtensionValueMask = 0x4000;
+        private static readonly short StaticExtensionValueMask = 0x2000;
         #endregion Data
     }
 
@@ -2994,11 +2994,11 @@ namespace System.Windows.Markup
         }
 #endif
 
-        #endregion Properties
+#endregion Properties
 
-        #region Data
+#region Data
 
-        internal const short TypeIdValueMask = 0x4000;
+        internal static readonly short TypeIdValueMask = 0x4000;
 
         short                  _attributeId = 0;
         short                  _serializerTypeId = 0;
@@ -3862,8 +3862,8 @@ namespace System.Windows.Markup
 
         short _valueId = 0;
 
-        private const byte TypeExtensionValueMask = 0x01;
-        private const byte StaticExtensionValueMask = 0x02;
+        private static readonly byte TypeExtensionValueMask = 0x01;
+        private static readonly byte StaticExtensionValueMask = 0x02;
 
         // Allocate space in _flags.
         private static BitVector32.Section _isValueTypeExtensionSection

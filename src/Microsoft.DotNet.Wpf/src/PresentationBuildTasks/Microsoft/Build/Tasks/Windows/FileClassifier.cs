@@ -334,7 +334,7 @@ namespace Microsoft.Build.Tasks.Windows
             // if the default culture is not set, by default all
             // the items are not localizable.
 
-            if (Culture != null && Culture.Length > 0)
+            if (Culture != null && Culture.Equals("") == false)
             {
                 string localizableString;
 

@@ -312,7 +312,11 @@ namespace System.Xaml
             _context.CurrentType = parentProperty.Type;
 
             object inst = Runtime.GetValue(parentInstance, parentProperty);
-            _context.CurrentInstance = inst ?? throw _context.WithLineInfo(new XamlObjectWriterException(SR.Get(SRID.GetObjectNull, parentInstance.GetType(), parentProperty.Name)));
+            if (inst == null)
+            {
+                throw _context.WithLineInfo(new XamlObjectWriterException(SR.Get(SRID.GetObjectNull, parentInstance.GetType(), parentProperty.Name)));
+            }
+            _context.CurrentInstance = inst;
             if (parentProperty.Type.IsCollection || parentProperty.Type.IsDictionary)
             {
                 _context.CurrentCollection = inst;

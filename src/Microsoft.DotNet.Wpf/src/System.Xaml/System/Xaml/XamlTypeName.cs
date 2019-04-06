@@ -43,8 +43,8 @@ namespace System.Xaml.Schema
             {
                 throw new ArgumentNullException(nameof(xamlType));
             }
-            Name = xamlType.Name;
-            Namespace = xamlType.GetXamlNamespaces()[0];
+            this.Name = xamlType.Name;
+            this.Namespace = xamlType.GetXamlNamespaces()[0];
             if (xamlType.TypeArguments != null)
             {
                 foreach (XamlType argumentType in xamlType.TypeArguments)
@@ -253,7 +253,7 @@ namespace System.Xaml.Schema
                 {
                     throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameCannotGetPrefix, Namespace));
                 }
-                if (prefix.Length != 0)
+                if (prefix != string.Empty)
                 {
                     result.Append(prefix);
                     result.Append(":");

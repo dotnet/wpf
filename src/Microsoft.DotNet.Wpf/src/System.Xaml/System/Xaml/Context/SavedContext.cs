@@ -26,7 +26,7 @@ namespace System.Xaml
             {
                 stack.CurrentFrame.Instance = null;
             }
-            BaseUri = owContext.BaseUri;
+            this.BaseUri = owContext.BaseUri;
         }
 
         public SavedContextType SaveContextType { get { return _savedContextType; } }

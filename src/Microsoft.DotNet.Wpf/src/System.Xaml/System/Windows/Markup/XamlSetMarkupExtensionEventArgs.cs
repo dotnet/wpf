@@ -36,7 +36,7 @@ namespace System.Windows.Markup
 
                 if (baseType != null)
                 {
-                    CurrentType = baseType;
+                    this.CurrentType = baseType;
                     if (baseType.SetMarkupExtensionHandler != null)
                     {
                         baseType.SetMarkupExtensionHandler(TargetObject, this);

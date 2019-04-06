@@ -438,7 +438,7 @@ namespace System.Windows.Markup
             if (innerException != null && innerException.Message != null)
             {
                 StringBuilder sb = new StringBuilder(message);
-                if (!string.IsNullOrEmpty(innerException.Message))
+                if (innerException.Message != String.Empty)
                 {
                     sb.Append(" ");
                 }

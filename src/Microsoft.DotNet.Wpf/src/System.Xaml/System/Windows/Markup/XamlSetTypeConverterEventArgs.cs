@@ -41,7 +41,7 @@ namespace System.Windows.Markup
 
                 if (baseType != null)
                 {
-                    CurrentType = baseType;
+                    this.CurrentType = baseType;
                     if (baseType.SetTypeConverterHandler != null)
                     {
                         baseType.SetTypeConverterHandler(TargetObject, this);

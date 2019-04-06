@@ -25,7 +25,7 @@ namespace System.Windows.Markup
         {
             if (serviceProvider == null)
             {
-                throw new ArgumentNullException(nameof(serviceProvider));
+                throw new ArgumentNullException("serviceProvider");
             }
             IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
             if (nameResolver == null)

@@ -597,7 +597,7 @@ namespace Microsoft.Build.Tasks.Windows
             get
             {
                if (_generatedCodeFiles == null)
-                   _generatedCodeFiles = Array.Empty<TaskItem>();
+                   _generatedCodeFiles = new TaskItem[0];
                return _generatedCodeFiles;
             }
 
@@ -616,7 +616,7 @@ namespace Microsoft.Build.Tasks.Windows
             get
             {
                if (_generatedBamlFiles == null)
-                   _generatedBamlFiles = Array.Empty<TaskItem>();
+                   _generatedBamlFiles = new TaskItem[0];
                return _generatedBamlFiles;
             }
 
@@ -635,7 +635,7 @@ namespace Microsoft.Build.Tasks.Windows
             get
             {
                 if (_generatedLocalizationFiles == null)
-                    _generatedLocalizationFiles = Array.Empty<TaskItem>();
+                    _generatedLocalizationFiles = new TaskItem[0];
 
                 return _generatedLocalizationFiles;
             }

@@ -79,7 +79,7 @@ namespace System.Xaml.Schema
         [SecuritySafeCritical]
         internal MemberReflector(XamlType type, XamlValueConverter<TypeConverter> typeConverter)
         {
-            Type = type;
+            this.Type = type;
             _typeConverter.Value = typeConverter;
             _designerSerializationVisibility = DesignerSerializationVisibility.Visible;
             _memberBits = (int)BoolMemberBits.Directive | (int)BoolMemberBits.AllValid;

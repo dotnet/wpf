@@ -351,9 +351,9 @@ namespace System.Windows.Markup
         }
 
         // These are special attributes that aren't mapped like other properties
-        internal const string XmlSpaceString = "xml:space";
-        internal const string XmlLangString = "xml:lang";
-        internal const string XmlnsDefinitionString = "xmlns";
+        internal static readonly string XmlSpaceString = "xml:space";
+        internal static readonly string XmlLangString  = "xml:lang";
+        internal static readonly string XmlnsDefinitionString = "xmlns";
         private static MethodInfo _xmlSpaceSetter = null;
 #endregion Internal
     }

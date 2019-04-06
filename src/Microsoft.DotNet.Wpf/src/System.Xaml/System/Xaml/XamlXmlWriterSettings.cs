@@ -15,8 +15,8 @@ namespace System.Xaml
         {
             return new XamlXmlWriterSettings()
             {
-                AssumeValidInput = AssumeValidInput,
-                CloseOutput = CloseOutput
+                AssumeValidInput = this.AssumeValidInput,
+                CloseOutput = this.CloseOutput
             };
         }
     }

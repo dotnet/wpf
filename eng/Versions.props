@@ -24,7 +24,7 @@
     <SystemWindowsExtensionsPackageVersion>4.6.0-preview5.19206.5</SystemWindowsExtensionsPackageVersion>
     <SystemCodeDomPackageVersion>4.6.0-preview5.19206.5</SystemCodeDomPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/arcade -->
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19206.5</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19207.1</MicrosoftDotNetCodeAnalysisPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/corefxlab -->
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->

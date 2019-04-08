@@ -59,7 +59,7 @@ namespace System.Windows.Markup
             /// <summary>
             /// ScopeCount.  Incremented for nested scopes.   
             /// </summary>
-            public int    ScopeCount;
+            public int ScopeCount;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace System.Windows.Markup
         {
             if(null == xmlnsDictionary)
             {
-                throw new ArgumentNullException( "xmlnsDictionary" );
+                throw new ArgumentNullException(nameof(xmlnsDictionary));
             }
             
             // Copy the Declarations if they exists 
@@ -223,7 +223,7 @@ namespace System.Windows.Markup
         /// <returns>Returns an enumerator on the dictionary contents</returns>
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
-            HybridDictionary namespaceTable = new HybridDictionary(_lastDecl);
+            var namespaceTable = new HybridDictionary(_lastDecl);
 
             for (int thisDecl = 0; thisDecl < _lastDecl;  thisDecl++)
             {
@@ -260,7 +260,7 @@ namespace System.Windows.Markup
         /// <param name="index">The zero-based index in array at which copying begins</param>
         public void CopyTo(Array array, int index)
         {
-            IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
+            var dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
             if (dict != null)
                 dict.CopyTo(array,index);
         }
@@ -297,7 +297,7 @@ namespace System.Windows.Markup
         /// <returns>Returns an enumerator on the dictionary contents</returns>
         protected IDictionaryEnumerator GetDictionaryEnumerator()
         {
-            HybridDictionary namespaceTable = new HybridDictionary(_lastDecl);
+            var namespaceTable = new HybridDictionary(_lastDecl);
 
             for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
             {
@@ -341,7 +341,7 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( "prefix" ); 
+                throw new ArgumentNullException(nameof(prefix)); 
             }
             
             if (_lastDecl >0)
@@ -373,7 +373,7 @@ namespace System.Windows.Markup
         {
             if (xmlNamespace == null)
             {
-                throw new ArgumentNullException( "xmlNamespace" ); 
+                throw new ArgumentNullException(nameof(xmlNamespace)); 
             }
 
             if (_lastDecl > 0)
@@ -444,18 +444,12 @@ namespace System.Windows.Markup
         /// <summary>
         /// IDictionary property specifying whether the dictionary is fixed size (always false)
         /// </summary>
-        public bool IsFixedSize
-        {
-            get { return false; }
-        }
+        public bool IsFixedSize => false;
 
         /// <summary>
         /// IDictionary property specifying whether the dictionary is read-only
         /// </summary>
-        public bool IsReadOnly
-        {
-            get { return _sealed; }
-        }
+        public bool IsReadOnly => _sealed;
 
         /// <summary>
         /// A property indexing into the dictionary by XML prefix
@@ -499,7 +493,7 @@ namespace System.Windows.Markup
                 // Dynamically create the keys table and return it.
                 // should be used mainly in foreach cases thru IEnumerator.
                 // Indexer is provided, so this is seldom useful.
-                ArrayList prefixes = new ArrayList(_lastDecl+1);
+                var prefixes = new ArrayList(_lastDecl+1);
                 for (int thisDecl =0; thisDecl < _lastDecl; thisDecl++)
                 {
                     // add all the Namespace Declarations whose Namespaces are not null
@@ -521,7 +515,7 @@ namespace System.Windows.Markup
         {
             get 
             {                
-                HybridDictionary namespaceTable = new HybridDictionary(_lastDecl+1);
+                var namespaceTable = new HybridDictionary(_lastDecl+1);
                 for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
                 {
                     if (_nsDeclarations[thisDecl].Uri != null)
@@ -536,38 +530,23 @@ namespace System.Windows.Markup
         /// <summary>
         /// The number of elements in the dictionaries
         /// </summary>
-        public int Count
-        {
-            get 
-            {
-                return _countDecl;
-            }
-        }
+        public int Count => _countDecl;
 
         /// <summary>
         /// Whether or not access to this dictionary is thread-safe
         /// </summary>
-        public bool IsSynchronized
-        {
-            get  {return _nsDeclarations.IsSynchronized; }
-        }
+        public bool IsSynchronized => _nsDeclarations.IsSynchronized;
 
         /// <summary>
         /// An object that can be used to synchronize access to the dictionary
         /// </summary>
-        public object SyncRoot
-        {
-            get {return _nsDeclarations.SyncRoot; }
-        }
+        public object SyncRoot => _nsDeclarations.SyncRoot;
 
 #if !PBTCOMPILER
         /// <summary>
         /// Whether or not the dictionary is sealed
         /// </summary>
-        public bool Sealed
-        {
-            get { return _sealed; }
-        }
+        public bool Sealed => _sealed;
 #endif
 
 #endregion Properties
@@ -614,10 +593,10 @@ namespace System.Windows.Markup
             CheckSealed();
             
             if (xmlNamespace == null)
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
 
             if (prefix == null)
-                throw new ArgumentNullException("prefix");
+                throw new ArgumentNullException(nameof(prefix));
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -664,12 +643,12 @@ namespace System.Windows.Markup
             {
                 if (xmlNamespace == null)
                 {
-                    throw new ArgumentNullException("xmlNamespace");
+                    throw new ArgumentNullException(nameof(xmlNamespace));
                 }
 
                 if (prefix == null)
                 {
-                    throw new ArgumentNullException("prefix");
+                    throw new ArgumentNullException(nameof(prefix));
                 }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;
@@ -687,7 +666,7 @@ namespace System.Windows.Markup
         }
 
         // Get all namespaces in the local or scope from the last parent
-        private  IDictionary GetNamespacesInScope(NamespaceScope scope)
+        private IDictionary GetNamespacesInScope(NamespaceScope scope)
         {
             int i = 0;
 
@@ -706,7 +685,7 @@ namespace System.Windows.Markup
                     break;
             }
 
-            HybridDictionary dict = new HybridDictionary(_lastDecl -i + 1);
+            var dict = new HybridDictionary(_lastDecl -i + 1);
 
             for (; i < _lastDecl; i++)
             {
@@ -763,7 +742,7 @@ namespace System.Windows.Markup
         /// Namespace Declarations Rear Index, where we do additions and deletions, also
         /// this is the index from which we start lookup for namespaces.
         /// </summary>
-        private int   _lastDecl = 0;
+        private int _lastDecl = 0;
 
         /// <summary>
         /// Namespace Declarations Rear Index, where we do additions and deletions, also

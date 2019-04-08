@@ -1,0 +1,28 @@
+<Project>
+  <PropertyGroup>
+    <PreparePackageAssetsDependsOn Condition="'$(IsRedistProject)'=='true'">
+      $(PreparePackageAssetsDependsOn);
+      CopyRedistFile
+    </PreparePackageAssetsDependsOn>
+  </PropertyGroup>
+  <!-- 
+    Target used by projects under \src\Microsoft.DotNet.Wpf\redist\
+  -->
+  <Target Name="CopyRedistFile"
+          AfterTargets="Build"
+          Returns="$(TargetPath);@(AdditionalRedistFile->'%(Destination)')"
+          Condition="'$(IsRedistProject)'=='true'">
+
+    <Error Condition="!Exists($(RedistSourcePath))"
+       Text="RedistSourcePath='$(RedistSourcePath)' is not defined or it doesn't exist- cannot copy redistributable file to '$(TargetPath)'" />
+
+    <Delete Condition="Exists('$(TargetPath)')" Files="$(TargetPath)" />
+    <Copy SourceFiles="$(RedistSourcePath)" 
+          DestinationFiles="$(TargetPath)" />
+
+    <Delete Condition="Exists('%(AdditionalRedistFile.Destination)')" 
+            Files="%(AdditionalRedistFile.Destination)" />
+    <Copy SourceFiles="@(AdditionalRedistFile)"
+          DestinationFolder="%(AdditionalRedistFile.Destination)" />
+  </Target>
+</Project>

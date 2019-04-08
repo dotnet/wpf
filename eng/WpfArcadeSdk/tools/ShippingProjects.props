@@ -1,0 +1,137 @@
+<Project>
+  <PropertyGroup>
+    <ExternalShippingProjects>
+      System.Xaml;
+      PresentationBuildTasks
+    </ExternalShippingProjects>
+
+    <InternalShippingProjects>
+      PresentationCore;
+      DirectWriteForwarder;
+      PresentationCore-CommonResources;
+      PresentationFramework;
+      PresentationFramework-SystemCore;
+      PresentationFramework-SystemData;
+      PresentationFramework-SystemDrawing;
+      PresentationFramework-SystemXml;
+      PresentationFramework-SystemXmlLinq;
+      PresentationUI;
+      ReachFramework;
+      System.Printing;
+      System.Windows.Controls.Ribbon;
+      System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      WindowsFormsIntegration;
+      PenImc;
+      PresentationNative;
+      WpfGfx;
+      D3DCompiler;
+      VCRuntime
+    </InternalShippingProjects>
+
+    <ShippingProjects>
+      $(ExternalShippingProjects);
+      $(InternalShippingProjects)
+    </ShippingProjects>
+
+    <ExcludeFromXlfLocalization>
+      PresentationBuildTasks;
+      D3DCompiler;
+      VCRuntime
+    </ExcludeFromXlfLocalization>
+
+    <WindowsDesktopSdkProject>
+      PresentationBuildTasks
+    </WindowsDesktopSdkProject>
+    
+    <CycleBreakerProjects>
+        PresentationFramework-PresentationUI-api-cycle;
+        PresentationFramework-ReachFramework-impl-cycle;
+        PresentationFramework-System.Printing-api-cycle;
+        PresentationFramework-System.Printing-impl-cycle;
+        PresentationUI-PresentationFramework-impl-cycle;
+        ReachFramework-PresentationFramework-api-cycle;
+        ReachFramework-System.Printing-api-cycle;
+        System.Printing-PresentationFramework-api-cycle
+    </CycleBreakerProjects>
+    <HandCraftedReferenceProjects>
+        System.Printing-ref
+    </HandCraftedReferenceProjects>
+
+    <HelperProjects>
+      $(CycleBreakerProjects);
+      $(HandCraftedReferenceProjects)
+    </HelperProjects>
+
+    <!--
+      These assemblies have the public key id 31bf3856ad364e35 (MicrosoftShared)
+    -->
+    <UseMicrosoftSharedKeyId>
+      DirectWriteForwarder;
+      PresentationBuildTasks;
+      PresentationCore;
+      PresentationFramework;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      PresentationUI;
+      ReachFramework;
+      System.Printing;
+      UIAutomationClient;
+      UIAutomationClientsideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      WindowsFormsIntegration;
+      PresentationFramework-PresentationUI-api-cycle;
+      PresentationFramework-ReachFramework-impl-cycle;
+      PresentationFramework-System.Printing-api-cycle;
+      PresentationFramework-System.Printing-impl-cycle;
+      ReachFramework-PresentationFramework-api-cycle;
+      ReachFramework-System.Printing-api-cycle;
+      System.Printing-PresentationFramework-api-cycle;
+      PresentationUI-PresentationFramework-impl-cycle;
+      System.Printing-ref
+    </UseMicrosoftSharedKeyId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      Some WPF product assemblies, like System.Windows.Controls.Ribbon, require markup compilation.
+      At present, a temporary project is created on the disk during markup-compilation with a name like 
+          <ProjectName>_random_wpftmp.csproj
+      Normalizing $(MSBuildProjectName) allows us to ensure that temporary projects of this nature are also
+      correctly treated as IsShipping=true
+    -->
+    <NormalizedMSBuildProjectName Condition="!$(MSBuildProjectName.EndsWith('_wpftmp'))">$(MSBuildProjectName)</NormalizedMSBuildProjectName>
+    <NormalizedMSBuildProjectName Condition="$(MSBuildProjectName.EndsWith('_wpftmp'))">$(MSBuildProjectName.SubString(0, $(MSBuildProjectName.IndexOf('_'))))</NormalizedMSBuildProjectName>
+    
+    <IsShipping>false</IsShipping>
+    <IsShipping Condition="$(ShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IsShipping>
+    <IsShipping Condition="'$(IsPackagingProject)'=='true'">true</IsShipping>
+
+    <EnableXlfLocalization>false</EnableXlfLocalization>
+    <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(NormalizedMSBuildProjectName)'))">true</EnableXlfLocalization>
+
+    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
+    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
+    
+    <!-- WindowsDesktopSdk overrides Internal, External etc. -->
+    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+  </PropertyGroup>
+  
+</Project>

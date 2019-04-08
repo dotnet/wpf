@@ -1,0 +1,48 @@
+<Project>
+  <!-- This workaround fixes an issue with ResolveAssemblyReferences task where it 
+       removes a reference to *project* WindowsBase.dll because *sdk reference* 
+       WindowsBase.dll exists in the list of references it resolves. -->
+  <Target Name="FixupProjectReferences" AfterTargets="ResolveAssemblyReferences">
+    <CallTarget Targets="ResolveProjectReferences" />
+    <ItemGroup>
+      <ReferencePath Remove="@(_ResolvedNativeProjectReferencePaths)" />
+      <ReferencePath Include="@(_ResolvedNativeProjectReferencePaths)" />
+
+      <ReferencePath Remove="@(_ResolvedProjectReferencePaths)" />
+      <ReferencePath Include="@(_ResolvedProjectReferencePaths)" />
+    </ItemGroup>
+    <ItemGroup>
+      <FilteredReferencePath Remove="@(FilteredReferencePath)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(ReferencePath)">
+      <Output TaskParameter="Filtered" ItemName="FilteredReferencePath"/>
+    </RemoveDuplicates>
+    <ItemGroup>
+      <ReferencePath Remove="@(ReferencePath)" />
+      <ReferencePath Include="@(FilteredReferencePath)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(ProjectReference)">
+      <Output TaskParameter="Filtered" ItemName="FilteredProjectReference"/>
+    </RemoveDuplicates>
+    <ItemGroup>
+      <ProjectReference Remove="@(ProjectReference)" />
+      <ProjectReference Include="@(FilteredProjectReference)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="DeDuplicateProjectReferenceWithConfiguration" AfterTargets="AssignProjectConfiguration">
+    <RemoveDuplicates Inputs="@(ProjectReferenceWithConfiguration)">
+      <Output TaskParameter="Filtered" ItemName="_filteredProjectReferenceWithConfiguration"/>
+    </RemoveDuplicates>
+    <ItemGroup>
+      <ProjectReferenceWithConfiguration Remove="@(ProjectReferenceWithConfiguration)" />
+      <ProjectReferenceWithConfiguration Include="@(_filteredProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_ProjectReferenceWithConfiguration)">
+      <Output TaskParameter="Filtered" ItemName="_filtered_ProjectReferenceWithConfiguration"/>
+    </RemoveDuplicates>
+    <ItemGroup>
+      <_ProjectReferenceWithConfiguration Remove="@(_ProjectReferenceWithConfiguration)" />
+      <_ProjectReferenceWithConfiguration Include="@(_filtered_ProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+  </Target>
+</Project>

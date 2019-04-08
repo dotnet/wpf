@@ -1,0 +1,84 @@
+<Project>
+  <PropertyGroup>
+    <TaskFactoryToUse Condition="'$(MSBuildProjectExtension)'!='.vcxproj'">RoslynCodeTaskFactory</TaskFactoryToUse>
+    <TaskFactoryToUse Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">CodeTaskFactory</TaskFactoryToUse>
+
+    <TaskFactoryAssemblyToUse Condition="'$(MSBuildProjectExtension)'!='.vcxproj'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyToUse>
+    <TaskFactoryAssemblyToUse Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll</TaskFactoryAssemblyToUse>
+  </PropertyGroup>
+  
+  <UsingTask TaskName="FilterItem1ByItem2"
+               TaskFactory="$(TaskFactoryToUse)"
+               AssemblyFile="$(TaskFactoryAssemblyToUse)">
+    <ParameterGroup>
+      <Item1 ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Item2 ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Metadata2 ParameterType="System.String" Required="true" />
+      <PreserveItem1Metadata ParameterType="System.Boolean" />
+      <PreserveItem2Metadata ParameterType="System.Boolean" />
+      <TreatItemsAsPaths ParameterType="System.Boolean" />
+      <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+      <UnmatchedReferences ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            var result = new List<TaskItem>();
+            var unmatched = new List<TaskItem>();
+
+            foreach (var item1 in Item1)
+            {
+                bool matched = false;
+                foreach (var item2 in Item2)
+                {
+                    if (item2.MetadataNames.Cast<string>().Contains(Metadata2))
+                    {
+                        string str1 = item1.ItemSpec;
+                        string str2 = item2.GetMetadata(Metadata2);
+
+                        bool cmp =
+                            !TreatItemsAsPaths ?
+                            str1.Equals(str2, StringComparison.OrdinalIgnoreCase)
+                            : Path.Equals(str1, str2);
+
+                        if (cmp)
+                        {
+                            var resultItem = new TaskItem(item2.GetMetadata(Metadata2));
+                            if (PreserveItem1Metadata)
+                            {
+                                var metadata = item1.CloneCustomMetadata();
+                                foreach (object m in metadata.Keys)
+                                {
+                                    resultItem.SetMetadata((string)m, (string)metadata[m]);
+                                }
+                            }
+
+                            if (PreserveItem2Metadata)
+                            {
+                                var metadata = item2.CloneCustomMetadata();
+                                foreach (object m in metadata.Keys)
+                                {
+                                    resultItem.SetMetadata((string)m, (string)metadata[m]);
+                                }
+                            }
+
+                            result.Add(resultItem);
+                            matched = true;
+                        }
+                    }
+                }
+
+                if (!matched)
+                {
+                    unmatched.Add(new TaskItem(item1));
+                }
+            }
+
+            Result = result.ToArray();
+            UnmatchedReferences = unmatched.ToArray();
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>

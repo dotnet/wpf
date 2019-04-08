@@ -3,7 +3,6 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <AssemblyKey>ECMA</AssemblyKey>
     <IsWPF>true</IsWPF>
   </PropertyGroup>
 </Project>

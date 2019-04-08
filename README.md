@@ -11,11 +11,11 @@ WPF applications are based on a vector graphics architecture. This enables appli
 
 See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
 
-[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use Visual Studio 2019 Preview 2 to use WPF and WinForms with .NET Core.
+[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use [Visual Studio 2019 Preview](https://visualstudio.microsoft.com/vs/preview/) to use WPF and WinForms with .NET Core.
 
 ## Getting started
 
-* [.NET Core 3.0 SDK Preview 2](https://www.microsoft.com/net/download)
+* [.NET Core 3.0 SDK Preview](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
 

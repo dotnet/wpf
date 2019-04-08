@@ -593,7 +593,7 @@ namespace MS.Win32
             public int bmiHeader_biClrImportant;
 
 
-            // hamidm -- 03/08/2006
+            // Microsoft -- 03/08/2006
             // if the following RGBQUAD struct is added in this struct,
             // we need to update bmiHeader_biSize in the cctor to hard-coded 40
             // since it expects the size of the BITMAPINFOHEADER only

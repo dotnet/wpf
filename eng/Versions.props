@@ -8,6 +8,7 @@
     <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19205.5</MicrosoftPrivateWinformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview5.19207.6</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview5.19207.6</SystemDirectoryServicesVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27608-06</MicrosoftNETCoreAppVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>

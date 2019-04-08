@@ -21,6 +21,7 @@
     <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
+    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppVersion)'!=''">$(MicrosoftNETCoreAppVersion)</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)SystemResources.props"/>

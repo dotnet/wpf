@@ -1,5 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="RuntimeFrameworkVersion">
   <PropertyGroup>
+    <RuntimeFrameworkVersion/>
     <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -1,6 +1,6 @@
-<Project Condition="Exists($(MSBuildProjectDirectory)AvTraceMessages.json)">
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+<Project>
+  <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')">
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" PrivateAssets="all" />
     <None Include="AvTraceDetails.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AvTraceDetails.cs</LastGenOutput>
@@ -22,8 +22,8 @@
       <DependentUpon>PresentationTraceSources.tt</DependentUpon>
     </None>
   </ItemGroup>
-  <Import Project="$(WpfCodeGenDir)TextTemplate.targets" />
-  <ItemGroup>
+  <Import Project="$(WpfCodeGenDir)TextTemplate.targets" Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')" />
+  <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')">
     <T4ParameterValues Include="AvTraceMessageFile">
       <Value>$(MSBuildProjectDirectory)AvTraceMessages.json</Value>
       <Visible>False</Visible>

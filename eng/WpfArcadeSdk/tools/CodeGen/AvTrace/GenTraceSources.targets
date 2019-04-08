@@ -1,0 +1,32 @@
+<Project Condition="Exists($(MSBuildProjectDirectory)AvTraceMessages.json)">
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+    <None Include="AvTraceDetails.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AvTraceDetails.cs</LastGenOutput>
+      <OutputFilePath>$(MSBuildProjectDirectory)</OutputFilePath>
+    </None>
+    <None Update="AvTraceDetails.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AvTraceDetails.tt</DependentUpon>
+    </None>
+    <None Include="PresentationTraceSources.tt" >
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PresentationTraceSources.cs</LastGenOutput>
+      <OutputFilePath>$(MSBuildProjectDirectory)</OutputFilePath>
+    </None>
+    <None Update="PresentationTraceSources.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PresentationTraceSources.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(WpfCodeGenDir)TextTemplate.targets" />
+  <ItemGroup>
+    <T4ParameterValues Include="AvTraceMessageFile">
+      <Value>$(MSBuildProjectDirectory)AvTraceMessages.json</Value>
+      <Visible>False</Visible>
+    </T4ParameterValues>
+  </ItemGroup>
+</Project>

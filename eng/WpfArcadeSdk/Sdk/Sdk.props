@@ -13,7 +13,6 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.props" />
 
   <PropertyGroup>
-    <GenTraceSources>$(WpfArcadeSdkToolsDir)AvTrace\GenTraceSources.pl</GenTraceSources>
     <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
 
     <PublishWindowsPdb Condition="'$(IsShipping)'=='' And '$(IsPackagingProject)'!='true'">true</PublishWindowsPdb>
@@ -35,7 +34,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />
-
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
 
   <PropertyGroup>
     <DebugType>full</DebugType>

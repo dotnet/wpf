@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\Sdk\*" SubFolder="root\Sdk" />
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\*" SubFolder="root\tools" />
-    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\AvTrace\*" SubFolder="root\tools\AvTrace" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeGen\*" SubFolder="root\tools\CodeGen" />
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\*" SubFolder="root\tools\WppConfig" />
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\rev1\*" SubFolder="root\tools\WppConfig\rev1" />
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeAnalysis\*" SubFolder="root\tools\CodeAnalysis" />

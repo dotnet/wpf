@@ -1,0 +1,25 @@
+<Project>
+  <!-- Import Signing.targets before Microsoft.DotNet.Arcade.Sdk -->
+  <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
+  
+  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)GenerateAvTraceMessages.targets"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)Packaging.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Publishing.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ReferenceAssembly.targets"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)ProjectReferences.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)SdkReferences.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)FixupProjectReferences.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Redist.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)WpfProjectReference.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
+  <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
+  
+  <!-- PresentationBuildTasks related targets files -->
+  <Import Project="$(WpfArcadeSdkToolsDir)Pbt.targets" Condition="'$(InternalMarkupCompilation)'=='true'"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)NoInternalTypeHelper.targets" />
+</Project>

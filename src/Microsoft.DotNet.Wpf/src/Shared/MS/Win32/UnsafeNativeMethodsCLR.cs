@@ -16,8 +16,10 @@ namespace MS.Win32
     using System.Security;
     using System.Diagnostics;
     using System.ComponentModel;
+    using MS.Internal;
 #if !DRT && !UIAUTOMATIONTYPES
     using MS.Internal.Interop;
+    using MS.Utility;
 #endif
 
  // DRTs cannot access MS.Internal
@@ -63,6 +65,22 @@ namespace MS.Win32
         [SecurityCritical]
         public static object PtrToStructure(IntPtr lparam, Type cls) {
             return Marshal.PtrToStructure(lparam, cls);
+        }
+
+        /// <summary>
+        /// Generic PtrToStructure(T) - because Marshal.PtrToStructure(T) doesn't
+        /// seem to be available in our build environment.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        /// <securitynote>
+        /// Critical - Marshal.PtrToStructure is Critical
+        /// </securitynote>
+        [SecurityCritical]
+        public static T PtrToStructure<T>(IntPtr lParam)
+        {
+            return (T)Marshal.PtrToStructure(lParam, typeof(T));
         }
 
         // For some reason "StructureToPtr" requires super high permission.
@@ -143,37 +161,12 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetWindow(HandleRef hWnd, int uCmd);
 
-        public enum MonitorOpts : int
-        {
-            MONITOR_DEFAULTTONULL = 0x00000000,
-            MONITOR_DEFAULTTOPRIMARY = 0x00000001,
-            MONITOR_DEFAULTTONEAREST = 0x00000002,
-        }
-
-        public enum MonitorDpiType
-        {
-            MDT_Effective_DPI = 0,
-            MDT_Angular_DPI = 1,
-            MDT_Raw_DPI = 2,
-        }
-
-        public enum ProcessDpiAwareness
-        {
-            Process_DPI_Unaware = 0,
-            Process_System_DPI_Aware = 1,
-            Process_Per_Monitor_DPI_Aware = 2
-        }
-
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
-        [DllImport(ExternDll.Shcore, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
-        public static extern uint GetProcessDpiAwareness(HandleRef hProcess, out IntPtr awareness);
-
         ///<SecurityNote>
         /// Critical: This code escalates to unmanaged code permission
         ///</SecurityNote>
         [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [DllImport(ExternDll.Shcore, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
-        public static extern uint GetDpiForMonitor(HandleRef hMonitor, MonitorDpiType dpiType, out uint dpiX, out uint dpiY);
+        public static extern uint GetDpiForMonitor(HandleRef hMonitor, NativeMethods.MONITOR_DPI_TYPE dpiType, out uint dpiX, out uint dpiY);
 
         [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [DllImport(ExternDll.User32, EntryPoint = "IsProcessDPIAware", CharSet = CharSet.Auto, SetLastError = true)]
@@ -4229,6 +4222,139 @@ namespace MS.Win32
                                                 [In] ref NativeMethods.RID_DEVICE_INFO ridInfo,
                                                 ref uint sizeInBytes);
 
+        /// <summary>
+        /// Retrieves a handle to the menu assigned to the specified window.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose menu handle is to be retrieved.</param>
+        /// <returns>The return value is a handle to the menu. If the specified window has no menu, the return value is NULL.
+        /// If the window is a child window, the return value is undefined.</returns>
+        /// <remarks>
+        /// GetMenu does not work on floating menu bars. Floating menu bars are custom controls that mimic
+        /// standard menus; they are not menus. To get the handle on a floating menu bar, use the Active Accessibility APIs.
+        /// </remarks>
+        [SecurityCritical]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+        internal extern static IntPtr GetMenu([In] HandleRef hWnd);
 
+#if !DRT && !UIAUTOMATIONTYPES
+
+        /// <summary>
+        /// Set the DPI awareness for the current thread to the provided value.
+        /// </summary>
+        /// <param name="dpiContext">
+        /// The new DPI_AWARENESS_CONTEXT for the current thread. This context includes the DPI_AWARENESS value.
+        /// </param>
+        /// <returns>
+        /// The old DPI_AWARENESS_CONTEXT for the thread. If the dpiContext is invalid, the thread will not
+        /// be updated and the return value will be NULL. You can use this value to restore the old DPI_AWARENESS_CONTEXT
+        /// after overriding it with a predefined value.
+        /// </returns>
+        /// <remarks>
+        /// Use this API to change the DPI_AWARENESS_CONTEXT for the thread from the default value for the app.
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+        internal static extern DpiAwarenessContextHandle SetThreadDpiAwarenessContext(DpiAwarenessContextHandle dpiContext);
+
+        /// <summary>
+        /// Gets the DPI_AWARENESS_CONTEXT for the current thread.
+        /// </summary>
+        /// <returns>The current DPI_AWARENESS_CONTEXT for the thread.</returns>
+        /// <remarks>
+        /// This method will return the latest DPI_AWARENESS_CONTEXT sent to SetThreadDpiAwarenessContext.
+        /// If SetThreadDpiAwarenessContext was never called for this thread, then the return value will equal
+        /// the default DPI_AWARENESS_CONTEXT for the process.
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+        internal static extern DpiAwarenessContextHandle GetThreadDpiAwarenessContext();
+
+#endif
+
+        /// <summary>
+        /// The EnumDisplayMonitors function enumerates display monitors (including invisible pseudo-monitors
+        /// associated with the mirroring drivers) that intersect a region formed by the intersection of a specified
+        /// clipping rectangle and the visible region of a device context. EnumDisplayMonitors calls an
+        /// application-defined MonitorEnumProc callback function once for each monitor that is enumerated.
+        /// Note that GetSystemMetrics (SM_CMONITORS) counts only the display monitors.
+        /// </summary>
+        /// <param name="hdc">
+        /// A handle to a display device context that defines the visible region of interest.
+        /// 
+        /// If this parameter is NULL, the hdcMonitor parameter passed to the callback function
+        /// will be NULL, and the visible region of interest is the virtual screen that encompasses all
+        /// the displays on the desktop.
+        /// </param>
+        /// <param name="lprcClip">
+        /// A pointer to a RECT structure that specifies a clipping rectangle. The region of interest
+        /// is the intersection of the clipping rectangle with the visible region specified by hdc.
+        /// 
+        /// If hdc is non-NULL, the coordinates of the clipping rectangle are relative to the origin
+        /// of the hdc.If hdc is NULL, the coordinates are virtual-screen coordinates.
+        /// 
+        /// This parameter can be NULL if you don't want to clip the region specified by hdc.
+        /// </param>
+        /// <param name="lpfnEnum">A pointer to a MonitorEnumProc application-defined callback function.</param>
+        /// <param name="lParam">Application-defined data that EnumDisplayMonitors passes directly to the
+        /// MonitorEnumProc function.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is true, otherwise the
+        /// return value is false.
+        /// </returns>
+        /// <remarks>
+        /// There are two reasons to call the EnumDisplayMonitors function:
+        /// 
+        ///     You want to draw optimally into a device context that spans several display monitors, and the monitors have different color formats.
+        ///     You want to obtain a handle and position rectangle for one or more display monitors.
+        /// 
+        /// To determine whether all the display monitors in a system share the same color format, call GetSystemMetrics (SM_SAMEDISPLAYFORMAT).
+        /// 
+        /// You do not need to use the EnumDisplayMonitors function when a window spans display monitors that have different color formats.
+        /// You can continue to paint under the assumption that the entire screen has the color properties of the primary monitor.Your windows will
+        /// look fine.EnumDisplayMonitors just lets you make them look better.
+        /// 
+        /// Setting the hdc parameter to NULL lets you use the EnumDisplayMonitors function to obtain a handle and position rectangle for
+        /// one or more display monitors.The following table shows how the four combinations of NULL and non-NULLhdc and lprcClip values affect
+        /// the behavior of the EnumDisplayMonitors function.
+        /// 
+        /// +-----------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        /// |                                        hdc                                        | lprcRect |                                                                          EnumDisplayMonitors behavior                                                                          |
+        /// +-----------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        /// | NULL                                                                              | NULL     | Enumerates all display monitors.                                                                                                                                               |
+        /// | The callback function receives a NULL HDC.                                        |          |                                                                                                                                                                                |
+        /// | NULL                                                                              | non-NULL | Enumerates all display monitors that intersect the clipping rectangle.Use virtual screen coordinates for the clipping rectangle.                                               |
+        /// | The callback function receives a NULL HDC.                                        |          |                                                                                                                                                                                |
+        /// | non-NULL                                                                          | NULL     | Enumerates all display monitors that intersect the visible region of the device context.                                                                                       |
+        /// | The callback function receives a handle to a DC for the specific display monitor. |          |                                                                                                                                                                                |
+        /// | non-NULL                                                                          | non-NULL | Enumerates all display monitors that intersect the visible region of the device context and the clipping rectangle.Use device context coordinates for the clipping rectangle.  |
+        /// | The callback function receives a handle to a DC for the specific display monitor. |          |                                                                                                                                                                                |
+        /// +-----------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        /// </remarks>
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool EnumDisplayMonitors(
+            IntPtr hdc, 
+            IntPtr lprcClip, 
+            NativeMethods.MonitorEnumProc lpfnEnum, 
+            IntPtr lParam);
+
+        /// <summary>
+        /// Retrieves a value that describes the Device Guard policy enforcement status for .NET dynamic code.
+        /// </summary>
+        /// <param name="enabled">On success, returns true if the Device Guard policy enforces .NET Dynamic Code policy; otherwise, returns false.</param>
+        /// <returns>This method returns S_OK if successful or a failure code otherwise.</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        [DllImport(ExternDll.Wldp, CallingConvention = CallingConvention.Winapi, ExactSpelling = true)]
+        internal static extern int WldpIsDynamicCodePolicyEnabled([Out] out bool enabled);
     }
 }

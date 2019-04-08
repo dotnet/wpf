@@ -4,7 +4,7 @@
         <RootNamespace>TestServices</RootNamespace>
         <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;CORE_NATIVEMETHODS;DRT</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <NoWarn>$(NoWarn);CS0618</NoWarn>
+        <NoWarn>$(NoWarn);CS0618;0618</NoWarn>
         <Platforms>AnyCPU;x64</Platforms>
         <UseWPF>true</UseWPF>
     </PropertyGroup>

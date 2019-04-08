@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup Condition="'$(GenerateProgramFile)'==''">
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <GenerateProgramFile Condition="'$(IsTestProject)'=='true' And '$(InternalMarkupCompilation)'!='true'">true</GenerateProgramFile>
+  </PropertyGroup>
+</Project>

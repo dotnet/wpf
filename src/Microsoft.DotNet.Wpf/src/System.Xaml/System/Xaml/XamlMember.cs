@@ -147,10 +147,11 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(SR.Get(SRID.GetterOrSetterRequired), (Exception)null);
             }
-            ValidateGetter(getter, "getter");
-            ValidateSetter(setter, "setter");
-
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
+
+            ValidateGetter(getter, nameof(getter));
+            ValidateSetter(setter, nameof(setter));
+
             _declaringType = schemaContext.GetXamlType(accessor.DeclaringType);
             _reflector = reflector;
             _memberType = MemberType.Attachable;

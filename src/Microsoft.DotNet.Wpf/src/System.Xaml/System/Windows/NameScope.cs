@@ -33,7 +33,7 @@ namespace System.Xaml
             if (scopedElement == null)
                 throw new ArgumentNullException(nameof(scopedElement));
 
-            if (name == string.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
@@ -78,7 +78,7 @@ namespace System.Xaml
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (name == string.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (_nameMap != null && _nameMap[name] != null)
@@ -104,7 +104,7 @@ namespace System.Xaml
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || name == null || name == string.Empty)
+            if (_nameMap == null || string.IsNullOrEmpty(name))
                 return null;
 
             return _nameMap[name];
@@ -121,20 +121,20 @@ namespace System.Xaml
 
         IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            return new Enumerator(this._nameMap);
+            return new Enumerator(_nameMap);
         }
 
         #region IEnumerable methods
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
         #endregion
 
         #region IEnumerable<KeyValuePair<string, object> methods
         IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
         #endregion
 
@@ -367,7 +367,7 @@ namespace System.Xaml
             {
                 get
                 {
-                    return this.Current;
+                    return Current;
                 }
             }
 

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Configuration.ConfigurationManager" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Configuration.ConfigurationManager" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Diagnostics.EventLog" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Diagnostics.EventLog" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Reflection.Emit" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Reflection.Emit" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Reflection.TypeExtensions" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Reflection.TypeExtensions" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Security.AccessControl" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Security.AccessControl" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Security.Cryptography.Xml" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Security.Cryptography.Xml" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Security.Permissions" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Security.Permissions" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Security.Principal.Windows" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Security.Principal.Windows" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.Windows.Extensions" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.Windows.Extensions" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
-    <Dependency Name="System.CodeDom" Version="4.6.0-preview4.19207.5">
+    <Dependency Name="System.CodeDom" Version="4.6.0-preview4.19208.4">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>c74fcf05bfec0c6bfd3a79c773e61defa6c99275</Sha>
+      <Sha>775c8502fda4a8cc40ba58a9677146ab258fdc59</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

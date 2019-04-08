@@ -60,7 +60,6 @@ namespace MS.Internal.Xaml.Parser
         string _tokenText;
         StringState _state;
         bool _hasTrailingWhitespace;
-        int _lineNumber;
         int _startPosition;
         private string _currentParameterName;
         private SpecialBracketCharacters _currentSpecialBracketCharacters;
@@ -69,7 +68,7 @@ namespace MS.Internal.Xaml.Parser
         {
             _context = context;
             _inputText = text;
-            _lineNumber = lineNumber;
+            LineNumber = lineNumber;
             _startPosition = linePosition;
             _idx = -1;
             _state = StringState.Value;
@@ -77,10 +76,7 @@ namespace MS.Internal.Xaml.Parser
             _currentSpecialBracketCharacters = null;
         }
 
-        public int LineNumber
-        {
-            get { return _lineNumber; }
-        }
+        public int LineNumber { get; }
 
         public int LinePosition
         {
@@ -91,25 +87,13 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        public string Namespace
-        {
-            get { return _tokenNamespace; }
-        }
+        public string Namespace => _tokenNamespace;
 
-        public MeTokenType Token
-        {
-            get { return _token; }
-        }
+        public MeTokenType Token => _token;
 
-        public XamlType TokenType
-        {
-            get { return _tokenXamlType; }
-        }
+        public XamlType TokenType => _tokenXamlType;
 
-        public XamlMember TokenProperty
-        {
-            get { return _tokenProperty; }
-        }
+        public XamlMember TokenProperty => _tokenProperty;
 
         // FxCop says this is never called
         //  (but _tokenNamespace is used internally in the Scanner)
@@ -118,20 +102,11 @@ namespace MS.Internal.Xaml.Parser
         //    get { return _tokenNamespace; }
         //}
 
-        public string TokenText
-        {
-            get { return _tokenText; }
-        }
+        public string TokenText => _tokenText;
 
-        public bool IsAtEndOfInput
-        {
-            get { return (_idx >= _inputText.Length); }
-        }
+        public bool IsAtEndOfInput => _idx >= _inputText.Length;
 
-        public bool HasTrailingWhitespace
-        {
-            get { return _hasTrailingWhitespace; }
-        }
+        public bool HasTrailingWhitespace => _hasTrailingWhitespace;
 
         public void Read()
         {
@@ -527,10 +502,7 @@ namespace MS.Internal.Xaml.Parser
             return result;
         }
 
-        private char CurrentChar
-        {
-            get { return _inputText[_idx]; }
-        }
+        private char CurrentChar =>_inputText[_idx];
 
         private char NextChar
         {

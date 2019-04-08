@@ -105,15 +105,9 @@ namespace MS.Internal.Xaml
 
         #region IEnumerator<XamlNode> Members
 
-        public XamlNode Current
-        {
-            get { return _current; }
-        }
+        public XamlNode Current => _current;
 
-        object IEnumerator.Current
-        {
-            get { return _current; }
-        }
+        object IEnumerator.Current => _current;
 
         public bool MoveNext()
         {

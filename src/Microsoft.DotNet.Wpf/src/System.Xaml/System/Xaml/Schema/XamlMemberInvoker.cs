@@ -48,15 +48,9 @@ namespace System.Xaml.Schema
             }
         }
 
-        public MethodInfo UnderlyingGetter
-        {
-            get { return IsUnknown ? null : _member.Getter; }
-        }
+        public MethodInfo UnderlyingGetter => IsUnknown ? null : _member.Getter;
 
-        public MethodInfo UnderlyingSetter
-        {
-            get { return IsUnknown ? null : _member.Setter; }
-        }
+        public MethodInfo UnderlyingSetter => IsUnknown ? null : _member.Setter;
 
         public virtual object GetValue(object instance)
         {
@@ -201,10 +195,7 @@ namespace System.Xaml.Schema
         }
         // ^^^^^----- End of unused members.  -----^^^^^
 
-        private bool IsUnknown
-        {
-            get { return _member == null || _member.UnderlyingMember == null; }
-        }
+        private bool IsUnknown => _member == null || _member.UnderlyingMember == null;
 
         private void ThrowIfUnknown()
         {

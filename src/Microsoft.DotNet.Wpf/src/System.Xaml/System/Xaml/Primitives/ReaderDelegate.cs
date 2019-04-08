@@ -20,7 +20,7 @@ namespace System.Xaml
             _nextDelegate = next;
             _currentNode = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
             _currentLineInfo = null;
-            _hasLineInfo = hasLineInfo;
+            HasLineInfo = hasLineInfo;
         }
 
         public override bool Read()

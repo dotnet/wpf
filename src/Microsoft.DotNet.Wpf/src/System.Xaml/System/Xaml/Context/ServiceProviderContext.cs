@@ -94,20 +94,11 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             return false;
         }
 
-        IContainer ITypeDescriptorContext.Container
-        {
-            get { return null; }
-        }
+        IContainer ITypeDescriptorContext.Container => null;
 
-        object ITypeDescriptorContext.Instance
-        {
-            get { return null; }
-        }
+        object ITypeDescriptorContext.Instance => null;
 
-        PropertyDescriptor ITypeDescriptorContext.PropertyDescriptor
-        {
-            get { return null; }
-        }
+        PropertyDescriptor ITypeDescriptorContext.PropertyDescriptor => null;
         #endregion
 
         #region IXamlTypeResolver Members
@@ -232,32 +223,17 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         #endregion
 
         #region IXamlSchemaContextProvider Members
-        XamlSchemaContext IXamlSchemaContextProvider.SchemaContext
-        {
-            get { return _xamlContext.SchemaContext; }
-        }
+        XamlSchemaContext IXamlSchemaContextProvider.SchemaContext => _xamlContext.SchemaContext;
         #endregion
 
         #region IProvideValueTarget Members
-        object IProvideValueTarget.TargetObject
-        {
-            get { return _xamlContext.ParentInstance; }
-        }
+        object IProvideValueTarget.TargetObject => _xamlContext.ParentInstance;
 
-        object IProvideValueTarget.TargetProperty
-        {
-            get { return ContextServices.GetTargetProperty(this._xamlContext); }
-        }
+        object IProvideValueTarget.TargetProperty => ContextServices.GetTargetProperty(_xamlContext);
         #endregion
 
         #region IRootObjectProvider Members
-        object IRootObjectProvider.RootObject
-        {
-            get
-            {
-                return _xamlContext.RootInstance;
-            }
-        }
+        object IRootObjectProvider.RootObject => _xamlContext.RootInstance;
         #endregion
 
         #region IXamlNamespaceResolver Members
@@ -275,10 +251,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         #region IXamlNameResolver Members
 
-        bool IXamlNameResolver.IsFixupTokenAvailable
-        {
-            get { return !_xamlContext.NameResolutionComplete; }
-        }
+        bool IXamlNameResolver.IsFixupTokenAvailable => !_xamlContext.NameResolutionComplete;
 
         object IXamlNameResolver.Resolve(string name)
         {
@@ -407,20 +380,11 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         #region IXamlLineInfo Members
 
-        public bool HasLineInfo
-        {
-            get { return _xamlContext.LineNumber != 0 || _xamlContext.LinePosition != 0; }
-        }
+        public bool HasLineInfo => _xamlContext.LineNumber != 0 || _xamlContext.LinePosition != 0;
 
-        public int LineNumber
-        {
-            get { return _xamlContext.LineNumber; }
-        }
+        public int LineNumber => _xamlContext.LineNumber;
 
-        public int LinePosition
-        {
-            get { return _xamlContext.LinePosition; }
-        }
+        public int LinePosition => _xamlContext.LinePosition;
 
         #endregion
 

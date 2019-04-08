@@ -433,16 +433,9 @@ namespace MS.Internal.Xaml.Parser
             _tokenizer.Read();
         }
 
-        private int LineNumber
-        {
-            get { return _tokenizer.LineNumber; }
-        }
+        private int LineNumber => _tokenizer.LineNumber;
 
-
-        private int LinePosition
-        {
-            get { return _tokenizer.LinePosition; }
-        }
+        private int LinePosition => _tokenizer.LinePosition;
 
         // ================================================
 

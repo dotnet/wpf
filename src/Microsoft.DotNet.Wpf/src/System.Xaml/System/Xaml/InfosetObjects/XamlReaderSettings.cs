@@ -45,14 +45,7 @@ namespace System.Xaml
         private void InitializeProvideLineInfo()
         {
             //By default, _provideLineInfo is true if the currently executing process is running in debug mode
-            if (Debugger.IsAttached)
-            {
-                ProvideLineInfo = true;
-            }
-            else
-            {
-                ProvideLineInfo = false;
-            }
+            ProvideLineInfo = Debugger.IsAttached;
         }
     }
 }

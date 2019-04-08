@@ -256,7 +256,7 @@ namespace System.Xaml
             get { return IsWritePublicIgnoringType && (_declaringType == null || _declaringType.IsPublic); }
         }
 
-        public string Name { get { return _name; } }
+        public string Name => _name;
 
         public bool IsNameValid
         {
@@ -384,27 +384,15 @@ namespace System.Xaml
             get { return _underlyingMember; }
         }
 
-        public bool IsReadOnly
-        {
-            get { return GetFlag(BoolMemberBits.ReadOnly); }
-        }
+        public bool IsReadOnly => GetFlag(BoolMemberBits.ReadOnly);
 
-        public bool IsWriteOnly
-        {
-            get { return GetFlag(BoolMemberBits.WriteOnly); }
-        }
+        public bool IsWriteOnly => GetFlag(BoolMemberBits.WriteOnly);
 
-        public bool IsAttachable
-        {
-            get { return _memberType == MemberType.Attachable; }
-        }
+        public bool IsAttachable => _memberType == MemberType.Attachable;
 
-        public bool IsEvent
-        {
-            get { return GetFlag(BoolMemberBits.Event); }
-        }
+        public bool IsEvent => GetFlag(BoolMemberBits.Event);
 
-        public bool IsDirective { get { return _memberType == MemberType.Directive; } }
+        public bool IsDirective => _memberType == MemberType.Directive;
 
         public virtual IList<string> GetXamlNamespaces()
         {
@@ -430,10 +418,7 @@ namespace System.Xaml
             }
         }
 
-        public bool IsAmbient
-        {
-            get { return GetFlag(BoolMemberBits.Ambient); }
-        }
+        public bool IsAmbient => GetFlag(BoolMemberBits.Ambient);
 
         public DesignerSerializationVisibility SerializationVisibility
         {

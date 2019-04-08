@@ -338,59 +338,29 @@ namespace System.Xaml
             return !IsEof;
         }
 
-        public override XamlNodeType NodeType
-        {
-            get { return _current.NodeType; }
-        }
+        public override XamlNodeType NodeType => _current.NodeType;
 
-        public override bool IsEof
-        {
-            get { return _current.IsEof; }
-        }
+        public override bool IsEof => _current.IsEof;
 
-        public override NamespaceDeclaration Namespace
-        {
-            get { return _current.NamespaceDeclaration; }
-        }
+        public override NamespaceDeclaration Namespace => _current.NamespaceDeclaration;
 
-        public override XamlType Type
-        {
-            get { return _current.XamlType; }
-        }
+        public override XamlType Type => _current.XamlType; 
 
-        public override object Value
-        {
-            get { return _current.Value; }
-        }
+        public override object Value => _current.Value;
 
-        public override XamlMember Member
-        {
-            get { return _current.Member; }
-        }
+        public override XamlMember Member => _current.Member;
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get { return _context.SchemaContext; }
-        }
+        public override XamlSchemaContext SchemaContext => _context.SchemaContext;
 
         #endregion
 
         #region IXamlLineInfo Members
 
-        public bool HasLineInfo
-        {
-            get { return _mergedSettings.ProvideLineInfo; }
-        }
+        public bool HasLineInfo => _mergedSettings.ProvideLineInfo;
 
-        public int LineNumber
-        {
-            get { return _currentLineInfo.LineNumber; }
-        }
+        public int LineNumber => _currentLineInfo.LineNumber;
 
-        public int LinePosition
-        {
-            get { return _currentLineInfo.LinePosition; }
-        }
+        public int LinePosition => _currentLineInfo.LinePosition;
 
         #endregion
 

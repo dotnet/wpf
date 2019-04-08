@@ -33,7 +33,7 @@ namespace System.Xaml
             _idx = -1;
             _currentNode = s_StartOfStream;
             _currentLineInfo = null;
-            _hasLineInfo = hasLineInfo;
+            HasLineInfo = hasLineInfo;
         }
 
         public override bool Read()
@@ -72,7 +72,7 @@ namespace System.Xaml
             return !IsEof;
         }
 
-        public int Count { get { return _count; } }
+        public int Count => _count;
 
         public int CurrentIndex
         {

@@ -44,20 +44,11 @@ namespace System.Xaml
             }
         }
 
-        public XamlWriter Writer
-        {
-            get { return _writer; }
-        }
+        public XamlWriter Writer => _writer;
 
-        public bool IsEmpty
-        {
-            get { return _nodeQueue.Count == 0; }
-        }
+        public bool IsEmpty => _nodeQueue.Count == 0;
 
-        public int Count
-        {
-            get { return _nodeQueue.Count; }
-        }
+        public int Count => _nodeQueue.Count;
 
         // ======================================
 

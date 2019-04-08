@@ -19,7 +19,7 @@ namespace System.Xaml.Schema
         private ConcurrentDictionary<string, XamlType> _typeCache;
         private ICollection<XamlType> _allPublicTypes;
 
-        public bool IsClrNamespace { get; private set; }
+        public bool IsClrNamespace { get; }
 
         public XamlNamespace(XamlSchemaContext schemaContext)
         {
@@ -46,10 +46,7 @@ namespace System.Xaml.Schema
             _typeCache = XamlSchemaContext.CreateDictionary<string, XamlType>();
         }
 
-        public bool IsResolved
-        {
-            get { return (null != _assemblyNamespaces); }
-        }
+        public bool IsResolved => null != _assemblyNamespaces;
 
         public ICollection<XamlType> GetAllXamlTypes()
         {
@@ -176,12 +173,9 @@ namespace System.Xaml.Schema
 
         #endregion
 
-        internal int RevisionNumber
-        {
-            // The only external mutation we allow is adding new namespaces. So the count of
-            // namespaces also serves as a revision number.
-            get { return (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0; }
-        }
+        // The only external mutation we allow is adding new namespaces. So the count of
+        // namespaces also serves as a revision number.
+        internal int RevisionNumber => _assemblyNamespaces != null ? _assemblyNamespaces.Count : 0;
 
         // ================ Internal Static functions ======================================
 

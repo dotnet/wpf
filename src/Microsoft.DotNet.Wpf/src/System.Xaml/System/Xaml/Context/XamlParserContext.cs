@@ -256,20 +256,11 @@ namespace MS.Internal.Xaml.Context
             set { _stack.CurrentFrame.ForcedToUseConstructor = value; }
         }
 
-        public bool CurrentInItemsProperty
-        {
-            get { return _stack.CurrentFrame.Member == XamlLanguage.Items; }
-        }
+        public bool CurrentInItemsProperty => _stack.CurrentFrame.Member == XamlLanguage.Items;
 
-        public bool CurrentInInitProperty
-        {
-            get { return _stack.CurrentFrame.Member == XamlLanguage.Initialization; }
-        }
+        public bool CurrentInInitProperty => _stack.CurrentFrame.Member == XamlLanguage.Initialization;
 
-        public bool CurrentInUnknownContent
-        {
-            get { return _stack.CurrentFrame.Member == XamlLanguage.UnknownContent; }
-        }
+        public bool CurrentInUnknownContent => _stack.CurrentFrame.Member == XamlLanguage.UnknownContent;
 
         public bool CurrentInImplicitArray
         {
@@ -299,9 +290,6 @@ namespace MS.Internal.Xaml.Context
             return CurrentMember.IsWriteVisibleTo(LocalAssembly, allowProtectedForType);
         }
 
-        public bool CurrentTypeIsRoot
-        {
-            get { return _stack.CurrentFrame.XamlType != null && _stack.Depth == 1; }
-        }
+        public bool CurrentTypeIsRoot => _stack.CurrentFrame.XamlType != null && _stack.Depth == 1;
     }
 }

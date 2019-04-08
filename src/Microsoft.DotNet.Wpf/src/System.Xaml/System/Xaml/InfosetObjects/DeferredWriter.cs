@@ -39,15 +39,9 @@ namespace System.Xaml
             _deferredTreeDepth = -1;
         }
 
-        public bool Handled
-        {
-            get { return _handled; }
-        }
+        public bool Handled => _handled;
 
-        public DeferringMode Mode
-        {
-            get { return _mode; }
-        }
+        public DeferringMode Mode => _mode;
 
         public XamlNodeList CollectTemplateList()
         {
@@ -300,10 +294,7 @@ namespace System.Xaml
             }
         }
 
-        public bool ShouldProvideLineInfo
-        {
-            get { return true; }
-        }
+        public bool ShouldProvideLineInfo => true;
 
         #endregion
 

@@ -6,29 +6,14 @@ namespace System.Xaml
 {
     internal class LineInfo
     {
-        #region Fields
-        private int _lineNumber;
-        private int _linePosition;
-        #endregion
-
-        #region Constructors
         internal LineInfo(int lineNumber, int linePosition)
         {
-            _lineNumber = lineNumber;
-            _linePosition = linePosition;
-        }
-        #endregion
-
-        #region Public Properties
-        public int LineNumber
-        {
-            get { return _lineNumber; }
+            LineNumber = lineNumber;
+            LinePosition = linePosition;
         }
 
-        public int LinePosition
-        {
-            get { return _linePosition; }            
-        }
-        #endregion
+        public int LineNumber { get; }
+
+        public int LinePosition { get; }
     }
 }

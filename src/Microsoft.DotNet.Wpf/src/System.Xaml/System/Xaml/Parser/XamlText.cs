@@ -36,18 +36,9 @@ namespace MS.Internal.Xaml.Parser
             _isWhiteSpaceOnly = true;
         }
 
-        public bool IsEmpty
-        {
-            get { return _sb.Length==0; }
-        }
+        public bool IsEmpty => _sb.Length==0;
 
-        public string Text
-        {
-            get
-            {
-                return _sb.ToString();
-            }
-        }
+        public string Text => _sb.ToString();
 
         public string AttributeText
         {
@@ -62,15 +53,9 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        public bool IsSpacePreserved
-        {
-            get { return _isSpacePreserve; }
-        }
+        public bool IsSpacePreserved => _isSpacePreserve;
 
-        public bool IsWhiteSpaceOnly
-        {
-            get { return _isWhiteSpaceOnly; }
-        }
+        public bool IsWhiteSpaceOnly => _isWhiteSpaceOnly;
 
         public void Paste(string text, bool trimLeadingWhitespace, bool convertCRLFtoLF=true)
         {

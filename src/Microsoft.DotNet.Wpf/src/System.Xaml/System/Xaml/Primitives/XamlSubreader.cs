@@ -37,81 +37,29 @@ namespace System.Xaml
             return true;
         }
 
-        private bool IsEmpty { get { return _done || _firstRead; } }
+        private bool IsEmpty => _done || _firstRead;
 
-        public override XamlNodeType NodeType
-        {
-            get { return IsEmpty ? XamlNodeType.None : _reader.NodeType; }
-        }
+        public override XamlNodeType NodeType => IsEmpty ? XamlNodeType.None : _reader.NodeType;
 
-        public override bool IsEof
-        {
-            get { return IsEmpty ? true : _reader.IsEof; }
-        }
+        public override bool IsEof => IsEmpty ? true : _reader.IsEof;
 
-        public override NamespaceDeclaration Namespace
-        {
-            get { return IsEmpty ? null : _reader.Namespace; }
-        }
+        public override NamespaceDeclaration Namespace => IsEmpty ? null : _reader.Namespace;
 
-        public override XamlType Type
-        {
-            get { return IsEmpty ? null : _reader.Type; }
-        }
+        public override XamlType Type => IsEmpty ? null : _reader.Type;
 
-        public override object Value
-        {
-            get { return IsEmpty ? null : _reader.Value; }
-        }
+        public override object Value => IsEmpty ? null : _reader.Value;
 
-        public override XamlMember Member
-        {
-            get { return IsEmpty ? null : _reader.Member; }
-        }
+        public override XamlMember Member => IsEmpty ? null : _reader.Member;
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get { return _reader.SchemaContext; }
-        }
+        public override XamlSchemaContext SchemaContext => _reader.SchemaContext;
 
         #region IXamlLineInfo Members
 
-        public bool HasLineInfo
-        {
-            get
-            {
-                if (_lineInfoReader == null)
-                {
-                    return false;
-                }
-                return _lineInfoReader.HasLineInfo;
-            }
+        public bool HasLineInfo => _lineInfoReader != null && _lineInfoReader.HasLineInfo;
 
-        }
+        public int LineNumber =>_lineInfoReader == null ? 0 : _lineInfoReader.LineNumber;
 
-        public int LineNumber
-        {
-            get
-            {
-                if (_lineInfoReader == null)
-                {
-                    return 0;
-                }
-                return _lineInfoReader.LineNumber;
-            }
-        }
-
-        public int LinePosition
-        {
-            get
-            {
-                if (_lineInfoReader == null)
-                {
-                    return 0;
-                }
-                return _lineInfoReader.LinePosition;
-            }
-        }
+        public int LinePosition => _lineInfoReader == null ? 0 : _lineInfoReader.LinePosition;
 
         #endregion
 

@@ -14,19 +14,15 @@ namespace MS.Internal.Xaml
 {
     internal abstract class XamlContext
     {
-        private XamlSchemaContext _schemaContext;
         private Func<string, string> _resolvePrefixCachedDelegate;
         protected Assembly _localAssembly;
 
         protected XamlContext(XamlSchemaContext schemaContext)
         {
-            _schemaContext = schemaContext;
+            SchemaContext = schemaContext;
         }
 
-        public XamlSchemaContext SchemaContext
-        {
-            get { return _schemaContext; }
-        }
+        public XamlSchemaContext SchemaContext { get; }
 
         /// <SecurityNote>
         /// Note: not SecurityCritical. Should be used only for convenience filtering, not for security decisions.
@@ -260,7 +256,7 @@ namespace MS.Internal.Xaml
             Debug.Assert(typeName != null, "typeName cannot be null and should have been checked before now");
             Debug.Assert(typeName.Name != null, "typeName.Name cannot be null and should have been checked before now");
             Debug.Assert(typeName.Namespace != null);
-            XamlType xamlType = _schemaContext.GetXamlType(typeName);
+            XamlType xamlType = SchemaContext.GetXamlType(typeName);
             if (xamlType != null && !skipVisibilityCheck && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;
@@ -274,7 +270,7 @@ namespace MS.Internal.Xaml
                     typeArgs = ArrayHelper.ConvertArrayType<XamlTypeName, XamlType>(
                         typeName.TypeArguments, GetXamlTypeOrUnknown);
                 }
-                xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, this.SchemaContext);
+                xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
             }
             return xamlType;
         }
@@ -367,7 +363,7 @@ namespace MS.Internal.Xaml
         {
             XamlType[] typeArgArray = new XamlType[typeArguments.Count];
             typeArguments.CopyTo(typeArgArray, 0);
-            XamlType xamlType = _schemaContext.GetXamlType(ns, name, typeArgArray);
+            XamlType xamlType = SchemaContext.GetXamlType(ns, name, typeArgArray);
             if (xamlType != null && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;

@@ -739,20 +739,11 @@ namespace MS.Internal.Xaml.Parser
 
         // ---------- Private properties  ---------------
 
-        private int LineNumber
-        {
-            get { return _xamlScanner.LineNumber; }
-        }
+        private int LineNumber => _xamlScanner.LineNumber;
 
-        private int LinePosition
-        {
-            get { return _xamlScanner.LinePosition; }
-        }
+        private int LinePosition => _xamlScanner.LinePosition;
 
-        private bool ProvideLineInfo
-        {
-            get { return _settings.ProvideLineInfo; }
-        }
+        private bool ProvideLineInfo => _settings.ProvideLineInfo;
 
         // =================== Logic Functions ========================
 

@@ -6,30 +6,15 @@ namespace System.Xaml
 {
     public class AttachableMemberIdentifier : IEquatable<AttachableMemberIdentifier>
     {
-        readonly Type declaringType;
-        readonly string memberName;
-
         public AttachableMemberIdentifier(Type declaringType, string memberName)
         {
-            this.declaringType = declaringType;
-            this.memberName = memberName;
+            DeclaringType = declaringType;
+            MemberName = memberName;
         }
 
-        public string MemberName
-        {
-            get
-            {
-                return memberName;
-            }
-        }
+        public string MemberName { get; }
 
-        public Type DeclaringType
-        {
-            get
-            {
-                return this.declaringType;
-            }
-        }
+        public Type DeclaringType { get; }
 
         public static bool operator !=(AttachableMemberIdentifier left, AttachableMemberIdentifier right)
         {
@@ -57,24 +42,24 @@ namespace System.Xaml
                 return false;
             }
 
-            return this.declaringType == other.declaringType && this.memberName == other.memberName;
+            return this.DeclaringType == other.DeclaringType && this.MemberName == other.MemberName;
         }
 
         public override int GetHashCode()
         {
-            int a = this.declaringType == null ? 0 : this.declaringType.GetHashCode();
-            int b = this.memberName == null ? 0 : this.memberName.GetHashCode();
+            int a = this.DeclaringType == null ? 0 : this.DeclaringType.GetHashCode();
+            int b = this.MemberName == null ? 0 : this.MemberName.GetHashCode();
             return ((a << 5) + a) ^ b;
         }
 
         public override string ToString()
         {
-            if (this.declaringType == null)
+            if (this.DeclaringType == null)
             {
-                return this.memberName;
+                return this.MemberName;
             }
 
-            return this.declaringType.ToString() + "." + memberName;
+            return this.DeclaringType.ToString() + "." + MemberName;
         }
     }
 }

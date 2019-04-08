@@ -44,13 +44,7 @@ namespace System.Xaml
             base.Dispose(disposing);
         }
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get
-            {
-                return this.xamlXmlWriter.SchemaContext;
-            }
-        }
+        public override XamlSchemaContext SchemaContext => xamlXmlWriter.SchemaContext;
 
         public void Reset()
         {
@@ -64,30 +58,11 @@ namespace System.Xaml
         // It should be called after calling the final WriteEndObject().
         // If MarkupExtensionString is not called before writing the next markup extension string
         // in curly syntax, the previous markup extension string is lost.
-        public string MarkupExtensionString
-        {
-            get
-            {
-                if (this.nodes.Count == 0)
-                {
-                    return sb.ToString();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        public string MarkupExtensionString => nodes.Count == 0 ? sb.ToString() : null;
 
         // This is set to true when the Markup Extension Writer fails to write
         // the given node stream in curly form.
-        public bool Failed
-        {
-            get
-            {
-                return failed;
-            }
-        }
+        public bool Failed => failed;
 
         string LookupPrefix(XamlType type)
         {
@@ -183,26 +158,10 @@ namespace System.Xaml
 
         class Node
         {
-            public XamlMember XamlProperty
-            {
-                get;
-                set;
-            }
-            public XamlPropertySet Members
-            {
-                get;
-                set;
-            }
-            public XamlNodeType NodeType
-            {
-                get;
-                set;
-            }
-            public XamlType XamlType
-            {
-                get;
-                set;
-            }
+            public XamlMember XamlProperty { get; set; }
+            public XamlPropertySet Members { get; set; }
+            public XamlNodeType NodeType { get; set; }
+            public XamlType XamlType { get; set; }
         }
 
         abstract class WriterState
@@ -297,10 +256,7 @@ namespace System.Xaml
             Start()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
             public override void WriteStartObject(XamlMarkupExtensionWriter writer, XamlType type)
             {
@@ -323,10 +279,7 @@ namespace System.Xaml
             {
             }
 
-            public abstract string Delimiter
-            {
-                get;
-            }
+            public abstract string Delimiter { get; }
 
             public override void WriteEndObject(XamlMarkupExtensionWriter writer)
             {
@@ -431,10 +384,7 @@ namespace System.Xaml
             InObjectBeforeMember()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
             public override string Delimiter
             {
@@ -461,15 +411,9 @@ namespace System.Xaml
             InObjectAfterMember()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
-            public override string Delimiter
-            {
-                get { return ", "; }
-            }
+            public override string Delimiter => ", ";
 
             public override void WriteStartMember(XamlMarkupExtensionWriter writer, XamlMember property)
             {
@@ -484,10 +428,7 @@ namespace System.Xaml
             {
             }
 
-            public abstract string Delimiter
-            {
-                get;
-            }
+            public abstract string Delimiter { get; }
 
             public override void WriteValue(XamlMarkupExtensionWriter writer, string value)
             {
@@ -510,15 +451,9 @@ namespace System.Xaml
             InPositionalParametersBeforeValue()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
-            public override string Delimiter
-            {
-                get { return " "; }
-            }
+            public override string Delimiter => " ";
         }
 
         class InPositionalParametersAfterValue : InPositionalParameters
@@ -527,15 +462,9 @@ namespace System.Xaml
             InPositionalParametersAfterValue()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
-            public override string Delimiter
-            {
-                get { return ", "; }
-            }
+            public override string Delimiter => ", ";
 
             public override void WriteEndMember(XamlMarkupExtensionWriter writer)
             {
@@ -555,10 +484,7 @@ namespace System.Xaml
             InMember()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
             public override void WriteValue(XamlMarkupExtensionWriter writer, string value)
             {
@@ -591,10 +517,7 @@ namespace System.Xaml
             InMemberAfterValueOrEndObject()
             {
             }
-            public static WriterState State
-            {
-                get { return state; }
-            }
+            public static WriterState State => state;
 
             public override void WriteEndMember(XamlMarkupExtensionWriter writer)
             {
@@ -617,10 +540,6 @@ namespace System.Xaml
 
     internal class XamlMarkupExtensionWriterSettings
     {
-        public bool ContinueWritingWhenPrefixIsNotFound
-        {
-            get;
-            set;
-        }
+        public bool ContinueWritingWhenPrefixIsNotFound { get; set; }
     }
 }

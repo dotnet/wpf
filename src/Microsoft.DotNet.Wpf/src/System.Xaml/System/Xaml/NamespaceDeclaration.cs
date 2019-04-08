@@ -9,30 +9,14 @@ namespace System.Xaml
     [DebuggerDisplay("Prefix={Prefix} Namespace={Namespace}")]
     public class NamespaceDeclaration
     {
-        private string prefix;
-        
-        private string ns;
-
         public NamespaceDeclaration(string ns, string prefix)
         {
-            this.ns = ns;
-            this.prefix = prefix;
+            this.Namespace = ns;
+            this.Prefix = prefix;
         }
 
-        public string Prefix
-        {
-            get
-            {
-                return prefix;
-            }
-        }
+        public string Prefix { get; }
         
-        public string Namespace
-        {
-            get
-            {
-                return ns;
-            }
-        }
+        public string Namespace { get; }
     }
 }

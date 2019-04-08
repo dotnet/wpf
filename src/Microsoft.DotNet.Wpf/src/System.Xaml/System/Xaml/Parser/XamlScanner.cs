@@ -79,73 +79,31 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        public ScannerNodeType NodeType
-        {
-            get { return _currentNode.NodeType; }
-        }
+        public ScannerNodeType NodeType => _currentNode.NodeType;
 
-        public XamlType Type
-        {
-            get { return _currentNode.Type; }
-        }
+        public XamlType Type => _currentNode.Type;
 
-        public XamlMember PropertyAttribute
-        {
-            get { return _currentNode.PropertyAttribute; }
-        }
+        public XamlMember PropertyAttribute => _currentNode.PropertyAttribute;
 
-        public XamlText PropertyAttributeText
-        {
-            get { return _currentNode.PropertyAttributeText; }
-        }
+        public XamlText PropertyAttributeText => _currentNode.PropertyAttributeText;
 
-        public bool IsCtorForcingMember
-        {
-            get { return _currentNode.IsCtorForcingMember; }
-        }
+        public bool IsCtorForcingMember => _currentNode.IsCtorForcingMember;
 
-        public XamlMember PropertyElement
-        {
-            get { return _currentNode.PropertyElement; }
-        }
+        public XamlMember PropertyElement => _currentNode.PropertyElement;
 
-        public XamlText TextContent
-        {
-            get { return _currentNode.TextContent; }
-        }
+        public XamlText TextContent => _currentNode.TextContent;
 
-        public bool IsXDataText
-        {
-            get { return _currentNode.IsXDataText; }
-        }
+        public bool IsXDataText => _currentNode.IsXDataText;
 
-        public bool HasKeyAttribute
-        {
-            get
-            {
-                return _hasKeyAttribute;
-            }
-        }
+        public bool HasKeyAttribute => _hasKeyAttribute;
 
-        public string Prefix
-        {
-            get { return _currentNode.Prefix; }
-        }
+        public string Prefix => _currentNode.Prefix;
 
-        public string Namespace
-        {
-            get { return _currentNode.TypeNamespace; }
-        }
+        public string Namespace => _currentNode.TypeNamespace;
 
-        public int LineNumber
-        {
-            get { return _currentNode.LineNumber; }
-        }
+        public int LineNumber => _currentNode.LineNumber;
 
-        public int LinePosition
-        {
-            get { return _currentNode.LinePosition; }
-        }
+        public int LinePosition => _currentNode.LinePosition;
 
         // ===================================================================
 
@@ -223,10 +181,7 @@ namespace MS.Internal.Xaml.Parser
             _accumulatedText = null;
         }
 
-        private bool HaveAccumulatedText
-        {
-            get { return _accumulatedText != null && !_accumulatedText.IsEmpty; }
-        }
+        private bool HaveAccumulatedText => _accumulatedText != null && !_accumulatedText.IsEmpty;
 
         // ============= Element Processing ==================================
 
@@ -729,10 +684,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private bool HaveUnprocessedAttributes
-        {
-            get { return _attributes != null; }
-        }
+        private bool HaveUnprocessedAttributes => _attributes != null;
 
         private void EnqueueAnotherAttribute(bool isEmptyTag)
         {

@@ -121,69 +121,21 @@ namespace System.Xaml
             return true;
         }
 
-        public override XamlNodeType NodeType
-        {
-            get
-            {
-                return this.currentXamlNode.NodeType;
-            }
-        }
+        public override XamlNodeType NodeType => currentXamlNode.NodeType;
 
-        public override NamespaceDeclaration Namespace
-        {
-            get
-            {
-                return this.currentXamlNode.NamespaceDeclaration;
-            }
-        }
+        public override NamespaceDeclaration Namespace => currentXamlNode.NamespaceDeclaration;
 
-        public override XamlType Type
-        {
-            get
-            {
-                return this.currentXamlNode.XamlType;
-            }
-        }
+        public override XamlType Type => currentXamlNode.XamlType;
 
-        public override XamlMember Member
-        {
-            get
-            {
-                return this.currentXamlNode.Member;
-            }
-        }
+        public override XamlMember Member => currentXamlNode.Member;
 
-        public override object Value
-        {
-            get
-            {
-                return this.currentXamlNode.Value;
-            }
-        }
+        public override object Value => currentXamlNode.Value;
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get
-            {
-                return this.schemaContext;
-            }
-        }
+        public override XamlSchemaContext SchemaContext => schemaContext;
 
-        public override bool IsEof
-        {
-            get
-            {
-                return this.currentXamlNode.IsEof;
-            }
-        }
+        public override bool IsEof => currentXamlNode.IsEof;
 
-        public virtual object Instance
-        {
-            get
-            {
-                return this.currentXamlNode.NodeType == XamlNodeType.StartObject ? this.currentInstance : null;
-            }
-        }
+        public virtual object Instance =>currentXamlNode.NodeType == XamlNodeType.StartObject ? currentInstance : null;
 
         internal static DesignerSerializationVisibility GetSerializationVisibility(XamlMember member)
         {
@@ -263,13 +215,7 @@ namespace System.Xaml
                 return children;
             }
 
-            public bool IsAtomic
-            {
-                get
-                {
-                    return (this.children.Count == 1) && (this.children[0] is ValueMarkupInfo);
-                }
-            }
+            public bool IsAtomic => children.Count == 1 && children[0] is ValueMarkupInfo;
 
             public bool IsAttributableMarkupExtension
             {
@@ -966,20 +912,16 @@ namespace System.Xaml
 
         class EndObjectMarkupInfo : MarkupInfo
         {
-            static EndObjectMarkupInfo instance = new EndObjectMarkupInfo();
-
             EndObjectMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.EndObject); }
 
-            public static EndObjectMarkupInfo Instance { get { return instance; } }
+            public static EndObjectMarkupInfo Instance { get; } = new EndObjectMarkupInfo();
         }
 
         class EndMemberMarkupInfo : MarkupInfo
         {
-            static EndMemberMarkupInfo instance = new EndMemberMarkupInfo();
-
             EndMemberMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.EndMember); }
 
-            public static EndMemberMarkupInfo Instance { get { return instance; } }
+            public static EndMemberMarkupInfo Instance { get; } = new EndMemberMarkupInfo();
         }
 
         class NamespaceMarkupInfo : MarkupInfo
@@ -996,7 +938,7 @@ namespace System.Xaml
             List<MarkupInfo> properties = new List<MarkupInfo>();
             bool? isAttributableMarkupExtension = null;
 
-            public List<MarkupInfo> Properties { get { return this.properties; } }
+            public List<MarkupInfo> Properties => properties;
             public string Name { get; set; }
             //public object Scope { get; set; }
             //public bool? ShouldWriteAsReference { get; set; }

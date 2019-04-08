@@ -12,14 +12,13 @@ namespace System.Xaml
 {
     public class XamlDirective : XamlMember
     {
-        private AllowedMemberLocations _allowedLocation;
         private readonly IList<string> _xamlNamespaces;
 
         internal XamlDirective(IEnumerable<string> xamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
             : base(name, reflector) 
         {
             _xamlNamespaces = GetReadOnly(xamlNamespaces);
-            _allowedLocation = allowedLocation;
+            AllowedLocation = allowedLocation;
         }
 
         public XamlDirective(IEnumerable<string> xamlNamespaces, string name, XamlType xamlType,
@@ -32,17 +31,17 @@ namespace System.Xaml
             }
 
             _xamlNamespaces = GetReadOnly(xamlNamespaces);
-            _allowedLocation = allowedLocation;
+            AllowedLocation = allowedLocation;
         }
 
         public XamlDirective(string xamlNamespace, string name)
             :base(name, null)
         {
             _xamlNamespaces = GetReadOnly(xamlNamespace);
-            _allowedLocation = AllowedMemberLocations.Any;
+            AllowedLocation = AllowedMemberLocations.Any;
         }
 
-        public AllowedMemberLocations AllowedLocation { get { return _allowedLocation; } }
+        public AllowedMemberLocations AllowedLocation { get; }
 
         public override int GetHashCode()
         {

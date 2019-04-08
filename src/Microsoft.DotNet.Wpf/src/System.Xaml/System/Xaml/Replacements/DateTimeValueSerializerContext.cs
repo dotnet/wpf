@@ -24,15 +24,9 @@ namespace System.Xaml.Replacements
         }
 
 
-        public IContainer Container
-        {
-            get { return null; }
-        }
+        public IContainer Container => null;
 
-        public object Instance
-        {
-            get { return null; }
-        }
+        public object Instance => null;
 
         public void OnComponentChanged()
         {
@@ -43,10 +37,7 @@ namespace System.Xaml.Replacements
             return false;
         }
 
-        public PropertyDescriptor PropertyDescriptor
-        {
-            get { return null; }
-        }
+        public PropertyDescriptor PropertyDescriptor => null;
 
         public object GetService(Type serviceType)
         {

@@ -101,15 +101,9 @@ namespace MS.Internal.Xaml.Parser
         //}
 
         // These properties are only defined if this Xml-Attribute is a XmlNs definition.
-        public string XmlNsPrefixDefined
-        {
-            get { return _xmlnsDefinitionPrefix; }
-        }
+        public string XmlNsPrefixDefined => _xmlnsDefinitionPrefix;
 
-        public string XmlNsUriDefined
-        {
-            get { return _xmlnsDefinitionUri; }
-        }
+        public string XmlNsUriDefined => _xmlnsDefinitionUri;
 
         //  ========================== internal ================================
 

@@ -72,29 +72,10 @@ namespace MS.Internal.Xaml.Parser
             return propName;
         }
 
-        public override string ScopedName
-        {
-            get
-            {
-                return IsDotted ?
-                    Owner.ScopedName + "." + Name :
-                    Name;
-            }
-        }
+        public override string ScopedName => IsDotted ? $"{Owner.ScopedName}.{Name}" : Name;
 
-        public string OwnerName
-        {
-            get
-            {
-                return IsDotted ?
-                    Owner.Name :
-                    string.Empty;
-            }
-        }
+        public string OwnerName => IsDotted ? Owner.Name : string.Empty;
 
-        public bool IsDotted
-        {
-            get { return Owner != null; }
-        }
+        public bool IsDotted => Owner != null;
     }
 }

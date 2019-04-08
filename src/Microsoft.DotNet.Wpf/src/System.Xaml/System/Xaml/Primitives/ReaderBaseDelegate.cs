@@ -15,7 +15,6 @@ namespace System.Xaml
         protected XamlSchemaContext _schemaContext;
         protected XamlNode _currentNode;
         protected LineInfo _currentLineInfo;
-        protected bool _hasLineInfo;
 
         protected ReaderBaseDelegate(XamlSchemaContext schemaContext)
         {
@@ -26,85 +25,24 @@ namespace System.Xaml
             _schemaContext = schemaContext;            
         }
 
-        public override XamlNodeType NodeType
-        {
-            get { return _currentNode.NodeType; }
-        }
+        public override XamlNodeType NodeType => _currentNode.NodeType;
 
-        public override bool IsEof
-        {
-            get { return _currentNode.IsEof; }
-        }
+        public override bool IsEof => _currentNode.IsEof;
 
-        public override NamespaceDeclaration  Namespace
-        {
-            get { return _currentNode.NamespaceDeclaration; }
-        }
+        public override NamespaceDeclaration  Namespace => _currentNode.NamespaceDeclaration;
 
-        public override XamlType Type
-        {
-            get { return _currentNode.XamlType; }
-        }
+        public override XamlType Type => _currentNode.XamlType;
 
-        public override object Value
-        {
-            get { return _currentNode.Value; }
-        }
+        public override object Value => _currentNode.Value;
 
-        public override XamlMember Member
-        {
-            get { return _currentNode.Member; }
-        }
+        public override XamlMember Member => _currentNode.Member;
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get { return _schemaContext; }
-        }
+        public override XamlSchemaContext SchemaContext => _schemaContext;
 
-        #region IXamlLineInfo Members
+        public bool HasLineInfo { get; set; }
 
-        public bool HasLineInfo
-        {
-            get
-            {
-                return _hasLineInfo;
-            }
-            set
-            {
-                _hasLineInfo = value;
-            }
-        }
+        public int LineNumber =>_currentLineInfo != null ? _currentLineInfo.LineNumber : 0;
 
-        public int LineNumber
-        {
-            get 
-            {
-                if (_currentLineInfo != null)
-                {
-                    return _currentLineInfo.LineNumber;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-
-        public int LinePosition
-        {
-            get
-            {
-                if (_currentLineInfo != null)
-                {
-                    return _currentLineInfo.LinePosition;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-
-        #endregion
+        public int LinePosition => _currentLineInfo != null ? _currentLineInfo.LinePosition : 0;
     }
 }

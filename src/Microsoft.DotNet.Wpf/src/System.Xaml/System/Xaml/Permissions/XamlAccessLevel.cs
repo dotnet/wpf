@@ -36,7 +36,7 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentNullException(nameof(assemblyName));
             }
-            ValidateAssemblyName(assemblyName, "assemblyName");
+            ValidateAssemblyName(assemblyName, nameof(assemblyName));
             return new XamlAccessLevel(assemblyName.FullName, null);
         }
 
@@ -64,7 +64,7 @@ namespace System.Xaml.Permissions
             string typeName = assemblyQualifiedTypeName.Substring(0, nameBoundary).Trim();
             string assemblyFullName = assemblyQualifiedTypeName.Substring(nameBoundary + 1).Trim();
             AssemblyName assemblyName = new AssemblyName(assemblyFullName);
-            ValidateAssemblyName(assemblyName, "assemblyQualifiedTypeName");
+            ValidateAssemblyName(assemblyName, nameof(assemblyQualifiedTypeName));
             
             return new XamlAccessLevel(assemblyName.FullName, typeName);
         }
@@ -76,10 +76,7 @@ namespace System.Xaml.Permissions
         // Type references, because permissions can be serialized, and we don't want to force an
         // assembly load on deserialization in a different AppDomain.
         
-        public AssemblyName AssemblyAccessToAssemblyName
-        {
-            get { return new AssemblyName(AssemblyNameString); }
-        }
+        public AssemblyName AssemblyAccessToAssemblyName => new AssemblyName(AssemblyNameString);
 
         public string PrivateAccessToTypeName { get; private set; }
 

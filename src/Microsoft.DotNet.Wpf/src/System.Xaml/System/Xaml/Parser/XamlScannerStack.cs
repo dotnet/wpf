@@ -46,20 +46,11 @@ namespace MS.Internal.Xaml.Parser
             _stack.Pop();
         }
 
-        public int Depth
-        {
-            get { return _stack.Count - 1; }
-        }
+        public int Depth => _stack.Count - 1;
 
-        public XamlType CurrentType
-        {
-            get { return (_stack.Count == 0) ? null : _stack.Peek().XamlType; }
-        }
+        public XamlType CurrentType => _stack.Count == 0 ? null : _stack.Peek().XamlType;
 
-        public string CurrentTypeNamespace
-        {
-            get { return (_stack.Count == 0) ? null : _stack.Peek().TypeNamespace; }
-        }
+        public string CurrentTypeNamespace => _stack.Count == 0 ? null : _stack.Peek().TypeNamespace;
 
         public XamlMember CurrentProperty
         {

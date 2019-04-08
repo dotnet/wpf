@@ -12,7 +12,8 @@ namespace MS.Internal.Xaml.Parser
         public const char UnderScore = '_';
         public const char Dot = '.';
 
-        public string Name { get; protected set; }
+        protected string _prefix;
+        protected string _namespace = null;
 
         protected XamlName() : this(string.Empty) { }
 
@@ -27,13 +28,13 @@ namespace MS.Internal.Xaml.Parser
             _prefix = prefix ?? string.Empty;
         }
 
+        public string Name { get; protected set; }
+
         public abstract string ScopedName { get; }
 
-        protected string _prefix;
-        protected string _namespace = null;
+        public string Prefix => _prefix;
 
-        public string Prefix { get { return _prefix; } }
-        public string Namespace { get { return _namespace; } }
+        public string Namespace => _namespace;
 
         public static bool ContainsDot(string name)
         {

@@ -52,10 +52,7 @@ namespace System.Xaml
             _writer = new WriterDelegate(Add, AddLineInfo, schemaContext);
         }
 
-        public XamlWriter Writer
-        {
-            get { return _writer; }
-        }
+        public XamlWriter Writer => _writer;
 
         public XamlReader GetReader()
         {
@@ -119,9 +116,6 @@ namespace System.Xaml
             _readMode = false;      // go back to write mode.
         }
 
-        public int Count
-        {
-            get { return _nodeList.Count; }
-        }
+        public int Count => _nodeList.Count;
     }
 }

@@ -54,12 +54,7 @@ namespace System.Windows.Markup
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if ( !(value is DateTime))
-            {
-                return false;
-            }
-            
-            return true;
+            return value is DateTime;
         }
 
         /// <summary>
@@ -119,10 +114,10 @@ namespace System.Windows.Markup
                 throw GetConvertToException( value, typeof(string) );
             }
             
-            DateTime dateTime = (DateTime)value;
+            var dateTime = (DateTime)value;
 
             // Build up the format string to be used in DateTime.ToString()
-            StringBuilder formatString = new StringBuilder("yyyy-MM-dd");
+            var formatString = new StringBuilder("yyyy-MM-dd");
             
             if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
@@ -164,10 +159,7 @@ namespace System.Windows.Markup
             // We've finally got our format string built, we can create the string.
 
             return dateTime.ToString(formatString.ToString(), TypeConverterHelper.InvariantEnglishUS );
-
         }
-
     }
-
 }
 

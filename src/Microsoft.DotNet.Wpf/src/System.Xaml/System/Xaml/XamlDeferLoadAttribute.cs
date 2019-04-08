@@ -7,9 +7,6 @@ namespace System.Windows.Markup
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class XamlDeferLoadAttribute : Attribute
     {
-        string _contentTypeName;
-        string _loaderTypeName;
-
         public XamlDeferLoadAttribute(Type loaderType, Type contentType)
         {
             if (loaderType == null)
@@ -20,8 +17,8 @@ namespace System.Windows.Markup
             {
                 throw new ArgumentNullException(nameof(contentType));
             }
-            _loaderTypeName = loaderType.AssemblyQualifiedName;
-            _contentTypeName = contentType.AssemblyQualifiedName;
+            LoaderTypeName = loaderType.AssemblyQualifiedName;
+            ContentTypeName = contentType.AssemblyQualifiedName;
             LoaderType = loaderType;
             ContentType = contentType;
         }
@@ -36,21 +33,16 @@ namespace System.Windows.Markup
             {
                 throw new ArgumentNullException(nameof(contentType));
             }
-            _loaderTypeName = loaderType;
-            _contentTypeName = contentType;
+            LoaderTypeName = loaderType;
+            ContentTypeName = contentType;
         }
 
-        public string LoaderTypeName
-        {
-            get { return _loaderTypeName; }
-        }
+        public string LoaderTypeName { get; }
 
-        public string ContentTypeName
-        {
-            get { return _contentTypeName; }
-        }
+        public string ContentTypeName { get; }
 
         public Type LoaderType { get; private set; }
+
         public Type ContentType { get; private set; }
     }
 }

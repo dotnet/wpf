@@ -37,11 +37,11 @@ namespace MS.Internal.Xaml.Parser
             _pushedBackSymbol = GenericTypeNameScannerToken.NONE;
         }
 
-        public GenericTypeNameScannerToken Token { get { return _token; } }
+        public GenericTypeNameScannerToken Token => _token;
 
-        public string MultiCharTokenText { get { return _tokenText; } }
+        public string MultiCharTokenText => _tokenText;
 
-        public char ErrorCurrentChar { get { return _lastChar; } }
+        public char ErrorCurrentChar => _lastChar;
 
         public void Read()
         {
@@ -331,15 +331,9 @@ namespace MS.Internal.Xaml.Parser
             _idx = 0;
         }
 
-        protected char CurrentChar
-        {
-            get { return _inputText[_idx]; }
-        }
+        protected char CurrentChar => _inputText[_idx];
 
-        public bool IsAtEndOfInput
-        {
-            get { return (_idx >= _inputText.Length); }
-        }
+        public bool IsAtEndOfInput => _idx >= _inputText.Length;
 
         protected bool Advance()
         {

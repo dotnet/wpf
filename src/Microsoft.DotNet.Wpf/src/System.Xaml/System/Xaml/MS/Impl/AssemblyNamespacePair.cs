@@ -11,22 +11,15 @@ namespace System.Xaml.MS.Impl
     internal class AssemblyNamespacePair
     {
         WeakReference _assembly;
-        String _clrNamespace;
 
         public AssemblyNamespacePair(Assembly asm, String clrNamespace)
         {
             _assembly = new WeakReference(asm);
-            _clrNamespace = clrNamespace;
+            ClrNamespace = clrNamespace;
         }
 
-        public Assembly Assembly
-        {
-            get { return (Assembly)_assembly.Target; }
-        }
+        public Assembly Assembly => (Assembly)_assembly.Target;
 
-        public string ClrNamespace
-        {
-            get { return _clrNamespace; }
-        }
+        public string ClrNamespace { get; }
     }
 }

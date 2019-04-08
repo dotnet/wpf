@@ -22,10 +22,7 @@ namespace System.Xaml.Schema
             _factory = factory;
         }
 
-        internal override bool IsPublic
-        {
-            get { return true; }
-        }
+        internal override bool IsPublic => true;
 
         protected override TConverterBase CreateInstance()
         {

@@ -109,15 +109,9 @@ namespace System.Xaml
             }
         }
 
-        internal bool IncomingFull
-        {
-            get { return _inIdx >= _incoming.Length; }
-        }
+        internal bool IncomingFull => _inIdx >= _incoming.Length;
 
-        internal bool OutgoingEmpty
-        {
-            get { return _outIdx >= _outValid; }
-        }
+        internal bool OutgoingEmpty => _outIdx >= _outValid;
 
         private void SwapBuffers()
         {
@@ -267,59 +261,29 @@ namespace System.Xaml
             return _internalReader.Read();
         }
 
-        public override XamlNodeType NodeType
-        {
-            get { return _internalReader.NodeType; }
-        }
+        public override XamlNodeType NodeType => _internalReader.NodeType;
 
-        public override bool IsEof
-        {
-            get { return _internalReader.IsEof; }
-        }
+        public override bool IsEof => _internalReader.IsEof;
 
-        public override NamespaceDeclaration Namespace
-        {
-            get { return _internalReader.Namespace; }
-        }
+        public override NamespaceDeclaration Namespace => _internalReader.Namespace;
 
-        public override XamlType Type
-        {
-            get { return _internalReader.Type; }
-        }
+        public override XamlType Type => _internalReader.Type;
 
-        public override object Value
-        {
-            get { return _internalReader.Value; }
-        }
+        public override object Value => _internalReader.Value;
 
-        public override XamlMember Member
-        {
-            get { return _internalReader.Member; }
-        }
+        public override XamlMember Member => _internalReader.Member;
 
-        public override XamlSchemaContext SchemaContext
-        {
-            get { return _internalReader.SchemaContext; }
-        }
+        public override XamlSchemaContext SchemaContext => _internalReader.SchemaContext;
 
         #endregion
 
         #region IXamlLineInfo Members
 
-        public bool HasLineInfo
-        {
-            get { return _wrappedReaderHasLineInfo; }
-        }
+        public bool HasLineInfo => _wrappedReaderHasLineInfo;
 
-        public int LineNumber
-        {
-            get { return _lineNumber; }
-        }
+        public int LineNumber => _lineNumber;
 
-        public int LinePosition
-        {
-            get { return _linePosition; }
-        }
+        public int LinePosition => _linePosition;
 
         #endregion
 

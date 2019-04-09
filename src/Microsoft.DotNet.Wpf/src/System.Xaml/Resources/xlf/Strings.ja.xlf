@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -29,37 +29,37 @@
       </trans-unit>
       <trans-unit id="Animation_ChildMustBeKeyFrame">
         <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
-        <target state="translated">XAML 内の KeyFrameAnimation の子は、互換性のある種類の KeyFrame でなければなりません。</target>
+        <target state="new">A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
         <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
-        <target state="translated">'{0}' には、Duration として TimeSpan を指定するか、最後の KeyFrame の KeyTime として TimeSpan を指定する必要があります。この '{0}' では、Duration が '{1}' で最後の KeyFrame の KeyTime が '{2}' であるため、KeyTime を解決できません。</target>
+        <target state="new">'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidBaseValue">
         <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
-        <target state="translated">'{0}' はクラス '{2}' の有効な '{1}' 値ではありません。この値は、アニメーション処理されるプロパティのベース値、または同じプロパティに適用された別のアニメーションの出力値によって提供された可能性があります。</target>
+        <target state="new">'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">インデックス {1} のキー フレームの解決された KeyTime 値は、インデックス {4} のキー フレームの解決された KeyTime 値を超えることはできません。KeyFrames[{1}] には KeyTime '{2}' が指定されており、時刻 {3} に解決されます。KeyFrames[{4}] には KeyTime '{5}' が指定されており、時刻 {6} に解決されます。'{0}' の Begin 時刻から相対的に解決されたり、Duration から相対的に解決されたりする KeyTime もあるため、一部の KeyTime がすべての Duration に対して有効でない場合もあります。</target>
+        <target state="new">Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
         <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
-        <target state="translated">'{2}' KeyTime 値は、アニメーションの Duration 値 '{3}' より大きいため、この '{0}' のインデックス {1} のキー フレームに対して無効です。</target>
+        <target state="new">'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_Invalid_DefaultValue">
         <source>'{0}' cannot use default {1} value of '{2}'.</source>
-        <target state="translated">'{0}' は、'{2}' の既定の {1} の値を使用できません。</target>
+        <target state="new">'{0}' cannot use default {1} value of '{2}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_NoTextChildren">
         <source>KeyFrameAnimation objects cannot have text objects as children.</source>
-        <target state="translated">KeyFrameAnimation オブジェクトは、子としてテキスト オブジェクトを持つことができません。</target>
+        <target state="new">KeyFrameAnimation objects cannot have text objects as children.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArgumentRequired">
@@ -74,7 +74,7 @@
       </trans-unit>
       <trans-unit id="AssemblyTagMissing">
         <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
-        <target state="translated">URI '{1}' で、セミコロン ';' と等号 '=' の間の部分が '{0}' ではありません。</target>
+        <target state="new">Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="AttachableEventNotImplemented">
@@ -164,12 +164,12 @@
       </trans-unit>
       <trans-unit id="CannotConvertStringToType">
         <source>Cannot convert string value '{0}' to type '{1}'.</source>
-        <target state="translated">文字列値 '{0}' を型 '{1}' に変換できません。</target>
+        <target state="new">Cannot convert string value '{0}' to type '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotConvertType">
         <source>Cannot convert type '{0}' to '{1}'.</source>
-        <target state="translated">型 '{0}' を '{1}' に変換できません。</target>
+        <target state="new">Cannot convert type '{0}' to '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotCreateBadEventDelegate">
@@ -189,7 +189,7 @@
       </trans-unit>
       <trans-unit id="CannotModifyReadOnlyContainer">
         <source>Cannot modify a read-only container.</source>
-        <target state="translated">読み取り専用コンテナーは変更できません。</target>
+        <target state="new">Cannot modify a read-only container.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotReassignSchemaContext">
@@ -204,7 +204,7 @@
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
         <source>Cannot get part or part information from a write-only container.</source>
-        <target state="translated">書き込み専用コンテナーからパーツまたはパーツの詳細情報を取得することはできません。</target>
+        <target state="new">Cannot get part or part information from a write-only container.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotSetBaseUri">
@@ -274,27 +274,27 @@
       </trans-unit>
       <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
         <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
-        <target state="translated">このコレクション内の要素の数は、'{0}' 以下でなければなりません。</target>
+        <target state="new">The number of elements in this collection must be less than or equal to '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_BadType">
         <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
-        <target state="translated">型 '{1}' のインスタンスを型 '{0}' のコレクションに追加することはできません。型 '{2}' の項目のみが許可されます。</target>
+        <target state="new">Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
         <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
-        <target state="translated">コレクションの CopyTo メソッドに多次元配列を渡すことはできません。</target>
+        <target state="new">Cannot pass multidimensional array to the CopyTo method on a collection.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
         <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
-        <target state="translated">'{0}' パラメーター値は、'{1}' パラメーター値の長さと同じかそれより長くなっています。</target>
+        <target state="new">'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
         <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
-        <target state="translated">このコレクション内の要素の数は、'{0}' からコピー先の最後である '{1}' までの使用可能な領域を超えています。</target>
+        <target state="new">The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ConstructImplicitType">
@@ -399,12 +399,12 @@
       </trans-unit>
       <trans-unit id="Enum_Invalid">
         <source>'{0}' enumeration value is not valid.</source>
-        <target state="translated">'{0}' 列挙値が無効です。</target>
+        <target state="new">'{0}' enumeration value is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="Enumerator_VerifyContext">
         <source>No current object to return.</source>
-        <target state="translated">返すべき現在のオブジェクトがありません。</target>
+        <target state="new">No current object to return.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventCannotBeAssigned">
@@ -454,12 +454,12 @@
       </trans-unit>
       <trans-unit id="FileFormatException">
         <source>Input file or data stream does not conform to the expected file format specification.</source>
-        <target state="translated">入力ファイルまたはデータ ストリームが、予期されたファイル形式の仕様に準拠していません。</target>
+        <target state="new">Input file or data stream does not conform to the expected file format specification.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatExceptionWithFileName">
         <source>'{0}' file does not conform to the expected file format specification.</source>
-        <target state="translated">'{0}' ファイルは、予期されたファイル形式の仕様に準拠していません。</target>
+        <target state="new">'{0}' file does not conform to the expected file format specification.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFoundExceptionMessage">
@@ -474,7 +474,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CantBeFrozen">
         <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
-        <target state="translated">型 '{0}' の指定された値を変更するには、IsFrozen が false に設定されていなければなりません。</target>
+        <target state="new">Specified value of type '{0}' must have IsFrozen set to false to modify.</target>
         <note />
       </trans-unit>
       <trans-unit id="FrugalList_CannotPromoteBeyondArray">
@@ -564,12 +564,12 @@
       </trans-unit>
       <trans-unit id="InvalidPermissionStateValue">
         <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 値 '{0}' は、このアクセス許可に対して無効です。</target>
+        <target state="new">PermissionState value '{0}' is not valid for this Permission.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidPermissionType">
         <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
+        <target state="new">Permission type is not valid. Expected '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -739,7 +739,7 @@
       </trans-unit>
       <trans-unit id="MissingTagInNamespace">
         <source>Missing '{0}' in URI '{1}'.</source>
-        <target state="translated">'{0}' が URI '{1}' にありません。</target>
+        <target state="new">Missing '{0}' in URI '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingTypeConverter">
@@ -779,12 +779,12 @@
       </trans-unit>
       <trans-unit id="NameScopeInvalidIdentifierName">
         <source>'{0}' name is not valid for identifier.</source>
-        <target state="translated">'{0}' の名前は識別子として有効ではありません。</target>
+        <target state="translated">'{0}' 名は、識別子に対して無効です。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">名前を空の文字列にすることはできません。</target>
+        <target state="translated">名前は空の文字列にはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -989,7 +989,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
         <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">アクセスできるコンストラクターがないため、型 '{0}' のオブジェクトを読み込むことができません。この型を XAML で使用できるようにするには、既定のコンストラクターを追加するか、ConstructorArgumentAttribute を使用するか、または InstanceDescriptor を提供してください。</target>
+        <target state="needs-review-translation">アクセスできるコンストラクターがないため、型 '{0}' のオブジェクトを読み込むことができません。この型を XAML で使用できるようにするには、既定のコンストラクターの追加か、ConstructorArgumentAttribute の使用、または InstanceDescriptor の提供をしてください。</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1054,7 +1054,7 @@
       </trans-unit>
       <trans-unit id="ParameterCannotBeNegative">
         <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
+        <target state="new">Parameter must be greater than or equal to zero.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
@@ -1149,7 +1149,7 @@
       </trans-unit>
       <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
         <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
+        <target state="new">Cannot set SandboxExternalContent to true in partial trust.</target>
         <note />
       </trans-unit>
       <trans-unit id="SecurityXmlMissingAttribute">
@@ -1224,7 +1224,7 @@
       </trans-unit>
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">パラメーターを長さ 0 の文字列にすることはできません。</target>
+        <target state="new">Parameter cannot be a zero-length string.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">
@@ -1244,27 +1244,27 @@
       </trans-unit>
       <trans-unit id="ToStringNull">
         <source>(null)</source>
-        <target state="translated">(null)</target>
+        <target state="translated">(なし)</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperEmptyToken">
         <source>Empty token encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">'{1}' の解析中に、位置 {0} で空のトークンが見つかりました。</target>
+        <target state="new">Empty token encountered at position {0} while parsing '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperExtraDataEncountered">
         <source>Extra data encountered at position {0} while parsing '{1}'.</source>
-        <target state="translated">'{1}' の解析中に、位置 {0} で余分なデータが見つかりました。</target>
+        <target state="new">Extra data encountered at position {0} while parsing '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperMissingEndQuote">
         <source>Missing end quote encountered while parsing '{0}'.</source>
-        <target state="translated">'{0}' の解析中に、終わりの引用符が見つかりませんでした。</target>
+        <target state="new">Missing end quote encountered while parsing '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperPrematureStringTermination">
         <source>Premature string termination encountered while parsing '{0}'.</source>
-        <target state="translated">'{0}' の解析中に、終了が不完全な文字列が見つかりました。</target>
+        <target state="new">Premature string termination encountered while parsing '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TooManyAttributes">
@@ -1309,7 +1309,7 @@
       </trans-unit>
       <trans-unit id="TypeMetadataCannotChangeAfterUse">
         <source>Cannot change property metadata after it has been associated with a property.</source>
-        <target state="translated">プロパティ メタデータをプロパティに関連付けた後に、プロパティ メタデータを変更することはできません。</target>
+        <target state="new">Cannot change property metadata after it has been associated with a property.</target>
         <note />
       </trans-unit>
       <trans-unit id="TypeNameCannotHavePeriod">
@@ -1349,7 +1349,7 @@
       </trans-unit>
       <trans-unit id="UnexpectedParameterType">
         <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
-        <target state="translated">予期しない型 '{0}' のパラメーターです。型 '{1}' が必要です。</target>
+        <target state="new">Parameter is unexpected type '{0}'. Expected type is '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedToken">
@@ -1424,7 +1424,7 @@
       </trans-unit>
       <trans-unit id="Visual_ArgumentOutOfRange">
         <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
-        <target state="translated">指定されたインデックスが範囲外であるか、インデックス位置の子が null です。VisualChildrenCount から 0 が返され、Visual に子がないことが判明した場合は、このメソッドを呼び出さないでください。</target>
+        <target state="new">Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</target>
         <note />
       </trans-unit>
       <trans-unit id="WhiteSpaceInCollection">
@@ -1444,7 +1444,7 @@
       </trans-unit>
       <trans-unit id="XCRChoiceAfterFallback">
         <source>Choice cannot follow a Fallback.</source>
-        <target state="translated">Choice を Fallback に続けることはできません。</target>
+        <target state="translated">Choice を、Fallback に続けることはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRChoiceNotFound">
@@ -1504,12 +1504,12 @@
       </trans-unit>
       <trans-unit id="XCRInvalidPreserve">
         <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
-        <target state="translated">名前空間 '{0}' に、固有およびワイルドカードの Preserve 宣言の両方を指定することはできません。</target>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの Preserve 宣言の両方を指定することはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRInvalidProcessContent">
         <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
-        <target state="translated">名前空間 '{0}' に、固有およびワイルドカードの ProcessContent 宣言の両方を指定することはできません。</target>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの ProcessContent 宣言の両方を指定することはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRInvalidRequiresAttribute">
@@ -1519,7 +1519,7 @@
       </trans-unit>
       <trans-unit id="XCRInvalidXMLName">
         <source>'{0}' attribute value is not a valid XML name.</source>
-        <target state="translated">'{0}' 属性値は、有効な XML 名ではありません。</target>
+        <target state="translated">'{0}' 属性値は、無効な XML 名です。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRMultipleFallbackFound">

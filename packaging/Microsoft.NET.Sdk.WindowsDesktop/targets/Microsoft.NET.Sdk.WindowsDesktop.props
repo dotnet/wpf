@@ -5,6 +5,10 @@
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml')">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <ApplicationDefinition Include="Application.xaml"
+                           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/Application.xaml')">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
 
     <None Remove="@(ApplicationDefinition)"
           Condition="'$(EnableDefaultApplicationDefinition)' != 'false'" />

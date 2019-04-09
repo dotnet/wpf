@@ -2,7 +2,10 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
- 
+  <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
+       it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
+       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
+       doesn’t run before the Build target. -->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <!-- Get the Visual Studio version: -->

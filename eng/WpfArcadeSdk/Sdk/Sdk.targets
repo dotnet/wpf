@@ -3,6 +3,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
   
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />

@@ -73,7 +73,7 @@ function CopyBinaryToLocation($binary, $binaryLocation, $destination)
     }
     else
     {
-        Write-Host "Binary Unavailable: " $binary
+        Write-Host "Binary Unavailable: " $binary -ForegroundColor Yellow
     }
 }
 

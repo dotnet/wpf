@@ -3,7 +3,6 @@
     <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
-    <EnableXlfLocalization>True</EnableXlfLocalization>
 
     <!-- 
       Clear AssemblyVersion => it will ensure that the AssemblyVersion is > 4.0.0.0.

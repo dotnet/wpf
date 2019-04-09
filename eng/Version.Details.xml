@@ -41,10 +41,6 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>6ca16758a5d454c1f1b04975bf55f259dd71fc49</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview5-27608-16">
-      <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>59c193bd93deafba5926cb827872b80338aca7c0</Sha>
-    </Dependency>
     <Dependency Name="System.Reflection.MetadataLoadContext" Version="4.6.0-preview5.19208.5" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>6ca16758a5d454c1f1b04975bf55f259dd71fc49</Sha>
@@ -65,6 +61,10 @@
       <Sha>6ca16758a5d454c1f1b04975bf55f259dd71fc49</Sha>
       <SourceBuildId>5589</SourceBuildId>
     </Dependency>
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview5-27609-01">
+      <Uri>https://github.com/dotnet/core-setup</Uri>
+      <Sha>0d98c40e504e222ef27a971a3a10b1ee4031463a</Sha>
+    </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
     <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19209.1">
@@ -74,6 +74,10 @@
     <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19209.1">
       <Uri>https://github.com/dotnet/arcade</Uri>
       <Sha>9d7e665ecf2606094677524ecd5af0fc39c7bb49</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview5.19208.5" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>6ca16758a5d454c1f1b04975bf55f259dd71fc49</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

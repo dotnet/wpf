@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true'">$(MicrosoftNETCoreAppVersion)</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <!-- 
+    Explicitly import Microsoft.NETCore.Platforms to prevent using the one from the SDK, which
+    usually lags behind the version that WPF gets from CoreFx packages 
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
+  </ItemGroup>
+
+  <!-- workaround for package downgrade in Microsoft.NetCore.Platforms -->
+  <PropertyGroup>
+    <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
+  </PropertyGroup>
+  
+</Project>

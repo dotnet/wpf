@@ -23,6 +23,7 @@
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
   </PropertyGroup>
 
+  <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>
   <Import Project="$(WpfArcadeSdkToolsDir)SystemResources.props"/>
   <Import Project="$(WpfArcadeSdkToolsDir)TargetFrameworks.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)VersionSuffix.props" />

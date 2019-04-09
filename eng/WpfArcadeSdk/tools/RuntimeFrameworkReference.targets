@@ -1,0 +1,15 @@
+<Project>
+  <!-- 
+    Explicitly import Microsoft.NETCore.Platforms to prevent using the one from the SDK, which
+    usually lags behind the version that WPF gets from CoreFx packages 
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
+    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(ManagedCxx)'=='true'"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- If TargetFramework is not netcoreapp3.x, then reset RuntimeFrameworkVersion -->
+    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.'))" />
+  </PropertyGroup>
+</Project>

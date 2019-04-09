@@ -19,7 +19,6 @@
   <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
-  <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.targets" />
   
   <!-- PresentationBuildTasks related targets files -->
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.targets" Condition="'$(InternalMarkupCompilation)'=='true'"/>

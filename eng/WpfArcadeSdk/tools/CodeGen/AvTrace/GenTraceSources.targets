@@ -1,32 +1,54 @@
 <Project>
-  <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')">
-    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" PrivateAssets="all" />
-    <None Include="AvTraceDetails.tt">
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+ 
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <!-- Get the Visual Studio version: -->
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+    <!-- Keep the next element all on one line: -->
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <!-- This is what will cause the templates to be transformed when the project is built (default is false) -->
+    <TransformOnBuild>true</TransformOnBuild>
+    <!-- Set to true to force overwriting of read-only output files, e.g. if they're not checked out (default is false) -->
+    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+    <!-- Set to false to transform files even if the output appears to be up-to-date (default is true)  -->
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+    <AvTraceMessageFile>$(MSBuildProjectDirectory)\AvTraceMessages.json</AvTraceMessageFile>
+    <NewtonsoftVersion>12.0.2-beta1</NewtonsoftVersion>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)AvTraceDetails.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AvTraceDetails.cs</LastGenOutput>
-      <OutputFilePath>$(MSBuildProjectDirectory)</OutputFilePath>
+      <OutputFilePath>$(MSBuildProjectDirectory)Generated\</OutputFilePath>
     </None>
     <None Update="AvTraceDetails.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>AvTraceDetails.tt</DependentUpon>
+      <DependentUpon>$(MSBuildThisFileDirectory)AvTraceDetails.tt</DependentUpon>
     </None>
-    <None Include="PresentationTraceSources.tt" >
+    <None Include="$(MSBuildThisFileDirectory)PresentationTraceSources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PresentationTraceSources.cs</LastGenOutput>
-      <OutputFilePath>$(MSBuildProjectDirectory)</OutputFilePath>
+      <OutputFilePath>$(MSBuildProjectDirectory)Generated\</OutputFilePath>
     </None>
     <None Update="PresentationTraceSources.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>PresentationTraceSources.tt</DependentUpon>
+      <DependentUpon>$(MSBuildThisFileDirectory)PresentationTraceSources.tt</DependentUpon>
     </None>
   </ItemGroup>
-  <Import Project="$(WpfCodeGenDir)TextTemplate.targets" Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')" />
-  <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)AvTraceMessages.json')">
+  <ItemGroup>
     <T4ParameterValues Include="AvTraceMessageFile">
-      <Value>$(MSBuildProjectDirectory)AvTraceMessages.json</Value>
+      <Value>$(AvTraceMessageFile)</Value>
       <Visible>False</Visible>
+    </T4ParameterValues>
+    <T4ParameterValues Include="NewtonsoftLocation">
+      <Value>$(NugetPackageRoot)\newtonsoft.json\$(NewtonsoftVersion)\lib\netstandard2.0</Value>
+      <Visible>false</Visible>
     </T4ParameterValues>
   </ItemGroup>
 </Project>

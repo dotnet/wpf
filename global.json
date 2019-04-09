@@ -1,15 +1,15 @@
 {
   "tools": {
-    "dotnet": "3.0.100-preview-010024",
+    "dotnet": "3.0.100-preview4-011144",
     "vs": {
       "version": "16.0"
     }
   },
   "sdk": {
-    "version": "3.0.100-preview-010024"
+    "version": "3.0.100-preview4-011144"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19207.1"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19209.2"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",

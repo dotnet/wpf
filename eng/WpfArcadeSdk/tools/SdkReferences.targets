@@ -22,7 +22,7 @@
     <!-- Save Microsoft.NETCore.App assemblies, and remove those from @(ReferencePath) -->
     <ItemGroup>
       <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
-      <_netCoreAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
+      <_netCoreAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App' Or '%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'"/>
       
       <ReferencePath Remove="@(_netCoreAppSdkReference)" />
     </ItemGroup>

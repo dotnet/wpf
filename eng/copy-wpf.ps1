@@ -1,7 +1,6 @@
 # Copy wpf binaries from local build to desired location. The location can either be the version number (for copying to shared installation)
 # or the location of the project file if copying binaries to the output of a locally built application.
 Param(
-[Parameter(Mandatory=$true)]
 [string]$destination,
 [string]$arch="x86",
 [switch]$release,
@@ -97,7 +96,7 @@ function Print-Usage()
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $Config = if ($release) { "Release" } else { "Debug" }
 
-if ($help) 
+if ($help -or [string]::IsNullOrEmpty($destination)) 
 {
     Print-Usage
 }
@@ -105,12 +104,22 @@ elseif($shared)
 {
     Write-Host "Copying binaries to shared installation"
     $sharedLocation = Join-Path (Join-Path $env:ProgramFiles "dotnet\shared\Microsoft.WindowsDesktop.App") $destination
+    if(![System.IO.File]::Exists($sharedLocation))
+    {
+        Write-Host "Location unavailable: " $sharedLocation -ForegroundColor Red
+        return
+    }
     CopyByBinaryToPublishLocation $sharedLocation
 }
 else
 {
     $runtimeIdentifer = if ($arch -eq "x86") { "win-x86" } else { "win-x64" }
     $publishLocation = Join-Path (Join-Path (Join-Path $destination "bin\Debug\netcoreapp3.0") $runtimeIdentifer) "publish"
+    if(![System.IO.File]::Exists($publishLocation))
+    {
+        Write-Host "Location unavailable: " $publishLocation -ForegroundColor Red
+        return
+    }
     Write-Host "Copying binaries to app published directory"
     CopyByBinaryToPublishLocation $publishLocation  
 }

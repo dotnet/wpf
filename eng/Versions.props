@@ -5,7 +5,7 @@
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemReflectionMetadataLoadContextVersion>4.6.0-preview4.19208.6</SystemReflectionMetadataLoadContextVersion>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19205.5</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19208.2</MicrosoftPrivateWinformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview4.19208.6</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview4.19208.6</SystemDirectoryServicesVersion>
   </PropertyGroup>
@@ -24,7 +24,7 @@
     <SystemWindowsExtensionsPackageVersion>4.6.0-preview4.19208.6</SystemWindowsExtensionsPackageVersion>
     <SystemCodeDomPackageVersion>4.6.0-preview4.19208.6</SystemCodeDomPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/arcade -->
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19207.1</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19209.2</MicrosoftDotNetCodeAnalysisPackageVersion>
     <!-- Packages that come from https://github.com/dotnet/corefxlab -->
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
     <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->

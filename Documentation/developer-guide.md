@@ -37,16 +37,28 @@ The values you can choose here are `win-x86` or `win-x64`.
 
 Then to copy the WPF assemblies to this published location, simply run the copy-wpf.ps1 script
 located in the `eng` folder of the repo and point it to the location of your test application:
-> eng\copy-wpf.ps1 -destination "proj location"
+> eng\copy-wpf.ps1 -destination "c:\mysampleproj"
 
-#### Copying binaries to shared installation
-*Note: We recommend backing up the original files when doing this.*
+#### Copying binaries to test host installation
 
-If you want/need to test an existing application that targets the shared installation, you can copy
-the assemblies directly over the existing Microsoft.WindowsDesktop.App ones.
-You can run the copy-wpf.ps1 script again, except this time the destination refers to the version 
-of the shared framework to copy over, and the `-shared` parameter must be passed in as well:
-> eng\copy-wpf.ps1 -destination "version" -shared  
+If you want/need to test an existing application that targets the shared installation, 
+it is safest to setup a test host, rather than trying to copy assemblies over the shared installation.
+You can run the copy-wpf.ps1 script again, except this time the destination points to the location
+of the test host. This destination is the same location specified when setting up the test host as
+described [here](#Setting-up-the-test-host). When you run copy-wpf.ps1, be sure to pass in the 
+the `-testhost` parameter:
+> eng\copy-wpf.ps1 -destination "c:\mytesthost" -testhost  
+
+You need to set environment variables so that your testhost installation is used when launching the application.
+Once these are set, you should be able to launch the executable from the command line and then your assemblies
+will be used.
+
+- DOTNET_ROOT=c:\mytesthost
+- DOTNET_MULTILEVEL_LOOKUP=0
+
+**How to find location of the exe to test?**
+If you are testing an application and don't know where the executable is located, the easiest thing to do
+is use Process Explorer (from SysInternals) or attach to the process with a debugger like Visual Studio.
 
 #### Testing API changes 
 The above instructions imply that you are testing assemblies that don't have any changes to the
@@ -56,7 +68,9 @@ When the C# compiler detects a collision with assembly references, the assembly 
 higher version number is chosen. Assuming our locally built binaries are newer than what is
 installed, we can then simply reference those local binaries directly from the project file, like this:
 
-*Note: you should build locally with the `-pack` param to ensure the binaries are put in the correct location.* 
+*Note: you should build locally with the `-pack` param to ensure the binaries are put in the correct location.*
+*Currently, you have to remove the artifacts\packaging directory first before using the `-pack` parameter.*
+*See the [issue](https://github.com/dotnet/wpf/issues/564) here for more information*
 
 ```
   <PropertyGroup>
@@ -73,6 +87,11 @@ installed, we can then simply reference those local binaries directly from the p
     <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\Microsoft.DotNet.Wpf.GitHub\lib\win-x86\*.dll" />
   </ItemGroup>
 ```
+
+#### Setting up the test host
+You can setup a local test host installation so that you don't have to overwrite the shared installation on your machine
+that can affect *all* WPF applications that are running on .NET Core, not just the one you want to test. This approach is
+recommended if it not possible to copy the WPF assemblies to a publish directory as described [here](#Copying-binaries-to-publish-location-of-a-self-contained-application).
 
 ### Testing PresentationBuildTasks
 -- add more content here --

@@ -4,17 +4,24 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview5</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview5.19209.12</SystemReflectionMetadataLoadContextVersion>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview5.19208.4</MicrosoftPrivateWinformsVersion>
-    <SystemDrawingCommonVersion>4.6.0-preview5.19209.12</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>4.6.0-preview5.19209.12</SystemDirectoryServicesVersion>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27609-17</MicrosoftNETCoreAppVersion>
-    <MicrosoftNETCorePlatformsVersion>3.0.0-preview5.19209.12</MicrosoftNETCorePlatformsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
+  <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <!-- Packages that come from https://github.com/dotnet/corefx -->
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview5.19208.4</MicrosoftPrivateWinformsVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/core-setup -->
+  <PropertyGroup>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27609-17</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCorePlatformsVersion>3.0.0-preview5.19209.12</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>4.6.0-preview5.19209.12</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>4.6.0-preview5.19209.12</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview5.19209.12</SystemReflectionMetadataLoadContextVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
+  <PropertyGroup>
     <MicrosoftWin32RegistryPackageVersion>4.6.0-preview5.19209.12</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview5.19209.12</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview5.19209.12</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview5.19209.12</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionEmitPackageVersion>4.6.0-preview5.19209.12</SystemReflectionEmitPackageVersion>
@@ -24,20 +31,27 @@
     <SystemSecurityPermissionsPackageVersion>4.6.0-preview5.19209.12</SystemSecurityPermissionsPackageVersion>
     <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview5.19209.12</SystemSecurityPrincipalWindowsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>4.6.0-preview5.19209.12</SystemWindowsExtensionsPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview5.19209.12</SystemCodeDomPackageVersion>
-    <!-- Packages that come from https://github.com/dotnet/arcade -->
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/arcade -->
+  <PropertyGroup>
     <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19209.2</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+  <PropertyGroup>
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
-    <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+  </PropertyGroup>
+  <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+  <PropertyGroup>
     <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
-    <!-- Other Packages that require manual updating-->
+  </PropertyGroup>
+  <!-- Other Packages that require manual updating-->
+  </PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
-    <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
-    <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
+    <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
+    <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreSources>

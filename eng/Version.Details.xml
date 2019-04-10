@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview5-27609-17">
+      <Uri>https://github.com/dotnet/core-setup</Uri>
+      <Sha>9e195d41f604e38fb227eaed017c9292c884149c</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview5.19208.4">
+      <Uri>https://github.com/dotnet/winforms</Uri>
+      <Sha>fd52f87e309d708ce4491f7c65b892f29091346f</Sha>
+    </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
+    </Dependency>
+    <Dependency Name="System.CodeDom" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
     </Dependency>
@@ -13,7 +25,19 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
     </Dependency>
+    <Dependency Name="System.DirectoryServices" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
+    </Dependency>
+      <Dependency Name="System.Drawing.Common" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
+    </Dependency>
     <Dependency Name="System.Reflection.Emit" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
+    </Dependency>
+    <Dependency Name="System.Reflection.MetadataLoadContext" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
     </Dependency>
@@ -36,34 +60,6 @@
     <Dependency Name="System.Windows.Extensions" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
-    </Dependency>
-    <Dependency Name="System.CodeDom" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
-    </Dependency>
-    <Dependency Name="System.Reflection.MetadataLoadContext" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
-      <SourceBuildId>5589</SourceBuildId>
-    </Dependency>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview5.19208.4">
-      <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>fd52f87e309d708ce4491f7c65b892f29091346f</Sha>
-      <SourceBuildId>6173</SourceBuildId>
-    </Dependency>
-    <Dependency Name="System.Drawing.Common" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
-      <SourceBuildId>5589</SourceBuildId>
-    </Dependency>
-    <Dependency Name="System.DirectoryServices" Version="4.6.0-preview5.19209.12" CoherentParentDependency="Microsoft.NETCore.App">
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>5b6a71f295e5b7dcdff4fae98f1301c6a5772c7d</Sha>
-      <SourceBuildId>5589</SourceBuildId>
-    </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview5-27609-17">
-      <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>9e195d41f604e38fb227eaed017c9292c884149c</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

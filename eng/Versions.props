@@ -6,7 +6,6 @@
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
-  <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
     <MicrosoftPrivateWinformsVersion>4.8.0-preview5.19208.4</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
@@ -45,7 +44,7 @@
     <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
   </PropertyGroup>
   <!-- Other Packages that require manual updating-->
-  </PropertyGroup>
+  <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>

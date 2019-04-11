@@ -1,0 +1,15 @@
+<Project>
+  <!-- 
+    Properties used with redist binaries
+  -->
+  <PropertyGroup>
+    <VCRuntimeDllBaseName>vcruntime</VCRuntimeDllBaseName>
+    <VCRuntimeVersion>140</VCRuntimeVersion>
+
+    <MSVCPDllBaseName>msvcp</MSVCPDllBaseName>
+    <MSVCPVersion>140</MSVCPVersion>
+
+    <D3DCompilerDllBaseName>D3DCompiler</D3DCompilerDllBaseName>
+    <D3DCompilerVersion>_47</D3DCompilerVersion>
+  </PropertyGroup>
+</Project>

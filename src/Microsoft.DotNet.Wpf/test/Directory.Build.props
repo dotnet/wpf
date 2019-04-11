@@ -1,4 +1,7 @@
 <Project>
+  <PropertyGroup>
+    <WpfTest>true</WpfTest>
+  </PropertyGroup>
   <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
   <PropertyGroup>
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
@@ -6,6 +9,7 @@
     <IsTestProject>true</IsTestProject>
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>
+    <CLSCompliant>false</CLSCompliant>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <EmbeddedResource>

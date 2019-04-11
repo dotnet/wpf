@@ -246,7 +246,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IProvideValueTarget.TargetProperty
         {
-            get { return ContextServices.GetTargetProperty(this._xamlContext); }
+            get { return ContextServices.GetTargetProperty(_xamlContext); }
         }
         #endregion
 

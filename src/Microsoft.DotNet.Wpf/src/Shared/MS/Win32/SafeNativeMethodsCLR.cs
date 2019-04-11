@@ -4,6 +4,7 @@
 
 namespace MS.Win32
 {
+    using MS.Utility;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System;
@@ -15,8 +16,8 @@ namespace MS.Win32
     using System.ComponentModel;
 
 
-// The SecurityHelper class differs between assemblies and could not actually be
-//  shared, so it is duplicated across namespaces to prevent name collision.
+    // The SecurityHelper class differs between assemblies and could not actually be
+    //  shared, so it is duplicated across namespaces to prevent name collision.
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
@@ -25,6 +26,8 @@ namespace MS.Win32
     using MS.Internal.PresentationFramework;
 #elif DRT
     using MS.Internal.Drt;
+#elif UIAUTOMATIONTYPES
+    using MS.Internal.UIAutomationTypes;
 #else
 #error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
 #endif
@@ -204,6 +207,16 @@ namespace MS.Win32
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <summary>
+        /// Alternative version of GetClientRect
+        /// </summary>
+        internal static NativeMethods.RECT GetClientRect(HandleRef hWnd)
+        {
+            var clientRect = default(NativeMethods.RECT);
+            SafeNativeMethods.GetClientRect(hWnd, ref clientRect);
+            return clientRect;
         }
 
         /// <SecurityNote>
@@ -552,6 +565,297 @@ namespace MS.Win32
             return currentSessionConnectState;
         }
 
+        /// <summary>
+        /// Retrieves the dots per inch (dpi) awareness of the specified process
+        /// </summary>
+        /// <param name="hProcess">[in]
+        /// Handle of the process that is being queried. If this parameter
+        /// is null, the current process is queried. 
+        /// </param>
+        /// <returns>The <see cref="NativeMethods.PROCESS_DPI_AWARENESS"/> of the specified process</returns>
+        /// <exception cref="ArgumentException">The handle <paramref name="hProcess"/> is not valid</exception>
+        /// <exception cref="UnauthorizedAccessException">The application does not have sufficient priviliges</exception>
+        /// <exception cref="COMException">
+        /// The call to Win32 GetProcessDpiAwareness function failed with some other error. 
+        /// The error code in the exception object will contain the corresponding HRESULT
+        /// </exception>
+        /// <remarks>
+        ///     - See remarks for <see cref="SafeNativeMethodsPrivate.GetProcessDpiAwareness(HandleRef, out IntPtr)"/>
+        ///     - Minimum supported client: Windows 8.1
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical - Calls into <see cref="SafeNativeMethodsPrivate.GetProcessDpiAwareness(HandleRef, out IntPtr)"/>
+        ///     Safe - Does not return any Critical data to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static NativeMethods.PROCESS_DPI_AWARENESS GetProcessDpiAwareness(HandleRef hProcess)
+        {
+            var ptrProcessDpiAwareness = IntPtr.Zero;
+            var hr = (int)SafeNativeMethodsPrivate.GetProcessDpiAwareness(hProcess, out ptrProcessDpiAwareness);
+
+            if(hr != NativeMethods.S_OK)
+            {
+                Marshal.ThrowExceptionForHR(hr);
+            }
+
+            return (NativeMethods.PROCESS_DPI_AWARENESS)NativeMethods.IntPtrToInt32(ptrProcessDpiAwareness);
+        }
+
+#if !DRT && !UIAUTOMATIONTYPES
+
+        /// <summary>
+        /// Returns the DPI_AWARENESS_CONTEXT associated with a window
+        /// </summary>
+        /// <param name="hwnd">The window to query</param>
+        /// <returns>
+        /// The DPI_AWARENESS_CONTEXT for the provided window. If the 
+        /// window is not valid, the return value is NULL</returns>
+        /// <remarks>
+        /// The return value of GetWindowDpiAwarenessContext is not affected by the DPI_AWARENESS
+        /// of the current thread. It only indicates the context of the window specified by the hwnd input parameter.
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller. The returned IntPtr
+        ///                 is a pseudo-handle which is really an integer that encodes enumeration-like
+        ///                 information about DPI awareness context of the window, and does not require
+        ///                 to be released. In other words, this is not a "native resource"
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static DpiAwarenessContextHandle GetWindowDpiAwarenessContext(IntPtr hwnd)
+        {
+            return SafeNativeMethodsPrivate.GetWindowDpiAwarenessContext(hwnd);
+        }
+
+#endif
+
+        /// <summary>
+        /// Determines whether two DPI_AWARENESS_CONTEXT values are identical
+        /// </summary>
+        /// <param name="dpiContextA">The first value to compare</param>
+        /// <param name="dpiContextB">The second value to compare</param>
+        /// <returns>Returns TRUE if the values are equal, otherwise FALSE</returns>
+        /// <remarks>
+        /// A DPI_AWARENESS_CONTEXT contains multiple pieces of information. 
+        /// For example, it includes both the current and the inherited DPI_AWARENESS values. 
+        /// AreDpiAwarenessContextsEqual ignores informational flags and determines if the 
+        /// values are equal. You can't use a direct bitwise comparison because of these 
+        /// informational flags.
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// 
+        /// Note: Do NOT change this method signature to take DpiAwarenessContextHandle arguments.
+        /// This method is used internally by DpiAwarenessContextHandle.
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static bool AreDpiAwarenessContextsEqual(IntPtr dpiContextA, IntPtr dpiContextB)
+        {
+            return SafeNativeMethodsPrivate.AreDpiAwarenessContextsEqual(dpiContextA, dpiContextB);
+        }
+
+        /// <summary>
+        /// Returns the dots per inch (dpi) value for the associated window.
+        /// </summary>
+        /// <param name="hwnd">The window you want to get information about.</param>
+        /// <returns>The DPI for the window which depends on the <see cref="NativeMethods.DPI_AWARENESS"/> of the window. An invalid <paramref name="hwnd"/> value will result in a return value of 0.</returns>
+        /// <remarks>
+        /// The following table indicates the return value of GetDpiForWindow based on the <see cref="NativeMethods.DPI_AWARENESS"/> of the provided <paramref name="hwnd"/>.
+        /// +---------------------------------+-----------------------------------------------------+
+        /// |          DPI_AWARENESS          |                    Return value                     |
+        /// +---------------------------------+-----------------------------------------------------+
+        /// | DPI_AWARENESS_UNAWARE           | 96                                                  |
+        /// | DPI_AWARENESS_SYSTEM_AWARE      | The system DPI.                                     |
+        /// | DPI_AWARENESS_PER_MONITOR_AWARE | The DPI of the monitor where the window is located. |
+        /// +---------------------------------+-----------------------------------------------------+
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static uint GetDpiForWindow(HandleRef hwnd)
+        {
+            return SafeNativeMethodsPrivate.GetDpiForWindow(hwnd);
+        }
+
+
+        /// <summary>
+        /// Returns the system DPI.
+        /// </summary>
+        /// <returns>The system DPI value</returns>
+        /// <remarks>
+        /// The return value will be dependent based upon the calling context. If the current thread has a 
+        /// DPI_AWARENESS (see <see cref="NativeMethods.DPI_AWARENESS"/>) value of DPI_AWARENESS_UNAWARE(<see cref="NativeMethods.DPI_AWARENESS.DPI_AWARENESS_UNAWARE"/>),
+        /// the return value will be 96. that is because the current context always assumes a DPI of 96. For any other
+        /// DPI_AWARENESS value, the return value will be the actual system DPI.
+        /// 
+        /// You should not cache the system DPI, but should use <see cref="GetDpiForSystem"/> whenever you need
+        /// the system DPI value. This is so that Unaware and System Aware thread contexts get the correct system DPI's. 
+        /// The System DPI for all other thread contexts (System Aware, and Per Monitor Aware) are fixed/constant at
+        /// the time of process creation, and will not change. 
+        /// 
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static uint GetDpiForSystem()
+        {
+            return SafeNativeMethodsPrivate.GetDpiForSystem();
+        }
+
+        /// <summary>
+        /// Returns the DPI_HOSTING_BEHAVIOR of the specified window.
+        /// </summary>
+        /// <param name="hWnd">The handle for the window to examine.</param>
+        /// <returns>The DPI_HOSTING_BEHAVIOR of the specified window.</returns>
+        /// <remarks>
+        /// This API allows you to examine the hosting behavior of a window after it has been created.
+        /// A window's hosting behavior is the hosting behavior of the thread in which the window was created,
+        /// as set by a call to SetThreadDpiHostingBehavior. This is a permanent value and cannot be changed
+        /// after the window is created, even if the thread's hosting behavior is changed.
+        /// 
+        /// Minimum supported client: Windows 10, version 1803 (RS4)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static NativeMethods.DPI_HOSTING_BEHAVIOR GetWindowDpiHostingBehavior(IntPtr hWnd)
+        {
+            return SafeNativeMethodsPrivate.GetWindowDpiHostingBehavior(hWnd);
+        }
+
+        /// <summary>
+        /// Retrieves the DPI_HOSTING_BEHAVIOR from the current thread.
+        /// </summary>
+        /// <returns>The DPI_HOSTING_BEHAVIOR of the current thread.</returns>
+        /// <remarks>
+        /// This API returns the hosting behavior set by an earlier call of SetThreadDpiHostingBehavior,
+        /// or DPI_HOSTING_BEHAVIOR_DEFAULT if no earlier call has been made.
+        /// 
+        /// Minimum supported client: Windows 10, version 1803 (RS4)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical:   Calls into a native methods
+        ///     Safe:       Does not return Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static NativeMethods.DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior()
+        {
+            return SafeNativeMethodsPrivate.GetThreadDpiHostingBehavior();
+        }
+
+        /// <summary>
+        /// Calculates the required size of the window rectangle, based on the desired size of the
+        /// client rectangle and the provided DPI. This window rectangle can then be passed to the CreateWindowEx
+        /// function to create a window with a client area of the desired size.
+        /// </summary>
+        /// <param name="lpRect">
+        /// A pointer to a RECT structure that contains the coordinates of the top-left and bottom-right
+        /// corners of the desired client area. When the function returns, the structure contains the coordinates
+        /// of the top-left and bottom-right corners of the window to accommodate the desired client area.
+        /// </param>
+        /// <param name="dwStyle">
+        /// The Window Style of the window whose required size is to be calculated. Note that
+        /// you cannot specify the WS_OVERLAPPED style.
+        /// </param>
+        /// <param name="bMenu">Indicates whether the window has a menu.</param>
+        /// <param name="dwExStyle">The Extended Window Style of the window whose required size is to be calculated.</param>
+        /// <param name="dpi">The DPI to use for scaling.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is true.
+        /// If the function fails, the return value is false.
+        /// To get extended error information, call GetLastError
+        /// </returns>
+        /// <remarks>
+        /// Minimum supported client: Windows 10, version 1607 (RS1)
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical: Calls into native method
+        ///     Safe: does not return any Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static bool AdjustWindowRectExForDpi(
+            ref NativeMethods.RECT lpRect,
+            int dwStyle,
+            bool bMenu,
+            int dwExStyle,
+            int dpi)
+        {
+            return 
+                SafeNativeMethodsPrivate.AdjustWindowRectExForDpi(
+                    ref lpRect, 
+                    dwStyle, 
+                    bMenu, 
+                    dwExStyle, 
+                    dpi);
+        }
+
+        /// <summary>
+        /// Converts a point in a window from logical coordinates into physical coordinates, regardless of
+        /// the dots per inch (dpi) awareness of the caller. For more information about DPI awareness
+        /// levels, see PROCESS_DPI_AWARENESS.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose transform is used for the conversion.</param>
+        /// <param name="lpPoint">A pointer to a POINT structure that specifies the logical
+        /// coordinates to be converted. The new physical coordinates are copied into this
+        /// structure if the function succeeds.</param>
+        /// <returns>
+        /// Returns true if successful, or false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// Minimum supported client: Windows 8.1
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical: Calls into a native method
+        ///     Safe: Does not return any Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static bool LogicalToPhysicalPointForPerMonitorDPI(
+            HandleRef hWnd, 
+            ref NativeMethods.POINT lpPoint)
+        {
+            return SafeNativeMethodsPrivate.LogicalToPhysicalPointForPerMonitorDPI(hWnd, ref lpPoint);
+        }
+
+        /// <summary>
+        /// Converts a point in a window from logical coordinates into physical coordinates,
+        /// regardless of the dots per inch (dpi) awareness of the caller. For more information about DPI
+        /// awareness levels, see PROCESS_DPI_AWARENESS.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose transform is used for the conversion.</param>
+        /// <param name="lpPoint">A pointer to a POINT structure that specifies the physical/screen coordinates to be converted.
+        /// The new logical coordinates are copied into this structure if the function succeeds.</param>
+        /// <returns>
+        /// Returns true if successful, or false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// Minimum supported client: Windows 8.1
+        /// </remarks>
+        /// <SecurityNote>
+        ///     Critical: Calls into a native method
+        ///     Safe: Does not return any Critical data back to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        internal static bool PhysicalToLogicalPointForPerMonitorDPI(
+            HandleRef hWnd, 
+            ref NativeMethods.POINT lpPoint)
+        {
+            return SafeNativeMethodsPrivate.PhysicalToLogicalPointForPerMonitorDPI(hWnd, ref lpPoint);
+        }
+
         [SuppressUnmanagedCodeSecurity,SecurityCritical(SecurityCriticalScope.Everything)]
         private partial class SafeNativeMethodsPrivate
         {
@@ -673,6 +977,251 @@ namespace MS.Win32
 
             [DllImport(ExternDll.WtsApi32, EntryPoint = "WTSFreeMemory", CharSet = CharSet.Auto)]
             public static extern bool WTSFreeMemory([In]IntPtr pMemory);
+
+            /// <summary>
+            /// Retrieves the dots per inch (dpi) awareness of the specified process
+            /// </summary>
+            /// <param name="hProcess"> [in]
+            /// Handle of the process that is being queried. If this parameter
+            /// is NULL, the current process is queried
+            /// </param>
+            /// <param name="awareness"> [out]
+            /// The DPI awareness of the specified process. Possible values are 
+            /// from the PROCESS_DPI_AWARENESS enumeration. See <see cref="PROCESS_DPI_AWARENESS"/>.
+            /// </param>
+            /// <returns>
+            /// This function returns one of the following values.
+            /// 
+            /// |---------------------------------------------------|
+            /// |   Return Code     |       Description             |
+            /// |---------------------------------------------------|
+            /// |   S_OK            |   The function successfully   |
+            /// |                   |   retrieved the DPI awareness |
+            /// |                   |   of the specified process    |
+            /// |---------------------------------------------------|
+            /// |   E_INVALIDARG    |   The handle or pointer passed|
+            /// |                   |   in is not valid             |
+            /// ----------------------------------------------------|
+            /// |   E_ACCESSDENIED  |   The application does not    |
+            /// |                   |   have sufficient priviliges.  |
+            /// ----------------------------------------------------|
+            /// 
+            /// </returns>
+            /// <remarks>
+            /// - This function is identical to the following code:
+            ///     <code>GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext());</code>
+            /// - This function is supported on Windows 8.1 onwards. 
+            /// </remarks>
+            /// <SecurityNote>
+            ///     Critical - Elevates via SUC
+            /// </SecurityNote>
+            [DllImport(ExternDll.Shcore, CallingConvention = CallingConvention.Winapi)]
+            internal static extern uint GetProcessDpiAwareness([In] HandleRef hProcess, out IntPtr awareness);
+
+            /// <summary>
+            /// Calculates the required size of the window rectangle, based on the desired size of the
+            /// client rectangle and the provided DPI. This window rectangle can then be passed to the CreateWindowEx
+            /// function to create a window with a client area of the desired size.
+            /// </summary>
+            /// <param name="lpRect">
+            /// A pointer to a RECT structure that contains the coordinates of the top-left and bottom-right
+            /// corners of the desired client area. When the function returns, the structure contains the coordinates
+            /// of the top-left and bottom-right corners of the window to accommodate the desired client area.
+            /// </param>
+            /// <param name="dwStyle">
+            /// The Window Style of the window whose required size is to be calculated. Note that
+            /// you cannot specify the WS_OVERLAPPED style.
+            /// </param>
+            /// <param name="bMenu">Indicates whether the window has a menu.</param>
+            /// <param name="dwExStyle">The Extended Window Style of the window whose required size is to be calculated.</param>
+            /// <param name="dpi">The DPI to use for scaling.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is true.
+            /// If the function fails, the return value is false.
+            /// To get extended error information, call GetLastError
+            /// </returns>
+            /// <remarks>
+            /// Minimum supported client: Windows 10, version 1607 (RS1)
+            /// </remarks>
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool AdjustWindowRectExForDpi(
+                [In] [Out] ref NativeMethods.RECT lpRect,
+                [In] int dwStyle,
+                [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
+                [In] int dwExStyle,
+                [In] int dpi);
+
+            /// <summary>
+            /// Converts a point in a window from logical coordinates into physical coordinates,
+            /// regardless of the dots per inch (dpi) awareness of the caller. For more information about DPI
+            /// awareness levels, see PROCESS_DPI_AWARENESS.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window whose transform is used for the conversion.</param>
+            /// <param name="lpPoint">A pointer to a POINT structure that specifies the physical/screen coordinates to be converted.
+            /// The new logical coordinates are copied into this structure if the function succeeds.</param>
+            /// <returns>
+            /// Returns true if successful, or false otherwise.
+            /// </returns>
+            /// <remarks>
+            /// Minimum supported client: Windows 8.1
+            /// </remarks>
+            /// <SecurityNote>
+            ///     Critical: Calls into a native method
+            ///     Safe: Does not return any Critical data back to the caller
+            /// </SecurityNote>
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool PhysicalToLogicalPointForPerMonitorDPI(
+                [In] HandleRef hWnd,
+                [In] [Out] ref NativeMethods.POINT lpPoint);
+
+            /// <summary>
+            /// Converts a point in a window from logical coordinates into physical coordinates, regardless of
+            /// the dots per inch (dpi) awareness of the caller. For more information about DPI awareness
+            /// levels, see PROCESS_DPI_AWARENESS.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window whose transform is used for the conversion.</param>
+            /// <param name="lpPoint">A pointer to a POINT structure that specifies the logical
+            /// coordinates to be converted. The new physical coordinates are copied into this
+            /// structure if the function succeeds.</param>
+            /// <returns>
+            /// Returns true if successful, or false otherwise.
+            /// </returns>
+            /// <remarks>
+            /// Minimum supported client: Windows 8.1
+            /// </remarks>
+            /// <SecurityNote>
+            ///     Critical: Calls into a native method
+            ///     Safe: Does not return any Critical data back to the caller
+            /// </SecurityNote>
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool LogicalToPhysicalPointForPerMonitorDPI(
+                [In] HandleRef hWnd,
+                [In] [Out] ref NativeMethods.POINT lpPoint);
+
+#if !DRT && !UIAUTOMATIONTYPES
+
+            /// <summary>
+            /// Returns the DPI_AWARENESS_CONTEXT associated with a window
+            /// </summary>
+            /// <param name="hwnd">The window to query</param>
+            /// <returns>
+            /// The DPI_AWARENESS_CONTEXT for the provided window. If the 
+            /// window is not valid, the return value is NULL</returns>
+            /// <remarks>
+            /// The return value of GetWindowDpiAwarenessContext is not affected by the DPI_AWARENESS
+            /// of the current thread. It only indicates the context of the window specified by the hwnd input parameter.
+            /// 
+            /// Minimum supported client: Windows 10, version 1607 (RS1)
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            internal static extern DpiAwarenessContextHandle GetWindowDpiAwarenessContext([In] IntPtr hwnd);
+
+#endif
+            /// <summary>
+            /// Determines whether two DPI_AWARENESS_CONTEXT values are identical
+            /// </summary>
+            /// <param name="dpiContextA">The first value to compare</param>
+            /// <param name="dpiContextB">The second value to compare</param>
+            /// <returns>Returns TRUE if the values are equal, otherwise FALSE</returns>
+            /// <remarks>
+            /// A DPI_AWARENESS_CONTEXT contains multiple pieces of information. 
+            /// For example, it includes both the current and the inherited DPI_AWARENESS values. 
+            /// AreDpiAwarenessContextsEqual ignores informational flags and determines if the 
+            /// values are equal. You can't use a direct bitwise comparison because of these 
+            /// informational flags.
+            /// 
+            /// Minimum supported client: Windows 10, version 1607 (RS1)
+            /// 
+            /// Note: Do NOT change this method signature to take DpiAwarenessContextHandle arguments.
+            /// This method is used internally by DpiAwarenessContextHandle.
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool AreDpiAwarenessContextsEqual([In] IntPtr dpiContextA, [In] IntPtr dpiContextB);
+
+            /// <summary>
+            /// Returns the dots per inch (dpi) value for the associated window.
+            /// </summary>
+            /// <param name="hwnd">The window you want to get information about.</param>
+            /// <returns>The DPI for the window which depends on the <see cref="NativeMethods.DPI_AWARENESS"/> of the window. An invalid <paramref name="hwnd"/> value will result in a return value of 0.</returns>
+            /// <remarks>
+            /// The following table indicates the return value of GetDpiForWindow based on the <see cref="NativeMethods.DPI_AWARENESS"/> of the provided <paramref name="hwnd"/>.
+            /// +---------------------------------+-----------------------------------------------------+
+            /// |          DPI_AWARENESS          |                    Return value                     |
+            /// +---------------------------------+-----------------------------------------------------+
+            /// | DPI_AWARENESS_UNAWARE           | 96                                                  |
+            /// | DPI_AWARENESS_SYSTEM_AWARE      | The system DPI.                                     |
+            /// | DPI_AWARENESS_PER_MONITOR_AWARE | The DPI of the monitor where the window is located. |
+            /// +---------------------------------+-----------------------------------------------------+
+            /// 
+            /// Minimum supported client: Windows 10, version 1607 (RS1)
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Winapi)]
+            internal static extern uint GetDpiForWindow([In] HandleRef hwnd);
+
+            /// <summary>
+            /// Returns the system DPI.
+            /// </summary>
+            /// <returns>The system DPI value</returns>
+            /// <remarks>
+            /// The return value will be dependent based upon the calling context. If the current thread has a 
+            /// DPI_AWARENESS (see <see cref="NativeMethods.DPI_AWARENESS"/>) value of DPI_AWARENESS_UNAWARE(<see cref="NativeMethods.DPI_AWARENESS.DPI_AWARENESS_UNAWARE"/>),
+            /// the return value will be 96. that is because the current context always assumes a DPI of 96. For any other
+            /// DPI_AWARENESS value, the return value will be the actual system DPI.
+            /// 
+            /// You should not cache the system DPI, but should use <see cref="GetDpiForSystem"/> whenever you need
+            /// the system DPI value. This is so that Unaware and System Aware thread contexts get the correct system DPI's. 
+            /// The System DPI for all other thread contexts (System Aware, and Per Monitor Aware) are fixed/constant at
+            /// the time of process creation, and will not change. 
+            /// 
+            /// Minimum supported client: Windows 10, version 1607 (RS1)
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            internal static extern uint GetDpiForSystem();
+
+            /// <summary>
+            /// Returns the DPI_HOSTING_BEHAVIOR of the specified window.
+            /// </summary>
+            /// <param name="hWnd">The handle for the window to examine.</param>
+            /// <returns>The DPI_HOSTING_BEHAVIOR of the specified window.</returns>
+            /// <remarks>
+            /// This API allows you to examine the hosting behavior of a window after it has been created.
+            /// A window's hosting behavior is the hosting behavior of the thread in which the window was created,
+            /// as set by a call to SetThreadDpiHostingBehavior. This is a permanent value and cannot be changed
+            /// after the window is created, even if the thread's hosting behavior is changed.
+            /// 
+            /// Minimum supported client: Windows 10, version 1803 (RS4)
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            internal static extern NativeMethods.DPI_HOSTING_BEHAVIOR GetWindowDpiHostingBehavior(IntPtr hWnd);
+
+            /// <summary>
+            /// Retrieves the DPI_HOSTING_BEHAVIOR from the current thread.
+            /// </summary>
+            /// <returns>The DPI_HOSTING_BEHAVIOR of the current thread.</returns>
+            /// <remarks>
+            /// This API returns the hosting behavior set by an earlier call of SetThreadDpiHostingBehavior,
+            /// or DPI_HOSTING_BEHAVIOR_DEFAULT if no earlier call has been made.
+            /// 
+            /// Minimum supported client: Windows 10, version 1803 (RS4)
+            /// </remarks>
+            [SuppressUnmanagedCodeSecurity]
+            [SecurityCritical]
+            [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
+            internal static extern NativeMethods.DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior();
         }
     }
 }

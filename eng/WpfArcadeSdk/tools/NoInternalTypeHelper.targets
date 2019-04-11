@@ -1,0 +1,17 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="_UpdateGeneratedFiles" AfterTargets="MarkupCompilePass1">
+    <ItemGroup Condition="'$(NoInternalTypeHelper)' == 'true'">
+      <!-- The internal type helper is generated deriving from InternalTypeHelper and generates "protected override" members,
+      this doesn't work for PresentationUI which has internals visible to WindowsBase and sees the actual members are "protected internal"
+      just omit this generated helper as it is not used -->
+      <Compile Remove="@(Compile)" Condition="'%(FileName)%(Extension)' == 'GeneratedInternalTypeHelper.g.cs'" />
+      <_GeneratedCodeFiles Remove="@(_GeneratedCodeFiles)" Condition="'%(FileName)%(Extension)' == 'GeneratedInternalTypeHelper.g.cs'" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <!-- When building the temporary assembly we can't run the resource generation targets since those would
+           leak global properties into project references, so instead just pass the compile items down -->
+      <_GeneratedCodeFiles Include="@(EmbeddedResource->'%(StronglyTypedFileName)');" />
+    </ItemGroup>
+  </Target>
+</Project>

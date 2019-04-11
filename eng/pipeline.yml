@@ -1,8 +1,12 @@
+#
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+#
+# 
 parameters:
 
   # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-  # Defaults to dotnet-external-temp-vs2019
-  agentPool: dotnet-external-temp-vs2019
+  # Defaults to dotnet-internal-vs2019-preview
+  agentPool: dotnet-internal-vs2019-preview
 
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
@@ -16,7 +20,7 @@ jobs:
     enablePublishTestResults: true
     enablePublishBuildAssets: true
     enableTelemetry: true
-    helixRepo: dotnet/wpf
+    helixRepo: dnceng/wpf
 
     jobs:
     - job: Windows_NT
@@ -26,7 +30,7 @@ jobs:
         - name: _TeamName
           value: DotNetCore
         - name: _SignType
-          value: test
+          value: real
         - name: _SignArgs
           value: ''
 
@@ -39,6 +43,10 @@ jobs:
           value: ''
         - name: _OfficialBuildIdArgs
           value: ''
+        - name: _Platform
+          value: x86
+        - name: _PlatformArgs
+          value: /p:Platform=$(_Platform)
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -63,20 +71,32 @@ jobs:
             value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
               /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
               /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+              /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
+              /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
               /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
       strategy:
         matrix:
-          Build_Debug:
+          Build_Debug_x86:
             _BuildConfig: Debug
             # override some variables for debug
             _PublishType: none
             _SignType: test
             _DotNetPublishToBlobFeed : false
-          Build_Release:
+          Build_Release_x86:
             _BuildConfig: Release
+          Build_Debug_x64:
+            _BuildConfig: Debug
+            # override some variables for debug
+            _PublishType: none
+            _SignType: test
+            _DotNetPublishToBlobFeed : false
+            _Platform: x64
+          Build_Release_x64:
+            _BuildConfig: Release
+            _Platform: x64
       steps:
       - checkout: self
         clean: true
@@ -87,4 +107,5 @@ jobs:
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
         displayName: Windows Build / Publish

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>9a7e395b-e859-40e2-809d-efb72cf3a2ee</ProjectGuid>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
+    <PackageDescription>WPF Transport Package from dotnet/wpf repository</PackageDescription>
+  </PropertyGroup>
+</Project>

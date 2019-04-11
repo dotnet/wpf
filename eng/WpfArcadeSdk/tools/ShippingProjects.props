@@ -46,7 +46,6 @@
     </ShippingProjects>
 
     <ExcludeFromXlfLocalization>
-      PresentationBuildTasks;
       D3DCompiler;
       VCRuntime
     </ExcludeFromXlfLocalization>

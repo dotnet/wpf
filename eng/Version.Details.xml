@@ -41,7 +41,7 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>e0a01a12c2676d69cefa61aa2526a414d7f2dabb</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview4-27610-06">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview4-27610-06" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>38eae75ec209bb6aa7df29871164dbbf249e1465</Sha>
     </Dependency>

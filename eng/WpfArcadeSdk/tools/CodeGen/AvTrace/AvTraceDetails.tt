@@ -1,6 +1,7 @@
 ﻿<#@ template hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="Newtonsoft.Json" #>
+<#@ assembly name="$(NewtonsoftLocation)\Newtonsoft.Json.dll" #>
+<#@ assembly name="netstandard" #>
 <#@ assembly name="Microsoft.CSharp" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>

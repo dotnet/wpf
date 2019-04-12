@@ -170,7 +170,7 @@ namespace Microsoft.Build.Tasks.Windows
                             temporaryProjectFile.Delete();
                         }
                     }
-                    catch (IOException e)                 
+                    catch (IOException e)
                     {
                         // Failure to delete the file is a non fatal error
                         Log.LogWarningFromException(e);

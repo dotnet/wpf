@@ -72,20 +72,17 @@ namespace System.Windows.Markup
 
 #region Constructor
 
-        static BamlMapTable()
-        {
-            // Setup the assembly record for the known types of controls
-            KnownAssemblyInfoRecord = new BamlAssemblyInfoRecord();
-            KnownAssemblyInfoRecord.AssemblyId = -1;
-            KnownAssemblyInfoRecord.Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty);
-            KnownAssemblyInfoRecord.AssemblyFullName = KnownAssemblyInfoRecord.Assembly.FullName;
-        }
-
         internal BamlMapTable(XamlTypeMapper xamlTypeMapper)
         {
             Debug.Assert(null != xamlTypeMapper);
 
             _xamlTypeMapper = xamlTypeMapper;
+
+            // Setup the assembly record for the known types of controls
+            KnownAssemblyInfoRecord = new BamlAssemblyInfoRecord();
+            KnownAssemblyInfoRecord.AssemblyId = -1;
+            KnownAssemblyInfoRecord.Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty);
+            KnownAssemblyInfoRecord.AssemblyFullName = KnownAssemblyInfoRecord.Assembly.FullName;
         }
 
 #endregion Constructor

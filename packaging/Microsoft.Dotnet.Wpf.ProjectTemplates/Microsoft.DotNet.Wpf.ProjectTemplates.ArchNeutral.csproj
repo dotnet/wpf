@@ -24,6 +24,6 @@
 
   <ItemGroup>
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
-    <PackagingContent Include="content\**\*" SubFolder="root\content\%(RecursiveDir)" />
+    <PackagingContent Include="content\**\*" SubFolder="root\%(RecursiveDir)" />
   </ItemGroup>
 </Project>

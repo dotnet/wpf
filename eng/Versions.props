@@ -11,7 +11,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27613-02</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27613-11</MicrosoftNETCoreAppVersion>
     <MicrosoftNETCorePlatformsVersion>3.0.0-preview5.19212.14</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview5.19212.14</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview5.19212.14</SystemDirectoryServicesVersion>

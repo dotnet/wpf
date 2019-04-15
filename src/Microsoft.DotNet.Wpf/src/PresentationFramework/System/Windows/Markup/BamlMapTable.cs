@@ -79,10 +79,10 @@ namespace System.Windows.Markup
             _xamlTypeMapper = xamlTypeMapper;
 
             // Setup the assembly record for the known types of controls
-            KnownAssemblyInfoRecord = new BamlAssemblyInfoRecord();
-            KnownAssemblyInfoRecord.AssemblyId = -1;
-            KnownAssemblyInfoRecord.Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty);
-            KnownAssemblyInfoRecord.AssemblyFullName = KnownAssemblyInfoRecord.Assembly.FullName;
+            _knownAssemblyInfoRecord = new BamlAssemblyInfoRecord();
+            _knownAssemblyInfoRecord.AssemblyId = -1;
+            _knownAssemblyInfoRecord.Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty);
+            _knownAssemblyInfoRecord.AssemblyFullName = _knownAssemblyInfoRecord.Assembly.FullName;
         }
 
 #endregion Constructor
@@ -995,7 +995,7 @@ namespace System.Windows.Markup
             // case return the known assembly info record.
             if (id == -1)
             {
-                return KnownAssemblyInfoRecord;
+                return _knownAssemblyInfoRecord;
             }
             else
             {
@@ -1803,7 +1803,6 @@ namespace System.Windows.Markup
 
         private const string _coreAssembly                 = "PresentationCore";
         private const string _frameworkAssembly            = "PresentationFramework";
-        private static BamlAssemblyInfoRecord KnownAssemblyInfoRecord;
 
         private static string[] _knownStrings =
         {
@@ -1829,6 +1828,9 @@ namespace System.Windows.Markup
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
         XamlTypeMapper _xamlTypeMapper;
+
+        // The assembly record for the known types of controls
+        BamlAssemblyInfoRecord _knownAssemblyInfoRecord;
 
 #if !PBTCOMPILER
         // Temporary cache of Known Type Converters for each baml reading session.

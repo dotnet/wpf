@@ -4,12 +4,24 @@
     usually lags behind the version that WPF gets from CoreFx packages 
   -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
-    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(ManagedCxx)'=='true'"/>
+    <PackageReference Include="Microsoft.NETCore.Platforms" 
+                      Version="$(MicrosoftNETCorePlatformsVersion)" 
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(IsTestProject)'!='true'"/>
+    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
+                                Version="$(MicrosoftNETCorePlatformsVersion)" 
+                                Condition="'$(ManagedCxx)'=='true'"/>
   </ItemGroup>
 
   <PropertyGroup>
     <!-- If TargetFramework is not netcoreapp3.x, then reset RuntimeFrameworkVersion -->
-    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.'))" />
+    <!-- 
+      Right now, we are building some test projects with Microsoft.NET.Sdk.WindowsDesktop, 
+      which is not idea. We should be using InternalMarkupCompilation=true and directly referencing
+      WPF product-assembly projects. 
+      These 'WindowsDesktop' based projects seem to have a conflict with RuntimeFrameworkVersion at
+      this time. Until the work for 'testhost' is completed (https://github.com/dotnet/wpf/issues/304), 
+      we will not enable RuntimeFrameworkVersion for test projects. 
+    -->
+    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.')) Or '$(IsTestProject)'=='true'" />
   </PropertyGroup>
 </Project>

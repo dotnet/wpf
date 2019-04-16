@@ -9,7 +9,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ output extension=".cs" #>
-<#@ parameter type="System.String" name="AvTraceMessageFile" #>
+<#@ parameter type="System.String" name="AvTraceMessageFiles" #>
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -22,12 +22,14 @@ namespace System.Diagnostics
     public static partial class PresentationTraceSources
     {
 <# 
-   string fileName = this.Host.ResolvePath(AvTraceMessageFile);
-   string jsonText = File.ReadAllText(fileName);
-   dynamic jsonObj = JsonConvert.DeserializeObject(jsonText);
-   foreach (var source in jsonObj.sources)
+   foreach (var avTracMessageFile in AvTraceMessageFiles.Split(';'))
    {
-		string name = source.name; 
+		string fileName = this.Host.ResolvePath(avTracMessageFile);
+		string jsonText = File.ReadAllText(fileName);
+		dynamic jsonObj = JsonConvert.DeserializeObject(jsonText);
+		foreach (var source in jsonObj.sources)
+		{
+			string name = source.name; 
 #>
 		/// <summary><#=name#>Source for <#=name#></summary>
 		public static TraceSource <#=name#>Source
@@ -42,7 +44,7 @@ namespace System.Diagnostics
 			}
 		}
 		internal static TraceSource _<#=name#>Source;
-
-<# } #>
+<#   }
+   } #>
 	}
 }

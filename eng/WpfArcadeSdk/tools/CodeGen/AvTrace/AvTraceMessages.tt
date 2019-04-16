@@ -1,0 +1,127 @@
+﻿<#@ template hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(NewtonsoftLocation)\Newtonsoft.Json.dll" #>
+<#@ assembly name="netstandard" #>
+<#@ assembly name="Microsoft.CSharp" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ output extension=".cs" #>
+<#@ parameter type="System.String" name="AvTraceMessageFile" #>
+
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+using System;
+using System.Diagnostics;
+
+namespace MS.Internal
+{
+<# 
+   string fileName = this.Host.ResolvePath(AvTraceMessageFile);
+   string jsonText = File.ReadAllText(fileName);
+   dynamic jsonObj = JsonConvert.DeserializeObject(jsonText);
+   foreach (var source in jsonObj.sources)
+   {
+		string name = source.name; 
+#>
+    static internal partial class Trace<#=name#>
+    {
+        static private AvTrace _avTrace = new AvTrace(
+                delegate() { return PresentationTraceSources.<#=name#>Source; },
+                delegate() { PresentationTraceSources._<#=name#>Source = null; }
+                );
+
+<#
+		int id = 0;
+		foreach (var traceDetails in source.trace_details)
+		{
+			++id;
+			string traceName = traceDetails.name;
+#>
+		static AvTraceDetails _<#=traceName#>;
+		static public AvTraceDetails <#=traceName#>
+        {
+            get
+            {
+                if ( _<#=traceName#> == null )
+                {
+<#			string dataString = traceDetails.data.ToString().Trim('[',']').Replace(Environment.NewLine,"").Trim(); #>
+                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails.message #>", <#=dataString#> } );
+                }
+
+                return _<#=traceName#>;
+            }
+        }
+<#		} #>
+
+        // Send a single trace output
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
+        {
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
+        }
+
+        // these help delay allocation of object array
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
+        {
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+        }
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
+        {
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
+        }
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
+        {
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
+        }
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        {
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
+        }
+
+        // Send a singleton "activity" trace (really, this sends the same trace as both a Start and a Stop)
+        static public void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
+        {
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
+        }
+
+        // these help delay allocation of object array
+        static public void TraceActivityItem( AvTraceDetails traceDetails )
+        {
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+        }
+        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
+        {
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
+        }
+        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
+        {
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
+        }
+        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        {
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
+        }
+
+        // Is tracing enabled here?
+        static public bool IsEnabled
+        {
+            get { return _avTrace != null && _avTrace.IsEnabled; }
+        }
+
+        // Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.)
+        static public bool IsEnabledOverride
+        {
+            get { return _avTrace.IsEnabledOverride; }
+        }
+
+        // Re-read the configuration for this trace source
+        static public void Refresh()
+        {
+            _avTrace.Refresh();
+        }
+	}
+<# } #>
+}

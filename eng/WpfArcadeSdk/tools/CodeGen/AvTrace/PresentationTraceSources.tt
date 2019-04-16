@@ -44,6 +44,7 @@ namespace System.Diagnostics
 			}
 		}
 		internal static TraceSource _<#=name#>Source;
+	
 <#   }
    } #>
 	}

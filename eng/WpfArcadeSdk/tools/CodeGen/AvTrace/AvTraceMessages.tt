@@ -48,7 +48,7 @@ namespace MS.Internal
             {
                 if ( _<#=traceName#> == null )
                 {
-<#			string dataString = traceDetails.data.ToString().Trim('[',']').Replace(Environment.NewLine,"").Trim(); #>
+<#			string dataString = traceDetails.data.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim(); #>
                     _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails.message #>", <#=dataString#> } );
                 }
 

@@ -4,8 +4,12 @@
     usually lags behind the version that WPF gets from CoreFx packages 
   -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
-    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" Version="$(MicrosoftNETCorePlatformsVersion)" Condition="'$(ManagedCxx)'=='true'"/>
+    <PackageReference Include="Microsoft.NETCore.Platforms" 
+                      Version="$(MicrosoftNETCorePlatformsVersion)" 
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(IsTestProject)'!='true'"/>
+    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
+                                Version="$(MicrosoftNETCorePlatformsVersion)" 
+                                Condition="'$(ManagedCxx)'=='true'"/>
   </ItemGroup>
 
   <PropertyGroup>

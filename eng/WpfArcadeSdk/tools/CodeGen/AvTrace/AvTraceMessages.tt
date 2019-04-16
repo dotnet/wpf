@@ -25,9 +25,10 @@ namespace MS.Internal
    dynamic jsonObj = JsonConvert.DeserializeObject(jsonText);
    foreach (var source in jsonObj.sources)
    {
-		string name = source.name; 
+		string name = source.name;
+        string traceClassName = source.tracename_override ?? $"Trace{name}";
 #>
-    static internal partial class Trace<#=name#>
+    static internal partial class <#=traceClassName#>
     {
         static private AvTrace _avTrace = new AvTrace(
                 delegate() { return PresentationTraceSources.<#=name#>Source; },
@@ -42,20 +43,42 @@ namespace MS.Internal
 			string traceName = traceDetails.name;
 #>
 		static AvTraceDetails _<#=traceName#>;
+<#          // Formattings strings are invoked by a function call, not a property
+            string traceMessage = traceDetails.message.ToString(); 
+            if (traceMessage.Contains("{0}"))
+            {
+#>
+        static public AvTraceDetails <#=traceName#>(params object[] args)
+        {
+            if ( _<#=traceName#> == null )
+            {
+                _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceMessage #>" } );
+            }
+            return new AvTraceFormat(_<#=traceName#>, args);
+        }
+        
+<#          } else { #>
 		static public AvTraceDetails <#=traceName#>
         {
             get
             {
                 if ( _<#=traceName#> == null )
                 {
-<#			string dataString = traceDetails.data.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim(); #>
-                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails.message #>", <#=dataString#> } );
+<#			if (traceDetails.data.Count == 0) { #>
+                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails.message #>" } );
+<#          } else { #>
+<#            string dataString = traceDetails.data.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim(); #>
+                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceMessage #>", <#=dataString#> } );
+<#          } #>
                 }
 
                 return _<#=traceName#>;
             }
         }
+
+<#		    } #>
 <#		} #>
+
 
         // Send a single trace output
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )

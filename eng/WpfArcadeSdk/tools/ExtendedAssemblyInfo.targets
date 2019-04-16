@@ -54,6 +54,8 @@
 
         WPF will also add [assembly: AssemblyMetadata("Language, "C#")] to C#
         assemblies.
+        
+        https://github.com/dotnet/wpf/issues/587
       --> 
       <AssemblyMetadata Include="Language" Condition="'$(Language)'!=''">
         <Value>$(Language)</Value>

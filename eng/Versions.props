@@ -66,4 +66,26 @@
     <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
     <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
   </PropertyGroup>
+  <!-- 
+    This is a toolset dependency added for use *only* by tests 
+    
+      !!!This dependency creates a cycle in the dependency-graph, but only in the 'toolset' portion of the graph. !!!
+
+      Note: Also see [Dependency graph](https://github.com/dotnet/arcade/blob/master/Documentation/Darc.md#viewing-the-dependency-graph)
+
+     - https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int consumes Microsoft.DotNet.Wpf.GitHub published by dotnet/wpf (this repo)
+     - https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int produces Microsoft.DotNet.Wpf.DncEng
+       - Microsoft.DotNet.Wpf.DncEng should, normally, be passed further along (and be consumed back by dotnet/wpf)
+     - Many WPF tests are non-trivial integration tests which require references to the whole WPF stack. 
+     - In order to satisfy these references, we consume Microsoft.DotNet.Wpf.DncEng for tests-only. 
+     - This is added as a DARC subscription that 
+       - (a) Updates EveryDay
+       - (b) Updates *only* in ".NET Core 3 Dev" channel
+       - (c) Does not update in ".NET Core 3 Release" channel
+
+      It is worth reiterating that this package *should not* be consumed to build the product.
+  -->
+  <PropertyGroup>
+      <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview5.19216.16</MicrosoftDotNetWpfDncEngVersion>
+  </PropertyGroup>
 </Project>

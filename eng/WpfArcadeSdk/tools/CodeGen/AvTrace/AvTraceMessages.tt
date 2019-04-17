@@ -8,6 +8,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Newtonsoft.Json" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
 <#@ output extension=".cs" #>
 <#@ parameter type="System.String" name="AvTraceMessageFile" #>
 // Licensed to the .NET Foundation under one or more agreements.
@@ -37,7 +38,6 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.<#=name#>Source; },
                 delegate() { PresentationTraceSources._<#=name#>Source = null; }
                 );
-
 <#
 		int id = 0;
 		foreach (var traceDetails in source.trace_details)
@@ -45,21 +45,20 @@ namespace MS.Internal
 			++id;
 			string traceName = traceDetails.name;
 #>
+
 		static AvTraceDetails _<#=traceName#>;
 <#          // Formattings strings are invoked by a function call, not a property
-            string traceMessage = traceDetails.message.ToString(); 
-            if (traceMessage.Contains("{0}"))
+            if (IsFormattedTraceMessage(traceDetails))
             {
 #>
         static public AvTraceDetails <#=traceName#>(params object[] args)
         {
             if ( _<#=traceName#> == null )
             {
-                _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceMessage #>" } );
+                <# OutputTraceCreation(id, traceDetails); #>
             }
             return new AvTraceFormat(_<#=traceName#>, args);
         }
-        
 <#          } else { #>
 		static public AvTraceDetails <#=traceName#>
         {
@@ -67,21 +66,14 @@ namespace MS.Internal
             {
                 if ( _<#=traceName#> == null )
                 {
-<#			if (traceDetails.data.Count == 0) { #>
-                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails.message #>" } );
-<#          } else { #>
-<#            string dataString = traceDetails.data.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim(); #>
-                    _<#=traceName#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceMessage #>", <#=dataString#> } );
-<#          } #>
+                    <# OutputTraceCreation(id, traceDetails); #>
                 }
 
                 return _<#=traceName#>;
             }
         }
-
 <#		    } #>
 <#		} #>
-
 
         // Send a single trace output
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
@@ -151,3 +143,37 @@ namespace MS.Internal
 	}
 <# } #>
 }
+<#+
+bool TryGetTraceDataString(JArray traceData, out string traceDataString)
+{
+    traceDataString = string.Empty;
+    if (traceData.Count > 0)
+    {
+        traceDataString = traceData.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim();
+    }
+    return !string.IsNullOrEmpty(traceDataString);
+}
+bool IsFormattedTraceMessage(JObject traceDetails)
+{
+    string traceMessage = traceDetails["message"].ToString(); 
+    return traceMessage.Contains("{0}");
+}
+// Put any Output* methods at the end, as they tend to be a bit messier because they need the special tags.
+// For ease of re-use, methods that output text should not make any assumptions about the indentation, and it
+// should be the callers responsibility for properly indenting
+void OutputTraceCreation(int id, JObject traceDetails)
+{
+    var traceData = (JArray)traceDetails["data"];
+    if (TryGetTraceDataString(traceData, out string dataString))
+    { 
+        // Prepend the comma to the list of strings (if any). This way we can write the dataString
+        // regardless if it is empty or not
+        dataString = $", {dataString}";
+    }
+    // The list of data strings in the JsonArray will already have quotation marks (i.e. "data1"),
+    // so we specifically don't add quotes around those here.
+#>
+_<#=traceDetails["name"]#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails["message"] #>"<#=dataString#> } );
+<#+
+}
+#>

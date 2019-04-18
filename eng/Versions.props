@@ -65,6 +65,7 @@
     <MicrosoftPrivateWinformsPackage>Microsoft.Private.Winforms</MicrosoftPrivateWinformsPackage>
     <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
     <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
+    <MicrosoftDotNetWpfDncEngPackage>Microsoft.DotNet.Wpf.DncEng</MicrosoftDotNetWpfDncEngPackage>
   </PropertyGroup>
   <!-- 
     This is a toolset dependency added for use *only* by tests 

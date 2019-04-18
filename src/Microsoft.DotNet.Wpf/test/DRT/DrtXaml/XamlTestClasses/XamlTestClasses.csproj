@@ -20,6 +20,5 @@
       System.Xaml in Microsoft.DotNet.Wpf.DncEng will be superseded by the project reference
     -->
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" />
   </ItemGroup>
 </Project>

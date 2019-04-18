@@ -2,6 +2,16 @@
 
 The following document describes how code generation in this repo works. The goal is to have all our code generation done through the use of T4 text generation. See the offical [Visual Studio T4 documentation](https://docs.microsoft.com/en-us/visualstudio/modeling/design-time-code-generation-by-using-t4-text-templates?view=vs-2019) for more information.
 
+## Design-Time vs Run-Time T4 templates
+Currently, we are evaluating the use of design-time text templates. This gives us the ability to simply add the templates and associated targets to the build, without the need of maintaining a separate tool to do run-time generation. Including the `Microsoft.TextTemplating.targets` requires us to manually import Sdk.Targets because it needs to be imported after Sdk.targets. This causes the `BuildDependsOn` variable, which is modified by the T4 targets, to be overwritten, so the `TransformAll` target doesn’t run before the Build target. The boilerplait for including design-time templates has been encapsulated in the `$(WpfCodeGenDir)DesignTimeTextTemplating.targets` file, so the pattern for enabling these in a project looks like this: 
+
+```
+<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+<Import Project="$(WpfCodeGenDir)AvTrace\GenTraceSources.targets" />
+<Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
+<Import Project="$(WpfCodeGenDir)DesignTimeTextTemplating.targets" />
+```
+
 ## Basic T4 code generation philosophy and guidelines
 T4 templates can be a powerful tool, however without a conscious effort, they can quickly become unmaintainable and difficult to understand.  When authoring/modifying a T4 template, extra care should be taken to ensure that the templates are as readable as possible. While the "readibility" of a template may be a bit subjective, there are a few common guidelines that really help. Note that these are guidelines, and are not mandatory. The readability of the template is paramount to all things.
 
@@ -84,3 +94,11 @@ bool GetFoo()
         }           
 <#+ } #>
 ```
+ 
+ ## Location of CodeGen targets
+ Unless there is a good reason (that should be documented), all codegen related targets should go into the $(WpfArcadeSdk)tools\CodeGen folder. This way we have a clean and clear location where we are able to keep track of all code generation in the codebase.
+
+ ## GenTraceSources and GenAvMessages
+ These two projects codegen the files the WPF codebase uses for tracing, and both use the AvTraceMessages.json files located in the project location that includes it, located via the MSBuild property $(MSBuildProjectFileDirectory).
+
+ **Note**: GenTraceSources should currently only be used by WindowsBase. It generates the [PresentationTraceSources](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.presentationtracesources?view=netcore3.0) class, which is a public class. Changing this file can impact the public API surface of WindowsBase or other WPF assemblies. 

@@ -5,6 +5,8 @@
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>f977a22b418447e1a42d04a61ab29c289465146f</Sha>
     </Dependency>
+  </ProductDependencies>
+  <ToolsetDependencies>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview5.19218.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>82eedbff6b767c0bd9297d3dd27c89d925a28e93</Sha>
@@ -57,8 +59,6 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>82eedbff6b767c0bd9297d3dd27c89d925a28e93</Sha>
     </Dependency>
-  </ProductDependencies>
-  <ToolsetDependencies>
     <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview5-27618-06">
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>4d6087136f8af1c076f706f59441f6de9795980b</Sha>

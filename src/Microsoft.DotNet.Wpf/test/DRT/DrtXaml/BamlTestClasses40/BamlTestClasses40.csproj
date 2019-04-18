@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>BamlTestClasses40</AssemblyName>
     <RootNamespace>BamlTestClasses40</RootNamespace>
@@ -9,6 +9,88 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE</DefineConstants>
+
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateProgramFile>true</GenerateProgramFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Page Include="BamlBindingPath.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BracketCharacterAttribute.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeferContMEPV.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResDeferredDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResInsert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResOverwrite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TempDPSetOrder1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfObfus1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <None Remove="@(Page)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+
+    <!-- 
+      These are proxy for ProjectReferences
+      Always set NuGetPackageId - this ensures that ResolvePackageFileConflicts target succeeds
+    -->
+    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\WindowsBase.dll" >
+      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
+    </Reference>
+    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\PresentationCore.dll">
+      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
+    </Reference>
+    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\PresentationFramework.dll">
+      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="mscorlib" />
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Linq" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+  </ItemGroup>
 </Project>

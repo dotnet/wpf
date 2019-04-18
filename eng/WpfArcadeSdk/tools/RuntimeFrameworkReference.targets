@@ -6,7 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms" 
                       Version="$(MicrosoftNETCorePlatformsVersion)" 
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(WpfTest)'!='true'"/>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
     
     <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
                                 Version="$(MicrosoftNETCorePlatformsVersion)" 

@@ -6,14 +6,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms" 
                       Version="$(MicrosoftNETCorePlatformsVersion)" 
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(IsTestProject)'!='true'"/>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(WpfTest)'!='true'"/>
+    
     <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
                                 Version="$(MicrosoftNETCorePlatformsVersion)" 
-                                Condition="'$(ManagedCxx)'=='true'"/>
+                                Condition="'$(ManagedCxx)'=='true' And '$(WpfTest)'!='true'"/>
+    
+    <FrameworkReference Update="Microsoft.NETCore.App"
+                      Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true' And $(TargetFramework.StartsWith('netcoreapp3.')) And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(WpfTest)'!='true'">
+      <TargetingPackVersion>$(MicrosoftNETCoreAppVersion)</TargetingPackVersion>
+    </FrameworkReference>
   </ItemGroup>
 
   <PropertyGroup>
     <!-- If TargetFramework is not netcoreapp3.x, then reset RuntimeFrameworkVersion -->
-    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.'))" />
+    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.')) And '$(WpfTest)'=='true'" />
   </PropertyGroup>
 </Project>

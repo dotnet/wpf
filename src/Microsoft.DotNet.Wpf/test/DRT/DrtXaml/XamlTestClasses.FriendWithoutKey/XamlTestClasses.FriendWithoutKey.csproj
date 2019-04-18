@@ -3,6 +3,5 @@
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 </Project>

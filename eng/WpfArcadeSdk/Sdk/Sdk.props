@@ -34,7 +34,6 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />
-  <Import Project="$(WpfArcadeSdkToolsDir)Tests.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
 
   <PropertyGroup>

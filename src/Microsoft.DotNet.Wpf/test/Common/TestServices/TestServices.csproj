@@ -6,13 +6,19 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <NoWarn>$(NoWarn);CS0618;0618</NoWarn>
         <Platforms>AnyCPU;x64</Platforms>
-        <UseWPF>true</UseWPF>
     </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 
+      System.Xaml in Microsoft.DotNet.Wpf.DncEng will be superseded by the project reference
+    -->
     <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\Accessibility.dll" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" />
   </ItemGroup>
 </Project>

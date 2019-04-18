@@ -3,7 +3,6 @@
     <AssemblyName>BamlTestClasses40</AssemblyName>
     <RootNamespace>BamlTestClasses40</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -68,21 +67,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-
     <!-- 
-      These are proxy for ProjectReferences
-      Always set NuGetPackageId - this ensures that ResolvePackageFileConflicts target succeeds
+      System.Xaml in Microsoft.DotNet.Wpf.DncEng will be superseded by the project reference
     -->
-    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\WindowsBase.dll" >
-      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
-    </Reference>
-    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\PresentationCore.dll">
-      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
-    </Reference>
-    <Reference Include="$(PkgMicrosoft_DotNet_Wpf_DncEng)\ref\$(TargetFramework)\PresentationFramework.dll">
-      <NuGetPackageId>Microsoft.DotNet.Wpf.DncEng</NuGetPackageId>
-    </Reference>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" />
   </ItemGroup>
 
   <ItemGroup>

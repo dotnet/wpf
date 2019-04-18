@@ -6,12 +6,12 @@
     <OutputType>Library</OutputType>
     <StartupObject />
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
     <IsIntegrationTestProject>true</IsIntegrationTestProject>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
   <ItemGroup>
@@ -24,7 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- 
+      System.Xaml in Microsoft.DotNet.Wpf.DncEng will be superseded by the project reference
+    -->
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" />
+
   </ItemGroup>
 
   <ItemGroup>

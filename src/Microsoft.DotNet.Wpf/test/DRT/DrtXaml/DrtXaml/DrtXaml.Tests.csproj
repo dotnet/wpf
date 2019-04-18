@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
@@ -21,6 +21,14 @@
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj" />
     <ProjectReference Include="..\XamlTestClasses\XamlTestClasses.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -47,10 +47,7 @@ namespace MS.Internal
 #>
 
 		static AvTraceDetails _<#=traceName#>;
-<#          // Formattings strings are invoked by a function call, not a property
-            if (IsFormattedTraceMessage(traceDetails))
-            {
-#>
+<#          if (IsFormattedTraceMessage(traceDetails)) { #>
         static public AvTraceDetails <#=traceName#>(params object[] args)
         {
             if ( _<#=traceName#> == null )

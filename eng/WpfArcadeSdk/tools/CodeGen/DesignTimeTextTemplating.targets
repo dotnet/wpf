@@ -14,13 +14,11 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <!-- This is what will cause the templates to be transformed when the project is built (default is false) -->
     <TransformOnBuild>true</TransformOnBuild>
-    <!-- Set to true to force overwriting of read-only output files, e.g. if they're not checked out (default is false) -->
-    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
     <!-- Set to false to transform files even if the output appears to be up-to-date (default is true)  -->
     <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
     <NewtonsoftVersion>12.0.2-beta1</NewtonsoftVersion>
   </PropertyGroup>
-  <Import Condition="'$(MSBuildRuntimeType)'!='Core'" Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
   <!-- ugly workaround. can be removed once the below issue is addressed: -->
   <!-- https://github.com/dotnet/xliff-tasks/issues/75 -->
 

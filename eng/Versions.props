@@ -4,6 +4,7 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview6</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <NewtonsoftJsonVersion>12.0.1</NewtonsoftJsonVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>

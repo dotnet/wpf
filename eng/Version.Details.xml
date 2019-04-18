@@ -75,5 +75,10 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>bd278630dd08914ef521e62658afb69845c5b93a</Sha>
     </Dependency>
+    <Dependency Name="Newtonsoft.Json" Version="12.0.1">
+      <Uri>https://github.com/JamesNK/Newtonsoft.Json</Uri>
+      <Sha>
+      </Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

@@ -20,7 +20,7 @@
     <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
     <NewtonsoftVersion>12.0.2-beta1</NewtonsoftVersion>
   </PropertyGroup>
-  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <Import Condition="'$(MSBuildRuntimeType)'!='Core'" Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
   <!-- ugly workaround. can be removed once the below issue is addressed: -->
   <!-- https://github.com/dotnet/xliff-tasks/issues/75 -->
 

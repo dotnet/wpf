@@ -1,0 +1,12 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Update="$(MicrosoftDotNetWpfDncEngPackage)">
+      <CopyLocal>true</CopyLocal>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(WpfTest)'=='true'">
+    <RuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</RuntimeIdentifier>
+  </PropertyGroup>
+</Project>

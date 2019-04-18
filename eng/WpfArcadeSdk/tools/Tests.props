@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" Condition="'$(IsTestProject)'=='true' and '$(MSBuildProjectExtension)'!='.vcxproj'">
+      <GeneratePathProperty>true</GeneratePathProperty>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

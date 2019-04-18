@@ -10,8 +10,16 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE</DefineConstants>
 
+    <!-- 
+      Properties needed for local markup-compilation
+    -->
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
     <NoInternalTypeHelper>true</NoInternalTypeHelper>
+
+    <!--
+      There is no @(ApplicationDefinition), so provide a 
+      static Main() instead
+    --> 
     <GenerateProgramFile>true</GenerateProgramFile>
   </PropertyGroup>
 

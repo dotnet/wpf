@@ -1,12 +1,21 @@
 <Project>
-  <ItemGroup>
-    <PackageReference Update="$(MicrosoftDotNetWpfDncEngPackage)">
-      <CopyLocal>true</CopyLocal>
-    </PackageReference>
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(WpfTest)'=='true'">
     <RuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</RuntimeIdentifier>
     <RuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</RuntimeIdentifier>
   </PropertyGroup>
+  <ItemGroup Condition="'$(WpfTest)'=='true'">
+    <PackageReference Include="runtime.$(RuntimeIdentifier).$(MicrosoftDotNetWpfDncEngPackage)" 
+                      Version="$(MicrosoftDotNetWpfDncEngVersion)">
+      <CopyLocal>true</CopyLocal>
+      <GeneratePathProperty>true</GeneratePathProperty>
+    </PackageReference>
+
+    <None Condition="'$(RuntimeIdentifier)'=='win-x64'" 
+          Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\lib\$(RuntimeIdentifier)\*.dll" 
+          CopyToOutputDirectory="PreserveNewest"/>
+    <None Condition="'$(RuntimeIdentifier)'=='win-x86'"
+           Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\lib\$(RuntimeIdentifier)\*.dll" 
+          CopyToOutputDirectory="PreserveNewest"/>
+  </ItemGroup>
+  
 </Project>

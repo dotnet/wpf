@@ -10,16 +10,16 @@ Param(
 
 function Print-Usage()
 {
-    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value] [-release] [-testhost]"
+    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value>] [-release] [-testhost]"
     Write-Host "    This script helps developers deploy wpf assemblies to the proper location for easy testing. See "
     Write-Host "    developer-guide.md for more information on how to use this script."
     Write-Host ""
     Write-Host "Common parameters:"
-    Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. If copying"
-    Write-Host "                          over a testhost installation, this should point to the location of dotnet.exe"
+    Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. Ignored"
+    Write-Host "                          if the -testhost parameter is used."
     Write-Host "  -arch <value>           Architecture of binaries to copy. Can be either x64 or x86. Default is x86."
     Write-Host "  -release                Copy release binaries. Default is to copy Debug binaries"
-    Write-Host "  -testhost               Copy binaries over the test host installation of Microsoft.WindowsDesktop.App."
+    Write-Host "  -testhost               Copy binaries over the local dotnet installation in the .dotnet folder"
     Write-Host "  -help                   Print help and exit"
     Write-Host ""
 }
@@ -29,68 +29,30 @@ $Config = if ($release) { "Release" } else { "Debug" }
 
 function CopyBinariesToLocation($location)
 {
-    $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\bin"
+    $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
     CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase 
     CopyManagedBinariesToLocation $location  $locallyBuiltBinaryLocationBase
-    CopyThemeBinariesToLocation $location  $locallyBuiltBinaryLocationBase
-    CopyUIAutomationBinariesToLocation $location  $locallyBuiltBinaryLocationBase
 }
 
 function CopyNativeBinariesToLocation($location, $localBinLocation)
 {
-    $NativeBinaries = "D3DCompiler", "PenImc", "PresentationNative", "wpfgfx"
-    $ArchFolder = if ($arch -eq "x86") { "Win32" } else { "x64" }
-    foreach($binary in $NativeBinaries)
-    {
-        $BinLocation = [System.IO.Path]::Combine($localBinLocation, $binary, $ArchFolder, $Config)
-        if ($binary -eq "D3DCompiler")
-        {
-            $binary = $binary + "_47"
-        }
-        $NetCore3NativeBinaryName = $binary + "_cor3.dll"
-        CopyBinaryToLocation $NetCore3NativeBinaryName $BinLocation $location
-    }
+    $PackageName = "Microsoft.DotNet.Wpf.GitHub"
+    $BinaryLocationInPackage =  "win-$arch"
+    CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
-    # x86 managed binaries don't have a distinct folder
-    $ManagedBinaries = "DirectWriteForwarder", "PresentationCore", "PresentationCore-CommonResources", "PresentationUI", "PresentationFramework-SystemCore", "PresentationFramework-SystemData", "PresentationFramework-SystemXml", "PresenationFramework-SystemXmlLinq", "ReachFramework", "System.Printing", "System.Windows.Controls.Ribbon", "System.Windows.Input.Manipulations", "WindowsBase", "WindowsFormsIntegration", "System.Xaml"
-    CopyNetCoreApp3Binaries $location $localBinLocation $ManagedBinaries
-}
-function CopyThemeBinariesToLocation($location, $localBinLocation)
-{
-    $ThemeBinaries = "PresentationFramework.Aero", "PresentationFramework.Aero2", "PresentationFramework.AeroLight", "PresentationFramework.Classic", "PresentationFramework.Luna", "PresentationFramework.Royale"
-    CopyNetCoreApp3Binaries $location $localBinLocation $ThemeBinaries
-}
-function CopyUIAutomationBinariesToLocation($location, $localBinLocation)
-{
-    $UIAutomationBinaries = "UIAutomationClient", "UIAutomationClientSideProviders", "UIAutomationProvider", "UIAutomationTypes"
-    CopyNetCoreApp3Binaries $location $localBinLocation $UIAutomationBinaries
+    # x86 managed binaries don't have a distinct folder. All the managed
+    $PackageName = "Microsoft.DotNet.Wpf.GitHub"
+    $BinaryLocationInPackage = "netcoreapp3.0"
+    CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 
-function CopyNetCoreApp3Binaries($location, $localBinLocation, $binaries)
+function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binaryLocationInPackage)
 {
     $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
-    foreach($binary in $binaries)
-    {
-        $FullBinaryName = $binary + ".dll"
-        $BinLocation = [System.IO.Path]::Combine($localBinLocation, $binary, $ArchFolder, $Config, "netcoreapp3.0")
-        CopyBinaryToLocation $FullBinaryName $BinLocation $location
-    }
-}
-
-function CopyBinaryToLocation($binary, $binaryLocation, $destination)
-{
-    $FullBinaryPath = Join-Path $binaryLocation $binary
-    if (Test-Path $FullBinaryPath)
-    {
-        Write-Host "Copying " $binary " to " $destination  
-        Copy-Item $FullBinaryPath $destination -Force
-    }
-    else
-    {
-        Write-Host "Binary Unavailable: " $binary -ForegroundColor Yellow
-    }
+    $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "lib", $binaryLocationInPackage)
+    Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
 }
 
 if ($help -or [string]::IsNullOrEmpty($destination)) 
@@ -110,7 +72,7 @@ elseif($testhost)
 }
 else
 {
-    $runtimeIdentifer = if ($arch -eq "x86") { "win-x86" } else { "win-x64" }
+    $runtimeIdentifer = "win-$arch"
     $location = [System.IO.Path]::Combine($destination, "bin\Debug\netcoreapp3.0", $runtimeIdentifer, "publish")
     if(![System.IO.Directory]::Exists($location))
     {

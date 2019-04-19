@@ -2,7 +2,6 @@
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(NewtonsoftLocation)\Newtonsoft.Json.dll" #>
 <#@ assembly name="netstandard" #>
-<#@ assembly name="Microsoft.CSharp" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -28,11 +27,10 @@ namespace System.Diagnostics
    foreach (var avTracMessageFile in AvTraceMessageFiles.Split(';'))
    {
 		string fileName = this.Host.ResolvePath(avTracMessageFile);
-		string jsonText = File.ReadAllText(fileName);
-		dynamic jsonObj = JsonConvert.DeserializeObject(jsonText);
-		foreach (var source in jsonObj.sources)
+		JObject jsonObj = (JObject)JsonConvert.DeserializeObject(File.ReadAllText(fileName));
+   		foreach (JObject source in (JArray)jsonObj["sources"])
 		{
-			string name = source.name; 
+			string name = source["name"].ToString(); 
 #>
 		/// <summary><#=name#>Source for <#=name#></summary>
 		public static TraceSource <#=name#>Source
@@ -41,7 +39,7 @@ namespace System.Diagnostics
 			{
 				if (_<#=name#>Source == null)
 				{
-					_<#=name#>Source = CreateTraceSource("<#=source.source_name#>");
+					_<#=name#>Source = CreateTraceSource("<#=source["source_name"]#>");
 				}
 				return _<#=name#>Source;
 			}

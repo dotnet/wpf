@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
-    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
 
     <!-- 
       Clear AssemblyVersion => it will ensure that the AssemblyVersion is > 4.0.0.0.
@@ -24,11 +22,8 @@
 
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <AssemblyName>PresentationBuildTasks</AssemblyName>
-    <OutputType>Library</OutputType>
     <DefineConstants>$(DefineConstants);PBTCOMPILER;PARSERM8BC;NEWLOADER;IGNORABLESUPPORT;ONLYMARKUPEXTENSIONS</DefineConstants>
-    <ProjectGuid>{4216C2EA-E2B9-4FB2-9803-F73FDC64CAC4}</ProjectGuid>
     <BinPlaceRuntime>false</BinPlaceRuntime>
-    <DebugType>full</DebugType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <Platforms>AnyCPU;x64</Platforms>
@@ -74,11 +69,7 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.resx">
-      <ManifestResourceName>Strings</ManifestResourceName>
-      <StronglyTypedClassName>MS.Utility</StronglyTypedClassName>
-      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
-    </EmbeddedResource>
+      <EmbeddedResource Include="Resources\Strings.resx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -321,15 +312,4 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.0" />
   </ItemGroup>
 
-
-  <PropertyGroup>
-    <!-- 
-        Resource Generation 
-           * GenerateResourcesSource must be added as a dependent compilation target 
-   -->
-    <CoreCompileDependsOn>
-      GenerateResourcesSource;
-      $(CoreCompileDependsOn)
-    </CoreCompileDependsOn>
-  </PropertyGroup>
 </Project>

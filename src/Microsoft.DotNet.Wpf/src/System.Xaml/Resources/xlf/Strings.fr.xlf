@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="fr" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">Le KeyTime résolu pour l'image clé à l'index {1} ne peut pas être supérieur au KeyTime résolu pour l'image clé à l'index {4}. KeyFrames[{1}] possède un KeyTime spécifié '{2}', qui se résout en heure {3} ; KeyFrames[{4}] a spécifié un KeyTime '{5}', qui se résout en heure {6}. Comme certains KeyTimes sont résolus par rapport à l'heure Begin de '{0}' et d'autres par rapport à sa valeur Duration, certains ensembles de KeyTimes ne sont pas valides pour tous les Durations.</target>
+        <target state="translated">Le temps clé résolu pour l'image clé à l'index {1} ne peut pas être supérieur au temps clé résolu pour l'image clé à l'index {4}. KeyFrames[{1}]5D; a un temps clé spécifié '{2}', qui se résout en heure {3} ; KeyFrames[{4}]5D; a spécifié un temps clé '{5}', qui se résout en heure {6}. Comme certains temps clés sont résolus par rapport à l'heure de début de '{0}' et d'autres par rapport à sa durée, certains ensembles de temps clés ne sont pas valides pour toutes les durées.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name ne peut pas être une chaîne vide.</target>
+        <target state="translated">Le nom ne peut pas être une chaîne vide.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] sur '{2}' n'est pas une propriété déclarée sur ce type.</target>
+        <target state="translated">['{0}'('{1}')]5D; sur '{2}' n'est pas une propriété déclarée sur ce type.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] sur '{2}' n'est pas une propriété connue.</target>
+        <target state="translated">['{0}'('{1}')]5D; sur '{2}' n'est pas une propriété connue.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

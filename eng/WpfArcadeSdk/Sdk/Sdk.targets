@@ -3,6 +3,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
   
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />
@@ -16,6 +17,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)WpfProjectReference.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
   

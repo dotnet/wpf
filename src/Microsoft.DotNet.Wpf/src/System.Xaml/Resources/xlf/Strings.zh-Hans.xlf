@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
         <source>Enumerating attached properties on object '{0}' threw an exception.</source>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">索引 {1} 处的关键帧的已解析 KeyTime 不能大于索引 {4} 处的关键帧的已解析 KeyTime。KeyFrames[{1}] 具有指定的 KeyTime“{2}”，它解析为时间 {3}；KeyFrames[{4}] 具有指定的 KeyTime“{5}”，它解析为时间 {6}。某些 KeyTime 是相对于“{0}”的 Begin 时间进行解析的，而其他的则是相对于其 Duration 进行解析的，因此某些 KeyTime 集并不是对所有 Duration 都有效。</target>
+        <target state="translated">索引 {1} 处的关键帧的已解析 KeyTime 不能大于索引 {4} 处的关键帧的已解析 KeyTime。KeyFrames[{1}]5D; 具有指定的 KeyTime“{2}”，它解析为时间 {3}；KeyFrames[{4}]5D; 具有指定的 KeyTime“{5}”，它解析为时间 {6}。某些 KeyTime 是相对于“{0}”的 Begin 时间进行解析的，而其他的则是相对于其 Duration 进行解析的，因此某些 KeyTime 集并不是对所有 Duration 都有效。</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -589,7 +589,7 @@
       </trans-unit>
       <trans-unit id="InvalidXamlMemberName">
         <source>'{0}' is not a valid XAML member name.</source>
-        <target state="translated">“{0}”不是有效的 XAML 成员名。</target>
+        <target state="translated">“{0}”不是有效的 XAML 成员名称。</target>
         <note />
       </trans-unit>
       <trans-unit id="LateConstructionDirective">
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name 不能为空字符串。</target>
+        <target state="translated">名称不能为空字符串。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">“{2}”上的 ['{0}'('{1}')] 不是在此类型上声明的属性。</target>
+        <target state="translated">“{2}”上的 ['{0}'('{1}')]5D; 不是在此类型上声明的属性。</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">“{2}”上的 ['{0}'('{1}')] 是未知属性。</target>
+        <target state="translated">“{2}”上的 ['{0}'('{1}')]5D; 是未知属性。</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

@@ -19,6 +19,7 @@ jobs:
     enablePublishBuildArtifacts: true
     enablePublishTestResults: true
     enablePublishBuildAssets: true
+    enablePublishUsingPipelines: $(_PublishUsingPipelines)
     enableTelemetry: true
     helixRepo: dnceng/wpf
 

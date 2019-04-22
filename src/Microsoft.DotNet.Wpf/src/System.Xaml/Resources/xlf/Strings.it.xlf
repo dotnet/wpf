@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="it" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">Il valore KeyTime risultante per il fotogramma chiave all'indice {1} non può essere maggiore del KeyTime risultante per il fotogramma chiave all'indice {4}. Per KeyFrames[{1}] è stato specificato un valore KeyTime '{2}', corrispondente all'unità di tempo del fotogramma chiave {3}. Per KeyFrames[{4}] è stato specificato un valore KeyTime '{5}', corrispondente all'unità di tempo del fotogramma chiave {6}. Alcuni valori KeyTime vengono calcolati in base all'ora Begin di '{0}' e altri in base al valore Duration, pertanto alcuni set di KeyTime non sono validi per tutti i valori Duration.</target>
+        <target state="translated">Il valore KeyTime risultante per il fotogramma chiave alla posizione di indice {1} non può essere maggiore del valore di KeyTime risultante per il fotogramma chiave alla posizione di indice {4}. Per KeyFrames[{1}]5D; è stato specificato un valore KeyTime '{2}', corrispondente all'unità di tempo del fotogramma chiave {3}. Per KeyFrames[{4}]5D; è stato specificato un valore KeyTime '{5}', corrispondente all'unità di tempo del fotogramma chiave {6}. Alcuni valori KeyTime vengono calcolati in base all'ora Begin di '{0}' e altri in base al valore Duration, quindi alcuni set di KeyTime non sono validi per tutti i valori Duration.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name non può essere una stringa vuota.</target>
+        <target state="translated">Il nome non può essere una stringa vuota.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] su '{2}' non è una proprietà dichiarata sul tipo corrente.</target>
+        <target state="translated">['{0}'('{1}')]5D; su '{2}' non è una proprietà dichiarata su questo tipo.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] su '{2}' non è una proprietà nota.</target>
+        <target state="translated">['{0}'('{1}')]5D; su '{2}' non è una proprietà nota.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

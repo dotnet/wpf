@@ -11,25 +11,25 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27620-10</MicrosoftNETCoreAppVersion>
-    <MicrosoftNETCorePlatformsVersion>3.0.0-preview5.19220.3</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>4.6.0-preview5.19220.3</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>4.6.0-preview5.19220.3</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview5.19220.3</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview5-27621-08</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCorePlatformsVersion>3.0.0-preview5.19221.5</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>4.6.0-preview5.19221.5</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>4.6.0-preview5.19221.5</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview5.19221.5</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview5.19220.3</MicrosoftWin32RegistryPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview5.19220.3</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview5.19220.3</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview5.19220.3</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>4.6.0-preview5.19220.3</SystemReflectionEmitPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview5.19221.5</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview5.19221.5</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview5.19221.5</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview5.19221.5</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview5.19221.5</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>4.6.0-preview5.19220.3</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview5.19220.3</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>4.6.0-preview5.19220.3</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview5.19220.3</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>4.6.0-preview5.19220.3</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview5.19221.5</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview5.19221.5</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview5.19221.5</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview5.19221.5</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview5.19221.5</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

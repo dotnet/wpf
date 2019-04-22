@@ -5,7 +5,7 @@
     <PreReleaseVersionLabel>preview4</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemReflectionMetadataLoadContextVersion>4.6.0-preview4.19212.13</SystemReflectionMetadataLoadContextVersion>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19213.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19222.1</MicrosoftPrivateWinformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview4.19212.13</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview4.19212.13</SystemDirectoryServicesVersion>
   </PropertyGroup>

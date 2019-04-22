@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
         <source>Enumerating attached properties on object '{0}' threw an exception.</source>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">在索引 {1} 解析之主要畫面格的 KeyTime 不能大於在索引 {4} 解析之主要畫面格的 KeyTime。KeyFrames[{1}] 具有指定的 KeyTime '{2}'，它會解析為時間 {3}; KeyFrames[{4}] 具有指定的 KeyTime '{5}'，它會解析為時間 {6}。某些 KeyTimes 會相對解析為 '{0}' 的 Begin 時間，而其他則會相對解析為其 Duration，因此某些 KeyTimes 集合並非對於所有 Duration 都有效。</target>
+        <target state="translated">解析出的索引 {1} 主要畫面 KeyTime，不可大於解析出的索引 {4} 主要畫面 KeyTime。KeyFrames[{1}]5D; 指定了 KeyTime '{2}'，其會解析為時間 {3}; 而 KeyFrames[{4}]5D; 則指定了 KeyTime '{5}'，會解析為時間 {6}。某些 KeyTimes 會解析為相對於 '{0}' 的 Begin 時間，其他則會解析為相對於其 Duration，所以某些 KeyTimes 集合並非對所有 Duration 都有效。</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">'{2}' 上的 ['{0}'('{1}')] 不是在此型別上宣告的屬性。</target>
+        <target state="translated">'{2}' 上的 ['{0}'('{1}')]5D; 不是在此類型上宣告的屬性。</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">'{2}' 上的 ['{0}'('{1}')] 不是已知的屬性。</target>
+        <target state="translated">'{2}' 上的 ['{0}'('{1}')]5D; 不是已知的屬性。</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

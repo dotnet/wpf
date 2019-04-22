@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">インデックス {1} のキー フレームの解決された KeyTime 値は、インデックス {4} のキー フレームの解決された KeyTime 値を超えることはできません。KeyFrames[{1}] には KeyTime '{2}' が指定されており、時刻 {3} に解決されます。KeyFrames[{4}] には KeyTime '{5}' が指定されており、時刻 {6} に解決されます。'{0}' の Begin 時刻から相対的に解決されたり、Duration から相対的に解決されたりする KeyTime もあるため、一部の KeyTime がすべての Duration に対して有効でない場合もあります。</target>
+        <target state="translated">インデックス {1} のキー フレームの解決された KeyTime 値は、インデックス {4} のキー フレームの解決された KeyTime 値を超えることはできません。KeyFrames[{1}]5D; には KeyTime '{2}' が指定されており、時刻 {3} に解決されます。KeyFrames[{4}]5D; には KeyTime '{5}' が指定されており、時刻 {6} に解決されます。'{0}' の Begin 時刻から相対的に解決されたり、Duration から相対的に解決されたりする KeyTime もあるため、一部の KeyTime がすべての Duration に対して有効でない場合もあります。</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -204,7 +204,7 @@
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
         <source>Cannot get part or part information from a write-only container.</source>
-        <target state="translated">書き込み専用コンテナーからパーツまたはパーツの詳細情報を取得することはできません。</target>
+        <target state="translated">書き込み専用コンテナーから部品または部品の詳細情報を取得できません。</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotSetBaseUri">
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
         <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
-        <target state="translated">コレクションの CopyTo メソッドに多次元配列を渡すことはできません。</target>
+        <target state="translated">コレクション上の CopyTo メソッドに多次元配列を渡すことはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
@@ -779,12 +779,12 @@
       </trans-unit>
       <trans-unit id="NameScopeInvalidIdentifierName">
         <source>'{0}' name is not valid for identifier.</source>
-        <target state="translated">'{0}' の名前は識別子として有効ではありません。</target>
+        <target state="translated">'{0}' 名は、識別子に対して無効です。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">名前を空の文字列にすることはできません。</target>
+        <target state="translated">名前は空の文字列にはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">'{2}' の ['{0}'('{1}')] は、この型で宣言されたプロパティではありません。</target>
+        <target state="translated">'{2}' の ['{0}'('{1}')]5D; は、この型で宣言されたプロパティではありません。</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1244,7 +1244,7 @@
       </trans-unit>
       <trans-unit id="ToStringNull">
         <source>(null)</source>
-        <target state="translated">(null)</target>
+        <target state="translated">(なし)</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperEmptyToken">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">'{2}' の ['{0}'('{1}')] は不明なプロパティです。</target>
+        <target state="translated">'{2}' の ['{0}'('{1}')]5D; は不明なプロパティです。</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">
@@ -1444,7 +1444,7 @@
       </trans-unit>
       <trans-unit id="XCRChoiceAfterFallback">
         <source>Choice cannot follow a Fallback.</source>
-        <target state="translated">Choice を Fallback に続けることはできません。</target>
+        <target state="translated">Choice を、Fallback に続けることはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRChoiceNotFound">
@@ -1504,12 +1504,12 @@
       </trans-unit>
       <trans-unit id="XCRInvalidPreserve">
         <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
-        <target state="translated">名前空間 '{0}' に、固有およびワイルドカードの Preserve 宣言の両方を指定することはできません。</target>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの Preserve 宣言の両方を指定することはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRInvalidProcessContent">
         <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
-        <target state="translated">名前空間 '{0}' に、固有およびワイルドカードの ProcessContent 宣言の両方を指定することはできません。</target>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの ProcessContent 宣言の両方を指定することはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRInvalidRequiresAttribute">
@@ -1519,7 +1519,7 @@
       </trans-unit>
       <trans-unit id="XCRInvalidXMLName">
         <source>'{0}' attribute value is not a valid XML name.</source>
-        <target state="translated">'{0}' 属性値は、有効な XML 名ではありません。</target>
+        <target state="translated">'{0}' 属性値は、無効な XML 名です。</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRMultipleFallbackFound">

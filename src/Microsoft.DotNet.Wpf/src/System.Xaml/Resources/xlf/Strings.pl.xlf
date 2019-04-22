@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="pl" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">Rozpoznana wartość KeyTime dla klatki kluczowej o indeksie {1} nie może być większa niż wartość KeyTime dla klatki o indeksie {4}. Element KeyFrames [{1}] ma określoną wartość KeyTime „{2}”, która jest rozpoznawana jako czas czasu {3}; element KeyFrames[{4}] ma określony parametr KeyTime „{5}”, który jest rozpoznawany jako czas {6}. Niektóre wartości KeyTimes są rozpoznawane w zależności od czasu Begin dla „{0}”, a inne — w zależności od wartości elementu Duration, więc niektóre zbiory wartości KeyTimes nie są prawidłowe dla wszystkich wartości Duration.</target>
+        <target state="translated">Rozpoznana wartość KeyTime dla klatki kluczowej o indeksie {1} nie może być większa niż wartość KeyTime dla klatki o indeksie {4}. Element KeyFrames[{1}]5D; ma określoną wartość KeyTime „{2}”, która jest rozpoznawana jako czas {3}; element KeyFrames[{4}]5D; ma określony parametr KeyTime „{5}”, który jest rozpoznawany jako czas {6}. Niektóre wartości KeyTimes są rozpoznawane w zależności od czasu Begin dla „{0}”, a inne — w zależności od wartości elementu Duration, więc niektóre zbiory wartości KeyTimes nie są prawidłowe dla wszystkich wartości Duration.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">Element [{0}({1})] w {2} nie jest właściwością zadeklarowaną w tym typie.</target>
+        <target state="translated">Element ['{0}'('{1}')]5D; w „{2}” nie jest właściwością zadeklarowaną w tym typie.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1244,7 +1244,7 @@
       </trans-unit>
       <trans-unit id="ToStringNull">
         <source>(null)</source>
-        <target state="translated">(zerowy)</target>
+        <target state="translated">(null)</target>
         <note />
       </trans-unit>
       <trans-unit id="TokenizerHelperEmptyToken">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">Element [{0}({1})] w {2} nie jest żadną znaną właściwością.</target>
+        <target state="translated">Element ['{0}'('{1}')]5D; w „{2}” nie jest znaną właściwością.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

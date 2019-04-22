@@ -23,6 +23,7 @@
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
   </PropertyGroup>
 
+  <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>
   <Import Project="$(WpfArcadeSdkToolsDir)SystemResources.props"/>
   <Import Project="$(WpfArcadeSdkToolsDir)TargetFrameworks.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)VersionSuffix.props" />
@@ -31,7 +32,6 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)ProjectReferences.props" />
-  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />

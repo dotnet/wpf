@@ -5,97 +5,150 @@
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
                       Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftPrivateWinformsReference)'!='true'"/>
+
+    <!--
+      When @(NetCoreReference) is non-empty, exclude all assets (ExcludeAssets = All) and re-add them in 
+      ResolveMicrosoftNetCoreAppReferences target
+    -->
+    <PackageReference Update="Microsoft.NETCore.App"
+                      GeneratePathProperty="true"
+                      ExcludeAssets="All"
+                      Condition="'@(NetCoreReference)'!='' And '$(DoNotLimitMicrosoftNetCoreReferences)'!='true' And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+
+    <PackageReference Update="Microsoft.NETCore.App"
+                    GeneratePathProperty="true"
+                    Condition="('@(NetCoreReference)'=='' Or '$(DoNotLimitMicrosoftNetCoreReferences)' == 'true') And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
   </ItemGroup>
-  
-  <Target
-    Name="LimitNetCoreAppReferences"
-    AfterTargets="ResolveAssemblyReferences"
-    Returns="@(ReferencePath)"
-    Condition="'@(NetCoreReference)'!='' and '@(ReferencePath)' != ''">
 
-
-    <!-- 
-      Example
-      <NetCoreReference Include="Microsoft.CSharp" /> 
-    -->
-
-    <!-- Save Microsoft.NETCore.App assemblies, and remove those from @(ReferencePath) -->
+  <Target Name="GeneratePathPropertyforMicrosoftWindowsDesktopApp"
+          AfterTargets="ResolveFrameworkReferences">
     <ItemGroup>
-      <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
-      <_netCoreAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App' Or '%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'"/>
-      
-      <ReferencePath Remove="@(_netCoreAppSdkReference)" />
-    </ItemGroup>
-    
-    <!-- Transform _netCoreAppSdkReference's Identity to its FileName. This will help us do a Remove against @(NetCoreReference) directly -->
-    <ItemGroup>
-      <_netCoreAppSdkUnwantedRefNormalized Remove="@(_netCoreAppSdkUnwantedRefNormalized)" />
-      <_netCoreAppSdkUnwantedRefNormalized Include="@(_netCoreAppSdkReference->'%(FileName)')" />
-      <_netCoreAppSdkUnwantedRefNormalized Remove="@(NetCoreReference)"  />
-    </ItemGroup>
-
-    <!-- Convert the Identity metadata of _netCoreAppSdkUnwantedRefNormalized back to it's Original value -->
-    <ItemGroup>
-      <_netCoreAppSdkUnwantedRef Remove="@(_netCoreAppSdkUnwantedRef)" />
-      <_netCoreAppSdkUnwantedRef Include="@(_netCoreAppSdkUnwantedRefNormalized->'%(OriginalItemSpec)')" />
-    </ItemGroup>
-    
-    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
-    <ItemGroup>
-      <ReferencePath 
-        Include="@(_netCoreAppSdkReference)" 
-        Exclude="@(_netCoreAppSdkUnwantedRef)"/>
-    </ItemGroup>
-  </Target>
-  
-  <Target
-    Name="LimitWindowsDekstopAppReferences"
-    AfterTargets="ResolveAssemblyReferences"
-    Returns="@(ReferencePath)"
-    Condition="'@(WindowsDesktopReference)'!='' and '@(ReferencePath)' != ''">
-    <!-- 
-      Example
-      <WindowsDesktopReference Include="PresentationCore" /> 
-    -->
-
-    <!-- Save Microsoft.WindowsDesktop.App assemblies, and remove those from @(ReferencePath) -->
-    <ItemGroup>
-      <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
-      <_windowsDesktopAppSdkReference Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.WindowsDesktop.App'"/>
-
-      <ReferencePath Remove="@(_windowsDesktopAppSdkReference)" />
-    </ItemGroup>
-
-    <!-- Transform _windowsDesktopAppSdkReference's Identity to its FileName. This will help us do a Remove against @(NetCoreReference) directly -->
-    <ItemGroup>
-      <_windowsDesktopAppSdkUnwantedRefNormalized Remove="@(_windowsDesktopAppSdkUnwantedRefNormalized)" />
-      <_windowsDesktopAppSdkUnwantedRefNormalized Include="@(_windowsDesktopAppSdkReference->'%(FileName)')" />
-      <_windowsDesktopAppSdkUnwantedRefNormalized Remove="@(WindowsDesktopReference)"  />
-    </ItemGroup>
-
-    <!-- Convert the Identity metadata of _windowsDesktopAppSdkUnwantedRefNormalized back to it's Original value -->
-    <ItemGroup>
-      <_windowsDesktopAppSdkUnwantedRef Remove="@(_windowsDesktopAppSdkUnwantedRef)" />
-      <_windowsDesktopAppSdkUnwantedRef Include="@(_windowsDesktopAppSdkUnwantedRefNormalized->'%(OriginalItemSpec)')" />
-    </ItemGroup>
-
-    <!-- Reconstruct ReferencePath, but this time exclude the unwanted references out -->
-    <ItemGroup>
-      <ReferencePath
-        Include="@(_windowsDesktopAppSdkReference)"
-        Exclude="@(_windowsDesktopAppSdkUnwantedRef)"/>
+      <PackageReference Update="Microsoft.WindowsDesktop.App"
+                        GeneratePathProperty="true" />
     </ItemGroup>
   </Target>
 
-  
   <PropertyGroup>
     <ResolveAssemblyReferencesDependsOn>
+      ResolveMicrosoftNetCoreAppReferences;
+      ResolveMicrosoftWindowsDesktopAppReferences;
       ResolveMicrosoftDotNetWpfGitHubReferences;
       ResolveWinFormsReferences;
       $(ResolveAssemblyReferencesDependsOn)
     </ResolveAssemblyReferencesDependsOn>
   </PropertyGroup>
-  
+
+  <Target
+    Name="ResolveMicrosoftNetCoreAppReferences"
+    Returns="@(Reference)"
+    Condition="'$(PkgMicrosoft_NETCore_App)'!='' And '@(NetCoreReference)'!='' and $(TargetFramework.StartsWith('netcoreapp3')) and '$(DoNotLimitMicrosoftNetCoreReferences)'!='true'">
+    <!-- 
+    In your project, Add a references to assemblies from Microsoft.NETCore.App like this
+      <ItemGroup>
+        <NetCoreReference Include="netstandard" />
+        <NetCoreReference Include="System.IO" />
+      </ItemGroup>
+      
+      It will get translated into something like this:
+      <ItemGroup>
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.netcore.app\3.0.0-preview5-27609-17\ref\netcoreapp3.0\netstandard.dll" />
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.netcore.app\3.0.0-preview5-27609-17\ref\netcoreapp3.0\System.IO.dll" />
+      </ItemGroup>
+    -->
+    <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_NETCore_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_NETCore_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll')" />
+    </ItemGroup>
+  </Target>
+
+
+  <Target
+    Name="LimitNetCoreAppReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="@(ReferencePath)"
+    Condition="'$(PkgMicrosoft_NETCore_App)'=='' And '@(NetCoreReference)'!='' and '@(ReferencePath)' != ''">
+    <!--
+      Example
+      <NetCoreReference Include="Microsoft.CSharp" />
+    -->
+
+    <!--
+       Save Microsoft.NETCore.App.Ref assemblies, and remove those from @(ReferencePath)
+     -->
+    <ItemGroup>
+      <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
+      <_netCoreAppSdkReference Include="@(ReferencePath)"
+                               Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'" />
+
+      <ReferencePath Remove="@(_netCoreAppSdkReference)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_netCoreAppReferences Remove="@(_netCoreAppReferences)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(_netCoreAppSdkReference->'%(FileName)')"
+                        Item2="@(NetCoreReference)"
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_netCoreAppReferences" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <ReferencePath Include="@(_netCoreAppReferences->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ResolveMicrosoftWindowsDesktopAppReferences"
+          Returns="@(Reference)"
+          Condition="'$(PkgMicrosoft_WindowsDesktop_App)'!='' And '@(WindowsDesktopAppeference)'!='' and $(TargetFramework.StartsWith('netcoreapp3')) and '$(DoNotLimitWindowsDesktopAppReferences)'!='true'">
+    <!-- 
+    In your project, Add a references to assemblies from Microsoft.NETCore.App like this
+      <ItemGroup>
+        <WindowsDesktopAppeference Include="PresentationCore" />
+        <WindowsDesktopAppeference Include="System.Xaml" />
+      </ItemGroup>
+    -->
+    <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_WindowsDesktop_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_WindowsDesktop_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="LimitWindowsDesktopAppReferences"
+        AfterTargets="ResolveAssemblyReferences"
+        Returns="@(ReferencePath)"
+        Condition="'$(PkgMicrosoft_WindowsDesktop_App)'=='' And '@(WindowsDesktopReference)'!='' and '@(ReferencePath)' != ''">
+    <!--
+      Example
+      <WindowsDesktopReference Include="PresentationCore" />
+    -->
+
+    <!--
+       Save Microsoft.WindowsDesktop.App.Ref assemblies, and remove those from @(ReferencePath)
+     -->
+    <ItemGroup>
+      <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
+      <_windowsDesktopAppSdkReference Include="@(ReferencePath)"
+                                      Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.WindowsDesktop.App.Ref'" />
+
+      <ReferencePath Remove="@(_windowsDesktopAppSdkReference)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_windowsDesktopAppReferences Remove="@(_windowsDesktopAppReferences)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(_windowsDesktopAppSdkReference->'%(FileName)')"
+                        Item2="@(WindowsDesktopReference)"
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_windowsDesktopAppReferences" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <ReferencePath Include="@(_windowsDesktopAppReferences->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+  </Target>
+
   <Target
     Name="ResolveMicrosoftDotNetWpfGitHubReferences"
     Returns="@(ReferencePath)"
@@ -106,13 +159,13 @@
         <MicrosoftDotNetWpfGitHubReference Include="System.Xaml" />
       </ItemGroup>
       
-    It will get translated into something like this:
+      It will get translated into something like this:
       <ItemGroup>
         <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\ref\netcoreapp3.0\System.Xaml.dll" />
       </ItemGroup>
-  -->
+    -->
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll" 
+      <Reference Include="$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll"
                  Condition="Exists('$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')"/>
     </ItemGroup>
   </Target>
@@ -128,11 +181,11 @@
       <ItemGroup>
         <Reference Include="C:\Users\username\.nuget\packages\microsoft.private.winforms\4.8.0-preview4.19170.4\lib\netcoreapp3.0\Accessibility.dll" />
       </ItemGroup>
-  -->
+   -->
   <Target Name="ResolveWinFormsReferences"
           Condition="'@(MicrosoftPrivateWinFormsReference)'!='' And $(TargetFramework.StartsWith('netcoreapp3'))">
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll" 
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
                  Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')"/>
     </ItemGroup>
   </Target>

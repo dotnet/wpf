@@ -21,7 +21,7 @@ namespace System.Xaml.Schema
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = new object[0];
+        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private Dictionary<XamlType, MethodInfo> _addMethods;
         internal MethodInfo EnumeratorMethod { get; set; }
@@ -56,11 +56,7 @@ namespace System.Xaml.Schema
 
         public XamlTypeInvoker(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            _xamlType = type;
+            _xamlType = type ?? throw new ArgumentNullException(nameof(type));
         }
 
         public static XamlTypeInvoker UnknownInvoker

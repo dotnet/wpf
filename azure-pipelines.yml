@@ -17,8 +17,8 @@ variables:
   # When set to true in a manual built, it produces and publishes 
   # Microsoft.DotNet.Arcade.Wpf.Sdk
   BuildMsBuildSdkPackages: false
-  _PublishUsingPipelines: false
-  _DotNetArtifactsCategory: .NETCore
+  _PublishUsingPipelines: true
+  _DotNetArtifactsCategory: WINDOWSDESKTOP
 
 # only trigger ci builds for the master and release branches
 trigger:

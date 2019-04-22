@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="de" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">Der aufgelöste KeyTime-Wert für den Keyframe an Index "{1}" kann nicht größer als der aufgelöste KeyTime-Wert für den Keyframe an Index "{4}" sein. Von "KeyFrames[{1}]" wurde der KeyTime-Wert "{2}" angegeben, der für die Zeit "{3}" aufgelöst wird. Von "KeyFrames[{4}]" wurde der KeyTime-Wert "{5}" angegeben, der für die Zeit "{6}" aufgelöst wird. Einige KeyTimes-Werte werden relativ zur Begin-Zeit von "{0}" und andere relativ zu den Duration-Werten aufgelöst, sodass einige Einstellungen von KeyTimes-Werten nicht für alle Duration-Werte gültig sind.</target>
+        <target state="translated">Der aufgelöste KeyTime-Wert für den Keyframe an Index "{1}" kann nicht größer als der aufgelöste KeyTime-Wert für den Keyframe an Index "{4}" sein. Von "KeyFrames[{1}]5D;" wurde der KeyTime-Wert "{2}" angegeben, der für die Zeit "{3}" aufgelöst wird. Von "KeyFrames[{4}]5D;" wurde der KeyTime-Wert "{5}" angegeben, der für die Zeit "{6}" aufgelöst wird. Einige KeyTimes-Werte werden relativ zur Begin-Zeit von "{0}" und andere relativ zu den Duration-Werten aufgelöst, sodass einige Einstellungen von KeyTimes-Werten nicht für alle Duration-Werte gültig sind.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Der Name darf keine leere Zeichenfolge sein.</target>
+        <target state="translated">Name darf keine leere Zeichenfolge sein.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">["{0}"("{1}")] für "{2}" ist keine für den Typ deklarierte Eigenschaft.</target>
+        <target state="translated">["{0}"("{1}")]5D; für "{2}" ist keine für den Typ deklarierte Eigenschaft.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">["{0}"("{1}")] für "{2}" ist keine bekannte Eigenschaft.</target>
+        <target state="translated">["{0}"("{1}")]5D; für "{2}" ist keine bekannte Eigenschaft.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

@@ -163,8 +163,8 @@ namespace MS.Internal.Xaml.Context
             XamlType xamlType = ServiceProvider_ResolveXamlType(qName);
             if (xamlType == null || xamlType.UnderlyingType == null)
             {
-                XamlTypeName name = XamlTypeName.Parse(qName, this._serviceProviderContext);
-                xamlType = this.GetXamlType(name, true, true);
+                XamlTypeName name = XamlTypeName.Parse(qName, _serviceProviderContext);
+                xamlType = GetXamlType(name, true, true);
                 throw new XamlParseException(SR.Get(SRID.TypeNotFound, xamlType.GetQualifiedName()));
             }
             return xamlType.UnderlyingType;

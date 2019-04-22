@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">{1} dizinindeki anahtar çerçevenin çözülen KeyTime'ı {4} dizinindeki anahtar çerçevenin çözülen KeyTime'ından büyük olamaz. KeyFrames'ler[{1}] {3} süresine çözülen KeyTime '{2}' belirtti; KeyFrames'ler[{4}] {6} süresine çözülen KeyTime '{5}' belirtti. Bazı KeyTime'lar '{0}' Begin saatine göre çözüldü ve diğerleri Duration'a göre çözüldü, bu nedenle bazı KeyTime kümeleri tüm Duration'lar için geçerli değil.</target>
+        <target state="translated">{1} dizinindeki anahtar çerçevenin çözülen KeyTime'ı {4} dizinindeki anahtar çerçevenin çözülen KeyTime'ından büyük olamaz. KeyFrames'ler[{1}]5D; {3} süresine çözülen KeyTime '{2}' belirtti; KeyFrames'ler[{4}]5D; {6} süresine çözülen KeyTime '{5}' belirtti. Bazı KeyTime'lar '{0}' Begin saatine göre çözüldü ve diğerleri Duration'a göre çözüldü, bu nedenle bazı KeyTime kümeleri tüm Duration'lar için geçerli değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="NameScopeNameNotEmptyString">
         <source>Name cannot be an empty string.</source>
-        <target state="translated">Name boş bir dize olamaz.</target>
+        <target state="translated">Ad boş bir dize olamaz.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">'{2}' öğesindeki ['{0}'('{1}')], bu türde bildirilen bir özellik değil.</target>
+        <target state="translated">'{2}' üzerinde ['{0}'('{1}')]5D;, bu türde bildirilen bir özellik değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">'{2}' öğesinde ['{0}'('{1}')] bilinen bir özellik değil.</target>
+        <target state="translated">'{2}' üzerinde ['{0}'('{1}')]5D; bilinen bir özellik değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">

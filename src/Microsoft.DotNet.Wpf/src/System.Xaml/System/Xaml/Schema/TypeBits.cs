@@ -67,7 +67,7 @@ namespace System.Xaml
 
         public bool IsSet
         {
-            get { return !ReferenceEquals(_value, null); }
+            get { return !(_value is null); }
         }
 
         public bool IsSetVolatile
@@ -75,7 +75,7 @@ namespace System.Xaml
             get
             {
                 object value = Thread.VolatileRead(ref _value);
-                return !ReferenceEquals(value, null);
+                return !(value is null);
             }
         }
 
@@ -86,18 +86,18 @@ namespace System.Xaml
                 object value = _value;
                 return ReferenceEquals(value, s_NullSentinel) ? null : (T)value;
             }
-            set { _value = ReferenceEquals(value, null) ? s_NullSentinel : value; }
+            set { _value = value is null ? s_NullSentinel : value; }
         }
 
         public void SetIfNull(T value)
         {
-            object newValue = ReferenceEquals(value, null) ? s_NullSentinel : value;
+            object newValue = value is null ? s_NullSentinel : value;
             Interlocked.CompareExchange(ref _value, newValue, null);
         }
 
         public void SetVolatile(T value)
         {
-            object newValue = ReferenceEquals(value, null) ? s_NullSentinel : value;
+            object newValue = value is null ? s_NullSentinel : value;
             Thread.VolatileWrite(ref _value, newValue);
         }
     }

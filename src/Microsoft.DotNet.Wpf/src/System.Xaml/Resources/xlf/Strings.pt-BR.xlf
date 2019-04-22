@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="pt-BR" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
@@ -44,12 +44,12 @@
       </trans-unit>
       <trans-unit id="Animation_InvalidResolvedKeyTimes">
         <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
-        <target state="needs-review-translation">KeyTime resolvido para o quadro principal no índice {1} não pode ser maior que KeyTime resolvido para o quadro principal no índice {4}. KeyFrames[{1}] tem KeyTime '{2}' especificado, que resolve para o tempo {3}; KeyFrames[{4}] tem KeyTime '{5}' especificado, que resolve para o tempo {6}. Alguns KeyTimes são resolvidos em relação ao tempo Begin de '{0}' e outros, em relação a Duration; portanto, alguns conjuntos de KeyTimes não são válidos para todas as Durations.</target>
+        <target state="translated">O KeyTime resolvido para o quadro chave no índice {1} não pode ser maior que o KeyTime resolvido para o quadro chave no índice {4}. O KeyFrames[{1}]5D; tem o KeyTime '{2}' especificado, que é resolvido para o tempo {3}. O KeyFrames[{4}]5D; tem o KeyTime '{5}' especificado, que é resolvido para o tempo {6}. Alguns KeyTimes são resolvidos em relação à Hora de início '{0}' e outros em relação à Duração, portanto, alguns conjuntos de KeyTimes não são válidos para todas as Durações.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_InvalidTimeKeyTime">
         <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
-        <target state="translated">O valor '{2}' de KeyTime não é válido para o quadro principal no índice {1} de '{0}', pois é maior que o valor '{3}' de Duration da animação.</target>
+        <target state="translated">O valor '{2}' de KeyTime não é válido para o quadro principal no índice {1} de '{0}' porque é maior que o valor '{3}' de Duration da animação.</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_Invalid_DefaultValue">
@@ -169,7 +169,7 @@
       </trans-unit>
       <trans-unit id="CannotConvertType">
         <source>Cannot convert type '{0}' to '{1}'.</source>
-        <target state="translated">Não é possível converter tipo '{0}' em '{1}'.</target>
+        <target state="translated">Não é possível converter o tipo '{0}' em '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotCreateBadEventDelegate">
@@ -589,7 +589,7 @@
       </trans-unit>
       <trans-unit id="InvalidXamlMemberName">
         <source>'{0}' is not a valid XAML member name.</source>
-        <target state="translated">'{0}' não é um nome de associado XAML válido.</target>
+        <target state="translated">'{0}' não é um nome válido de membro XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="LateConstructionDirective">
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="NotDeclaringTypeAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] em '{2}' não é uma propriedade declarada nesse tipo.</target>
+        <target state="translated">['{0}'('{1}')]5D; em '{2}' não é uma propriedade declarada nesse tipo.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotSupportedOnDirective">
@@ -1229,7 +1229,7 @@
       </trans-unit>
       <trans-unit id="StringIsNullOrEmpty">
         <source>The string is null or empty.</source>
-        <target state="translated">A cadeia de caracteres é nula ou está vazia.</target>
+        <target state="translated">A cadeia de caracteres é nula ou vazia.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="UnknownAttributeProperty">
         <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
-        <target state="needs-review-translation">['{0}'('{1}')] em '{2}' não é uma propriedade conhecida.</target>
+        <target state="translated">['{0}'('{1}')]5D; em '{2}' não é uma propriedade conhecida.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownMember">
@@ -1499,7 +1499,7 @@
       </trans-unit>
       <trans-unit id="XCRInvalidFormat">
         <source>'{0}' format is not valid.</source>
-        <target state="translated">O parâmetro '{0}' não é válido.</target>
+        <target state="translated">O formato '{0}' não é válido.</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRInvalidPreserve">

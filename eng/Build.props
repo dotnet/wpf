@@ -1,0 +1,8 @@
+<Project>
+    <!-- Workarounds for Arcade bug: https://github.com/dotnet/arcade/issues/2641 -->
+    <PropertyGroup Condition="'$(_HelixSource)'!=''">
+        <_NuGetRestoreTargets>$(MSBuildToolsPath32)\..\..\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets</_NuGetRestoreTargets>
+        <NuGetRestoreTargets>true</NuGetRestoreTargets>
+        <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
+    </PropertyGroup>
+</Project>

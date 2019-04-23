@@ -5,7 +5,7 @@
     <PreReleaseVersionLabel>preview5</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemReflectionMetadataLoadContextVersion>4.6.0-preview4.19212.13</SystemReflectionMetadataLoadContextVersion>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview4.19222.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview5.19222.16</MicrosoftPrivateWinformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview4.19212.13</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview4.19212.13</SystemDirectoryServicesVersion>
   </PropertyGroup>
@@ -37,7 +37,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19218.7</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19220.1</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

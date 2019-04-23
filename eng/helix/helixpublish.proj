@@ -1,0 +1,127 @@
+
+<Project Sdk="Microsoft.DotNet.Helix.Sdk" DefaultTargets="Test">
+  <PropertyGroup>
+    <!-- These properties help ensure proper and consistent restore behavior -->
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RestorePackagesPath>$(MSBuildThisFileDirectory)packages</RestorePackagesPath>
+    
+    
+    <!-- We copy our own dotnet payload over to the machine, so we don't want/need a different dotnet install -->
+    <IncludeDotNetCli>false</IncludeDotNetCli>
+    <EnableXUnitReporter>true</EnableXUnitReporter>
+    <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
+    <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
+    <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
+
+    <!-- These help ensure proper restore behavior for Microsoft.NETCore.Platforms -->
+    <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
+    <RestoreSources>
+      $(RestoreSources);
+      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
+    </RestoreSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="QV.Wpf.Test" Version="1.0.0" /> -->
+    <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
+    <HelixWorkItem Include="HelloHelix">
+      <Timeout>00:20:00</Timeout>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd</Command>
+    </HelixWorkItem>
+    <!--<HelixWorkItem Include="Ping stevenki">
+      <Timeout>00:20:00</Timeout>
+      <Command>ping \\stevenki1\public</Command>
+    </HelixWorkItem>
+    -->
+   <!-- 
+   <HelixWorkItem Include="Annotations">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Annotations</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="AppModel">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=AppModel</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="DigitalDocuments">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=DigitalDocuments</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Media">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Media</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Editing">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Editing</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="ElementServices">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=ElementServices</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Text">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Text</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Animation">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Animation</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="3D">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=3D</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="2D">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=2D</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Controls">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Controls</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Imaging">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Imaging</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="FlowLayout">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=FlowLayout</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="DataServices">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=DataServices</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="ElementLayout">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=ElementLayout</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Xaml">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Xaml</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Globalization">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Globalization</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Tablet">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Tablet</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Integration">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Integration</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="XET">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=XET</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="Printing">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=Printing</Command>
+    </HelixWorkItem>
+    <HelixWorkItem Include="WindowsFormsIntegration">
+      <Timeout>00:20:00</Timeout>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\rundrts.cmd /Area=WindowsFormsIntegration</Command>
+    </HelixWorkItem>
+    -->
+  </ItemGroup>
+</Project>

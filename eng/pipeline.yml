@@ -11,6 +11,7 @@ parameters:
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
   runAsPublic: true
+  repoName: dotnet/wpf
 
 jobs:
 - template: /eng/common/templates/jobs/jobs.yml
@@ -21,7 +22,7 @@ jobs:
     enablePublishBuildAssets: true
     enablePublishUsingPipelines: $(_PublishUsingPipelines)
     enableTelemetry: true
-    helixRepo: dnceng/wpf
+    helixRepo: $(repoName)
 
     jobs:
     - job: Windows_NT
@@ -48,6 +49,16 @@ jobs:
           value: x86
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
+        - name: _TestHelixAgentPool
+          value: 'Windows.10.Amd64.Open'
+        - name: _HelixStagingDir
+          value: $(BUILD.STAGINGDIRECTORY)\helix\functests
+        - name: _HelixSource
+          value: ${{ parameters.repoName }}/$(Build.SourceBranch)
+        - name: _HelixToken
+          value: ''
+        - name: _HelixCreator
+          value: ${{ parameters.repoName }}
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -60,6 +71,7 @@ jobs:
             value: true
           - group: DotNet-Blob-Feed
           - group: DotNet-Symbol-Server-Pats
+          - group: DotNet-HelixApi-Access
           - name: _PublishBlobFeedUrl
             value: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
 
@@ -78,6 +90,12 @@ jobs:
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
+          - name: _HelixSource
+            value: official/${{ parameters.repoName }}/$(Build.SourceBranch)
+          - name: _HelixToken
+            value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
+          - name: _HelixCreator
+            value: '' #if _HelixToken is set, Creator must be empty
       strategy:
         matrix:
           Build_Debug_x86:
@@ -101,6 +119,11 @@ jobs:
       steps:
       - checkout: self
         clean: true
+      
+      # Set VSO Variable(s)
+      - powershell: eng\pre-build.ps1
+        displayName: Pre-Build - Set VSO Variables
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
           -configuration $(_BuildConfig) 
@@ -110,3 +133,44 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
         displayName: Windows Build / Publish
+
+      - powershell: eng\common\build.ps1
+          -restore
+          -configuration $(_BuildConfig) 
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          -projects $(Build.SourcesDirectory)\eng\helix\helixpublish.proj
+        displayName: Restoring Nuget Dependencies for Helix
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          HelixSource: $(_HelixSource)
+          HelixType: 'tests/drt'
+          HelixBuild: $(Build.BuildNumber)
+          HelixTargetQueues: $(_TestHelixAgentPool)
+          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
+          Creator: $(_HelixCreator)
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)
+
+      # Prepare the helix payload
+      - powershell: eng\helix\prepare-helix-payload.ps1
+         -configuration $(_BuildConfig) -platform $(_Platform)
+        displayName: Preparing Helix Payload
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)
+
+      # Run DRTs
+      - powershell: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig)
+          $(_OfficialBuildIdArgs) 
+          $(_PlatformArgs)
+          -projects $(Build.SourcesDirectory)\eng\helix\helixpublish.proj
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixUnit.binlog
+        displayName: Run Developer Regression Tests on Helix Machine (Release)
+        env:
+          HelixSource: $(_HelixSource)
+          HelixType: 'tests/drt'
+          HelixBuild: $(Build.BuildNumber)
+          HelixTargetQueues: $(_TestHelixAgentPool)
+          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
+          Creator: $(_HelixCreator)
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)

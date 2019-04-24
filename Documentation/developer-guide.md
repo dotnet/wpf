@@ -86,11 +86,10 @@ installed, we can then simply reference those local binaries directly from the p
 ```
 
 ### Testing specific versions of the Microsoft.WindowsDesktop.App runtime
-At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to 
+At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occuring.
 
 For testing different versions of the runtime, you can install a specific version of the runtimes via the dotnet install script: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
-**Note**: These install the versions to your %user% directory, so you can use the DOTNET_ROOT environment variables to ensure these get used as
-described above. Otherwise, you can point them to install in %programfiles% and specify which version of the runtime should be picked up.
+**Note**: These install the versions to your %user% directory, so you can use the DOTNET_ROOT environment variables to ensure these get used as described above. Otherwise, you can point them to install in %programfiles% and specify which version of the runtime should be picked up.
 
 Below is an example powershell script of how you can use the `dotnet-install.ps1` script:
 
@@ -105,8 +104,23 @@ Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile $dotnet_install
 .$dotnet_install -Channel master -Version 3.0.0-preview5-27619-18 -Runtime windowsdesktop -Architecture x86 -InstallDir $x86InstallDir
 ```
 
-This would install version `3.0.0-preview5-27619-18` of the `Microsoft.WindowsDesktop.App` shared runtime. You can pass `"Latest"` to get the latest
-version of the runtime. 
+This would install version `3.0.0-preview5-27619-18` of the `Microsoft.WindowsDesktop.App` shared runtime. You can pass `"Latest"` to get the latest version of the runtime.  You can also use this script to install the runtimes as well as the SDK. If you know a particular SDK version and are curious to know what `Microsoft.WindowsDesktop.App` version is associated with it, there is a file called `Microsoft.NETCoreSdk.BundledVersions.props` contained inside the SDK folder. Inside that file, you will find an entry that looks like this:
+
+```
+    <KnownFrameworkReference Include="Microsoft.WindowsDesktop.App"
+                              TargetFramework="netcoreapp3.0"
+                              RuntimeFrameworkName="Microsoft.WindowsDesktop.App"
+                              DefaultRuntimeFrameworkVersion="3.0.0-preview4-27613-28"
+                              LatestRuntimeFrameworkVersion="3.0.0-preview4-27613-28"
+                              TargetingPackName="Microsoft.WindowsDesktop.App.Ref"
+                              TargetingPackVersion="3.0.0-preview4-27615-11"
+                              RuntimePackNamePatterns="runtime.**RID**.Microsoft.WindowsDesktop.App"
+                              RuntimePackRuntimeIdentifiers="win-x64;win-x86"
+                              />
+```
+In this example, the version of `Microsoft.WindowsDesktop.App` associated with this SDK is `3.0.0-preview4-27613-28`.
+
+**Note**: The ability to install the WindowsDesktop runtime via the dotnet install script is being tracked by: https://github.com/dotnet/cli/issues/11115 
 
 #### Specifying which version of the runtime to use
 If you can build directly from source, you can add this to your project file to pick up the version of the shared runtime you want to test:
@@ -133,11 +147,7 @@ If you don't have the ability to build from source, you can update the *.runtime
 ```
 
 #### Finding a specific version of Microsoft.WindowsDesktop.App that interests you
-
-Use [swagger ui](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html#/Builds/Builds_GetLatest)
-- 
-See here for how to setup your [authentication token](https://github.com/dotnet/arcade/blob/master/Documentation/DependencyFlowOnboarding.md#32-set-up-your-darc-client) properly. This applies to Swagger UI as well, and you need a new token for this.
-
+Follow the steps defined [here](https://github.com/dotnet/arcade/blob/master/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
 
 ### Testing PresentationBuildTasks
 -- add more content here --

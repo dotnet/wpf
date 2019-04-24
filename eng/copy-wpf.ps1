@@ -4,22 +4,22 @@ Param(
 [string]$destination,
 [string]$arch="x86",
 [switch]$release,
-[switch]$testhost,
+[switch]$local,
 [switch]$help
 )
 
 function Print-Usage()
 {
-    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value>] [-release] [-testhost]"
+    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value>] [-release] [-local]"
     Write-Host "    This script helps developers deploy wpf assemblies to the proper location for easy testing. See "
     Write-Host "    developer-guide.md for more information on how to use this script."
     Write-Host ""
     Write-Host "Common parameters:"
     Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. Ignored"
-    Write-Host "                          if the -testhost parameter is used."
+    Write-Host "                          if the -local parameter is used."
     Write-Host "  -arch <value>           Architecture of binaries to copy. Can be either x64 or x86. Default is x86."
     Write-Host "  -release                Copy release binaries. Default is to copy Debug binaries"
-    Write-Host "  -testhost               Copy binaries over the local dotnet installation in the .dotnet folder"
+    Write-Host "  -local                  Copy binaries over the local dotnet installation in the .dotnet folder"
     Write-Host "  -help                   Print help and exit"
     Write-Host ""
 }
@@ -63,13 +63,14 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
     Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
 }
 
-if ($help -or [string]::IsNullOrEmpty($destination)) 
+if ($help -or ([string]::IsNullOrEmpty($destination) -and !$local))
 {
     Print-Usage
 }
-elseif($testhost)
+elseif($local)
 {
-    Write-Host "Copying binaries to test host installation"
+    $destination = Join-Path $RepoRoot ".dotnet"
+    Write-Host "Copying binaries to local installation"
     $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\*")
     if(![System.IO.Directory]::Exists($location))
     {

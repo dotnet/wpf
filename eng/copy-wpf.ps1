@@ -36,13 +36,21 @@ function CopyBinariesToLocation($location)
 
 function CopyNativeBinariesToLocation($location, $localBinLocation)
 {
+    # Layout of where the native binaries looks something like this:
+
+    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\win-x86
+    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\win-x64
+    
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
     $BinaryLocationInPackage =  "win-$arch"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
-    # x86 managed binaries don't have a distinct folder. All the managed
+    # Layout of where the managed binaries looks something like this: 
+    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
+    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
+
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
     $BinaryLocationInPackage = "netcoreapp3.0"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage

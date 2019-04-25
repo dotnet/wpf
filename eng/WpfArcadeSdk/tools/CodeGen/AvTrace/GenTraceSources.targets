@@ -1,15 +1,15 @@
 <Project>
   <PropertyGroup>
-    <WindowsBaseAvTraceMessageFile>$(WpfSourceDir)\WindowsBase\AvTraceMessages.json</WindowsBaseAvTraceMessageFile>
-    <PresentationCoreAvTraceMessageFile>$(WpfSourceDir)\PresentationCore\AvTraceMessages.json</PresentationCoreAvTraceMessageFile>
-    <PresentationFrameworkAvTraceMessageFile>$(WpfSourceDir)\PresentationFramework\AvTraceMessages.json</PresentationFrameworkAvTraceMessageFile>    
+    <WindowsBaseAvTraceMessageFile>$(WpfSourceDir)\WindowsBase\AvTraceMessages.xml</WindowsBaseAvTraceMessageFile>
+    <PresentationCoreAvTraceMessageFile>$(WpfSourceDir)\PresentationCore\AvTraceMessages.xml</PresentationCoreAvTraceMessageFile>
+    <PresentationFrameworkAvTraceMessageFile>$(WpfSourceDir)\PresentationFramework\AvTraceMessages.xml</PresentationFrameworkAvTraceMessageFile>    
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)PresentationTraceSources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PresentationTraceSources.cs</LastGenOutput>
-      <OutputFilePath>$(WpfSourceDir)\WindowsBase\Generated\</OutputFilePath>
+      <OutputFilePath>$(WpfSourceDir)\WindowsBase\System\Diagnostics\Generated\</OutputFilePath>
     </None>
     <None Update="PresentationTraceSources.cs">
       <DesignTime>True</DesignTime>

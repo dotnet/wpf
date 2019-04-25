@@ -1,13 +1,13 @@
 <Project>
   <PropertyGroup>
-    <AvTraceMessageFile>$(MSBuildProjectDirectory)\AvTraceMessages.json</AvTraceMessageFile>
+    <AvTraceMessageFile>$(MSBuildProjectDirectory)\AvTraceMessages.xml</AvTraceMessageFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)AvTraceMessages.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AvTraceMessages.cs</LastGenOutput>
-      <OutputFilePath>$(MSBuildProjectDirectory)\Generated\</OutputFilePath>
+      <OutputFilePath>$(MSBuildProjectDirectory)\MS\Internal\Generated\</OutputFilePath>
     </None>
     <None Update="AvTraceMessages.cs">
       <DesignTime>True</DesignTime>

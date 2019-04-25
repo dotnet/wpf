@@ -1,12 +1,12 @@
 ﻿<#@ template hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(NewtonsoftLocation)\Newtonsoft.Json.dll" #>
-<#@ assembly name="netstandard" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.XDocument" #>
+<#@ assembly name="System.Xml.Linq" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
-<#@ import namespace="Newtonsoft.Json" #>
 <#@ output extension=".cs" #>
 <#@ parameter type="System.String" name="AvTraceMessageFiles" #>
 // Licensed to the .NET Foundation under one or more agreements.
@@ -27,10 +27,10 @@ namespace System.Diagnostics
    foreach (var avTracMessageFile in AvTraceMessageFiles.Split(';'))
    {
 		string fileName = this.Host.ResolvePath(avTracMessageFile);
-		JObject jsonObj = (JObject)JsonConvert.DeserializeObject(File.ReadAllText(fileName));
-   		foreach (JObject source in (JArray)jsonObj["sources"])
+		XDocument doc = XDocument.Load(fileName);
+   		foreach (XElement source in doc.Root.Elements("Source"))
 		{
-			string name = source["name"].ToString(); 
+			string name = source.Attribute("Name").Value; 
 #>
 		/// <summary><#=name#>Source for <#=name#></summary>
 		public static TraceSource <#=name#>Source
@@ -39,7 +39,7 @@ namespace System.Diagnostics
 			{
 				if (_<#=name#>Source == null)
 				{
-					_<#=name#>Source = CreateTraceSource("<#=source["source_name"]#>");
+					_<#=name#>Source = CreateTraceSource("<#= source.Attribute("SourceName").Value #>");
 				}
 				return _<#=name#>Source;
 			}

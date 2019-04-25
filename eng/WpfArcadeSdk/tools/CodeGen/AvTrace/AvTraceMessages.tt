@@ -1,13 +1,12 @@
 ﻿<#@ template hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(NewtonsoftLocation)\Newtonsoft.Json.dll" #>
-<#@ assembly name="netstandard" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.XDocument" #>
+<#@ assembly name="System.Xml.Linq" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
-<#@ import namespace="Newtonsoft.Json" #>
-<#@ import namespace="Newtonsoft.Json.Linq" #>
 <#@ output extension=".cs" #>
 <#@ parameter type="System.String" name="AvTraceMessageFile" #>
 // Licensed to the .NET Foundation under one or more agreements.
@@ -24,13 +23,13 @@ namespace MS.Internal
 {
 <# 
    string fileName = this.Host.ResolvePath(AvTraceMessageFile);
-   JObject jsonObj = (JObject)JsonConvert.DeserializeObject(File.ReadAllText(fileName));
-   foreach (JObject source in (JArray)jsonObj["sources"])
+   XDocument doc = XDocument.Load(fileName);
+   foreach (XElement source in doc.Root.Elements("Source"))
    {
-		string name = source["name"].ToString();
-        string traceClassName = (source["tracename_override"]?.ToString()) ?? $"Trace{name}";
+		string name = source.Attribute("Name").Value;
+        string traceClassName = source.Attribute("TraceNameOverride")?.Value ?? $"Trace{name}";
 #>
-    static internal partial class <#=traceClassName#>
+    static internal partial class <#= traceClassName #>
     {
         static private AvTrace _avTrace = new AvTrace(
                 delegate() { return PresentationTraceSources.<#=name#>Source; },
@@ -38,33 +37,33 @@ namespace MS.Internal
                 );
 <#
 		int id = 0;
-		foreach (JObject traceDetails in (JArray)source["trace_details"])
+		foreach (XElement traceDetails in source.Elements("TraceDetails"))
 		{
 			++id;
-			string traceName = traceDetails["name"].ToString();
+			string traceName = traceDetails.Attribute("Name").Value;
 #>
 
 		static AvTraceDetails _<#=traceName#>;
 <#          if (IsFormattedTraceMessage(traceDetails)) { #>
-        static public AvTraceDetails <#=traceName#>(params object[] args)
+        static public AvTraceDetails <#= traceName #>(params object[] args)
         {
             if ( _<#=traceName#> == null )
             {
                 <# OutputTraceCreation(id, traceDetails); #>
             }
-            return new AvTraceFormat(_<#=traceName#>, args);
+            return new AvTraceFormat(_<#= traceName #>, args);
         }
 <#          } else { #>
-		static public AvTraceDetails <#=traceName#>
+		static public AvTraceDetails <#= traceName #>
         {
             get
             {
-                if ( _<#=traceName#> == null )
+                if ( _<#= traceName #> == null )
                 {
                     <# OutputTraceCreation(id, traceDetails); #>
                 }
 
-                return _<#=traceName#>;
+                return _<#= traceName #>;
             }
         }
 <#		    } #>
@@ -139,36 +138,35 @@ namespace MS.Internal
 <# } #>
 }
 <#+
-bool TryGetTraceDataString(JArray traceData, out string traceDataString)
+string GetTraceDataString(XElement labels)
 {
-    traceDataString = string.Empty;
-    if (traceData.Count > 0)
+    // We need to ensure that we have quotes around each of these so that they will be written with them 
+    string traceDataString = $"\"{labels.Attribute("Message").Value}\"";
+    if (labels.HasElements)
     {
-        traceDataString = traceData.ToString().Trim('[',']').Replace($"{Environment.NewLine} ","").Trim();
+        foreach (XElement param in labels.Elements("Parameters"))
+        {
+            traceDataString += labels.LastNode != param ? $"\"{param}\", " : $"\"{param}\"";
+        }
     }
-    return !string.IsNullOrEmpty(traceDataString);
+
+    return traceDataString;
 }
-bool IsFormattedTraceMessage(JObject traceDetails)
+bool IsFormattedTraceMessage(XElement traceDetails)
 {
-    string traceMessage = traceDetails["message"].ToString(); 
+    XElement labels = traceDetails.Element("Labels");
+    string traceMessage = labels.Attribute("Message").Value; 
     return traceMessage.Contains("{0}");
 }
 // Put any Output* methods at the end, as they tend to be a bit messier because they need the special tags.
 // For ease of re-use, methods that output text should not make any assumptions about the indentation, and it
 // should be the callers responsibility for properly indenting
-void OutputTraceCreation(int id, JObject traceDetails)
+void OutputTraceCreation(int id, XElement traceDetails)
 {
-    var traceData = (JArray)traceDetails["data"];
-    if (TryGetTraceDataString(traceData, out string dataString))
-    { 
-        // Prepend the comma to the list of strings (if any). This way we can write the dataString
-        // regardless if it is empty or not
-        dataString = $", {dataString}";
-    }
-    // The list of data strings in the JsonArray will already have quotation marks (i.e. "data1"),
-    // so we specifically don't add quotes around those here.
+    XElement labels = traceDetails.Element("Labels");
+    string dataString = GetTraceDataString(labels);
 #>
-_<#=traceDetails["name"]#> = new AvTraceDetails(<#=id#>, new string[] { "<#=traceDetails["message"] #>"<#=dataString#> } );
+_<#= traceDetails.Attribute("Name").Value #> = new AvTraceDetails(<#=id#>, new string[] { <#= dataString #> } );
 <#+
 }
 #>

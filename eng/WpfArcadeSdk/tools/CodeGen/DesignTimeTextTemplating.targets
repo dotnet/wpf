@@ -17,9 +17,6 @@
     <!-- Set to false to transform files even if the output appears to be up-to-date (default is true)  -->
     <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" GeneratePathProperty="true" PrivateAssets="all"/>
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
   <!-- ugly workaround. can be removed once the below issue is addressed: -->
   <!-- https://github.com/dotnet/xliff-tasks/issues/75 -->
@@ -89,10 +86,4 @@
     </PreprocessTemplates>
   </Target>
   <!-- End workaround -->
-  <ItemGroup>
-    <T4ParameterValues Include="NewtonsoftLocation">
-      <Value>$(PkgNewtonSoft_Json)\lib\netstandard2.0</Value>
-      <Visible>false</Visible>
-    </T4ParameterValues>
-  </ItemGroup>
 </Project>

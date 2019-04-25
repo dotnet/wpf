@@ -99,6 +99,6 @@ bool GetFoo()
  Unless there is a good reason (that should be documented), all codegen related targets should go into the $(WpfArcadeSdk)tools\CodeGen folder. This way we have a clean and clear location where we are able to keep track of all code generation in the codebase.
 
  ## GenTraceSources and GenAvMessages
- These two projects codegen the files the WPF codebase uses for tracing, and both use the AvTraceMessages.json files located in the project location that includes it, located via the MSBuild property $(MSBuildProjectFileDirectory).
+ These two projects codegen the files the WPF codebase uses for tracing, and both use the AvTraceMessages.xml files located in the project location that includes it, located via the MSBuild property $(MSBuildProjectFileDirectory).
 
  **Note**: GenTraceSources should currently only be used by WindowsBase. It generates the [PresentationTraceSources](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.presentationtracesources?view=netcore3.0) class, which is a public class. Changing this file can impact the public API surface of WindowsBase or other WPF assemblies. 

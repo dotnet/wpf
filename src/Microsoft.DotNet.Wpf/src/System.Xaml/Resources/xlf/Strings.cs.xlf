@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="cs" original="../Strings.resx">
+    <body>
+      <trans-unit id="APSException">
+        <source>Enumerating attached properties on object '{0}' threw an exception.</source>
+        <target state="translated">Při vytváření výčtu připojených vlastností pro objekt {0} byla vyvolána výjimka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddCollection">
+        <source>Add value to collection of type '{0}' threw an exception.</source>
+        <target state="translated">Při přidání hodnoty do kolekce typu {0} byla vyvolána výjimka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddDictionary">
+        <source>Add value to dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">Při přidání hodnoty do slovníku typu {0} byla vyvolána výjimka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousCollectionItemType">
+        <source>Cannot determine the item type of collection type '{0}' because it has more than one Add method or ICollection&lt;T&gt; implementation. To make this collection type usable in XAML, add a public Add(object) method, implement System.Collections.IList or a single System.Collections.Generic.ICollection&lt;T&gt;.</source>
+        <target state="translated">Nelze určit typ položky kolekce typu {0}, protože má více než jednu metodu Add nebo implementaci rozhraní ICollection&lt;T&gt;. Chcete-li, aby byl tento typ kolekce použitelný v jazyce XAML, přidejte veřejnou metodu Add(objekt), implementujte rozhraní System.Collections.IList nebo jediné rozhraní System.Collections.Generic.ICollection&lt;T&gt;.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousDictionaryItemType">
+        <source>Cannot determine the item type of dictionary type '{0}' because it has more than one Add method or IDictionary&lt;K,V&gt; implementation. To make this dictionary type usable in XAML, add a public Add(object,object) method, implement System.Collections.IDictionary or a single System.Collections.Generic.IDictionary&lt;K,V&gt;.</source>
+        <target state="translated">Nelze určit typ položky slovníku typu {0}, protože má více než jednu metodu Add nebo implementaci rozhraní IDictionary&lt;K,V&gt;. Chcete-li, aby byl tento typ slovníku použitelný v jazyce XAML, přidejte veřejnou metodu Add(objekt,objekt), implementujte rozhraní System.Collections.IDictionary nebo jediné rozhraní System.Collections.Generic.IDictionary&lt;K,V&gt;.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">Podřízený prvek třídy KeyFrameAnimation v jazyce XAML musí být KeyFrame kompatibilního typu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
+        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
+        <target state="translated">Animace {0} musí mít buď hodnotu TimeSpan pro vlastnost Duration, nebo hodnotu TimeSpan pro čas KeyTime posledního rámce KeyFrame. V této animaci {0} má Duration hodnotu {1} a KeyTime hodnotu {2} pro poslední rámec KeyFrame, takže nelze přeložit časy KeyTimes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">{0} není platná hodnota {1} pro třídu {2}. Tato hodnota by mohla být poskytnuta základní hodnotou animované vlastnosti nebo výstupní hodnotou jiné animace použité na stejnou vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
+        <target state="translated">Přeložený čas KeyTime pro klíčový snímek s indexem {1} nesmí být větší než přeložený čas KeyTime pro klíčový snímek s indexem {4}. KeyFrames[{1}]5D; určuje KeyTime {2}, který je přeložen na čas {3}; KeyFrames[{4}]5D; určuje KeyTime {5}, který je přeložen na čas {6}. Některé hodnoty KeyTimes jsou přeloženy relativně k času Begin {0} a jiné relativně k hodnotě Duration, takže některé sady hodnot KeyTimes nejsou platné pro všechny hodnoty Duration.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">Hodnota KeyTime {2} není platná pro klíčový rámec indexu {1} tohoto prvku {0}, protože je vyšší než hodnota Duration {3} animace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">Prvek {0} nemůže použít výchozí hodnotu {1} prvku {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">Objekty KeyFrameAnimation nemohou mít textové objekty jako podřízené objekty.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentRequired">
+        <source>One of the following arguments must be non-null: '{0}'.</source>
+        <target state="translated">Jeden z následujících argumentů nesmí mít hodnotu Null: {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArrayAddNotImplemented">
+        <source>Array Add method is not implemented.</source>
+        <target state="translated">Metoda Add pro pole není implementována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AssemblyTagMissing">
+        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
+        <target state="translated">Část mezi středníkem (;) a rovnítkem (=) není {0} URI {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableEventNotImplemented">
+        <source>Attachable events are not implemented.</source>
+        <target state="translated">Připojitelné události nejsou implementovány.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableMemberNotFound">
+        <source>Attachable member '{0}' was not found.</source>
+        <target state="translated">Připojitelný člen {0} nebyl nalezen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropOnFwdRefTC">
+        <source>Cannot set property '{0}' on object '{1}' because the object is a forward or incompletely initialized reference. The unresolved name(s) are: '{2}'.</source>
+        <target state="translated">Nelze nastavit vlastnost {0} objektu {1}, protože objekt je odkaz směrem vpřed nebo neúplně inicializovaný odkaz. Nepřeložené názvy: {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnDictionaryKey">
+        <source>An attachable property named '{1}' is attached on a dictionary key '{0}' that is either a string or can be type-converted to string, which is not supported.</source>
+        <target state="translated">Připojitelná vlastnost s názvem {1} je připojena ke klíči slovníku {0}, který je buď řetězec, nebo může být typově převeden na řetězec. To není podporováno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnTypeConvertedOrStringProperty">
+        <source>An attachable property named '{2}' is attached to a property named '{1}'.  The property named '{1}' is either a string or can be type-converted to string; attaching on such properties are not supported.  For debugging, the property '{1}' contains an object '{0}'.</source>
+        <target state="translated">Připojitelná vlastnost s názvem {2} je připojena k vlastnosti s názvem {1}. Vlastnost s názvem {1} je buď řetězec, nebo může být typově převedena na řetězec. Připojení k takovým vlastnostem není podporováno. Pro účely ladění: Vlastnost {1} obsahuje objekt {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeUnhandledKind">
+        <source>An unhandled scanner attribute was encountered.</source>
+        <target state="translated">Byl zjištěn neošetřený atribut skeneru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo1">
+        <source>One of the InternalsVisibleToAttribute values in assembly '{0}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">Jedna z hodnot atributu InternalsVisibleToAttribute v sestavení {0} není platný název sestavení. Použijte formát „AssemblyShortName“ nebo „AssemblyShortName, PublicKey=...“.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo2">
+        <source>InternalsVisibleToAttribute value '{0}' in assembly '{1}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">Hodnota atributu InternalsVisibleToAttribute {0} v sestavení {1} není platný název sestavení. Použijte formát „AssemblyShortName“ nebo „AssemblyShortName, PublicKey=...“.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadMethod">
+        <source>Bad method '{0}' on '{1}'.</source>
+        <target state="translated">Špatná metoda {0} v {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadStateObjectWriter">
+        <source>Bad state in ObjectWriter. Non directive missing instance.</source>
+        <target state="translated">Špatný stav v objektu ObjectWriter. Chybí instance nedirektivního člena.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsCompat">
+        <source>An XmlnsCompatibleWithAttribute in assembly '{0}' is missing a required property. Set both the NewNamespace and OldNamespace properties, or remove the XmlnsCompatibleWithAttribute.</source>
+        <target state="translated">Atributu XmlnsCompatibleWithAttribute v sestavení {0} chybí požadovaná vlastnost. Nastavte obě vlastnosti NewNamespace a OldNamespace nebo odeberte atribut XmlnsCompatibleWithAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsDefinition">
+        <source>An XmlnsDefinitionAttribute in assembly '{0}' is missing a required property. Set both the ClrNamespace and XmlNamespace properties, or remove the XmlnsDefinitionAttribute.</source>
+        <target state="translated">Atributu XmlnsDefinitionAttribute v sestavení {0} chybí požadovaná vlastnost. Nastavte obě vlastnosti ClrNamespace a XmlNamespace nebo odeberte atribut XmlnsDefinitionAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsPrefix">
+        <source>An XmlnsPrefixAttribute in assembly '{0}' is missing a required property. Set both the Prefix and XmlNamespace properties, or remove the XmlnsPrefixAttribute.</source>
+        <target state="translated">Atributu XmlnsPrefixAttribute v sestavení {0} chybí požadovaná vlastnost. Nastavte obě vlastnosti Prefix a XmlNamespace nebo odeberte atribut XmlnsPrefixAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BuilderStackNotEmptyOnClose">
+        <source>Builder Stack is not empty when end of XamlNode stream was reached.</source>
+        <target state="translated">Při dosažení konce datového proudu XamlNode není zásobník tvůrce prázdný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertFromFailed">
+        <source>Failed to check convertibility from type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">Kontrola převoditelnosti z typu {0} pomocí {1} se nezdařila. To obvykle naznačuje nesprávně implementovaný atribut TypeConverter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertToFailed">
+        <source>Failed to check convertibility to type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">Kontrola převoditelnosti na typ {0} pomocí {1} se nezdařila. To obvykle naznačuje nesprávně implementovaný atribut TypeConverter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAddPositionalParameters">
+        <source>In markup extensions, all constructor argument values should be atoms.  For the object of type '{0}', one or more argument values are not atomic.</source>
+        <target state="translated">V rozšíření značek musí být všechny hodnoty argumentů konstruktoru atomy. Pro objekt typu {0} je hodnota minimálně jednoho argumentu neatomická.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">Hodnotu řetězce {0} nelze převést na typ {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">Typ {0} nelze převést na typ {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadEventDelegate">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">Nelze vytvořit instanci {0}, protože typ XamlType není platný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadType">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">Nelze vytvořit instanci {0}, protože typ XamlType není platný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotFindAssembly">
+        <source>Cannot find Assembly '{0}' in URI '{1}'.</source>
+        <target state="translated">Nelze najít sestavení {0} v identifikátoru URI {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">Zásobník určený jen pro čtení nelze upravit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotReassignSchemaContext">
+        <source>Cannot reassign a previously set SchemaContext.</source>
+        <target state="translated">Nelze změnit přiřazení dříve nastaveného kontextu SchemaContext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotResolveTypeForFactoryMethod">
+        <source>Cannot resolve type '{0}' for method '{1}'.</source>
+        <target state="translated">Nelze přeložit typ {0} pro metodu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">Součást nebo informace o součásti ze zásobníku, který je určen pouze pro zápis, nelze získat.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetBaseUri">
+        <source>BaseUri can only be set once at the root node (XamlXmlReader may provide a default at the root node).</source>
+        <target state="translated">Vlastnost BaseUri lze nastavit v kořenovém uzlu pouze jednou (třída XamlXmlReader může poskytovat výchozí nastavení v kořenovém uzlu).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContext">
+        <source>Cannot set SchemaContext on ObjectWriter.</source>
+        <target state="translated">Nelze nastavit parametr SchemaContext pro objekt ObjectWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContextNull">
+        <source>Cannot set SchemaContext to null.</source>
+        <target state="translated">Nelze nastavit parametr SchemaContext na hodnotu Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteClosedWriter">
+        <source>Cannot write on a closed XamlWriter.</source>
+        <target state="translated">Nelze provést zápis do zavřeného objektu XamlWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteXmlSpacePreserveOnMember">
+        <source>The value '{1}' contains significant white space(s) but "xml:space = preserve" cannot be written down on the member '{0}'.</source>
+        <target state="translated">Hodnota {1} obsahuje významné mezery, ale nelze zapsat „xml:space = preserve“ do člena {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantAssignRootInstance">
+        <source>Cannot assign root instance of type '{0}' to type '{1}'.</source>
+        <target state="translated">Nelze přiřadit kořenovou instanci typu {0} k typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantCreateUnknownType">
+        <source>Cannot create unknown type '{0}'.</source>
+        <target state="translated">Nelze vytvořit neznámý typ {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantGetWriteonlyProperty">
+        <source>Cannot get write-only property '{0}'.</source>
+        <target state="translated">Nelze načíst vlastnost {0} určenou pouze pro zápis.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetReadonlyProperty">
+        <source>Cannot set read-only property '{0}'.</source>
+        <target state="translated">Nelze nastavit vlastnost {0} určenou pouze pro čtení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetUnknownProperty">
+        <source>Cannot set unknown member '{0}'.</source>
+        <target state="translated">Nelze nastavit neznámý člen {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseInsideTemplate">
+        <source>Close called while inside a deferred load section.</source>
+        <target state="translated">Byla volána metoda Close uvnitř oddílu odloženého načtení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseXamlWriterBeforeReading">
+        <source>Must close XamlWriter before reading from XamlNodeList.</source>
+        <target state="translated">Před čtením ze seznamu XamlNodeList musí být zavřen objekt XamlWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionCannotContainNulls">
+        <source>Collection '{0}' cannot contain null values.</source>
+        <target state="translated">Kolekce {0} nesmí obsahovat hodnoty Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">Počet elementů v této kolekci musí být menší nebo roven {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">Instanci typu {1} nelze přidat ke kolekci typu {0}. Jsou povoleny pouze položky typu {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">Vícerozměrné pole nelze předat metodě CopyTo do kolekce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">Hodnota parametru {0} je větší nebo rovna délce hodnoty parametru {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">Počet elementů v této kolekci je větší než dostupný prostor od {0} do konce cílového umístění {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructImplicitType">
+        <source>Failed attempting to create an Implicit Type with a constructor.</source>
+        <target state="translated">Pokus o vytvoření implicitního typu pomocí konstruktoru se nezdařil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorInvocation">
+        <source>The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">Vyvolání konstruktoru pro typ {0}, který odpovídá zadaným omezením vazby, vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorNotFoundForGivenPositionalParameters">
+        <source>Cannot write the given positional parameters because a matching constructor was not found.</source>
+        <target state="translated">Nelze zapsat dané poziční parametry, protože nebyl nalezen odpovídající konstruktor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">Objekt ValueSerializer {0} nemůže provést převod z {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">Objekt ValueSerializer {0} nemůže provést převod z {1} na {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConverterMustDeriveFromBase">
+        <source>Converter type '{0}' doesn't derive from expected base type '{1}'.</source>
+        <target state="translated">Typ převaděče {0} není odvozen od očekávaného základního typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultAttachablePropertyStoreCannotAddInstance">
+        <source>Failed to add attached properties to item in ConditionalWeakTable.</source>
+        <target state="translated">Přidání připojených vlastností do položky v tabulce ConditionalWeakTable se nezdařilo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredLoad">
+        <source>Deferred load threw an exception.</source>
+        <target state="translated">Odložené načtení vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredPropertyNotCollected">
+        <source>Deferred member was not collected in '{0}'.</source>
+        <target state="translated">Odložený člen nebyl sebrán v {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredSave">
+        <source>Save of deferred-load content threw an exception.</source>
+        <target state="translated">Uložení obsahu s odloženým načtením vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferringLoaderInstanceNull">
+        <source>Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.</source>
+        <target state="translated">Nelze načíst objekt XamlDeferringLoader z objektu XamlValueConverter {0}, protože jeho vlastnost ConverterInstance má hodnotu Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DependsOnMissing">
+        <source>'{0}'.'{1}' Depends on '{0}'.{1}', which was not set.</source>
+        <target state="translated">{0}.{1} Závisí na {0}.{1}, které není nastaveno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryFirstChanceException">
+        <source>Dictionary of type '{0}' cannot add key '{1}'. A TypeConverter will convert the key to type '{2}'. To avoid seeing this error, override System.Collections.IDictionary.Add and perform the conversion there.</source>
+        <target state="translated">Slovník typu {0} nemůže přidat klíč {1}. Třída TypeConverter převede klíč na typ {2}. Chcete-li předejít zobrazení této chyby, přepište metodu System.Collections.IDictionary.Add a proveďte konverzi zde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveGetter">
+        <source>Directive getter is not implemented.</source>
+        <target state="translated">Direktiva Getter není implementována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveMustBeString">
+        <source>Directive '{0}' must be a value of type string. Remove this directive or change it to a string value.</source>
+        <target state="translated">Direktiva {0} musí být hodnota typu řetězec. Odeberte tuto direktivu nebo ji změňte na řetězcovou hodnotu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotAtRoot">
+        <source>Directive '{0}' is only allowed on the root object. Remove this directive or move it to the root of the document.</source>
+        <target state="translated">Direktiva {0} je povolena pouze pro kořenový objekt. Odeberte tuto direktivu nebo ji přesuňte do kořene dokumentu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotFound">
+        <source>Directive '{0}' was not found in TargetNamespace '{1}'.</source>
+        <target state="translated">Direktiva {0} nebyla nalezena v oboru TargetNamespace {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateMemberSet">
+        <source>'{0}' property has already been set on '{1}'.</source>
+        <target state="translated">Vlastnost {0} již byla nastavena pro {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompat">
+        <source>There is more than one XmlnsCompatibleWithAttribute in assembly '{0}' for OldNamespace '{1}'. Remove the extra attribute(s).</source>
+        <target state="translated">Existuje více než jeden atribut XmlnsCompatibleWithAttribute v sestavení {0} pro obor OldNamespace {1}. Odeberte nadbytečné atributy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
+        <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">Existuje konflikt v atributech XmlnsCompatibleWithAttributes v sestaveních {0} a {1} pro obor OldNamespace {2}. Změňte atributy tak, aby měly stejný obor NewNamespace, nebo v konstruktoru objektu XamlSchemaContext předejte nekonfliktní sadu referenčních sestavení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">Hodnota výčtu {0} není platná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">Neexistuje objekt, který by mohl být vrácen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventCannotBeAssigned">
+        <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
+        <target state="translated">Událost {0} nelze přiřadit hodnotě, která není přiřaditelná k {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithReadOnlyProperties">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since not all properties are writable.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">V aktuálním stavu nelze zapsat poziční parametry. Modul pro zápis nemůže zapsat poziční parametry do formuláře atributů, protože modul pro zápis začal zapisovat elementy, a nemůže ani rozbalit poziční atributy, protože ne všechny vlastnosti jsou zapisovatelné. Zkuste přesunout člena pozičních parametrů více dopředu v datovém proudu uzlu na místo, kde modul XamlXmlWriter ještě může zapisovat atributy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithoutUnderlyingType">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since UnderlyingType on type '{0}' is null.  Try moving the positional parameter member earlier in the node stream, to place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">V aktuálním stavu nelze zapsat poziční parametry. Modul pro zápis nemůže zapsat poziční parametry do formuláře atributů, protože modul pro zápis začal zapisovat elementy, a nemůže ani rozbalit poziční atributy, protože vlastnost UnderlyingType pro typ {0} má hodnotu Null. Zkuste přesunout člena pozičních parametrů více dopředu v datovém proudu uzlu na místo, kde modul XamlXmlWriter ještě může zapisovat atributy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersinTypeWithNoDefaultConstructor">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">V aktuálním stavu nelze zapsat poziční parametry. Modul pro zápis nemůže zapsat poziční parametry do formuláře atributů, protože modul pro zápis začal zapisovat elementy, a nemůže ani rozbalit poziční atributy z důvodu chybějícího výchozího konstruktoru pro rozšíření značek, které obsahuje tyto poziční parametry. Zkuste přesunout člena pozičních parametrů více dopředu v datovém proudu uzlu na místo, kde modul XamlXmlWriter ještě může zapisovat atributy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedLoadPermission">
+        <source>Expected permission of type XamlLoadPermission.</source>
+        <target state="translated">Bylo očekáváno oprávnění typu XamlLoadPermission.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedObjectMarkupInfo">
+        <source>Expected value of type ObjectMarkupInfo.</source>
+        <target state="translated">Byla očekávána hodnota typu ObjectMarkupInfo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedAssemblyName">
+        <source>Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.</source>
+        <target state="translated">Název sestavení {0} není plně kvalifikovaný. Je nutné zadat název, verzi, jazykovou verzi a PublicKeyToken.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedTypeName">
+        <source>Type name '{0}' is not assembly-qualified. You can obtain this value from System.Type.AssemblyQualifiedName.</source>
+        <target state="translated">Název typu {0} není kvalifikovaný pro sestavení. Tuto hodnotu můžete získat z vlastnosti System.Type.AssemblyQualifiedName.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FactoryReturnedNull">
+        <source>The factory method '{0}' that matches the specified binding constraints returned null.</source>
+        <target state="translated">Výrobní metoda {0} odpovídající zadaným omezením vazby vrátila hodnotu Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">Vstupní soubor nebo datový proud neodpovídají očekávané specifikaci formátu souboru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">Soubor {0} neodpovídá očekávané specifikaci formátu souboru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionMessage">
+        <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
+        <target state="translated">Nelze načíst soubor nebo sestavení {0} nebo jednu z jeho závislých položek. Systém nenalezl zadaný soubor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ForwardRefDirectives">
+        <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
+        <target state="translated">Byl zaznamenán pokus o odkaz na pojmenované objekty {0}, který ještě nebyly definovány. Odkazy směrem vpřed nebo odkazy na objekty obsahující odkazy směrem vpřed nejsou podporovány jinými direktivami než Key.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">Zadaná hodnota typu {0} musí mít vlastnost IsFrozen nastavenu na hodnotu false, aby ji bylo možné upravit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">Nelze zvýšit úroveň z pole.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">Nelze zvýšit úroveň z {0} na {1}, protože cílová mapa je příliš malá.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetConverterInstance">
+        <source>Getting instance of '{0}' threw an exception.</source>
+        <target state="translated">Při získávání instance {0} došlo k výjimce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsException">
+        <source>Retrieving items in collection or dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">Při načítání položek v kolekci nebo slovníku typu {0} došlo k výjimce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsReturnedNull">
+        <source>XamlTypeInvoker.GetItems returned null for type '{0}'. This generally indicates an incorrectly implemented collection type.</source>
+        <target state="translated">Metoda XamlTypeInvoker.GetItems vrátila hodnotu Null pro typ {0}. To obvykle naznačuje nesprávně implementovaný typ kolekce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetObjectNull">
+        <source>Collection property '{0}'.'{1}' is null.</source>
+        <target state="translated">Vlastnost kolekce {0}.{1} má hodnotu Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetTargetTypeOnNonAttachableMember">
+        <source>Cannot get TargetType on a non-attachable Member.</source>
+        <target state="translated">Nelze získat vlastnost TargetType v nepřipojitelném členu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetValue">
+        <source>Get property '{0}' threw an exception.</source>
+        <target state="translated">Při získávání vlastnosti {0} metodou Get došlo k výjimce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetterOrSetterRequired">
+        <source>Either getter or setter must be non-null.</source>
+        <target state="translated">Buď Getter, nebo Setter musí mít jinou hodnotu než Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectGetterParamNum">
+        <source>Attached property getter methods must have one parameter and a non-void return type.</source>
+        <target state="translated">Metody Getter připojené vlastnosti musejí mít jeden parametr a návratový typ jiný než void.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectSetterParamNum">
+        <source>Attached property setter and attached event adder methods must have two parameters.</source>
+        <target state="translated">Metody Setter připojené vlastnosti a metody Adder připojené události musejí mít dva parametry.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationGuard">
+        <source>Initialization of '{0}' threw an exception.</source>
+        <target state="translated">Při inicializaci {0} došlo k výjimce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationSyntaxWithoutTypeConverter">
+        <source>Type '{0}' cannot be initialized from text (XamlLanguage.Initialization).  Add a TypeConverter to this type or change the XAML to use a constructor or factory method.</source>
+        <target state="translated">Typ {0} nemůže být inicializován z textu (XamlLanguage.Initialization). Přidejte do tohoto typu argument TypeConverter nebo změňte kód XAML tak, aby byl použit konstruktor nebo výrobní metoda.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCharInTypeName">
+        <source>Character '{0}' was unexpected in string '{1}'.  Invalid XAML type name.</source>
+        <target state="translated">Znak {0} nebyl očekáván v řetězci {1}. Neplatný název typu XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClosingBracketCharacers">
+        <source>Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">Znak pravé závorky {0} nemá odpovídající znak levé závorky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">Argument události je neplatný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidExpression">
+        <source>Invalid expression: '{0}'</source>
+        <target state="translated">Neplatný výraz: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">Hodnota PermissionState {0} není pro toto oprávnění platná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">Typ oprávnění je neplatný. Očekávaný typ je {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeArgument">
+        <source>Type argument '{0}' is not a valid type.</source>
+        <target state="translated">Argument typu {0} nemá platný typ.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeListString">
+        <source>The string '{0}' is not a valid XAML type name list. Type name lists are comma-delimited lists of types; such as 'x:String, x:Int32'.</source>
+        <target state="translated">Řetězec {0} není platný seznam názvů typů XAML. Seznamy názvů typů jsou seznamy typů oddělených čárkami, například „x:String, x:Int32“.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeString">
+        <source>The string '{0}' is not a valid XAML type name. Type names contain an optional prefix, a name, and optional type arguments; such as 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</source>
+        <target state="translated">Řetězec {0} není platný název typu XAML. Názvy typů obsahují nepovinnou předponu, název a nepovinné argumenty typu; například „String“, „x:Int32“, „g:Dictionary(x:String,x:Int32)“.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXamlMemberName">
+        <source>'{0}' is not a valid XAML member name.</source>
+        <target state="translated">{0} není platný název člena XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LateConstructionDirective">
+        <source>Construction directive '{0}' must be an attribute or the first property element.</source>
+        <target state="translated">Direktiva vytváření {0} musí být atribut nebo první element vlastnosti.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberAndPosition">
+        <source>'{0}' Line number '{1}' and line position '{2}'.</source>
+        <target state="translated">{0} Číslo řádku {1} a pozice na řádku {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberOnly">
+        <source>'{0}' Line number '{1}'.</source>
+        <target state="translated">{0} Číslo řádku {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListNotIList">
+        <source>List collection is not an IList.</source>
+        <target state="translated">Kolekce seznamu není objekt IList.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedBracketCharacters">
+        <source>BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">Znak závorky {0} nemá odpovídající znak levé nebo pravé závorky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedPropertyName">
+        <source>Cannot parse the malformed property name '{0}'.</source>
+        <target state="translated">Nelze analyzovat špatně vytvořený název vlastnosti {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">Položky v poli musejí být typu {0}. Jednu nebo více položek nelze tomuto typu přiřadit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set Type before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">Před voláním metody ProvideValue v rozšíření ArrayExtension je nutné nastavit parametr Type.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">Hodnotu {0} StaticExtension nelze přeložit na výčet, statické pole ani statickou vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">Rozšíření značek {0} požaduje, aby {1} bylo implementováno v rozhraní IServiceProvider pro metodu ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">Třída StaticExtension musí mít nastavenu vlastnost Member před voláním metody ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">Třída TypeExtension musí mít nastavenu vlastnost TypeName před voláním metody ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">Řetězec {0} není pro tento typ platný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionWithDuplicateArity">
+        <source>Cannot determine the positional parameters for type '{0}' because it has more than one constructor overload with '{1}' parameters. To make this markup extension usable in XAML, remove the duplicate constructor overload(s) or set XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity to true.</source>
+        <target state="translated">Nelze určit poziční parametry pro typ {0}, protože existuje více než jedno přetížení konstruktoru pomocí parametrů {1}. Chcete-li, aby bylo toto rozšíření značek použitelné v jazyce XAML, odeberte duplicitní přetížení konstruktoru nebo nastavte vlastnost XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity na hodnotu true.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberHasInvalidXamlName">
+        <source>The name of the member '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">Název člena {0} obsahuje znaky, které jsou v jazyce XAML neplatné.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberIsInternal">
+        <source>Member '{0}' on type '{1}' is internal.</source>
+        <target state="translated">Člen {0} v typu {1} je interní.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodInvocation">
+        <source>The invocation of a method '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">Vyvolání metody {0}, která odpovídá zadaným omezením vazby, vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingAssemblyName">
+        <source>No local assembly provided to complete URI='{0}'.</source>
+        <target state="translated">Nebylo zadáno žádné místní sestavení pro dokončení identifikátoru URI={0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCase">
+        <source>Missing case '{0}' in DeferringWriter'{1}' method.</source>
+        <target state="translated">Chybí příkaz case {0} v metodě DeferringWriter {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCaseXamlNodes">
+        <source>Missing case in Default processing of XamlNodes.</source>
+        <target state="translated">Chybí příkaz case ve výchozím zpracování uzlů XamlNodes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma1">
+        <source>Unexpected equals sign '=' following '{0}'. Check for a missing comma separator.</source>
+        <target state="translated">Neočekávaný znak rovná se (=) hned za {0}. Zkontrolujte, zda nechybí oddělovací čárka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma2">
+        <source>Unexpected equals sign '=' following '{0}'='{1}'. Check for a missing comma separator.</source>
+        <target state="translated">Neočekávaný znak rovná se (=) hned za {0}={1}. Zkontrolujte, zda nechybí oddělovací čárka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitProperty">
+        <source>Missing implicit property case.</source>
+        <target state="translated">Chybí příkaz case implicitní vlastnosti.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitPropertyTypeCase">
+        <source>Missing case for ImplicitPropertyType.</source>
+        <target state="translated">Chybí příkaz case pro ImplicitPropertyType.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingKey">
+        <source>Missing key value on '{0}' object.</source>
+        <target state="translated">Chybí hodnota klíče v objektu {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingLookPropertyBit">
+        <source>Missing case handler in LookupPropertyBit.</source>
+        <target state="translated">Chybí obslužná rutina case v LookupPropertyBit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameProvider">
+        <source>Service provider is missing the IXamlNameProvider service.</source>
+        <target state="translated">Chybí služba IXamlNameProvider ve zprostředkovateli služby.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameResolver">
+        <source>Service provider is missing the INameResolver service.</source>
+        <target state="translated">Chybí služba INameResolver ve zprostředkovateli služby.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingPropertyCaseClrType">
+        <source>Missing case in ClrType 'Member' lookup.</source>
+        <target state="translated">Chybí příkaz case ve vyhledávání ClrType Member.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTagInNamespace">
+        <source>Missing '{0}' in URI '{1}'.</source>
+        <target state="translated">Chybí {0} v identifikátoru URI {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTypeConverter">
+        <source>Creating from text without a TypeConverter is not allowed.</source>
+        <target state="translated">Vytváření z textu bez atributu TypeConverter není povoleno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">{0} musí být typ {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustHaveName">
+        <source>Reference must have a Name to resolve.</source>
+        <target state="translated">Odkaz musí mít parametr Name, který lze přeložit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustNotCallSetter">
+        <source>This setter is not intended to be used directly from your code. Do not call this setter.</source>
+        <target state="translated">Tato metoda Setter není určena k použití přímo z vašeho kódu. Nevolejte tuto metodu Setter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameNotFound">
+        <source>Name resolution failure. '{0}' was not found.</source>
+        <target state="translated">Překlad názvu se nezdařil. {0} nebylo nalezeno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate name '{0}' in this scope.</source>
+        <target state="translated">Nelze registrovat duplicitní název {0} v tomto oboru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeException">
+        <source>Could not register named object. {0}</source>
+        <target state="translated">Nelze registrovat pojmenovaný objekt. {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">Název {0} není platný pro identifikátor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Název nemůže být prázdný řetězec.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>Name '{0}' was not found.</source>
+        <target state="translated">Název {0} nebyl nalezen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeOnRootInstance">
+        <source>Cannot attach NameScope to null root instance.</source>
+        <target state="translated">Nelze připojit obor NameScope ke kořenové instanci s hodnotou Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationCannotBeXml">
+        <source>The prefix 'xml' is reserved.</source>
+        <target state="translated">Předpona xml je vyhrazená.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationNamespaceCannotBeNull">
+        <source>NamespaceDeclaration.Namespace cannot be null.  Provide a value for this property.</source>
+        <target state="translated">Vlastnost NamespaceDeclaration.Namespace nesmí mít hodnotu Null. Zadejte hodnotu pro tuto vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationPrefixCannotBeNull">
+        <source>NamespaceDeclaration.Prefix cannot be null.  Provide a value for this property.</source>
+        <target state="translated">Vlastnost NamespaceDeclaration.Prefix nesmí mít hodnotu Null. Zadejte hodnotu pro tuto vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceNotFound">
+        <source>Namespace '{0}' was not found in scope.</source>
+        <target state="translated">Obor názvů {0} nebyl v oboru nalezen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAddMethodFound">
+        <source>No Add methods found on type '{0}' for a value of type '{1}'.</source>
+        <target state="translated">Nebyly nalezeny žádné metody Add v typu {0} pro hodnotu typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAttributeUsage">
+        <source>'{0}' is not allowed in attribute usage.</source>
+        <target state="translated">{0} není povoleno v použití atributu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructor">
+        <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">Pro typ {0} nebyl nalezen žádný výchozí konstruktor. Chcete-li zkonstruovat tento typ, můžete použít direktivy Arguments nebo FactoryMethod.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructorWithNArugments">
+        <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
+        <target state="translated">Konstruktor pro {0} s {1} argumenty nebyl nalezen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDefaultConstructor">
+        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">Pro typ {0} nebyl nalezen žádný výchozí konstruktor. Chcete-li zkonstruovat tento typ, můžete použít direktivy Arguments nebo FactoryMethod.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoElementUsage">
+        <source>'{0}' is not allowed in element usage.</source>
+        <target state="translated">{0} není povoleno v použití elementu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM">
+        <source>XAML Node Stream: Missing StartMember on Type '{0}' before EndMember.</source>
+        <target state="translated">Datový proud uzlu XAML: U typu {0} nebyla nalezena metoda StartMember před metodou EndMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM_noType">
+        <source>XAML Node Stream: EndMember must follow StartObject and StartMember.</source>
+        <target state="translated">Datový proud uzlu XAML: Metoda EndMember musí následovat za metodou StartObject a StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO">
+        <source>XAML Node Stream: GetObject requires a StartMember after StartObject '{0}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Metoda GetObject vyžaduje metodu StartMember po metodě StartObject {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO_noType">
+        <source>XAML Node Stream: GetObject must follow a StartObject and StartMember.</source>
+        <target state="translated">Datový proud uzlu XAML: Metoda GetObject musí následovat za metodou StartObject a StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_NS">
+        <source>XAML Node Stream: '{0}'='{1}' Namespace Declaration requires a StartMember after StartObject '{2}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Deklarace oboru názvů {0}={1} vyžaduje metodu StartMember po metodě StartObject {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_SO">
+        <source>XAML Node Stream: StartObject '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Metoda StartObject {0} vyžaduje metodu StartMember po metodě StartObject {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V">
+        <source>XAML Node Stream: Value of '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Hodnota {0} vyžaduje metodu StartMember po metodě StartObject {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V_noType">
+        <source>XAML Node Stream: Value of '{0}' must follow a StartObject and StartMember.</source>
+        <target state="translated">Datový proud uzlu XAML: Hodnota {0} musí následovat za metodou StartObject a StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoSuchConstructor">
+        <source>No constructor with '{0}' arguments for '{1}'.</source>
+        <target state="translated">Neexistuje žádný konstruktor s {0} argumenty pro {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing CurrentObject before EndObject.</source>
+        <target state="translated">Datový proud uzlu XAML: Nebyla nalezena metoda CurrentObject před metodou EndObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing StartObject before StartMember '{0}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Nebyla nalezena metoda StartObject před metodou StartMember {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonMEWithPositionalParameters">
+        <source>Type with positional parameters is not a markup extension.</source>
+        <target state="translated">Typ s pozičními parametry není rozšíření značek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientProperty">
+        <source>'{0}'.'{1}' is not an ambient property.</source>
+        <target state="translated">{0}.{1} není vedlejší vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientType">
+        <source>'{0}' is not an ambient type.</source>
+        <target state="translated">{0} není vedlejší typ.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAssignableFrom">
+        <source>The type '{0}' is not assignable from the type '{1}'.</source>
+        <target state="translated">Typ {0} není přiřaditelný z typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotDeclaringTypeAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
+        <target state="translated">['{0}'('{1}')]5D; v {2} není vlastnost deklarovaná na tomto typu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnDirective">
+        <source>This operation is not supported on directive members.</source>
+        <target state="translated">Tato operace není podporována na direktivních členech.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownMember">
+        <source>This operation is not supported on unknown members.</source>
+        <target state="translated">Tato operace není podporována na neznámých členech.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownType">
+        <source>This operation is not supported on unknown types.</source>
+        <target state="translated">Tato operace není podporována na neznámých typech.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectNotTcOrMe">
+        <source>Argument should be a Type Converter, Markup Extension or Null.</source>
+        <target state="translated">Argument musí být převaděč typu, rozšíření značek nebo hodnota Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderAttachedPropertyNotFound">
+        <source>Unable to find an attachable property named '{0}' on type '{1}'.</source>
+        <target state="translated">Nelze najít připojitelnou vlastnost s názvem {0} v typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderDictionaryMethod1NotFound">
+        <source>Unable to locate MemberMarkupInfo.DictionaryEntriesFromGeneric method.</source>
+        <target state="translated">Nelze najít metodu MemberMarkupInfo.DictionaryEntriesFromGeneric.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArgumentTypes">
+        <source>InstanceDescriptor provided an argument of type '{0}' where a parameter of type '{1}' was expected.</source>
+        <target state="translated">Objekt InstanceDescriptor poskytl argument typu {0}, když byl očekáván parametr typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArguments">
+        <source>InstanceDescriptor did not provide the correct number of arguments.</source>
+        <target state="translated">Objekt InstanceDescriptor neposkytl správný počet argumentů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorInvalidMethod">
+        <source>InstanceDescriptor did not provide a valid constructor or method.</source>
+        <target state="translated">Objekt InstanceDescriptor neposkytl platný konstruktor nebo metodu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderMultidimensionalArrayNotSupported">
+        <source>Multidimensional arrays not supported.</source>
+        <target state="translated">Vícerozměrná pole nejsou podporována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoDefaultConstructor">
+        <source>Unable to serialize type '{0}'.  Verify that the type is public and either has a default constructor or an instance descriptor.</source>
+        <target state="translated">Typ {0} nelze serializovat. Ověřte, zda je typ veřejný a má buď výchozí konstruktor, nebo popisovač instance.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoMatchingConstructor">
+        <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
+        <target state="translated">Nelze nalézt vhodný konstruktor pro zadané argumenty konstruktoru na typu {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeCannotRoundtrip">
+        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Nelze číst objekty typu �{0}�, protože neexistují žádné přístupné konstruktory. Chcete-li povolit použití tohoto typu v jazyce XAML, přidejte výchozí konstruktor, použijte atribut ConstructorArgumentAttribute nebo zadejte objekt InstanceDescriptor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeIsNested">
+        <source>Unable to read objects of the type '{0}'.  Nested types are not supported.</source>
+        <target state="translated">Nelze číst objekty typu {0}. Vnořené typy nejsou podporovány.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to serialize this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectReader constructor.</source>
+        <target state="translated">{0} blokuje použití typu {1} v jazyce XAML. Chcete-li serializovat tento typ, změňte metodu {0}.GetXamlType tak, aby vracela pro tento typ jinou hodnotu než Null, nebo předejte jinou hodnotu v parametru schemaContext konstruktoru XamlObjectReader.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamePropertyMustBeString">
+        <source>The name property '{0}' on type '{1}' must be of type System.String.</source>
+        <target state="translated">Vlastnost názvu {0} na typu {1} musí být typu System.String.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
+        <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
+        <target state="translated">Graf objektu obsahuje více odkazů na instanci typu {0} a serializátor nemůže najít obecně viditelné umístění pro zápis této instance. Měli byste prověřit použití oborů názvů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
+        <source>An element with the name '{0}' has already been registered in this scope.</source>
+        <target state="translated">Element s názvem {0} již byl v tomto oboru registrován.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReader_TypeNotVisible">
+        <source>Type '{0}' not visible. If the type is local, please set the LocalAssembly field in XamlReaderSettings.</source>
+        <target state="translated">Typ {0} není viditelný. Jedná-li se o místní typ, nastavte pole LocalAssembly v nastavení XamlReaderSettings.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectWriterTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to load this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectWriter constructor.</source>
+        <target state="translated">{0} blokuje použití typu {1} v jazyce XAML. Chcete-li načíst tento typ, změňte metodu {0}.GetXamlType tak, aby vracela pro tento typ jinou hodnotu než Null, nebo předejte jinou hodnotu v parametru schemaContext konstruktoru XamlObjectWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollections">
+        <source>This operation is only supported on collection types.</source>
+        <target state="translated">Tato operace je podporována pouze u typů kolekce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollectionsAndDictionaries">
+        <source>This operation is only supported on collection and dictionary types.</source>
+        <target state="translated">Tato operace je podporována pouze u typů kolekce a slovníku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnDictionaries">
+        <source>This operation is only supported on dictionary types.</source>
+        <target state="translated">Tato operace je podporována pouze u typů slovníku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before EndObject.</source>
+        <target state="translated">Datový proud uzlu XAML: Nebyla nalezena metoda EndMember pro {0}.{1} před metodou EndObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
+        <target state="translated">Datový proud uzlu XAML: Nebyla nalezena metoda EndMember pro {0}.{1} před metodou StartMember {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentlessPropertyElement">
+        <source>The property element '{0}' is not contained by an object element.</source>
+        <target state="translated">Element vlastnosti {0} není obsažen v elementu objektu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">Nelze načíst sestavení {0}, protože je načtena jiná verze {1} téhož sestavení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">Pro {0} je zadáno příliš mnoho atributů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">{0} vyžaduje více atributů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PositionalParamsWrongLength">
+        <source>GetPositionalParameters returned the wrong length vector.</source>
+        <target state="translated">Metoda GetPositionalParameters vrátila vektor špatné délky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotFound">
+        <source>Prefix '{0}' does not map to a namespace.</source>
+        <target state="translated">Předpona {0} neprovádí mapování na obor názvů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotInFrames">
+        <source>The prefix '{0}' could not be found.</source>
+        <target state="translated">Předponu {0} nelze nalézt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyDoesNotTakeText">
+        <source>'{0}' property on '{1}' does not allow you to specify text.</source>
+        <target state="translated">Vlastnost {0} v {1} vám neumožňuje zadat text.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotImplemented">
+        <source>'{0}' is not implemented.</source>
+        <target state="translated">Vlastnost {0} není implementována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValue">
+        <source>Provide value on '{0}' threw an exception.</source>
+        <target state="translated">Zadání hodnoty v {0} vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValueCycle">
+        <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
+        <target state="translated">Nelze volat metodu MarkupExtension.ProvideValue z důvodu cyklické závislosti. Vlastnosti uvnitř objektu MarkupExtension nemohou odkazovat na objekty, které odkazují na výsledek MarkupExtension. Toto se týká následujících objektů MarkupExtensions:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">Název typu {0} nemá očekávaný formát className, assembly.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QuoteCharactersOutOfPlace">
+        <source>Quote characters ' or " are only allowed at the start of values.</source>
+        <target state="translated">Znaky uvozovek ' nebo " jsou povoleny pouze na začátku hodnot.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">Hodnota nesmí být Null. Odkaz na objekt: {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextMismatch">
+        <source>schemaContext parameter cannot be different from savedContext.SchemaContext</source>
+        <target state="translated">Parametr schemaContext se nesmí lišit od savedContext.SchemaContext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextNull">
+        <source>savedContext.SchemaContext cannot be null</source>
+        <target state="translated">Hodnota savedContext.SchemaContext nesmí být Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNotInitialized">
+        <source>SchemaContext on writer must be initialized before accessing the reader.</source>
+        <target state="translated">Parametr SchemaContext v modulu pro zápis musí být inicializován před přístupem k modulu pro čtení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNull">
+        <source>SchemaContext cannot be null.</source>
+        <target state="translated">Hodnota SchemaContext nesmí být Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">Vlastnost SandboxExternalContent nelze nastavit na hodnotu true v částečném vztahu důvěryhodnosti.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlMissingAttribute">
+        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
+        <target state="translated">Neplatné zabezpečení XML. Chybí očekávaný atribut {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedTag">
+        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
+        <target state="translated">Neplatné zabezpečení XML. Neočekávaná značka {0}, byla očekávána značka {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedValue">
+        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
+        <target state="translated">Neplatné zabezpečení XML. Neočekávaná hodnota {0} v atributu {1}, byla očekávána hodnota {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">Tento objekt serviceType je již registrován u jiné služby.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetConnectionId">
+        <source>Set connectionId threw an exception.</source>
+        <target state="translated">Nastavení connectionId vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnlyProperty">
+        <source>'{0}'.'{1}' is a property without a getter and is not a valid XAML property.</source>
+        <target state="translated">{0}.{1} je vlastnost bez direktivy Getter a nejedná se o platnou vlastnost jazyka XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTargetTypeOnNonAttachableMember">
+        <source>Cannot set TargetType on a non-attachable Member.</source>
+        <target state="translated">Nelze nastavit vlastnost TargetType v nepřipojitelném členu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetUriBase">
+        <source>Setting xml:base on '{0}' threw an exception.</source>
+        <target state="translated">Při nastavení xml:base na {0} byla vyvolána výjimka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetValue">
+        <source>Set property '{0}' threw an exception.</source>
+        <target state="translated">Nastavení vlastnosti {0} vyvolalo výjimku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetXmlInstance">
+        <source>Setting xml instance on '{0}' threw an exception.</source>
+        <target state="translated">Při nastavení instance xml na {0} byla vyvolána výjimka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SettingPropertiesIsNotAllowed">
+        <source>Setting properties is not allowed on a type converted instance. Property = '{0}'</source>
+        <target state="translated">Není povoleno nastavení vlastností pro instanci s převedeným typem. Vlastnost = {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldOverrideMethod">
+        <source>Method '{0}' is not supported by default. It can be implemented in derived classes.</source>
+        <target state="translated">Metoda {0} není ve výchozím nastavení podporována. Může být implementována v odvozených třídách.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldSerializeFailed">
+        <source>ShouldSerialize check failed for member '{0}'.</source>
+        <target state="translated">Kontrola ShouldSerialize pro člena {0} se nezdařila.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SimpleFixupsMustHaveOneName">
+        <source>Directly Assignable Fixups must only have one name.</source>
+        <target state="translated">Přímo přiřaditelné opravy musí mít pouze jeden název.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Parametr nemůže být řetězec o nulové délce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">Řetězec je null nebo prázdný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNotCollected">
+        <source>Deferred load section was not collected in '{0}'.</source>
+        <target state="translated">Sekce odloženého načtení nebyla sebrána v {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadAlreadyStarted">
+        <source>Thread is already started.</source>
+        <target state="translated">Vlákno je již spuštěno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Při analýze {1} byl zjištěn prázdný token na pozici {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Při analýze {1} byla zjištěna nadbytečná data na pozici {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">Při analýze {0} bylo zjištěno, že chybí ukončovací uvozovka.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">Při analýze {0} bylo zjištěno předčasné ukončení řetězce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributes">
+        <source>Error with member '{0}'.'{1}'.  It has more than one '{2}'.</source>
+        <target state="translated">Chyba u členu {0}.{1}. Má více než jeden atribut {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributesOnType">
+        <source>Error with type '{0}'.  It has more than one '{1}'.</source>
+        <target state="translated">Chyba u typu {0}. Má více než jeden atribut {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyTypeConverterAttributes">
+        <source>Only one TypeConverter attribute is allowed on a type.</source>
+        <target state="translated">Pro typ je povolen pouze jeden atribut TypeConverter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransitiveForwardRefDirectives">
+        <source>Object '{0}' assigned to directive '{1}' has properties which are references to named object(s) '{2}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported inside object construction directives.</source>
+        <target state="translated">Objekt {0} přiřazený k direktivě {1} má vlastnosti odkazující na pojmenované objekty {2}, které ještě nebyly definovány. Odkazy směrem vpřed nebo odkazy na objekty obsahující odkazy směrem vpřed nejsou podporovány uvnitř direktiv konstrukce objektu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed">
+        <source>Failed to create a '{0}' from the text '{1}'.</source>
+        <target state="translated">Vytvoření {0} z textu {1} se nezdařilo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed2">
+        <source>Failed to convert '{0}' to type '{1}'.</source>
+        <target state="translated">Převod {0} na typ {1} se nezdařil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasInvalidXamlName">
+        <source>The name of the type '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">Název typu {0} obsahuje znaky, které jsou v jazyce XAML neplatné.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasNoContentProperty">
+        <source>Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.</source>
+        <target state="translated">Typ {0} nemá vlastnost obsahu. Zadejte název vlastnosti, kterou chcete nastavit, nebo do typu přidejte atribut ContentPropertyAttribute nebo TypeConverterAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">Metadata vlastnosti nelze změnit, pokud byla spojena s nějakou vlastností.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNameCannotHavePeriod">
+        <source>Type name '{0}' cannot have a dot '.'.</source>
+        <target state="translated">Název typu {0} nesmí obsahovat tečku (.).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotFound">
+        <source>Type reference cannot find type named '{0}'.</source>
+        <target state="translated">Odkaz na typ nemůže najít typ s názvem {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotPublic">
+        <source>Type '{0}' is not public.</source>
+        <target state="translated">Typ {0} není veřejný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnclosedQuote">
+        <source>Unclosed quoted value.</source>
+        <target state="translated">Hodnota neuzavřená do uvozovek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedClose">
+        <source>Unexpected close of XAML Node Stream.</source>
+        <target state="translated">Neočekávané uzavření datového proudu uzlu XAML</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedConstructorArg">
+        <source>Invalid metadata for attribute '{0}' on '{1}'. Expected '{2}' argument(s) of type '{3}'.</source>
+        <target state="translated">Neplatná metadata pro atribut {0} v {1}. Bylo očekáváno {2} argumentů typu {3}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedNodeType">
+        <source>Unexpected '{0}' in parse rule '{1}'.</source>
+        <target state="translated">Neočekávaný typ {0} v pravidle analýzy {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">Parametr je neočekávaného typu {0}. Byl očekáván typ {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedToken">
+        <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
+        <target state="translated">Neočekávaný token {0} v pravidle: {1}, v {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedTokenAfterME">
+        <source>Unexpected token after end of markup extension.</source>
+        <target state="translated">Neočekávaný token za koncem rozšíření značek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnhandledBoolTypeBit">
+        <source>Unhandled BoolTypeBit.</source>
+        <target state="translated">Neošetřený objekt BoolTypeBit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
+        <target state="translated">['{0}'('{1}')]5D; v {2} není známá vlastnost.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMember">
+        <source>Unknown member '{0}' on '{1}'.</source>
+        <target state="translated">Neznámý člen {0} v {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberOnUnknownType">
+        <source>Unknown member '{0}' on unknown type '{1}'.</source>
+        <target state="translated">Neznámý člen {0} v neznámém typu {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberSimple">
+        <source>Unknown member '{0}'.</source>
+        <target state="translated">Neznámý člen {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownType">
+        <source>Unknown type '{0}'.</source>
+        <target state="translated">Neznámý typ {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedForwardReferences">
+        <source>Unresolved reference '{0}'.</source>
+        <target state="translated">Nepřeložený odkaz {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedNamespace">
+        <source>XAML namespace '{0}' is not resolved.</source>
+        <target state="translated">Obor názvů XAML {0} nebyl přeložen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotFound">
+        <source>Uri '{0}' was not found.</source>
+        <target state="translated">Identifikátor Uri {0} nebyl nalezen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsableDuringInitializationOnME">
+        <source>Error with type '{0}'. MarkupExtensions cannot use the 'UsableDuringInitialization' attribute.</source>
+        <target state="translated">Chyba u typu {0}. Objekt MarkupExtensions nemůže používat atribut UsableDuringInitialization.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueInArrayIsNull">
+        <source>A value in the '{0}' array is null.</source>
+        <target state="translated">Hodnota v poli {0} je Null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFollowedByEndMember">
+        <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
+        <target state="translated">Datový proud uzlu XAML: Za uzly hodnot musí následovat metoda EndMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">Zadaný index je mimo rozsah nebo podřízený objekt na indexu má hodnotu null. Nevolejte tuto metodu, vrací-li funkce VisualChildrenCount hodnotu nula, která znamená, že objekt Visual nemá podřízené objekty.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhiteSpaceInCollection">
+        <source>XamlXmlWriter cannot write value '{0}' which contains significant white space in collection '{1}'.</source>
+        <target state="translated">Modul XamlXmlWriter nemůže zapsat hodnotu {0}, která obsahuje významnou mezeru v kolekci {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhitespaceAfterME">
+        <source>White space is not allowed after end of markup extension.</source>
+        <target state="translated">Za koncem rozšíření značek není povolena mezera.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriterIsClosed">
+        <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
+        <target state="translated">Byl proveden pokus o zápis do objektu XamlWriter, pro který byla volána metoda Closed.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Element Choice nemůže následovat za Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">Třída AlternateContent musí obsahovat jeden nebo více elementů Choice.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Element Choice je platný pouze v elementu AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">Dochází k zacyklení definic kompatibility XML, takže obor názvů {0} přepisuje sebe sama. To může být způsobeno nekonzistencí atributů XmlnsCompatibilityAttributes v různých sestaveních. Změňte definice tak, abyste odstranili zacyklení, nebo předejte v konstruktoru XamlSchemaContext nekonfliktní sadu referenčních sestavení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">Duplicitní deklarace třídy Preserve pro element {1} v oboru názvů {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">Duplicitní deklarace třídy ProcessContent pro element {1} v oboru názvů {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">Duplicitní deklarace třídy Preserve pro zástupné znaky pro obor názvů {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">Duplicitní deklarace pro zástupné znaky třídy ProcessContent pro obor názvů {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Element Fallback je platný pouze v elementu AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">Element {0} není platný podřízený element třídy AlternateContent. Platnými podřízenými elementy třídy AlternateContent jsou jen Choice a Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">Atribut {0} je neplatný pro element {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">Formát {0} je neplatný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">Nelze mít prohlášení Preserve jak pro specifické, tak pro zástupné znaky oboru názvů {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">Nelze mít prohlášení třídy ProcessContent jak pro specifické, tak pro zástupné znaky oboru názvů {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Atribut Requires musí obsahovat platnou předponu oboru názvů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">Hodnota atributu {0} není platný název XML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">Třída AlternateContent může obsahovat jen jeden element Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">Podmínka MustUnderstand pro obor názvů {0} nebyla dodržena.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">Obor názvů {0} nemůže zachovávat položky. Nejprve musí být deklarován jako Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">Obor názvů {0} nemůže zpracovat obsah. Nejprve musí být deklarován jako Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain a Requires attribute.</source>
+        <target state="translated">Element Choice musí obsahovat atribut Requires.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">Předpona {0} není definována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">Neznámý atribut kompatibility {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">Neznámý element kompatibility {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XClassMustMatchRootInstance">
+        <source>Specified class name '{0}' doesn't match actual root instance type '{1}'. Remove the Class directive or provide an instance via XamlObjectWriterSettings.RootObjectInstance.</source>
+        <target state="translated">Zadaný název třídy {0} se neshoduje se skutečným typem kořenové instance {1}. Odeberte direktivu Class nebo zadejte instanci prostřednictvím parametru XamlObjectWriterSettings.RootObjectInstance.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlFactoryInvalidXamlNode">
+        <source>Unexpected XAML node type '{0}' from XamlReader in XamlFactory.</source>
+        <target state="translated">Neočekávaný typ uzlu XAML {0} z objektu XamlReader v XamlFactory.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotSetSchemaContext">
+        <source>Cannot set SchemaContext on XamlMarkupExtensionWriter.</source>
+        <target state="translated">Nelze nastavit parametr SchemaContext pro objekt XamlMarkupExtensionWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Nelze zapsat hodnotu, která není řetězec.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">Člen {0} byl již zapsán.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterInputInvalid">
+        <source>Errors detected in input.</source>
+        <target state="translated">Byly zjištěny chyby ve vstupu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameCannotGetPrefix">
+        <source>Cannot convert this XamlTypeName instance to a string because the provided INamespacePrefixLookup could not generate a prefix for the namespace '{0}'.</source>
+        <target state="translated">Nelze převést tuto instanci XamlTypeName na řetězec, protože zadané rozhraní INamespacePrefixLookup nemůže generovat předponu pro obor názvů {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNameIsNullOrEmpty">
+        <source>Cannot convert this XamlTypeName instance to a string because the Name property is null or empty. Set the Name property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Nelze převést tuto instanci XamlTypeName na řetězec, protože vlastnost Name má hodnotu Null nebo je prázdná. Před voláním metody XamlTypeName.ToString nastavte vlastnost Name.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNamespaceIsNull">
+        <source>Cannot convert this XamlTypeName instance to a string because the Namespace property is null. Set the Namespace property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Nelze převést tuto instanci XamlTypeName na řetězec, protože vlastnost Namespace má hodnotu Null. Před voláním metody XamlTypeName.ToString nastavte vlastnost Namespace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Nelze zapsat hodnotu, která není řetězec.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">Člen {0} byl již zapsán.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections">
+        <source>The argument isObjectFromMember can only be set to true when the type is a collection.</source>
+        <target state="translated">Argument isObjectFromMember může být nastaven na hodnotu true pouze tehdy, jestliže typ je kolekce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope">
+        <source>Namespace '{0}' already has a prefix defined in current scope.</source>
+        <target state="translated">Obor názvů {0} již má v aktuálním oboru definovánu předponu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterPrefixAlreadyDefinedInCurrentScope">
+        <source>The prefix '{0}' is already defined in current scope.</source>
+        <target state="translated">Předpona {0} je již v aktuálním oboru definována.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteNotSupportedInCurrentState">
+        <source>Unable to call '{0}' in current state.</source>
+        <target state="translated">Nelze volat {0} v aktuálním stavu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteObjectNotSupportedInCurrentState">
+        <source>Unable to call WriteObject with isObjectFromMember set to true in current state.</source>
+        <target state="translated">Nelze volat operaci WriteObject, když je isObjectFromMember nastaveno na hodnotu true v aktuálním stavu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XaslTypePropertiesNotImplemented">
+        <source>Need to implement public/internal sorting.</source>
+        <target state="translated">Je nutné implementovat veřejné/interní řazení.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlDataNull">
+        <source>The value for XmlData property '{0}' is null or not IXmlSerializable.</source>
+        <target state="translated">Hodnota vlastnosti XmlData {0} je Null nebo není typu IXmlSerializable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlValueNotReader">
+        <source>The value for XmlData property '{0}' is not an XmlReader.</source>
+        <target state="translated">Hodnota vlastnosti XmlData {0} není modul XmlReader.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlnsCompatCycle">
+        <source>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</source>
+        <target state="translated">Dochází k zacyklení definic XmlnsCompatibleWithAttribute v sestavení {0}, takže obor názvů {1} přepisuje sám sebe. Změňte definice a eliminujte toto zacyklení.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

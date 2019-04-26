@@ -9,11 +9,10 @@
 *
 *
 \***************************************************************************/
-using System;
+
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -38,11 +37,7 @@ namespace System.Windows.Markup
         public ArrayExtension(
             Type arrayType)
         {
-            if (arrayType == null)
-            {
-                throw new ArgumentNullException("arrayType");
-            }
-            _arrayType = arrayType;
+            _arrayType = arrayType ?? throw new ArgumentNullException(nameof(arrayType));
         }
 
         /// <summary>
@@ -53,7 +48,7 @@ namespace System.Windows.Markup
         {
             if (elements == null)
             {
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
             }
 
             _arrayList.AddRange(elements);
@@ -123,7 +118,7 @@ namespace System.Windows.Markup
             {
                 retArray = _arrayList.ToArray(_arrayType);
             }
-            catch (System.InvalidCastException)
+            catch (InvalidCastException)
             {
                 // If an element was added to the ArrayExtension that does not agree with the
                 // ArrayType, then an InvalidCastException will occur.  Generate a more

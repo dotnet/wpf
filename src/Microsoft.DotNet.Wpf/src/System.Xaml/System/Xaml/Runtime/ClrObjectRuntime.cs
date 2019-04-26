@@ -3,19 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Diagnostics;
-using System.Reflection;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security;
+using System.Reflection;
 using System.Xaml;
+using System.Xaml.Schema;
 using System.Xml;
 using System.Xml.Serialization;
-using System.IO;
 using XAML3 = System.Windows.Markup;
-using System.Xaml.Schema;
-using System.Text;
 
 namespace MS.Internal.Xaml.Runtime
 {
@@ -238,7 +234,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 if(property.IsDirective)
                 {
-                    value = this.CreateInstance(property.Type, null);
+                    value = CreateInstance(property.Type, null);
                 }
                 else if(!failIfWriteOnly)
                 {
@@ -439,7 +435,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                System.Windows.Markup.IComponentConnector connector = root as System.Windows.Markup.IComponentConnector;
+                XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
                 if(connector != null)
                 {
                     connector.Connect(connectionId, instance);

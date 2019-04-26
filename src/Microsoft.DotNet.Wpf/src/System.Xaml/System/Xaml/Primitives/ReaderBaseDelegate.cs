@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-
 namespace System.Xaml
 {
     // This is the base class for the simplest implementation of a
@@ -21,11 +19,7 @@ namespace System.Xaml
 
         protected ReaderBaseDelegate(XamlSchemaContext schemaContext)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-            _schemaContext = schemaContext;            
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));            
         }
 
         public override XamlNodeType NodeType

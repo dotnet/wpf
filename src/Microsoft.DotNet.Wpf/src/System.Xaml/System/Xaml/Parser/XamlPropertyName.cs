@@ -3,9 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Diagnostics;
-using System.Xaml.MS.Impl;
-using System.Collections.Generic;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -16,11 +13,11 @@ namespace MS.Internal.Xaml.Parser
         {
             if (owner != null)
             {
-                this.Owner = owner;
-                this._prefix = owner.Prefix ?? string.Empty;
+                Owner = owner;
+                _prefix = owner.Prefix ?? string.Empty;
             }
             else
-                this._prefix = prefix ?? string.Empty;
+                _prefix = prefix ?? string.Empty;
         }
 
         public readonly XamlName Owner;

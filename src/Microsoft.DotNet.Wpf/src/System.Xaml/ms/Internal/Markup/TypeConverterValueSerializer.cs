@@ -3,8 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 //  Contents:  TypeConverter to ValueSerializer adapter
+
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Markup;
 using System.Xaml;
 

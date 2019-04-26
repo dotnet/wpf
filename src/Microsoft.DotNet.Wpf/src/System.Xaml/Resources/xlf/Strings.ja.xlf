@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
+    <body>
+      <trans-unit id="APSException">
+        <source>Enumerating attached properties on object '{0}' threw an exception.</source>
+        <target state="translated">オブジェクト '{0}' の添付プロパティの列挙中に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddCollection">
+        <source>Add value to collection of type '{0}' threw an exception.</source>
+        <target state="translated">型 '{0}' のコレクションに値を追加しているときに例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddDictionary">
+        <source>Add value to dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">型 '{0}' の辞書に値を追加しているときに例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousCollectionItemType">
+        <source>Cannot determine the item type of collection type '{0}' because it has more than one Add method or ICollection&lt;T&gt; implementation. To make this collection type usable in XAML, add a public Add(object) method, implement System.Collections.IList or a single System.Collections.Generic.ICollection&lt;T&gt;.</source>
+        <target state="translated">複数の Add メソッドまたは ICollection&lt;T&gt; の実装があるため、コレクション型 '{0}' の項目の型を特定できません。このコレクション型を XAML で使用できるようにするには、パブリックの Add(object) メソッドを追加し、System.Collections.IList または単一の System.Collections.Generic.ICollection&lt;T&gt; を実装してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousDictionaryItemType">
+        <source>Cannot determine the item type of dictionary type '{0}' because it has more than one Add method or IDictionary&lt;K,V&gt; implementation. To make this dictionary type usable in XAML, add a public Add(object,object) method, implement System.Collections.IDictionary or a single System.Collections.Generic.IDictionary&lt;K,V&gt;.</source>
+        <target state="translated">複数の Add メソッドまたは IDictionary&lt;K,V&gt; の実装があるため、ディクショナリ型 '{0}' の項目の型を特定できません。このディクショナリ型を XAML で使用できるようにするには、パブリックの Add(object,object) メソッドを追加し、System.Collections.IDictionary または単一の System.Collections.Generic.IDictionary&lt;K,V&gt; を実装してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">XAML 内の KeyFrameAnimation の子は、互換性のある種類の KeyFrame でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
+        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
+        <target state="translated">'{0}' には、Duration として TimeSpan を指定するか、最後の KeyFrame の KeyTime として TimeSpan を指定する必要があります。この '{0}' では、Duration が '{1}' で最後の KeyFrame の KeyTime が '{2}' であるため、KeyTime を解決できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">'{0}' はクラス '{2}' の有効な '{1}' 値ではありません。この値は、アニメーション処理されるプロパティのベース値、または同じプロパティに適用された別のアニメーションの出力値によって提供された可能性があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
+        <target state="translated">インデックス {1} のキー フレームの解決された KeyTime 値は、インデックス {4} のキー フレームの解決された KeyTime 値を超えることはできません。KeyFrames[{1}]5D; には KeyTime '{2}' が指定されており、時刻 {3} に解決されます。KeyFrames[{4}]5D; には KeyTime '{5}' が指定されており、時刻 {6} に解決されます。'{0}' の Begin 時刻から相対的に解決されたり、Duration から相対的に解決されたりする KeyTime もあるため、一部の KeyTime がすべての Duration に対して有効でない場合もあります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">'{2}' KeyTime 値は、アニメーションの Duration 値 '{3}' より大きいため、この '{0}' のインデックス {1} のキー フレームに対して無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">'{0}' は、'{2}' の既定の {1} の値を使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">KeyFrameAnimation オブジェクトは、子としてテキスト オブジェクトを持つことができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentRequired">
+        <source>One of the following arguments must be non-null: '{0}'.</source>
+        <target state="translated">次の引数のいずれか 1 つは null 以外でなければなりません: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArrayAddNotImplemented">
+        <source>Array Add method is not implemented.</source>
+        <target state="translated">配列の Add メソッドが実装されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AssemblyTagMissing">
+        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
+        <target state="translated">URI '{1}' で、セミコロン ';' と等号 '=' の間の部分が '{0}' ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableEventNotImplemented">
+        <source>Attachable events are not implemented.</source>
+        <target state="translated">添付可能なイベントが実装されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableMemberNotFound">
+        <source>Attachable member '{0}' was not found.</source>
+        <target state="translated">添付可能なメンバー '{0}' が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropOnFwdRefTC">
+        <source>Cannot set property '{0}' on object '{1}' because the object is a forward or incompletely initialized reference. The unresolved name(s) are: '{2}'.</source>
+        <target state="translated">オブジェクト '{1}' にプロパティ '{0}' を設定できません。このオブジェクトは前方参照か、完全に初期化されていない参照です。未解決の名前は '{2}' です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnDictionaryKey">
+        <source>An attachable property named '{1}' is attached on a dictionary key '{0}' that is either a string or can be type-converted to string, which is not supported.</source>
+        <target state="translated">'{1}' という名前の添付可能なプロパティが、辞書キー '{0}' に添付されています。この辞書キーは文字列であるか、文字列に型変換できます。このような添付はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnTypeConvertedOrStringProperty">
+        <source>An attachable property named '{2}' is attached to a property named '{1}'.  The property named '{1}' is either a string or can be type-converted to string; attaching on such properties are not supported.  For debugging, the property '{1}' contains an object '{0}'.</source>
+        <target state="translated">'{2}' という名前の添付可能なプロパティが、'{1}' というプロパティに添付されています。プロパティ '{1}' は文字列であるか、文字列に型変換できます。このようなプロパティへの添付はサポートされていません。デバッグ用に、プロパティ '{1}' にはオブジェクト '{0}' が含まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeUnhandledKind">
+        <source>An unhandled scanner attribute was encountered.</source>
+        <target state="translated">ハンドルされないスキャナー属性が見つかりました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo1">
+        <source>One of the InternalsVisibleToAttribute values in assembly '{0}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">アセンブリ '{0}' の InternalsVisibleToAttribute 値の 1 つが有効なアセンブリ名ではありません。'AssemblyShortName' の形式または 'AssemblyShortName, PublicKey=...' の形式を使用してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo2">
+        <source>InternalsVisibleToAttribute value '{0}' in assembly '{1}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">アセンブリ '{1}' の InternalsVisibleToAttribute 値 '{0}' が有効なアセンブリ名ではありません。'AssemblyShortName' の形式または 'AssemblyShortName, PublicKey=...' の形式を使用してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadMethod">
+        <source>Bad method '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' のメソッド '{0}' が正しくありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadStateObjectWriter">
+        <source>Bad state in ObjectWriter. Non directive missing instance.</source>
+        <target state="translated">ObjectWriter の状態が正しくありません。XAML ディレクティブのインスタンスがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsCompat">
+        <source>An XmlnsCompatibleWithAttribute in assembly '{0}' is missing a required property. Set both the NewNamespace and OldNamespace properties, or remove the XmlnsCompatibleWithAttribute.</source>
+        <target state="translated">アセンブリ '{0}' の XmlnsCompatibleWithAttribute に必須プロパティがありません。NewNamespace プロパティと OldNamespace プロパティの両方を設定するか、XmlnsCompatibleWithAttribute を削除してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsDefinition">
+        <source>An XmlnsDefinitionAttribute in assembly '{0}' is missing a required property. Set both the ClrNamespace and XmlNamespace properties, or remove the XmlnsDefinitionAttribute.</source>
+        <target state="translated">アセンブリ '{0}' の XmlnsDefinitionAttribute に必須プロパティがありません。ClrNamespace プロパティと XmlNamespace プロパティの両方を設定するか、XmlnsDefinitionAttribute を削除してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsPrefix">
+        <source>An XmlnsPrefixAttribute in assembly '{0}' is missing a required property. Set both the Prefix and XmlNamespace properties, or remove the XmlnsPrefixAttribute.</source>
+        <target state="translated">アセンブリ '{0}' の XmlnsPrefixAttribute に必須プロパティがありません。Prefix プロパティと XmlNamespace プロパティの両方を設定するか、XmlnsPrefixAttribute を削除してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BuilderStackNotEmptyOnClose">
+        <source>Builder Stack is not empty when end of XamlNode stream was reached.</source>
+        <target state="translated">XamlNode ストリームの終わりに到達しましたが、ビルダー スタックが空ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertFromFailed">
+        <source>Failed to check convertibility from type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">'{1}' を使用して型 '{0}' からの変換可能性をチェックできませんでした。通常、これは、TypeConverter の実装が正しくないことを意味します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertToFailed">
+        <source>Failed to check convertibility to type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">'{1}' を使用して型 '{0}' への変換可能性をチェックできませんでした。通常、これは、TypeConverter の実装が正しくないことを意味します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAddPositionalParameters">
+        <source>In markup extensions, all constructor argument values should be atoms.  For the object of type '{0}', one or more argument values are not atomic.</source>
+        <target state="translated">マークアップ拡張では、すべてのコンストラクターの引数値はアトムである必要があります。型 '{0}' のオブジェクトで、1 つ以上の引数値が原子値ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">文字列値 '{0}' を型 '{1}' に変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">型 '{0}' を '{1}' に変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadEventDelegate">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">XamlType が有効でないため、'{0}' のインスタンスを作成できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadType">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">XamlType が有効でないため、'{0}' のインスタンスを作成できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotFindAssembly">
+        <source>Cannot find Assembly '{0}' in URI '{1}'.</source>
+        <target state="translated">URI '{1}' にアセンブリ '{0}' が見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">読み取り専用コンテナーは変更できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotReassignSchemaContext">
+        <source>Cannot reassign a previously set SchemaContext.</source>
+        <target state="translated">以前に設定された SchemaContext を再割り当てできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotResolveTypeForFactoryMethod">
+        <source>Cannot resolve type '{0}' for method '{1}'.</source>
+        <target state="translated">メソッド '{1}' の型 '{0}' を解決できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">書き込み専用コンテナーから部品または部品の詳細情報を取得できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetBaseUri">
+        <source>BaseUri can only be set once at the root node (XamlXmlReader may provide a default at the root node).</source>
+        <target state="translated">BaseUri は、ルート ノードで 1 回のみ設定できます (XamlXmlReader により、ルート ノードに既定値が指定される場合があります)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContext">
+        <source>Cannot set SchemaContext on ObjectWriter.</source>
+        <target state="translated">ObjectWriter に SchemaContext を設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContextNull">
+        <source>Cannot set SchemaContext to null.</source>
+        <target state="translated">SchemaContext を null に設定することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteClosedWriter">
+        <source>Cannot write on a closed XamlWriter.</source>
+        <target state="translated">閉じている XamlWriter に書き込むことはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteXmlSpacePreserveOnMember">
+        <source>The value '{1}' contains significant white space(s) but "xml:space = preserve" cannot be written down on the member '{0}'.</source>
+        <target state="translated">値 '{1}' には有意の空白が含まれていますが、メンバー '{0}' に "xml:space = preserve" を書き込むことはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantAssignRootInstance">
+        <source>Cannot assign root instance of type '{0}' to type '{1}'.</source>
+        <target state="translated">型 '{0}' のルート インスタンスを '{1}' に割り当てることができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantCreateUnknownType">
+        <source>Cannot create unknown type '{0}'.</source>
+        <target state="translated">不明な型 '{0}' を作成できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantGetWriteonlyProperty">
+        <source>Cannot get write-only property '{0}'.</source>
+        <target state="translated">書き込み専用のプロパティ '{0}' は取得できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetReadonlyProperty">
+        <source>Cannot set read-only property '{0}'.</source>
+        <target state="translated">読み取り専用のプロパティ '{0}' は設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetUnknownProperty">
+        <source>Cannot set unknown member '{0}'.</source>
+        <target state="translated">不明なメンバー '{0}' を設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseInsideTemplate">
+        <source>Close called while inside a deferred load section.</source>
+        <target state="translated">遅延読み込みセクション内で Close が呼び出されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseXamlWriterBeforeReading">
+        <source>Must close XamlWriter before reading from XamlNodeList.</source>
+        <target state="translated">XamlNodeList から読み込む前に、XamlWriter を終了する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionCannotContainNulls">
+        <source>Collection '{0}' cannot contain null values.</source>
+        <target state="translated">コレクション '{0}' に null 値を含めることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">このコレクション内の要素の数は、'{0}' 以下でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">型 '{1}' のインスタンスを型 '{0}' のコレクションに追加することはできません。型 '{2}' の項目のみが許可されます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">コレクション上の CopyTo メソッドに多次元配列を渡すことはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">'{0}' パラメーター値は、'{1}' パラメーター値の長さと同じかそれより長くなっています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">このコレクション内の要素の数は、'{0}' からコピー先の最後である '{1}' までの使用可能な領域を超えています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructImplicitType">
+        <source>Failed attempting to create an Implicit Type with a constructor.</source>
+        <target state="translated">コンストラクターで暗黙的な型を作成しようとしてエラーが発生しました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorInvocation">
+        <source>The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">指定されたバインディング制約に一致する型 '{0}' のコンストラクターの呼び出しで例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorNotFoundForGivenPositionalParameters">
+        <source>Cannot write the given positional parameters because a matching constructor was not found.</source>
+        <target state="translated">一致するコンストラクターが見つからなかったため、指定された位置指定パラメーターを出力できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">'{0}' ValueSerializer は '{1}' から変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">'{0}' ValueSerializer は、'{1}' から '{2}' に変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConverterMustDeriveFromBase">
+        <source>Converter type '{0}' doesn't derive from expected base type '{1}'.</source>
+        <target state="translated">コンバーターの型 '{0}' は、予期された基本型 '{1}' から派生していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultAttachablePropertyStoreCannotAddInstance">
+        <source>Failed to add attached properties to item in ConditionalWeakTable.</source>
+        <target state="translated">ConditionalWeakTable の項目に添付プロパティを追加できませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredLoad">
+        <source>Deferred load threw an exception.</source>
+        <target state="translated">遅延読み込みで例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredPropertyNotCollected">
+        <source>Deferred member was not collected in '{0}'.</source>
+        <target state="translated">遅延メンバーは '{0}' で収集されませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredSave">
+        <source>Save of deferred-load content threw an exception.</source>
+        <target state="translated">遅延読み込みコンテンツの保存時に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferringLoaderInstanceNull">
+        <source>Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.</source>
+        <target state="translated">ConverterInstance プロパティが null であるため、XamlValueConverter '{0}' から XamlDeferringLoader を取得できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DependsOnMissing">
+        <source>'{0}'.'{1}' Depends on '{0}'.{1}', which was not set.</source>
+        <target state="translated">'{0}'.'{1}' 依存している '{0}'.{1}' が設定されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryFirstChanceException">
+        <source>Dictionary of type '{0}' cannot add key '{1}'. A TypeConverter will convert the key to type '{2}'. To avoid seeing this error, override System.Collections.IDictionary.Add and perform the conversion there.</source>
+        <target state="translated">型 '{0}' のディクショナリはキー '{1}' を追加できません。TypeConverter はキーを型 '{2}' に変換します。このエラーを回避するには、System.Collections.IDictionary.Add をオーバーライドし、そこで変換を追加して実行してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveGetter">
+        <source>Directive getter is not implemented.</source>
+        <target state="translated">ディレクティブ getter が実装されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveMustBeString">
+        <source>Directive '{0}' must be a value of type string. Remove this directive or change it to a string value.</source>
+        <target state="translated">ディレクティブ '{0}' は文字列型の値でなければなりません。このディレクティブを削除するか、文字列値に変更してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotAtRoot">
+        <source>Directive '{0}' is only allowed on the root object. Remove this directive or move it to the root of the document.</source>
+        <target state="translated">ディレクティブ '{0}' はルート オブジェクトでのみ使用できます。このディレクティブを削除するか、ドキュメントのルートに移動してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotFound">
+        <source>Directive '{0}' was not found in TargetNamespace '{1}'.</source>
+        <target state="translated">ディレクティブ '{0}' が TargetNamespace '{1}' に見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateMemberSet">
+        <source>'{0}' property has already been set on '{1}'.</source>
+        <target state="translated">'{0}' プロパティは既に '{1}' に設定されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompat">
+        <source>There is more than one XmlnsCompatibleWithAttribute in assembly '{0}' for OldNamespace '{1}'. Remove the extra attribute(s).</source>
+        <target state="translated">OldNamespace '{1}' のアセンブリ '{0}' に複数の XmlnsCompatibleWithAttribute があります。余分な属性を削除してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
+        <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">OldNamespace '{2}' のアセンブリ '{0}' および '{1}' に、競合する XmlnsCompatibleWithAttributes があります。同じ NewNamespace になるように属性を変更するか、競合しない参照アセンブリのセットを XamlSchemaContext コンストラクターに渡してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' 列挙値が無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">返すべき現在のオブジェクトがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventCannotBeAssigned">
+        <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
+        <target state="translated">'{1}' に割り当て可能でない値を '{0}' イベントに割り当てることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithReadOnlyProperties">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since not all properties are writable.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">現在の状態では位置指定パラメーターを出力できません。ライターは要素の出力を開始しているため、属性形式の位置指定パラメーターを書き出すことはできません。また、すべてのプロパティが書き込み可能ではないため、位置指定パラメーターを展開することもできません。位置指定パラメーター メンバーをノード ストリームの前の方へ移動して、XamlXmlWriter が属性を記述できる位置に配置してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithoutUnderlyingType">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since UnderlyingType on type '{0}' is null.  Try moving the positional parameter member earlier in the node stream, to place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">現在の状態では位置指定パラメーターを出力できません。ライターは要素の出力を開始しているため、属性形式の位置指定パラメーターを書き出すことはできません。また、型 '{0}' の UnderlyingType が null であるため、位置指定パラメーターを展開することもできません。位置指定パラメーター メンバーをノード ストリームの前の方へ移動して、XamlXmlWriter が属性を記述できる位置に配置してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersinTypeWithNoDefaultConstructor">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">現在の状態では位置指定パラメーターを出力できません。ライターは要素の出力を開始しているため、属性形式の位置指定パラメーターを書き出すことはできません。また、位置指定パラメーターを含むマークアップ拡張に既定のコンストラクターがないため、位置指定パラメーターを展開することもできません。位置指定パラメーター メンバーをノード ストリームの前の方へ移動して、XamlXmlWriter が属性を出力できる位置に配置してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedLoadPermission">
+        <source>Expected permission of type XamlLoadPermission.</source>
+        <target state="translated">XamlLoadPermission 型のアクセス許可が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedObjectMarkupInfo">
+        <source>Expected value of type ObjectMarkupInfo.</source>
+        <target state="translated">ObjectMarkupInfo 型の値が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedAssemblyName">
+        <source>Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.</source>
+        <target state="translated">アセンブリ名 '{0}' は完全修飾されていません。名前、バージョン、カルチャ、および PublicKeyToken をすべて指定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedTypeName">
+        <source>Type name '{0}' is not assembly-qualified. You can obtain this value from System.Type.AssemblyQualifiedName.</source>
+        <target state="translated">型名 '{0}' はアセンブリ修飾されていません。この値は System.Type.AssemblyQualifiedName から取得できます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FactoryReturnedNull">
+        <source>The factory method '{0}' that matches the specified binding constraints returned null.</source>
+        <target state="translated">指定されたバインディング制約に一致するファクトリ メソッド '{0}' が null を返しました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">入力ファイルまたはデータ ストリームが、予期されたファイル形式の仕様に準拠していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' ファイルは、予期されたファイル形式の仕様に準拠していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionMessage">
+        <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
+        <target state="translated">ファイルまたはアセンブリ '{0}'、あるいはその依存関係の 1 つを読み込めませんでした。指定されたファイルが見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ForwardRefDirectives">
+        <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
+        <target state="translated">未定義の名前付きオブジェクト '{0}' を参照しようとしています。前方参照、または前方参照を含むオブジェクトへの参照は、Key 以外のディレクティブではサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">型 '{0}' の指定された値を変更するには、IsFrozen が false に設定されていなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">配列から昇格させることができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">ターゲット マップが小さすぎるため、'{0}' から '{1}' に昇格させることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetConverterInstance">
+        <source>Getting instance of '{0}' threw an exception.</source>
+        <target state="translated">'{0}' のインスタンスの取得中に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsException">
+        <source>Retrieving items in collection or dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">型 '{0}' のコレクションまたはディクショナリの項目の取得中に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsReturnedNull">
+        <source>XamlTypeInvoker.GetItems returned null for type '{0}'. This generally indicates an incorrectly implemented collection type.</source>
+        <target state="translated">XamlTypeInvoker.GetItems は、型 '{0}' に対して null を返しました。通常、これは、コレクション型の実装が正しくないことを意味します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetObjectNull">
+        <source>Collection property '{0}'.'{1}' is null.</source>
+        <target state="translated">コレクション プロパティ '{0}'.'{1}' は null です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetTargetTypeOnNonAttachableMember">
+        <source>Cannot get TargetType on a non-attachable Member.</source>
+        <target state="translated">添付可能でないメンバーの TargetType は取得できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetValue">
+        <source>Get property '{0}' threw an exception.</source>
+        <target state="translated">プロパティ '{0}' の Get で例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetterOrSetterRequired">
+        <source>Either getter or setter must be non-null.</source>
+        <target state="translated">get アクセス操作子と set アクセス操作子の一方は null 以外でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectGetterParamNum">
+        <source>Attached property getter methods must have one parameter and a non-void return type.</source>
+        <target state="translated">添付プロパティの get アクセス操作子メソッドには、1 つのパラメーターと、void でない戻り値の型が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectSetterParamNum">
+        <source>Attached property setter and attached event adder methods must have two parameters.</source>
+        <target state="translated">添付プロパティの set アクセス操作子、および添付イベントに追加するメソッドには、2 つのパラメーターが必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationGuard">
+        <source>Initialization of '{0}' threw an exception.</source>
+        <target state="translated">'{0}' の初期化で例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationSyntaxWithoutTypeConverter">
+        <source>Type '{0}' cannot be initialized from text (XamlLanguage.Initialization).  Add a TypeConverter to this type or change the XAML to use a constructor or factory method.</source>
+        <target state="translated">型 '{0}' をテキスト (XamlLanguage.Initialization) から初期化することはできません。この型に TypeConverter を追加するか、コンストラクターまたはファクトリ メソッドを使用するように XAML を変更してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCharInTypeName">
+        <source>Character '{0}' was unexpected in string '{1}'.  Invalid XAML type name.</source>
+        <target state="translated">文字列 '{1}' に予期しない文字 '{0}' が見つかりました。無効な XAML 型名です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClosingBracketCharacers">
+        <source>Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">終了の BracketCharacter '{0}' が見つかりましたが、対応する開始の BracketCharacter がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">イベント引数が無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidExpression">
+        <source>Invalid expression: '{0}'</source>
+        <target state="translated">無効な式: '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">PermissionState 値 '{0}' は、このアクセス許可に対して無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeArgument">
+        <source>Type argument '{0}' is not a valid type.</source>
+        <target state="translated">型引数 '{0}' は有効な型ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeListString">
+        <source>The string '{0}' is not a valid XAML type name list. Type name lists are comma-delimited lists of types; such as 'x:String, x:Int32'.</source>
+        <target state="translated">文字列 '{0}' は有効な XAML 型名リストではありません。型名リストは、'x:String, x:Int32' のようなコンマ区切りの型のリストです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeString">
+        <source>The string '{0}' is not a valid XAML type name. Type names contain an optional prefix, a name, and optional type arguments; such as 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</source>
+        <target state="translated">文字列 '{0}' は XAML の有効な型名ではありません。型名には、省略可能なプレフィックス、名前、および省略可能な型引数が含まれます。たとえば、'String'、'x:Int32'、'g:Dictionary(x:String,x:Int32)' などがあります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXamlMemberName">
+        <source>'{0}' is not a valid XAML member name.</source>
+        <target state="translated">'{0}' は有効な XAML メンバー名ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LateConstructionDirective">
+        <source>Construction directive '{0}' must be an attribute or the first property element.</source>
+        <target state="translated">構築ディレクティブ '{0}' は、属性または最初のプロパティ要素でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberAndPosition">
+        <source>'{0}' Line number '{1}' and line position '{2}'.</source>
+        <target state="translated">'{0}' 行番号 '{1}'、行位置 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberOnly">
+        <source>'{0}' Line number '{1}'.</source>
+        <target state="translated">'{0}' 行番号 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListNotIList">
+        <source>List collection is not an IList.</source>
+        <target state="translated">リスト コレクションは IList ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedBracketCharacters">
+        <source>BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">BracketCharacter '{0}' には、対応する開始/終了の BracketCharacter がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedPropertyName">
+        <source>Cannot parse the malformed property name '{0}'.</source>
+        <target state="translated">間違った形式のプロパティ名 '{0}' を解析できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">配列の項目の型は '{0}' でなければなりません。1 つ以上の項目をこの型にキャストできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set Type before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">ArrayExtension で ProvideValue を呼び出す前に、Type を設定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">'{0}' StaticExtension 値は、列挙値、静的フィールド、または静的プロパティに解決できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">マークアップ拡張 '{0}' では、ProvideValue の IServiceProvider に '{1}' を実装する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">StaticExtension では、ProvideValue を呼び出す前に、Member プロパティを設定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">TypeExtension では、ProvideValue を呼び出す前に、TypeName プロパティを設定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">'{0}' 文字列は型として有効ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionWithDuplicateArity">
+        <source>Cannot determine the positional parameters for type '{0}' because it has more than one constructor overload with '{1}' parameters. To make this markup extension usable in XAML, remove the duplicate constructor overload(s) or set XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity to true.</source>
+        <target state="translated">型 '{0}' の位置指定パラメーターを決定できません。'{1}' 個のパラメーターを持つコンストラクターのオーバーロードが複数存在します。このマークアップ拡張を XAML で使用できるようにするには、重複するコンストラクターのオーバーロードを削除するか、XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity を true に設定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberHasInvalidXamlName">
+        <source>The name of the member '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">メンバー '{0}' の名前に、XAML で無効な文字が含まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberIsInternal">
+        <source>Member '{0}' on type '{1}' is internal.</source>
+        <target state="translated">型 '{1}' の '{0}' は内部メンバーです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodInvocation">
+        <source>The invocation of a method '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">指定されたバインディング制約に一致するメソッド '{0}' の呼び出しで例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingAssemblyName">
+        <source>No local assembly provided to complete URI='{0}'.</source>
+        <target state="translated">URI='{0}' は不完全です。ローカル アセンブリが指定されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCase">
+        <source>Missing case '{0}' in DeferringWriter'{1}' method.</source>
+        <target state="translated">DeferringWriter'{1}' メソッドにケース '{0}' がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCaseXamlNodes">
+        <source>Missing case in Default processing of XamlNodes.</source>
+        <target state="translated">XamlNodes の既定の処理にケースがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma1">
+        <source>Unexpected equals sign '=' following '{0}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}' の後に予期しない等号 '=' があります。コンマ区切り記号が不足していないかどうかを確認してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma2">
+        <source>Unexpected equals sign '=' following '{0}'='{1}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}'='{1}' の後に予期しない等号 '=' があります。コンマ区切り記号が不足していないかどうかを確認してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitProperty">
+        <source>Missing implicit property case.</source>
+        <target state="translated">暗黙的なプロパティ ケースがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitPropertyTypeCase">
+        <source>Missing case for ImplicitPropertyType.</source>
+        <target state="translated">ImplicitPropertyType のケースがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingKey">
+        <source>Missing key value on '{0}' object.</source>
+        <target state="translated">'{0}' オブジェクトにキー値がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingLookPropertyBit">
+        <source>Missing case handler in LookupPropertyBit.</source>
+        <target state="translated">LookupPropertyBit にケース ハンドラーがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameProvider">
+        <source>Service provider is missing the IXamlNameProvider service.</source>
+        <target state="translated">サービス プロバイダーに IXamlNameProvider サービスがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameResolver">
+        <source>Service provider is missing the INameResolver service.</source>
+        <target state="translated">サービス プロバイダーに INameResolver サービスがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingPropertyCaseClrType">
+        <source>Missing case in ClrType 'Member' lookup.</source>
+        <target state="translated">ClrType 'Member' 検索にケースがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTagInNamespace">
+        <source>Missing '{0}' in URI '{1}'.</source>
+        <target state="translated">'{0}' が URI '{1}' にありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTypeConverter">
+        <source>Creating from text without a TypeConverter is not allowed.</source>
+        <target state="translated">TypeConverter を使用せずにテキストから作成することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' の型は '{1}' でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustHaveName">
+        <source>Reference must have a Name to resolve.</source>
+        <target state="translated">参照を解決するには、名前が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustNotCallSetter">
+        <source>This setter is not intended to be used directly from your code. Do not call this setter.</source>
+        <target state="translated">この set アクセス操作子はコードから直接使用できません。この set アクセス操作子を呼び出さないでください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameNotFound">
+        <source>Name resolution failure. '{0}' was not found.</source>
+        <target state="translated">名前の解決に失敗しました。'{0}' が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate name '{0}' in this scope.</source>
+        <target state="translated">このスコープで重複する名前 '{0}' を登録することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeException">
+        <source>Could not register named object. {0}</source>
+        <target state="translated">名前付きオブジェクトを登録できませんでした。{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">'{0}' 名は、識別子に対して無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">名前は空の文字列にはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>Name '{0}' was not found.</source>
+        <target state="translated">名前 '{0}' が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeOnRootInstance">
+        <source>Cannot attach NameScope to null root instance.</source>
+        <target state="translated">NameScope を null のルート インスタンスにアタッチすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationCannotBeXml">
+        <source>The prefix 'xml' is reserved.</source>
+        <target state="translated">プレフィックス 'xml' は予約されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationNamespaceCannotBeNull">
+        <source>NamespaceDeclaration.Namespace cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Namespace を null にすることはできません。このプロパティの値を入力してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationPrefixCannotBeNull">
+        <source>NamespaceDeclaration.Prefix cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Prefix を null にすることはできません。このプロパティの値を入力してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceNotFound">
+        <source>Namespace '{0}' was not found in scope.</source>
+        <target state="translated">名前空間 '{0}' がスコープ内に見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAddMethodFound">
+        <source>No Add methods found on type '{0}' for a value of type '{1}'.</source>
+        <target state="translated">型 '{1}' の値の型 '{0}' に Add メソッドが見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAttributeUsage">
+        <source>'{0}' is not allowed in attribute usage.</source>
+        <target state="translated">属性では '{0}' を使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructor">
+        <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">一致するコンストラクターが型 '{0}' に見つかりません。この型は、引数または FactoryMethod ディレクティブを使用して構築できます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructorWithNArugments">
+        <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
+        <target state="translated">'{1}' 個の引数を持つ '{0}' のコンストラクターが見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDefaultConstructor">
+        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">型 '{0}' に既定のコンストラクターが見つかりません。この型は、引数または FactoryMethod ディレクティブを使用して構築できます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoElementUsage">
+        <source>'{0}' is not allowed in element usage.</source>
+        <target state="translated">要素では '{0}' を使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM">
+        <source>XAML Node Stream: Missing StartMember on Type '{0}' before EndMember.</source>
+        <target state="translated">XAML ノード ストリーム: EndMember の前に型 '{0}' の StartMember がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM_noType">
+        <source>XAML Node Stream: EndMember must follow StartObject and StartMember.</source>
+        <target state="translated">XAML ノード ストリーム: EndMember は、StartObject および StartMember の後に続く必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO">
+        <source>XAML Node Stream: GetObject requires a StartMember after StartObject '{0}'.</source>
+        <target state="translated">XAML ノード ストリーム: GetObject は、StartObject '{0}' の後に StartMember を必要とします。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO_noType">
+        <source>XAML Node Stream: GetObject must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML ノード ストリーム: GetObject は、StartObject および StartMember の後に続く必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_NS">
+        <source>XAML Node Stream: '{0}'='{1}' Namespace Declaration requires a StartMember after StartObject '{2}'.</source>
+        <target state="translated">XAML ノード ストリーム: '{0}'='{1}' 名前空間の宣言は、StartObject '{2}' の後に StartMember を必要とします。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_SO">
+        <source>XAML Node Stream: StartObject '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML ノード ストリーム: StartObject '{0}' は、StartObject '{1}' の後に StartMember を必要とします。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V">
+        <source>XAML Node Stream: Value of '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML ノード ストリーム: '{0}' の値は、StartObject '{1}' の後に StartMember を必要とします。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V_noType">
+        <source>XAML Node Stream: Value of '{0}' must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML ノード ストリーム: '{0}' の値は、StartObject および StartMember の後に続く必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoSuchConstructor">
+        <source>No constructor with '{0}' arguments for '{1}'.</source>
+        <target state="translated">'{1}' には '{0}' 個の引数を持つコンストラクターがありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing CurrentObject before EndObject.</source>
+        <target state="translated">XAML ノード ストリーム: EndObject の前に CurrentObject がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing StartObject before StartMember '{0}'.</source>
+        <target state="translated">XAML ノード ストリーム: StartMember '{0}' の前に StartObject がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonMEWithPositionalParameters">
+        <source>Type with positional parameters is not a markup extension.</source>
+        <target state="translated">位置指定パラメーターを持つ型は、マークアップ拡張ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientProperty">
+        <source>'{0}'.'{1}' is not an ambient property.</source>
+        <target state="translated">'{0}'.'{1}' はアンビエント プロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientType">
+        <source>'{0}' is not an ambient type.</source>
+        <target state="translated">'{0}' はアンビエント型ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAssignableFrom">
+        <source>The type '{0}' is not assignable from the type '{1}'.</source>
+        <target state="translated">型 '{0}' を型 '{1}' から割り当てることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotDeclaringTypeAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
+        <target state="translated">'{2}' の ['{0}'('{1}')]5D; は、この型で宣言されたプロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnDirective">
+        <source>This operation is not supported on directive members.</source>
+        <target state="translated">ディレクティブ メンバーでは、この操作はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownMember">
+        <source>This operation is not supported on unknown members.</source>
+        <target state="translated">不明なメンバーでは、この操作はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownType">
+        <source>This operation is not supported on unknown types.</source>
+        <target state="translated">不明な型では、この操作はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectNotTcOrMe">
+        <source>Argument should be a Type Converter, Markup Extension or Null.</source>
+        <target state="translated">引数は、型コンバーター、マークアップ拡張、または Null である必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderAttachedPropertyNotFound">
+        <source>Unable to find an attachable property named '{0}' on type '{1}'.</source>
+        <target state="translated">型 '{1}' に '{0}' という名前の添付可能なプロパティが見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderDictionaryMethod1NotFound">
+        <source>Unable to locate MemberMarkupInfo.DictionaryEntriesFromGeneric method.</source>
+        <target state="translated">MemberMarkupInfo.DictionaryEntriesFromGeneric メソッドが見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArgumentTypes">
+        <source>InstanceDescriptor provided an argument of type '{0}' where a parameter of type '{1}' was expected.</source>
+        <target state="translated">InstanceDescriptor によって型 '{0}' の引数が提供されましたが、型 '{1}' のパラメーターが必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArguments">
+        <source>InstanceDescriptor did not provide the correct number of arguments.</source>
+        <target state="translated">InstanceDescriptor によって提供された引数の数が正しくありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorInvalidMethod">
+        <source>InstanceDescriptor did not provide a valid constructor or method.</source>
+        <target state="translated">InstanceDescriptor によって提供されたコンストラクターまたはメソッドが有効ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderMultidimensionalArrayNotSupported">
+        <source>Multidimensional arrays not supported.</source>
+        <target state="translated">多次元配列はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoDefaultConstructor">
+        <source>Unable to serialize type '{0}'.  Verify that the type is public and either has a default constructor or an instance descriptor.</source>
+        <target state="translated">型 '{0}' をシリアル化できません。型がパブリックであり、既定のコンストラクターまたはインスタンス記述子が存在することを確認してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoMatchingConstructor">
+        <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
+        <target state="translated">指定されたコンストラクター引数に適したコンストラクターが型 '{0}' に見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeCannotRoundtrip">
+        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">アクセスできるコンストラクターがないため、型 '{0}' のオブジェクトを読み込むことができません。この型を XAML で使用できるようにするには、既定のコンストラクターを追加するか、ConstructorArgumentAttribute を使用するか、または InstanceDescriptor を提供してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeIsNested">
+        <source>Unable to read objects of the type '{0}'.  Nested types are not supported.</source>
+        <target state="translated">型 '{0}' のオブジェクトを読み取ることができません。入れ子になった型はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to serialize this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectReader constructor.</source>
+        <target state="translated">'{0}' により、XAML での型 '{1}' の使用がブロックされました。この型をシリアル化するには、この型の null 以外の値を返すように '{0}'.GetXamlType を変更するか、XamlObjectReader コンストラクターの schemaContext パラメーターに別の値を渡してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamePropertyMustBeString">
+        <source>The name property '{0}' on type '{1}' must be of type System.String.</source>
+        <target state="translated">型 '{1}' の名前プロパティ '{0}' は System.String 型でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
+        <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
+        <target state="translated">オブジェクト グラフには、型 '{0}' のインスタンスへの複数の参照が含まれています。シリアライザーは、インスタンスの出力先として一般に参照できる場所を見つけることができません。名前のスコープの使用方法を確認してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
+        <source>An element with the name '{0}' has already been registered in this scope.</source>
+        <target state="translated">'{0}' という名前の要素は、このスコープに既に登録されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReader_TypeNotVisible">
+        <source>Type '{0}' not visible. If the type is local, please set the LocalAssembly field in XamlReaderSettings.</source>
+        <target state="translated">型 '{0}' を参照できません。ローカル型の場合は、XamlReaderSettings の LocalAssembly フィールドを設定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectWriterTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to load this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectWriter constructor.</source>
+        <target state="translated">'{0}' により、XAML での型 '{1}' の使用がブロックされました。この型を読み込むには、この型の null 以外の値を返すように '{0}'.GetXamlType を変更するか、XamlObjectWriter コンストラクターの schemaContext パラメーターに別の値を渡してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollections">
+        <source>This operation is only supported on collection types.</source>
+        <target state="translated">この操作はコレクション型でのみサポートされています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollectionsAndDictionaries">
+        <source>This operation is only supported on collection and dictionary types.</source>
+        <target state="translated">この操作はコレクション型とディクショナリ型でのみサポートされています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnDictionaries">
+        <source>This operation is only supported on dictionary types.</source>
+        <target state="translated">この操作はディクショナリ型でのみサポートされています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before EndObject.</source>
+        <target state="translated">XAML ノード ストリーム: EndObject の前に '{0}.{1}' の EndMember がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
+        <target state="translated">XAML ノード ストリーム: StartMember '{2}' の前に '{0}.{1}' の EndMember がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentlessPropertyElement">
+        <source>The property element '{0}' is not contained by an object element.</source>
+        <target state="translated">プロパティ要素 '{0}' はオブジェクト要素に含まれていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">アセンブリ '{0}' を読み込むことができません。同じアセンブリの異なるバージョン '{1}' が読み込まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">'{0}' に対して指定されている属性が多すぎます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' に必要な属性が不足しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PositionalParamsWrongLength">
+        <source>GetPositionalParameters returned the wrong length vector.</source>
+        <target state="translated">GetPositionalParameters から、誤った長さのベクターが返されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotFound">
+        <source>Prefix '{0}' does not map to a namespace.</source>
+        <target state="translated">プレフィックス '{0}' は名前空間に対応付けられません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotInFrames">
+        <source>The prefix '{0}' could not be found.</source>
+        <target state="translated">プレフィックス '{0}' が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyDoesNotTakeText">
+        <source>'{0}' property on '{1}' does not allow you to specify text.</source>
+        <target state="translated">'{1}' の '{0}' プロパティにテキストを指定することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotImplemented">
+        <source>'{0}' is not implemented.</source>
+        <target state="translated">'{0}' は実装されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValue">
+        <source>Provide value on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' の値の指定時に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValueCycle">
+        <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
+        <target state="translated">循環する依存関係があるため、MarkupExtension.ProvideValue を呼び出すことができません。MarkupExtension 内のプロパティから、MarkupExtension の結果を参照するオブジェクトを参照することはできません。影響を受ける MarkupExtension は次のとおりです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">'{0}' 型名には、必要な形式 'className, assembly' がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QuoteCharactersOutOfPlace">
+        <source>Quote characters ' or " are only allowed at the start of values.</source>
+        <target state="translated">引用符 ' または " は、値の始めにしか使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">値を null にすることはできません。オブジェクト参照: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextMismatch">
+        <source>schemaContext parameter cannot be different from savedContext.SchemaContext</source>
+        <target state="translated">schemaContext パラメーターは、savedContext.SchemaContext と同じである必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextNull">
+        <source>savedContext.SchemaContext cannot be null</source>
+        <target state="translated">savedContext.SchemaContext を null にすることはできません</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNotInitialized">
+        <source>SchemaContext on writer must be initialized before accessing the reader.</source>
+        <target state="translated">リーダーにアクセスする前に、ライターの SchemaContext を初期化する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNull">
+        <source>SchemaContext cannot be null.</source>
+        <target state="translated">SchemaContext を null にすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlMissingAttribute">
+        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
+        <target state="translated">無効なセキュリティ XML です。必要な属性 '{0}' がありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedTag">
+        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
+        <target state="translated">無効なセキュリティ XML です。タグ '{0}' は予期されていません。'{1}' が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedValue">
+        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
+        <target state="translated">無効なセキュリティ XML です。属性 '{1}' に予期しない値 '{0}' があります。'{2}' が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">この serviceType は、既に別のサービスに登録されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetConnectionId">
+        <source>Set connectionId threw an exception.</source>
+        <target state="translated">connectionId の設定時に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnlyProperty">
+        <source>'{0}'.'{1}' is a property without a getter and is not a valid XAML property.</source>
+        <target state="translated">'{0}'.'{1}' は get アクセス操作子を持たないプロパティであり、有効な XAML プロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTargetTypeOnNonAttachableMember">
+        <source>Cannot set TargetType on a non-attachable Member.</source>
+        <target state="translated">添付可能でないメンバーの TargetType は設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetUriBase">
+        <source>Setting xml:base on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' での xml:base の設定時に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetValue">
+        <source>Set property '{0}' threw an exception.</source>
+        <target state="translated">プロパティ '{0}' の Set で例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetXmlInstance">
+        <source>Setting xml instance on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' での xml インスタンスの設定時に例外がスローされました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SettingPropertiesIsNotAllowed">
+        <source>Setting properties is not allowed on a type converted instance. Property = '{0}'</source>
+        <target state="translated">型変換されたインスタンスではプロパティを設定できません。プロパティ = '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldOverrideMethod">
+        <source>Method '{0}' is not supported by default. It can be implemented in derived classes.</source>
+        <target state="translated">メソッド '{0}' は既定ではサポートされていません。これは派生クラスに実装できます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldSerializeFailed">
+        <source>ShouldSerialize check failed for member '{0}'.</source>
+        <target state="translated">メンバー '{0}' で ShouldSerialize チェックに失敗しました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SimpleFixupsMustHaveOneName">
+        <source>Directly Assignable Fixups must only have one name.</source>
+        <target state="translated">直接割り当て可能なフィックスアップには、名前を 1 つだけ指定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">パラメーターを長さ 0 の文字列にすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">文字列が null または空です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNotCollected">
+        <source>Deferred load section was not collected in '{0}'.</source>
+        <target state="translated">'{0}' で遅延読み込みセクションが収集されませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadAlreadyStarted">
+        <source>Thread is already started.</source>
+        <target state="translated">スレッドは既に開始されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(なし)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}' の解析中に、位置 {0} で空のトークンが見つかりました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}' の解析中に、位置 {0} で余分なデータが見つかりました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}' の解析中に、終わりの引用符が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}' の解析中に、終了が不完全な文字列が見つかりました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributes">
+        <source>Error with member '{0}'.'{1}'.  It has more than one '{2}'.</source>
+        <target state="translated">メンバー '{0}'.'{1}' のエラー。2 つ以上の '{2}' が指定されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributesOnType">
+        <source>Error with type '{0}'.  It has more than one '{1}'.</source>
+        <target state="translated">型 '{0}' のエラー。2 つ以上の '{1}' が指定されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyTypeConverterAttributes">
+        <source>Only one TypeConverter attribute is allowed on a type.</source>
+        <target state="translated">1 つの型に指定できる TypeConverter 属性は 1 つだけです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransitiveForwardRefDirectives">
+        <source>Object '{0}' assigned to directive '{1}' has properties which are references to named object(s) '{2}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported inside object construction directives.</source>
+        <target state="translated">ディレクティブ '{1}' に割り当てられたオブジェクト '{0}' に、まだ定義されていない名前付きオブジェクト '{2}' への参照であるプロパティがあります。前方参照、または前方参照を含むオブジェクトへの参照は、オブジェクト構築ディレクティブの内部ではサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed">
+        <source>Failed to create a '{0}' from the text '{1}'.</source>
+        <target state="translated">テキスト '{1}' から '{0}' を作成できませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed2">
+        <source>Failed to convert '{0}' to type '{1}'.</source>
+        <target state="translated">'{0}' を型 '{1}' に変換できませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasInvalidXamlName">
+        <source>The name of the type '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">型 '{0}' の名前に、XAML で無効な文字が含まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasNoContentProperty">
+        <source>Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.</source>
+        <target state="translated">型 '{0}' にはコンテンツ プロパティがありません。設定するプロパティの名前を指定するか、ContentPropertyAttribute または TypeConverterAttribute を型に追加してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">プロパティ メタデータをプロパティに関連付けた後に、プロパティ メタデータを変更することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNameCannotHavePeriod">
+        <source>Type name '{0}' cannot have a dot '.'.</source>
+        <target state="translated">型名 '{0}' にドット '.' を含めることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotFound">
+        <source>Type reference cannot find type named '{0}'.</source>
+        <target state="translated">型参照は '{0}' という名前の型を見つけることができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotPublic">
+        <source>Type '{0}' is not public.</source>
+        <target state="translated">型 '{0}' はパブリックではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnclosedQuote">
+        <source>Unclosed quoted value.</source>
+        <target state="translated">引用符付きの値が閉じられていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedClose">
+        <source>Unexpected close of XAML Node Stream.</source>
+        <target state="translated">XAML Node ストリームが予期せず閉じられました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedConstructorArg">
+        <source>Invalid metadata for attribute '{0}' on '{1}'. Expected '{2}' argument(s) of type '{3}'.</source>
+        <target state="translated">'{1}' の属性 '{0}' のメタデータが無効です。型 '{3}' の '{2}' 個の引数が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedNodeType">
+        <source>Unexpected '{0}' in parse rule '{1}'.</source>
+        <target state="translated">解析ルール '{1}' に予期しない '{0}' があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">予期しない型 '{0}' のパラメーターです。型 '{1}' が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedToken">
+        <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
+        <target state="translated">'{2}' の規則 '{1}' に予期しないトークン '{0}' があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedTokenAfterME">
+        <source>Unexpected token after end of markup extension.</source>
+        <target state="translated">マークアップ拡張の末尾より後ろに予期しないトークンがあります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnhandledBoolTypeBit">
+        <source>Unhandled BoolTypeBit.</source>
+        <target state="translated">処理されない BoolTypeBit です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
+        <target state="translated">'{2}' の ['{0}'('{1}')]5D; は不明なプロパティです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMember">
+        <source>Unknown member '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' の不明なメンバー '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberOnUnknownType">
+        <source>Unknown member '{0}' on unknown type '{1}'.</source>
+        <target state="translated">不明な型 '{1}' の不明なメンバー '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberSimple">
+        <source>Unknown member '{0}'.</source>
+        <target state="translated">不明なメンバー '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownType">
+        <source>Unknown type '{0}'.</source>
+        <target state="translated">不明な型 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedForwardReferences">
+        <source>Unresolved reference '{0}'.</source>
+        <target state="translated">未解決の参照 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedNamespace">
+        <source>XAML namespace '{0}' is not resolved.</source>
+        <target state="translated">XAML 名前空間 '{0}' は解決されません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotFound">
+        <source>Uri '{0}' was not found.</source>
+        <target state="translated">Uri '{0}' が見つかりませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsableDuringInitializationOnME">
+        <source>Error with type '{0}'. MarkupExtensions cannot use the 'UsableDuringInitialization' attribute.</source>
+        <target state="translated">型 '{0}' のエラー。MarkupExtensions では 'UsableDuringInitialization' 属性を使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueInArrayIsNull">
+        <source>A value in the '{0}' array is null.</source>
+        <target state="translated">'{0}' 配列の値は null です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFollowedByEndMember">
+        <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
+        <target state="translated">XAML ノード ストリーム: 値ノードは EndMember の後に続く必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">指定されたインデックスが範囲外であるか、インデックス位置の子が null です。VisualChildrenCount から 0 が返され、Visual に子がないことが判明した場合は、このメソッドを呼び出さないでください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhiteSpaceInCollection">
+        <source>XamlXmlWriter cannot write value '{0}' which contains significant white space in collection '{1}'.</source>
+        <target state="translated">XamlXmlWriter は、コレクション '{1}' に有意の空白を含む値 '{0}' を書き込むことができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhitespaceAfterME">
+        <source>White space is not allowed after end of markup extension.</source>
+        <target state="translated">マークアップ拡張の末尾より後ろに空白を追加することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriterIsClosed">
+        <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
+        <target state="translated">既に Closed メソッドが呼び出された XamlWriter への書き込みが試行されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice を、Fallback に続けることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent には、1 つまたは複数の Choice 要素が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice は AlternateContent でのみ有効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">XML 互換性定義に、名前空間 '{0}' が自身をオーバーライドするような循環定義があります。原因として、複数のアセンブリに一貫性のない XmlnsCompatibilityAttributes が設定されている可能性があります。定義を変更してこの循環定義を削除するか、競合しない参照アセンブリを XamlSchemaContext コンストラクターに渡してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' の要素 '{1}' の Preserve 宣言が重複しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' の要素 '{1}' の ProcessContent 宣言が重複しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' のワイルドカード Preserve 宣言が重複しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' のワイルドカード ProcessContent 宣言が重複しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback は AlternateContent でのみ有効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">'{0}' 要素は、AlternateContent の有効な子ではありません。AlternateContent 要素の有効な子は、Choice および Fallback 要素のみです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">'{0}' 属性は、'{1}' 要素に対して無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">'{0}' 形式は無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの Preserve 宣言の両方を指定することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' の固有およびワイルドカードの ProcessContent 宣言の両方を指定することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Requires 属性には、有効な名前空間プレフィックスが含まれている必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">'{0}' 属性値は、無効な XML 名です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent には、Fallback 要素が 1 つだけ含まれている必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">名前空間 '{0}' で MustUnderstand 条件が失敗しました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 名前空間は項目を保持できません。最初に Ignorable を宣言する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 名前空間はコンテンツを処理できません。最初に Ignorable を宣言する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain a Requires attribute.</source>
+        <target state="translated">Choice には、Requires 属性が含まれている必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">'{0}' プレフィックスは定義されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">認識できない互換性属性 '{0}' です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">認識できない互換性要素 {0} です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XClassMustMatchRootInstance">
+        <source>Specified class name '{0}' doesn't match actual root instance type '{1}'. Remove the Class directive or provide an instance via XamlObjectWriterSettings.RootObjectInstance.</source>
+        <target state="translated">指定されたクラス名 '{0}' は、実際のルート インスタンス型 '{1}' と一致しません。Class ディレクティブを削除するか、XamlObjectWriterSettings.RootObjectInstance 経由でインスタンスを指定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlFactoryInvalidXamlNode">
+        <source>Unexpected XAML node type '{0}' from XamlReader in XamlFactory.</source>
+        <target state="translated">XamlFactory の XamlReader から、予期しない XAML ノード型 '{0}' が取得されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotSetSchemaContext">
+        <source>Cannot set SchemaContext on XamlMarkupExtensionWriter.</source>
+        <target state="translated">XamlMarkupExtensionWriter に SchemaContext を設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">文字列ではない値を書き込むことはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">メンバー '{0}' は既に書き込まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterInputInvalid">
+        <source>Errors detected in input.</source>
+        <target state="translated">入力にエラーが検出されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameCannotGetPrefix">
+        <source>Cannot convert this XamlTypeName instance to a string because the provided INamespacePrefixLookup could not generate a prefix for the namespace '{0}'.</source>
+        <target state="translated">指定された INamespacePrefixLookup で名前空間 '{0}' のプレフィックスを生成できなかったため、この XamlTypeName インスタンスを文字列に変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNameIsNullOrEmpty">
+        <source>Cannot convert this XamlTypeName instance to a string because the Name property is null or empty. Set the Name property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Name プロパティが null または空であるため、XamlTypeName インスタンスを文字列に変換できません。XamlTypeName.ToString を呼び出す前に、Name プロパティを設定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNamespaceIsNull">
+        <source>Cannot convert this XamlTypeName instance to a string because the Namespace property is null. Set the Namespace property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Namespace プロパティが null または空であるため、XamlTypeName インスタンスを文字列に変換できません。XamlTypeName.ToString を呼び出す前に、Namespace プロパティを設定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">文字列ではない値を書き込むことはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">メンバー '{0}' は既に書き込まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections">
+        <source>The argument isObjectFromMember can only be set to true when the type is a collection.</source>
+        <target state="translated">引数 isObjectFromMember は、型がコレクションである場合にのみ true に設定できます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope">
+        <source>Namespace '{0}' already has a prefix defined in current scope.</source>
+        <target state="translated">名前空間 '{0}' には、既に現在のスコープでプレフィックスが定義されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterPrefixAlreadyDefinedInCurrentScope">
+        <source>The prefix '{0}' is already defined in current scope.</source>
+        <target state="translated">プレフィックス '{0}' は既に現在のスコープで定義されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteNotSupportedInCurrentState">
+        <source>Unable to call '{0}' in current state.</source>
+        <target state="translated">現在の状態では '{0}' を呼び出すことができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteObjectNotSupportedInCurrentState">
+        <source>Unable to call WriteObject with isObjectFromMember set to true in current state.</source>
+        <target state="translated">現在の状態では、isObjectFromMember が true に設定された WriteObject を呼び出すことができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XaslTypePropertiesNotImplemented">
+        <source>Need to implement public/internal sorting.</source>
+        <target state="translated">public/internal の並べ替えを実装する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlDataNull">
+        <source>The value for XmlData property '{0}' is null or not IXmlSerializable.</source>
+        <target state="translated">XmlData プロパティ '{0}' の値は null か、または IXmlSerializable ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlValueNotReader">
+        <source>The value for XmlData property '{0}' is not an XmlReader.</source>
+        <target state="translated">XmlData プロパティ '{0}' の値は XmlReader ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlnsCompatCycle">
+        <source>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</source>
+        <target state="translated">アセンブリ '{0}' の XmlnsCompatibleWithAttribute 定義に、名前空間 '{1}' が自身をオーバーライドするような循環定義があります。定義を変更して、この循環定義を削除してください。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

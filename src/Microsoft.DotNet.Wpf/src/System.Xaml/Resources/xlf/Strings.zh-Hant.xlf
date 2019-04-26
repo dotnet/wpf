@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+    <body>
+      <trans-unit id="APSException">
+        <source>Enumerating attached properties on object '{0}' threw an exception.</source>
+        <target state="translated">列舉物件 '{0}' 的附加屬性時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddCollection">
+        <source>Add value to collection of type '{0}' threw an exception.</source>
+        <target state="translated">將值加入到型別 '{0}' 的集合時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddDictionary">
+        <source>Add value to dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">將值加入到型別 '{0}' 的字典時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousCollectionItemType">
+        <source>Cannot determine the item type of collection type '{0}' because it has more than one Add method or ICollection&lt;T&gt; implementation. To make this collection type usable in XAML, add a public Add(object) method, implement System.Collections.IList or a single System.Collections.Generic.ICollection&lt;T&gt;.</source>
+        <target state="translated">無法判斷集合型別 '{0}' 的項目型別，因為它有一個以上 Add 方法或 ICollection&lt;T&gt; 實作。若要讓此集合型別可以在 XAML 中使用，請加入 public Add(object) 方法，實作 System.Collections.IList 或單一 System.Collections.Generic.ICollection&lt;T&gt;。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousDictionaryItemType">
+        <source>Cannot determine the item type of dictionary type '{0}' because it has more than one Add method or IDictionary&lt;K,V&gt; implementation. To make this dictionary type usable in XAML, add a public Add(object,object) method, implement System.Collections.IDictionary or a single System.Collections.Generic.IDictionary&lt;K,V&gt;.</source>
+        <target state="translated">無法判斷字典型別 '{0}' 的項目型別，因為它有一個以上 Add 方法或 IDictionary&lt;K,V&gt; 實作。若要讓此字典型別可以在 XAML 中使用，請加入 public Add(object,object) 方法，實作 System.Collections.IDictionary 或單一 System.Collections.Generic.IDictionary&lt;K,V&gt;。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">XAML 中 KeyFrameAnimation 的子項目必須是相容型別的 KeyFrame。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
+        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
+        <target state="translated">'{0}' 最後一個 KeyFrame 之 Duration 必須設定 TimeSpan，或 KeyTime 必須設定 TimeSpan。此 '{0}' 最後一個 KeyFrame 的 Duration 為 '{1}'，且 KeyTime 為 '{2}'，因此無法解析 KeyTime。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">'{0}' 不是類別 '{2}' 的有效 '{1}' 值。此值必須由要展示動畫之屬性的基礎值提供，或是由另一個套用至相同屬性之動畫的輸出值提供。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
+        <target state="translated">解析出的索引 {1} 主要畫面 KeyTime，不可大於解析出的索引 {4} 主要畫面 KeyTime。KeyFrames[{1}]5D; 指定了 KeyTime '{2}'，其會解析為時間 {3}; 而 KeyFrames[{4}]5D; 則指定了 KeyTime '{5}'，會解析為時間 {6}。某些 KeyTimes 會解析為相對於 '{0}' 的 Begin 時間，其他則會解析為相對於其 Duration，所以某些 KeyTimes 集合並非對所有 Duration 都有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">'{2}' KeyTime 值對於位於此 '{0}' 之索引 {1} 的主要畫面格而言是無效的，因為它大於動畫的 Duration 值 '{3}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">'{0}' 無法使用 '{2}' 的預設值 {1}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">KeyFrameAnimation 物件不能使用文字物件做為子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentRequired">
+        <source>One of the following arguments must be non-null: '{0}'.</source>
+        <target state="translated">下列其中一個引數必須是非 null: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArrayAddNotImplemented">
+        <source>Array Add method is not implemented.</source>
+        <target state="translated">未實作陣列 Add 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AssemblyTagMissing">
+        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
+        <target state="translated">分號 ';' 與等號 '=' 之間的部分不是 '{0}' URI '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableEventNotImplemented">
+        <source>Attachable events are not implemented.</source>
+        <target state="translated">未實作可附加事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableMemberNotFound">
+        <source>Attachable member '{0}' was not found.</source>
+        <target state="translated">找不到可附加成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropOnFwdRefTC">
+        <source>Cannot set property '{0}' on object '{1}' because the object is a forward or incompletely initialized reference. The unresolved name(s) are: '{2}'.</source>
+        <target state="translated">無法設定物件 '{1}' 上的屬性 '{0}'，因為此物件是轉送或未完全初始化的參考。未解析的名稱為: '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnDictionaryKey">
+        <source>An attachable property named '{1}' is attached on a dictionary key '{0}' that is either a string or can be type-converted to string, which is not supported.</source>
+        <target state="translated">名為 '{1}' 的可附加屬性所附加的字典索引鍵 '{0}'，可能是字串或可轉型成字串，但都不受支援。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnTypeConvertedOrStringProperty">
+        <source>An attachable property named '{2}' is attached to a property named '{1}'.  The property named '{1}' is either a string or can be type-converted to string; attaching on such properties are not supported.  For debugging, the property '{1}' contains an object '{0}'.</source>
+        <target state="translated">名為 '{2}' 的可附加屬性被附加到名為 '{1}' 的屬性。名為 '{1}' 的屬性是字串或可以轉型成字串; 不支援附加到這類屬性。就偵錯而言，屬性 '{1}' 包含物件 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeUnhandledKind">
+        <source>An unhandled scanner attribute was encountered.</source>
+        <target state="translated">遇到未處理的掃描器屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo1">
+        <source>One of the InternalsVisibleToAttribute values in assembly '{0}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">組件 '{0}' 中的其中一個 InternalsVisibleToAttribute 值不是有效的組件名稱。請使用格式 'AssemblyShortName' 或 'AssemblyShortName, PublicKey=...'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo2">
+        <source>InternalsVisibleToAttribute value '{0}' in assembly '{1}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">組件 '{1}' 中的 InternalsVisibleToAttribute 值 '{0}' 不是有效的組件名稱。請使用格式 'AssemblyShortName' 或 'AssemblyShortName, PublicKey=...'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadMethod">
+        <source>Bad method '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' 上的方法 '{0}' 錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadStateObjectWriter">
+        <source>Bad state in ObjectWriter. Non directive missing instance.</source>
+        <target state="translated">ObjectWriter 中狀態錯誤。遺失 XAML 指示詞的執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsCompat">
+        <source>An XmlnsCompatibleWithAttribute in assembly '{0}' is missing a required property. Set both the NewNamespace and OldNamespace properties, or remove the XmlnsCompatibleWithAttribute.</source>
+        <target state="translated">組件 '{0}' 中的 XmlnsCompatibleWithAttribute 遺漏必要屬性。請同時設定 NewNamespace 和 OldNamespace 屬性，或移除 XmlnsCompatibleWithAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsDefinition">
+        <source>An XmlnsDefinitionAttribute in assembly '{0}' is missing a required property. Set both the ClrNamespace and XmlNamespace properties, or remove the XmlnsDefinitionAttribute.</source>
+        <target state="translated">組件 '{0}' 中的 XmlnsDefinitionAttribute 遺漏必要屬性。請同時設定 ClrNamespace 和 XmlNamespace 屬性，或移除 XmlnsDefinitionAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsPrefix">
+        <source>An XmlnsPrefixAttribute in assembly '{0}' is missing a required property. Set both the Prefix and XmlNamespace properties, or remove the XmlnsPrefixAttribute.</source>
+        <target state="translated">組件 '{0}' 中的 XmlnsPrefixAttribute 遺漏必要屬性。請同時設定 Prefix 和 XmlNamespace 屬性，或移除 XmlnsPrefixAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BuilderStackNotEmptyOnClose">
+        <source>Builder Stack is not empty when end of XamlNode stream was reached.</source>
+        <target state="translated">到達 XamlNode 資料流末端時，產生器堆疊不是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertFromFailed">
+        <source>Failed to check convertibility from type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">使用 '{1}' 檢查從型別 '{0}' 的轉換性失敗。這通常表示實作 TypeConverter 不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertToFailed">
+        <source>Failed to check convertibility to type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">使用 '{1}' 檢查轉換為型別 '{0}' 的轉換性失敗。這通常表示實作 TypeConverter 不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAddPositionalParameters">
+        <source>In markup extensions, all constructor argument values should be atoms.  For the object of type '{0}', one or more argument values are not atomic.</source>
+        <target state="translated">在標記延伸中，所有建構函數引數值都應該是元素。就型別 '{0}' 的物件而言，有一個或多個引數值不是元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">無法將字串值 '{0}' 轉換為型別 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">無法將型別 '{0}' 轉換為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadEventDelegate">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">無法建立 '{0}' 的執行個體，因為 XamlType 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadType">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">無法建立 '{0}' 的執行個體，因為 XamlType 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotFindAssembly">
+        <source>Cannot find Assembly '{0}' in URI '{1}'.</source>
+        <target state="translated">在 URI '{1}' 中找不到組件 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">無法修改唯讀容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotReassignSchemaContext">
+        <source>Cannot reassign a previously set SchemaContext.</source>
+        <target state="translated">無法重新指派先前已設定的 SchemaContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotResolveTypeForFactoryMethod">
+        <source>Cannot resolve type '{0}' for method '{1}'.</source>
+        <target state="translated">無法解析方法 '{1}' 的型別 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">無法從唯寫容器取得組件或組件資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetBaseUri">
+        <source>BaseUri can only be set once at the root node (XamlXmlReader may provide a default at the root node).</source>
+        <target state="translated">BaseUri 只能在根節點設定一次 (XamlXmlReader 可以在根節點提供預設值)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContext">
+        <source>Cannot set SchemaContext on ObjectWriter.</source>
+        <target state="translated">無法設定 ObjectWriter 上的 SchemaContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContextNull">
+        <source>Cannot set SchemaContext to null.</source>
+        <target state="translated">無法將 SchemaContext 設定為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteClosedWriter">
+        <source>Cannot write on a closed XamlWriter.</source>
+        <target state="translated">無法在關閉的 XamlWriter 上寫入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteXmlSpacePreserveOnMember">
+        <source>The value '{1}' contains significant white space(s) but "xml:space = preserve" cannot be written down on the member '{0}'.</source>
+        <target state="translated">值 '{1}' 含有重要空格，但無法將 "xml:space = preserve" 寫入成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantAssignRootInstance">
+        <source>Cannot assign root instance of type '{0}' to type '{1}'.</source>
+        <target state="translated">無法將 '{0}' 型別的根執行個體指派為 '{1}' 型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantCreateUnknownType">
+        <source>Cannot create unknown type '{0}'.</source>
+        <target state="translated">無法建立未知的型別 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantGetWriteonlyProperty">
+        <source>Cannot get write-only property '{0}'.</source>
+        <target state="translated">無法取得唯寫屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetReadonlyProperty">
+        <source>Cannot set read-only property '{0}'.</source>
+        <target state="translated">無法設定唯讀屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetUnknownProperty">
+        <source>Cannot set unknown member '{0}'.</source>
+        <target state="translated">無法設定未知的成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseInsideTemplate">
+        <source>Close called while inside a deferred load section.</source>
+        <target state="translated">在延後的載入區段內部呼叫了關閉。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseXamlWriterBeforeReading">
+        <source>Must close XamlWriter before reading from XamlNodeList.</source>
+        <target state="translated">必須先關閉 XamlWriter 然後再從 XamlNodeList 讀取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionCannotContainNulls">
+        <source>Collection '{0}' cannot contain null values.</source>
+        <target state="translated">集合 '{0}' 不可包含 null 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">此集合中的項目數目必須小於或等於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">無法新增型別為 '{1}' 的執行個體至型別 '{0}' 的集合。只允許使用型別為 '{2}' 的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">無法傳遞多維度陣列至集合上的 CopyTo 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">'{0}' 參數值等於或大於 '{1}' 參數值的長度。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">此集合中的項目數目大於從 '{0}' 到目的地 '{1}' 結尾的可用空間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructImplicitType">
+        <source>Failed attempting to create an Implicit Type with a constructor.</source>
+        <target state="translated">嘗試使用建構函式建立隱含型別失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorInvocation">
+        <source>The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">符合所指定繫結條件約束之型別 '{0}' 上建構函式的引動過程擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorNotFoundForGivenPositionalParameters">
+        <source>Cannot write the given positional parameters because a matching constructor was not found.</source>
+        <target state="translated">無法寫入所指定的位置參數，因為找不到相符的建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">'{0}' ValueSerializer 無法從 '{1}' 轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">'{0}' ValueSerializer 無法將 '{1}' 轉換為 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConverterMustDeriveFromBase">
+        <source>Converter type '{0}' doesn't derive from expected base type '{1}'.</source>
+        <target state="translated">轉換器型別 '{0}' 不是衍生自預期的基底型別 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultAttachablePropertyStoreCannotAddInstance">
+        <source>Failed to add attached properties to item in ConditionalWeakTable.</source>
+        <target state="translated">無法將附加屬性加入到 ConditionalWeakTable 中的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredLoad">
+        <source>Deferred load threw an exception.</source>
+        <target state="translated">延後的載入擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredPropertyNotCollected">
+        <source>Deferred member was not collected in '{0}'.</source>
+        <target state="translated">延後的成員未收集在 '{0}' 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredSave">
+        <source>Save of deferred-load content threw an exception.</source>
+        <target state="translated">儲存延後的載入內容時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferringLoaderInstanceNull">
+        <source>Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.</source>
+        <target state="translated">無法從 XamlValueConverter '{0}' 取得 XamlDeferringLoader，因為它的 ConverterInstance 屬性為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DependsOnMissing">
+        <source>'{0}'.'{1}' Depends on '{0}'.{1}', which was not set.</source>
+        <target state="translated">'{0}'.'{1}' 相依於 '{0}'.{1}'，但是並未設定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryFirstChanceException">
+        <source>Dictionary of type '{0}' cannot add key '{1}'. A TypeConverter will convert the key to type '{2}'. To avoid seeing this error, override System.Collections.IDictionary.Add and perform the conversion there.</source>
+        <target state="translated">型別 '{0}' 的字典無法加入索引鍵 '{1}'。TypeConverter 會將索引鍵轉換為型別 '{2}'。若要避免出現這項錯誤，請覆寫 System.Collections.IDictionary.Add 並且在那裡執行轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveGetter">
+        <source>Directive getter is not implemented.</source>
+        <target state="translated">未實作指示詞 getter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveMustBeString">
+        <source>Directive '{0}' must be a value of type string. Remove this directive or change it to a string value.</source>
+        <target state="translated">指示詞 '{0}' 必須是字串型別的值。請移除這個指示詞，或將它變更為字串值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotAtRoot">
+        <source>Directive '{0}' is only allowed on the root object. Remove this directive or move it to the root of the document.</source>
+        <target state="translated">指示詞 '{0}' 只允許使用在根物件上。請移除這個指示詞，或將它移到文件根目錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotFound">
+        <source>Directive '{0}' was not found in TargetNamespace '{1}'.</source>
+        <target state="translated">在 TargetNamespace '{1}' 中找不到指示詞 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateMemberSet">
+        <source>'{0}' property has already been set on '{1}'.</source>
+        <target state="translated">'{0}' 屬性在 '{1}' 上已經設定過了。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompat">
+        <source>There is more than one XmlnsCompatibleWithAttribute in assembly '{0}' for OldNamespace '{1}'. Remove the extra attribute(s).</source>
+        <target state="translated">OldNamespace '{1}' 的組件 '{0}' 中有一個以上 XmlnsCompatibleWithAttribute。請移除多餘的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
+        <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">OldNamespace '{2}' 的組件 '{0}' 和 '{1}' 中有衝突的 XmlnsCompatibleWithAttributes。請變更這些屬性讓它們具有相同的 NewNamespace，或者在 XamlSchemaContext 建構函式中傳遞一組不衝突的參考組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' 列舉值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">沒有可傳回的目前物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventCannotBeAssigned">
+        <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
+        <target state="translated">不可將無法指派給 '{1}' 的值指派給 '{0}' 事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithReadOnlyProperties">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since not all properties are writable.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">無法寫入處於目前狀態的位置參數。寫入器無法以屬性 (Attribute) 形式寫入位置參數，因為寫入器已開始寫入項目，而且寫入器也無法展開此位置參數，因為並非所有屬性 (Property) 都可寫入。請嘗試將先前節點資料流中的位置參數成員，移到 XamlXmlWriter 仍然可以寫入屬性的地方。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithoutUnderlyingType">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since UnderlyingType on type '{0}' is null.  Try moving the positional parameter member earlier in the node stream, to place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">無法寫入處於目前狀態的位置參數。寫入器無法以屬性形式寫入位置參數，因為寫入器已開始寫入項目，而且寫入器也無法展開此位置參數，因為型別 '{0}' 上的 UnderlyingType 為 null。請嘗試將先前節點資料流中的位置參數成員，移到 XamlXmlWriter 仍然可以寫入屬性的地方。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersinTypeWithNoDefaultConstructor">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">無法寫入處於目前狀態的位置參數。寫入器無法以屬性形式寫入位置參數，因為寫入器已開始寫入項目，而且寫入器也無法展開此位置參數，因為包含此位置參數的標記延伸上沒有預設建構函式。請嘗試將先前節點資料流中的位置參數成員，移到 XamlXmlWriter 仍然可以寫入屬性的地方。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedLoadPermission">
+        <source>Expected permission of type XamlLoadPermission.</source>
+        <target state="translated">必須是 XamlLoadPermission 類型的權限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedObjectMarkupInfo">
+        <source>Expected value of type ObjectMarkupInfo.</source>
+        <target state="translated">必須是型別 ObjectMarkupInfo 的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedAssemblyName">
+        <source>Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.</source>
+        <target state="translated">組件名稱 '{0}' 不是完整限定名稱。名稱、版本、文化特性及 PublicKeyToken 都必須提供。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedTypeName">
+        <source>Type name '{0}' is not assembly-qualified. You can obtain this value from System.Type.AssemblyQualifiedName.</source>
+        <target state="translated">型別名稱 '{0}' 不是組件限定名稱。您可以從 System.Type.AssemblyQualifiedName 取得這項值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FactoryReturnedNull">
+        <source>The factory method '{0}' that matches the specified binding constraints returned null.</source>
+        <target state="translated">符合所指定繫結條件約束的 Factory 方法 '{0}' 傳回了 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">輸入檔或資料流不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' 檔案不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionMessage">
+        <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
+        <target state="translated">無法載入檔案或組件 '{0}' 或其相依性的其中之一。系統找不到指定的檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ForwardRefDirectives">
+        <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
+        <target state="translated">嘗試參考尚未定義的具名物件 '{0}'。Key 以外的指示詞上不支援向前參考，或參考包含向前參考的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">所指定型別 '{0}' 的值必須將 IsFrozen 設定為 false，才能進行修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">無法從陣列升級。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">無法從 '{0}' 升級到 '{1}'，因為目標對應太小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetConverterInstance">
+        <source>Getting instance of '{0}' threw an exception.</source>
+        <target state="translated">取得 '{0}' 的執行個體時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsException">
+        <source>Retrieving items in collection or dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">擷取型別 '{0}' 的集合或字典中的項目時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsReturnedNull">
+        <source>XamlTypeInvoker.GetItems returned null for type '{0}'. This generally indicates an incorrectly implemented collection type.</source>
+        <target state="translated">XamlTypeInvoker.GetItems 對型別 '{0}' 傳回 null。這通常表示實作集合型別不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetObjectNull">
+        <source>Collection property '{0}'.'{1}' is null.</source>
+        <target state="translated">集合屬性 '{0}'.'{1}' 為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetTargetTypeOnNonAttachableMember">
+        <source>Cannot get TargetType on a non-attachable Member.</source>
+        <target state="translated">無法取得非可附加成員上的 TargetType。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetValue">
+        <source>Get property '{0}' threw an exception.</source>
+        <target state="translated">Get 屬性 '{0}' 擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetterOrSetterRequired">
+        <source>Either getter or setter must be non-null.</source>
+        <target state="translated">getter 或 setter 其中一個必須為非 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectGetterParamNum">
+        <source>Attached property getter methods must have one parameter and a non-void return type.</source>
+        <target state="translated">附加的屬性 getter 方法必須有一個參數和非 void 傳回型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectSetterParamNum">
+        <source>Attached property setter and attached event adder methods must have two parameters.</source>
+        <target state="translated">附加的屬性 setter 和附加的事件 adder 方法必須有兩個參數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationGuard">
+        <source>Initialization of '{0}' threw an exception.</source>
+        <target state="translated">'{0}' 的初始設定擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationSyntaxWithoutTypeConverter">
+        <source>Type '{0}' cannot be initialized from text (XamlLanguage.Initialization).  Add a TypeConverter to this type or change the XAML to use a constructor or factory method.</source>
+        <target state="translated">無法從文字 (XamlLanguage.Initialization) 初始化型別 '{0}'。請將一個 TypeConverter 加入到此型別，或將 XAML 變更為使用建構函式或 Factory 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCharInTypeName">
+        <source>Character '{0}' was unexpected in string '{1}'.  Invalid XAML type name.</source>
+        <target state="translated">字元 '{0}' 不應出現在字串 '{1}' 中。無效的 XAML 型別名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClosingBracketCharacers">
+        <source>Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">發生結尾 BracketCharacter '{0}' 沒有相對應的開頭 BracketCharacter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">事件引數無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidExpression">
+        <source>Invalid expression: '{0}'</source>
+        <target state="translated">無效的運算式: '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">PermissionState 值 '{0}' 對此權限無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeArgument">
+        <source>Type argument '{0}' is not a valid type.</source>
+        <target state="translated">型別引數 '{0}' 不是有效的型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeListString">
+        <source>The string '{0}' is not a valid XAML type name list. Type name lists are comma-delimited lists of types; such as 'x:String, x:Int32'.</source>
+        <target state="translated">字串 '{0}' 不是有效的 XAML 型別名稱清單。型別名稱清單是以逗號分隔的型別清單，例如 'x:String, x:Int32'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeString">
+        <source>The string '{0}' is not a valid XAML type name. Type names contain an optional prefix, a name, and optional type arguments; such as 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</source>
+        <target state="translated">字串 '{0}' 不是有效的 XAML 型別名稱。型別名稱包含選擇性的前置詞、名稱及選擇性的型別引數，例如 'String'、'x:Int32'、'g:Dictionary(x:String,x:Int32)'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXamlMemberName">
+        <source>'{0}' is not a valid XAML member name.</source>
+        <target state="translated">'{0}' 不是有效的 XAML 成員名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LateConstructionDirective">
+        <source>Construction directive '{0}' must be an attribute or the first property element.</source>
+        <target state="translated">建構指示詞 '{0}' 必須是屬性 (Attribute) 或第一個屬性 (Property) 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberAndPosition">
+        <source>'{0}' Line number '{1}' and line position '{2}'.</source>
+        <target state="translated">'{0}' 行號 '{1}' 和行位置 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberOnly">
+        <source>'{0}' Line number '{1}'.</source>
+        <target state="translated">'{0}' 行號 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListNotIList">
+        <source>List collection is not an IList.</source>
+        <target state="translated">清單集合不是 IList。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedBracketCharacters">
+        <source>BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">BracketCharacter '{0}' 沒有相對應的開頭/結尾 BracketCharacter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedPropertyName">
+        <source>Cannot parse the malformed property name '{0}'.</source>
+        <target state="translated">無法剖析格式錯誤的屬性名稱 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">陣列中之項目的型別必須是 '{0}'。一或多個項目無法轉型為此型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set Type before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">必須先設定型別然後再呼叫 ArrayExtension 上的 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">'{0}' StaticExtension 值無法解析為列舉、靜態欄位或靜態屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">標記延伸 '{0}' 要求 '{1}' 必須已在 ProvideValue 的 IServiceProvider 中實作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">StaticExtension 必須設定 Member 屬性，才能呼叫 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">TypeExtension 必須設定 TypeName 屬性，才能呼叫 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">'{0}' 字串對於型別而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionWithDuplicateArity">
+        <source>Cannot determine the positional parameters for type '{0}' because it has more than one constructor overload with '{1}' parameters. To make this markup extension usable in XAML, remove the duplicate constructor overload(s) or set XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity to true.</source>
+        <target state="translated">無法判斷型別 '{0}' 的位置參數，因為它有一個以上具有 '{1}' 參數的建構函式多載。若要讓這個標記延伸可以在 XAML 中使用，請移除重複的建構函式多載，或將 XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity 設定為 true。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberHasInvalidXamlName">
+        <source>The name of the member '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">成員 '{0}' 的名稱含有在 XAML 中無效的字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberIsInternal">
+        <source>Member '{0}' on type '{1}' is internal.</source>
+        <target state="translated">型別 '{1}' 上的成員 '{0}' 是內部成員。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodInvocation">
+        <source>The invocation of a method '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">符合所指定繫結條件約束之方法 '{0}' 的引動過程擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingAssemblyName">
+        <source>No local assembly provided to complete URI='{0}'.</source>
+        <target state="translated">未提供本機組件以完成 URI='{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCase">
+        <source>Missing case '{0}' in DeferringWriter'{1}' method.</source>
+        <target state="translated">DeferringWriter'{1}' 方法中遺漏案例 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCaseXamlNodes">
+        <source>Missing case in Default processing of XamlNodes.</source>
+        <target state="translated">XamlNodes 的預設處理中遺漏案例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma1">
+        <source>Unexpected equals sign '=' following '{0}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}' 後面有未預期的等號 '='。請檢查是否遺漏了逗號分隔符號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma2">
+        <source>Unexpected equals sign '=' following '{0}'='{1}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}'='{1}' 後面有未預期的等號 '='。請檢查是否遺漏了逗號分隔符號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitProperty">
+        <source>Missing implicit property case.</source>
+        <target state="translated">遺漏隱含屬性案例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitPropertyTypeCase">
+        <source>Missing case for ImplicitPropertyType.</source>
+        <target state="translated">遺漏 ImplicitPropertyType 的案例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingKey">
+        <source>Missing key value on '{0}' object.</source>
+        <target state="translated">遺漏 '{0}' 物件的機碼值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingLookPropertyBit">
+        <source>Missing case handler in LookupPropertyBit.</source>
+        <target state="translated">LookupPropertyBit 中遺漏案例處理常式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameProvider">
+        <source>Service provider is missing the IXamlNameProvider service.</source>
+        <target state="translated">服務提供者遺漏 IXamlNameProvider 服務。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameResolver">
+        <source>Service provider is missing the INameResolver service.</source>
+        <target state="translated">服務提供者遺漏 INameResolver 服務。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingPropertyCaseClrType">
+        <source>Missing case in ClrType 'Member' lookup.</source>
+        <target state="translated">ClrType 'Member' 查閱中遺漏案例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTagInNamespace">
+        <source>Missing '{0}' in URI '{1}'.</source>
+        <target state="translated">URI '{1}' 中遺漏 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTypeConverter">
+        <source>Creating from text without a TypeConverter is not allowed.</source>
+        <target state="translated">不允許從沒有 TypeConverter 的文字建立。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' 必須屬於型別 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustHaveName">
+        <source>Reference must have a Name to resolve.</source>
+        <target state="translated">參考必須有名稱才能解析。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustNotCallSetter">
+        <source>This setter is not intended to be used directly from your code. Do not call this setter.</source>
+        <target state="translated">這個 setter 不可直接從程式碼使用。請勿呼叫這個 setter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameNotFound">
+        <source>Name resolution failure. '{0}' was not found.</source>
+        <target state="translated">名稱解析失敗。找不到 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate name '{0}' in this scope.</source>
+        <target state="translated">無法在此範圍中登錄重複的名稱 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeException">
+        <source>Could not register named object. {0}</source>
+        <target state="translated">無法登錄具名物件。{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">'{0}' 名稱對識別項而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">名稱不可為空字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>Name '{0}' was not found.</source>
+        <target state="translated">找不到名稱 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeOnRootInstance">
+        <source>Cannot attach NameScope to null root instance.</source>
+        <target state="translated">無法將 NameScope 附加到 null 根執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationCannotBeXml">
+        <source>The prefix 'xml' is reserved.</source>
+        <target state="translated">前置詞 'xml' 是保留的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationNamespaceCannotBeNull">
+        <source>NamespaceDeclaration.Namespace cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Namespace 不可為 null。請提供此屬性的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationPrefixCannotBeNull">
+        <source>NamespaceDeclaration.Prefix cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Prefix 不可為 null。請提供此屬性的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceNotFound">
+        <source>Namespace '{0}' was not found in scope.</source>
+        <target state="translated">範圍中找不到命名空間 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAddMethodFound">
+        <source>No Add methods found on type '{0}' for a value of type '{1}'.</source>
+        <target state="translated">型別 '{0}' 上找不到 Add 方法可使用於型別 '{1}' 的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAttributeUsage">
+        <source>'{0}' is not allowed in attribute usage.</source>
+        <target state="translated">屬性使用方式中不允許 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructor">
+        <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">型別 '{0}' 上找不到相符的建構函式。您可以使用 Arguments 或 FactoryMethod 指示詞來建構此型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructorWithNArugments">
+        <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
+        <target state="translated">找不到使用於 '{0}' 具有 '{1}' 引數的建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDefaultConstructor">
+        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">找不到型別 '{0}' 的預設建構函式。您可以使用 Arguments 或 FactoryMethod 指示詞來建構此型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoElementUsage">
+        <source>'{0}' is not allowed in element usage.</source>
+        <target state="translated">項目使用方式中不允許 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM">
+        <source>XAML Node Stream: Missing StartMember on Type '{0}' before EndMember.</source>
+        <target state="translated">XAML 節點資料流: 在型別 '{0}' 上的 EndMember 前面遺漏 StartMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM_noType">
+        <source>XAML Node Stream: EndMember must follow StartObject and StartMember.</source>
+        <target state="translated">XAML 節點資料流: EndMember 必須在 StartObject 和 StartMember 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO">
+        <source>XAML Node Stream: GetObject requires a StartMember after StartObject '{0}'.</source>
+        <target state="translated">XAML 節點資料流: GetObject 必須在 StartObject '{0}' 後面有 StartMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO_noType">
+        <source>XAML Node Stream: GetObject must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML 節點資料流: GetObject 必須在 StartObject 和 StartMember 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_NS">
+        <source>XAML Node Stream: '{0}'='{1}' Namespace Declaration requires a StartMember after StartObject '{2}'.</source>
+        <target state="translated">XAML 節點資料流: '{0}'='{1}' 命名空間宣告必須在 StartObject '{2}' 後面有 StartMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_SO">
+        <source>XAML Node Stream: StartObject '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML 節點資料流: StartObject '{0}' 必須在 StartObject '{1}' 後面有 StartMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V">
+        <source>XAML Node Stream: Value of '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML 節點資料流: '{0}' 的值必須在 StartObject '{1}' 後面有 StartMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V_noType">
+        <source>XAML Node Stream: Value of '{0}' must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML 節點資料流: '{0}' 的值必須在 StartObject 和 StartMember 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoSuchConstructor">
+        <source>No constructor with '{0}' arguments for '{1}'.</source>
+        <target state="translated">沒有適用於 '{1}' 具有 '{0}' 引數的建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing CurrentObject before EndObject.</source>
+        <target state="translated">XAML 節點資料流: EndObject 的前面遺漏 CurrentObject。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing StartObject before StartMember '{0}'.</source>
+        <target state="translated">XAML 節點資料流: StartMember '{0}' 的前面遺漏 StartObject。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonMEWithPositionalParameters">
+        <source>Type with positional parameters is not a markup extension.</source>
+        <target state="translated">具有位置參數的型別不是標記延伸。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientProperty">
+        <source>'{0}'.'{1}' is not an ambient property.</source>
+        <target state="translated">'{0}'.'{1}' 不是環境屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientType">
+        <source>'{0}' is not an ambient type.</source>
+        <target state="translated">'{0}' 不是環境型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAssignableFrom">
+        <source>The type '{0}' is not assignable from the type '{1}'.</source>
+        <target state="translated">型別 '{0}' 不可從型別 '{1}' 指派。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotDeclaringTypeAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
+        <target state="translated">'{2}' 上的 ['{0}'('{1}')]5D; 不是在此類型上宣告的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnDirective">
+        <source>This operation is not supported on directive members.</source>
+        <target state="translated">指示詞成員不支援此作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownMember">
+        <source>This operation is not supported on unknown members.</source>
+        <target state="translated">未知的成員不支援此作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownType">
+        <source>This operation is not supported on unknown types.</source>
+        <target state="translated">未知的型別不支援此作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectNotTcOrMe">
+        <source>Argument should be a Type Converter, Markup Extension or Null.</source>
+        <target state="translated">引數應該是型別轉換器、標記延伸或 Null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderAttachedPropertyNotFound">
+        <source>Unable to find an attachable property named '{0}' on type '{1}'.</source>
+        <target state="translated">型別 '{1}' 上找不到名為 '{0}' 的可附加屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderDictionaryMethod1NotFound">
+        <source>Unable to locate MemberMarkupInfo.DictionaryEntriesFromGeneric method.</source>
+        <target state="translated">找不到 MemberMarkupInfo.DictionaryEntriesFromGeneric 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArgumentTypes">
+        <source>InstanceDescriptor provided an argument of type '{0}' where a parameter of type '{1}' was expected.</source>
+        <target state="translated">InstanceDescriptor 提供了型別 '{0}' 的引數，但需要的是型別 '{1}' 的引數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArguments">
+        <source>InstanceDescriptor did not provide the correct number of arguments.</source>
+        <target state="translated">InstanceDescriptor 未提供正確的引數數目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorInvalidMethod">
+        <source>InstanceDescriptor did not provide a valid constructor or method.</source>
+        <target state="translated">InstanceDescriptor 未提供有效的建構函式或方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderMultidimensionalArrayNotSupported">
+        <source>Multidimensional arrays not supported.</source>
+        <target state="translated">不支援多維陣列。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoDefaultConstructor">
+        <source>Unable to serialize type '{0}'.  Verify that the type is public and either has a default constructor or an instance descriptor.</source>
+        <target state="translated">無法序列化型別 '{0}'。請確認此型別是否為公用、是否擁有預設建構函式或執行個體描述元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoMatchingConstructor">
+        <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
+        <target state="translated">在型別 '{0}' 上找不到適合所指定建構函式引數的建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeCannotRoundtrip">
+        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">無法讀取型別 {0} 的物件，因為沒有可存取的建構函式。若要讓這種型別能使用在 XAML 中，請加入預設建構函式、使用 ConstructorArgumentAttribute，或提供 InstanceDescriptor。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeIsNested">
+        <source>Unable to read objects of the type '{0}'.  Nested types are not supported.</source>
+        <target state="translated">無法讀取型別 '{0}' 的物件。不支援巢狀型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to serialize this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectReader constructor.</source>
+        <target state="translated">'{0}' 阻礙了型別 '{1}' 在 XAML 中的使用。如果您要序列化此型別，請將 '{0}'.GetXamlType 變更為傳回此型別的非 null 值，或在 XamlObjectReader 建構函式的 schemaContext 參數中傳遞不同的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamePropertyMustBeString">
+        <source>The name property '{0}' on type '{1}' must be of type System.String.</source>
+        <target state="translated">型別 '{1}' 上的名稱屬性 '{0}' 必須是 System.String 型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
+        <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
+        <target state="translated">此物件圖形含有多個型別 '{0}' 之執行個體的參考，而且序列化程式找不到一般的可見位置來寫入此執行個體。請檢查名稱範圍的使用情況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
+        <source>An element with the name '{0}' has already been registered in this scope.</source>
+        <target state="translated">名為 '{0}' 的項目已經在此範圍中註冊了。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReader_TypeNotVisible">
+        <source>Type '{0}' not visible. If the type is local, please set the LocalAssembly field in XamlReaderSettings.</source>
+        <target state="translated">型別 '{0}' 不可見。如果此型別是區域型別，請在 XamlReaderSettings 中設定 LocalAssembly 欄位。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectWriterTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to load this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectWriter constructor.</source>
+        <target state="translated">'{0}' 阻礙了型別 '{1}' 在 XAML 中的使用。如果您要載入此型別，請將 '{0}'.GetXamlType 變更為傳回此型別的非 null 值，或在 XamlObjectWriter 建構函式的 schemaContext 參數中傳遞不同的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollections">
+        <source>This operation is only supported on collection types.</source>
+        <target state="translated">只有集合型別支援這項作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollectionsAndDictionaries">
+        <source>This operation is only supported on collection and dictionary types.</source>
+        <target state="translated">只有集合和字典型別支援這項作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnDictionaries">
+        <source>This operation is only supported on dictionary types.</source>
+        <target state="translated">只有字典型別支援這項作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before EndObject.</source>
+        <target state="translated">XAML 節點資料流: EndObject 前面遺漏 '{0}.{1}' 的 EndMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
+        <target state="translated">XAML 節點資料流: StartMember '{2}' 前面遺漏 '{0}.{1}' 的 EndMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">參數必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentlessPropertyElement">
+        <source>The property element '{0}' is not contained by an object element.</source>
+        <target state="translated">屬性項目 '{0}' 未包含在物件項目中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">無法載入組件 '{0}'，因為已載入相同組件的不同版本 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">為 '{0}' 指定太多屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' 需要更多屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PositionalParamsWrongLength">
+        <source>GetPositionalParameters returned the wrong length vector.</source>
+        <target state="translated">GetPositionalParameters 傳回長度錯誤的向量。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotFound">
+        <source>Prefix '{0}' does not map to a namespace.</source>
+        <target state="translated">前字詞 '{0}' 未對應到命名空間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotInFrames">
+        <source>The prefix '{0}' could not be found.</source>
+        <target state="translated">找不到前置詞 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyDoesNotTakeText">
+        <source>'{0}' property on '{1}' does not allow you to specify text.</source>
+        <target state="translated">'{1}' 上的屬性 '{0}' 不允許指定文字。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotImplemented">
+        <source>'{0}' is not implemented.</source>
+        <target state="translated">'{0}' 未實作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValue">
+        <source>Provide value on '{0}' threw an exception.</source>
+        <target state="translated">在 '{0}' 上提供值時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValueCycle">
+        <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
+        <target state="translated">無法呼叫 MarkupExtension.ProvideValue，因為有循環相依性。MarkupExtension 內部的屬性不可參考會參考 MarkupExtension 結果的物件。受影響的 MarkupExtensions 為:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">'{0}' 型別名稱不是預期的格式 'className, assembly'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QuoteCharactersOutOfPlace">
+        <source>Quote characters ' or " are only allowed at the start of values.</source>
+        <target state="translated">引號字元 ' 或 " 只能使用在值的開頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">值不能為 null。物件參考: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextMismatch">
+        <source>schemaContext parameter cannot be different from savedContext.SchemaContext</source>
+        <target state="translated">schemaContext 參數不能與 savedContext.SchemaContext 不同</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextNull">
+        <source>savedContext.SchemaContext cannot be null</source>
+        <target state="translated">savedContext.SchemaContext 不可為 null</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNotInitialized">
+        <source>SchemaContext on writer must be initialized before accessing the reader.</source>
+        <target state="translated">必須先初始化寫入器上的 SchemaContext 然後再存取讀取器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNull">
+        <source>SchemaContext cannot be null.</source>
+        <target state="translated">SchemaContext 不可為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">在部分信任的情況下，無法將 SandboxExternalContent 設定為 True。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlMissingAttribute">
+        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
+        <target state="translated">無效的安全性 XML。遺漏所需的屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedTag">
+        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
+        <target state="translated">無效的安全性 XML。未預期的標記 '{0}'，應該是 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedValue">
+        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
+        <target state="translated">無效的安全性 XML。屬性 '{1}' 中有未預期的值 '{0}'，應該是 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">此 serviceType 已在其他服務登錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetConnectionId">
+        <source>Set connectionId threw an exception.</source>
+        <target state="translated">設定 connectionId 時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnlyProperty">
+        <source>'{0}'.'{1}' is a property without a getter and is not a valid XAML property.</source>
+        <target state="translated">'{0}'.'{1}' 是沒有 getter 的屬性，而且不是有效的 XAML 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTargetTypeOnNonAttachableMember">
+        <source>Cannot set TargetType on a non-attachable Member.</source>
+        <target state="translated">無法設定非可附加成員上的 TargetType。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetUriBase">
+        <source>Setting xml:base on '{0}' threw an exception.</source>
+        <target state="translated">設定 '{0}' 上的 xml:base 時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetValue">
+        <source>Set property '{0}' threw an exception.</source>
+        <target state="translated">設定屬性 '{0}' 時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetXmlInstance">
+        <source>Setting xml instance on '{0}' threw an exception.</source>
+        <target state="translated">設定 '{0}' 上的 xml 執行個體時擲回例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SettingPropertiesIsNotAllowed">
+        <source>Setting properties is not allowed on a type converted instance. Property = '{0}'</source>
+        <target state="translated">不允許在型別轉換的執行個體上設定屬性。屬性 = '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldOverrideMethod">
+        <source>Method '{0}' is not supported by default. It can be implemented in derived classes.</source>
+        <target state="translated">預設情況不支援方法 '{0}'。它可以實作在衍生類別中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldSerializeFailed">
+        <source>ShouldSerialize check failed for member '{0}'.</source>
+        <target state="translated">成員 '{0}' 的 ShouldSerialize 檢查失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SimpleFixupsMustHaveOneName">
+        <source>Directly Assignable Fixups must only have one name.</source>
+        <target state="translated">可直接指派的修復只能有一個名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">參數不能是零長度字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">字串是 null 或空白。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNotCollected">
+        <source>Deferred load section was not collected in '{0}'.</source>
+        <target state="translated">延後的載入區段未收集在 '{0}' 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadAlreadyStarted">
+        <source>Thread is already started.</source>
+        <target state="translated">執行緒已經啟動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，於位置 {0} 發現空的語彙基元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，於位置 {0} 發現額外的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時遺失結尾引號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時發現字串過早結束。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributes">
+        <source>Error with member '{0}'.'{1}'.  It has more than one '{2}'.</source>
+        <target state="translated">成員 '{0}'.'{1}' 錯誤。它有多個 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributesOnType">
+        <source>Error with type '{0}'.  It has more than one '{1}'.</source>
+        <target state="translated">型別 '{0}' 錯誤。它有多個 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyTypeConverterAttributes">
+        <source>Only one TypeConverter attribute is allowed on a type.</source>
+        <target state="translated">型別上只能有一個 TypeConverter 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransitiveForwardRefDirectives">
+        <source>Object '{0}' assigned to directive '{1}' has properties which are references to named object(s) '{2}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported inside object construction directives.</source>
+        <target state="translated">指派給指示詞 '{1}' 的物件 '{0}' 包含的屬性是尚未定義之具名物件 '{2}' 的參考。物件建構指示詞內不支援向前參考，或參考包含向前參考的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed">
+        <source>Failed to create a '{0}' from the text '{1}'.</source>
+        <target state="translated">無法從文字 '{1}' 建立 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed2">
+        <source>Failed to convert '{0}' to type '{1}'.</source>
+        <target state="translated">無法將 '{0}' 轉換為型別 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasInvalidXamlName">
+        <source>The name of the type '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">型別 '{0}' 的名稱含有在 XAML 中無效的字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasNoContentProperty">
+        <source>Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.</source>
+        <target state="translated">型別 '{0}' 沒有內容屬性。請指定要設定的屬性名稱，或在此型別上加入 ContentPropertyAttribute 或 TypeConverterAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">當屬性中繼資料與屬性關聯時，即無法變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNameCannotHavePeriod">
+        <source>Type name '{0}' cannot have a dot '.'.</source>
+        <target state="translated">型別名稱 '{0}' 不能有點號 '.'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotFound">
+        <source>Type reference cannot find type named '{0}'.</source>
+        <target state="translated">型別參考找不到名為 '{0}' 的型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotPublic">
+        <source>Type '{0}' is not public.</source>
+        <target state="translated">型別 '{0}' 不是公用型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnclosedQuote">
+        <source>Unclosed quoted value.</source>
+        <target state="translated">無結尾引號的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedClose">
+        <source>Unexpected close of XAML Node Stream.</source>
+        <target state="translated">未預期的 XAML 節點資料流關閉。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedConstructorArg">
+        <source>Invalid metadata for attribute '{0}' on '{1}'. Expected '{2}' argument(s) of type '{3}'.</source>
+        <target state="translated">'{1}' 上屬性 '{0}' 的中繼資料無效。應該是型別 '{3}' 的 '{2}' 引數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedNodeType">
+        <source>Unexpected '{0}' in parse rule '{1}'.</source>
+        <target state="translated">剖析規則 '{1}' 中有未預期的 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">參數是未預期的型別 '{0}'。預期型別為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedToken">
+        <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
+        <target state="translated">規則 '{1}' 中有未預期的語彙基元 '{0}' (位於 '{2}' 中)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedTokenAfterME">
+        <source>Unexpected token after end of markup extension.</source>
+        <target state="translated">標記延伸結尾之後有未預期的語彙基元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnhandledBoolTypeBit">
+        <source>Unhandled BoolTypeBit.</source>
+        <target state="translated">未處理的 BoolTypeBit。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
+        <target state="translated">'{2}' 上的 ['{0}'('{1}')]5D; 不是已知的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMember">
+        <source>Unknown member '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' 上有未知的成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberOnUnknownType">
+        <source>Unknown member '{0}' on unknown type '{1}'.</source>
+        <target state="translated">未知的型別 '{1}' 上有未知的成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberSimple">
+        <source>Unknown member '{0}'.</source>
+        <target state="translated">未知的成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownType">
+        <source>Unknown type '{0}'.</source>
+        <target state="translated">未知的型別 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedForwardReferences">
+        <source>Unresolved reference '{0}'.</source>
+        <target state="translated">未解析的參考 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedNamespace">
+        <source>XAML namespace '{0}' is not resolved.</source>
+        <target state="translated">未解析 XAML 命名空間 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotFound">
+        <source>Uri '{0}' was not found.</source>
+        <target state="translated">找不到 Uri '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsableDuringInitializationOnME">
+        <source>Error with type '{0}'. MarkupExtensions cannot use the 'UsableDuringInitialization' attribute.</source>
+        <target state="translated">型別 '{0}' 錯誤。MarkupExtensions 不可使用 'UsableDuringInitialization' 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueInArrayIsNull">
+        <source>A value in the '{0}' array is null.</source>
+        <target state="translated">'{0}' 陣列中有 null 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFollowedByEndMember">
+        <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
+        <target state="translated">XAML 節點資料流: 值節點後面必須有 EndMember。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">指定的索引超出範圍，或位於索引的子項目是 null 值。如果 VisualChildrenCount 傳回零 (表示 Visual 沒有子項目)，請勿呼叫此方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhiteSpaceInCollection">
+        <source>XamlXmlWriter cannot write value '{0}' which contains significant white space in collection '{1}'.</source>
+        <target state="translated">XamlXmlWriter 無法寫入含有集合 '{1}' 中重要空格的值 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhitespaceAfterME">
+        <source>White space is not allowed after end of markup extension.</source>
+        <target state="translated">標記延伸結尾之後不允許空白字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriterIsClosed">
+        <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
+        <target state="translated">嘗試寫入已經呼叫其 Closed 方法的 XamlWriter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice 不能跟在 Fallback 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent 必須包含一或多個 Choice 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice 只有在 AlternateContent 中才有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">XML 相容性定義中有循環的現象，例如命名空間 '{0}' 覆寫本身。這可能是不同組件中的 XmlnsCompatibilityAttributes 不一致所致。請變更定義來消除此循環，或在 XamlSchemaContext 建構函式中傳遞一組非衝突的參考組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">在命名空間 '{0}' 中發現項目 '{1}' 的重複 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">在命名空間 '{0}' 中發現項目 '{1}' 的重複 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">發現命名空間 '{0}' 的重複萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">發現命名空間 '{0}' 的重複萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback 只有在 AlternateContent 中才有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">'{0}' 項目不是 AlternateContent 的有效子項目。只有 Choice 與 Fallback 項目才是 AlternateContent 項目的有效子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">'{0}' 屬性對於 '{1}' 項目而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">'{0}' 格式無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">不能為命名空間 '{0}' 同時指定特定與萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">不能為命名空間 '{0}' 同時指定特定與萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Requires 屬性必須包含有效的命名空間前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">'{0}' 屬性值不是有效的 XML 名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent 只能包含一個 Fallback 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">命名空間 '{0}' 的 MustUnderstand 條件失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 命名空間無法保留項目; 必須先將它宣告為 Ignorable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 命名空間無法處理內容; 必須先將它宣告為 Ignorable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain a Requires attribute.</source>
+        <target state="translated">Choice 必須包含 Requires 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">未定義 '{0}' 前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">無法識別的相容性屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">無法識別的相容性項目 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XClassMustMatchRootInstance">
+        <source>Specified class name '{0}' doesn't match actual root instance type '{1}'. Remove the Class directive or provide an instance via XamlObjectWriterSettings.RootObjectInstance.</source>
+        <target state="translated">指定的類別名稱 '{0}' 與實際根執行個體型別 '{1}' 不相符。請移除 Class 指示詞，或透過 XamlObjectWriterSettings.RootObjectInstance 提供執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlFactoryInvalidXamlNode">
+        <source>Unexpected XAML node type '{0}' from XamlReader in XamlFactory.</source>
+        <target state="translated">XamlFactory 中的 XamlReader 有未預期的 XAML 節點型別 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotSetSchemaContext">
+        <source>Cannot set SchemaContext on XamlMarkupExtensionWriter.</source>
+        <target state="translated">無法設定 XamlMarkupExtensionWriter 上的 SchemaContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">無法寫入不是字串的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">已經寫入成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterInputInvalid">
+        <source>Errors detected in input.</source>
+        <target state="translated">在輸入中偵測到錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameCannotGetPrefix">
+        <source>Cannot convert this XamlTypeName instance to a string because the provided INamespacePrefixLookup could not generate a prefix for the namespace '{0}'.</source>
+        <target state="translated">無法將這個 XamlTypeName 執行個體轉換成字串，因為提供的 INamespacePrefixLookup 無法產生命名空間 '{0}' 的前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNameIsNullOrEmpty">
+        <source>Cannot convert this XamlTypeName instance to a string because the Name property is null or empty. Set the Name property before calling XamlTypeName.ToString.</source>
+        <target state="translated">無法將這個 XamlTypeName 執行個體轉換成字串，因為 Name 屬性為 null 或空白。請先設定 Name 屬性然後再呼叫 XamlTypeName.ToString。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNamespaceIsNull">
+        <source>Cannot convert this XamlTypeName instance to a string because the Namespace property is null. Set the Namespace property before calling XamlTypeName.ToString.</source>
+        <target state="translated">無法將這個 XamlTypeName 執行個體轉換成字串，因為 Namespace 屬性為 null 或空白。請先設定 Namespace 屬性然後再呼叫 XamlTypeName.ToString。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">無法寫入不是字串的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">已經寫入成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections">
+        <source>The argument isObjectFromMember can only be set to true when the type is a collection.</source>
+        <target state="translated">型別為集合時，引數 isObjectFromMember 只能設定為 true。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope">
+        <source>Namespace '{0}' already has a prefix defined in current scope.</source>
+        <target state="translated">命名空間 '{0}' 已經在目前範圍中定義過前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterPrefixAlreadyDefinedInCurrentScope">
+        <source>The prefix '{0}' is already defined in current scope.</source>
+        <target state="translated">前置詞 '{0}' 已經在目前範圍中定義過。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteNotSupportedInCurrentState">
+        <source>Unable to call '{0}' in current state.</source>
+        <target state="translated">目前的狀態無法呼叫 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteObjectNotSupportedInCurrentState">
+        <source>Unable to call WriteObject with isObjectFromMember set to true in current state.</source>
+        <target state="translated">目前的狀態無法呼叫 isObjectFromMember 設定為 true 的 WriteObject。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XaslTypePropertiesNotImplemented">
+        <source>Need to implement public/internal sorting.</source>
+        <target state="translated">必須實作公用/內部排序。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlDataNull">
+        <source>The value for XmlData property '{0}' is null or not IXmlSerializable.</source>
+        <target state="translated">XmlData 屬性 '{0}' 的值為 null 或者不是 IXmlSerializable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlValueNotReader">
+        <source>The value for XmlData property '{0}' is not an XmlReader.</source>
+        <target state="translated">XmlData 屬性 '{0}' 的值不是 XmlReader。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlnsCompatCycle">
+        <source>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</source>
+        <target state="translated">組件 '{0}' 中 XmlnsCompatibleWithAttribute 定義有循環的現象，例如命名空間 '{1}' 覆寫本身。請變更定義以排除這個循環問題。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

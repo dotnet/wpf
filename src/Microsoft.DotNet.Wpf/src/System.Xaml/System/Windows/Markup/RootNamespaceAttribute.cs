@@ -10,7 +10,6 @@
 //
 // 
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -30,17 +29,12 @@ namespace System.Windows.Markup
         /// <param name="nameSpace">The root namespace value</param>
         public RootNamespaceAttribute(string nameSpace)
         {
-            _nameSpace = nameSpace;
+            Namespace = nameSpace;
         }
 
         /// <summary>
         /// The root namespace value corresponding to the value of the RootNamespace property in a project file.
         /// </summary>
-        public string Namespace
-        {
-            get { return _nameSpace; }
-        }
-
-        private string _nameSpace;
+        public string Namespace { get; }
     }
 }

@@ -4,14 +4,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Markup;
-using System.Xaml;
 
 namespace System.Xaml.Schema
 {
@@ -24,7 +21,7 @@ namespace System.Xaml.Schema
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = new object[0];
+        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private Dictionary<XamlType, MethodInfo> _addMethods;
         internal MethodInfo EnumeratorMethod { get; set; }
@@ -59,11 +56,7 @@ namespace System.Xaml.Schema
 
         public XamlTypeInvoker(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            _xamlType = type;
+            _xamlType = type ?? throw new ArgumentNullException(nameof(type));
         }
 
         public static XamlTypeInvoker UnknownInvoker
@@ -92,7 +85,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IList list = instance as IList;
             if (list != null)
@@ -127,7 +120,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IDictionary dictionary = instance as IDictionary;
             if (dictionary != null)
@@ -181,7 +174,7 @@ namespace System.Xaml.Schema
         {
             if (contentType == null)
             {
-                throw new ArgumentNullException("contentType");
+                throw new ArgumentNullException(nameof(contentType));
             }
             if (IsUnknown || _xamlType.ItemType == null)
             {
@@ -251,7 +244,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             IEnumerable enumerable = instance as IEnumerable;
             if (enumerable != null)

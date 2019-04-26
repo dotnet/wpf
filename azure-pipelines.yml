@@ -1,35 +1,30 @@
-# This is a simple wrapper for eng/ci.yml to get around the limitation of
+# This is a simple wrapper for eng/pipeline.yml to get around the limitation of
 # user-defined variables not being available in yaml template expressions.
 
 # Parameters ARE available in template expressions, and parameters can have default values,
 # so they can be used to control yaml flow.
+#
+# TODO:
+#   BuildMsBuildSdkPackages, _BuildMsBuildSdkPackages, _BuildMsBuildSdkPackagesArgs should be removed eventually, when 
+#   Microsoft.DotNet.Arcade.Wpf.Sdk is moved from dnceng/dotnet-wpf-int to github/dotnet/wpf. 
+#   When that move happens, there would be no need to suppress the Sdk build by default. Currently, 
+#   allowing the Sdk to build every time will result in an infinite loop that triggers a dotnet/wpf built,
 
 variables:
 
   # clean the local repo on the build agents
   Build.Repository.Clean: true
-  
-  # This project only builds a transport package
-  _IsShipping: false
+  # When set to true in a manual built, it produces and publishes 
+  # Microsoft.DotNet.Arcade.Wpf.Sdk
+  BuildMsBuildSdkPackages: false
+  _PublishUsingPipelines: true
+  _DotNetArtifactsCategory: WINDOWSDESKTOP
 
-  # Set some variables based on build conditions
-  ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-    _HelixType: build/product
-    _HelixSource: pr/dotnet/wpf/$(Build.SourceBranch)
-    _PublishType: none
-    _SignType: test
-    _DotNetPublishToBlobFeed: false
-  # else
-  ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    _TeamName: DotNetCore
-    _HelixSource: official/dotnet/wpf/$(Build.SourceBranch)
-    _PublishType: blob
-    _SignType: real
-    _DotNetPublishToBlobFeed: true
-
-# only trigger ci builds for the master branch
+# only trigger ci builds for the master and release branches
 trigger:
 - master
+- release/3.0
+- arcade
 
 # To be added in the future when VSTS supports this feature
 # only trigger pull request builds for the master branch
@@ -37,11 +32,11 @@ trigger:
 # - master
 
 # Call the pipeline.yml template, which does the real work
-phases:
+jobs:
 - template: /eng/pipeline.yml
   parameters:
     ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
       # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-temp
+      agentPool: dotnet-internal-vs2019-preview
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false

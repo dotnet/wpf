@@ -1,0 +1,21 @@
+<Project>
+
+  <PropertyGroup>
+    <CopyTransitiveReferences>false</CopyTransitiveReferences>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <DisableTransitiveProjectReferences Condition="'$(DisableTransitiveProjectReferences)'==''">true</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+
+  <!-- 
+    Private = False 
+    Build against the reference, but do not copy it to the output directory
+  -->
+  <ItemDefinitionGroup Condition="'$(IsShipping)'=='true' and '$(CopyTransitiveReferences)'=='false'">
+    <ProjectReference>
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  
+</Project>

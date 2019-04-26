@@ -1,0 +1,49 @@
+<Project>
+
+  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(UseWPF)' == 'true'">
+    <ApplicationDefinition Include="App.xaml"
+                           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Application.xaml"
+                           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/Application.xaml') And '$(MSBuildProjectExtension)' == '.vbproj'">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+
+    <None Remove="@(ApplicationDefinition)"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false'" />
+
+    <Page Include="**/*.xaml"
+          Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(ApplicationDefinition)"
+          Condition="'$(EnableDefaultPageItems)' != 'false'" >
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <None Remove="@(Page)"
+          Condition="'$(EnableDefaultPageItems)' != 'false'" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'">
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' ">
+    <_SDKImplicitReference Include="WindowsBase"/>
+    <_SDKImplicitReference Include="PresentationCore"/>
+    <_SDKImplicitReference Include="PresentationFramework"/>
+    <_SDKImplicitReference Include="System.Windows.Controls.Ribbon"/>
+    <_SDKImplicitReference Include="System.Xaml"/>
+    <_SDKImplicitReference Include="UIAutomationClient"/>
+    <_SDKImplicitReference Include="UIAutomationClientSideProviders"/>
+    <_SDKImplicitReference Include="UIAutomationProvider"/>
+    <_SDKImplicitReference Include="UIAutomationTypes"/>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' ">
+    <_SDKImplicitReference Include="System.Windows.Forms"/>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' And '$(UseWPF)' == 'true' ">
+    <_SDKImplicitReference Include="WindowsFormsIntegration"/>
+  </ItemGroup>
+</Project>

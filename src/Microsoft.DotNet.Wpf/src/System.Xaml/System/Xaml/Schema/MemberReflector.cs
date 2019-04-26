@@ -2,15 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Threading;
-using System.Windows.Markup;
-using System.Collections.ObjectModel;
 using System.Security;
-using MS.Internal.Xaml.Parser;
+using System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
@@ -83,7 +79,7 @@ namespace System.Xaml.Schema
         [SecuritySafeCritical]
         internal MemberReflector(XamlType type, XamlValueConverter<TypeConverter> typeConverter)
         {
-            this.Type = type;
+            Type = type;
             _typeConverter.Value = typeConverter;
             _designerSerializationVisibility = DesignerSerializationVisibility.Visible;
             _memberBits = (int)BoolMemberBits.Directive | (int)BoolMemberBits.AllValid;
@@ -255,7 +251,7 @@ namespace System.Xaml.Schema
 
         internal bool? GetFlag(BoolMemberBits flag)
         {
-            return Reflector.GetFlag(_memberBits, (int)flag);
+            return GetFlag(_memberBits, (int)flag);
         }
 
         internal void SetFlag(BoolMemberBits flag, bool value)

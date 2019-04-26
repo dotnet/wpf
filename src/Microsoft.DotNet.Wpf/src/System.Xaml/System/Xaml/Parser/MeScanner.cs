@@ -3,15 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Text;
-using System.Diagnostics;
-using System.Xaml;
-using MS.Internal.Xaml.Context;
-using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Text;
+using System.Xaml;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -112,13 +110,6 @@ namespace MS.Internal.Xaml.Parser
         {
             get { return _tokenProperty; }
         }
-
-        // FxCop says this is never called
-        //  (but _tokenNamespace is used internally in the Scanner)
-        //public XamlNamespace TokenNamespace
-        //{
-        //    get { return _tokenNamespace; }
-        //}
 
         public string TokenText
         {
@@ -336,12 +327,9 @@ namespace MS.Internal.Xaml.Parser
             // Regular property p
             else
             {
-                // _tokenNamespace is always null here
-                string ns = _context.GetAttributeNamespace(propName, _tokenNamespace);
+                string ns = _context.GetAttributeNamespace(propName, Namespace);
                 declaringType = _context.CurrentType;
-
-                // _tokenNamespace is always null here
-                prop = _context.GetNoDotAttributeProperty(declaringType, propName, _tokenNamespace, ns, false /*tagIsRoot*/);
+                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false /*tagIsRoot*/);
             }
             _tokenProperty = prop;
         }
@@ -405,7 +393,7 @@ namespace MS.Internal.Xaml.Parser
                             throw new XamlParseException(this, SR.Get(SRID.InvalidClosingBracketCharacers, ch.ToString()));
                         }
                     }
-                    else if (ch == MeScanner.Backslash)
+                    else if (ch == Backslash)
                     {
                         escaped = true;
                     }

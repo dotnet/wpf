@@ -1,6 +1,7 @@
 # Windows Presentation Foundation (WPF)
 
 [![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/dotnet/wpf/blob/master/LICENSE.TXT)
 
 Windows Presentation Foundation (WPF) is a UI framework for building Windows desktop applications. WPF supports a broad set of application development features, including an application model, resources, controls, graphics, layout, data binding and documents. WPF uses the Extensible Application Markup Language (XAML) to provide a declarative model for application programming.
 
@@ -10,11 +11,11 @@ WPF applications are based on a vector graphics architecture. This enables appli
 
 See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
 
-[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use Visual Studio 2019 Preview 1 to use WPF and WinForms with .NET Core.
+[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use [Visual Studio 2019 Preview](https://visualstudio.microsoft.com/vs/preview/) to use WPF and WinForms with .NET Core.
 
 ## Getting started
 
-* [.NET Core 3.0 SDK Preview 1](https://www.microsoft.com/net/download)
+* [.NET Core 3.0 SDK Preview](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
 

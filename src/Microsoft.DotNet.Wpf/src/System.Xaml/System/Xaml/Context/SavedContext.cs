@@ -2,11 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using MS.Internal.Xaml.Context;
-using System.Windows.Markup;
 
 namespace System.Xaml
 {
@@ -30,7 +26,7 @@ namespace System.Xaml
             {
                 stack.CurrentFrame.Instance = null;
             }
-            this.BaseUri = owContext.BaseUri;
+            BaseUri = owContext.BaseUri;
         }
 
         public SavedContextType SaveContextType { get { return _savedContextType; } }

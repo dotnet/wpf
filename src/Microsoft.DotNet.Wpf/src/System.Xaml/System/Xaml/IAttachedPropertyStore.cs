@@ -2,12 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
 namespace System.Xaml
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Collections.Generic;
-    using System.Xaml;
-
     public interface IAttachedPropertyStore
     {
         // The number of properties currently attached to this instance

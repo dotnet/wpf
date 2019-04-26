@@ -1,3 +1,7 @@
+#
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+#
+
 parameters:
   name: ''
   # send telemetry
@@ -38,7 +42,7 @@ phases:
       ${{ if and(eq(parameters.runAsPublic, 'false'), ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
         # This should be changed to an isolated blob feed per-build.
         # Right now a manual build of a random branch would get published alongside the normal branch artifacts.
-        _PublishBlobFeedUrl: https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
+        _PublishBlobFeedUrl: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
         _SignArgs: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
         _PublishArgs: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
           /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl) 
@@ -67,7 +71,7 @@ phases:
         $(_PublishArgs)
         $(_SignArgs)
         $(_OfficialBuildIdArgs)
-        /p:Platform=$(_Platform) /p:IsShipping=$(_IsShipping) 
+        /p:Platform=$(_Platform) /p:IsShipping=$(_IsShipping)
       displayName: Windows Build / Publish
       condition: and(succeeded(), eq(variables['Agent.Os'], 'Windows_NT'))
 

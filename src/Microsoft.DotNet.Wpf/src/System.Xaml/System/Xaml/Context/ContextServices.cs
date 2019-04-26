@@ -2,15 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Xaml;
-using System.Xaml.Schema;
-using System.Xaml.MS.Impl;
-using System.Windows;
 using System.Diagnostics;
-
+using System.Windows.Markup;
+using System.Xaml;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -22,7 +16,7 @@ namespace MS.Internal.Xaml.Context
             // If the XamlMember implements IProvideValueTarget, ask it for the TargetProperty first
             Debug.Assert(xamlContext.ParentProperty != null);
 
-            System.Windows.Markup.IProvideValueTarget ipvt = xamlContext.ParentProperty as System.Windows.Markup.IProvideValueTarget;
+            IProvideValueTarget ipvt = xamlContext.ParentProperty as IProvideValueTarget;
             if (ipvt != null)
             {
                 return ipvt.TargetProperty;

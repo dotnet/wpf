@@ -7,11 +7,10 @@
 //
 
 using System.Runtime.CompilerServices;
-using System.Security;
-using System.Security.Permissions;
+using System.Windows.Markup;
 
-[assembly:DependencyAttribute("mscorlib,", LoadHint.Always)]
-[assembly:DependencyAttribute("System,", LoadHint.Always)]
-[assembly:DependencyAttribute("System.Xml,", LoadHint.Sometimes)]
+[assembly:Dependency("mscorlib,", LoadHint.Always)]
+[assembly:Dependency("System,", LoadHint.Always)]
+[assembly:Dependency("System.Xml,", LoadHint.Sometimes)]
 
-[assembly:System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]
+[assembly:XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]

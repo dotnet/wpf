@@ -4,9 +4,6 @@
 
 // Description: Defines the basic Name Scoping interface for root classes
 
-using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

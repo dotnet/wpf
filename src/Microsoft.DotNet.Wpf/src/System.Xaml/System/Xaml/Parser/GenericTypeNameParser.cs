@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xaml;
-using System.Xaml.Schema;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -265,11 +263,7 @@ namespace MS.Internal.Xaml.Parser
             TypeNameFrame frame = new TypeNameFrame();
             frame.Name = name;
             string ns = _prefixResolver(prefix);
-            if (ns == null)
-            {
-                throw new TypeNameParserException(SR.Get(SRID.PrefixNotFound, prefix));
-            }
-            frame.Namespace = ns;
+            frame.Namespace = ns ?? throw new TypeNameParserException(SR.Get(SRID.PrefixNotFound, prefix));
             _stack.Push(frame);
         }
 

@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="pt-BR" original="../Strings.resx">
+    <body>
+      <trans-unit id="APSException">
+        <source>Enumerating attached properties on object '{0}' threw an exception.</source>
+        <target state="translated">A enumeração das propriedades anexadas ao objeto '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddCollection">
+        <source>Add value to collection of type '{0}' threw an exception.</source>
+        <target state="translated">A adição de valor à coleção do tipo '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddDictionary">
+        <source>Add value to dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">A adição de valor ao dicionário do tipo '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousCollectionItemType">
+        <source>Cannot determine the item type of collection type '{0}' because it has more than one Add method or ICollection&lt;T&gt; implementation. To make this collection type usable in XAML, add a public Add(object) method, implement System.Collections.IList or a single System.Collections.Generic.ICollection&lt;T&gt;.</source>
+        <target state="translated">Não é possível determinar o tipo de item do tipo de coleção '{0}', pois ele tem mais de um método Add ou implementação de ICollection&lt;T&gt;. Para tornar esse tipo de coleção utilizável no XAML, adicione um método Add(objeto) público, implemente System.Collections.IList ou um único System.Collections.Generic.ICollection&lt;T&gt;.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousDictionaryItemType">
+        <source>Cannot determine the item type of dictionary type '{0}' because it has more than one Add method or IDictionary&lt;K,V&gt; implementation. To make this dictionary type usable in XAML, add a public Add(object,object) method, implement System.Collections.IDictionary or a single System.Collections.Generic.IDictionary&lt;K,V&gt;.</source>
+        <target state="translated">Não é possível determinar o tipo de item do tipo de dicionário '{0}', pois ele tem mais de um método Add ou implementação de IDictionary&lt;K,V&gt;. Para tornar esse tipo de dicionário utilizável no XAML, adicione um método Add(objeto,objeto) público, implemente System.Collections.IDictionary ou um único System.Collections.Generic.IDictionary&lt;K,V&gt;.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">Um filho de KeyFrameAnimation no XAML deve ser um KeyFrame de um tipo compatível.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
+        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
+        <target state="translated">'{0}' deve ter um TimeSpan para Duration ou um TimeSpan para o KeyTime do último KeyFrame. Este '{0}' tem Duration de '{1}' e KeyTime de '{2}' para o último KeyFrame; portanto, o KeyTimes não pode ser resolvido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">'{0}' não é um valor '{1}' válido para a classe '{2}'. Esse valor pode ter sido fornecido pelo valor de base da propriedade que está sendo animada ou pelo valor de saída de outra animação aplicada à mesma propriedade.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
+        <target state="translated">O KeyTime resolvido para o quadro chave no índice {1} não pode ser maior que o KeyTime resolvido para o quadro chave no índice {4}. O KeyFrames[{1}]5D; tem o KeyTime '{2}' especificado, que é resolvido para o tempo {3}. O KeyFrames[{4}]5D; tem o KeyTime '{5}' especificado, que é resolvido para o tempo {6}. Alguns KeyTimes são resolvidos em relação à Hora de início '{0}' e outros em relação à Duração, portanto, alguns conjuntos de KeyTimes não são válidos para todas as Durações.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">O valor '{2}' de KeyTime não é válido para o quadro principal no índice {1} de '{0}' porque é maior que o valor '{3}' de Duration da animação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">'{0}' não pode utilizar o valor padrão {1} de '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">Os objetos KeyFrameAnimation não podem ter objetos de texto como filhos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentRequired">
+        <source>One of the following arguments must be non-null: '{0}'.</source>
+        <target state="translated">Um destes argumentos deve ser não nulo: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArrayAddNotImplemented">
+        <source>Array Add method is not implemented.</source>
+        <target state="translated">O método de matriz Add não está implementado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AssemblyTagMissing">
+        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
+        <target state="translated">A parte entre o ponto-e-vírgula ';' e o sinal de igual '=' não é '{0}' URI '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableEventNotImplemented">
+        <source>Attachable events are not implemented.</source>
+        <target state="translated">Os eventos anexáveis não estão implementados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableMemberNotFound">
+        <source>Attachable member '{0}' was not found.</source>
+        <target state="translated">O associado anexável '{0}' não foi encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropOnFwdRefTC">
+        <source>Cannot set property '{0}' on object '{1}' because the object is a forward or incompletely initialized reference. The unresolved name(s) are: '{2}'.</source>
+        <target state="translated">Não é possível definir a propriedade '{0}' no objeto '{1}', pois o objeto é uma referência de encaminhamento ou uma referência não totalmente inicializada. Os nomes não resolvidos são: '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnDictionaryKey">
+        <source>An attachable property named '{1}' is attached on a dictionary key '{0}' that is either a string or can be type-converted to string, which is not supported.</source>
+        <target state="translated">Uma propriedade anexável denominada '{1}' está anexada a uma chave de dicionário '{0}', que é uma cadeia de caracteres ou seu tipo pode ser convertido em cadeia de caracteres, o que não tem suporte.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnTypeConvertedOrStringProperty">
+        <source>An attachable property named '{2}' is attached to a property named '{1}'.  The property named '{1}' is either a string or can be type-converted to string; attaching on such properties are not supported.  For debugging, the property '{1}' contains an object '{0}'.</source>
+        <target state="translated">Uma propriedade anexável denominada '{2}' está anexada a uma propriedade denominada '{1}'.  A propriedade '{1}' é uma cadeia de caracteres ou seu tipo pode ser convertido em cadeia de caracteres; não há suporte para a anexação a essas propriedades. Para depuração, a propriedade '{1}' contém um objeto '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeUnhandledKind">
+        <source>An unhandled scanner attribute was encountered.</source>
+        <target state="translated">Foi encontrado um atributo de verificador não tratado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo1">
+        <source>One of the InternalsVisibleToAttribute values in assembly '{0}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">Um dos valores de InternalsVisibleToAttribute no assembly '{0}' não é um nome de assembly válido. Use o formato 'AssemblyShortName' ou 'AssemblyShortName, PublicKey=...'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo2">
+        <source>InternalsVisibleToAttribute value '{0}' in assembly '{1}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">O valor de InternalsVisibleToAttribute '{0}' no assembly '{1}' não é um nome de assembly válido. Use o formato 'AssemblyShortName' ou 'AssemblyShortName, PublicKey=...'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadMethod">
+        <source>Bad method '{0}' on '{1}'.</source>
+        <target state="translated">Método '{0}' inválido em '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadStateObjectWriter">
+        <source>Bad state in ObjectWriter. Non directive missing instance.</source>
+        <target state="translated">Estado inválido em ObjectWriter. Instância ausente não diretiva.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsCompat">
+        <source>An XmlnsCompatibleWithAttribute in assembly '{0}' is missing a required property. Set both the NewNamespace and OldNamespace properties, or remove the XmlnsCompatibleWithAttribute.</source>
+        <target state="translated">Um XmlnsCompatibleWithAttribute no assembly '{0}' não possui uma propriedade obrigatória. Defina as propriedades NewNamespace e OldNamespace, ou remova XmlnsCompatibleWithAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsDefinition">
+        <source>An XmlnsDefinitionAttribute in assembly '{0}' is missing a required property. Set both the ClrNamespace and XmlNamespace properties, or remove the XmlnsDefinitionAttribute.</source>
+        <target state="translated">Um XmlnsDefinitionAttribute no assembly '{0}' não possui uma propriedade obrigatória. Defina as propriedades ClrNamespace e XmlNamespace, ou remova XmlnsDefinitionAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsPrefix">
+        <source>An XmlnsPrefixAttribute in assembly '{0}' is missing a required property. Set both the Prefix and XmlNamespace properties, or remove the XmlnsPrefixAttribute.</source>
+        <target state="translated">Um XmlnsPrefixAttribute no assembly '{0}' não possui uma propriedade obrigatória. Defina as propriedades Prefix e XmlNamespace, ou remova XmlnsPrefixAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BuilderStackNotEmptyOnClose">
+        <source>Builder Stack is not empty when end of XamlNode stream was reached.</source>
+        <target state="translated">A Pilha do Construtor não estava vazia quando o fim do fluxo de XamlNode foi atingido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertFromFailed">
+        <source>Failed to check convertibility from type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">Falha na verificação da conversibilidade do tipo '{0}' usando '{1}'. Em geral, isso indica um TypeConverter implementado de maneira incorreta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertToFailed">
+        <source>Failed to check convertibility to type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">Falha na verificação da conversibilidade no tipo '{0}' usando '{1}'. Em geral, isso indica um TypeConverter implementado de maneira incorreta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAddPositionalParameters">
+        <source>In markup extensions, all constructor argument values should be atoms.  For the object of type '{0}', one or more argument values are not atomic.</source>
+        <target state="translated">Em extensões de marcação, todos os valores do argumento do construtor devem ser átomos. Para o tipo de objeto '{0}', um ou mais valores de argumento não são atômicos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">Não é possível converter o valor da cadeia de caracteres '{0}' no tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">Não é possível converter o tipo '{0}' em '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadEventDelegate">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">Não é possível criar uma instância de '{0}', pois XamlType não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadType">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">Não é possível criar uma instância de '{0}', pois XamlType não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotFindAssembly">
+        <source>Cannot find Assembly '{0}' in URI '{1}'.</source>
+        <target state="translated">Não é possível encontrar o Assembly '{0}' no URI '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">Não é possível modificar um contêiner somente leitura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotReassignSchemaContext">
+        <source>Cannot reassign a previously set SchemaContext.</source>
+        <target state="translated">Não é possível reatribuir um SchemaContext definido anteriormente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotResolveTypeForFactoryMethod">
+        <source>Cannot resolve type '{0}' for method '{1}'.</source>
+        <target state="translated">Não é possível resolver o tipo '{0}' do método '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">Não é possível obter parte ou informações da parte de um contêiner somente gravação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetBaseUri">
+        <source>BaseUri can only be set once at the root node (XamlXmlReader may provide a default at the root node).</source>
+        <target state="translated">Não é possível definir BaseUri uma vez no nó raiz (XamlXmlReader poderá fornecer um padrão no nó raiz).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContext">
+        <source>Cannot set SchemaContext on ObjectWriter.</source>
+        <target state="translated">Não é possível definir SchemaContext em ObjectWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContextNull">
+        <source>Cannot set SchemaContext to null.</source>
+        <target state="translated">Não é possível definir SchemaContext como nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteClosedWriter">
+        <source>Cannot write on a closed XamlWriter.</source>
+        <target state="translated">Não é possível gravar em um XamlWriter fechado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteXmlSpacePreserveOnMember">
+        <source>The value '{1}' contains significant white space(s) but "xml:space = preserve" cannot be written down on the member '{0}'.</source>
+        <target state="translated">O valor '{1}' contém espaços em branco significativos, mas "xml:space = preserve" não pode ser gravado no associado '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantAssignRootInstance">
+        <source>Cannot assign root instance of type '{0}' to type '{1}'.</source>
+        <target state="translated">Não é possível atribuir a instância raiz do tipo '{0}' ao tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantCreateUnknownType">
+        <source>Cannot create unknown type '{0}'.</source>
+        <target state="translated">Não é possível criar tipo desconhecido '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantGetWriteonlyProperty">
+        <source>Cannot get write-only property '{0}'.</source>
+        <target state="translated">Não é possível obter a propriedade somente leitura '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetReadonlyProperty">
+        <source>Cannot set read-only property '{0}'.</source>
+        <target state="translated">Não é possível definir a propriedade somente leitura '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetUnknownProperty">
+        <source>Cannot set unknown member '{0}'.</source>
+        <target state="translated">Não é possível definir o associado desconhecido '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseInsideTemplate">
+        <source>Close called while inside a deferred load section.</source>
+        <target state="translated">Fechamento chamado durante uma seção de carregamento adiado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseXamlWriterBeforeReading">
+        <source>Must close XamlWriter before reading from XamlNodeList.</source>
+        <target state="translated">XamlWriter deve ser fechado antes da leitura de XamlNodeList.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionCannotContainNulls">
+        <source>Collection '{0}' cannot contain null values.</source>
+        <target state="translated">A coleção '{0}' não pode conter valores nulos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">O número de elementos nesta coleção deve ser menor ou igual a '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">Não é possível adicionar uma instância do tipo '{1}' à coleção do tipo '{0}'. Somente itens do tipo '{2}' são permitidos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">Não é possível transferir a matriz multidimensional para o método CopyTo em uma coleção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">O valor do parâmetro '{0}' é igual ou maior que o comprimento do valor do parâmetro '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">O número de elementos nesta coleção é maior que o espaço disponível de '{0}' até o fim do destino '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructImplicitType">
+        <source>Failed attempting to create an Implicit Type with a constructor.</source>
+        <target state="translated">Falha ao tentar criar um Tipo Implícito com um construtor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorInvocation">
+        <source>The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">A invocação do construtor no tipo '{0}' que corresponde às restrições de associação especificadas iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorNotFoundForGivenPositionalParameters">
+        <source>Cannot write the given positional parameters because a matching constructor was not found.</source>
+        <target state="translated">Não é possível gravar os parâmetros posicionais fornecidos, pois não foi encontrado um construtor correspondente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">ValueSerializer '{0}' não pode converter de '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">ValueSerializer '{0}' não pode converter '{1}' em '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConverterMustDeriveFromBase">
+        <source>Converter type '{0}' doesn't derive from expected base type '{1}'.</source>
+        <target state="translated">O tipo de conversor '{0}' não deriva do tipo base esperado '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultAttachablePropertyStoreCannotAddInstance">
+        <source>Failed to add attached properties to item in ConditionalWeakTable.</source>
+        <target state="translated">Falha ao adicionar as propriedades anexadas ao item em ConditionalWeakTable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredLoad">
+        <source>Deferred load threw an exception.</source>
+        <target state="translated">O carregamento adiado iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredPropertyNotCollected">
+        <source>Deferred member was not collected in '{0}'.</source>
+        <target state="translated">O associado adiado não foi coletado em '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredSave">
+        <source>Save of deferred-load content threw an exception.</source>
+        <target state="translated">O salvamento do conteúdo de carregamento adiado iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferringLoaderInstanceNull">
+        <source>Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.</source>
+        <target state="translated">Não é possível obter um XamlDeferringLoader de XamlValueConverter '{0}', pois a propriedade ConverterInstance é nula.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DependsOnMissing">
+        <source>'{0}'.'{1}' Depends on '{0}'.{1}', which was not set.</source>
+        <target state="translated">'{0}'.'{1}' Depende de '{0}'.{1}', que não foi definido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryFirstChanceException">
+        <source>Dictionary of type '{0}' cannot add key '{1}'. A TypeConverter will convert the key to type '{2}'. To avoid seeing this error, override System.Collections.IDictionary.Add and perform the conversion there.</source>
+        <target state="translated">Dicionário do tipo '{0}' não pode adicionar a chave '{1}'. Um TypeConverter converterá a chave no tipo '{2}'. Para não ver este erro, substitua System.Collections.IDictionary.Add e lá realize a conversão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveGetter">
+        <source>Directive getter is not implemented.</source>
+        <target state="translated">O getter da diretiva não está implementado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveMustBeString">
+        <source>Directive '{0}' must be a value of type string. Remove this directive or change it to a string value.</source>
+        <target state="translated">A diretiva '{0}' deve ser um valor do tipo cadeia de caracteres. Remova essa diretiva ou altere-a para um valor de cadeia de caracteres.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotAtRoot">
+        <source>Directive '{0}' is only allowed on the root object. Remove this directive or move it to the root of the document.</source>
+        <target state="translated">A diretiva '{0}' só é permitida no objeto raiz. Remova essa diretia ou mova-a para a raiz do documento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotFound">
+        <source>Directive '{0}' was not found in TargetNamespace '{1}'.</source>
+        <target state="translated">A diretiva '{0}' não foi encontrada em TargetNamespace '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateMemberSet">
+        <source>'{0}' property has already been set on '{1}'.</source>
+        <target state="translated">A propriedade '{0}' já foi definida em '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompat">
+        <source>There is more than one XmlnsCompatibleWithAttribute in assembly '{0}' for OldNamespace '{1}'. Remove the extra attribute(s).</source>
+        <target state="translated">Há mais de um XmlnsCompatibleWithAttribute no assembly '{0}' para OldNamespace '{1}'. Remova os atributos extras.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
+        <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">Há XmlnsCompatibleWithAttributes conflitantes nos assemblies '{0}' e '{1}' para OldNamespace '{2}'. Altere os atributos para que tenham o mesmo NewNamespace ou passe um conjunto de Assemblies de Referência não conflitantes no construtor XamlSchemaContext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">O valor de enumeração '{0}' não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">Nenhum objeto atual a ser retornado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventCannotBeAssigned">
+        <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
+        <target state="translated">Não é possível atribuir um valor ao evento '{0}' que não possa ser atribuído a '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithReadOnlyProperties">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since not all properties are writable.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Não é possível gravar parâmetros posicionais no estado atual. O gravador não pode gravar os parâmetros posicionais na forma de atributo, pois começou a gravar elementos; ele também não pode expandir os parâmetros posicionais já que nem todas as propriedades são graváveis. Tente mover o associado de parâmetro posicional para uma posição anterior no fluxo do nó, para um local em que XamlXmlWriter ainda possa gravar atributos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithoutUnderlyingType">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since UnderlyingType on type '{0}' is null.  Try moving the positional parameter member earlier in the node stream, to place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Não é possível gravar parâmetros posicionais no estado atual. O gravador não pode gravar os parâmetros posicionais na forma de atributo, pois começou a gravar elementos; ele também não pode expandir os parâmetros posicionais já que UnderlyingType no tipo '{0}' é nulo. Tente mover o associado de parâmetro posicional para uma posição anterior no fluxo do nó, para um local em que XamlXmlWriter ainda possa gravar atributos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersinTypeWithNoDefaultConstructor">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Não é possível gravar parâmetros posicionais no estado atual. O gravador não pode gravar os parâmetros posicionais na forma de atributo, pois começou a gravar elementos; ele também não pode expandir os parâmetros posicionais devido à ausência de um construtor padrão na extensão de marcação que contém os parâmetros. Tente mover o associado de parâmetro posicional para uma posição anterior no fluxo do nó, para um local em que XamlXmlWriter ainda possa gravar atributos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedLoadPermission">
+        <source>Expected permission of type XamlLoadPermission.</source>
+        <target state="translated">Esperada permissão do tipo XamlLoadPermission.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedObjectMarkupInfo">
+        <source>Expected value of type ObjectMarkupInfo.</source>
+        <target state="translated">Esperado valor do tipo ObjectMarkupInfo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedAssemblyName">
+        <source>Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.</source>
+        <target state="translated">O nome do assembly '{0}' não é totalmente qualificado. Name, Version, Culture e PublicKeyToken devem ser fornecidos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedTypeName">
+        <source>Type name '{0}' is not assembly-qualified. You can obtain this value from System.Type.AssemblyQualifiedName.</source>
+        <target state="translated">O nome do tipo '{0}' não é qualificado por assembly. Esse valor é obtido de System.Type.AssemblyQualifiedName.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FactoryReturnedNull">
+        <source>The factory method '{0}' that matches the specified binding constraints returned null.</source>
+        <target state="translated">O método da fábrica '{0}' que corresponde às restrições de associação especificadas retornou nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">O arquivo de entrada ou o fluxo de dados não está de acordo com a especificação de formato de arquivo esperada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">O arquivo '{0}' não está de acordo com a especificação de formato de arquivo esperada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionMessage">
+        <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
+        <target state="translated">Não foi possível carregar o arquivo ou assembly '{0}' ou uma de suas dependências. O sistema não pode localizar o arquivo especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ForwardRefDirectives">
+        <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
+        <target state="translated">Tentativa de referenciar objetos nomeados '{0}' que ainda não foram definidos. Não há suporte em diretivas que não sejam Key para referências de encaminhamento ou referências a objetos que contêm referências de encaminhamento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">O valor especificado do tipo '{0}' deve ter IsFrozen definido como falso para modificação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">Não é possível elevar a partir de Array.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">Não é possível elevar de '{0}' a '{1}' porque o mapa de destino é muito pequeno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetConverterInstance">
+        <source>Getting instance of '{0}' threw an exception.</source>
+        <target state="translated">A obtenção da instância de '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsException">
+        <source>Retrieving items in collection or dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">A recuperação de itens na coleção ou no dicionário do tipo '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsReturnedNull">
+        <source>XamlTypeInvoker.GetItems returned null for type '{0}'. This generally indicates an incorrectly implemented collection type.</source>
+        <target state="translated">XamlTypeInvoker.GetItems retornou nulo para o tipo '{0}'. Em geral, isso indica um tipo de coleção implementado de maneira incorreta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetObjectNull">
+        <source>Collection property '{0}'.'{1}' is null.</source>
+        <target state="translated">A propriedade de coleção '{0}'.'{1}' é nula.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetTargetTypeOnNonAttachableMember">
+        <source>Cannot get TargetType on a non-attachable Member.</source>
+        <target state="translated">Não é possível obter TargetType em um Associado não anexável.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetValue">
+        <source>Get property '{0}' threw an exception.</source>
+        <target state="translated">A propriedade Get '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetterOrSetterRequired">
+        <source>Either getter or setter must be non-null.</source>
+        <target state="translated">O getter ou o setter deve ser não nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectGetterParamNum">
+        <source>Attached property getter methods must have one parameter and a non-void return type.</source>
+        <target state="translated">Os métodos getter da propriedade anexada devem ter um parâmetro e um tipo de retorno não void.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectSetterParamNum">
+        <source>Attached property setter and attached event adder methods must have two parameters.</source>
+        <target state="translated">O setter da propriedade anexada e os métodos do adicionador de eventos anexados devem ter dois parâmetros.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationGuard">
+        <source>Initialization of '{0}' threw an exception.</source>
+        <target state="translated">A inicialização de '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationSyntaxWithoutTypeConverter">
+        <source>Type '{0}' cannot be initialized from text (XamlLanguage.Initialization).  Add a TypeConverter to this type or change the XAML to use a constructor or factory method.</source>
+        <target state="translated">O tipo '{0}' não pode ser inicializado a partir de texto (XamlLanguage.Initialization). Adicione um TypeConverter a esse tipo ou altere o XAML para usar um método de construtor ou fábrica.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCharInTypeName">
+        <source>Character '{0}' was unexpected in string '{1}'.  Invalid XAML type name.</source>
+        <target state="translated">Caractere '{0}' inesperado na cadeia de caracteres '{1}'. Nome de tipo XAML inválido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClosingBracketCharacers">
+        <source>Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">Encontrado um BracketCharacter de fechamento '{0}' sem um BracketCharacter de abertura correspondente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">Argumento de evento inválido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidExpression">
+        <source>Invalid expression: '{0}'</source>
+        <target state="translated">Expressão inválida: '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">O valor de PermissionState '{0}' não é válido para esta Permissão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">O tipo de permissão não é válido. '{0}' esperado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeArgument">
+        <source>Type argument '{0}' is not a valid type.</source>
+        <target state="translated">O argumento de tipo '{0}' não é um tipo válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeListString">
+        <source>The string '{0}' is not a valid XAML type name list. Type name lists are comma-delimited lists of types; such as 'x:String, x:Int32'.</source>
+        <target state="translated">A cadeia de caracteres '{0}' não é uma lista de nomes de tipo XAML válida. As listas de nomes de tipos listas de tipos separados por vírgulas, por exemplo, 'x:String, x:Int32'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeString">
+        <source>The string '{0}' is not a valid XAML type name. Type names contain an optional prefix, a name, and optional type arguments; such as 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</source>
+        <target state="translated">A cadeia de caracteres '{0}' não é um nome de tipo XAML válido. Os nomes de tipo contêm um prefixo opcional, um nome e argumentos de tipo opcionais, como 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXamlMemberName">
+        <source>'{0}' is not a valid XAML member name.</source>
+        <target state="translated">'{0}' não é um nome válido de membro XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LateConstructionDirective">
+        <source>Construction directive '{0}' must be an attribute or the first property element.</source>
+        <target state="translated">A diretiva de construção '{0}' deve ser um atributo ou o primeiro elemento da propriedade.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberAndPosition">
+        <source>'{0}' Line number '{1}' and line position '{2}'.</source>
+        <target state="translated">'{0}' Número de linha '{1}' e posição de linha '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberOnly">
+        <source>'{0}' Line number '{1}'.</source>
+        <target state="translated">'{0}' Número de linha '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListNotIList">
+        <source>List collection is not an IList.</source>
+        <target state="translated">A coleção de listas não é uma IList.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedBracketCharacters">
+        <source>BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">O BracketCharacter '{0}' não tem um BracketCharacter de abertura/fechamento correspondente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedPropertyName">
+        <source>Cannot parse the malformed property name '{0}'.</source>
+        <target state="translated">Não é possível analisar o nome de propriedade malformado '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">Os itens da matriz devem ser do tipo '{0}'. Não é possível converter um ou mais itens nesse tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set Type before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">Type deve ser definido antes de chamar ProvideValue em ArrayExtension.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">O valor de StaticExtension '{0}' não pode ser resolvido como uma enumeração, campo estático ou propriedade estática.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">A extensão de marcação '{0}' requer que '{1}' seja implementado no IServiceProvider para ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">StaticExtension deve ter a propriedade Member definida para que ProvideValue possa ser chamado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">TypeExtension deve ter a propriedade TypeName definida para que ProvideValue possa ser chamado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">A cadeia de caracteres '{0}' não é válida para o tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionWithDuplicateArity">
+        <source>Cannot determine the positional parameters for type '{0}' because it has more than one constructor overload with '{1}' parameters. To make this markup extension usable in XAML, remove the duplicate constructor overload(s) or set XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity to true.</source>
+        <target state="translated">Não é possível determinar os parâmetros posicionais para o tipo '{0}', pois ele tem mais de uma sobrecarga de construtor com parâmetros de '{1}'. Para tornar essa extensão de marcação utilizável em XAML, remova as sobrecargas de construtor duplicadas ou defina XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity como verdadeiro.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberHasInvalidXamlName">
+        <source>The name of the member '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">O nome do associado '{0}' contém caracteres inválidos em XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberIsInternal">
+        <source>Member '{0}' on type '{1}' is internal.</source>
+        <target state="translated">O membro '{0}' no tipo '{1}' é interno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodInvocation">
+        <source>The invocation of a method '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">A invocação de um método '{0}' que corresponde às restrições de associação especificadas iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingAssemblyName">
+        <source>No local assembly provided to complete URI='{0}'.</source>
+        <target state="translated">Nenhum assembly local fornecido para completar URI='{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCase">
+        <source>Missing case '{0}' in DeferringWriter'{1}' method.</source>
+        <target state="translated">Caso '{0}' ausente no método DeferringWriter'{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCaseXamlNodes">
+        <source>Missing case in Default processing of XamlNodes.</source>
+        <target state="translated">Caso ausente no processamento Padrão de XamlNodes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma1">
+        <source>Unexpected equals sign '=' following '{0}'. Check for a missing comma separator.</source>
+        <target state="translated">Sinal de igual '=' inesperado após '{0}'. Verifique se um separador de vírgula está ausente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma2">
+        <source>Unexpected equals sign '=' following '{0}'='{1}'. Check for a missing comma separator.</source>
+        <target state="translated">Sinal de igual '=' inesperado após '{0}'='{1}'. Verifique se um separador de vírgula está ausente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitProperty">
+        <source>Missing implicit property case.</source>
+        <target state="translated">Caso de propriedade implícita ausente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitPropertyTypeCase">
+        <source>Missing case for ImplicitPropertyType.</source>
+        <target state="translated">Caso ausente para ImplicitPropertyType.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingKey">
+        <source>Missing key value on '{0}' object.</source>
+        <target state="translated">Valor de chave ausente no objeto '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingLookPropertyBit">
+        <source>Missing case handler in LookupPropertyBit.</source>
+        <target state="translated">Manipulador de caso ausente em LookupPropertyBit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameProvider">
+        <source>Service provider is missing the IXamlNameProvider service.</source>
+        <target state="translated">O serviço IXamlNameProvider está ausente no provedor de serviço.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameResolver">
+        <source>Service provider is missing the INameResolver service.</source>
+        <target state="translated">O serviço INameResolver está ausente no provedor de serviço.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingPropertyCaseClrType">
+        <source>Missing case in ClrType 'Member' lookup.</source>
+        <target state="translated">Caso ausente na pesquisa ClrType 'Member'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTagInNamespace">
+        <source>Missing '{0}' in URI '{1}'.</source>
+        <target state="translated">'{0}' ausente no URI '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTypeConverter">
+        <source>Creating from text without a TypeConverter is not allowed.</source>
+        <target state="translated">A criação de texto sem um TypeConverter não é permitida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' deve ser do tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustHaveName">
+        <source>Reference must have a Name to resolve.</source>
+        <target state="translated">A referência deve ter um Nome para resolver.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustNotCallSetter">
+        <source>This setter is not intended to be used directly from your code. Do not call this setter.</source>
+        <target state="translated">Esse setter não deve ser usado diretamente do código. Não chame esse setter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameNotFound">
+        <source>Name resolution failure. '{0}' was not found.</source>
+        <target state="translated">Falha de resolução de nome. '{0}' não foi encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate name '{0}' in this scope.</source>
+        <target state="translated">Não é possível registrar Nome duplicado '{0}' neste escopo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeException">
+        <source>Could not register named object. {0}</source>
+        <target state="translated">Não foi possível registrar objeto nomeado. {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">O nome '{0}' não é válido para o identificador.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">O nome não pode ser uma cadeia de caracteres vazia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>Name '{0}' was not found.</source>
+        <target state="translated">O nome '{0}' não foi encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeOnRootInstance">
+        <source>Cannot attach NameScope to null root instance.</source>
+        <target state="translated">Não é possível anexar NameScope a uma instância de raiz nula.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationCannotBeXml">
+        <source>The prefix 'xml' is reserved.</source>
+        <target state="translated">O prefixo 'xml' está reservado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationNamespaceCannotBeNull">
+        <source>NamespaceDeclaration.Namespace cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Namespace não pode ser nulo. Forneça um valor para essa propriedade.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationPrefixCannotBeNull">
+        <source>NamespaceDeclaration.Prefix cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Prefix não pode ser nulo. Forneça um valor para essa propriedade.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceNotFound">
+        <source>Namespace '{0}' was not found in scope.</source>
+        <target state="translated">O namespace '{0}' não foi encontrado no escopo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAddMethodFound">
+        <source>No Add methods found on type '{0}' for a value of type '{1}'.</source>
+        <target state="translated">Nenhum método Add encontrado no tipo '{0}' para um valor do tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAttributeUsage">
+        <source>'{0}' is not allowed in attribute usage.</source>
+        <target state="translated">'{0}' não é permitido na utilização do atributo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructor">
+        <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">Nenhum construtor correspondente encontrado no tipo '{0}'. Você pode usar a diretiva Arguments ou FactoryMethod para construir esse tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructorWithNArugments">
+        <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
+        <target state="translated">Não foi encontrado um Construtor para '{0}' com '{1}' argumentos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDefaultConstructor">
+        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">Nenhum construtor padrão encontrado para o tipo '{0}'. Você pode usar a diretiva Arguments ou FactoryMethod para construir esse tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoElementUsage">
+        <source>'{0}' is not allowed in element usage.</source>
+        <target state="translated">'{0}' não é permitido na utilização do elemento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM">
+        <source>XAML Node Stream: Missing StartMember on Type '{0}' before EndMember.</source>
+        <target state="translated">Fluxo do Nó XAML: StartMember ausente no Tipo '{0}' antes de EndMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM_noType">
+        <source>XAML Node Stream: EndMember must follow StartObject and StartMember.</source>
+        <target state="translated">Fluxo do Nó XAML: EndMember deve seguir StartObject e StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO">
+        <source>XAML Node Stream: GetObject requires a StartMember after StartObject '{0}'.</source>
+        <target state="translated">Fluxo do Nó XAML: GetObject requer um StartMember após StartObject '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO_noType">
+        <source>XAML Node Stream: GetObject must follow a StartObject and StartMember.</source>
+        <target state="translated">Fluxo do Nó XAML: GetObject deve seguir um StartObject e um StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_NS">
+        <source>XAML Node Stream: '{0}'='{1}' Namespace Declaration requires a StartMember after StartObject '{2}'.</source>
+        <target state="translated">Fluxo do Nó XAML: a Declaração de Namespace '{0}'='{1}' requer um StartMember após StartObject '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_SO">
+        <source>XAML Node Stream: StartObject '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">Fluxo do Nó XAML: o StartObject '{0}' requer um StartMember após StartObject '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V">
+        <source>XAML Node Stream: Value of '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">Fluxo do Nó XAML: o valor de '{0}' requer um StartMember após StartObject '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V_noType">
+        <source>XAML Node Stream: Value of '{0}' must follow a StartObject and StartMember.</source>
+        <target state="translated">Fluxo do Nó XAML: o valor de '{0}' deve seguir um StartObject e um StartMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoSuchConstructor">
+        <source>No constructor with '{0}' arguments for '{1}'.</source>
+        <target state="translated">Nenhum construtor com '{0}' argumentos para '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing CurrentObject before EndObject.</source>
+        <target state="translated">Fluxo do Nó XAML: CurrentObject ausente antes de EndObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing StartObject before StartMember '{0}'.</source>
+        <target state="translated">Fluxo do Nó XAML: StartObject ausente antes de StartMember '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonMEWithPositionalParameters">
+        <source>Type with positional parameters is not a markup extension.</source>
+        <target state="translated">O tipo com parâmetros posicionais não é uma extensão de marcação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientProperty">
+        <source>'{0}'.'{1}' is not an ambient property.</source>
+        <target state="translated">'{0}'.'{1}' não é uma propriedade de ambiente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientType">
+        <source>'{0}' is not an ambient type.</source>
+        <target state="translated">'{0}' não é um tipo de ambiente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAssignableFrom">
+        <source>The type '{0}' is not assignable from the type '{1}'.</source>
+        <target state="translated">O tipo '{0}' não pode ser atribuído do tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotDeclaringTypeAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
+        <target state="translated">['{0}'('{1}')]5D; em '{2}' não é uma propriedade declarada nesse tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnDirective">
+        <source>This operation is not supported on directive members.</source>
+        <target state="translated">Não há suporte para essa operação em associados de diretiva.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownMember">
+        <source>This operation is not supported on unknown members.</source>
+        <target state="translated">Não há suporte para essa operação em associados desconhecidos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownType">
+        <source>This operation is not supported on unknown types.</source>
+        <target state="translated">Não há suporte para essa operação em tipos desconhecidos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectNotTcOrMe">
+        <source>Argument should be a Type Converter, Markup Extension or Null.</source>
+        <target state="translated">O argumento deve ser um Conversor de Tipo, uma Marcação de Extensão ou Nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderAttachedPropertyNotFound">
+        <source>Unable to find an attachable property named '{0}' on type '{1}'.</source>
+        <target state="translated">Não é possível encontrar uma propriedade anexável denominada '{0}' no tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderDictionaryMethod1NotFound">
+        <source>Unable to locate MemberMarkupInfo.DictionaryEntriesFromGeneric method.</source>
+        <target state="translated">Não é possível localizar o método MemberMarkupInfo.DictionaryEntriesFromGeneric.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArgumentTypes">
+        <source>InstanceDescriptor provided an argument of type '{0}' where a parameter of type '{1}' was expected.</source>
+        <target state="translated">InstanceDescriptor forneceu um argumento do tipo '{0}', no qual um parâmetro do tipo '{1}' era esperado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArguments">
+        <source>InstanceDescriptor did not provide the correct number of arguments.</source>
+        <target state="translated">InstanceDescriptor não forneceu o número correto de argumentos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorInvalidMethod">
+        <source>InstanceDescriptor did not provide a valid constructor or method.</source>
+        <target state="translated">InstanceDescriptor não forneceu um construtor ou método válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderMultidimensionalArrayNotSupported">
+        <source>Multidimensional arrays not supported.</source>
+        <target state="translated">Não há suporte para matrizes multidimensionais.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoDefaultConstructor">
+        <source>Unable to serialize type '{0}'.  Verify that the type is public and either has a default constructor or an instance descriptor.</source>
+        <target state="translated">Não é possível serializar o tipo '{0}'. Verifique se o tipo é público e se tem um construtor padrão ou um descritor de instância.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoMatchingConstructor">
+        <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
+        <target state="translated">Não é possível encontrar um construtor adequado para os argumentos de construtor especificados no tipo '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeCannotRoundtrip">
+        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Não é possível ler objetos do tipo {0}, pois não há construtores acessíveis. Para permitir que esse tipo seja usado em XAML, adicione um construtor padrão, use ConstructorArgumentAttribute ou fornece um InstanceDescriptor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeIsNested">
+        <source>Unable to read objects of the type '{0}'.  Nested types are not supported.</source>
+        <target state="translated">Não é possível ler objetos do tipo '{0}'. Não há suporte para tipos aninhados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to serialize this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectReader constructor.</source>
+        <target state="translated">'{0}' bloqueou o uso do tipo '{1}' em XAML. Se quiser serializar esse tipo, altere '{0}'.GetXamlType para que retorne um valor não nulo para esse tipo ou passe um valor diferente no parâmetro schemaContext do construtor XamlObjectReader.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamePropertyMustBeString">
+        <source>The name property '{0}' on type '{1}' must be of type System.String.</source>
+        <target state="translated">A propriedade de nome '{0}' no tipo '{1}' deve ser do tipo System.String.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
+        <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
+        <target state="translated">O gráfico do objeto contém várias referências a uma instância do tipo '{0}' e o serializador não pode encontrar um local visível comumente para gravar a instância. Você deve examinar o uso de escopos de nome.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
+        <source>An element with the name '{0}' has already been registered in this scope.</source>
+        <target state="translated">Um elemento com o nome '{0}' já foi registrado no escopo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReader_TypeNotVisible">
+        <source>Type '{0}' not visible. If the type is local, please set the LocalAssembly field in XamlReaderSettings.</source>
+        <target state="translated">O tipo '{0}' não é visível. Se o tipo é local, defina o campo LocalAssembly em XamlReaderSettings.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectWriterTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to load this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectWriter constructor.</source>
+        <target state="translated">'{0}' bloqueou o uso do tipo '{1}' em XAML. Se quiser carregar esse tipo, altere '{0}'.GetXamlType para que retorne um valor não nulo para esse tipo ou passe um valor diferente no parâmetro schemaContext do construtor XamlObjectWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollections">
+        <source>This operation is only supported on collection types.</source>
+        <target state="translated">Só há suporte para essa operação em tipos de coleção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollectionsAndDictionaries">
+        <source>This operation is only supported on collection and dictionary types.</source>
+        <target state="translated">Só há suporte para essa operação em tipos de coleção e dicionário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnDictionaries">
+        <source>This operation is only supported on dictionary types.</source>
+        <target state="translated">Só há suporte para essa operação em tipos de dicionário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before EndObject.</source>
+        <target state="translated">Fluxo do Nó XAML: EndMember ausente para '{0}.{1}' antes de EndObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
+        <target state="translated">Fluxo do Nó XAML: EndMember ausente para '{0}.{1}' antes de StartMember '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">O parâmetro deve ser maior ou igual a zero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentlessPropertyElement">
+        <source>The property element '{0}' is not contained by an object element.</source>
+        <target state="translated">O elemento de propriedade '{0}' não está contido em um elemento de objeto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">Não é possível carregar o assembly '{0}', pois uma versão diferente do mesmo assembly já está carregada '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">Muitos atributos especificados para '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' requer mais atributos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PositionalParamsWrongLength">
+        <source>GetPositionalParameters returned the wrong length vector.</source>
+        <target state="translated">GetPositionalParameters retornou o vetor de comprimento incorreto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotFound">
+        <source>Prefix '{0}' does not map to a namespace.</source>
+        <target state="translated">O prefixo '{0}' não é mapeado para um namespace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotInFrames">
+        <source>The prefix '{0}' could not be found.</source>
+        <target state="translated">O prefixo '{0}' não foi encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyDoesNotTakeText">
+        <source>'{0}' property on '{1}' does not allow you to specify text.</source>
+        <target state="translated">A propriedade '{0}' em '{1}' não permite a especificação de texto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotImplemented">
+        <source>'{0}' is not implemented.</source>
+        <target state="translated">'{0}' não está implementado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValue">
+        <source>Provide value on '{0}' threw an exception.</source>
+        <target state="translated">O valor fornecido em '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValueCycle">
+        <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
+        <target state="translated">Não é possível chamar MarkupExtension.ProvideValue devido a uma dependência cíclica. As propriedades em uma MarkupExtension não podem referenciar objetos que referenciam o resultado da MarkupExtension. As MarkupExtensions afetadas são:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">O nome de tipo '{0}' não tem o formato esperado 'nomeDaClasse, assembly'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QuoteCharactersOutOfPlace">
+        <source>Quote characters ' or " are only allowed at the start of values.</source>
+        <target state="translated">As aspas ' ou " só são permitidas no início de valores.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">Valor não pode ser nulo. Referência de objeto: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextMismatch">
+        <source>schemaContext parameter cannot be different from savedContext.SchemaContext</source>
+        <target state="translated">O parâmetro schemaContext não pode ser diferente de savedContext.SchemaContext</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextNull">
+        <source>savedContext.SchemaContext cannot be null</source>
+        <target state="translated">savedContext.SchemaContext não pode ser nulo</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNotInitialized">
+        <source>SchemaContext on writer must be initialized before accessing the reader.</source>
+        <target state="translated">SchemaContext no gravador deve ser inicializado antes do acesso ao leitor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNull">
+        <source>SchemaContext cannot be null.</source>
+        <target state="translated">SchemaContext não pode ser nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">Não é possível definir SandboxExternalContent como verdadeiro em confiança parcial.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlMissingAttribute">
+        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
+        <target state="translated">XML de segurança inválido. Atributo esperado ausente '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedTag">
+        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
+        <target state="translated">XML de segurança inválido. Marca '{0}' inesperada; esperava-se '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedValue">
+        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
+        <target state="translated">XML de segurança inválido. Valor '{0}' inesperado no atributo '{1}', esperava-se '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">O serviceType já está registrado em outro serviço.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetConnectionId">
+        <source>Set connectionId threw an exception.</source>
+        <target state="translated">A connectionId definida iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnlyProperty">
+        <source>'{0}'.'{1}' is a property without a getter and is not a valid XAML property.</source>
+        <target state="translated">'{0}'.'{1}' é uma propriedade sem um getter e não é uma propriedade XAML válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTargetTypeOnNonAttachableMember">
+        <source>Cannot set TargetType on a non-attachable Member.</source>
+        <target state="translated">Não é possível definir TargetType em um Associado não anexável.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetUriBase">
+        <source>Setting xml:base on '{0}' threw an exception.</source>
+        <target state="translated">A definição de xml:base em '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetValue">
+        <source>Set property '{0}' threw an exception.</source>
+        <target state="translated">A propriedade definida '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetXmlInstance">
+        <source>Setting xml instance on '{0}' threw an exception.</source>
+        <target state="translated">A definição da instância xml em '{0}' iniciou uma exceção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SettingPropertiesIsNotAllowed">
+        <source>Setting properties is not allowed on a type converted instance. Property = '{0}'</source>
+        <target state="translated">A definição de propriedades não é permitida em uma instância convertida por tipo. Propriedade = '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldOverrideMethod">
+        <source>Method '{0}' is not supported by default. It can be implemented in derived classes.</source>
+        <target state="translated">Por padrão, não há suporte para o método '{0}'. Ele pode ser implementado em classes derivadas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldSerializeFailed">
+        <source>ShouldSerialize check failed for member '{0}'.</source>
+        <target state="translated">Falha na verificação de ShouldSerialize para o associado '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SimpleFixupsMustHaveOneName">
+        <source>Directly Assignable Fixups must only have one name.</source>
+        <target state="translated">Ajustes que possam ser atribuídos diretamente devem ter somente um nome.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">O parâmetro não pode ser uma cadeia de caracteres de comprimento zero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">A cadeia de caracteres é nula ou vazia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNotCollected">
+        <source>Deferred load section was not collected in '{0}'.</source>
+        <target state="translated">A seção de carregamento adiado não foi coletada em '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadAlreadyStarted">
+        <source>Thread is already started.</source>
+        <target state="translated">O thread já foi iniciado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(nulo)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Encontrado um token vazio na posição {0} ao analisar '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Encontrados dados adicionais na posição {0} ao analisar '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">Encontrada aspa de fechamento ausente ao analisar '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">Encontrado um término prematuro da cadeia de caracteres ao analisar '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributes">
+        <source>Error with member '{0}'.'{1}'.  It has more than one '{2}'.</source>
+        <target state="translated">Erro com o associado '{0}'.'{1}'. Ele tem mais de um '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributesOnType">
+        <source>Error with type '{0}'.  It has more than one '{1}'.</source>
+        <target state="translated">Erro com o tipo '{0}'. Ele tem mais de um '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyTypeConverterAttributes">
+        <source>Only one TypeConverter attribute is allowed on a type.</source>
+        <target state="translated">Somente um atributo TypeConverter é permitido em um tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransitiveForwardRefDirectives">
+        <source>Object '{0}' assigned to directive '{1}' has properties which are references to named object(s) '{2}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported inside object construction directives.</source>
+        <target state="translated">O objeto '{0}' atribuído à diretiva '{1}' tem propriedades que são referências a objetos nomeados '{2}' que ainda não foram definidos. Não há suporte em diretivas de construção de objeto para referências de encaminhamento ou referências a objetos que contêm referências de encaminhamento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed">
+        <source>Failed to create a '{0}' from the text '{1}'.</source>
+        <target state="translated">Falha ao criar um '{0}' do texto '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed2">
+        <source>Failed to convert '{0}' to type '{1}'.</source>
+        <target state="translated">Falha ao converter '{0}' no tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasInvalidXamlName">
+        <source>The name of the type '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">O nome do tipo '{0}' contém caracteres inválidos em XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasNoContentProperty">
+        <source>Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.</source>
+        <target state="translated">O tipo '{0}' não tem uma propriedade de conteúdo. Especifique o nome da propriedade a ser definida ou adicione um ContentPropertyAttribute ou TypeConverterAttribute no tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">Não é possível alterar os metadados da propriedade após serem associados a uma propriedade.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNameCannotHavePeriod">
+        <source>Type name '{0}' cannot have a dot '.'.</source>
+        <target state="translated">O nome do tipo '{0}' não pode ter um ponto '.'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotFound">
+        <source>Type reference cannot find type named '{0}'.</source>
+        <target state="translated">A referência de tipo não pode encontrar o tipo denominado '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotPublic">
+        <source>Type '{0}' is not public.</source>
+        <target state="translated">O tipo '{0}' não é público.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnclosedQuote">
+        <source>Unclosed quoted value.</source>
+        <target state="translated">Aspas não fechadas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedClose">
+        <source>Unexpected close of XAML Node Stream.</source>
+        <target state="translated">Fechamento inesperado do Fluxo do Nó XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedConstructorArg">
+        <source>Invalid metadata for attribute '{0}' on '{1}'. Expected '{2}' argument(s) of type '{3}'.</source>
+        <target state="translated">Metadados inválidos para o atributo '{0}' em '{1}'. Esperava-se '{2}' argumentos do tipo '{3}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedNodeType">
+        <source>Unexpected '{0}' in parse rule '{1}'.</source>
+        <target state="translated">'{0}' inesperado na regra de análise '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">O parâmetro é do tipo '{0}' inesperado. O tipo esperado é '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedToken">
+        <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
+        <target state="translated">Token '{0}' inesperado na regra: '{1}', em '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedTokenAfterME">
+        <source>Unexpected token after end of markup extension.</source>
+        <target state="translated">Token inesperado após o término da extensão de marcação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnhandledBoolTypeBit">
+        <source>Unhandled BoolTypeBit.</source>
+        <target state="translated">BoolTypeBit não tratado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
+        <target state="translated">['{0}'('{1}')]5D; em '{2}' não é uma propriedade conhecida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMember">
+        <source>Unknown member '{0}' on '{1}'.</source>
+        <target state="translated">Associado '{0}' desconhecido em '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberOnUnknownType">
+        <source>Unknown member '{0}' on unknown type '{1}'.</source>
+        <target state="translated">Associado '{0}' desconhecido no tipo desconhecido '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberSimple">
+        <source>Unknown member '{0}'.</source>
+        <target state="translated">Associado '{0}' desconhecido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownType">
+        <source>Unknown type '{0}'.</source>
+        <target state="translated">Tipo desconhecido '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedForwardReferences">
+        <source>Unresolved reference '{0}'.</source>
+        <target state="translated">Referência não resolvida '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedNamespace">
+        <source>XAML namespace '{0}' is not resolved.</source>
+        <target state="translated">O namespace XAML '{0}' não está resolvido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotFound">
+        <source>Uri '{0}' was not found.</source>
+        <target state="translated">O Uri '{0}' não foi encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsableDuringInitializationOnME">
+        <source>Error with type '{0}'. MarkupExtensions cannot use the 'UsableDuringInitialization' attribute.</source>
+        <target state="translated">Erro com o tipo '{0}'. MarkupExtensions não pode usar o atributo 'UsableDuringInitialization'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueInArrayIsNull">
+        <source>A value in the '{0}' array is null.</source>
+        <target state="translated">Um valor na matriz '{0}' é nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFollowedByEndMember">
+        <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
+        <target state="translated">Fluxo do Nó XAML: os nós de valores devem ser seguidos por EndMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">O índice especificado está fora do intervalo ou o filho no índice é nulo. Não chame esse método se VisualChildrenCount retornar zero, indicando que o Visual não tem filhos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhiteSpaceInCollection">
+        <source>XamlXmlWriter cannot write value '{0}' which contains significant white space in collection '{1}'.</source>
+        <target state="translated">XamlXmlWriter não pode gravar o valor '{0}' que contém espaço em branco significativo na coleção '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhitespaceAfterME">
+        <source>White space is not allowed after end of markup extension.</source>
+        <target state="translated">Não é permitido espaço em branco após o término da extensão de marcação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriterIsClosed">
+        <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
+        <target state="translated">Foi feita uma tentativa de gravar em um XamlWriter cujo método Closed havia sido chamado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice não pode seguir Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent deve conter um ou mais elementos Choice.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice é válido somente em AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">Há um ciclo de definições de compatibilidade de XML, fazendo com que o namespace '{0}' substitua a ele mesmo. Isso pode acontecer devido a XmlnsCompatibilityAttributes inconsistentes em assemblies diferentes. Altere as definições para eliminar esse ciclo ou passe um conjunto não conflitante de Assemblies de Referência no construtor XamlSchemaContext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">Declaração Preserve duplicada para o elemento '{1}' no namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">Declaração ProcessContent duplicada para o elemento '{1}' no namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">Declaração Preserve duplicada do curinga para o namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">Declaração ProcessContent duplicada do curinga para o namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback é válido somente em AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">O elemento '{0}' não é um elemento filho válido de AlternateContent. Somente os elementos Choice e Fallback são filhos válidos de um elemento AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">O atributo '{0}' não é válido para o elemento '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">O formato '{0}' não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">Não é possível ter uma declaração Preserve específica e curinga para o namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">Não é possível ter uma declaração ProcessContent específica e curinga para o namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">O atributo Requires deve conter um prefixo de namespace válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">O valor do atributo '{0}' não é um nome XML válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent deve conter somente um elemento Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">Falha da condição MustUnderstand no namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">O namespace '{0}' não pode preservar itens; primeiro, ele deve ser declarado Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">O namespace '{0}' não pode processar o conteúdo; primeiro, ele deve ser declarado Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain a Requires attribute.</source>
+        <target state="translated">Choice deve conter um atributo Requires.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">O prefixo '{0}' não está definido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">Atributo de compatibilidade '{0}' não reconhecido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">Elemento Compatibility não reconhecido '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XClassMustMatchRootInstance">
+        <source>Specified class name '{0}' doesn't match actual root instance type '{1}'. Remove the Class directive or provide an instance via XamlObjectWriterSettings.RootObjectInstance.</source>
+        <target state="translated">O nome de classe especificado '{0}' não corresponde ao tipo de instância raiz real '{1}'. Remova a diretiva Class ou forneça uma instância via XamlObjectWriterSettings.RootObjectInstance.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlFactoryInvalidXamlNode">
+        <source>Unexpected XAML node type '{0}' from XamlReader in XamlFactory.</source>
+        <target state="translated">Tipo de nó XAML '{0}' inesperado de XamlReader em XamlFactory.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotSetSchemaContext">
+        <source>Cannot set SchemaContext on XamlMarkupExtensionWriter.</source>
+        <target state="translated">Não é possível definir SchemaContext em XamlMarkupExtensionWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Não é possível gravar um valor que não seja uma cadeia de caracteres.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">O associado '{0}' já foi gravado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterInputInvalid">
+        <source>Errors detected in input.</source>
+        <target state="translated">Erros detectados na entrada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameCannotGetPrefix">
+        <source>Cannot convert this XamlTypeName instance to a string because the provided INamespacePrefixLookup could not generate a prefix for the namespace '{0}'.</source>
+        <target state="translated">Não é possível converter essa instância de XamlTypeName em uma cadeia de caracteres, pois o INamespacePrefixLookup fornecido não pôde gerar um prefixo para o namespace '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNameIsNullOrEmpty">
+        <source>Cannot convert this XamlTypeName instance to a string because the Name property is null or empty. Set the Name property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Não é possível converter essa instância de XamlTypeName em uma cadeia de caracteres, pois a propriedade Name é nula ou está vazia. Defina essa propriedade antes de chamar XamlTypeName.ToString.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNamespaceIsNull">
+        <source>Cannot convert this XamlTypeName instance to a string because the Namespace property is null. Set the Namespace property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Não é possível converter essa instância de XamlTypeName em uma cadeia de caracteres, pois a propriedade Namespace é nula. Defina essa propriedade antes de chamar XamlTypeName.ToString.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Não é possível gravar um valor que não seja uma cadeia de caracteres.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">O associado '{0}' já foi gravado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections">
+        <source>The argument isObjectFromMember can only be set to true when the type is a collection.</source>
+        <target state="translated">O argumento isObjectFromMember só pode ser definido como verdadeiro quando o tipo é uma coleção.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope">
+        <source>Namespace '{0}' already has a prefix defined in current scope.</source>
+        <target state="translated">O namespace '{0}' já tem um prefixo definido no escopo atual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterPrefixAlreadyDefinedInCurrentScope">
+        <source>The prefix '{0}' is already defined in current scope.</source>
+        <target state="translated">O prefixo '{0}' já está definido no escopo atual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteNotSupportedInCurrentState">
+        <source>Unable to call '{0}' in current state.</source>
+        <target state="translated">Não é possível chamar '{0}' no estado atual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteObjectNotSupportedInCurrentState">
+        <source>Unable to call WriteObject with isObjectFromMember set to true in current state.</source>
+        <target state="translated">Não é possível chamar WriteObject com isObjectFromMember definido como verdadeiro no estado atual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XaslTypePropertiesNotImplemented">
+        <source>Need to implement public/internal sorting.</source>
+        <target state="translated">É necessário implementar a classificação pública/interna.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlDataNull">
+        <source>The value for XmlData property '{0}' is null or not IXmlSerializable.</source>
+        <target state="translated">O valor da propriedade XmlData '{0}' não é nulo ou não é IXmlSerializable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlValueNotReader">
+        <source>The value for XmlData property '{0}' is not an XmlReader.</source>
+        <target state="translated">O valor da propriedade XmlData '{0}' não é XmlReader.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlnsCompatCycle">
+        <source>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</source>
+        <target state="translated">Há um ciclo de definições de XmlnsCompatibleWithAttribute no assembly '{0}', fazendo com que o namespace '{1}' substitua a ele mesmo. Altere as definições para eliminar esse ciclo.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

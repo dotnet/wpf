@@ -9,11 +9,9 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Windows;
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -37,12 +35,7 @@ namespace System.Windows.Markup
         /// </summary>
         public TypeExtension(string typeName)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException("typeName");
-            }
-            
-            _typeName = typeName;
+            _typeName = typeName ?? throw new ArgumentNullException(nameof(typeName));
         }
 
         /// <summary>
@@ -50,12 +43,7 @@ namespace System.Windows.Markup
         /// </summary>
         public TypeExtension(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-
-            _type = type;
+            _type = type ?? throw new ArgumentNullException(nameof(type));
             // we would like to set TypeName here, but we can't because we can't resolve its namespace
         }
 
@@ -88,7 +76,7 @@ namespace System.Windows.Markup
 
             if (serviceProvider == null)
             {
-                throw new ArgumentNullException("serviceProvider");
+                throw new ArgumentNullException(nameof(serviceProvider));
             }            
 
             IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
@@ -120,12 +108,7 @@ namespace System.Windows.Markup
             get { return _typeName; }
             set 
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                _typeName = value;
+                _typeName = value ?? throw new ArgumentNullException(nameof(value));
                 _type = null; // so that ProvideValue does not use the existing type
             }
         }
@@ -139,13 +122,8 @@ namespace System.Windows.Markup
         {
             get { return _type; }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                _type = value; 
+            {
+                _type = value ?? throw new ArgumentNullException(nameof(value)); 
                 _typeName = null; // so that ProvideValue does not use the existing typeName
             }
         }

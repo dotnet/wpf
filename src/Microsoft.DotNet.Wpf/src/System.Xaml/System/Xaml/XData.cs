@@ -7,8 +7,8 @@
 // don't have to load System.Xml in the BAML case unless we really
 // do have an XML Island.
 
-using System.Xml;
 using System.IO;
+using System.Xml;
 
 namespace System.Windows.Markup
 {
@@ -41,7 +41,7 @@ namespace System.Windows.Markup
                 if (_reader == null)
                 {
                     StringReader stringReader = new StringReader(Text);
-                    _reader = System.Xml.XmlReader.Create(stringReader);
+                    _reader = Xml.XmlReader.Create(stringReader);
                 }
                 return _reader;
             }

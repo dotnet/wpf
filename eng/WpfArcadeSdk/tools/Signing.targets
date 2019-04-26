@@ -1,0 +1,6 @@
+<Project InitialTargets="ValidateUniqueKeyIdRequest">
+  <Target Name="ValidateUniqueKeyIdRequest">
+    <Error Condition="'$(UseEcmaKey)'=='true' And '$(UseMicrosoftSharedKey)'=='true'"
+           Message="Both UseEcmaKey and UseMicrosoftSharedKey are set to true. Only one of these can be enabled at any one time"/>
+  </Target>
+</Project>

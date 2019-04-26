@@ -10,10 +10,6 @@
 //
 //
 
-using System;
-using System.Windows;
-using System.Reflection;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

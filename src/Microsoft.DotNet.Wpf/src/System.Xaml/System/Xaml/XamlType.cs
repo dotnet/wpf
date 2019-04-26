@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,9 +10,9 @@ using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading;
+using System.Windows.Markup;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
-using System.Windows.Markup;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -49,16 +48,8 @@ namespace System.Xaml
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException("typeName");
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-            _name = typeName;
-            _schemaContext = schemaContext;
+            _name = typeName ?? throw new ArgumentNullException(nameof(typeName));
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
         }
 
@@ -66,19 +57,12 @@ namespace System.Xaml
         {
             if (unknownTypeNamespace == null)
             {
-                throw new ArgumentNullException("unknownTypeNamespace");
+                throw new ArgumentNullException(nameof(unknownTypeNamespace));
             }
-            if (unknownTypeName == null)
-            {
-                throw new ArgumentNullException("unknownTypeName");
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-            _name = unknownTypeName;
+
+            _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
         }        
@@ -102,15 +86,12 @@ namespace System.Xaml
         {
             if (underlyingType == null)
             {
-                throw new ArgumentNullException("underlyingType");
+                throw new ArgumentNullException(nameof(underlyingType));
             }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
+
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(underlyingType, schemaContext);
             _underlyingType.Value = underlyingType;
             _reflector.Invoker = invoker;
@@ -457,7 +438,7 @@ namespace System.Xaml
 
         public virtual bool CanAssignTo(XamlType xamlType)
         {
-            if (object.ReferenceEquals(xamlType, null))
+            if (xamlType is null)
             {
                 return false;
             }
@@ -1604,7 +1585,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(this.GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
+                    Debug.Assert(GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
                 }
             }
             return new ReadOnlyCollection<XamlMember>(result);
@@ -1799,11 +1780,11 @@ namespace System.Xaml
         // name/namespace fallback for known non-CLR types
         public static bool operator ==(XamlType xamlType1, XamlType xamlType2)
         {
-            if (object.ReferenceEquals(xamlType1, xamlType2))
+            if (ReferenceEquals(xamlType1, xamlType2))
             {
                 return true;
             }
-            if (object.ReferenceEquals(xamlType1, null) || object.ReferenceEquals(xamlType2, null))
+            if (xamlType1 is null || xamlType2 is null)
             {
                 return false;
             }
@@ -1864,7 +1845,7 @@ namespace System.Xaml
         internal static class EmptyList<T>
         {
             public static readonly ReadOnlyCollection<T> Value =
-                new ReadOnlyCollection<T>(new T[0]);
+                new ReadOnlyCollection<T>(Array.Empty<T>());
         }
     }
 }

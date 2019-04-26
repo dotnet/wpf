@@ -23,7 +23,7 @@
   </PropertyGroup>
   
   <ItemGroup Condition="'$(TargetFramework)'!='net35'">
-    <PackageReference Include="System.Reflection.Emit" Version="$(SystemReflectionEmitVersion)" />
+    <PackageReference Include="System.Reflection.Emit" Version="$(SystemReflectionEmitPackageVersion)" />
   </ItemGroup>
   
   <!-- When IsUnitTestProject is set by Arcade, these ProjectReferences are implicitly included -->

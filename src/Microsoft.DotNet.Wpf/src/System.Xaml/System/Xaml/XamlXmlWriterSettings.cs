@@ -4,8 +4,6 @@
 
 namespace System.Xaml
 {
-    using System;
-
     public class XamlXmlWriterSettings : XamlWriterSettings
     {
         public bool AssumeValidInput
@@ -17,8 +15,8 @@ namespace System.Xaml
         {
             return new XamlXmlWriterSettings()
             {
-                AssumeValidInput = this.AssumeValidInput,
-                CloseOutput = this.CloseOutput
+                AssumeValidInput = AssumeValidInput,
+                CloseOutput = CloseOutput
             };
         }
     }

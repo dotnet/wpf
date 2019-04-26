@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
+    <body>
+      <trans-unit id="APSException">
+        <source>Enumerating attached properties on object '{0}' threw an exception.</source>
+        <target state="translated">'{0}' nesnesine eklenen özellikler numaralandırılırken özel durum döndürüldü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddCollection">
+        <source>Add value to collection of type '{0}' threw an exception.</source>
+        <target state="translated">'{0}' türündeki koleksiyona değer ekleme işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddDictionary">
+        <source>Add value to dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">'{0}' türündeki sözlüğe değer ekleme işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousCollectionItemType">
+        <source>Cannot determine the item type of collection type '{0}' because it has more than one Add method or ICollection&lt;T&gt; implementation. To make this collection type usable in XAML, add a public Add(object) method, implement System.Collections.IList or a single System.Collections.Generic.ICollection&lt;T&gt;.</source>
+        <target state="translated">'{0}' koleksiyon türünün birden çok Add metodu veya ICollection&lt;T&gt; uygulaması olduğundan, öğe türü saptanamıyor. Bu koleksiyon türünün XAML'de kullanılabilir olmasını sağlamak için bir ortak Add(object) metodu ekleyin, System.Collections.IList veya tek bir System.Collections.Generic.ICollection&lt;T&gt; uygulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AmbiguousDictionaryItemType">
+        <source>Cannot determine the item type of dictionary type '{0}' because it has more than one Add method or IDictionary&lt;K,V&gt; implementation. To make this dictionary type usable in XAML, add a public Add(object,object) method, implement System.Collections.IDictionary or a single System.Collections.Generic.IDictionary&lt;K,V&gt;.</source>
+        <target state="translated">'{0}' sözlük türünün birden çok Add metodu veya IDictionary&lt;K,V&gt; uygulaması olduğundan, öğe türü saptanamıyor. Bu koleksiyon türünün XAML'de kullanılabilir olmasını sağlamak için bir ortak Add(object,object) metodu ekleyin, System.Collections.IDictionary veya tek bir System.Collections.Generic.IDictionary&lt;K,V&gt; uygulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">XAML içinde bir KeyFrameAnimation alt öğesinin uyumlu türde bir KeyFrame olması gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidAnimationUsingKeyFramesDuration">
+        <source>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</source>
+        <target state="translated">'{0}', Duration için bir TimeSpan veya son KeyFrame'inin KeyTime için bir TimeSpan içermelidir. Bu '{0}' bir '{1}' Duration ve son KeyFrame için '{2}' KeyTime içeriyor ve bu nedenle KeyTime'lar çözülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">'{0}', '{2}' sınıfı için geçerli bir '{1}' değeri değildir. Bu değer animasyonu oluşturulan özelliğin temel değeri veya aynı özelliğe uygulanan başka bir animasyonun çıkış değeri tarafından sağlanmış olabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}]5D; has specified KeyTime '{2}', which resolves to time {3}; KeyFrames[{4}]5D; has specified KeyTime '{5}', which resolves to time {6}. Some KeyTimes are resolved relative to Begin time of '{0}' and others relative to its Duration, so some sets of KeyTimes are not valid for all Durations.</source>
+        <target state="translated">{1} dizinindeki anahtar çerçevenin çözülen KeyTime'ı {4} dizinindeki anahtar çerçevenin çözülen KeyTime'ından büyük olamaz. KeyFrames'ler[{1}]5D; {3} süresine çözülen KeyTime '{2}' belirtti; KeyFrames'ler[{4}]5D; {6} süresine çözülen KeyTime '{5}' belirtti. Bazı KeyTime'lar '{0}' Begin saatine göre çözüldü ve diğerleri Duration'a göre çözüldü, bu nedenle bazı KeyTime kümeleri tüm Duration'lar için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">'{2}' KeyTime değeri, animasyonun '{3}' Duration değerinden büyük olduğundan bu '{0}' öğesinin {1} dizinindeki anahtar çerçeve için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">'{0}' varsayılan {1} değeri olarak '{2}' kullanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">KeyFrameAnimation nesneleri alt öğe olarak metin nesneleri içeremez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentRequired">
+        <source>One of the following arguments must be non-null: '{0}'.</source>
+        <target state="translated">Şu bağımsız değişkenlerden biri null dışında bir değer olmalıdır: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArrayAddNotImplemented">
+        <source>Array Add method is not implemented.</source>
+        <target state="translated">Dizi Add metodu uygulanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AssemblyTagMissing">
+        <source>Part between semicolon ';' and equals sign '=' is not '{0}' URI '{1}'.</source>
+        <target state="translated">Noktalı virgül ';' ile eşittir işareti '=' arasındaki bölüm '{0}' URI '{1}' değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableEventNotImplemented">
+        <source>Attachable events are not implemented.</source>
+        <target state="translated">Eklenebilir olaylar uygulanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachableMemberNotFound">
+        <source>Attachable member '{0}' was not found.</source>
+        <target state="translated">Eklenebilir '{0}' üyesi bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropOnFwdRefTC">
+        <source>Cannot set property '{0}' on object '{1}' because the object is a forward or incompletely initialized reference. The unresolved name(s) are: '{2}'.</source>
+        <target state="translated">'{1}' nesnesi bir iletme veya eksik başlatılmış bir başvuru olduğundan bu nesnede '{0}' özelliği ayarlanamıyor. Çözümlenmeyen adlar: '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnDictionaryKey">
+        <source>An attachable property named '{1}' is attached on a dictionary key '{0}' that is either a string or can be type-converted to string, which is not supported.</source>
+        <target state="translated">Eklenebilir '{1}' adlı özellik bir dize olan veya dize türüne dönüştürülebilen '{0}' sözlük anahtarına eklendi; bu desteklenmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttachedPropertyOnTypeConvertedOrStringProperty">
+        <source>An attachable property named '{2}' is attached to a property named '{1}'.  The property named '{1}' is either a string or can be type-converted to string; attaching on such properties are not supported.  For debugging, the property '{1}' contains an object '{0}'.</source>
+        <target state="translated">Eklenebilir '{2}' adlı özellik '{1}' adlı özelliğe eklendi. '{1}' adlı özellik bir dize veya dize türüne dönüştürülebilir; bu tür özelliklere ekleme işlemi desteklenmez. Hata ayıklama için, '{1}' özelliği '{0}' nesnesi içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeUnhandledKind">
+        <source>An unhandled scanner attribute was encountered.</source>
+        <target state="translated">İşlenmemiş tarayıcı özniteliğiyle karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo1">
+        <source>One of the InternalsVisibleToAttribute values in assembly '{0}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kodundaki InternalsVisibleToAttribute değerlerinden biri geçerli bir bütünleştirilmiş kod adı değil. 'AssemblyShortName' veya 'AssemblyShortName, PublicKey=...' biçimini kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadInternalsVisibleTo2">
+        <source>InternalsVisibleToAttribute value '{0}' in assembly '{1}' is not a valid assembly name. Use the format 'AssemblyShortName' or 'AssemblyShortName, PublicKey=...'.</source>
+        <target state="translated">'{1}' bütünleştirilmiş kodundaki '{0}' InternalsVisibleToAttribute değeri geçerli bir bütünleştirilmiş kod adı değil. 'AssemblyShortName' veya 'AssemblyShortName, PublicKey=...' biçimini kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadMethod">
+        <source>Bad method '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' öğesinde hatalı '{0}' metodu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadStateObjectWriter">
+        <source>Bad state in ObjectWriter. Non directive missing instance.</source>
+        <target state="translated">ObjectWriter'da hatalı durum. Yönerge olmayan eksik örnek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsCompat">
+        <source>An XmlnsCompatibleWithAttribute in assembly '{0}' is missing a required property. Set both the NewNamespace and OldNamespace properties, or remove the XmlnsCompatibleWithAttribute.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kodundaki XmlnsCompatibleWithAttribute'te gerekli bir özellik eksik. NewNamespace ve OldNamespace özelliklerinin her ikisini de ayarlayın veya XmlnsCompatibleWithAttribute'u kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsDefinition">
+        <source>An XmlnsDefinitionAttribute in assembly '{0}' is missing a required property. Set both the ClrNamespace and XmlNamespace properties, or remove the XmlnsDefinitionAttribute.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kodundaki XmlnsDefinitionAttribute'te gerekli bir özellik eksik. ClrNamespace ve XmlNamespace özelliklerinin her ikisini de ayarlayın veya XmlnsDefinitionAttribute'u kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXmlnsPrefix">
+        <source>An XmlnsPrefixAttribute in assembly '{0}' is missing a required property. Set both the Prefix and XmlNamespace properties, or remove the XmlnsPrefixAttribute.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kodundaki XmlnsPrefixAttribute'te gerekli bir özellik eksik. Prefix ve XmlNamespace özelliklerinin her ikisini de ayarlayın veya XmlnsPrefixAttribute'u kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BuilderStackNotEmptyOnClose">
+        <source>Builder Stack is not empty when end of XamlNode stream was reached.</source>
+        <target state="translated">XamlNode akışının sonuna ulaşıldığında Oluşturucu Yığını boş değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertFromFailed">
+        <source>Failed to check convertibility from type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">'{1}' kullanılarak '{0}' türünden dönüştürülebilirlik denetimi başarısız oldu. Bu durum genel olarak yanlış uygulanan bir TypeConverter'ı gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanConvertToFailed">
+        <source>Failed to check convertibility to type '{0}' using '{1}'. This generally indicates an incorrectly implemented TypeConverter.</source>
+        <target state="translated">'{1}' kullanılarak '{0}' türüne dönüştürülebilirlik denetimi başarısız oldu. Bu durum genel olarak yanlış uygulanan bir TypeConverter'ı gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAddPositionalParameters">
+        <source>In markup extensions, all constructor argument values should be atoms.  For the object of type '{0}', one or more argument values are not atomic.</source>
+        <target state="translated">İşaretleme uzantılarında, tüm oluşturucu bağımsız değişken değerleri atomlar olmalıdır. '{0}' türündeki nesne için, bir veya birden çok bağımsız değişken değeri atomik değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">'{0}' dize değeri '{1}' türüne dönüştürülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">'{0}' türü '{1}' olarak dönüştürülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadEventDelegate">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">XamlType geçerli olmadığından '{0}' örneği oluşturulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotCreateBadType">
+        <source>Cannot create an instance of '{0}' because XamlType is not valid.</source>
+        <target state="translated">XamlType geçerli olmadığından '{0}' örneği oluşturulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotFindAssembly">
+        <source>Cannot find Assembly '{0}' in URI '{1}'.</source>
+        <target state="translated">'{1}' URI'sinde '{0}' Bütünleştirilmiş Kodu bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">Salt okunur kapsayıcı değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotReassignSchemaContext">
+        <source>Cannot reassign a previously set SchemaContext.</source>
+        <target state="translated">Daha önceden ayarlanmış bir SchemaContext yeniden atanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotResolveTypeForFactoryMethod">
+        <source>Cannot resolve type '{0}' for method '{1}'.</source>
+        <target state="translated">'{1}' metodu için '{0}' türü çözümlenemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">Salt yazılır bir kapsayıcıdan bölüm veya bölüm bilgileri alınamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetBaseUri">
+        <source>BaseUri can only be set once at the root node (XamlXmlReader may provide a default at the root node).</source>
+        <target state="translated">BaseUri, kök düğümünde yalnızca bir kere ayarlanabilir (XamlXmlReader kök düğümünde bir varsayılan değer sağlayabilir).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContext">
+        <source>Cannot set SchemaContext on ObjectWriter.</source>
+        <target state="translated">ObjectWriter'da SchemaContext ayarlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSetSchemaContextNull">
+        <source>Cannot set SchemaContext to null.</source>
+        <target state="translated">SchemaContext null olarak ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteClosedWriter">
+        <source>Cannot write on a closed XamlWriter.</source>
+        <target state="translated">Kapatılmış bir XamlWriter'a yazılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotWriteXmlSpacePreserveOnMember">
+        <source>The value '{1}' contains significant white space(s) but "xml:space = preserve" cannot be written down on the member '{0}'.</source>
+        <target state="translated">'{1}' değeri önemli boş alan(lar) içeriyor ancak "xml:space = preserve" '{0}' üyesine yazılamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantAssignRootInstance">
+        <source>Cannot assign root instance of type '{0}' to type '{1}'.</source>
+        <target state="translated">'{0}' türündeki kök örnek '{1}' türüne atanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantCreateUnknownType">
+        <source>Cannot create unknown type '{0}'.</source>
+        <target state="translated">Bilinmeyen '{0}' türü oluşturulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantGetWriteonlyProperty">
+        <source>Cannot get write-only property '{0}'.</source>
+        <target state="translated">Salt yazılır '{0}' özelliği alınamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetReadonlyProperty">
+        <source>Cannot set read-only property '{0}'.</source>
+        <target state="translated">Salt okunur '{0}' özelliği ayarlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantSetUnknownProperty">
+        <source>Cannot set unknown member '{0}'.</source>
+        <target state="translated">Bilinmeyen '{0}' üyesi ayarlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseInsideTemplate">
+        <source>Close called while inside a deferred load section.</source>
+        <target state="translated">Ertelenmiş yükleme bölümü içindeyken kapatma çağrısı yapıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseXamlWriterBeforeReading">
+        <source>Must close XamlWriter before reading from XamlNodeList.</source>
+        <target state="translated">XamlNodeList'ten okunmadan XamlWriter kapatılmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionCannotContainNulls">
+        <source>Collection '{0}' cannot contain null values.</source>
+        <target state="translated">'{0}' koleksiyonu null değerler içeremez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">Bu koleksiyondaki öğe sayısı '{0}' değerine eşit veya daha az olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">'{0}' türünde bir koleksiyona '{1}' türünde örnek eklenemez. Yalnızca '{2}' türünde öğelere izin verilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">Bir koleksiyonda CopyTo yöntemine çok boyutlu dizi geçirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">'{0}' parametre değeri '{1}' parametre değerinin uzunluğuna eşit veya daha büyük.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">Bu koleksiyondaki öğe sayısı, '{0}' ile '{1}' hedefinin sonuna kadar olan kullanılabilir alandan daha büyük.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructImplicitType">
+        <source>Failed attempting to create an Implicit Type with a constructor.</source>
+        <target state="translated">Oluşturucuyla Implicit Type oluşturma girişimi başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorInvocation">
+        <source>The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">Belirtilen bağlama kısıtlamalarıyla eşleşen '{0}' türündeki oluşturucuyu çağırma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorNotFoundForGivenPositionalParameters">
+        <source>Cannot write the given positional parameters because a matching constructor was not found.</source>
+        <target state="translated">Eşleşen oluşturucu bulunamadığından verilen konum parametreleri yazılamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">'{0}' ValueSerializer, '{1}' değerinden dönüştürülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">'{0}' ValueSerializer '{1}' öğesini '{2}' olarak dönüştüremiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConverterMustDeriveFromBase">
+        <source>Converter type '{0}' doesn't derive from expected base type '{1}'.</source>
+        <target state="translated">Beklenen '{1}' temel türünden '{0}' dönüştürücü türü türetilmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultAttachablePropertyStoreCannotAddInstance">
+        <source>Failed to add attached properties to item in ConditionalWeakTable.</source>
+        <target state="translated">Eklenen özellikler ConditionalWeakTable içindeki öğeye eklenemedi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredLoad">
+        <source>Deferred load threw an exception.</source>
+        <target state="translated">Ertelenmiş yükleme özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredPropertyNotCollected">
+        <source>Deferred member was not collected in '{0}'.</source>
+        <target state="translated">Ertelenmiş üye '{0}' içinde toplanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferredSave">
+        <source>Save of deferred-load content threw an exception.</source>
+        <target state="translated">Ertelenmiş yükleme içeriğini kaydetme işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeferringLoaderInstanceNull">
+        <source>Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.</source>
+        <target state="translated">'{0}' XamlValueConverter'dan XamlDeferringLoader alınamadı çünkü ConverterInstance özelliği null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DependsOnMissing">
+        <source>'{0}'.'{1}' Depends on '{0}'.{1}', which was not set.</source>
+        <target state="translated">'{0}'.'{1}' Ayarlanmamış olan '{0}'.{1}' değerine bağımlı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryFirstChanceException">
+        <source>Dictionary of type '{0}' cannot add key '{1}'. A TypeConverter will convert the key to type '{2}'. To avoid seeing this error, override System.Collections.IDictionary.Add and perform the conversion there.</source>
+        <target state="translated">'{0}' türündeki sözlük '{1}' anahtarını ekleyemez. TypeConverter anahtarı '{2}' türüne dönüştürecek. Bu hatayı görmemek için System.Collections.IDictionary.Add metodunu geçersiz kılın ve dönüştürme işlemini orada gerçekleştirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveGetter">
+        <source>Directive getter is not implemented.</source>
+        <target state="translated">Yönerge alıcısı uygulanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveMustBeString">
+        <source>Directive '{0}' must be a value of type string. Remove this directive or change it to a string value.</source>
+        <target state="translated">'{0}' yönergesi dize türünde bir değer olmalıdır. Bu yönergeyi kaldırın veya dize değeri olacak şekilde değiştirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotAtRoot">
+        <source>Directive '{0}' is only allowed on the root object. Remove this directive or move it to the root of the document.</source>
+        <target state="translated">'{0}' yönergesine yalnızca kök nesnede izin verilir. Bu yönergeyi kaldırın veya bunu belgenin köküne taşıyın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectiveNotFound">
+        <source>Directive '{0}' was not found in TargetNamespace '{1}'.</source>
+        <target state="translated">'{0}' yönergesi '{1}' TargetNamespace içinde bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateMemberSet">
+        <source>'{0}' property has already been set on '{1}'.</source>
+        <target state="translated">'{1}' öğesinde '{0}' özelliği zaten ayarlandı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompat">
+        <source>There is more than one XmlnsCompatibleWithAttribute in assembly '{0}' for OldNamespace '{1}'. Remove the extra attribute(s).</source>
+        <target state="translated">'{1}' OldNamespace için '{0}' bütünleştirilmiş kodunda birden çok XmlnsCompatibleWithAttribute var. Fazla öznitelikleri kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
+        <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">'{2}' OldNamespace için '{0}' ve '{1}' derlemelerinde çakışan XmlnsCompatibleWithAttributes değerleri var. Öznitelikleri aynı NewNamespace'e sahip olacak şekilde değiştirin veya XamlSchemaContext oluşturucusuna çakışmayan bir Başvuru Derlemeleri kümesi geçirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' sabit listesi değeri geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">Döndürülecek geçerli nesne yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventCannotBeAssigned">
+        <source>'{0}' event cannot be assigned a value that is not assignable to '{1}'.</source>
+        <target state="translated">'{0}' olayı, '{1}' öğesine atanamayan bir değeri atayamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithReadOnlyProperties">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since not all properties are writable.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Geçerli durumda konum parametreleri yazılamıyor. Yazıcı öznitelik formuna konum parametrelerini yazamıyor çünkü yazıcı öğeleri yazmaya başladı ancak tüm özellikler yazılabilir olmadığından yazıcı konum parametrelerini genişletemedi. Konum parametresi üyesini düğüm akışında XamlXmlWriter'ın hala öznitelikleri yazabildiği önceki bir yere taşımayı deneyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersWithoutUnderlyingType">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters since UnderlyingType on type '{0}' is null.  Try moving the positional parameter member earlier in the node stream, to place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Geçerli durumda konum parametreleri yazılamıyor. Yazıcı öznitelik formuna konum parametrelerini yazamıyor çünkü yazıcı öğeleri yazmaya başladı ancak '{0}' türü üzerindeki UnderlyingType null olduğundan yazıcı konum parametrelerini genişletemedi. Konum parametresi üyesini düğüm akışında XamlXmlWriter'ın hala öznitelikleri yazabildiği önceki bir yere taşımayı deneyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpandPositionalParametersinTypeWithNoDefaultConstructor">
+        <source>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</source>
+        <target state="translated">Geçerli durumda konum parametreleri yazılamıyor. Yazıcı öznitelik formuna konum parametrelerini yazamıyor çünkü yazıcı öğeleri yazmaya başladı ancak konum parametrelerini içeren işaretleme uzantısında varsayılan oluşturucunun bulunmaması nedeniyle yazıcı konum parametrelerini genişletemedi. Konum parametresi üyesini düğüm akışında XamlXmlWriter'ın hala öznitelikleri yazabildiği önceki bir yere taşımayı deneyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedLoadPermission">
+        <source>Expected permission of type XamlLoadPermission.</source>
+        <target state="translated">Beklenen XamlLoadPermission türündeki izin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedObjectMarkupInfo">
+        <source>Expected value of type ObjectMarkupInfo.</source>
+        <target state="translated">ObjectMarkupInfo türünün beklenen değeri.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedAssemblyName">
+        <source>Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kod adı tam olarak nitelenmemiş. Name, Version, Culture ve PublicKeyToken değerlerinin tümü sağlanmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedQualifiedTypeName">
+        <source>Type name '{0}' is not assembly-qualified. You can obtain this value from System.Type.AssemblyQualifiedName.</source>
+        <target state="translated">'{0}' tür adı bütünleştirilmiş kodla nitelenmemiş. Bu değeri System.Type.AssemblyQualifiedName'den alabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FactoryReturnedNull">
+        <source>The factory method '{0}' that matches the specified binding constraints returned null.</source>
+        <target state="translated">Belirtilen bağlama kısıtlamalarıyla eşleşen '{0}' fabrika metodu null döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">Giriş dosyası veya veri akışı beklenen dosya biçimi belirtimine uymuyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' dosyası beklenen dosya biçimi belirtimine uymuyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionMessage">
+        <source>Could not load file or assembly '{0}' or one of its dependencies. The system cannot find the specified file.</source>
+        <target state="translated">'{0}' dosyası veya bütünleştirilmiş kodu ya da bunun bağımlılıklarından biri yüklenemedi. Sistem belirtilen dosyayı bulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ForwardRefDirectives">
+        <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
+        <target state="translated">Henüz tanımlanmamış '{0}' adlandırılmış nesnesine veya nesnelerine başvuru girişiminde bulunuldu. Key dışındaki yönergelerde ileri başvurular veya ileri başvuru içeren nesnelere yönelik başvurular desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">Belirtilen '{0}' türünde değerin değiştirilebilmesi için IsFrozen yanlış olarak ayarlanmış olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">Diziden yükseltilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">Hedef eşleme çok küçük olduğu için '{0}' öğesinden '{1}' öğesine yükseltme yapılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetConverterInstance">
+        <source>Getting instance of '{0}' threw an exception.</source>
+        <target state="translated">'{0}' örneği alma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsException">
+        <source>Retrieving items in collection or dictionary of type '{0}' threw an exception.</source>
+        <target state="translated">'{0}' türündeki koleksiyondan veya sözlükten öğeleri alma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetItemsReturnedNull">
+        <source>XamlTypeInvoker.GetItems returned null for type '{0}'. This generally indicates an incorrectly implemented collection type.</source>
+        <target state="translated">XamlTypeInvoker.GetItems '{0}' türü için null döndürdü. Bu durum genel olarak yanlış uygulanmış bir koleksiyon türünü gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetObjectNull">
+        <source>Collection property '{0}'.'{1}' is null.</source>
+        <target state="translated">'{0}'.'{1}' koleksiyon özelliği null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetTargetTypeOnNonAttachableMember">
+        <source>Cannot get TargetType on a non-attachable Member.</source>
+        <target state="translated">Eklenemeyen bir Üyede TargetType alınamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetValue">
+        <source>Get property '{0}' threw an exception.</source>
+        <target state="translated">'{0}' Get özelliğini alma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetterOrSetterRequired">
+        <source>Either getter or setter must be non-null.</source>
+        <target state="translated">Alıcı veya ayarlayıcı null dışında bir değer olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectGetterParamNum">
+        <source>Attached property getter methods must have one parameter and a non-void return type.</source>
+        <target state="translated">Eklenen özellik alıcı metotlarının tek bir parametresi ve geçersiz olmayan bir dönüş türü olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncorrectSetterParamNum">
+        <source>Attached property setter and attached event adder methods must have two parameters.</source>
+        <target state="translated">Eklenen özellik ayarlayıcı ve eklenen olay ekleyici metotlarının iki parametresi olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationGuard">
+        <source>Initialization of '{0}' threw an exception.</source>
+        <target state="translated">'{0}' başlatma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationSyntaxWithoutTypeConverter">
+        <source>Type '{0}' cannot be initialized from text (XamlLanguage.Initialization).  Add a TypeConverter to this type or change the XAML to use a constructor or factory method.</source>
+        <target state="translated">'{0}' türü metinden başlatılamıyor (XamlLanguage.Initialization). Bu türe bir TypeConverter ekleyin veya XAML'yi bir oluşturucu veya fabrika metodu kullanacak şekilde değiştirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCharInTypeName">
+        <source>Character '{0}' was unexpected in string '{1}'.  Invalid XAML type name.</source>
+        <target state="translated">'{1}' dizesinde '{0}' karakteri beklenmiyordu. Geçersiz XAML tür adı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClosingBracketCharacers">
+        <source>Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">Karşılık gelen bir açılış ayracı olmayan '{0}' kapanış ayracı ile karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">Olay bağımsız değişkeni geçersiz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidExpression">
+        <source>Invalid expression: '{0}'</source>
+        <target state="translated">Geçersiz ifade: '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">İzin türü geçerli değil. Beklenen: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeArgument">
+        <source>Type argument '{0}' is not a valid type.</source>
+        <target state="translated">'{0}' tür bağımsız değişkeni geçerli bir tür değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeListString">
+        <source>The string '{0}' is not a valid XAML type name list. Type name lists are comma-delimited lists of types; such as 'x:String, x:Int32'.</source>
+        <target state="translated">'{0}' dizesi geçerli bir XAML tür adı listesi değil. Tür adı listeleri, türlerin virgülle ayrılmış listeleri olur; örneğin: 'x:String, x:Int32'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeString">
+        <source>The string '{0}' is not a valid XAML type name. Type names contain an optional prefix, a name, and optional type arguments; such as 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</source>
+        <target state="translated">'{0}' dizesi geçerli bir XAML tür adı değil. Tür adları isteğe bağlı bir önek, bir ad ve isteğe bağlı tür bağımsız değişkenleri içerir; örneğin: 'String', 'x:Int32', 'g:Dictionary(x:String,x:Int32)'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXamlMemberName">
+        <source>'{0}' is not a valid XAML member name.</source>
+        <target state="translated">'{0}' geçerli bir XAML üye adı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LateConstructionDirective">
+        <source>Construction directive '{0}' must be an attribute or the first property element.</source>
+        <target state="translated">'{0}' oluşturma yönergesi bir öznitelik veya ilk özellik öğesi olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberAndPosition">
+        <source>'{0}' Line number '{1}' and line position '{2}'.</source>
+        <target state="translated">'{0}' Satır numarası '{1}' ve satır konumu '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LineNumberOnly">
+        <source>'{0}' Line number '{1}'.</source>
+        <target state="translated">'{0}' Satır numarası '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListNotIList">
+        <source>List collection is not an IList.</source>
+        <target state="translated">Liste koleksiyonu bir IList değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedBracketCharacters">
+        <source>BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">'{0}' köşeli ayraç karakteri için karşılık gelen bir sol köşeli/sağ köşeli ayraç karakteri yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedPropertyName">
+        <source>Cannot parse the malformed property name '{0}'.</source>
+        <target state="translated">Yanlış biçimlendirilmiş '{0}' özellik adı ayrıştırılamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">Dizideki öğeler '{0}' türünde olmalıdır. Bir veya birden çok öğe bu türe yayınlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set Type before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">ArrayExtension öğesinde ProvideValue çağrılmadan önce Tür ayarlanmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">'{0}' StaticExtension değeri bir sabit listesi, statik alan veya statik özelliğe çözülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">{0}' işaretleme uzantısı, ProvideValue için IServiceProvider içinde '{1}' yürütülmesini gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">ProvideValue çağırılmadan önce StaticExtension için Member özelliği ayarlanmış olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">ProvideValue çağrılmadan önce TypeExtension'ın TypeName özelliği ayarlanmış olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">'{0}' dizesinin türü geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionWithDuplicateArity">
+        <source>Cannot determine the positional parameters for type '{0}' because it has more than one constructor overload with '{1}' parameters. To make this markup extension usable in XAML, remove the duplicate constructor overload(s) or set XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity to true.</source>
+        <target state="translated">{0}' türünün '{1}' parametreleriyle birden çok oluşturucu fazla yüklemesi bulunduğundan bu türün konum parametreleri saptanamıyor. Bu işaretleme uzantısının XAML'de kullanılabilir duruma gelmesini sağlamak için, yinelenen oluşturucu fazla yüklemelerini kaldırın veya XamlSchemaContextSettings.SupportMarkupExtensionsWithDuplicateArity değerini true olarak ayarlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberHasInvalidXamlName">
+        <source>The name of the member '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">'{0}' üyesinin adı XAML'de geçersiz olan karakterler içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MemberIsInternal">
+        <source>Member '{0}' on type '{1}' is internal.</source>
+        <target state="translated">'{1}' türündeki '{0}' üyesi bir iç üyedir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodInvocation">
+        <source>The invocation of a method '{0}' that matches the specified binding constraints threw an exception.</source>
+        <target state="translated">Belirtilen bağlama kısıtlamalarıyla eşleşen '{0}' metodunu çağırma işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingAssemblyName">
+        <source>No local assembly provided to complete URI='{0}'.</source>
+        <target state="translated">URI='{0}' öğesini tamamlamak için hiçbir yerel bütünleştirilmiş kod sağlanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCase">
+        <source>Missing case '{0}' in DeferringWriter'{1}' method.</source>
+        <target state="translated">DeferringWriter'{1}' metodunda '{0}' durumu eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCaseXamlNodes">
+        <source>Missing case in Default processing of XamlNodes.</source>
+        <target state="translated">XamlNodes'un Varsayılan işleminde durum eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma1">
+        <source>Unexpected equals sign '=' following '{0}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}' değerinden sonra beklenmeyen eşittir işareti '='. Virgül ayırıcısının eksik olup olmadığını denetleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingComma2">
+        <source>Unexpected equals sign '=' following '{0}'='{1}'. Check for a missing comma separator.</source>
+        <target state="translated">'{0}'='{1}' değerinden sonra beklenmeyen eşittir işareti '='. Virgül ayırıcısının eksik olup olmadığını denetleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitProperty">
+        <source>Missing implicit property case.</source>
+        <target state="translated">Örtülü özellik durumu eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingImplicitPropertyTypeCase">
+        <source>Missing case for ImplicitPropertyType.</source>
+        <target state="translated">ImplicitPropertyType için durum eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingKey">
+        <source>Missing key value on '{0}' object.</source>
+        <target state="translated">'{0}' nesnesinde anahtar değeri eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingLookPropertyBit">
+        <source>Missing case handler in LookupPropertyBit.</source>
+        <target state="translated">LookupPropertyBit içinde durum işleyicisi eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameProvider">
+        <source>Service provider is missing the IXamlNameProvider service.</source>
+        <target state="translated">IXamlNameProvider hizmetinde hizmet sağlayıcısı eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingNameResolver">
+        <source>Service provider is missing the INameResolver service.</source>
+        <target state="translated">INameResolver hizmetinde hizmet sağlayıcısı eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingPropertyCaseClrType">
+        <source>Missing case in ClrType 'Member' lookup.</source>
+        <target state="translated">ClrType 'Member' aramasında durum eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTagInNamespace">
+        <source>Missing '{0}' in URI '{1}'.</source>
+        <target state="translated">'{1}' URI'sinde '{0}' eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingTypeConverter">
+        <source>Creating from text without a TypeConverter is not allowed.</source>
+        <target state="translated">TypeConverter olmadan metinden oluşturmaya izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}', '{1}' türünde olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustHaveName">
+        <source>Reference must have a Name to resolve.</source>
+        <target state="translated">Başvurunun çözülecek bir Ad değeri olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustNotCallSetter">
+        <source>This setter is not intended to be used directly from your code. Do not call this setter.</source>
+        <target state="translated">Bu ayarlayıcı doğrudan kodunuzdan kullanılmaya yönelik değildi. Bu ayarlayıcıyı çağırmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameNotFound">
+        <source>Name resolution failure. '{0}' was not found.</source>
+        <target state="translated">Ad çözme hatası. '{0}' bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate name '{0}' in this scope.</source>
+        <target state="translated">Bu kapsamda yinelenen '{0}' adı kaydedilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeException">
+        <source>Could not register named object. {0}</source>
+        <target state="translated">Adlandırılmış nesne kaydedilemiyor. {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">'{0}' adı tanımlayıcı için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Ad boş bir dize olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>Name '{0}' was not found.</source>
+        <target state="translated">'{0}' adı bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeOnRootInstance">
+        <source>Cannot attach NameScope to null root instance.</source>
+        <target state="translated">NameScope null bir kök örneğine eklenemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationCannotBeXml">
+        <source>The prefix 'xml' is reserved.</source>
+        <target state="translated">'xml' öneki ayrılmıştır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationNamespaceCannotBeNull">
+        <source>NamespaceDeclaration.Namespace cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Namespace null olamaz. Bu özellik için bir değer sağlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceDeclarationPrefixCannotBeNull">
+        <source>NamespaceDeclaration.Prefix cannot be null.  Provide a value for this property.</source>
+        <target state="translated">NamespaceDeclaration.Prefix null olamaz. Bu özellik için bir değer sağlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamespaceNotFound">
+        <source>Namespace '{0}' was not found in scope.</source>
+        <target state="translated">'{0}' ad alanı kapsamda bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAddMethodFound">
+        <source>No Add methods found on type '{0}' for a value of type '{1}'.</source>
+        <target state="translated">'{1}' türündeki bir değer için '{0}' türünde Add metodu bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoAttributeUsage">
+        <source>'{0}' is not allowed in attribute usage.</source>
+        <target state="translated">Öznitelik kullanımında '{0}' kullanılmasına izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructor">
+        <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">'{0}' türünde eşleşen oluşturucu bulunamadı. Bu türü oluşturmak için Arguments veya FactoryMethod yönergelerini kullanabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoConstructorWithNArugments">
+        <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
+        <target state="translated">'{1}' bağımsız değişkenle '{0}' için Oluşturucu bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDefaultConstructor">
+        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
+        <target state="translated">'{0}' türü için varsayılan oluşturucu bulunamadı. Bu türü oluşturmak için Arguments veya FactoryMethod yönergelerini kullanabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoElementUsage">
+        <source>'{0}' is not allowed in element usage.</source>
+        <target state="translated">Öğe kullanımında '{0}' kullanılmasına izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM">
+        <source>XAML Node Stream: Missing StartMember on Type '{0}' before EndMember.</source>
+        <target state="translated">XAML Düğüm Akışı: '{0}' Türünde EndMember öncesinde StartMember yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_EM_noType">
+        <source>XAML Node Stream: EndMember must follow StartObject and StartMember.</source>
+        <target state="translated">XAML Düğüm Akışı: EndMember, StartObject ve StartMember öğelerini izlemelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO">
+        <source>XAML Node Stream: GetObject requires a StartMember after StartObject '{0}'.</source>
+        <target state="translated">XAML Düğüm Akışı: GetObject, StartObject '{0}' öğesinden sonra StartMember gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_GO_noType">
+        <source>XAML Node Stream: GetObject must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML Düğüm Akışı: GetObject, StartObject ve StartMember öğelerini izlemelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_NS">
+        <source>XAML Node Stream: '{0}'='{1}' Namespace Declaration requires a StartMember after StartObject '{2}'.</source>
+        <target state="translated">XAML Düğüm Akışı: '{0}'='{1}' Ad Alanı Bildirimi StartObject '{2}' öğesinden sonra StartMember gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_SO">
+        <source>XAML Node Stream: StartObject '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML Düğüm Akışı: StartObject '{0}', StartObject '{1}' öğesinden sonra StartMember gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V">
+        <source>XAML Node Stream: Value of '{0}' requires a StartMember after StartObject '{1}'.</source>
+        <target state="translated">XAML Düğüm Akışı: '{0}' değeri StartObject '{1}' öğesinden sonra StartMember gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPropertyInCurrentFrame_V_noType">
+        <source>XAML Node Stream: Value of '{0}' must follow a StartObject and StartMember.</source>
+        <target state="translated">XAML Düğüm Akışı: '{0}' değerini StartObject ve StartMember öğeleri izlemelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoSuchConstructor">
+        <source>No constructor with '{0}' arguments for '{1}'.</source>
+        <target state="translated">'{1}' için '{0}' bağımsız değişkeni olan oluşturucu yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing CurrentObject before EndObject.</source>
+        <target state="translated">XAML Düğüm Akışı: EndObject öncesinde CurrentObject yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoTypeInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing StartObject before StartMember '{0}'.</source>
+        <target state="translated">XAML Düğüm Akışı: StartMember '{0}' öncesinde StartObject yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonMEWithPositionalParameters">
+        <source>Type with positional parameters is not a markup extension.</source>
+        <target state="translated">Konum parametreleri içeren tür bir işaretleme uzantısı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientProperty">
+        <source>'{0}'.'{1}' is not an ambient property.</source>
+        <target state="translated">'{0}'.'{1}' bir ortam özelliği değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAmbientType">
+        <source>'{0}' is not an ambient type.</source>
+        <target state="translated">'{0}' bir ortam türü değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAssignableFrom">
+        <source>The type '{0}' is not assignable from the type '{1}'.</source>
+        <target state="translated">'{0}' türü, '{1}' türünden atanabilir değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotDeclaringTypeAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a property declared on this type.</source>
+        <target state="translated">'{2}' üzerinde ['{0}'('{1}')]5D;, bu türde bildirilen bir özellik değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnDirective">
+        <source>This operation is not supported on directive members.</source>
+        <target state="translated">Bu işlem yönerge üyelerinde desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownMember">
+        <source>This operation is not supported on unknown members.</source>
+        <target state="translated">Bu işlem bilinmeyen üyelerde desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedOnUnknownType">
+        <source>This operation is not supported on unknown types.</source>
+        <target state="translated">Bu işlem bilinmeyen türlerde desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectNotTcOrMe">
+        <source>Argument should be a Type Converter, Markup Extension or Null.</source>
+        <target state="translated">Bağımsız değişken Tür Dönüştürücüsü, İşaretleme Uzantısı veya Null olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderAttachedPropertyNotFound">
+        <source>Unable to find an attachable property named '{0}' on type '{1}'.</source>
+        <target state="translated">'{1}' türünde '{0}' adlı eklenebilir bir özellik bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderDictionaryMethod1NotFound">
+        <source>Unable to locate MemberMarkupInfo.DictionaryEntriesFromGeneric method.</source>
+        <target state="translated">MemberMarkupInfo.DictionaryEntriesFromGeneric metodu bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArgumentTypes">
+        <source>InstanceDescriptor provided an argument of type '{0}' where a parameter of type '{1}' was expected.</source>
+        <target state="translated">InstanceDescriptor '{0}' türünde bir bağımsız değişken sağladı, oysa '{1}' türünde bir parametre bekleniyordu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorIncompatibleArguments">
+        <source>InstanceDescriptor did not provide the correct number of arguments.</source>
+        <target state="translated">InstanceDescriptor doğru sayıda bağımsız değişken sağlamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderInstanceDescriptorInvalidMethod">
+        <source>InstanceDescriptor did not provide a valid constructor or method.</source>
+        <target state="translated">InstanceDescriptor geçerli bir oluşturucu veya metot sağlamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderMultidimensionalArrayNotSupported">
+        <source>Multidimensional arrays not supported.</source>
+        <target state="translated">Çok boyutlu diziler desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoDefaultConstructor">
+        <source>Unable to serialize type '{0}'.  Verify that the type is public and either has a default constructor or an instance descriptor.</source>
+        <target state="translated">'{0}' türü seri hale getirilemedi. Türün genel olduğunu ve varsayılan bir oluşturucusu veya örnek tanımlayıcısı bulunduğunu doğrulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderNoMatchingConstructor">
+        <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
+        <target state="translated">Belirtilen '{0}' türündeki oluşturucu bağımsız değişkenleri için uygun bir oluşturucu bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeCannotRoundtrip">
+        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Erişilebilir oluşturucular olmadığından �{0}� türündeki nesneler okunamadı. XAML'de bu türün kullanılmasına olanak tanımak için varsayılan bir oluşturucu ekleyin, ConstructorArgumentAttribute kullanın veya bir InstanceDescriptor sağlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeIsNested">
+        <source>Unable to read objects of the type '{0}'.  Nested types are not supported.</source>
+        <target state="translated">'{0}' türündeki nesneler okunamadı. İç içe türler desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to serialize this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectReader constructor.</source>
+        <target state="translated">'{0}', XAML'de '{1}' türünün kullanımını engelledi. Bu türü seri hale getirmek istiyorsanız, '{0}'.GetXamlType'ı bu tür için null dışında bir değer döndürecek şekilde değiştirin veya XamlObjectReader oluşturucusunun schemaContext parametresinde başka bir değer geçirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamePropertyMustBeString">
+        <source>The name property '{0}' on type '{1}' must be of type System.String.</source>
+        <target state="translated">'{1}' türündeki '{0}' ad özelliği System.String türünde olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
+        <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
+        <target state="translated">Nesne grafiği '{0}' türünün bir örneğine birden çok başvuru içeriyor ve seri hale getirici örneği yazmak için genel olarak görünür olan bir konum bulamadı. Ad kapsamlarını kullanımınızı incelemelisiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
+        <source>An element with the name '{0}' has already been registered in this scope.</source>
+        <target state="translated">Bu kapsamda '{0}' adlı bir öğe zaten kaydedildi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectReader_TypeNotVisible">
+        <source>Type '{0}' not visible. If the type is local, please set the LocalAssembly field in XamlReaderSettings.</source>
+        <target state="translated">'{0}' türü görünür değil. Yerel bir türse, lütfen XamlReaderSettings'de LocalAssembly alanını ayarlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectWriterTypeNotAllowed">
+        <source>'{0}' blocked the use of type '{1}' in XAML. If you want to load this type, change '{0}'.GetXamlType to return a non-null value for this type, or pass a different value in the schemaContext parameter of the XamlObjectWriter constructor.</source>
+        <target state="translated">'{0}', XAML'de '{1}' türünün kullanımını engelledi. Bu türü yüklemek istiyorsanız, '{0}'.GetXamlType'ı bu tür için null dışında bir değer döndürecek şekilde değiştirin veya XamlObjectWriter oluşturucusunun schemaContext parametresinde başka bir değer geçirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollections">
+        <source>This operation is only supported on collection types.</source>
+        <target state="translated">Bu işlem yalnızca koleksiyon türlerinde desteklenir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnCollectionsAndDictionaries">
+        <source>This operation is only supported on collection and dictionary types.</source>
+        <target state="translated">Bu işlem yalnızca koleksiyon ve sözlük türlerinde desteklenir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlySupportedOnDictionaries">
+        <source>This operation is only supported on dictionary types.</source>
+        <target state="translated">Bu işlem yalnızca sözlük türlerinde desteklenir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_EO">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before EndObject.</source>
+        <target state="translated">XAML Düğüm Akışı: EndObject öncesinde '{0}.{1}' için EndMember yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenPropertyInCurrentFrame_SM">
+        <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
+        <target state="translated">XAML Düğüm Akışı: StartMember '{2}' öncesinde '{0}.{1}' için EndMember yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentlessPropertyElement">
+        <source>The property element '{0}' is not contained by an object element.</source>
+        <target state="translated">'{0}' özellik öğesi bir nesne öğesinin içinde değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">Aynı bütünleştirilmiş kodun farklı bir sürümü yüklendiğinden '{0}' bütünleştirilmiş kodu yüklenemiyor '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">'{0}' için çok fazla sayıda öznitelik belirtildi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' daha çok öznitelik gerektirir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PositionalParamsWrongLength">
+        <source>GetPositionalParameters returned the wrong length vector.</source>
+        <target state="translated">GetPositionalParameters yanlış uzunlukta vektör döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotFound">
+        <source>Prefix '{0}' does not map to a namespace.</source>
+        <target state="translated">'{0}' öneki bir ad alanına eşlenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrefixNotInFrames">
+        <source>The prefix '{0}' could not be found.</source>
+        <target state="translated">'{0}' öneki bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyDoesNotTakeText">
+        <source>'{0}' property on '{1}' does not allow you to specify text.</source>
+        <target state="translated">'{1}' öğesindeki '{0}' özelliği metin belirtmenize izin vermiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotImplemented">
+        <source>'{0}' is not implemented.</source>
+        <target state="translated">'{0}' uygulanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValue">
+        <source>Provide value on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' öğesinde değer sağlama işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProvideValueCycle">
+        <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
+        <target state="translated">Döngüsel bağımlılık nedeniyle MarkupExtension.ProvideValue çağrılamıyor. MarkupExtension'ın içindeki özellikler, MarkupExtension'ın sonucuna başvurun nesneler başvuruda bulunamaz. Etkilenen MarkupExtension öğeleri:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">'{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QuoteCharactersOutOfPlace">
+        <source>Quote characters ' or " are only allowed at the start of values.</source>
+        <target state="translated">Tırnak işareti karakterlerine (' veya ") yalnızca değerlerin başında izin verilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">Değer null olamaz. Nesne başvurusu: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextMismatch">
+        <source>schemaContext parameter cannot be different from savedContext.SchemaContext</source>
+        <target state="translated">schemaContext parametresi savedContext.SchemaContext'ten farklı olamaz</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SavedContextSchemaContextNull">
+        <source>savedContext.SchemaContext cannot be null</source>
+        <target state="translated">savedContext.SchemaContext null olamaz</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNotInitialized">
+        <source>SchemaContext on writer must be initialized before accessing the reader.</source>
+        <target state="translated">Okuyucuya erişmeden önce yazıcıdaki SchemaContext başlatılmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaContextNull">
+        <source>SchemaContext cannot be null.</source>
+        <target state="translated">SchemaContext null olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlMissingAttribute">
+        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
+        <target state="translated">Geçersiz güvenlik XML'si. Beklenen '{0}' özniteliği eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedTag">
+        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
+        <target state="translated">Geçersiz güvenlik XML'si. '{0}' etiketi beklenmiyordu; '{1}' bekleniyordu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityXmlUnexpectedValue">
+        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
+        <target state="translated">Geçersiz güvenlik XML'si. '{1}' özniteliğinde '{0}' değeri beklenmiyordu; '{2}' bekleniyordu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">Bu serviceType başka bir hizmete zaten kaydedildi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetConnectionId">
+        <source>Set connectionId threw an exception.</source>
+        <target state="translated">connectionId ayarlama işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnlyProperty">
+        <source>'{0}'.'{1}' is a property without a getter and is not a valid XAML property.</source>
+        <target state="translated">'{0}'.'{1}' alıcısı olmayan bir özellik ve geçerli bir XAML özelliği değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTargetTypeOnNonAttachableMember">
+        <source>Cannot set TargetType on a non-attachable Member.</source>
+        <target state="translated">TargetType eklenemeyen bir Üyeye ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetUriBase">
+        <source>Setting xml:base on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' öğesinde xml:base ayarlama işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetValue">
+        <source>Set property '{0}' threw an exception.</source>
+        <target state="translated">'{0}' özelliğini ayarlama işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetXmlInstance">
+        <source>Setting xml instance on '{0}' threw an exception.</source>
+        <target state="translated">'{0}' öğesinde xml örneğini ayarlama işlemi özel durum döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SettingPropertiesIsNotAllowed">
+        <source>Setting properties is not allowed on a type converted instance. Property = '{0}'</source>
+        <target state="translated">Türü dönüştürülmüş bir örnekte özelliklerin ayarlanmasına izin verilmez. Özellik = '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldOverrideMethod">
+        <source>Method '{0}' is not supported by default. It can be implemented in derived classes.</source>
+        <target state="translated">'{0}' metodu varsayılan olarak desteklenmiyor. Türetilen sınıflarda uygulanabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldSerializeFailed">
+        <source>ShouldSerialize check failed for member '{0}'.</source>
+        <target state="translated">'{0}' üyesi için ShouldSerialize denetimi başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SimpleFixupsMustHaveOneName">
+        <source>Directly Assignable Fixups must only have one name.</source>
+        <target state="translated">Doğrudan Atanabilir Düzeltmelerin tek bir adı olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">Dize null veya boş.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNotCollected">
+        <source>Deferred load section was not collected in '{0}'.</source>
+        <target state="translated">Ertelenmiş yükleme bölümü '{0}' içinde toplanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadAlreadyStarted">
+        <source>Thread is already started.</source>
+        <target state="translated">İş parçacığı zaten başlatıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}' ayrıştırılırken {0} konumunda boş belirteçle karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}' ayrıştırılırken {0} konumunda dış veriyle karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}' ayrıştırılırken eksik bitiş tırnak işareti bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}' ayrıştırılırken erken dize sonuyla karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributes">
+        <source>Error with member '{0}'.'{1}'.  It has more than one '{2}'.</source>
+        <target state="translated">'{0}'.'{1}' üyesi hatalı. Birden çok '{2}' içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyAttributesOnType">
+        <source>Error with type '{0}'.  It has more than one '{1}'.</source>
+        <target state="translated">'{0}' türü hatalı.  Birden çok '{1}' içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyTypeConverterAttributes">
+        <source>Only one TypeConverter attribute is allowed on a type.</source>
+        <target state="translated">Türde yalnızca bir TypeConverter özniteliğine izin verilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransitiveForwardRefDirectives">
+        <source>Object '{0}' assigned to directive '{1}' has properties which are references to named object(s) '{2}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported inside object construction directives.</source>
+        <target state="translated">'{1}' yönergesine atanan '{0}' nesnesinin, henüz tanımlanmamış durumdaki '{2}' adlandırılmış nesnesine veya nesnelerine başvuru olan özellikleri var. Nesne oluşturma yönergelerinin içinde, ileri başvurular veya ileri başvuru içeren nesnelere yapılan başvurular desteklenmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed">
+        <source>Failed to create a '{0}' from the text '{1}'.</source>
+        <target state="translated">'{1}' metninden '{0}' oluşturulamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeConverterFailed2">
+        <source>Failed to convert '{0}' to type '{1}'.</source>
+        <target state="translated">'{0}', '{1}' türüne dönüştürülemedi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasInvalidXamlName">
+        <source>The name of the type '{0}' contains characters that are invalid in XAML.</source>
+        <target state="translated">'{0}' türünün adı XAML'de geçersiz olan karakterler içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeHasNoContentProperty">
+        <source>Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.</source>
+        <target state="translated">'{0}' türünün içerik özelliği yok. Ayarlanacak özelliğin adını belirtin veya türe bir ContentPropertyAttribute veya TypeConverterAttribute ekleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">Bir özellikle ilişkilendirildikten sonra özellik meta verileri değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNameCannotHavePeriod">
+        <source>Type name '{0}' cannot have a dot '.'.</source>
+        <target state="translated">'{0}' tür adında nokta '.' bulunamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotFound">
+        <source>Type reference cannot find type named '{0}'.</source>
+        <target state="translated">Tür başvurusu '{0}' adlı türü bulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeNotPublic">
+        <source>Type '{0}' is not public.</source>
+        <target state="translated">'{0}' türü genel bir tür değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnclosedQuote">
+        <source>Unclosed quoted value.</source>
+        <target state="translated">Değer kapatılmamış tırnak içinde yer alıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedClose">
+        <source>Unexpected close of XAML Node Stream.</source>
+        <target state="translated">XAML Düğüm Akışının beklenmeyen kapanışı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedConstructorArg">
+        <source>Invalid metadata for attribute '{0}' on '{1}'. Expected '{2}' argument(s) of type '{3}'.</source>
+        <target state="translated">'{1}' öğesinde '{0}' özniteliği için geçersiz meta veriler. '{3}' türünde '{2}' bağımsız değişken bekleniyordu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedNodeType">
+        <source>Unexpected '{0}' in parse rule '{1}'.</source>
+        <target state="translated">'{1}' ayrıştırma kuralında beklenmeyen '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">Parametre beklenmeyen bir '{0}' türü. Beklenen tür: '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedToken">
+        <source>Unexpected token '{0}' in rule: '{1}', in '{2}'.</source>
+        <target state="translated">Kuralda beklenmeyen '{0}' belirteci: '{2}' içinde '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedTokenAfterME">
+        <source>Unexpected token after end of markup extension.</source>
+        <target state="translated">İşaretleme uzantısı sonundan sonra beklenmeyen belirteç.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnhandledBoolTypeBit">
+        <source>Unhandled BoolTypeBit.</source>
+        <target state="translated">İşlenmemiş BoolTypeBit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownAttributeProperty">
+        <source>['{0}'('{1}')]5D; on '{2}' is not a known property.</source>
+        <target state="translated">'{2}' üzerinde ['{0}'('{1}')]5D; bilinen bir özellik değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMember">
+        <source>Unknown member '{0}' on '{1}'.</source>
+        <target state="translated">'{1}' öğesinde bilinmeyen '{0}' üyesi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberOnUnknownType">
+        <source>Unknown member '{0}' on unknown type '{1}'.</source>
+        <target state="translated">Bilinmeyen '{1}' türünde bilinmeyen '{0}' üyesi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownMemberSimple">
+        <source>Unknown member '{0}'.</source>
+        <target state="translated">Bilinmeyen '{0}' üyesi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownType">
+        <source>Unknown type '{0}'.</source>
+        <target state="translated">Bilinmeyen '{0}' türü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedForwardReferences">
+        <source>Unresolved reference '{0}'.</source>
+        <target state="translated">Çözülmemiş '{0}' başvurusu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnresolvedNamespace">
+        <source>XAML namespace '{0}' is not resolved.</source>
+        <target state="translated">'{0}' XAML ad alanı çözülmedi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotFound">
+        <source>Uri '{0}' was not found.</source>
+        <target state="translated">'{0}' Uri'si bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsableDuringInitializationOnME">
+        <source>Error with type '{0}'. MarkupExtensions cannot use the 'UsableDuringInitialization' attribute.</source>
+        <target state="translated">'{0}' türü hatalı. MarkupExtensions, 'UsableDuringInitialization' özniteliğini kullanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueInArrayIsNull">
+        <source>A value in the '{0}' array is null.</source>
+        <target state="translated">'{0}' dizisindeki bir değer null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFollowedByEndMember">
+        <source>XAML Node Stream: Value nodes must be followed by EndMember.</source>
+        <target state="translated">XAML Düğüm Akışı: Değer düğümlerinin ardından EndMember gelmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">Belirtilen dizin aralık dışında veya dizindeki alt öğe boş. Visual'ın alt öğesi olmadığı anlamında VisualChildrenCount sıfır döndürürse bu yöntemi çağırmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhiteSpaceInCollection">
+        <source>XamlXmlWriter cannot write value '{0}' which contains significant white space in collection '{1}'.</source>
+        <target state="translated">XamlXmlWriter, '{1}' koleksiyonunda önemli bir boş alan içeren '{0}' değerini yazamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WhitespaceAfterME">
+        <source>White space is not allowed after end of markup extension.</source>
+        <target state="translated">İşaretleme uzantısının sonundan sonra boş alana izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriterIsClosed">
+        <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
+        <target state="translated">Kendi Closed metodu çağrılmış olan bir XamlWriter'a yazma girişiminde bulunuldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice, bir Fallback'ten sonra olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent bir veya daha fazla Choice öğesi içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice yalnızca AlternateContent içinde geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
+        <target state="translated">XML uyumluluk tanımlarında, '{0}' ad alanının kendi kendini geçersiz kılması gibi bir döngü var. Bunun nedeni, farklı derlemelerdeki uyumsuz XmlnsCompatibilityAttributes öğeleri olabilir. Lütfen tanımları döngüyü ortadan kaldıracak şekilde değiştirin veya XamlSchemaContext oluşturucusuna çakışma içermeyen bir Başvuru Derlemeleri kümesi geçirin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanındaki '{1}' öğesi için yinelenen Preserve bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanındaki '{1}' öğesi için yinelenen ProcessContent bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanı için yinelenen joker karakterli Preserve bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanı için yinelenen joker karakterli ProcessContent bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback yalnızca AlternateContent içinde geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">'{0}' öğesi AlternateContent'in geçerli bir alt öğesi değil. Yalnızca Choice ve Fallback bir AlternateContent öğesinin geçerli alt öğeleridir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">'{0}' özniteliği '{1}' öğesi için geçerli değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">'{0}' biçimi geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanı için hem belirli, hem de joker Preserve bildirimi olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanı için hem belirli, hem joker ProcessContent bildirimi olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Requires özniteliği, geçerli bir ad alanı öneki içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">'{0}' özellik değeri geçerli bir XML adı değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent yalnızca bir Fallback öğesi içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">'{0}' ad alanında MustUnderstand koşulu başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' ad alanı öğeleri koruyamaz; önce Ignorable olarak bildirilmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' ad alanı içeriği işleyemez; önce Ignorable olarak bildirilmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain a Requires attribute.</source>
+        <target state="translated">Choice bir Requires özniteliği içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">'{0}' öneki tanımlı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">Tanınmayan uyumluluk özniteliği '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">Tanınmayan Uyumluluk öğesi '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XClassMustMatchRootInstance">
+        <source>Specified class name '{0}' doesn't match actual root instance type '{1}'. Remove the Class directive or provide an instance via XamlObjectWriterSettings.RootObjectInstance.</source>
+        <target state="translated">Belirtilen '{0}' sınıf adı gerçek '{1}' kök örneği türüyle eşleşmiyor. Class yönergesini kaldırın veya XamlObjectWriterSettings.RootObjectInstance aracılığıyla bir örnek sağlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlFactoryInvalidXamlNode">
+        <source>Unexpected XAML node type '{0}' from XamlReader in XamlFactory.</source>
+        <target state="translated">XamlFactory içindeki XamlReader'dan beklenmeyen '{0}' XAML düğüm türü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotSetSchemaContext">
+        <source>Cannot set SchemaContext on XamlMarkupExtensionWriter.</source>
+        <target state="translated">XamlMarkupExtensionWriter'da SchemaContext ayarlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Dize olmayan bir değer yazılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">'{0}' üyesi zaten yazılmıştı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlMarkupExtensionWriterInputInvalid">
+        <source>Errors detected in input.</source>
+        <target state="translated">Girişte hatalar algılandı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameCannotGetPrefix">
+        <source>Cannot convert this XamlTypeName instance to a string because the provided INamespacePrefixLookup could not generate a prefix for the namespace '{0}'.</source>
+        <target state="translated">Sağlanan INamespacePrefixLookup '{0}' ad alanı için bir önek oluşturamadığından, bu XamlTypeName örneği dizeye dönüştürülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNameIsNullOrEmpty">
+        <source>Cannot convert this XamlTypeName instance to a string because the Name property is null or empty. Set the Name property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Name özelliği null veya boş olduğundan bu XamlTypeName örneği dizeye dönüştürülemiyor. XamlTypeName.ToString'i çağırmadan önce Name özelliğini ayarlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlTypeNameNamespaceIsNull">
+        <source>Cannot convert this XamlTypeName instance to a string because the Namespace property is null. Set the Namespace property before calling XamlTypeName.ToString.</source>
+        <target state="translated">Namespace özelliği null olduğundan bu XamlTypeName örneği dizeye dönüştürülemiyor. XamlTypeName.ToString'i çağırmadan önce Namespace özelliğini ayarlayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterCannotWriteNonstringValue">
+        <source>Cannot write a value that is not a string.</source>
+        <target state="translated">Dize olmayan bir değer yazılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterDuplicateMember">
+        <source>The member '{0}' has already been written.</source>
+        <target state="translated">'{0}' üyesi zaten yazılmıştı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections">
+        <source>The argument isObjectFromMember can only be set to true when the type is a collection.</source>
+        <target state="translated">Tür bir koleksiyon olduğunda isObjectFromMember bağımsız değişkeni yalnızca true olarak ayarlanabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope">
+        <source>Namespace '{0}' already has a prefix defined in current scope.</source>
+        <target state="translated">'{0}' ad alanının zaten geçerli kapsamda tanımlanmış bir öneki var.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterPrefixAlreadyDefinedInCurrentScope">
+        <source>The prefix '{0}' is already defined in current scope.</source>
+        <target state="translated">'{0}' öneki zaten geçerli kapsamda tanımlandı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteNotSupportedInCurrentState">
+        <source>Unable to call '{0}' in current state.</source>
+        <target state="translated">Geçerli durumda '{0}' çağrılamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XamlXmlWriterWriteObjectNotSupportedInCurrentState">
+        <source>Unable to call WriteObject with isObjectFromMember set to true in current state.</source>
+        <target state="translated">Geçerli durumda isObjectFromMember true değerine ayarlanmış olarak WriteObject çağrılamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XaslTypePropertiesNotImplemented">
+        <source>Need to implement public/internal sorting.</source>
+        <target state="translated">Genel/iç sıralamanın uygulanması gerekiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlDataNull">
+        <source>The value for XmlData property '{0}' is null or not IXmlSerializable.</source>
+        <target state="translated">'{0}' XmlData özelliğinin değeri null veya bu değer IXmlSerializable değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlValueNotReader">
+        <source>The value for XmlData property '{0}' is not an XmlReader.</source>
+        <target state="translated">'{0}' XmlData özelliğinin değeri bir XmlReader değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlnsCompatCycle">
+        <source>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</source>
+        <target state="translated">'{0}' bütünleştirilmiş kodunda, '{1}' ad alanının kendi kendini geçersiz kılması gibi bir XmlnsCompatibleWithAttribute tanımları döngüsü var. Tanımları bu döngüyü ortadan kaldıracak şekilde değiştirin.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

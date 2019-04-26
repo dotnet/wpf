@@ -22,9 +22,46 @@ As we complete those goals, we'll update our roadmap to include additional featu
 
 ## Porting Status
 
-The port from WPF for .NET Framework is still in progress. Currently this repository contains these components:
+The port from WPF for .NET Framework is still in progress.  All components applicable to WPF for .NET Core will eventually be published to this repository.
 
+### Currently Available
 * Components:
   * [System.Xaml](src/Microsoft.DotNet.Wpf/src/System.Xaml)
 * Tests:
   * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)
+
+### In Progress
+Note: This list is in rough priority order and may change.
+* Components: 
+  * `WindowsBase`
+  * `PresentationFramework`
+  * `PresentationCore`
+  * `PresentationBuildTasks`
+  * `WindowsFormsIntegration`
+  * `System.Windows.Controls.Ribbon`
+  * `WPF Themes`
+    * `PresentationFramework-Aero`
+    * `PresentationFramework-Aero2`
+    * `PresentationFramework-AeroLite`
+    * `PresentationFramework-Classic`
+    * `PresentationFramework-Luna`
+    * `PresentationFramework-Royale`
+  * `UIAutomation`
+    * `UIAutomationClient`
+    * `UIAutomationClientSideProviders`
+    * `UIAutomationProvider`
+    * `UIAutomationTypes`
+  * `WPF Extensions`
+    * `PresentationFramework-SystemCore`
+    * `PresentationFramework-SystemData`
+    * `PresentationFramework-SystemDrawing`
+    * `PresentationFramework-SystemXml`
+    * `PresentationFramework-SystemXmlLinq`
+  * `System.Windows.Input.Manipulations`
+  * `System.Windows.Presentation`
+  * `PresentationUI`
+  * `ReachFramework`
+  * `System.Printing`
+  * `PenIMC_cor3`
+  * `WpfGfx_cor3`
+  * `PresentationNative_cor3`

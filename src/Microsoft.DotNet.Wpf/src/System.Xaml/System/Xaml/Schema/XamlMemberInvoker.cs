@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
-using System.Xaml;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
@@ -21,7 +18,7 @@ namespace System.Xaml.Schema
     {
         private static XamlMemberInvoker s_Directive;
         private static XamlMemberInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = new object[0];
+        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private XamlMember _member;
         private NullableReference<MethodInfo> _shouldSerializeMethod;
@@ -32,11 +29,7 @@ namespace System.Xaml.Schema
 
         public XamlMemberInvoker(XamlMember member)
         {
-            if (member == null)
-            {
-                throw new ArgumentNullException("member");
-            }
-            _member = member;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         public static XamlMemberInvoker UnknownInvoker
@@ -65,7 +58,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
@@ -96,7 +89,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingSetter == null)

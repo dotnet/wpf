@@ -1,5 +1,6 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
+powershell -ExecutionPolicy ByPass -NoProfile -command "& """%~dp0configure-helix-machine.ps1""" "
 
 REM Run the tests
 dotnet --info

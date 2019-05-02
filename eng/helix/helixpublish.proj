@@ -4,35 +4,29 @@
     <!-- These properties help ensure proper and consistent restore behavior -->
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RestorePackagesPath>$(MSBuildThisFileDirectory)packages</RestorePackagesPath>
-    
-    
-    <!-- We copy our own dotnet payload over to the machine, so we don't want/need a different dotnet install -->
-    <IncludeDotNetCli>false</IncludeDotNetCli>
-    <EnableXUnitReporter>true</EnableXUnitReporter>
-    <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
-    <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
-    <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
-
-    <!-- These help ensure proper restore behavior for Microsoft.NETCore.Platforms -->
     <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
     <RestoreSources>
       $(RestoreSources);
       https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
     </RestoreSources>
+
+    <!-- We copy our own dotnet payload over to the machine, so we don't want/need a different dotnet install -->
+    <IncludeDotNetCli>false</IncludeDotNetCli>
+    <EnableXUnitReporter>true</EnableXUnitReporter>
+    <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
+    <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
+
+    <!-- Semi-colon delimited list of commands that are executed before every test.-->
+    <HelixPreCommands>$(HelixPreCommands); powershell %HELIX_CORRELATION_PAYLOAD%\configure-helix-machine.ps1;</HelixPreCommands>
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="QV.Wpf.Test" Version="1.0.0" /> -->
+    <!--<PackageReference Include="Microsoft.DotNet.Wpf.DncEng.Test" Version="1.0.0" /> -->
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="HelloHelix">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\helixrun.cmd</Command>
     </HelixWorkItem>
-    <!--<HelixWorkItem Include="Ping stevenki">
-      <Timeout>00:20:00</Timeout>
-      <Command>ping \\stevenki1\public</Command>
-    </HelixWorkItem>
-    -->
    <!-- 
    <HelixWorkItem Include="Annotations">
       <Timeout>00:20:00</Timeout>

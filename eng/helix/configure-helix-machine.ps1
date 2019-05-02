@@ -5,13 +5,13 @@ $dotnetLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.P
 Write-Output "Adding dotnet location to path: $dotnetLocation"
 
 # Prepend the path to ensure that dotnet.exe is called from there.
-[System.Environment]::SetEnvironmentVariable("PATH", "$dotnetLocation;$env:path", [System.EnvironmentVariableTarget]::User)
+$env:path="$dotnetLocation;$env:path"
 
 # Don't look outside the TestHost to resolve best match SDKs.
-[System.Environment]::SetEnvironmentVariable("DOTNET_MULTILEVEL_LOOKUP", "0", [System.EnvironmentVariableTarget]::User)
+$env:DOTNET_MULTILEVEL_LOOKUP = 0
 
 # Disable first run since we do not need all ASP.NET packages restored.
-[System.Environment]::SetEnvironmentVariable("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1", [System.EnvironmentVariableTarget]::User)
+$env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
 # Ensure that the dotnet installed at our dotnetLocation is used
-[System.Environment]::SetEnvironmentVariable("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "$dotnetLocation", [System.EnvironmentVariableTarget]::User)
+$env:DOTNET_ROOT=$dotnetLocation

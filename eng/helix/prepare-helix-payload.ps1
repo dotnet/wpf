@@ -37,7 +37,7 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages
-$testNugetLocation = Join-Path $nugetPackagesDir "qv.wpf.test\1.0.0\tools\win-$platform\"
+$testNugetLocation = Join-Path $nugetPackagesDir "Microsoft.DotNet.Wpf.DncEng.Test\1.0.0\tools\win-$platform\"
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 
@@ -48,4 +48,4 @@ CopyFolderStructure $localDotnetInstall $dotnetPayloadLocation
 
 # Copy scripts
 Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
-Copy-Item "eng\helix\runtests.cmd" $payloadDir
+Copy-Item "eng\helix\helixrun.cmd" $payloadDir

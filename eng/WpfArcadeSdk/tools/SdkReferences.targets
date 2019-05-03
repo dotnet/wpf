@@ -64,7 +64,7 @@
 
   <Target
     Name="LimitNetCoreAppReferences"
-    AfterTargets="ResolveAssemblyReferences"
+    AfterTargets="ResolveTargetingPacks"
     Returns="@(ReferencePath)"
     Condition="'$(PkgMicrosoft_NETCore_App)'=='' And '@(NetCoreReference)'!='' and '@(ReferencePath)' != ''">
     <!--
@@ -115,7 +115,7 @@
   </Target>
 
   <Target Name="LimitWindowsDesktopAppReferences"
-        AfterTargets="ResolveAssemblyReferences"
+        AfterTargets="ResolveTargetingPacks"
         Returns="@(ReferencePath)"
         Condition="'$(PkgMicrosoft_WindowsDesktop_App)'=='' And '@(WindowsDesktopReference)'!='' and '@(ReferencePath)' != ''">
     <!--

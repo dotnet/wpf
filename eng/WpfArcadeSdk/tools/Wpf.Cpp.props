@@ -89,11 +89,20 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd>
+    <!-- 
+      If there is ever need to use a private C++ compiler front-end, use the logic in the commented section below,
+      and update global.json with the corresponding version of msvcurt-c1xx
+      
+      There is also a corresponding section (also commented out) in Wpf.Cpp.targets.
+      
+      msvcurt-c1xx should reference a blob hosted in azure storage that contains
+      msvcurt[d]_netcore.lib and c1xx.dll 
+    -->
+    <!-- <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd> --> 
     <!-- Also update in global.json -->
-    <MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>
-    <MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>
-    <MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>
+    <!--<MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>-->
+    <!--<MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>-->
+    <!--<MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>-->
   </PropertyGroup>
   
   <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">

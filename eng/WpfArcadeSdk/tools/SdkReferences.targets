@@ -64,23 +64,25 @@
 
   <Target
     Name="LimitNetCoreAppReferences"
-    AfterTargets="ResolveAssemblyReferences"
-    Returns="@(ReferencePath)"
-    Condition="'$(PkgMicrosoft_NETCore_App)'=='' And '@(NetCoreReference)'!='' and '@(ReferencePath)' != ''">
+    AfterTargets="ResolveTargetingPacks"
+    Returns="@(Reference)"
+    Condition="'$(PkgMicrosoft_NETCore_App)'=='' And '@(NetCoreReference)'!='' and '@(Reference)' != ''">
     <!--
       Example
       <NetCoreReference Include="Microsoft.CSharp" />
     -->
 
     <!--
-       Save Microsoft.NETCore.App.Ref assemblies, and remove those from @(ReferencePath)
+       Save Microsoft.NETCore.App.Ref assemblies, and remove those from @(Reference)
      -->
     <ItemGroup>
       <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
-      <_netCoreAppSdkReference Include="@(ReferencePath)"
-                               Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'" />
+      <_netCoreAppSdkReference Include="@(Reference)"
+                               Condition="'%(Reference.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'">
+        <OriginalPath>%(Reference.Identity)</OriginalPath>
+      </_netCoreAppSdkReference>
 
-      <ReferencePath Remove="@(_netCoreAppSdkReference)" />
+      <Reference Remove="@(_netCoreAppSdkReference)" />
     </ItemGroup>
 
     <ItemGroup>
@@ -94,7 +96,7 @@
     </FilterItem1ByItem2>
 
     <ItemGroup>
-      <ReferencePath Include="@(_netCoreAppReferences->'%(OriginalItemSpec)')" />
+      <Reference Include="@(_netCoreAppReferences->'%(OriginalPath)')" />
     </ItemGroup>
   </Target>
 
@@ -115,23 +117,25 @@
   </Target>
 
   <Target Name="LimitWindowsDesktopAppReferences"
-        AfterTargets="ResolveAssemblyReferences"
-        Returns="@(ReferencePath)"
-        Condition="'$(PkgMicrosoft_WindowsDesktop_App)'=='' And '@(WindowsDesktopReference)'!='' and '@(ReferencePath)' != ''">
+        AfterTargets="ResolveTargetingPacks"
+        Returns="@(Reference)"
+        Condition="'$(PkgMicrosoft_WindowsDesktop_App)'=='' And '@(WindowsDesktopReference)'!='' and '@(Reference)' != ''">
     <!--
       Example
       <WindowsDesktopReference Include="PresentationCore" />
     -->
 
     <!--
-       Save Microsoft.WindowsDesktop.App.Ref assemblies, and remove those from @(ReferencePath)
+       Save Microsoft.WindowsDesktop.App.Ref assemblies, and remove those from @(Reference)
      -->
     <ItemGroup>
       <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
-      <_windowsDesktopAppSdkReference Include="@(ReferencePath)"
-                                      Condition="'%(ReferencePath.NuGetPackageId)'=='Microsoft.WindowsDesktop.App.Ref'" />
+      <_windowsDesktopAppSdkReference Include="@(Reference)"
+                                      Condition="'%(Reference.NuGetPackageId)'=='Microsoft.WindowsDesktop.App.Ref'">
+        <OriginalPath>%(Reference.Identity)</OriginalPath>
+      </_windowsDesktopAppSdkReference>
 
-      <ReferencePath Remove="@(_windowsDesktopAppSdkReference)" />
+      <Reference Remove="@(_windowsDesktopAppSdkReference)" />
     </ItemGroup>
 
     <ItemGroup>
@@ -145,7 +149,7 @@
     </FilterItem1ByItem2>
 
     <ItemGroup>
-      <ReferencePath Include="@(_windowsDesktopAppReferences->'%(OriginalItemSpec)')" />
+      <Reference Include="@(_windowsDesktopAppReferences->'%(OriginalPath)')" />
     </ItemGroup>
   </Target>
 

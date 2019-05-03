@@ -189,17 +189,25 @@ namespace DrtXaml.XamlTestFramework
 
         public static bool IsATestType(Type type)
         {
-            if (!type.GetCustomAttributes(typeof(TestClassAttribute), false).Any())
+            try
             {
+                if (!type.GetCustomAttributes(typeof(TestClassAttribute), false).Any())
+                {
+                    return false;
+                }
+
+                if (type.GetCustomAttributes(typeof(TestDisabledAttribute), false).Any())
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (TypeLoadException e) when (e.TypeName == "System.Runtime.CompilerServices.SuppressMergeCheckAttribute")
+            {
+                // Temporary workaround for missing type in System.Runtime
                 return false;
             }
-
-            if (type.GetCustomAttributes(typeof(TestDisabledAttribute), false).Any())
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public static bool IsTestMethod(MethodInfo method)

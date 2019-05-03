@@ -48,4 +48,4 @@ CopyFolderStructure $localDotnetInstall $dotnetPayloadLocation
 
 # Copy scripts
 Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
-Copy-Item "eng\helix\helixrun.cmd" $payloadDir
+Copy-Item "eng\helix\runtests.ps1" $payloadDir

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
 
+  <!-- 
+    See comment about UsePrivateFrontEnd in Wpf.Cpp.props
+  -->
+  <!-- 
   <PropertyGroup>
     <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit'">$(MsvcurtC1xxToolsPath)HostX86\c1xx.dll</FrontEndPath>
     <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit'">$(MsvcurtC1xxToolsPath)HostX64\c1xx.dll</FrontEndPath>
@@ -17,7 +21,7 @@
       <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-
+  --> 
 
   <ItemDefinitionGroup>
     <ClCompile>

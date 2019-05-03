@@ -1,0 +1,13 @@
+# Testing in Helix
+
+I'd recommend seeing the official Helix [readme](https://github.com/dotnet/arcade/blob/master/src/Microsoft.DotNet.Helix/Sdk/Readme.md) if you are interested in some of the general Helix concepts. I'll briefly outline what we are doing that is a bit unique:
+
+1. Helix has built-in support for running xUnit tests. Since we are not using xUnit, we have to manually setup our machines so that they work with QualityVault and STI.
+We manually restore the helixpublish.proj project during CI builds; this is done in `pipeline.yml`. This allows us to package reference the `Microsoft.DotNet.Wpf.DncEng.Test` package to pull down the binaries that we need. We can extract them into a local folder using the MSBuild property `RestorePackagesPath`, so that when the project is restored, we know the exact relative location of the packages.
+2. We need to create a "TestHost" installation of dotnet on the Helix machine. The default Helix support for installing dotnet only installs version 2.x, and only installs the `Microsoft.NETCore.App` runtime, and not the M`icrosoft.WindowsDesktop.App` or `Microsoft.AspNetCore.App` runtimes. I opted to doing this manually and copy it out of the `.dotnet` folder that gets created as part of ci builds, rather than running an installer on the Helix machine. I figured reducing the number of dependencies on making external network calls and downloading items from the internet the better.
+3. We copy both the nuget packages we care care about and the dotnet install in the `prepare-helix-payload.ps1` script. This gets invoked before we actually run tests in the `pipeline-yml` file located in the `eng` directory. Helix allows you to specify a `HelixCorrelationPayload` directory, where this directory gets deployed to the Helix machine, and is made available in your various helix commands with the `HELIX_CORRELATION_PAYLOAD` environment variable.
+4. Helix and Azure Pipelines can report xUnit logs, so we will be updating QualityVault to produce an xUnit compatible log. We will then need to copy that log to a known location for it to be picked up.
+
+## How we are running tests
+1. Currently, the `HelixQueues` that we selected are Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open. Essentially, this translates to: "Latest Windows 10", "Windows 7", and "Windows 10 RS5 Server" addition. This enables tests to run on some of the most interesting and important SKUs, without overloading the Helix servers and/or making CI runs take an unnecessarily long time to run.
+2. In similar vain, we only run test passes for Release builds, mainly to save time and resources running duplicate tests in a near-identical environment.

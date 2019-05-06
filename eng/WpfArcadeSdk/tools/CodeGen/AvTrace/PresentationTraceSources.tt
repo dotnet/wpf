@@ -24,9 +24,9 @@ namespace System.Diagnostics
     public static partial class PresentationTraceSources
     {
 <# 
-   foreach (var avTracMessageFile in AvTraceMessageFiles.Split(';'))
+   foreach (var avTraceMessageFile in AvTraceMessageFiles.Split(';'))
    {
-		string fileName = this.Host.ResolvePath(avTracMessageFile);
+		string fileName = this.Host.ResolvePath(avTraceMessageFile);
 		XDocument doc = XDocument.Load(fileName);
    		foreach (XElement source in doc.Root.Elements("Source"))
 		{

@@ -3,7 +3,7 @@
 The following document describes how code generation in this repo works. The goal is to have all our code generation done through the use of T4 text generation. See the offical [Visual Studio T4 documentation](https://docs.microsoft.com/en-us/visualstudio/modeling/design-time-code-generation-by-using-t4-text-templates?view=vs-2019) for more information.
 
 ## Design-Time vs Run-Time T4 templates
-Currently, we are evaluating the use of design-time text templates. This gives us the ability to simply add the templates and associated targets to the build, without the need of maintaining a separate tool to do run-time generation. Including the `Microsoft.TextTemplating.targets` requires us to manually import Sdk.Targets because it needs to be imported after Sdk.targets. This causes the `BuildDependsOn` variable, which is modified by the T4 targets, to be overwritten, so the `TransformAll` target doesn’t run before the Build target. The boilerplait for including design-time templates has been encapsulated in the `$(WpfCodeGenDir)DesignTimeTextTemplating.targets` file, so the pattern for enabling these in a project looks like this: 
+Currently, we are evaluating the use of design-time text templates. This gives us the ability to simply add the templates and associated targets to the build, without the need of maintaining a separate tool to do run-time generation. When using the SDK-style project format, including the `Microsoft.TextTemplating.targets` requires us to manually import `Sdk.Targets` because the `BuildDependsOn` variable, which is modified by the T4 targets, would otherwise be overwritten by the automatic inclusion of `Sdk.targets`. This causes the `TransformAll` target to not run before the `Build` target. The boilerplait for including design-time templates has been encapsulated in the `$(WpfCodeGenDir)DesignTimeTextTemplating.targets` file, so the pattern for enabling these in a project looks like this: 
 
 ```
 <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
@@ -13,7 +13,7 @@ Currently, we are evaluating the use of design-time text templates. This gives u
 ```
 
 ## Basic T4 code generation philosophy and guidelines
-T4 templates can be a powerful tool, however without a conscious effort, they can quickly become unmaintainable and difficult to understand.  When authoring/modifying a T4 template, extra care should be taken to ensure that the templates are as readable as possible. While the "readibility" of a template may be a bit subjective, there are a few common guidelines that really help. Note that these are guidelines, and are not mandatory. The readability of the template is paramount to all things.
+T4 templates can be a powerful tool, however without a conscious effort, they can quickly become unmaintainable and difficult to understand.  When authoring/modifying a T4 template, extra care should be taken to ensure that the templates are as readable as possible. While the "readability" of a template may be a bit subjective, there are a few common guidelines that really help. Note that these are guidelines, and are not mandatory. The readability of the template is paramount to all things.
 
 * When multiple lines of code need to be written inside of "<# #>" blocks, the "<#" and "#>" tags should be on seperate lines. This makes it easier to tell where the code starts and stops. If we follow this policy, we can know that a line that only contains a "<#" tag is the start of a multi-line code block.
 

@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <AvTraceMessageFile>$(MSBuildProjectDirectory)\AvTraceMessages.xml</AvTraceMessageFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)AvTraceMessages.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AvTraceMessages.cs</LastGenOutput>
+      <OutputFilePath>$(MSBuildProjectDirectory)\MS\Internal\Generated\</OutputFilePath>
+    </None>
+    <None Update="AvTraceMessages.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>$(MSBuildThisFileDirectory)AvTraceMessages.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <T4ParameterValues Include="AvTraceMessageFile">
+      <Value>$(AvTraceMessageFile)</Value>
+      <Visible>False</Visible>
+    </T4ParameterValues>
+  </ItemGroup>
+</Project>

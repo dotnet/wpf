@@ -7,7 +7,6 @@
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />
-  <Import Project="$(WpfArcadeSdkToolsDir)GenerateAvTraceMessages.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Publishing.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ReferenceAssembly.targets"/>

@@ -158,3 +158,4 @@ Follow the steps defined [here](https://github.com/dotnet/arcade/blob/master/Doc
 * [Coding guidelines](https://github.com/dotnet/corefx/tree/master/Documentation#coding-guidelines)
 * [up-for-grabs WPF issues](https://github.com/dotnet/wpf/issues?q=is%3Aopen+is%3Aissue+label%3Aup-for-grabs)
 * [easy WPF issues](https://github.com/dotnet/wpf/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3Aeasy)
+* [Code generation in dotnet/wpf](codegen.md)

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+
+  <PropertyGroup>
+    <!-- 
+         Arcade requires us to set this property in order for it to appropriately update
+         GenerateSource in our EmbeddedResource items.  Without this, no code generation
+         will take place for any of our resx files.
+         See GenerateResxSource.targets in Arcade.
+    -->
+    <GenerateResxSource>true</GenerateResxSource>
+  </PropertyGroup>
+
   <ItemDefinitionGroup>
     <EmbeddedResource>
       <GenerateSource>true</GenerateSource>

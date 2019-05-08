@@ -9,7 +9,7 @@
     "version": "3.0.100-preview5-011568"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19256.12"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19257.7"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1"

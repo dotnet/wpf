@@ -59,9 +59,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>28a926b5b38eefb18cd77b4cb0b74fdda99cdb26</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview6-27707-10">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview6-27708-04">
       <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>911b9999b1755450e774486e96f7e5517355f08d</Sha>
+      <Sha>19ecb4847b57249bdee93d14eeea81bbc0174ff5</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19258.5">
       <Uri>https://github.com/dotnet/arcade</Uri>

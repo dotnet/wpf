@@ -48,6 +48,7 @@ of the repository when you do a full build using the `build.cmd` or `build.sh` s
 You can run the copy-wpf.ps1 script again, except you can leave out the destination and be sure to pass in the 
 the `-testhost` parameter:
 > eng\copy-wpf.ps1 -testhost  
+```cmd eng\copy-wpf.ps1 -testhost  ```
 
 You need to set environment variables so that your testhost installation is used when launching the application.
 Once these are set, you should be able to launch the executable from the command line and then your assemblies
@@ -69,7 +70,7 @@ higher version number is chosen. Assuming our locally built binaries are newer t
 installed, we can then simply reference those local binaries directly from the project file, like this:
 
 *Note: you should build locally with the `-pack` param to ensure the binaries are put in the correct location.*
-```
+```xml
   <PropertyGroup>
      <!-- Change this value based on where your local repo is located -->
      <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
@@ -106,7 +107,7 @@ Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile $dotnet_install
 
 This would install version `3.0.0-preview5-27619-18` of the `Microsoft.WindowsDesktop.App` shared runtime. You can pass `"Latest"` to get the latest version of the runtime.  You can also use this script to install the runtimes as well as the SDK. If you know a particular SDK version and are curious to know what `Microsoft.WindowsDesktop.App` version is associated with it, there is a file called `Microsoft.NETCoreSdk.BundledVersions.props` contained inside the SDK folder. Inside that file, you will find an entry that looks like this:
 
-```
+```xml
     <KnownFrameworkReference Include="Microsoft.WindowsDesktop.App"
                               TargetFramework="netcoreapp3.0"
                               RuntimeFrameworkName="Microsoft.WindowsDesktop.App"
@@ -124,7 +125,7 @@ In this example, the version of `Microsoft.WindowsDesktop.App` associated with t
 
 #### Specifying which version of the runtime to use
 If you can build directly from source, you can add this to your project file to pick up the version of the shared runtime you want to test:
-```
+```xml
  <PropertyGroup>
     <MicrosoftWindowsDesktopAppVersion>3.0.0-preview5-27619-18</MicrosoftWindowsDesktopAppVersion>
  <PropertyGroup>
@@ -134,7 +135,7 @@ If you can build directly from source, you can add this to your project file to 
 ```
 
 If you don't have the ability to build from source, you can update the *.runtimeconfig.json file located next to the executable to pick up your version:
-```
+```json
 {
   "runtimeOptions": {
     "tfm": "netcoreapp3.0",

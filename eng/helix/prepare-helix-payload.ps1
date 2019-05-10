@@ -37,12 +37,23 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages
-$testNugetLocation = Join-Path $nugetPackagesDir "Microsoft.DotNet.Wpf.DncEng.Test\1.0.0\tools\win-$platform\"
+$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.DncEng.Test\1.0.0-beta.19260.5\tools\win-$platform\"
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 
-# Copy local dotnet install
-$localDotnetInstall = Join-Path $env:BUILD_SOURCESDIRECTORY '.dotnet'
+# Copy local DRT assemblies to test location
+CopyFolderStructure $testNugetLocation $testPayloadLocation
+$drtArtifactsLocation = [System.IO.Path]::Combine($env:BUILD_SOURCESDIRECTORY, "artifacts\test", $configuration, $platform, "Test\DRT")
+$drtPayloadLocation = Join-Path $payloadDir "Test\DRT"
+CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
+
+# Copy built assemblies to dotnet install location
+$eng = Join-Path $env:BUILD_SOURCESDIRECTORY "eng"
+$configArgs = if ($configuration == "Release") { "-release" } else { }
+& "$eng\copy-wpf.ps1 -local -arch $platform $configArgs"
+
+# Copy local dotnet install to payload
+$localDotnetInstall = Join-Path $env:BUILD_SOURCESDIRECTORY ".dotnet"
 $dotnetPayloadLocation = Join-Path $payloadDir "dotnet"
 CopyFolderStructure $localDotnetInstall $dotnetPayloadLocation
 

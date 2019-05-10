@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+    <AssemblyName>XamlTestClasses.FriendWithKey</AssemblyName>
+    <OutputType>Library</OutputType>
+    <DefineConstants>$(DefineConstants);OLDRESOURCES</DefineConstants>
+    <TestCode>true</TestCode>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="FriendWithKey.cs" />
+  </ItemGroup>
+</Project>

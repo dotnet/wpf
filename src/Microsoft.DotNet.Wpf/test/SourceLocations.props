@@ -1,0 +1,1072 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <CommonCodeLocation>$(WpfTestBasePath)\Common\Code\Microsoft\Test</CommonCodeLocation>
+    <CommonCriticalCodeLocation>$(WpfTestBasePath)\Common\Code\Critical\Microsoft\Test</CommonCriticalCodeLocation>
+    <CommonDataLocation>$(WpfTestBasePath)\Common\Data</CommonDataLocation>
+  </PropertyGroup>
+
+  <!-- ClickOnce Helper -->
+  <ItemGroup>
+    <SourcesClickonceHelper Include="$(CommonCodeLocation)\Deployment\ClickOnceHelper.cs"> <Link>Test\Deployment\ClickOnceHelper.cs</Link> </SourcesClickonceHelper>
+  </ItemGroup>
+
+  <!-- Container -->
+  <ItemGroup>
+    <SourcesContainer Include="$(CommonCodeLocation)\Container\StorageRootWrapper.cs"> <Link>Test\Container\StorageRootWrapper.cs</Link> </SourcesContainer>
+  </ItemGroup>
+
+  <!-- Exception Validation -->
+  <ItemGroup>
+    <SourcesExceptionValidation Include="$(CommonCodeLocation)\Globalization\Exceptions.cs"> <Link>Test\Globalization\Exceptions.cs</Link> </SourcesExceptionValidation>
+  </ItemGroup>
+
+  <!-- MSBuild -->
+  <ItemGroup>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\Compiler.cs"> <Link>Test\MSBuildEngine\Compiler.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\ErrorCodes.cs"> <Link>Test\MSBuildEngine\ErrorCodes.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\ErrorWarningParser.cs"> <Link>Test\MSBuildEngine\ErrorWarningParser.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\IMSBuildLogger.cs"> <Link>Test\MSBuildEngine\IMSBuildLogger.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\MSBuildCommonHelper.cs"> <Link>Test\MSBuildEngine\MSBuildCommonHelper.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\MSBuildLogger.cs"> <Link>Test\MSBuildEngine\MSBuildLogger.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\MSBuildPerf.cs"> <Link>Test\MSBuildEngine\MSBuildPerf.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\MSBuildPerfLogger.cs"> <Link>Test\MSBuildEngine\MSBuildPerfLogger.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\MSBuildProjExecutor.cs"> <Link>Test\MSBuildEngine\MSBuildProjExecutor.cs</Link> </SourcesMSBuildEngine>
+    <SourcesMSBuildEngine Include="$(CommonCodeLocation)\MSBuildEngine\CompilerHelper.cs"> <Link>Test\MSBuildEngine\CompilerHelper.cs</Link> </SourcesMSBuildEngine>
+  </ItemGroup>
+
+  <!-- AutoData -->
+  <ItemGroup>
+    <SourcesAutoData Include="$(CommonCodeLocation)\Globalization\AutoDataEnums.cs"> <Link>Test\Globalization\AutoDataEnums.cs</Link> </SourcesAutoData>
+    <SourcesAutoData Include="$(CommonCodeLocation)\Globalization\extract.cs"> <Link>Test\Globalization\extract.cs</Link> </SourcesAutoData>
+    <SourcesAutoData Include="$(CommonCodeLocation)\Globalization\generate.cs"> <Link>Test\Globalization\generate.cs</Link> </SourcesAutoData>
+    <SourcesAutoData Include="$(CommonCodeLocation)\Globalization\LangPackHelper.cs"> <Link>Test\Globalization\LangPackHelper.cs</Link> </SourcesAutoData>
+  </ItemGroup>
+
+  <!-- ETW Logging Code -->
+  <ItemGroup>
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\ClrTraceEventParser.cs"> <Link>Test\EventTracing\ClrTraceEventParser.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\DynamicTraceEventParser.cs"> <Link>Test\EventTracing\DynamicTraceEventParser.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\ETWTraceEventSource.cs"> <Link>Test\EventTracing\ETWTraceEventSource.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\KernelTraceEventParser.cs"> <Link>Test\EventTracing\KernelTraceEventParser.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Manifest.cs"> <Link>Test\EventTracing\Manifest.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\SymbolEventParser.cs"> <Link>Test\EventTracing\SymbolEventParser.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\SymbolResolver.cs"> <Link>Test\EventTracing\SymbolResolver.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\TraceEvent.cs"> <Link>Test\EventTracing\TraceEvent.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\TraceEventNativeMethods.cs"> <Link>Test\TraceEventNativeMethods.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\TraceEventSession.cs"> <Link>Test\EventTracing\TraceEventSession.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\TraceLog.cs"> <Link>Test\EventTracing\TraceLog.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utility.cs"> <Link>Test\EventTracing\Utility.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\WPFTraceEventParser.cs"> <Link>Test\EventTracing\WPFTraceEventParser.cs</Link> </SourcesETWLogging >
+
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\CompressedStream.cs"> <Link>Test\EventTracing\Utilities\CompressedStream.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\FastSerialization.cs"> <Link>Test\EventTracing\Utilities\FastSerialization.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\GrowableArray.cs"> <Link>Test\EventTracing\Utilities\GrowableArray.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\StreamReaderWriter.cs"> <Link>Test\EventTracing\Utilities\StreamReaderWriter.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\StreamUtilities.cs"> <Link>Test\EventTracing\Utilities\StreamUtilities.cs</Link> </SourcesETWLogging >
+    <SourcesETWLogging Include="$(CommonCodeLocation)\EventTracing\Utilities\XmlUtilities.cs"> <Link>Test\EventTracing\Utilities\XmlUtilities.cs</Link> </SourcesETWLogging >
+  </ItemGroup>
+
+  <!-- Managed Resources AutoData  -->
+  <ItemGroup>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\ChineseSimplified.txt">
+      <LogicalName>ChineseSimplified.txt</LogicalName>
+      <Link>Resources\Globalization\ChineseSimplified.txt</Link>
+    </ManagedResourcesAutoData>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\ChineseTraditional.txt">
+      <LogicalName>ChineseTraditional.txt</LogicalName>
+      <Link>Resources\Globalization\ChineseTraditional.txt</Link>
+    </ManagedResourcesAutoData>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\Japanese.txt">
+      <LogicalName>Japanese.txt</LogicalName>
+      <Link>Resources\Globalization\Japanese.txt</Link>
+    </ManagedResourcesAutoData>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\Korean.txt">
+      <LogicalName>Korean.txt</LogicalName>
+      <Link>Resources\Globalization\Korean.txt</Link>
+    </ManagedResourcesAutoData>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\ProblemDate.xml">
+      <LogicalName>ProblemDate.xml</LogicalName>
+      <Link>Resources\Globalization\ProblemDate.xml</Link>
+    </ManagedResourcesAutoData>
+    <ManagedResourcesAutoData Include="$(CommonCodeLocation)\Globalization\ProblemString.xml">
+      <LogicalName>ProblemString.xml</LogicalName>
+      <Link>Resources\Globalization\ProblemString.xml</Link>
+    </ManagedResourcesAutoData>
+  </ItemGroup>
+
+  <!-- Markup -->
+  <ItemGroup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\ModifyXaml.cs"> <Link>Test\Markup\ModifyXaml.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\WPFLibraryGenerator.cs"> <Link>Test\Markup\WPFLibraryGenerator.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\WPFTreeGenerator.cs"> <Link>Test\Markup\WPFTreeGenerator.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\WPFXamlGenerator.cs"> <Link>Test\Markup\WPFXamlGenerator.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\XamlGenerator.cs"> <Link>Test\Markup\XamlGenerator.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\XmlGenerator.cs"> <Link>Test\Markup\XmlGenerator.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\XamlComparer.cs"> <Link>Test\Markup\XamlComparer.cs</Link> </SourcesMarkup>
+    <SourcesMarkup Include="$(CommonCodeLocation)\Markup\XamlTestDocument.cs"> <Link>Test\Markup\XamlTestDocument.cs</Link> </SourcesMarkup>
+  </ItemGroup>
+
+  <!-- Windows Forms -->
+  <ItemGroup>
+    <SourcesWindowsForms Include="$(CommonCodeLocation)\WindowsForms\Application.cs"> <Link>Test\WindowsForms\Application.cs</Link> </SourcesWindowsForms>
+    <SourcesWindowsForms Include="$(CommonCodeLocation)\WindowsForms\WindowsFormsSource.cs"> <Link>Test\WindowsForms\WindowsFormsSource.cs</Link> </SourcesWindowsForms>
+  </ItemGroup>
+
+  <!-- AppMonitor -->
+  <ItemGroup>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\ApplicationDeploymentHelper.cs"> <Link>Test\Loaders\ApplicationDeploymentHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\ApplicationMonitorTest.cs"> <Link>Test\Loaders\ApplicationMonitorTest.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\ApplicationMonitor.cs"> <Link>Test\Loaders\ApplicationMonitor.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\ApplicationMonitorConfig.cs"> <Link>Test\Loaders\ApplicationMonitorConfig.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\FileHost.cs"> <Link>Test\Loaders\FileHost.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\IXamlLauncher.cs"> <Link>Test\Loaders\IXamlLauncher.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\LoaderStep.cs"> <Link>Test\Loaders\LoaderStep.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\ResourceHelper.cs"> <Link>Test\Loaders\ResourceHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\FireFoxAutomationHelper.cs"> <Link>Test\Loaders\FireFoxAutomationHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\UIHandler.cs"> <Link>Test\Loaders\UIHandler.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\ActivationStep.cs"> <Link>Test\Loaders\Steps\ActivationStep.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\FileHostStep.cs"> <Link>Test\Loaders\Steps\FileHostStep.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\HostingRuntimePolicyHelper.cs"> <Link>Test\Loaders\Steps\HostingRuntimePolicyHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\LoggingSteps.cs"> <Link>Test\Loaders\Steps\LoggingSteps.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\VersionHelper.cs"> <Link>Test\Loaders\Steps\VersionHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\RegistryStep.cs"> <Link>Test\Loaders\Steps\RegistryStep.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\UIHandlers\DefaultHandlers.cs"> <Link>Test\Loaders\UIHandlers\DefaultHandlers.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Scripter.cs"> <Link>Test\Loaders\Steps\Scripter.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\String.cs"> <Link>Test\Loaders\Steps\String.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Win32.cs"> <Link>Test\Loaders\Steps\Win32.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Resources.cs"> <Link>Test\Loaders\Steps\Resources.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Registry.cs"> <Link>Test\Loaders\Steps\Registry.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Tests.cs"> <Link>Test\Loaders\Steps\Tests.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Diagnostics.cs"> <Link>Test\Loaders\Steps\Diagnostics.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\IO.cs"> <Link>Test\Loaders\Steps\IO.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\UI.cs"> <Link>Test\Loaders\Steps\UI.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\XML.cs"> <Link>Test\Loaders\Steps\XML.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Input.cs"> <Link>Test\Loaders\Steps\Input.cs</Link> </SourcesAppMonitor>
+    <!--<SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Security.cs"> <Link>Test\Loaders\Steps\Security.cs</Link> </SourcesAppMonitor>-->
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Reflection.cs"> <Link>Test\Loaders\Steps\Reflection.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Avalon.cs"> <Link>Test\Loaders\Steps\Avalon.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Collections.cs"> <Link>Test\Loaders\Steps\Collections.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\Environment.cs"> <Link>Test\Loaders\Steps\Environment.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\ScripterStep.cs"> <Link>Test\Loaders\Steps\ScripterStep.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\UIHandlers\CustomUIHandler.cs"> <Link>Test\Loaders\UIHandlers\CustomUIHandler.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\ConfigFileStep.cs"> <Link>Test\Loaders\Steps\ConfigFileStep.cs</Link> </SourcesAppMonitor>
+    <!--<SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\BrowserStateStep.cs"> <Link>Test\Loaders\Steps\BrowserStateStep.cs</Link> </SourcesAppMonitor>-->
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\IENavigationHelper.cs"> <Link>Test\Loaders\IENavigationHelper.cs</Link> </SourcesAppMonitor>
+    <SourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\MachineInfoStepDisabler.cs"> <Link>Test\Loaders\Steps\MachineInfoStepDisabler.cs</Link> </SourcesAppMonitor>
+  </ItemGroup>
+
+  <!-- Managed Resources AppMonitor -->
+  <ItemGroup>
+    <!--<ManagedResourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\clickoncetest.pfx">
+      <LogicalName>clickoncetest.pfx</LogicalName>
+      <Link>Resources\Loaders\clickoncetest.pfx</Link>
+    </ManagedResourcesAppMonitor>-->
+    <ManagedResourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\NamedRegistrations.xml">
+      <LogicalName>NamedRegistrations.xml</LogicalName>
+      <Link>Resources\Loaders\NamedRegistrations.xml</Link>
+    </ManagedResourcesAppMonitor>
+    <ManagedResourcesAppMonitor Include="$(CommonCodeLocation)\Loaders\Steps\ErrorCodes.xml">
+      <LogicalName>ErrorCodes.xml</LogicalName>
+      <Link>Resources\Loaders\ErrorCodes.xml</Link>
+    </ManagedResourcesAppMonitor>
+  </ItemGroup>
+
+  <!-- Threading -->
+  <ItemGroup>
+    <SourcesThreading Include="$(CommonCodeLocation)\Threading\DispatcherHelper.cs"> <Link>Test\Threading\DispatcherHelper.cs</Link> </SourcesThreading>
+    <SourcesThreading Include="$(CommonCodeLocation)\Threading\DispatcherQueueWrapper.cs"> <Link>Test\Threading\DispatcherQueueWrapper.cs</Link> </SourcesThreading>
+    <SourcesThreading Include="$(CommonCodeLocation)\Threading\DispatcherTimerHelper.cs"> <Link>Test\Threading\DispatcherTimerHelper.cs</Link> </SourcesThreading>
+    <SourcesThreading Include="$(CommonCodeLocation)\Threading\DispatcherPriorityHelper.cs"> <Link>Test\Threading\DispatcherPriorityHelper.cs</Link> </SourcesThreading>
+    <SourcesThreading Include="$(CommonCodeLocation)\Threading\DispatcherSignalHelper.cs"> <Link>Test\Threading\DispatcherSignalHelper.cs</Link> </SourcesThreading>
+  </ItemGroup>
+
+  <!-- Security -->
+  <ItemGroup>
+    <SourcesSecurity Include="$(CommonCodeLocation)\Security\Secure.cs"> <Link>Test\Security\Secure.cs</Link> </SourcesSecurity>
+  </ItemGroup>
+
+  <!-- Security Wrappers -->
+  <ItemGroup>
+    <SourcesSecurityWrappers Include="$(CommonCodeLocation)\Security\Wrappers\TestAPISw.cs"> <Link>Test\Security\Wrappers\TestAPISw.cs</Link> </SourcesSecurityWrappers>
+    <SourcesSecurityWrappers Include="$(CommonCodeLocation)\Security\Wrappers\AvalonWrappers.cs"> <Link>Test\Security\Wrappers\AvalonWrappers.cs</Link> </SourcesSecurityWrappers>
+    <SourcesSecurityWrappers Include="$(CommonCodeLocation)\Security\Wrappers\WrapperClasses.cs"> <Link>Test\Security\Wrappers\WrapperClasses.cs</Link> </SourcesSecurityWrappers>
+    <!-- Include 4.0 Wrappers based on build target version -->
+    <SourcesSecurityWrappers Include="$(CommonCodeLocation)\Security\Wrappers\WrapperClasses40.cs" Condition="'$(WPF_TESTBUILD_TARGETVERSION)' != 'v3.0' AND '$(WPF_TESTBUILD_TARGETVERSION)' != 'v3.5'"> <Link>Test\Security\Wrappers\WrapperClasses40.cs</Link> </SourcesSecurityWrappers>
+  </ItemGroup>
+
+  <!-- Display Minimal -->
+  <ItemGroup>
+    <SourcesDisplayMinimal Include="$(CommonCodeLocation)\Display\DisplayConfiguration.cs"> <Link>Test\Display\DisplayConfiguration.cs</Link> </SourcesDisplayMinimal>
+    <SourcesDisplayMinimal Include="$(CommonCodeLocation)\Display\DisplaySettings.cs"> <Link>Test\Display\DisplaySettings.cs</Link> </SourcesDisplayMinimal>
+    <SourcesDisplayMinimal Include="$(CommonCodeLocation)\Display\DisplaySettingsInfo.cs"> <Link>Test\Display\DisplaySettingsInfo.cs</Link> </SourcesDisplayMinimal>
+    <SourcesDisplayMinimal Include="$(CommonCodeLocation)\Display\DwmApi.cs"> <Link>Test\Display\DwmApi.cs</Link> </SourcesDisplayMinimal>
+    <SourcesDisplayMinimal Include="$(CommonCodeLocation)\Display\Monitor.cs"> <Link>Test\Display\Monitor.cs</Link> </SourcesDisplayMinimal>
+  </ItemGroup>
+
+  <!-- Display -->
+  <ItemGroup>
+    <SourcesDisplay Include="$(CommonCodeLocation)\Display\Desktop.cs"> <Link>Test\Display\Desktop.cs</Link> </SourcesDisplay>
+    <SourcesDisplay Include="@(SourcesDisplayMinimal)" />
+  </ItemGroup>
+
+  <!-- Leak Testing -->
+  <ItemGroup>
+    <SourcesLeak Include="$(CommonCodeLocation)\Leak\LeakTest.cs"> <Link>Test\Leak\LeakTest.cs</Link> </SourcesLeak>    
+  </ItemGroup>
+
+  <!-- Test Types -->
+  <ItemGroup>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\AvalonModel.cs"> <Link>Test\TestTypes\AvalonModel.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\AvalonTest.cs"> <Link>Test\TestTypes\AvalonTest.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\ETWVerificationTest.cs"> <Link>Test\TestTypes\ETWVerificationTest.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\StepsTest.cs"> <Link>Test\TestTypes\StepsTest.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\WindowModel.cs"> <Link>Test\TestTypes\WindowModel.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\WindowTest.cs"> <Link>Test\TestTypes\WindowTest.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\WindowUtil.cs"> <Link>Test\TestTypes\WindowUtil.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\XamlModel.cs"> <Link>Test\TestTypes\XamlModel.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\XamlTest.cs"> <Link>Test\TestTypes\XamlTest.cs</Link> </SourcesTestTypes>
+    <SourcesTestTypes Include="$(CommonCodeLocation)\TestTypes\XamlVisualVerificationTest.cs"> <Link>Test\TestTypes\XamlVisualVerificationTest.cs</Link> </SourcesTestTypes>
+  </ItemGroup>
+
+  <!-- Drt -->
+  <ItemGroup>
+    <SourcesDrt Include="$(CommonCodeLocation)\Drt\DrtRunner.cs"> <Link>Test\Drt\DrtRunner.cs</Link> </SourcesDrt>
+  </ItemGroup>
+
+  <!-- Verification -->
+  <ItemGroup>
+    <SourcesVerification Include="$(CommonCodeLocation)\Verification\IVerifier.cs"> <Link>Test\Verification\IVerifier.cs</Link> </SourcesVerification>
+    <SourcesVerification Include="$(CommonCodeLocation)\Verification\IVerifyResult.cs"> <Link>Test\Verification\IVerifyResult.cs</Link> </SourcesVerification>
+    <SourcesVerification Include="$(CommonCodeLocation)\Verification\VerifyResult.cs"> <Link>Test\Verification\VerifyResult.cs</Link> </SourcesVerification>
+  </ItemGroup>
+
+  <!-- Input Minimal -->
+  <ItemGroup>
+    <SourcesInputMinimal Include="$(CommonCodeLocation)\Input\InputHelper.cs"> <Link>Test\Input\InputHelper.cs</Link> </SourcesInputMinimal>
+  </ItemGroup>
+
+  <!-- Input -->
+  <ItemGroup>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\Input.cs"> <Link>Test\Input\Input.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\NativeMethods.cs"> <Link>Test\Input\NativeMethods.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\SafeNativeMethods.cs"> <Link>Test\Input\SafeNativeMethods.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\UnsafeNativeMethods.cs"> <Link>Test\Input\UnsafeNativeMethods.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\InputManagerWrapper.cs"> <Link>Test\Input\InputManagerWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\KeyboardRecorder.cs"> <Link>Test\Input\KeyboardRecorder.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawMouseActions.cs"> <Link>Test\Input\RawMouseActions.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\InputReportEventArgsWrapper.cs"> <Link>Test\Input\InputReportEventArgsWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawKeyboardActions.cs"> <Link>Test\Input\RawKeyboardActions.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawMouseInputReportWrapper.cs"> <Link>Test\Input\RawMouseInputReportWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawMouseState.cs"> <Link>Test\Input\RawMouseState.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawKeyboardInputReportWrapper.cs"> <Link>Test\Input\RawKeyboardInputReportWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\InputReportWrapper.cs"> <Link>Test\Input\InputReportWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\KeyboardPlayer.cs"> <Link>Test\Input\KeyboardPlayer.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawKeyboardState.cs"> <Link>Test\Input\RawKeyboardState.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\RawTextInputReportWrapper.cs"> <Link>Test\Input\RawTextInputReportWrapper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\MultiMonitorHelper.cs"> <Link>Test\Input\MultiMonitorHelper.cs</Link> </SourcesInput>
+    <SourcesInput Include="$(CommonCodeLocation)\Input\UserInput.cs"> <Link>Test\Input\UserInput.cs</Link> </SourcesInput>
+    <SourcesInput Include="@(SourcesInputMinimal)" />
+  </ItemGroup>
+
+  <!-- Hosting/Xaml Browser Host- TODO: the name should be fixed. -->
+  <ItemGroup>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaDistributedStepInfo.cs"> <Link>Test\Hosting\UiaDistributedStepInfo.cs</Link> </SourcesXamlBrowserHost>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaDistributedStepTarget.cs"> <Link>Test\Hosting\UiaDistributedStepTarget.cs</Link> </SourcesXamlBrowserHost>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaDistributedTestcase.cs"> <Link>Test\Hosting\UiaDistributedTestcase.cs</Link> </SourcesXamlBrowserHost>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaDistributedTestCaseHost.cs"> <Link>Test\Hosting\UiaDistributedTestCaseHost.cs</Link> </SourcesXamlBrowserHost>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaSimpleTestCase.cs"> <Link>Test\Hosting\UiaSimpleTestCase.cs</Link> </SourcesXamlBrowserHost>
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\UiaTestState.cs"> <Link>Test\Hosting\UiaTestState.cs</Link> </SourcesXamlBrowserHost>
+
+    <SourcesXamlBrowserHost Include="$(CommonCodeLocation)\Hosting\XamlBrowserHost.cs"> <Link>Test\Hosting\XamlBrowserHost.cs</Link> </SourcesXamlBrowserHost>
+  </ItemGroup>
+
+  <!-- Object Serializer -->
+  <ItemGroup>
+    <SourcesObjectserializer Include="$(CommonCriticalCodeLocation)\Serialization\ObjectSerializer.cs"> <Link>Critical\Test\Serialization\ObjectSerializer.cs</Link> </SourcesObjectserializer>
+    <SourcesObjectserializer Include="$(CommonCriticalCodeLocation)\Serialization\DefaultObjectSerializer.cs"> <Link>Critical\Test\Serialization\DefaultObjectSerializer.cs</Link> </SourcesObjectserializer>
+  </ItemGroup>
+
+ <!-- Runtime Logging Sources -->
+  <ItemGroup>
+    <SharedRuntimeLoggingSources Include="$(CommonCriticalCodeLocation)\Logging\TestResult.cs"> <Link>Critical\Test\Logging\TestResult.cs</Link> </SharedRuntimeLoggingSources>
+    <SharedRuntimeLoggingSources Include="$(CommonCriticalCodeLocation)\Logging\IHarnessLoggingContract.cs"> <Link>Critical\Test\Logging\IHarnessLoggingContract.cs</Link> </SharedRuntimeLoggingSources>
+  </ItemGroup>
+
+  <!-- Logging -->
+  <ItemGroup>
+    <SourcesLogging Include="@(SharedRuntimeLoggingSources)" />
+    <SourcesLogging Include="$(CommonCodeLocation)\Logging\TestLog.cs"> <Link>Test\Logging\TestLog.cs</Link> </SourcesLogging>
+    <SourcesLogging Include="$(CommonCodeLocation)\Logging\TestStage.cs"> <Link>Test\Logging\TestStage.cs</Link> </SourcesLogging>
+    <SourcesLogging Include="$(CommonCodeLocation)\Logging\GlobalLog.cs"> <Link>Test\Logging\GlobalLog.cs</Link> </SourcesLogging>
+  </ItemGroup>
+
+  <!-- System Information -->
+  <ItemGroup>
+    <SourcesSystemInfo Include="$(CommonCodeLocation)\Diagnostics\SystemInformation.cs"> <Link>Test\Diagnostics\SystemInformation.cs</Link> </SourcesSystemInfo>
+    <SourcesSystemInfo Include="$(CommonCodeLocation)\Diagnostics\ProcessorInformation.cs"> <Link>Test\Diagnostics\ProcessorInformation.cs</Link> </SourcesSystemInfo>
+    <SourcesSystemInfo Include="$(CommonCodeLocation)\Diagnostics\SystemMetrics.cs"> <Link>Test\Diagnostics\SystemMetrics.cs</Link> </SourcesSystemInfo>
+  </ItemGroup>
+
+  <!-- System Information WPF-->
+  <ItemGroup>
+    <SourcesSystemInfoWpf Include="$(CommonCodeLocation)\Diagnostics\SystemInformation_Wpf.cs"> <Link>Test\Diagnostics\SystemInformation_Wpf.cs</Link> </SourcesSystemInfoWpf>
+  </ItemGroup>
+
+  <!-- System Information WindowsMediaPlayer-->
+  <ItemGroup>
+    <SourcesSystemInfoMediaPlayer Include="$(CommonCodeLocation)\Diagnostics\SystemInformation_WindowsMediaPlayer.cs"> <Link>Test\Diagnostics\SystemInformation_WindowsMediaPlayer.cs</Link> </SourcesSystemInfoMediaPlayer>
+  </ItemGroup>
+
+  <!-- Process Monitor -->
+  <ItemGroup>
+    <SourcesProcessmonitor Include="$(CommonCodeLocation)\Diagnostics\ProcessMonitor.cs"> <Link>Test\Diagnostics\ProcessMonitor.cs</Link> </SourcesProcessmonitor>
+  </ItemGroup>
+
+  <!-- Process Helper -->
+  <ItemGroup>
+    <SourcesProcessHelper Include="$(CommonCodeLocation)\Diagnostics\ProcessHelper.cs"> <Link>Test\Diagnostics\ProcessHelper.cs</Link> </SourcesProcessHelper>
+    <SourcesProcessHelper Include="$(CommonCodeLocation)\Diagnostics\ProcessGroup.cs"> <Link>Test\Diagnostics\ProcessGroup.cs</Link> </SourcesProcessHelper>
+    <SourcesProcessHelper Include="$(CommonCodeLocation)\Diagnostics\ManifestHelper.cs"> <Link>Test\Diagnostics\ManifestHelper.cs</Link> </SourcesProcessHelper>
+  </ItemGroup>
+
+  <!-- Loaders -->
+  <ItemGroup>
+    <SourcesLoaders Include="@(SourcesProcessMonitor)" />
+  </ItemGroup>
+
+  <!-- Debugging -->
+  <ItemGroup>
+    <SourcesDebugging Include="$(CommonCodeLocation)\Diagnostics\CdbSession.cs"><Link>Test\Diagnostics\CdbSession.cs</Link> </SourcesDebugging>
+  </ItemGroup>
+
+  <!-- State Management Runtime -->
+  <ItemGroup>
+    <SourcesStateManagementRuntime Include="$(CommonCodeLocation)\Configuration\MachineStateManager.cs"> <Link>Test\Configuration\MachineStateManager.cs</Link> </SourcesStateManagementRuntime>
+  </ItemGroup>
+
+  <!-- State Management -->
+  <ItemGroup>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\StateManager.cs"> <Link>Test\StateManagement\StateManager.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\State.cs"> <Link>Test\StateManagement\State.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\RegistryState.cs"> <Link>Test\StateManagement\RegistryState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\UserSessionState.cs"> <Link>Test\StateManagement\UserSessionState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\SystemInformationState.cs"> <Link>Test\StateManagement\SystemInformationState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\MonitorState.cs"> <Link>Test\StateManagement\MonitorState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\DisplayThemeState.cs"> <Link>Test\StateManagement\DisplayThemeState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\BrowserState.cs"> <Link>Test\StateManagement\BrowserState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\FirewallExceptionState.cs"> <Link>Test\StateManagement\FirewallExceptionState.cs</Link> </SourcesStateManagement>
+    <SourcesStateManagement Include="$(CommonCodeLocation)\StateManagement\ComServerState.cs"> <Link>Test\StateManagement\ComServerState.cs</Link> </SourcesStateManagement>
+  </ItemGroup>
+
+  <!-- Execution Service Client -->
+  <ItemGroup>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\IExecutionService.cs"> <Link>Test\Diagnostics\IExecutionService.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\ExecutionServiceClient.cs"> <Link>Test\Diagnostics\ExecutionServiceClient.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\ExecutionServiceClientConnection.cs"> <Link>Test\Diagnostics\ExecutionServiceClientConnection.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\FirefoxHelper.cs"> <Link>Test\Diagnostics\FirefoxHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\FirewallHelper.cs"> <Link>Test\Diagnostics\FirewallHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\RegistrationHelper.cs"> <Link>Test\Diagnostics\RegistrationHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\UserSessionHelper.cs"> <Link>Test\Diagnostics\UserSessionHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\UserInfo.cs"> <Link>Test\Diagnostics\UserInfo.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\WttHelper.cs"> <Link>Test\Diagnostics\WttHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCodeLocation)\Diagnostics\ImpersonateUserHelper.cs"> <Link>Test\Diagnostics\ImpersonateUserHelper.cs</Link> </SourcesExecutionServiceClient>
+    <SourcesExecutionServiceClient Include="$(CommonCriticalCodeLocation)\Deployment\RuntimeDeploymentHelper.cs"> <Link>Critical\Test\Deployment\RuntimeDeploymentHelper.cs</Link> </SourcesExecutionServiceClient>
+  </ItemGroup>
+
+  <!-- Execution Service -->
+  <ItemGroup>
+    <SourcesExecutionservice Include="$(CommonCodeLocation)\Diagnostics\ExecutionServiceProxyClient.cs"> <Link>Test\Diagnostics\ExecutionServiceProxyClient.cs</Link> </SourcesExecutionservice>
+    <SourcesExecutionservice Include="$(CommonCodeLocation)\Diagnostics\ExecutionServiceProxy.cs"> <Link>Test\Diagnostics\ExecutionServiceProxy.cs</Link> </SourcesExecutionservice>
+  </ItemGroup>
+
+  <!-- Win32 Minimal -->
+  <ItemGroup>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\NativeStructs.cs"> <Link>Test\Win32\NativeStructs.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\NativeConstants.cs"> <Link>Test\Win32\NativeConstants.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\Gdi32.cs"> <Link>Test\Win32\Gdi32.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\User32.cs"> <Link>Test\Win32\User32.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\Kernel32.cs"> <Link>Test\Win32\Kernel32.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\WindowEnumerator.cs"> <Link>Test\Win32\WindowEnumerator.cs</Link> </SourcesWin32Minimal>
+    <SourcesWin32Minimal Include="$(CommonCodeLocation)\Win32\Ntdll.cs"> <Link>Test\Win32\Ntdll.cs</Link> </SourcesWin32Minimal>
+  </ItemGroup>
+
+  <!-- Win32 -->
+  <ItemGroup>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\HwndSubClass.cs"> <Link>Test\Win32\HwndSubClass.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\HwndWrapper.cs"> <Link>Test\Win32\HwndWrapper.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\ManagedWndProcTracker.cs"> <Link>Test\Win32\ManagedWndProcTracker.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\NativeMethods.cs"> <Link>Test\Win32\NativeMethods.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\WeakReferenceList.cs"> <Link>Test\Win32\WeakReferenceList.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\WeakReferenceListEnumerator.cs"> <Link>Test\Win32\WeakReferenceListEnumerator.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="$(CommonCodeLocation)\Win32\AcceleratorTable.cs"> <Link>Test\Win32\AcceleratorTable.cs</Link> </SourcesWin32>
+    <SourcesWin32 Include="@(SourcesWin32Minimal)" />
+  </ItemGroup>
+
+  <!-- Modeling -->
+  <ItemGroup>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\AsyncActionManager.cs"> <Link>Test\Modeling\AsyncActionManager.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\Model.cs"> <Link>Test\Modeling\Model.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\ModelingBaseObject.cs"> <Link>Test\Modeling\ModelingBaseObject.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\TestLoader.cs"> <Link>Test\Modeling\TestLoader.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\XamlTransformer.cs"> <Link>Test\Modeling\XamlTransformer.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\XtcParser.cs"> <Link>Test\Modeling\XtcParser.cs</Link> </SourcesModeling>
+    <SourcesModeling Include="$(CommonCodeLocation)\Modeling\XtcTestCaseLoader.cs"> <Link>Test\Modeling\XtcTestCaseLoader.cs</Link> </SourcesModeling>
+  </ItemGroup>
+
+  <!-- Windows -->
+  <ItemGroup>
+    <SourcesWindows Include="$(CommonCodeLocation)\Windows\ActionForTypeHelper.cs"> <Link>Test\Windows\ActionForTypeHelper.cs</Link> </SourcesWindows>
+    <SourcesWindows Include="$(CommonCodeLocation)\Windows\TreeComparer.cs"> <Link>Test\Windows\TreeComparer.cs</Link> </SourcesWindows>
+  </ItemGroup>
+
+  <!-- Managed Resources Windows -->
+  <ItemGroup>
+    <ManagedResourcesWindows Include="$(CommonDataLocation)\Windows\PropertiesToSkip.xml">
+      <LogicalName>PropertiesToSkip.xml</LogicalName>
+      <Link>Resources\Windows\PropertiesToSkip.xml</Link>
+    </ManagedResourcesWindows>
+  </ItemGroup>
+
+  <!-- Test -->
+  <ItemGroup>
+    <SourcesTest Include="$(CommonCodeLocation)\EventHelper.cs"> <Link>Test\EventHelper.cs</Link> </SourcesTest>
+    <SourcesTest Include="$(CommonCodeLocation)\ExceptionHelper.cs"> <Link>Test\ExceptionHelper.cs</Link> </SourcesTest>
+    <SourcesTest Include="$(CommonCodeLocation)\TestException.cs"> <Link>Test\TestException.cs</Link> </SourcesTest>
+    <SourcesTest Include="$(CommonCodeLocation)\TestSetupException.cs"> <Link>Test\TestSetupException.cs</Link> </SourcesTest>
+    <SourcesTest Include="$(CommonCodeLocation)\TestValidationException.cs"> <Link>Test\TestValidationException.cs</Link> </SourcesTest>
+  </ItemGroup>
+
+  <!-- Serialization -->
+  <ItemGroup>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\BamlHelper.cs"> <Link>Test\Serialization\BamlHelper.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\BamlReaderWrapper.cs"> <Link>Test\Serialization\BamlReaderWrapper.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\BamlWriterWrapper.cs"> <Link>Test\Serialization\BamlWriterWrapper.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\IOHelper.cs"> <Link>Test\Serialization\IOHelper.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\SerializationHelper.cs"> <Link>Test\Serialization\SerializationHelper.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\WrapperUtil.cs"> <Link>Test\Serialization\WrapperUtil.cs</Link> </SourcesSerialization>
+    <SourcesSerialization Include="$(CommonCodeLocation)\Serialization\XamlRoundTrip.cs"> <Link>Test\Serialization\XamlRoundTrip.cs</Link> </SourcesSerialization>
+  </ItemGroup>
+
+  <!-- Serialization Custom Elements -->
+  <ItemGroup>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomBorder.cs"> <Link>Test\Serialization\CustomElements\CustomBorder.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomButton.cs"> <Link>Test\Serialization\CustomElements\CustomButton.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomCanvas.cs"> <Link>Test\Serialization\CustomElements\CustomCanvas.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomDockPanel.cs"> <Link>Test\Serialization\CustomElements\CustomDockPanel.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomElementHelper.cs"> <Link>Test\Serialization\CustomElements\CustomElementHelper.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomPage.cs"> <Link>Test\Serialization\CustomElements\CustomPage.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomStackPanel.cs"> <Link>Test\Serialization\CustomElements\CustomStackPanel.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomTextPanel.cs"> <Link>Test\Serialization\CustomElements\CustomTextPanel.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\CustomWindow.cs"> <Link>Test\Serialization\CustomElements\CustomWindow.cs</Link> </SourcesSerializationCustomElements>
+    <SourcesSerializationCustomElements Include="$(CommonCodeLocation)\Serialization\CustomElements\ICustomElement.cs"> <Link>Test\Serialization\CustomElements\ICustomElement.cs</Link> </SourcesSerializationCustomElements>
+  </ItemGroup>
+
+  <!-- Integration TXR -->
+  <ItemGroup>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\ActionForXamlInfo.cs"> <Link>Test\Integration\ActionForXamlInfo.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\FileVariationGenerator.cs"> <Link>Test\Integration\FileVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\FileVariationItem.cs"> <Link>Test\Integration\FileVariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\BaseTestContract.cs"> <Link>Test\Integration\BaseTestContract.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\BaseVariationGenerator.cs"> <Link>Test\Integration\BaseVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\CallbackVariationGenerator.cs"> <Link>Test\Integration\CallbackVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\CallbackVariationItem.cs"> <Link>Test\Integration\CallbackVariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\CollectionsXamlHelper.cs"> <Link>Test\Integration\CollectionsXamlHelper.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\CombinationGenerator.cs"> <Link>Test\Integration\CombinationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\GeneratorReference.cs"> <Link>Test\Integration\GeneratorReference.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Helper.cs"> <Link>Test\Integration\Helper.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\ITestContract.cs"> <Link>Test\Integration\ITestContract.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\IVariationGenerator.cs"> <Link>Test\Integration\IVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\MDEVariationGenerator.cs"> <Link>Test\Integration\MDEVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\MDEVariationItem.cs"> <Link>Test\Integration\MDEVariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\NotificationList.cs"> <Link>Test\Integration\NotificationList.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\StorageItem.cs"> <Link>Test\Integration\StorageItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\TestExtenderGraph.cs"> <Link>Test\Integration\TestExtenderGraph.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\TestExtenderOutput.cs"> <Link>Test\Integration\TestExtenderOutput.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\VariationItem.cs"> <Link>Test\Integration\VariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\VariationItemGroup.cs"> <Link>Test\Integration\VariationItemGroup.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\CommonStorage.cs"> <Link>Test\Integration\CommonStorage.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\SelectorGenerator.cs"> <Link>Test\Integration\SelectorGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\ContentItem.cs"> <Link>Test\Integration\ContentItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\AssemblyDesc.cs"> <Link>Test\Integration\AssemblyDesc.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\WPF3Helper.cs"> <Link>Test\Integration\WPF3Helper.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\TypeVariationGenerator.cs"> <Link>Test\Integration\Windows\TypeVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\TypeVariationItem.cs"> <Link>Test\Integration\Windows\TypeVariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ContainerVariationGenerator.cs"> <Link>Test\Integration\Windows\ContainerVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ContainerVariationItem.cs"> <Link>Test\Integration\Windows\ContainerVariationItem.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ActionSequenceVariationGenerator.cs"> <Link>Test\Integration\Windows\ActionSequenceVariationGenerator.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ControllerProxy.cs"> <Link>Test\Integration\Windows\ControllerProxy.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\Controller.cs"> <Link>Test\Integration\Windows\Controller.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ThreadController.cs"> <Link>Test\Integration\Windows\ThreadController.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\ApplicationController.cs"> <Link>Test\Integration\Windows\ApplicationController.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\Windows\WinFormsController.cs"> <Link>Test\Integration\Windows\WinFormsController.cs</Link> </SourcesIntegrationTxr>
+    <SourcesIntegrationTxr Include="$(CommonCodeLocation)\Integration\TestExtenderHelper.cs"> <Link>Test\Integration\TestExtenderHelper.cs</Link> </SourcesIntegrationTxr>
+  </ItemGroup>
+
+  <!-- Pict -->
+  <ItemGroup>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\AllPossibleObjectArrayCollection.cs"> <Link>Test\PICT\ObjectArrays\AllPossibleObjectArrayCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\AllPossibleObjectArrayEnumerator.cs"> <Link>Test\PICT\ObjectArrays\AllPossibleObjectArrayEnumerator.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\AllPossibleObjectArrayGenerationStrategy.cs"> <Link>Test\PICT\ObjectArrays\AllPossibleObjectArrayGenerationStrategy.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\IObjectArrayCollection.cs"> <Link>Test\PICT\ObjectArrays\IObjectArrayCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\IObjectArrayEnumerator.cs"> <Link>Test\PICT\ObjectArrays\IObjectArrayEnumerator.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\IObjectArrayGenerationStrategy.cs"> <Link>Test\PICT\ObjectArrays\IObjectArrayGenerationStrategy.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\ObjectArrayGeneration.cs"> <Link>Test\PICT\ObjectArrays\ObjectArrayGeneration.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\ObjectArrayGenerator.cs"> <Link>Test\PICT\ObjectArrays\ObjectArrayGenerator.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\ObjectArrayPairwiseGeneration.cs"> <Link>Test\PICT\ObjectArrays\ObjectArrayPairwiseGeneration.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\PairwiseObjectArrayCollection.cs"> <Link>Test\PICT\ObjectArrays\PairwiseObjectArrayCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\PairwiseObjectArrayEnumerator.cs"> <Link>Test\PICT\ObjectArrays\PairwiseObjectArrayEnumerator.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\ObjectArrays\PairwiseObjectArrayGenerationStrategy.cs"> <Link>Test\PICT\ObjectArrays\PairwiseObjectArrayGenerationStrategy.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\IPairwiseComment.cs"> <Link>Test\PICT\IPairwiseComment.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\IPairwiseVisitable.cs"> <Link>Test\PICT\IPairwiseVisitable.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseAliasCollection.cs"> <Link>Test\PICT\PairwiseAliasCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseAndClause.cs"> <Link>Test\PICT\PairwiseAndClause.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseComparison.cs"> <Link>Test\PICT\PairwiseComparison.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseComparisonTerm.cs"> <Link>Test\PICT\PairwiseComparisonTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseCondition.cs"> <Link>Test\PICT\PairwiseCondition.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseConditionCollection.cs"> <Link>Test\PICT\PairwiseConditionCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseEqualTerm.cs"> <Link>Test\PICT\PairwiseEqualTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseException.cs"> <Link>Test\PICT\PairwiseException.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseGreaterThanOrEqualTerm.cs"> <Link>Test\PICT\PairwiseGreaterThanOrEqualTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseGreaterThanTerm.cs"> <Link>Test\PICT\PairwiseGreaterThanTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseIfThenConstraint.cs"> <Link>Test\PICT\PairwiseIfThenConstraint.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseIfThenConstraintCollection.cs"> <Link>Test\PICT\PairwiseIfThenConstraintCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseInTerm.cs"> <Link>Test\PICT\PairwiseInTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseLessThanOrEqualTerm.cs"> <Link>Test\PICT\PairwiseLessThanOrEqualTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseLessThanTerm.cs"> <Link>Test\PICT\PairwiseLessThanTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseLikeTerm.cs"> <Link>Test\PICT\PairwiseLikeTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseLogicalClause.cs"> <Link>Test\PICT\PairwiseLogicalClause.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseLogicalRelationship.cs"> <Link>Test\PICT\PairwiseLogicalRelationship.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseModel.cs"> <Link>Test\PICT\PairwiseModel.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseNotClause.cs"> <Link>Test\PICT\PairwiseNotClause.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseNotEqualTerm.cs"> <Link>Test\PICT\PairwiseNotEqualTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseNotInTerm.cs"> <Link>Test\PICT\PairwiseNotInTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseOrClause.cs"> <Link>Test\PICT\PairwiseOrClause.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseParameter.cs"> <Link>Test\PICT\PairwiseParameter.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseParameterCollection.cs"> <Link>Test\PICT\PairwiseParameterCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseParameterConstraint.cs"> <Link>Test\PICT\PairwiseParameterConstraint.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseParameterConstraintCollection.cs"> <Link>Test\PICT\PairwiseParameterConstraintCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwisePICTCache.cs"> <Link>Test\PICT\PairwisePICTCache.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseSettings.cs"> <Link>Test\PICT\PairwiseSettings.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseSubModel.cs"> <Link>Test\PICT\PairwiseSubModel.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseSubModelCollection.cs"> <Link>Test\PICT\PairwiseSubModelCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseTerm.cs"> <Link>Test\PICT\PairwiseTerm.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseTuple.cs"> <Link>Test\PICT\PairwiseTuple.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseValue.cs"> <Link>Test\PICT\PairwiseValue.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseValueCollection.cs"> <Link>Test\PICT\PairwiseValueCollection.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseValueType.cs"> <Link>Test\PICT\PairwiseValueType.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PairwiseVisitor.cs"> <Link>Test\PICT\PairwiseVisitor.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTConstants.cs"> <Link>Test\PICT\PICTConstants.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTExecutionInformation.cs"> <Link>Test\PICT\PICTExecutionInformation.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTPairwiseVisitor.cs"> <Link>Test\PICT\PICTPairwiseVisitor.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTRunner.cs"> <Link>Test\PICT\PICTRunner.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTWarningBehaviors.cs"> <Link>Test\PICT\PICTWarningBehaviors.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTWarningEventArgs.cs"> <Link>Test\PICT\PICTWarningEventArgs.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\PICTWarningEventHandler.cs"> <Link>Test\PICT\PICTWarningEventHandler.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\MatrixOutput\PairwiseTestCase.cs"> <Link>Test\PICT\MatrixOutput\PairwiseTestCase.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\MatrixOutput\PairwiseTestMatrix.cs"> <Link>Test\PICT\MatrixOutput\PairwiseTestMatrix.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\MatrixOutput\PairwiseTestParameter.cs"> <Link>Test\PICT\MatrixOutput\PairwiseTestParameter.cs</Link> </SourcesPict>
+    <SourcesPict Include="$(CommonCodeLocation)\PICT\MatrixOutput\PairwiseHelper.cs"> <Link>Test\PICT\MatrixOutput\PairwiseTestParameter.cs</Link> </SourcesPict>
+  </ItemGroup>
+  
+  <!-- Imaging -->
+  <ItemGroup>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\BitmapCapture.cs"> <Link>Test\Imaging\BitmapCapture.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\BitmapUtils.cs"> <Link>Test\Imaging\BitmapUtils.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ColorUtils.cs"> <Link>Test\Imaging\ColorUtils.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ComparisonAlgorithm.cs"> <Link>Test\Imaging\ComparisonAlgorithm.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ComparisonCriteria.cs"> <Link>Test\Imaging\ComparisonCriteria.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ComparisonOperation.cs"> <Link>Test\Imaging\ComparisonOperation.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ComparisonOperationUtils.cs"> <Link>Test\Imaging\ComparisonOperationUtils.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ComparisonResult.cs"> <Link>Test\Imaging\ComparisonResult.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\ElementUtils.cs"> <Link>Test\Imaging\ElementUtils.cs</Link> </SourcesImaging>
+    <SourcesImaging Include="$(CommonCodeLocation)\Imaging\PixelData.cs"> <Link>Test\Imaging\PixelData.cs</Link> </SourcesImaging>
+  </ItemGroup>
+
+  <!-- Animation -->
+  <ItemGroup>
+    <SourcesAnimation Include="$(CommonCodeLocation)\Animation\AnimationSideBySide.cs"> <Link>Test\Animation\AnimationSideBySide.cs</Link> </SourcesAnimation>
+    <SourcesAnimation Include="$(CommonCodeLocation)\Animation\AnimationUtils.cs"> <Link>Test\Animation\AnimationUtils.cs</Link> </SourcesAnimation>
+    <SourcesAnimation Include="$(CommonCodeLocation)\Animation\AnimationValidator.cs"> <Link>Test\Animation\AnimationValidator.cs</Link> </SourcesAnimation>
+    <SourcesAnimation Include="$(CommonCodeLocation)\Animation\TimeManagerCommon.cs"> <Link>Test\Animation\TimeManagerCommon.cs</Link> </SourcesAnimation>
+  </ItemGroup>
+
+  <!-- Rendering VScan -->
+  <ItemGroup>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ColorByte.cs"> <Link>Test\RenderingVerification\ColorByte.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ColorDouble.cs"> <Link>Test\RenderingVerification\ColorDouble.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Color_Avalon.cs"> <Link>Test\RenderingVerification\Color_Avalon.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Curve.cs"> <Link>Test\RenderingVerification\Curve.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\CurveTolerance.cs"> <Link>Test\RenderingVerification\CurveTolerance.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\DisplayConfiguration.cs"> <Link>Test\RenderingVerification\DisplayConfiguration.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\DisplayConfigurationMinimal.cs"> <Link>Test\RenderingVerification\DisplayConfigurationMinimal.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Exceptions.cs"> <Link>Test\RenderingVerification\Exceptions.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageAdapter.cs"> <Link>Test\RenderingVerification\ImageAdapter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageComparator.cs"> <Link>Test\RenderingVerification\ImageComparator.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageUtility.cs"> <Link>Test\RenderingVerification\ImageUtility.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageUtilityProxy.cs"> <Link>Test\RenderingVerification\ImageUtilityProxy.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageUtility_Avalon.cs"> <Link>Test\RenderingVerification\ImageUtility_Avalon.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Interfaces.cs"> <Link>Test\RenderingVerification\Interfaces.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\IPUtil.cs"> <Link>Test\RenderingVerification\IPUtil.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\KeepGreaterKey.cs"> <Link>Test\RenderingVerification\KeepGreaterKey.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MetaDataInfo.cs"> <Link>Test\RenderingVerification\MetaDataInfo.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MismatchingPoints.cs"> <Link>Test\RenderingVerification\MismatchingPoints.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Package.cs"> <Link>Test\RenderingVerification\Package.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Pixel.cs"> <Link>Test\RenderingVerification\Pixel.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\PInvoke.cs"> <Link>Test\RenderingVerification\PInvoke.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\PropertyItemWrapper.cs"> <Link>Test\RenderingVerification\PropertyItemWrapper.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\RuntimeInfo.cs"> <Link>Test\RenderingVerification\RuntimeInfo.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\RenderRect.cs"> <Link>Test\RenderingVerification\RenderRect.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\VideoCapture.cs"> <Link>Test\RenderingVerification\VideoCapture.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\XamlLauncherReflect.cs"> <Link>Test\RenderingVerification\XamlLauncherReflect.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\AffineFilter.cs"> <Link>Test\RenderingVerification\Filters\AffineFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\AttractorFilter.cs"> <Link>Test\RenderingVerification\Filters\AttractorFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\BlurFilter.cs"> <Link>Test\RenderingVerification\Filters\BlurFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\BrightnessContrastFilter.cs"> <Link>Test\RenderingVerification\Filters\BrightnessContrastFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ChannelOperationFilter.cs"> <Link>Test\RenderingVerification\Filters\ChannelOperationFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ColorFilter.cs"> <Link>Test\RenderingVerification\Filters\ColorFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ColorSpaceConversion.cs"> <Link>Test\RenderingVerification\Filters\ColorSpaceConversion.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ColorTransformFilter.cs"> <Link>Test\RenderingVerification\Filters\ColorTransformFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ContrastFilter.cs"> <Link>Test\RenderingVerification\Filters\ContrastFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ConvolutionFilter.cs"> <Link>Test\RenderingVerification\Filters\ConvolutionFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\EqualizeFilter.cs"> <Link>Test\RenderingVerification\Filters\EqualizeFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\Filter.cs"> <Link>Test\RenderingVerification\Filters\Filter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\FilterParameter.cs"> <Link>Test\RenderingVerification\Filters\FilterParameter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\FlipRotateFilter.cs"> <Link>Test\RenderingVerification\Filters\FlipRotateFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\GammaCorrectFilter.cs"> <Link>Test\RenderingVerification\Filters\GammaCorrectFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\GaussianFilter.cs"> <Link>Test\RenderingVerification\Filters\GaussianFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\GlowFilter.cs"> <Link>Test\RenderingVerification\Filters\GlowFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\GrayscaleFilter.cs"> <Link>Test\RenderingVerification\Filters\GrayscaleFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\IColorConverter.cs"> <Link>Test\RenderingVerification\Filters\IColorConverter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\Image2DTransforms.cs"> <Link>Test\RenderingVerification\Filters\Image2DTransforms.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\Interpolator.cs"> <Link>Test\RenderingVerification\Filters\Interpolator.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\LogicalOperationFilter.cs"> <Link>Test\RenderingVerification\Filters\LogicalOperationFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\Matrix2D.cs"> <Link>Test\RenderingVerification\Filters\Matrix2D.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\Matrix2DConverter.cs"> <Link>Test\RenderingVerification\Filters\Matrix2DConverter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\MorphologicalFilter.cs"> <Link>Test\RenderingVerification\Filters\MorphologicalFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\MorphShapeFilter.cs"> <Link>Test\RenderingVerification\Filters\MorphShapeFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\NegateFilter.cs"> <Link>Test\RenderingVerification\Filters\NegateFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\OpacityPointsFilter.cs"> <Link>Test\RenderingVerification\Filters\OpacityPointsFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\OrderStatisticFilter.cs"> <Link>Test\RenderingVerification\Filters\OrderStatisticFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\PixelizeFilter.cs"> <Link>Test\RenderingVerification\Filters\PixelizeFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\ProcessXmlFilter.cs"> <Link>Test\RenderingVerification\Filters\ProcessXmlFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\RenderingColorConverter.cs"> <Link>Test\RenderingVerification\Filters\RenderingColorConverter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\SaturateEdgeFilter.cs"> <Link>Test\RenderingVerification\Filters\SaturateEdgeFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\SchematizationFilter.cs"> <Link>Test\RenderingVerification\Filters\SchematizationFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\SharpenFilter.cs"> <Link>Test\RenderingVerification\Filters\SharpenFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\SpatialTransformFilter.cs"> <Link>Test\RenderingVerification\Filters\SpatialTransformFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\TintFilter.cs"> <Link>Test\RenderingVerification\Filters\TintFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\TintShadeFilter.cs"> <Link>Test\RenderingVerification\Filters\TintShadeFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\VMorph.cs"> <Link>Test\RenderingVerification\Filters\VMorph.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\WaveletTransformFilter.cs"> <Link>Test\RenderingVerification\Filters\WaveletTransformFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Filters\WVMorph.cs"> <Link>Test\RenderingVerification\Filters\WVMorph.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\CartesianMomentDescriptor.cs"> <Link>Test\RenderingVerification\Models\Analytical\CartesianMomentDescriptor.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\Criterion.cs"> <Link>Test\RenderingVerification\Models\Analytical\Criterion.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\DescriptorBase.cs"> <Link>Test\RenderingVerification\Models\Analytical\DescriptorBase.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\DescriptorInfo.cs"> <Link>Test\RenderingVerification\Models\Analytical\DescriptorInfo.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\DescriptorManager.cs"> <Link>Test\RenderingVerification\Models\Analytical\DescriptorManager.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\DescriptorSquareMatrix.cs"> <Link>Test\RenderingVerification\Models\Analytical\DescriptorSquareMatrix.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\ImageToShapeIDMapping.cs"> <Link>Test\RenderingVerification\Models\Analytical\ImageToShapeIDMapping.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\Interfaces.cs"> <Link>Test\RenderingVerification\Models\Analytical\Interfaces.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\ModelManager2.cs"> <Link>Test\RenderingVerification\Models\Analytical\ModelManager2.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\MomentDescriptorBase.cs"> <Link>Test\RenderingVerification\Models\Analytical\MomentDescriptorBase.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\PolarMomentDescriptor.cs"> <Link>Test\RenderingVerification\Models\Analytical\PolarMomentDescriptor.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Analytical\VScan.cs"> <Link>Test\RenderingVerification\Models\Analytical\VScan.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\AnimatedProperty.cs"> <Link>Test\RenderingVerification\Models\Synthetical\AnimatedProperty.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\Animator.cs"> <Link>Test\RenderingVerification\Models\Synthetical\Animator.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\AvalonTypographer.cs"> <Link>Test\RenderingVerification\Models\Synthetical\AvalonTypographer.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\DeltaImageComparator.cs"> <Link>Test\RenderingVerification\Models\Synthetical\DeltaImageComparator.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GeometryFilter.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GeometryFilter.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphBase.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphBase.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphChar.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphChar.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphColorChooser.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphColorChooser.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphComparator.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphComparator.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphCompareInfo.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphCompareInfo.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphContainer.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphContainer.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphFont.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphFont.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphImage.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphImage.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphLayout.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphLayout.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphModel.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphModel.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphPanel.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphPanel.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphResource.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphResource.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphShape.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphShape.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\GlyphText.cs"> <Link>Test\RenderingVerification\Models\Synthetical\GlyphText.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\Interfaces.cs"> <Link>Test\RenderingVerification\Models\Synthetical\Interfaces.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\LayoutContainer.cs"> <Link>Test\RenderingVerification\Models\Synthetical\LayoutContainer.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\MatchingInfo.cs"> <Link>Test\RenderingVerification\Models\Synthetical\MatchingInfo.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\MatchingInfoEditor.cs"> <Link>Test\RenderingVerification\Models\Synthetical\MatchingInfoEditor.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\StandardTypographer.cs"> <Link>Test\RenderingVerification\Models\Synthetical\StandardTypographer.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\TypographBroker.cs"> <Link>Test\RenderingVerification\Models\Synthetical\TypographBroker.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\XenoSymbolBroker.cs"> <Link>Test\RenderingVerification\Models\Synthetical\XenoSymbolBroker.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\LayoutEngine\CanvasLayoutEngine.cs"> <Link>Test\RenderingVerification\Models\Synthetical\LayoutEngine\CanvasLayoutEngine.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\Models\Synthetical\LayoutEngine\FlowLayoutEngine.cs"> <Link>Test\RenderingVerification\Models\Synthetical\LayoutEngine\FlowLayoutEngine.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ResourceFetcher\EmbeddedResourceKey.cs"> <Link>Test\RenderingVerification\ResourceFetcher\EmbeddedResourceKey.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ResourceFetcher\EmbeddedResourceProvider.cs"> <Link>Test\RenderingVerification\ResourceFetcher\EmbeddedResourceProvider.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ResourceFetcher\ResourceProvider.cs"> <Link>Test\RenderingVerification\ResourceFetcher\ResourceProvider.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ResourceFetcher\Resourcestripper.cs"> <Link>Test\RenderingVerification\ResourceFetcher\Resourcestripper.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\UnmanagedProxies\UnmanagedInterfaces.cs"> <Link>Test\RenderingVerification\UnmanagedProxies\UnmanagedInterfaces.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\AsyncData.cs"> <Link>Test\RenderingVerification\AsyncData.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\AsyncHelper.cs"> <Link>Test\RenderingVerification\AsyncHelper.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageComparisonResult.cs"> <Link>Test\RenderingVerification\ImageComparisonResult.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageComparisonSettings.cs"> <Link>Test\RenderingVerification\ImageComparisonSettings.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\ImageMetadata.cs"> <Link>Test\RenderingVerification\ImageMetadata.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MasterDimensions.cs"> <Link>Test\RenderingVerification\MasterDimensions.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MasterImageComparer.cs"> <Link>Test\RenderingVerification\MasterImageComparer.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MasterIndex.cs"> <Link>Test\RenderingVerification\MasterIndex.cs</Link> </SourcesRenderingverification>
+    <SourcesRenderingverification Include="$(CommonCodeLocation)\RenderingVerification\MasterMetadata.cs"> <Link>Test\RenderingVerification\MasterMetadata.cs</Link> </SourcesRenderingverification>
+  </ItemGroup>
+
+  <!-- Managed Resource Vscan -->
+  <ItemGroup>
+    <ManagedResourcesVscan Include="$(CommonCodeLocation)\RenderingVerification\DefaultTolerance.xml">
+      <LogicalName>Microsoft.Test.RenderingVerification.RenderingVerification.DefaultTolerance.xml</LogicalName>
+      <Link>Resources\VScan\DefaultTolerance.xml</Link>
+    </ManagedResourcesVscan>
+  </ItemGroup>
+
+  <!-- Compression -->
+  <ItemGroup>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Archiver.cs"> <Link>Test\Compression\Archiver.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\Cab.cs"> <Link>Test\Compression\Cab\Cab.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabApi.cs"> <Link>Test\Compression\Cab\CabApi.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabBase.cs"> <Link>Test\Compression\Cab\CabBase.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabCreator.cs"> <Link>Test\Compression\Cab\CabCreator.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabException.cs"> <Link>Test\Compression\Cab\CabException.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabExtractor.cs"> <Link>Test\Compression\Cab\CabExtractor.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabInfo.cs"> <Link>Test\Compression\Cab\CabInfo.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\CabStatus.cs"> <Link>Test\Compression\Cab\CabStatus.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\DuplicateStream.cs"> <Link>Test\Compression\Cab\DuplicateStream.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\HandleManager.cs"> <Link>Test\Compression\Cab\HandleManager.cs</Link> </SourcesCompression>
+    <SourcesCompression Include="$(CommonCodeLocation)\Compression\Cab\OffsetStream.cs"> <Link>Test\Compression\Cab\OffsetStream.cs</Link> </SourcesCompression>
+  </ItemGroup>
+
+  <!-- Graphics Base -->
+  <ItemGroup>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\ColorOperations.cs"> <Link>Test\Graphics\ColorOperations.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\DiscreteAnimation.cs"> <Link>Test\Graphics\DiscreteAnimation.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\MathEx.cs"> <Link>Test\Graphics\MathEx.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\Matrix3DAnimation.cs"> <Link>Test\Graphics\Matrix3DAnimation.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\MatrixUtils.cs"> <Link>Test\Graphics\MatrixUtils.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\MeshOperations.cs"> <Link>Test\Graphics\MeshOperations.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\ObjectUtils.cs"> <Link>Test\Graphics\ObjectUtils.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\StringConverter.cs"> <Link>Test\Graphics\StringConverter.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\VisualUtils.cs"> <Link>Test\Graphics\VisualUtils.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\DpiScalingHelper.cs"> <Link>Test\Graphics\DpiScalingHelper.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\RenderingModeHelper.cs"> <Link>Test\Graphics\RenderingModeHelper.cs</Link> </SourcesGraphicsBase>
+    <SourcesGraphicsBase Include="$(CommonCodeLocation)\Graphics\RenderingMode.cs"> <Link>Test\Graphics\RenderingMode.cs</Link> </SourcesGraphicsBase>
+  </ItemGroup>
+
+  <!-- Graphics Factories -->
+  <ItemGroup>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\BrushFactory.cs"> <Link>Test\Graphics\Factories\BrushFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\CameraFactory.cs"> <Link>Test\Graphics\Factories\CameraFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\Const.cs"> <Link>Test\Graphics\Factories\Const.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\Const2D.cs"> <Link>Test\Graphics\Factories\Const2D.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\DrawingFactory.cs"> <Link>Test\Graphics\Factories\DrawingFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\EffectFactory.cs"> <Link>Test\Graphics\Factories\EffectFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\EffectInputFactory.cs"> <Link>Test\Graphics\Factories\EffectInputFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\GeometryFactory.cs"> <Link>Test\Graphics\Factories\GeometryFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\HitTestFilterFactory.cs"> <Link>Test\Graphics\Factories\HitTestFilterFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\LightFactory.cs"> <Link>Test\Graphics\Factories\LightFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\MaterialFactory.cs"> <Link>Test\Graphics\Factories\MaterialFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\MeshFactory.cs"> <Link>Test\Graphics\Factories\MeshFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\ModelFactory.cs"> <Link>Test\Graphics\Factories\ModelFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\ObjectFactory.cs"> <Link>Test\Graphics\Factories\ObjectFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\PenFactory.cs"> <Link>Test\Graphics\Factories\PenFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\SceneFactory.cs"> <Link>Test\Graphics\Factories\SceneFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\ShapeFactory.cs"> <Link>Test\Graphics\Factories\ShapeFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\Transform2DFactory.cs"> <Link>Test\Graphics\Factories\Transform2DFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\TransformFactory.cs"> <Link>Test\Graphics\Factories\TransformFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\Visual3DFactory.cs"> <Link>Test\Graphics\Factories\Visual3DFactory.cs</Link> </SourcesGraphicsFactories>
+    <SourcesGraphicsFactories Include="$(CommonCodeLocation)\Graphics\Factories\VisualFactory.cs"> <Link>Test\Graphics\Factories\VisualFactory.cs</Link> </SourcesGraphicsFactories>
+  </ItemGroup>
+
+  <!-- Graphics Reference Renderer -->
+  <ItemGroup>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\BiLinearTextureFilter.cs"> <Link>Test\Graphics\ReferenceRender\BiLinearTextureFilter.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\Edge.cs"> <Link>Test\Graphics\ReferenceRender\Edge.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\GouraudShader.cs"> <Link>Test\Graphics\ReferenceRender\GouraudShader.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\HdrColor.cs"> <Link>Test\Graphics\ReferenceRender\HdrColor.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\Interpolators.cs"> <Link>Test\Graphics\ReferenceRender\Interpolators.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\LightEquations.cs"> <Link>Test\Graphics\ReferenceRender\LightEquations.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\MeshProjectedGeometry.cs"> <Link>Test\Graphics\ReferenceRender\MeshProjectedGeometry.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\ModelBounder.cs"> <Link>Test\Graphics\ReferenceRender\ModelBounder.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\ModelRenderer.cs"> <Link>Test\Graphics\ReferenceRender\ModelRenderer.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\NearestNeighbourTextureFilter.cs"> <Link>Test\Graphics\ReferenceRender\NearestNeighbourTextureFilter.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\PhongShader.cs"> <Link>Test\Graphics\ReferenceRender\PhongShader.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\ProjectedGeometry.cs"> <Link>Test\Graphics\ReferenceRender\ProjectedGeometry.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\RenderBuffer.cs"> <Link>Test\Graphics\ReferenceRender\RenderBuffer.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\RenderTolerance.cs"> <Link>Test\Graphics\ReferenceRender\RenderTolerance.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\RenderToToleranceShader.cs"> <Link>Test\Graphics\ReferenceRender\RenderToToleranceShader.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\RenderVerifier.cs"> <Link>Test\Graphics\ReferenceRender\RenderVerifier.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\SceneRenderer.cs"> <Link>Test\Graphics\ReferenceRender\SceneRenderer.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\Shader.cs"> <Link>Test\Graphics\ReferenceRender\Shader.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\SolidColorTextureFilter.cs"> <Link>Test\Graphics\ReferenceRender\SolidColorTextureFilter.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\SSLProjectedGeometry.cs"> <Link>Test\Graphics\ReferenceRender\SSLProjectedGeometry.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\TextureFilter.cs"> <Link>Test\Graphics\ReferenceRender\TextureFilter.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\TextureGenerator.cs"> <Link>Test\Graphics\ReferenceRender\TextureGenerator.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\Triangle.cs"> <Link>Test\Graphics\ReferenceRender\Triangle.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\TriLinearTextureFilter.cs"> <Link>Test\Graphics\ReferenceRender\TriLinearTextureFilter.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\Vertex.cs"> <Link>Test\Graphics\ReferenceRender\Vertex.cs</Link> </SourcesGraphicsReferenceRender>
+    <SourcesGraphicsReferenceRender Include="$(CommonCodeLocation)\Graphics\ReferenceRender\VisualBounder.cs"> <Link>Test\Graphics\ReferenceRender\VisualBounder.cs</Link> </SourcesGraphicsReferenceRender>
+  </ItemGroup>
+
+  <!-- Graphics Test Types -->
+  <ItemGroup>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\AnimationAPITest.cs"> <Link>Test\Graphics\TestTypes\AnimationAPITest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\AnimationAPITestBase.cs"> <Link>Test\Graphics\TestTypes\AnimationAPITestBase.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\ClassGenerator.cs"> <Link>Test\Graphics\TestTypes\ClassGenerator.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\CodeGenerator.cs"> <Link>Test\Graphics\TestTypes\CodeGenerator.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\ConstructorGenerator.cs"> <Link>Test\Graphics\TestTypes\ConstructorGenerator.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\CoreGraphicsTest.cs"> <Link>Test\Graphics\TestTypes\CoreGraphicsTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\EnvironmentWrapper.cs"> <Link>Test\Graphics\TestTypes\EnvironmentWrapper.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\ExceptionCatchingTest.cs"> <Link>Test\Graphics\TestTypes\ExceptionCatchingTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Exceptions.cs"> <Link>Test\Graphics\TestTypes\Exceptions.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\FactoryParser.cs"> <Link>Test\Graphics\TestTypes\FactoryParser.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\InfoOrganizer.cs"> <Link>Test\Graphics\TestTypes\InfoOrganizer.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\InheritanceChecker.cs"> <Link>Test\Graphics\TestTypes\InheritanceChecker.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Interop.cs"> <Link>Test\Graphics\TestTypes\Interop.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Logger.cs"> <Link>Test\Graphics\TestTypes\Logger.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\MethodGenerator.cs"> <Link>Test\Graphics\TestTypes\MethodGenerator.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\MethodGeneratorBase.cs"> <Link>Test\Graphics\TestTypes\MethodGeneratorBase.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\PartialTrust.cs"> <Link>Test\Graphics\TestTypes\PartialTrust.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\PhotoConverter.cs"> <Link>Test\Graphics\TestTypes\PhotoConverter.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Photographer.cs"> <Link>Test\Graphics\TestTypes\Photographer.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\PropertyGenerator.cs"> <Link>Test\Graphics\TestTypes\PropertyGenerator.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\ReferenceTest.cs"> <Link>Test\Graphics\TestTypes\ReferenceTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\RenderingTest.cs"> <Link>Test\Graphics\TestTypes\RenderingTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\RenderingWindow.cs"> <Link>Test\Graphics\TestTypes\RenderingWindow.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\RunAllTester.cs"> <Link>Test\Graphics\TestTypes\RunAllTester.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\RunScriptTester.cs"> <Link>Test\Graphics\TestTypes\RunScriptTester.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\SerializationTest.cs"> <Link>Test\Graphics\TestTypes\SerializationTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Tester.cs"> <Link>Test\Graphics\TestTypes\Tester.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\TestLauncher.cs"> <Link>Test\Graphics\TestTypes\TestLauncher.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\TestObjects.cs"> <Link>Test\Graphics\TestTypes\TestObjects.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Tokens.cs"> <Link>Test\Graphics\TestTypes\Tokens.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\Variation.cs"> <Link>Test\Graphics\TestTypes\Variation.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\ViewportWindow.cs"> <Link>Test\Graphics\TestTypes\ViewportWindow.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\VisualObjects.cs"> <Link>Test\Graphics\TestTypes\VisualObjects.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\VisualVerificationTest.cs"> <Link>Test\Graphics\TestTypes\VisualVerificationTest.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\VisualWindow.cs"> <Link>Test\Graphics\TestTypes\VisualWindow.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\VisualWrapper.cs"> <Link>Test\Graphics\TestTypes\VisualWrapper.cs</Link> </SourcesGraphicsTestTypes>
+    <SourcesGraphicsTestTypes Include="$(CommonCodeLocation)\Graphics\TestTypes\XAMLTest.cs"> <Link>Test\Graphics\TestTypes\XAMLTest.cs</Link> </SourcesGraphicsTestTypes>
+  </ItemGroup>
+
+  <!-- Graphics -->
+  <ItemGroup>
+    <SourcesGraphics Include="@(SourcesGraphicsBase)" />
+    <SourcesGraphics Include="@(SourcesGraphicsFactories)" />
+    <SourcesGraphics Include="@(SourcesGraphicsReferenceRender)" />
+    <SourcesGraphics Include="@(SourcesGraphicsTestTypes)" />
+  </ItemGroup>
+
+  <!-- Layout Common -->
+  <ItemGroup>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\Common\Common.cs"> <Link>Test\Layout\Common\Common.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\Common\LayoutTestWindows.cs"> <Link>Test\Layout\Common\LayoutTestWindows.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\Common\LayoutUtility.cs"> <Link>Test\Layout\Common\LayoutUtility.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\Common\DoubleUtil.cs"> <Link>Test\Layout\Common\DoubleUtil.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\Common\VisualScan.cs"> <Link>Test\Layout\Common\VisualScan.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\TestTypes\LayoutTest.cs"> <Link>Test\Layout\TestTypes\LayoutTest.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\TestTypes\CodeTest.cs"> <Link>Test\Layout\TestTypes\CodeTest.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\TestTypes\PropertyDumpTest.cs"> <Link>Test\Layout\TestTypes\PropertyDumpTest.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\TestTypes\VisualScanTest.cs"> <Link>Test\Layout\TestTypes\VisualScanTest.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\Arguments.cs"> <Link>Test\Layout\PropertyDump\Arguments.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\DiffPackage.cs"> <Link>Test\Layout\PropertyDump\DiffPackage.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\Filter.cs"> <Link>Test\Layout\PropertyDump\Filter.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\FrameworkElements.cs"> <Link>Test\Layout\PropertyDump\FrameworkElements.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\Package.cs"> <Link>Test\Layout\PropertyDump\Package.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\PropertyDumpCore.cs"> <Link>Test\Layout\PropertyDump\PropertyDumpCore.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\PropertyDumpHelper.cs"> <Link>Test\Layout\PropertyDump\PropertyDumpHelper.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\ColumnResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\ColumnResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\ContainerParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\ContainerParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\DocumentPageTextViewW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\DocumentPageTextViewW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\FloaterParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\FloaterParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\FigureParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\FigureParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\FlowDocumentPageW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\FlowDocumentPageW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\IEnumerableW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\IEnumerableW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\LineResultDetailsW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\LineResultDetailsW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\LineResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\LineResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\OrientedTextPositionW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\OrientedTextPositionW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\ParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\ParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\ReflectionHelper.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\ReflectionHelper.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\RowParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\RowParagraphResultW.cs</Link> </SourcesLayoutCommon>    
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\SubpageParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\SubpageParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\TableParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\TableParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\TextDocumentViewW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\TextDocumentViewW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\TextParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\TextParagraphResultW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\TextParagraphViewW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\TextParagraphViewW.cs</Link> </SourcesLayoutCommon>
+    <SourcesLayoutCommon Include="$(CommonCodeLocation)\Layout\PropertyDump\TextViewWrapper\UIElementParagraphResultW.cs"> <Link>Test\Layout\PropertyDump\TextViewWrapper\UIElementParagraphResultW.cs</Link> </SourcesLayoutCommon>
+  </ItemGroup>
+
+  <!-- Stress Framework -->
+  <ItemGroup>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\DistributionFactory.cs"> <Link>Test\Stability\Stress\DistributionFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\RandDist.cs"> <Link>Test\Stability\Stress\RandDist.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\RandomGenerator.cs"> <Link>Test\Stability\Stress\RandomGenerator.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Invariant.cs"> <Link>Test\Stability\Stress\Invariant.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\StressFrameWorkHelper.cs"> <Link>Test\Stability\Stress\StressFrameWorkHelper.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\WeightedList.cs"> <Link>Test\Stability\Stress\WeightedList.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Action\ActionManager.cs"> <Link>Test\Stability\Stress\Action\ActionManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Action\Attributes.cs"> <Link>Test\Stability\Stress\Action\Attributes.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Action\IAction.cs"> <Link>Test\Stability\Stress\Action\IAction.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Action\IActionFactory.cs"> <Link>Test\Stability\Stress\Action\IActionFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Action\WeightedActionFactory.cs"> <Link>Test\Stability\Stress\Action\WeightedActionFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\ConfigReader\ConfigReader.cs"> <Link>Test\Stability\Stress\ConfigReader\ConfigReader.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\ConfigReader\IConfigReader.cs"> <Link>Test\Stability\Stress\ConfigReader\IConfigReader.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\ConfigReader\MultipleTagSectionHandler.cs"> <Link>Test\Stability\Stress\ConfigReader\MultipleTagSectionHandler.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\ActionHandlers.cs"> <Link>Test\Stability\Stress\Context\ActionHandlers.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\EventHandlers.cs"> <Link>Test\Stability\Stress\Context\EventHandlers.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\EventArgs.cs"> <Link>Test\Stability\Stress\Context\EventArgs.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\Handlers.cs"> <Link>Test\Stability\Stress\Context\Handlers.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\IStressContext.cs"> <Link>Test\Stability\Stress\Context\IStressContext.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\IStressContextManager.cs"> <Link>Test\Stability\Stress\Context\IStressContextManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\StressContext.cs"> <Link>Test\Stability\Stress\Context\StressContext.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\StressContextManager.cs"> <Link>Test\Stability\Stress\Context\StressContextManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\IObjectFactory.cs"> <Link>Test\Stability\Stress\Context\IObjectFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\EnumerationObjectFactory.cs"> <Link>Test\Stability\Stress\Context\EnumerationObjectFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Context\ReflectionObjectFactory.cs"> <Link>Test\Stability\Stress\Context\ReflectionObjectFactory.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\CoreServices\CoreServices.cs"> <Link>Test\Stability\Stress\CoreServices\CoreServices.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\CoreServices\ICoreServices.cs"> <Link>Test\Stability\Stress\CoreServices\ICoreServices.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\CoreServices\IStressManager.cs"> <Link>Test\Stability\Stress\CoreServices\IStressManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\CoreServices\StressManager.cs"> <Link>Test\Stability\Stress\CoreServices\StressManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\CoreServices\EventLogger.cs"> <Link>Test\Stability\Stress\CoreServices\EventLogger.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Exceptions\ExceptionEventArgs.cs"> <Link>Test\Stability\Stress\Exceptions\ExceptionEventArgs.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Exceptions\ExceptionEventHandlers.cs"> <Link>Test\Stability\Stress\Exceptions\ExceptionEventHandlers.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\PropertyEngine\PropertyEngine.cs"> <Link>Test\Stability\Stress\PropertyEngine\PropertyEngine.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Storage\ContextStorage.cs"> <Link>Test\Stability\Stress\Storage\ContextStorage.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Storage\EventArgs.cs"> <Link>Test\Stability\Stress\Storage\EventArgs.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Storage\IStorage.cs"> <Link>Test\Stability\Stress\Storage\IStorage.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\StressFrameworkObject\IStressFrameworkObject.cs"> <Link>Test\Stability\Stress\StressFrameworkObject\IStressFrameworkObject.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\StressFrameworkObject\StressFrameworkObject.cs"> <Link>Test\Stability\Stress\StressFrameworkObject\StressFrameworkObject.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Security\SecurityHelper.cs"> <Link>Test\Stability\Stress\Security\SecurityHelper.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\EventArgs.cs"> <Link>Test\Stability\Stress\Thread\EventArgs.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\EventHandlers.cs"> <Link>Test\Stability\Stress\Thread\EventHandlers.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\IStressThread.cs"> <Link>Test\Stability\Stress\Thread\IStressThread.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\IStressThreadManager.cs"> <Link>Test\Stability\Stress\Thread\IStressThreadManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\StressThread.cs"> <Link>Test\Stability\Stress\Thread\StressThread.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Thread\StressThreadManager.cs"> <Link>Test\Stability\Stress\Thread\StressThreadManager.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Utils\ProcessShutdownMonitor.cs"> <Link>Test\Stability\Stress\Utils\ProcessShutdownMonitor.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Utils\Win32NativeInterop.cs"> <Link>Test\Stability\Stress\Utils\Win32NativeInterop.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Utils\CommandlineParser.cs"> <Link>Test\Stability\Stress\Utils\CommandlineParser.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\Utils\XmlParser.cs"> <Link>Test\Stability\Stress\Utils\XmlParser.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\IEHelper\DISPIDs.cs"> <Link>Test\Stability\Stress\IEHelper\DISPIDs.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\IEHelper\IEInterop.cs"> <Link>Test\Stability\Stress\IEHelper\IEInterop.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Stability\Stress\IEHelper\Rtl.cs"> <Link>Test\Stability\Stress\IEHelper\Rtl.cs</Link> </SourcesStressFramework>
+    <SourcesStressFramework Include="$(CommonCodeLocation)\Collections\Generics\WeightedList.cs"> <Link>Test\Collections\Generics\WeightedList.cs</Link> </SourcesStressFramework>
+  </ItemGroup>
+
+  <!-- Stress Framework -->
+  <ItemGroup>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AssemblyCacheEnum.cs"> <Link>Test\Stability\Stress\AvalonProxy\AssemblyCacheEnum.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AvalonActionManager.cs"> <Link>Test\Stability\Stress\AvalonProxy\AvalonActionManager.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AvalonStressContext.cs"> <Link>Test\Stability\Stress\AvalonProxy\AvalonStressContext.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AvalonStressContextManager.cs"> <Link>Test\Stability\Stress\AvalonProxy\AvalonStressContextManager.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AvalonStressThreadManager.cs"> <Link>Test\Stability\Stress\AvalonProxy\AvalonStressThreadManager.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\MemoryChecker.cs"> <Link>Test\Stability\Stress\AvalonProxy\MemoryChecker.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\AvalonStressFrameworkHelper.cs"> <Link>Test\Stability\Stress\AvalonProxy\AvalonStressFrameworkHelper.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\BrowserStressContext.cs"> <Link>Test\Stability\Stress\AvalonProxy\BrowserStressContext.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\BrowserStressContextManager.cs"> <Link>Test\Stability\Stress\AvalonProxy\BrowserStressContextManager.cs</Link> </SourcesStressFrameworkAvalonProxy>
+    <SourcesStressFrameworkAvalonProxy Include="$(CommonCodeLocation)\Stability\Stress\AvalonProxy\BrowserStressThreadManager.cs"> <Link>Test\Stability\Stress\AvalonProxy\BrowserStressThreadManager.cs</Link> </SourcesStressFrameworkAvalonProxy>
+  </ItemGroup>
+
+  <!-- Stress Framework -->
+  <ItemGroup>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulSQLConnect.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulSQLConnect.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulCommon.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulCommon.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulStateObjects.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulStateObjects.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulStressContext.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulStressContext.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulStressContextManager.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulStressContextManager.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulStressThreadManager.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulStressThreadManager.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+    <SourcesStressFrameworkLonghaulProxy Include="$(CommonCodeLocation)\Stability\Stress\LonghaulProxy\LonghaulEventLog.cs"> <Link>Test\Stability\Stress\LonghaulProxy\LonghaulEventLog.cs</Link> </SourcesStressFrameworkLonghaulProxy>
+  </ItemGroup>
+
+  <!-- Stability Leak -->
+  <ItemGroup>
+    <SourcesStabilityLeak Include="$(CommonCodeLocation)\Stability\LeakUtility.cs"> <Link>Test\Stability\LeakUtility.cs</Link> </SourcesStabilityLeak>
+    <SourcesStabilityLeak Include="$(CommonCodeLocation)\Stability\Input.cs"> <Link>Test\Stability\Input.cs</Link> </SourcesStabilityLeak>
+  </ItemGroup>
+
+  <!-- Stress Graphics -->
+  <ItemGroup>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\AddNodes.cs"> <Link>Test\Stability\Stress\Graphics\AddNodes.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\AnimationFactory.cs"> <Link>Test\Stability\Stress\Graphics\AnimationFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\Channel.cs"> <Link>Test\Stability\Stress\Graphics\Channel.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\ChannelFactory.cs"> <Link>Test\Stability\Stress\Graphics\ChannelFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\CompositionActorFactory.cs"> <Link>Test\Stability\Stress\Graphics\CompositionActorFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\ConnectDisconnect.cs"> <Link>Test\Stability\Stress\Graphics\ConnectDisconnect.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\ConnectDisconnectActorFactory.cs"> <Link>Test\Stability\Stress\Graphics\ConnectDisconnectActorFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\ContainerVisual.cs"> <Link>Test\Stability\Stress\Graphics\ContainerVisual.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\DrawContextProvider.cs"> <Link>Test\Stability\Stress\Graphics\DrawContextProvider.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\GetHwndSources.cs"> <Link>Test\Stability\Stress\Graphics\GetHwndSources.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\GetProperties.cs"> <Link>Test\Stability\Stress\Graphics\GetProperties.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\GetPropertiesFactory.cs"> <Link>Test\Stability\Stress\Graphics\GetPropertiesFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\HelperClass.cs"> <Link>Test\Stability\Stress\Graphics\HelperClass.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\HitTest.cs"> <Link>Test\Stability\Stress\Graphics\HitTest.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\HitTestFactory.cs"> <Link>Test\Stability\Stress\Graphics\HitTestFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\HostVisual.cs"> <Link>Test\Stability\Stress\Graphics\HostVisual.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\HwndSourceCreator.cs"> <Link>Test\Stability\Stress\Graphics\HwndSourceCreator.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\IDrawContextProvider.cs"> <Link>Test\Stability\Stress\Graphics\IDrawContextProvider.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\IRootVisualHolder.cs"> <Link>Test\Stability\Stress\Graphics\IRootVisualHolder.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\ISurface.cs"> <Link>Test\Stability\Stress\Graphics\ISurface.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\IVisual.cs"> <Link>Test\Stability\Stress\Graphics\IVisual.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\IVisualProperties.cs"> <Link>Test\Stability\Stress\Graphics\IVisualProperties.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\Magnifier.cs"> <Link>Test\Stability\Stress\Graphics\Magnifier.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\MagnifierFactory.cs"> <Link>Test\Stability\Stress\Graphics\MagnifierFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\MoveNode.cs"> <Link>Test\Stability\Stress\Graphics\MoveNode.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\NodeActor.cs"> <Link>Test\Stability\Stress\Graphics\NodeActor.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\NodeCreator.cs"> <Link>Test\Stability\Stress\Graphics\NodeCreator.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\R3DVisual.cs"> <Link>Test\Stability\Stress\Graphics\R3DVisual.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\Random.cs"> <Link>Test\Stability\Stress\Graphics\Random.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\RemoveNode.cs"> <Link>Test\Stability\Stress\Graphics\RemoveNode.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\RenderTargetBitmap.cs"> <Link>Test\Stability\Stress\Graphics\RenderTargetBitmap.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\RenderTargetBitmapFactory.cs"> <Link>Test\Stability\Stress\Graphics\RenderTargetBitmapFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\RootVisualHolder.cs"> <Link>Test\Stability\Stress\Graphics\RootVisualHolder.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\RootVisualHolderActor.cs"> <Link>Test\Stability\Stress\Graphics\RootVisualHolderActor.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\SharedObjects.cs"> <Link>Test\Stability\Stress\Graphics\SharedObjects.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\TransformCreatorFactory.cs"> <Link>Test\Stability\Stress\Graphics\TransformCreatorFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\TreeActor.cs"> <Link>Test\Stability\Stress\Graphics\TreeActor.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\TreeCreator.cs"> <Link>Test\Stability\Stress\Graphics\TreeCreator.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\TreeCreatorInitFactory.cs"> <Link>Test\Stability\Stress\Graphics\TreeCreatorInitFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\TreeInitActor.cs"> <Link>Test\Stability\Stress\Graphics\TreeInitActor.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\UpdateProperties.cs"> <Link>Test\Stability\Stress\Graphics\UpdateProperties.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\UpdatePropertiesFactory.cs"> <Link>Test\Stability\Stress\Graphics\UpdatePropertiesFactory.cs</Link> </SourcesStressGraphics>
+    <SourcesStressGraphics Include="$(CommonCodeLocation)\Stability\Stress\Graphics\VisualTarget.cs"> <Link>Test\Stability\Stress\Graphics\VisualTarget.cs</Link> </SourcesStressGraphics>
+  </ItemGroup>
+
+  <!-- Performance  -->
+  <ItemGroup>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\CLRProfilerControl.cs"> <Link>Test\Performance\CLRProfilerControl.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\CustomTestAction.cs"> <Link>Test\Performance\CustomTestAction.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\InputPerf.cs"> <Link>Test\Performance\InputPerf.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\PerfActionHelper.cs"> <Link>Test\Performance\PerfActionHelper.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\TraceProvider.cs"> <Link>Test\Performance\TraceProvider.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\EventTrace.cs"> <Link>Test\Performance\EventTrace.cs</Link> </SourcesPerformanceTesting>
+    <SourcesPerformanceTesting Include="$(CommonCodeLocation)\Performance\EventType.cs"> <Link>Test\Performance\EventType.cs</Link> </SourcesPerformanceTesting>
+  </ItemGroup>
+
+  <!-- Performance Partial Trust -->
+  <ItemGroup>
+    <SourcesPerformanceTestingPartialTrust Include="$(CommonCodeLocation)\Performance\CLRProfilerControl.cs"> <Link>Test\Performance\CLRProfilerControl.cs</Link> </SourcesPerformanceTestingPartialTrust>
+    <SourcesPerformanceTestingPartialTrust Include="$(CommonCodeLocation)\Performance\CustomTestAction.cs"> <Link>Test\Performance\CustomTestAction.cs</Link> </SourcesPerformanceTestingPartialTrust>
+    <SourcesPerformanceTestingPartialTrust Include="$(CommonCodeLocation)\Performance\InputPerf_PartialTrust.cs"> <Link>Test\Performance\InputPerf_PartialTrust.cs</Link> </SourcesPerformanceTestingPartialTrust>
+    <SourcesPerformanceTestingPartialTrust Include="$(CommonCodeLocation)\Performance\PerfActionHelper.cs"> <Link>Test\Performance\PerfActionHelper.cs</Link> </SourcesPerformanceTestingPartialTrust>
+    <SourcesPerformanceTestingPartialTrust Include="$(CommonCodeLocation)\Performance\PerfTestTraceProvider.cs"> <Link>Test\Performance\PerfTestTraceProvider.cs</Link> </SourcesPerformanceTestingPartialTrust>
+  </ItemGroup>
+
+  <!-- Annotations -->
+  <ItemGroup>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\AnnotationsTestSettings.cs"> <Link>Test\Annotations\AnnotationsTestSettings.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\Attributes.cs"> <Link>Test\Annotations\Attributes.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\FastTestSuite.cs"> <Link>Test\Annotations\FastTestSuite.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\TestSuite.cs"> <Link>Test\Annotations\TestSuite.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\TestSuiteRunner.cs"> <Link>Test\Annotations\TestSuiteRunner.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\UIAutomationModule.cs"> <Link>Test\Annotations\UIAutomationModule.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\VisualAutomationTestSuite.cs"> <Link>Test\Annotations\VisualAutomationTestSuite.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\VScanModule.cs"> <Link>Test\Annotations\VScanModule.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\Internal\ALogger.cs"> <Link>Test\Annotations\Internal\ALogger.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\Internal\TestCase.cs"> <Link>Test\Annotations\Internal\TestCase.cs</Link> </SourcesAnnotations>
+    <SourcesAnnotations Include="$(CommonCodeLocation)\Annotations\Internal\TestVariation.cs"> <Link>Test\Annotations\Internal\TestVariation.cs</Link> </SourcesAnnotations>
+  </ItemGroup>
+
+</Project>

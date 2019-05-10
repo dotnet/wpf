@@ -22,7 +22,6 @@ using System.Windows.Interop;
 using System.Text;
 
 using Microsoft.Win32;
-using Xunit.Abstractions;
 using MS.Internal;
 
 /************************************************************************
@@ -422,7 +421,6 @@ namespace DRT
                     case "help":
                         PrintUsage();
 
-                        Xunit.Assert.True(true);
                         Environment.Exit(0);
                         break;
 
@@ -1138,7 +1136,6 @@ namespace DRT
 
                 // Write any delayed output for debugging purposes
                 WriteDelayedOutput();
-                Xunit.Assert.True(cond, s);
 
                 if (_loudAsserts)
                 {
@@ -2051,7 +2048,6 @@ namespace DRT
                         _testIndex++;
                     }
 
-                    Xunit.Assert.False(aborting);
 
                     // Schedule the next test.
                     // Special situation: The current test may have called Suspend() and then
@@ -2099,7 +2095,6 @@ namespace DRT
 
             ReportDrtInfo();
 
-            Xunit.Assert.True(_retcode == 0);
             Environment.Exit(_retcode);
         }
 

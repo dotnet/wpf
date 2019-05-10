@@ -3,7 +3,7 @@
 & "$PSScriptRoot\configure-helix-machine.ps1"
 
 # Run the tests
-dotnet --info
+Get-ChildItem -Recurse
 
 # We can use $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py to upload any QV specific logs and/or screenshots that we are interested in.
 # For example: $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT%\upload_result.py -result screenshot.jpg -result_name screenshot.jpg

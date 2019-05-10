@@ -2,7 +2,7 @@
   <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
   
   <PropertyGroup>
-    <PublishRoot>$(WpfIntRootDirectory)publish\</PublishRoot>
+    <PublishRoot>$(RepoRoot)artifacts\test\</PublishRoot>
     <PlatformFolder>x86</PlatformFolder>
     <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
   </PropertyGroup>

@@ -1,0 +1,19 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(_NTDRIVE)$(_NTROOT)\wpf\test\Microsoft.Wpf.Test.Native.Settings.Targets" />
+
+
+  <ItemGroup Condition="'$(BuildExePhase)' == '' ">
+
+    <ProjectFile Include="TestServices\TestServices.csproj" />
+    <ProjectFile Include="WPFSetup\wpfSetup.csproj" />
+    <ProjectFile Include="Tools\DrtTools.csproj" />
+
+    <!-- Broken for 3.5 Build in recent Dev11 WPF migration.  Since DRTs are NEVER run in 3.X, disable there -->
+    <ProjectFile Include="rundrt\rundrts.nativeproj" Condition="'$(WPF_TESTBUILD_TARGETVERSION)' != 'v3.5' AND '$(WPF_TESTBUILD_TARGETVERSION)' != 'v3.0'"/>
+
+  </ItemGroup>
+
+  <Import Project="$(_NTDRIVE)$(_NTROOT)\tools\Microsoft.DevDiv.Traversal.targets" />
+
+</Project>

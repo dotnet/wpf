@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Import Condition="Exists('../Directory.Build.targets')" Project="../Directory.Build.targets" />
+  <Import Project="StrongName.targets" />
+  <Import Project="PublishAfterBuild.targets" />
+</Project>

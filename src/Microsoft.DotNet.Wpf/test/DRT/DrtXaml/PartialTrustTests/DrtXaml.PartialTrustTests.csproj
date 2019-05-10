@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+    <AssemblyName>DrtXaml.PartialTrustTests</AssemblyName>
+    <OutputType>Library</OutputType>
+    <DefineConstants>$(DefineConstants);OLDRESOURCES</DefineConstants>
+    <TestCode>true</TestCode>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyAttributeClsCompliant>false</AssemblyAttributeClsCompliant>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="NonPublicEvents.cs" />
+    <Compile Include="ObjectWriterNonPublic.cs" />
+    <!--<Compile Include="SystemXamlInternal.cs" />-->
+    <!-- Need our own local copy of this file, because DrtXaml is not APTCA -->
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DrtXaml\DrtXaml.csproj"/>
+    <ProjectReference Include="..\XamlTestClasses\XamlTestClasses.csproj"/>
+  </ItemGroup>
+</Project>

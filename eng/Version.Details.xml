@@ -46,9 +46,9 @@
       <Sha>6ca16758a5d454c1f1b04975bf55f259dd71fc49</Sha>
       <SourceBuildId>5589</SourceBuildId>
     </Dependency>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19258.6">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19259.2">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>ee51a187ba1d2174233dacb6e2056e5403f9d36e</Sha>
+      <Sha>2e3d08b60d7f5c91aa68cc30443e96b92995524e</Sha>
       <SourceBuildId>6173</SourceBuildId>
     </Dependency>
     <Dependency Name="System.Drawing.Common" Version="4.6.0-preview5.19208.5" CoherentParentDependency="Microsoft.NETCore.App">

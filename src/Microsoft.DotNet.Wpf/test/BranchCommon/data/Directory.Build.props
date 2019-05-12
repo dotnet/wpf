@@ -1,4 +1,3 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  <Import Condition="Exists('$(WpfTestBasePath)/DRT.Build.props')" Project="$(WpfTestBasePath)/DRT.Build.props" />
 </Project>

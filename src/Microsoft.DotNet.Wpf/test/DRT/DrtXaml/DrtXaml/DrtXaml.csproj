@@ -1,21 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
+    <LinkSubsystem>console</LinkSubsystem>
+    <OutputType>WinExe</OutputType>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
-    <IsIntegrationTestProject>true</IsIntegrationTestProject>
+    <IsIntegrationTestProject>false</IsIntegrationTestProject>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\TestServices\TestServices.csproj" />
+    <ProjectReference Include="..\..\..\Common\DRT\TestServices\TestServices.csproj" />
     <ProjectReference Include="..\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj" />
     <ProjectReference Include="..\BamlTestClasses40\BamlTestClasses40.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />

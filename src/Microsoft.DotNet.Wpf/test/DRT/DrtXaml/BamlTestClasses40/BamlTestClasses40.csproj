@@ -62,12 +62,16 @@
     <Page Include="XmlSpace3.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
+    <Compile Include="BCMarkupExtension.cs" />
+    <Compile Include="TempDPSetOrder1ListBox.cs" />
     <None Remove="@(Page)" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

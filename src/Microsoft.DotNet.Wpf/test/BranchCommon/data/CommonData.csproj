@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NoTargets>true</NoTargets>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <PublishDir>$(WpfTestBasePublishPath)</PublishDir>
+    <_IsPortable>true</_IsPortable>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier></RuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="DrtList.xml">
+      <Link>DRT\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  
+  </ItemGroup>
+
+</Project>

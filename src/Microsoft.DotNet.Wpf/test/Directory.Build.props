@@ -1,39 +1,20 @@
 <Project>
-  <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
-  
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
   <PropertyGroup>
     <WpfTestBasePath>$(MsBuildThisFileDirectory)</WpfTestBasePath>
     <DrtCommonRoot>$(WpfTestBasePath)\Common\DRT</DrtCommonRoot>
     <WpfSharedRoot>$(WpfTestBasePath)\Shared</WpfSharedRoot>
     <PublishRoot>$(RepoRoot)artifacts\test\</PublishRoot>
-
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-
-    <MicrosoftSourceLinkVersion>1.0.0-beta2-18618-05</MicrosoftSourceLinkVersion>
+    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+    <PlatformFolder>x86</PlatformFolder>
+    <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
   </PropertyGroup>
-  
-  <Choose>
-    <When Condition="'$(Platform)' == 'x64'">
-      <PropertyGroup>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <PlatformFolder>x64</PlatformFolder>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <RuntimeIdentifier>win-x86</RuntimeIdentifier>
-        <PlatformFolder>x86</PlatformFolder>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="all"/>
-  </ItemGroup>
-  
-  <Import Project="$(MsBuildThisFileDirectory)\Publish.props"/>
-  <Import Project="$(MsBuildThisFileDirectory)\StrongName.props"/>
+ 
+  <Import Project="$(WpfArcadeSdkToolsDir)\Publish.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)\StrongName.props"/>
 
   <ItemDefinitionGroup>
     <EmbeddedResource>
@@ -55,7 +36,7 @@
     <DrtToolsProject>$(WpfTestBasePath)\Common\DRT\Tools\DrtTools.csproj</DrtToolsProject>
   </PropertyGroup>
 
-  <Import Project="$(MsBuildThisFileDirectory)\SourceLocations.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)\SourceLocations.props"/>
 
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

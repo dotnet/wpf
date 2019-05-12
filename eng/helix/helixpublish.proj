@@ -1,4 +1,3 @@
-
 <Project Sdk="Microsoft.DotNet.Helix.Sdk" DefaultTargets="Test">
   <PropertyGroup>
     <!-- These properties help ensure proper and consistent restore behavior -->
@@ -10,25 +9,32 @@
       https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
     </RestoreSources>
 
-    <!-- We copy our own dotnet payload over to the machine, so we don't want/need a different dotnet install -->
-    <IncludeDotNetCli>false</IncludeDotNetCli>
+    <IncludeDotNetCli>true</IncludeDotNetCli>
+    <DotNetCliPackageType>sdk</DotNetCliPackageType>
+    <!-- Set to match global.json.tools.dotnet by pre-build.ps1 -->
+    <DotNetCliVersion>$(DotNetCliVersion)</DotNetCliVersion>
+    
     <EnableXUnitReporter>true</EnableXUnitReporter>
     <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
     <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
 
     <!-- Semi-colon delimited list of commands that are executed before every test.-->
-    <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
+    <HelixPreCommands>$(HelixPreCommands);powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\configure-helix-machine.ps1 -version Xaml"</HelixPreCommands>
 
     <!-- These are the list of Windows versions that we run tests on-->
-    <HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>
+    <!--<HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>-->
+    <!-- Just cutting down the total queues while bootstrapping to speed things up-->
+    <HelixTargetQueues>Windows.10.Amd64.Open</HelixTargetQueues>
+
+    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="1.0.0-beta.19260.5" />
+    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" />
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
-    <HelixWorkItem Include="HelloHelix">
+    <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1"</Command>
+      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 -area Xaml"</Command>
     </HelixWorkItem>
    <!-- 
    <HelixWorkItem Include="Annotations">

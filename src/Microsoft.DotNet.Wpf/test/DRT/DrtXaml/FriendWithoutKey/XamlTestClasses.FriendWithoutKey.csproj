@@ -3,7 +3,6 @@
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <OutputType>Library</OutputType>
     <DefineConstants>$(DefineConstants);OLDRESOURCES</DefineConstants>
-    <TestCode>true</TestCode>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>

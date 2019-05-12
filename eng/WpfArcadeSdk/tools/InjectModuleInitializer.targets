@@ -1,0 +1,32 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="2.0.8" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.NETCore.ILAsm" Version="2.0.8" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="2.0.8" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ILDAsm_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsm_Path>
+    <ILAsm_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsm_Path>
+    <CoreCLR_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLR_Path>
+    <ILTools_Path>$(RepositoryToolsDir)native\iltools\win-x$(Architecture)\</ILTools_Path>
+  </PropertyGroup>
+
+  <!-- 
+       In order to run ILDAsm and ILAsm, we need both the IL* executables and the corresponding version 
+       of CoreCLR in the same directory.  This target ensures that for every project using module initializer
+       injection.
+  -->
+  <Target Name="CopyILTools" BeforeTargets="Build" Condition="'$(InjectModuleInitializer)'=='true'">
+    <ItemGroup>
+      <ILDAsm_Files Include="$(ILDAsm_Path)*"/>
+      <ILAsm_Files Include="$(ILAsm_Path)*"/>
+      <CoreCLR_Files Include="$(CoreCLR_Path)*"/>
+    </ItemGroup>
+    <MakeDir Directories="$(ILTools_Path)" Condition="!Exists($(ILTools_Path))"/>
+    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
+  </Target>
+
+</Project>

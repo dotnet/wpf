@@ -2,7 +2,7 @@
     <PropertyGroup>
         <_IsPortable >true</_IsPortable>
         <SelfContained >false</SelfContained>
-        <RuntimeIdentifier >win-x86</RuntimeIdentifier>
+        <RuntimeIdentifier>win-x86</RuntimeIdentifier>
         <RuntimeIdentifier Condition="'$(Platform)' == 'x64'">win-x64</RuntimeIdentifier>
         <PublishDir>$(PublishRoot)$(Configuration)\$(PlatformFolder)</PublishDir>
         <WpfTestBasePublishPath>$(PublishDir)\Test</WpfTestBasePublishPath>

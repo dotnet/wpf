@@ -49,8 +49,8 @@ CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
 
 # Copy built assemblies to dotnet install location
 $eng = Join-Path $env:BUILD_SOURCESDIRECTORY "eng"
-$configArgs = if ($configuration == "Release") { "-release" } else { }
-& "$eng\copy-wpf.ps1 -local -arch $platform $configArgs"
+$configArgs = if ($configuration -eq "Release") { "-release" } else { }
+& "$eng\copy-wpf.ps1" -local -arch $platform $configArgs
 
 # Copy local dotnet install to payload
 $localDotnetInstall = Join-Path $env:BUILD_SOURCESDIRECTORY ".dotnet"

@@ -2,25 +2,35 @@
   <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
   
   <PropertyGroup>
-    <PublishRoot>$(RepoRoot)artifacts\test\</PublishRoot>
-    <PlatformFolder>x86</PlatformFolder>
-    <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
-    <MicrosoftSourceLinkVersion>1.0.0-beta2-18618-05</MicrosoftSourceLinkVersion>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="all"/>
-  </ItemGroup>
-
-  <PropertyGroup>
     <WpfTestBasePath>$(MsBuildThisFileDirectory)</WpfTestBasePath>
     <DrtCommonRoot>$(WpfTestBasePath)\Common\DRT</DrtCommonRoot>
     <WpfSharedRoot>$(WpfTestBasePath)\Shared</WpfSharedRoot>
+    <PublishRoot>$(RepoRoot)artifacts\test\</PublishRoot>
+
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
-    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <MicrosoftSourceLinkVersion>1.0.0-beta2-18618-05</MicrosoftSourceLinkVersion>
   </PropertyGroup>
+  
+  <Choose>
+    <When Condition="'$(Platform)' == 'x64'">
+      <PropertyGroup>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformFolder>x64</PlatformFolder>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+        <PlatformFolder>x86</PlatformFolder>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="all"/>
+  </ItemGroup>
   
   <Import Project="$(MsBuildThisFileDirectory)\Publish.props"/>
   <Import Project="$(MsBuildThisFileDirectory)\StrongName.props"/>
@@ -52,7 +62,6 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
-
 
   <PropertyGroup>
     <!-- CS0618 - UnmanagedType.Struct usage -->

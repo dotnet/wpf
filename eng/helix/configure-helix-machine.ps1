@@ -15,3 +15,4 @@ $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
 # Ensure that the dotnet installed at our dotnetLocation is used
 $env:DOTNET_ROOT=$dotnetLocation
+Set-Variable -name "DOTNET_ROOT(x86)" -value $dotnetLocation 

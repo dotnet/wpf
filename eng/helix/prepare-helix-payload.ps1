@@ -33,12 +33,10 @@ function CopyFolderStructure($from, $to)
     {
         Write-Output "Location doesn't exist: $from"
     }
-
-    Get-ChildItem $to -Recurse
 }
 
 # Copy files from nuget packages
-$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\1.0.0-beta.19260.5\tools\win-$platform\"
+$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\1.0.0-beta.19260.5\tools\win-$platform\Test"
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 

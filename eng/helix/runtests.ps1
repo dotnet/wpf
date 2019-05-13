@@ -7,10 +7,10 @@ Param(
 & "$PSScriptRoot\configure-helix-machine.ps1"
 
 # Run the tests
-Get-ChildItem -Recurse
+$gci = Get-ChildItem -Recurse
+Write-Output $gci
 
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
-
 Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
 
 # We can use $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py to upload any QV specific logs and/or screenshots that we are interested in.
@@ -18,4 +18,7 @@ Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
 # Then, links to these artifacts can then be included in the xUnit logs.
 
 # Need to copy the xUnit log to a known location that helix can understand
-Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" "..\testResults.xml"
+if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
+{
+    Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" "..\testResults.xml"
+}

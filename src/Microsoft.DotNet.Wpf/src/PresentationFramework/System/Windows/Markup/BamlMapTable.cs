@@ -1504,9 +1504,7 @@ namespace System.Windows.Markup
                     Debug.Assert(targetType != null && memberName != null);
 
                     MemberInfo memberInfo = XamlTypeMapper.GetStaticMemberInfo(targetType, memberName, false);
-                    if (memberInfo is PropertyInfo &&
-                        targetType.Assembly == XamlTypeMapper.AssemblyPF &&
-                        targetType.FullName == "System.Windows.SystemParameters")
+                    if (memberInfo is PropertyInfo)
                     {
                         // see if the value is a static SystemResourceKey property from the themes
                         memberId = SystemResourceKey.GetBamlIdBasedOnSystemResourceKeyId(targetType, memberName);

@@ -4,7 +4,7 @@ Param(
 )
 
 # Configure the machine before running tests
-& "$PSScriptRoot\configure-helix-machine.ps1"
+. "$PSScriptRoot\configure-helix-machine.ps1"
 
 # Run the tests
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"

@@ -26,9 +26,9 @@
   <ItemGroup>
     <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="1.0.0-beta.19260.5" />
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
-    <HelixWorkItem Include="HelloHelix">
+    <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1"</Command>
+      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 -area Xaml"</Command>
     </HelixWorkItem>
    <!-- 
    <HelixWorkItem Include="Annotations">

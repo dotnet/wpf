@@ -6,10 +6,10 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <ILDAsmPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsmPath>
-    <ILAsmPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsmPath>
-    <CoreCLRPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLRPath>
-    <ILToolsPath>$(RepositoryToolsDir)native\iltools\win-x$(Architecture)\</ILToolsPath>
+    <ILDAsmPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsmPath>
+    <ILAsmPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsmPath>
+    <CoreCLRPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLRPath>
+    <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)</ILToolsPath>
     <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
     <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
   </PropertyGroup>

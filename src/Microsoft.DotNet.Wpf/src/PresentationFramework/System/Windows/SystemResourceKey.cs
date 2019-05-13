@@ -390,14 +390,7 @@ namespace System.Windows
             if (targetType.Assembly == XamlTypeMapper.AssemblyPF &&
                 targetType.FullName == "System.Windows.SystemParameters")
             {
-                try
-                {
-                    srkId = (SystemResourceKeyID)Enum.Parse(typeof(SystemResourceKeyID), srkField);
-                }
-                catch (ArgumentException)
-                {
-                    found = false;
-                }
+                found = Enum.TryParse(srkField, out srkId);
             }
 
             if (found)

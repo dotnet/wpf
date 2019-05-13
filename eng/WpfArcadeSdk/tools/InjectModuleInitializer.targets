@@ -6,27 +6,550 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <ILDAsm_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsm_Path>
-    <ILAsm_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsm_Path>
-    <CoreCLR_Path>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLR_Path>
-    <ILTools_Path>$(RepositoryToolsDir)native\iltools\win-x$(Architecture)\</ILTools_Path>
+    <ILDAsmPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsmPath>
+    <ILAsmPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsmPath>
+    <CoreCLRPath>$(NugetPackageRoot)runtime.win-x$(Architecture).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLRPath>
+    <ILToolsPath>$(RepositoryToolsDir)native\iltools\win-x$(Architecture)\</ILToolsPath>
+    <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
+    <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
+    <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TaskFactoryReference Include="mscorlib" />
+    <TaskFactoryReference Include="netstandard" />
+  </ItemGroup>
 
   <!-- 
        In order to run ILDAsm and ILAsm, we need both the IL* executables and the corresponding version 
        of CoreCLR in the same directory.  This target ensures that for every project using module initializer
        injection.
   -->
-  <Target Name="CopyILTools" BeforeTargets="Build" Condition="'$(InjectModuleInitializer)'=='true'">
+  <Target Name="CopyILTools" BeforeTargets="DeconstructDll">
     <ItemGroup>
-      <ILDAsm_Files Include="$(ILDAsm_Path)*"/>
-      <ILAsm_Files Include="$(ILAsm_Path)*"/>
-      <CoreCLR_Files Include="$(CoreCLR_Path)*"/>
+      <ILDAsm_Files Include="$(ILDAsmPath)*"/>
+      <ILAsm_Files Include="$(ILAsmPath)*"/>
+      <CoreCLR_Files Include="$(CoreCLRPath)*"/>
     </ItemGroup>
-    <MakeDir Directories="$(ILTools_Path)" Condition="!Exists($(ILTools_Path))"/>
-    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
-    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
-    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILTools_Path)" SkipUnchangedFiles="true"/>
+
+    <MakeDir Directories="$(ILToolsPath)" Condition="!Exists($(ILToolsPath))"/>
+
+    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <UsingTask TaskName="ILDasm"
+           TaskFactory="$(TaskFactory)"
+           AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <Assembly ParameterType="System.String" Required="true" />
+      <Out ParameterType="System.String" Required="true" Output="true" />
+
+      <!-- Output in HTML format -->
+      <Html ParameterType="System.Boolean" Required="false" />
+      <!--  Output in rich text format -->
+      <Rtf ParameterType="System.Boolean" Required="false" />
+
+      <!--  Show actual bytes (in hex) as instruction comments -->
+      <Bytes ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show exception handling clauses in raw form -->
+      <RawEH ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show metadata tokens of classes and members -->
+      <Tokens ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show original source lines as comments -->
+      <Source ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include references to original source lines -->
+      <LineNum ParameterType="System.Boolean" Required="false" />
+
+      <!-- =<vis>[+<vis>...]    Only disassemble the items with specified
+          visibility. (<vis> = PUB | PRI | FAM | ASM | FAA | FOA | PSC)
+       -->
+      <Visibility ParameterType="System.String" Required="false" />
+
+      <!-- Only disassemble the public items (same as /VIS=PUB) -->
+      <PubOnly ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include all names into single quotes -->
+      <QuoteAllNames ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress output of custom attributes -->
+      <NoCA ParameterType="System.Boolean" Required="false" />
+
+      <!-- Output CA blobs in verbal form (default - in binary form) -->
+      <CAVerbal ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress disassembly progress bar window pop-up -->
+      <NoBar ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use UTF-8 encoding for output (default - ANSI) -->
+      <Utf8 ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use UNICODE encoding for output -->
+      <Unicode ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress IL assembler code output -->
+      <NoIL ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use forward class declaration -->
+      <Forward ParameterType="System.Boolean" Required="false" />
+
+      <!-- Output full list of types (to preserve type ordering in round-trip) -->
+      <TypeList ParameterType="System.Boolean" Required="false" />
+
+      <!-- Display .NET projection view if input is a .winmd file -->
+      <Project ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include file headers information in the output -->
+      <Headers ParameterType="System.Boolean" Required="false" />
+
+      <!-- =<class>[::<method>[(<sig>)]  Disassemble the specified item only -->
+      <Item ParameterType="System.String" Required="false" />
+
+      <!-- Include statistics on the image -->
+      <Stats ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include list of classes defined in the module -->
+      <ClassList ParameterType="System.Boolean" Required="false" />
+
+      <!-- Combination of /HEADER,/BYTES,/STATS,/CLASSLIST,/TOKENS -->
+      <All ParameterType="System.Boolean" Required="false" />
+
+
+      <!--  
+      Options for EXE,DLL,OBJ and LIB files:
+      /METADATA[=<specifier>] Show MetaData, where <specifier> is:
+          MDHEADER    Show MetaData header information and sizes.
+          HEX         Show more things in hex as well as words.
+          CSV         Show the record counts and heap sizes.
+          UNREX       Show unresolved externals.
+          SCHEMA      Show the MetaData header and schema information.
+          RAW         Show the raw MetaData tables.
+          HEAPS       Show the raw heaps.
+          VALIDATE    Validate the consistency of the metadata.
+      -->
+      <Metadata ParameterType="System.String" Required="false" />
+
+      <!-- 
+        Options for LIB files only:
+        /OBJECTFILE=<obj_file_name> Show MetaData of a single object file in library
+      -->
+      <ObjectFile ParameterType="System.String" Required="false" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Diagnostics" />
+      <!--<Reference Include="mscorlib" Condition="'$(MSBuildRuntimeType)'=='Core'" />-->
+      <!--<Reference Include="netstandard" Condition="'$(MSBuildRuntimeType)'=='Core'" />-->
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        try
+        {
+          string commandLine = "/OUT=" + Out;
+          if (Html) commandLine += " /HTML";
+          if (Rtf) commandLine += " /RTF";
+          if (Bytes) commandLine += " /BYTES";
+          if (RawEH) commandLine += " /RAWEH";
+          if (Tokens) commandLine += " /TOKENS";
+          if (Source) commandLine += " /SOURCE";
+          if (LineNum) commandLine += " /LINENUM";
+          if (Visibility != null && Visibility.Trim() != string.Empty) commandLine += " /VISIBILITY=" + Visibility;
+          if (PubOnly) commandLine += " /PUBONLY";
+          if (QuoteAllNames) commandLine += " /QUOTEALLNAMES";
+          if (NoCA) commandLine += " /NOCA";
+          if (CAVerbal) commandLine += " /CAVERBAL";
+          if (NoBar) commandLine += " /NOBAR";
+          if (Utf8) commandLine += " /UTF8";
+          if (Unicode) commandLine += " /UNICODE";
+          if (NoIL) commandLine += " /NOIL";
+          if (Forward) commandLine += " /FORWARD";
+          if (TypeList) commandLine += " /TYPELIST";
+          if (Headers) commandLine += " /HEADERS";
+          if (Item != null && Item.Trim() != string.Empty) commandLine += " /ITEM=" + Item;
+          if (Stats) commandLine += " /STATS";
+          if (ClassList) commandLine += " /CLASSLIST";
+          if (All) commandLine += " /ALL";
+          if (Metadata != null && Metadata.Trim() != string.Empty) commandLine += " /METADATA=" + Metadata;
+          if (ObjectFile != null && ObjectFile.Trim() != string.Empty) commandLine += " /OBJECTFILE=" + ObjectFile;
+          
+          ProcessStartInfo startInfo = new ProcessStartInfo(@"$(ILDasm)");
+          startInfo.CreateNoWindow = true;
+          startInfo.UseShellExecute = false;
+          startInfo.Arguments = Assembly + " " + commandLine;
+          
+          
+          Log.LogMessage("Starting process: " + startInfo.FileName + " " + startInfo.Arguments);
+          
+          Process.Start(startInfo).WaitForExit();
+        }
+        catch(Exception e)
+        {
+          Log.LogError(e.ToString() + e.StackTrace);
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="ILAsm"
+           TaskFactory="$(TaskFactory)"
+           AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <SourceFile ParameterType="System.String" Required="true" />
+      <Out ParameterType="System.String" Required="true" Output="true" />
+
+      <!-- /NOLOGO         Don't type the logo -->
+      <NoLogo ParameterType="System.Boolean" Required="false" />
+
+      <!--/QUIET          Don't report assembly progress -->
+      <Quiet ParameterType="System.Boolean" Required="false" />
+
+      <!--/NOAUTOINHERIT  Disable inheriting from System.Object by default-->
+      <NoAutoInherit ParameterType="System.Boolean" Required="false" />
+
+      <!--/DLL            Compile to .dll-->
+      <Dll ParameterType="System.Boolean" Required="false" />
+
+      <!--/EXE            Compile to .exe (default)-->
+      <Exe ParameterType="System.Boolean" Required="false" />
+
+      <!--/PDB            Create the PDB file without enabling debug info tracking-->
+      <Pdb ParameterType="System.Boolean" Required="false" />
+
+      <!--/APPCONTAINER           Create an AppContainer exe or dll-->
+      <AppContainer ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG                  Disable JIT optimization, create PDB file, use sequence points from PDB-->
+      <Debug ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG=IMPL             Disable JIT optimization, create PDB file, use implicit sequence points-->
+      <DebugDisableJitOptimization ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG=OPT              Enable JIT optimization, create PDB file, use implicit sequence points -->
+      <DebugEnableJitOptimization ParameterType="System.Boolean" Required="false" />
+
+      <!--/OPTIMIZE               Optimize long instructions to short-->
+      <Optimize ParameterType="System.Boolean" Required="false" />
+
+      <!--/FOLD                   Fold the identical method bodies into one-->
+      <Fold ParameterType="System.Boolean" Required="false" />
+
+      <!--/CLOCK                  Measure and report compilation times-->
+      <Clock ParameterType="System.Boolean" Required="false" />
+
+      <!--/RESOURCE=<res_file>    Link the specified resource file (*.res) into resulting .exe or .dll -->
+      <Resource ParameterType="System.String" Required="false" />
+
+      <!--/CVRES=<path_to_file>   Set path to cvtres tool: /CVR=cvtres.exe /CVR=tool\cvtres.cmd /CVR=D:\tool\-->
+      <CvRes ParameterType="System.String" Required="false" />
+
+      <!--/KEY=<keyfile>          Compile with strong signature 
+      			(<keyfile> contains private key)-->
+      <KeyFile ParameterType="System.String" Required="false" />
+
+      <!--/KEY=@<keysource>       Compile with strong signature 
+			(<keysource> is the private key source name)-->
+      <KeySource ParameterType="System.String" Required="false" />
+
+      <!--/INCLUDE=<path>         Set path to search for #include'd files-->
+      <Include ParameterType="System.String" Required="false" />
+
+      <!--/SUBSYSTEM=<int>        Set Subsystem value in the NT Optional header-->
+      <SubSystem ParameterType="System.String" Required="false" />
+
+      <!--/SSVER=<int>.<int>      Set Subsystem version number in the NT Optional header-->
+      <SubSystemVersion ParameterType="System.String" Required="false" />
+
+      <!--/FLAGS=<int>            Set CLR ImageFlags value in the CLR header-->
+      <Flags ParameterType="System.String" Required="false" />
+
+      <!--/ALIGNMENT=<int>        Set FileAlignment value in the NT Optional header-->
+      <Alignment ParameterType="System.String" Required="false" />
+
+      <!--/BASE=<int>             Set ImageBase value in the NT Optional header (max 2GB for 32-bit images)-->
+      <Base ParameterType="System.String" Required="false" />
+
+      <!--/STACK=<int>            Set SizeOfStackReserve value in the NT Optional header-->
+      <Stack ParameterType="System.String" Required="false" />
+
+      <!--/MDV=<version_string>   Set Metadata version string-->
+      <MetadataVersion ParameterType="System.String" Required="false" />
+
+      <!--/MSV=<int>.<int>        Set Metadata stream version (<major>.<minor>)-->
+      <MetadataStreamVersion ParameterType="System.String" Required="false" />
+
+      <!--/PE64                   Create a 64bit image (PE32+)-->
+      <PE64 ParameterType="System.String" Required="false" />
+
+      <!--/HIGHENTROPYVA          Set High Entropy Virtual Address capable PE32+ images (default for /APPCONTAINER)-->
+      <HighEntropyVirtualAddress ParameterType="System.String" Required="false" />
+
+      <!--/NOCORSTUB              Suppress generation of CORExeMain stub-->
+      <NoCorStub ParameterType="System.String" Required="false" />
+
+      <!--/STRIPRELOC             Indicate that no base relocations are needed-->
+      <StripReLoc ParameterType="System.String" Required="false" />
+
+      <!--/ITANIUM                Target processor: Intel Itanium-->
+      <Itanium ParameterType="System.String" Required="false" />
+
+      <!--/X64                    Target processor: 64bit AMD processor-->
+      <X64 ParameterType="System.String" Required="false" />
+
+      <!--/ARM                    Target processor: ARM processor-->
+      <Arm ParameterType="System.String" Required="false" />
+
+      <!--/32BITPREFERRED         Create a 32BitPreferred image (PE32)-->
+      <Prefer32Bit ParameterType="System.String" Required="false" />
+
+      <!--/ENC=<file>             Create Edit-and-Continue deltas from specified source file-->
+      <ENC ParameterType="System.String" Required="false" />
+
+
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Diagnostics" />
+      <!--<Reference Include="mscorlib" Condition="'$(MSBuildRuntimeType)'=='Core'" />-->
+      <!--<Reference Include="netstandard" Condition="'$(MSBuildRuntimeType)'=='Core'" />-->
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        try
+        {
+          string commandLine = "/OUT=" + Out;
+          if (NoLogo) commandLine += " /NOLOGO";
+          if (Quiet) commandLine += " /QUIET";
+          if (NoAutoInherit) commandLine += " /NOAUTOINHERIT";
+          if (Dll) commandLine += " /DLL";
+          if (Exe) commandLine += " /EXE";
+          if (Pdb) commandLine += " /PDB";
+          if (AppContainer) commandLine += " /APPCONTAINER";
+          if (Debug) commandLine += " /DEBUG";
+          if (DebugDisableJitOptimization) commandLine += " /DEBUG=IMPL";
+          if (DebugEnableJitOptimization) commandLine += " /DEBUG=OPT";
+          if (Optimize) commandLine += " /OPTIMIZE";
+          if (Fold) commandLine += " /FOLD";
+          if (Clock) commandLine += " /CLOCK";
+          if (!string.IsNullOrEmpty(Resource)) commandLine += " /RESOURCE=" + Resource;
+          if (!string.IsNullOrEmpty(CvRes)) commandLine += " /CVRES=" + CvRes;
+          if (!string.IsNullOrEmpty(KeyFile)) commandLine += " /KeyFile=" + KeyFile;
+          if (!string.IsNullOrEmpty(KeySource)) commandLine += " /CVRES=@" + KeySource;
+          if (!string.IsNullOrEmpty(Include)) commandLine += " /INCLUDE=" + Include;
+          
+          int subSystem = -1;
+          if (!string.IsNullOrEmpty(SubSystem) && Int32.TryParse(SubSystem, out subSystem)) commandLine += " /SUBSYSTEM=" + subSystem;
+          if (!string.IsNullOrEmpty(SubSystemVersion)) commandLine += " /SUBSYSTEMVERSION=" + SubSystemVersion;
+
+          int flags = -1;
+          if (!string.IsNullOrEmpty(Flags) && Int32.TryParse(Flags, out flags)) commandLine += " /FLAGS=" + flags;
+
+          int alignment = -1;
+          if (!string.IsNullOrEmpty(Alignment) && Int32.TryParse(Alignment, out alignment)) commandLine += " /ALIGNMENT=" + alignment;
+          
+          int @base = -1;
+          if (!string.IsNullOrEmpty(Base) && Int32.TryParse(Base, out @base)) commandLine += " /BASE=" + @base;
+          
+          int stack = -1;
+          if (!string.IsNullOrEmpty(Stack) && Int32.TryParse(Stack, out stack)) commandLine += " /STACK=" + stack; 
+          
+          if (!string.IsNullOrEmpty(MetadataVersion)) commandLine += " /MDV=" + MetadataVersion;
+          if (!string.IsNullOrEmpty(MetadataStreamVersion)) commandLine += " /MSV=" + MetadataStreamVersion;
+
+          bool pe64 = false;
+          if (!string.IsNullOrEmpty(PE64) && Boolean.TryParse(PE64, out pe64)) commandLine += " /PE64=" + pe64; 
+          
+          bool highEntropyVA = false;
+          if (!string.IsNullOrEmpty(HighEntropyVirtualAddress) && Boolean.TryParse(HighEntropyVirtualAddress, out highEntropyVA)) commandLine += " /HIGHENTROPYVA=" + highEntropyVA;          
+          
+          bool noCorStub = false;
+          if (!string.IsNullOrEmpty(NoCorStub) && Boolean.TryParse(NoCorStub, out noCorStub)) commandLine += " /NOCORSTUB=" + noCorStub;          
+          
+          bool stripreloc = false;
+          if (!string.IsNullOrEmpty(StripReLoc) && Boolean.TryParse(StripReLoc, out stripreloc)) commandLine += " /STRIPRELOC=" + stripreloc;          
+          
+          bool itanium = false;
+          if (!string.IsNullOrEmpty(Itanium) && Boolean.TryParse(Itanium, out itanium)) commandLine += " /ITANIUM=" + itanium;           
+          
+          bool x64 = false;
+          if (!string.IsNullOrEmpty(X64) && Boolean.TryParse(X64, out x64)) commandLine += " /X64=" + x64; 
+          
+          bool arm = false;
+          if (!string.IsNullOrEmpty(Arm) && Boolean.TryParse(Arm, out arm)) commandLine += " /ARM=" + arm; 
+          
+          bool prefer32bit = false;
+          if (!string.IsNullOrEmpty(Prefer32Bit) && Boolean.TryParse(Prefer32Bit, out prefer32bit)) commandLine += " /32BITPREFERRED=" + prefer32bit;           
+          
+          if (!string.IsNullOrEmpty(ENC)) commandLine += " /ENC=" + ENC;
+
+         
+          ProcessStartInfo startInfo = new ProcessStartInfo(@"$(ILAsm)");
+          startInfo.CreateNoWindow = true;
+          startInfo.UseShellExecute = false;
+          startInfo.Arguments = SourceFile + " " + commandLine;
+          
+          Log.LogMessage("Starting process: " + startInfo.FileName + " " + startInfo.Arguments);
+
+          Process.Start(startInfo).WaitForExit();
+        }
+        catch(Exception e)
+        {
+          Log.LogError(e.ToString() + e.StackTrace);
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="DeconstructDll"
+        AfterTargets="Compile"
+        Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))"
+        Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))">
+    <PropertyGroup>
+      <InFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</InFile>
+      <OutFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</OutFile>
+    </PropertyGroup>
+
+    <Delete Files="$(OutFile)"
+            Condition="Exists('$(OutFile)')" />
+
+    <ILDasm Assembly="$(InFile)"
+            Condition="Exists('$(InFile)')"
+            LineNum="true"
+            Out="$(OutFile)" />
+  </Target>
+
+  <Target Name="AddModuleConstructor"
+          AfterTargets="DeconstructDll">
+    <PropertyGroup>
+      <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
+    </PropertyGroup>
+
+    <ReadLinesFromFile File="$(ILFile)" Condition="Exists('$(ILFile)')">
+      <Output TaskParameter="Lines" ItemName="ILFileLines"/>
+    </ReadLinesFromFile>
+
+    <CreateProperty Value="true"
+                    Condition="$([System.String]::new('%(ILFileLines.Identity)').Contains('.assembly extern mscorlib'))">
+      <Output TaskParameter="Value" PropertyName="ContainsMsCorlibAssemblySection"/>
+    </CreateProperty>
+
+
+    <ItemGroup Condition="'$(ContainsMsCorlibAssemblySection)'!='true'">
+      <_ilFileLines Include=".assembly extern mscorlib" />
+      <_ilFileLines Include="{" />
+      <_ilFileLines Include="  .publickeytoken = (B7 7A 5C 56 19 34 E0 89 )" />
+      <_ilFileLines Include="  .ver 4:0:0:0" />
+      <_ilFileLines Include="}" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_moduleConstructor Include="ILBody">
+        <Text>
+          <![CDATA[
+
+.class private auto ansi '<Module>'
+{
+    .method private hidebysig specialname rtspecialname static void .cctor () cil managed 
+    {
+      // Code size       76 (0x4c)
+      .maxstack  3
+      
+      .locals init (class [mscorlib]System.Type V_0, bool V_1, class [mscorlib]System.Reflection.MethodInfo V_2, bool V_3)
+      IL_0000:  nop
+      IL_0001:  call       class [mscorlib]System.Reflection.Assembly [mscorlib]System.Reflection.Assembly::GetExecutingAssembly()
+      IL_0006:  ldstr      "ModuleInitializer"
+      IL_000b:  callvirt   instance class [mscorlib]System.Type [mscorlib]System.Reflection.Assembly::GetType(string)
+      IL_0010:  stloc.0
+      IL_0011:  ldloc.0
+      IL_0012:  ldnull
+      IL_0013:  call       bool [mscorlib]System.Type::op_Inequality(class [mscorlib]System.Type, class [mscorlib]System.Type)
+      IL_0018:  stloc.1
+      IL_0019:  ldloc.1
+      IL_001a:  brfalse.s  IL_004b
+
+      IL_001c:  nop
+      IL_001d:  ldloc.0
+      IL_001e:  ldstr      "Initialize"
+      IL_0023:  ldc.i4.s   24
+      IL_0025:  callvirt   instance class [mscorlib]System.Reflection.MethodInfo [mscorlib]System.Type::GetMethod(string, valuetype [mscorlib]System.Reflection.BindingFlags)
+      IL_002a:  stloc.2
+      IL_002b:  ldloc.2
+      IL_002c:  ldnull
+      IL_002d:  call       bool [mscorlib]System.Reflection.MethodInfo::op_Inequality(class [mscorlib]System.Reflection.MethodInfo, class [mscorlib]System.Reflection.MethodInfo)
+      IL_0032:  stloc.3
+      IL_0033:  ldloc.3
+      IL_0034:  brfalse.s  IL_004a
+
+      IL_0036:  nop
+      .try
+      {
+        IL_0037:  nop
+        IL_0038:  ldloc.2
+        IL_0039:  ldnull
+        IL_003a:  ldnull
+        IL_003b:  callvirt   instance object [mscorlib]System.Reflection.MethodBase::Invoke(object, object[])
+        IL_0040:  pop
+        IL_0041:  nop
+        IL_0042:  leave.s    IL_0049
+
+      }  // end .try
+      catch [mscorlib]System.Exception 
+      {
+        IL_0044:  pop
+        IL_0045:  nop
+        IL_0046:  nop
+        IL_0047:  leave.s    IL_0049
+
+      }  // end handler
+      IL_0049:  nop
+      IL_004a:  nop
+      IL_004b:  ret
+    }
+}
+
+        ]]>
+        </Text>
+      </_moduleConstructor>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ilFileLines Include="%(_moduleConstructor.Text)" />
+      <_ilFileLines Include="@(ILFileLines)" />
+    </ItemGroup>
+
+    <Delete Condition="Exists('$(ILFile)')"
+            Files="$(ILFile)" />
+
+    <WriteLinesToFile File="$(ILFile)"
+                      Overwrite="true"
+                      Lines="@(_ilFileLines)" />
+  </Target>
+
+  <Target Name="ReconstituteDll"
+          AfterTargets="AddModuleConstructor"
+          Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))"
+          Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))">
+    <PropertyGroup>
+      <TargetFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</TargetFile>
+      <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
+    </PropertyGroup>
+
+    <!-- 
+      Make a backup before overwriting $(TargetFile) 
+    -->
+    <Copy SourceFiles="$(TargetFile)"
+          DestinationFiles="$(TargetFile).bak"
+          Condition="Exists('$(TargetFile)')" />
+
+    <ILAsm SourceFile="$(ILFile)"
+           Out="$(TargetFile)" />
+
   </Target>
 
 </Project>

@@ -34,6 +34,7 @@ function CopyFolderStructure($from, $to)
         Write-Output "Location doesn't exist: $from"
     }
 
+    Get-ChildItem $to -Recurse
 }
 
 # Copy files from nuget packages

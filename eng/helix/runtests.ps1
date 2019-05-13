@@ -7,11 +7,11 @@ Param(
 & "$PSScriptRoot\configure-helix-machine.ps1"
 
 # Run the tests
-$gci = Get-ChildItem -Recurse
-Write-Output $gci
-
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
-Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
+if (Test-Path"$testLocation\rundrts.cmd")
+{
+    Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
+}
 
 # We can use $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py to upload any QV specific logs and/or screenshots that we are interested in.
 # For example: $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT%\upload_result.py -result screenshot.jpg -result_name screenshot.jpg

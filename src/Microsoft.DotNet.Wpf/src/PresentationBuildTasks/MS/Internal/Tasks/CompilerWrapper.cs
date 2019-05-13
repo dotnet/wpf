@@ -40,7 +40,7 @@ namespace MS.Internal
         internal CompilerWrapper()
         {
             _mc = new MarkupCompiler();
-            _sourceDir = Directory.GetCurrentDirectory() + "\\";
+            _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
             _nErrors = 0;
         }
 
@@ -408,7 +408,7 @@ namespace MS.Internal
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf("\\", StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = fullFilePath.Substring(pathEndIndex + 1);

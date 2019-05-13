@@ -2,15 +2,14 @@
   <PropertyGroup>
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
+    <LinkSubsystem>console</LinkSubsystem>
+    <OutputType>WinExe</OutputType>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
-    <IsIntegrationTestProject>true</IsIntegrationTestProject>
+    <IsIntegrationTestProject>false</IsIntegrationTestProject>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   

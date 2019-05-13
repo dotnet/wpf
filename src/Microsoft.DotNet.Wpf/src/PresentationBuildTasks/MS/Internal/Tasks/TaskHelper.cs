@@ -80,7 +80,6 @@ namespace MS.Internal.Tasks
 
             // get rid of '..' and '.' if any
             thePath = Path.GetFullPath(thePath);
-
             return thePath;
         }
 
@@ -100,7 +99,7 @@ namespace MS.Internal.Tasks
             string fullpath1;
             string fullpath2;
 
-            string sourceDir = Directory.GetCurrentDirectory() + "\\";
+            string sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             // make sure path1 and Path2 are both full path
             // so that they can be compared on right base.
@@ -235,4 +234,3 @@ namespace MS.Internal.Tasks
 
     #endregion TaskHelper class
 }
-

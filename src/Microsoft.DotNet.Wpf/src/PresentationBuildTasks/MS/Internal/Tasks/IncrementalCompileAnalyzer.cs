@@ -478,7 +478,7 @@ namespace MS.Internal.Tasks
             {
                 if (ListIsNotEmpty(_mcPass1.ContentFiles))
                 {
-                    string curDir = Directory.GetCurrentDirectory() + "\\";
+                    string curDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
                     int count = _mcPass1.ContentFiles.Length;
 

@@ -387,13 +387,17 @@ namespace System.Windows
                 srkField = memberName;
             }
 
-            try
+            if (targetType.Assembly == XamlTypeMapper.AssemblyPF &&
+                targetType.FullName == "System.Windows.SystemParameters")
             {
-                srkId = (SystemResourceKeyID)Enum.Parse(typeof(SystemResourceKeyID), srkField);
-            }
-            catch (ArgumentException)
-            {
-                found = false;
+                try
+                {
+                    srkId = (SystemResourceKeyID)Enum.Parse(typeof(SystemResourceKeyID), srkField);
+                }
+                catch (ArgumentException)
+                {
+                    found = false;
+                }
             }
 
             if (found)

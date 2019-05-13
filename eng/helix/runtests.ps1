@@ -8,7 +8,7 @@ Param(
 
 # Run the tests
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
-if (Test-Path"$testLocation\rundrts.cmd")
+if (Test-Path "$testLocation\rundrts.cmd")
 {
     Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
 }

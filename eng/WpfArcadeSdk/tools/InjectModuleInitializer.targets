@@ -519,8 +519,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ilFileLines Include="%(_moduleConstructor.Text)" />
       <_ilFileLines Include="@(ILFileLines)" />
+      <_ilFileLines Include="%(_moduleConstructor.Text)" />
     </ItemGroup>
 
     <Delete Condition="Exists('$(ILFile)')"
@@ -548,7 +548,8 @@
           Condition="Exists('$(TargetFile)')" />
 
     <ILAsm SourceFile="$(ILFile)"
-           Out="$(TargetFile)" />
+           Out="$(TargetFile)"
+           Dll="true"/>
 
   </Target>
 

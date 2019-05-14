@@ -39,7 +39,7 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages
-$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\$testPackageVersion\tools\win-$platform\Test"
+$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\*\tools\win-$platform\Test"
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 

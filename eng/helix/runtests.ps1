@@ -6,6 +6,8 @@ Param(
 # Configure the machine before running tests
 . "$PSScriptRoot\configure-helix-machine.ps1"
 
+Get-Variable "DOTNET_ROOT(X86)"
+
 # Run the tests
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
 if (Test-Path "$testLocation\rundrts.cmd")

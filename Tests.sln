@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml.Tests", "DrtXaml\DrtXaml\DrtXaml.Tests.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml.Tests", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\DrtXaml\DrtXaml.Tests.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "..\Common\DRT\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "src\Microsoft.DotNet.Wpf\test\Common\DRT\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses", "DrtXaml\XamlTestClasses\XamlTestClasses.csproj", "{3C1FC36C-E3E6-4EED-9ECA-CFF2EB950486}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\XamlTestClasses\XamlTestClasses.csproj", "{3C1FC36C-E3E6-4EED-9ECA-CFF2EB950486}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses.FriendWithKey", "DrtXaml\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj", "{BA5AFF97-E993-49CB-BD2D-593F85E83FD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses.FriendWithKey", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj", "{BA5AFF97-E993-49CB-BD2D-593F85E83FD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses.FriendWithoutKey", "DrtXaml\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj", "{7D204145-BB36-4239-AD55-24DCE26BE997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses.FriendWithoutKey", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj", "{7D204145-BB36-4239-AD55-24DCE26BE997}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlTestClasses40", "DrtXaml\BamlTestClasses40\BamlTestClasses40.csproj", "{2127AC4D-78F4-44BE-A93F-8872EA9A8BB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlTestClasses40", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\BamlTestClasses40\BamlTestClasses40.csproj", "{2127AC4D-78F4-44BE-A93F-8872EA9A8BB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlAvoidXmlTest", "DrtXaml\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlAvoidXmlTest", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonData.csproj", "src\Microsoft.DotNet.Wpf\test\BranchCommon\data\CommonData.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

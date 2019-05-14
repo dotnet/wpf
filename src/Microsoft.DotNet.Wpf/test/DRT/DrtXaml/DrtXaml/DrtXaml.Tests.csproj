@@ -14,7 +14,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\TestServices\TestServices.csproj" />
+    <ProjectReference Include="..\..\..\Common\DRT\TestServices\TestServices.csproj" />
     <ProjectReference Include="..\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj" />
     <ProjectReference Include="..\BamlTestClasses40\BamlTestClasses40.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />

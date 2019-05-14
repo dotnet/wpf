@@ -54,11 +54,6 @@ $eng = Join-Path $env:BUILD_SOURCESDIRECTORY "eng"
 $configArgs = if ($configuration -eq "Release") { "-release" } else { }
 & "$eng\copy-wpf.ps1" -local -arch $platform $configArgs
 
-# Copy local dotnet install to payload
-$localDotnetInstall = Join-Path $env:BUILD_SOURCESDIRECTORY ".dotnet"
-$dotnetPayloadLocation = Join-Path $payloadDir "dotnet"
-CopyFolderStructure $localDotnetInstall $dotnetPayloadLocation
-
 # Copy scripts
 Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
 Copy-Item "eng\helix\runtests.ps1" $payloadDir

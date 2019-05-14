@@ -10,14 +10,17 @@
       https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
     </RestoreSources>
 
-    <!-- We copy our own dotnet payload over to the machine, so we don't want/need a different dotnet install -->
-    <IncludeDotNetCli>false</IncludeDotNetCli>
+    <IncludeDotNetCli>true</IncludeDotNetCli>
+    <DotNetCliPackageType>sdk</DotNetCliPackageType>
+    <!-- Set to match global.json.tools.dotnet by pre-build.ps1 -->
+    <DotNetCliVersion>$(DotNetCliVersion)</DotNetCliVersion>
+    
     <EnableXUnitReporter>true</EnableXUnitReporter>
     <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
     <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
 
     <!-- Semi-colon delimited list of commands that are executed before every test.-->
-    <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
+    <HelixPreCommands>$(HelixPreCommands);powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\configure-helix-machine.ps1 -version Xaml"</HelixPreCommands>
 
     <!-- These are the list of Windows versions that we run tests on-->
     <!--<HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>-->

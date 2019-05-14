@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="1.0.0-beta.19260.5" />
+    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="1.0.0-beta.19263.1" />
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>

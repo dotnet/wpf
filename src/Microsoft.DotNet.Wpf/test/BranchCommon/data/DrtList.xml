@@ -1,16 +1,11 @@
 <!--
 Rundrtlist
 
- This file is owned by :
-   ChangoV
-
-   If you want to modifiy this file, please send email to one of the owners.
-
  Specifies the list of DRTs to run.
 
 
  format:
-       name,archList,osList,owner,team[,args]
+       name,archList,osList,team[,args]
 
  name - filename of the drt.  e.g. DrtFooTest.exe
  archList - architectures to run the drt for.
@@ -26,7 +21,6 @@ Rundrtlist
        all     - all operating systems
        xp      - Windows Xp
        vista   - Windows Vista
- owner - alias of the SDE that owns the DRT
  team - name of the Avalon FT that owns the drt
  args - optional command line to send to the drt
     - DRT is offline
@@ -543,7 +537,6 @@ Rundrtlist
   <Drt Executable="DrtXaml.exe" Architecture="x86|amd64" OS="all" Team="Xaml" >
     <SupportFiles>
       <SupportFile>XamlTestClasses.dll</SupportFile>
-      <SupportFile>BamlTestClasses35.dll</SupportFile>
       <SupportFile>BamlTestClasses40.dll</SupportFile>
       <SupportFile>BamlAvoidXmlTest.exe</SupportFile>
       <SupportFile>XamlTestClasses.FriendWithKey.dll</SupportFile>

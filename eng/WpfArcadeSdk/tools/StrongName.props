@@ -11,7 +11,7 @@
         
         <!-- Sign with the test key and ensure that we do not delay sign test code -->
         <DelaySign>false</DelaySign>
-        <AssemblyOriginatorKeyFile>$(TestUntrustedKey)</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile Condition="'$(AssemblyOriginatorKeyFile)'==''">$(TestUntrustedKey)</AssemblyOriginatorKeyFile>
         <StrongNameKeyId>custom</StrongNameKeyId>
     </PropertyGroup>
 </Project>

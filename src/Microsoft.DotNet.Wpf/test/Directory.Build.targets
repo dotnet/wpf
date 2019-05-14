@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
-  <Import Project="StrongName.targets" />
-  <Import Project="PublishAfterBuild.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)StrongName.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)PublishAfterBuild.targets" />
 </Project>
+  

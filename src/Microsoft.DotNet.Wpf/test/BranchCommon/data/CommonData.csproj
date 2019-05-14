@@ -1,6 +1,7 @@
-﻿<Project Sdk="Microsoft.Build.NoTargets/1.0.40">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <NoTargets>true</NoTargets>
     <EnableDefaultItems>false</EnableDefaultItems>
     <PublishDir>$(WpfTestBasePublishPath)</PublishDir>
     <_IsPortable>true</_IsPortable>

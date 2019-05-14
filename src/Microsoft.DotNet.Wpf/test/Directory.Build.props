@@ -13,8 +13,8 @@
     <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
   </PropertyGroup>
  
-  <Import Project="$(MsBuildThisFileDirectory)\Publish.props"/>
-  <Import Project="$(MsBuildThisFileDirectory)\StrongName.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)\Publish.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)\StrongName.props"/>
 
   <ItemDefinitionGroup>
     <EmbeddedResource>
@@ -36,7 +36,7 @@
     <DrtToolsProject>$(WpfTestBasePath)\Common\DRT\Tools\DrtTools.csproj</DrtToolsProject>
   </PropertyGroup>
 
-  <Import Project="$(MsBuildThisFileDirectory)\SourceLocations.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)\SourceLocations.props"/>
 
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

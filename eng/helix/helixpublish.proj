@@ -23,10 +23,12 @@
     <!--<HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>-->
     <!-- Just cutting down the total queues while bootstrapping to speed things up-->
     <HelixTargetQueues>Windows.10.Amd64.Open</HelixTargetQueues>
+
+    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="1.0.0-beta.19263.1" />
+    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" />
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>

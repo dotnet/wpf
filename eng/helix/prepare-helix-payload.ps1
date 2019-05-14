@@ -1,7 +1,8 @@
 [CmdLetBinding()]
 Param(
     [string]$platform,
-    [string]$configuration
+    [string]$configuration,
+    [string]$testPackageVersion
 )
 
 $payloadDir = "HelixPayload\$configuration\$platform"
@@ -38,7 +39,7 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages
-$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\1.0.0-beta.19260.5\tools\win-$platform\Test"
+$testNugetLocation = Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\$testPackageVersion\tools\win-$platform\Test"
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 

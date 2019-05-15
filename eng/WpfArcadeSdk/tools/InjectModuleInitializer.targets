@@ -1,15 +1,22 @@
 <Project>
+  
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="2.0.8" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.NETCore.ILAsm" Version="2.0.8" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="2.0.8" GeneratePathProperty="true" />
+    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
   </ItemGroup>
 
   <PropertyGroup>
-    <ILDAsmPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILDAsmPath>
-    <ILAsmPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm\2.0.8\runtimes\win-x$(Architecture)\native\</ILAsmPath>
-    <CoreCLRPath>$(NugetPackageRoot)$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR\2.0.8\runtimes\win-x$(Architecture)\native\</CoreCLRPath>
-    <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)</ILToolsPath>
+    <ILDAsmPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(RuntimeIdentifier)\native\</ILDAsmPath>
+    <ILAsmPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(RuntimeIdentifier)\native\</ILAsmPath>
+    <CoreCLRPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(RuntimeIdentifier)\native\</CoreCLRPath>
+    <ILDAsmPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(RuntimeIdentifier)\native\</ILDAsmPath>
+    <ILAsmPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(RuntimeIdentifier)\native\</ILAsmPath>
+    <CoreCLRPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(RuntimeIdentifier)\native\</CoreCLRPath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)\</ILToolsPath>
     <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
     <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
   </PropertyGroup>

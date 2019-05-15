@@ -2,10 +2,12 @@
   <PropertyGroup>
     <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
     <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
+   
+    <RuntimeIdentifier Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">win-$(Platform)</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">win-x86</RuntimeIdentifier>
 
     <!-- We like using RID prefix when generating nuget package names -->
-    <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">runtime.win-$(Platform)</PackageRuntimeIdentifierPrefix>
-    <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">runtime.win-x86</PackageRuntimeIdentifierPrefix>
+    <PackageRuntimeIdentifierPrefix>runtime.$(RuntimeIdentifier)</PackageRuntimeIdentifierPrefix>
 
     <!-- By default, everything is set to $(IsPackable) = false                 -->
     <!-- We have a few special projects that are used to orchestrate packaging  -->

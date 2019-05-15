@@ -88,5 +88,12 @@
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.Generic" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+    <NetCoreReference Include="System.Reflection.Primitives" />
+    <NetCoreReference Include="System.Text.Encoding.Extensions" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+
   </ItemGroup>
 </Project>

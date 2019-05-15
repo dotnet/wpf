@@ -553,10 +553,11 @@
     <Copy SourceFiles="$(TargetFile)"
           DestinationFiles="$(TargetFile).bak"
           Condition="Exists('$(TargetFile)')" />
-
+    
     <ILAsm SourceFile="$(ILFile)"
            Out="$(TargetFile)"
-           Dll="true"/>
+           Dll="true"
+           Debug="true" />
 
   </Target>
 

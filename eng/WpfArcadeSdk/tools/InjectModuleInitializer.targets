@@ -553,11 +553,16 @@
     <Copy SourceFiles="$(TargetFile)"
           DestinationFiles="$(TargetFile).bak"
           Condition="Exists('$(TargetFile)')" />
+
+    <PropertyGroup>
+      <DebugParam>false</DebugParam>
+      <DebugParam Condition="'$(Configuration)'=='Debug'">true</DebugParam>
+    </PropertyGroup>
     
     <ILAsm SourceFile="$(ILFile)"
            Out="$(TargetFile)"
            Dll="true"
-           Debug="true" />
+           Debug="$(DebugParam)" />
 
   </Target>
 

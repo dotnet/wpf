@@ -38,6 +38,8 @@
 
   <PropertyGroup>
     <DebugType>full</DebugType>
+    <DebugType Condition="'$(Configuration)'=='Release'">pdbonly</DebugType>
+    
     <PerlCommand>"$(RepoRoot).tools\native\bin\strawberry-perl\$(StrawberryPerlVersion)\portableshell.bat"</PerlCommand>
     
     <WpfCppProps>$(WpfArcadeSdkToolsDir)Wpf.Cpp.props</WpfCppProps>

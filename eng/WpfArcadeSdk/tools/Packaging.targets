@@ -10,7 +10,6 @@
       Architecture-specific assembies go under runtimes\<rid>\ 
       https://docs.microsoft.com/en-us/nuget/create-packages/supporting-multiple-target-frameworks
     -->
-    <RuntimesFolder>runtimes</RuntimesFolder>
   </PropertyGroup>
 
   <PropertyGroup>

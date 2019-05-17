@@ -36,7 +36,7 @@ namespace WpfArcadeSdk.Build.Tasks
                 var msCorLibAssemblySectionIL = File.ReadAllText(MsCorLibAssemblySectionIL);
                 var sourceIL = File.ReadAllText(ILFile);
 
-                using (TextWriter outputIL = new StreamWriter(File.OpenWrite(ILFile)))
+                using (var outputIL = File.AppendText(ILFile))
                 {
                     if (Regex.Match(sourceIL, "\\.class.+?ModuleInitializer.+?\\.method.+?static.+?Initialize\\(\\).+?end of class ModuleInitializer", RegexOptions.Singleline) == Match.Empty)
                     {

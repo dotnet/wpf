@@ -63,13 +63,13 @@
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>5cf9beae08ee36fb97669ea2f5248b19e10292bb</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19266.4">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19267.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>61cc7d4d347300835925ce5245bfc3ecb6b621d7</Sha>
+      <Sha>9b98b1e5c5aa94967dc222826f07df6c48e927b7</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19266.4">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19267.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>61cc7d4d347300835925ce5245bfc3ecb6b621d7</Sha>
+      <Sha>9b98b1e5c5aa94967dc222826f07df6c48e927b7</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview6.19266.11" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>

@@ -6,13 +6,22 @@
     <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
   </ItemGroup>
 
+  <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
   <PropertyGroup>
-    <ILDAsmPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(RuntimeIdentifier)\native\</ILDAsmPath>
-    <ILAsmPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(RuntimeIdentifier)\native\</ILAsmPath>
-    <CoreCLRPath Condition="'$(RuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(RuntimeIdentifier)\native\</CoreCLRPath>
-    <ILDAsmPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(RuntimeIdentifier)\native\</ILDAsmPath>
-    <ILAsmPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(RuntimeIdentifier)\native\</ILAsmPath>
-    <CoreCLRPath Condition="'$(RuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(RuntimeIdentifier)\native\</CoreCLRPath>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">win-$(Platform)</LocalRuntimeIdentifier>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">win-x86</LocalRuntimeIdentifier>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
+    <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
+    <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
+    <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">
+    <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
+    <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
+    <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
   </PropertyGroup>
   
   <PropertyGroup>

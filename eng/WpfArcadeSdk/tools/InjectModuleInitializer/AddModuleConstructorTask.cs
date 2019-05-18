@@ -36,7 +36,7 @@ namespace WpfArcadeSdk.Build.Tasks
                 var msCorLibAssemblySectionIL = File.ReadAllText(MsCorLibAssemblySectionIL);
                 var sourceIL = File.ReadAllText(ILFile);
 
-                using (var outputIL = File.AppendText(ILFile))
+                using (var outputIL = new StreamWriter(File.Open(ILFile, FileMode.Truncate)))
                 {
                     if (Regex.Match(sourceIL, "\\.class.+?ModuleInitializer.+?\\.method.+?static.+?Initialize\\(\\).+?end of class ModuleInitializer", RegexOptions.Singleline) == Match.Empty)
                     {
@@ -56,6 +56,8 @@ namespace WpfArcadeSdk.Build.Tasks
                     {
                         Log.LogError("Cannot insert a module initializer into an assembly that already contains one.");
                     }
+
+                    outputIL.WriteLine(sourceIL);
                 }
 
                 return true;

@@ -1,63 +1,72 @@
 <Project>
-  
-  <ItemGroup>
-    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
-    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
-    <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
-  </ItemGroup>
 
-  <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
-  <PropertyGroup>
-    <LocalRuntimeIdentifier Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">win-$(Platform)</LocalRuntimeIdentifier>
-    <LocalRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">win-x86</LocalRuntimeIdentifier>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
-    <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
-    <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
-    <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">
-    <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
-    <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
-    <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)\</ILToolsPath>
-    <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
-    <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
-  </PropertyGroup>
+  <Choose>
+    <!-- Use the IL Tools that are compiled and distributed with .NET Core -->
+    <When Condition="'$(UseNetCoreILTools)'=='true'">
+
+      <ItemGroup>
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+      </ItemGroup>
+
+      <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
+      <PropertyGroup>
+        <LocalRuntimeIdentifier Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">win-$(Platform)</LocalRuntimeIdentifier>
+        <LocalRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">win-x86</LocalRuntimeIdentifier>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
+        <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">
+        <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
+      
+      </PropertyGroup>
+
+      <PropertyGroup>
+        <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)\</ILToolsPath>
+        <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
+        <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
+      </PropertyGroup>
+
+    </When>
+  </Choose>
 
   <PropertyGroup>
     <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
     <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
   </PropertyGroup>
 
-  <ItemGroup >
+  <ItemGroup>
     <TaskFactoryReference Include="mscorlib" />
     <TaskFactoryReference Include="netstandard" />
   </ItemGroup>
 
-  <!-- 
-       In order to run ILDAsm and ILAsm, we need both the IL* executables and the corresponding version 
-       of CoreCLR in the same directory.  This target ensures that for every project using module initializer
-       injection.
-  -->
-  <Target Name="CopyILTools" BeforeTargets="DeconstructDll">
-    <ItemGroup>
-      <ILDAsm_Files Include="$(ILDAsmPath)*"/>
-      <ILAsm_Files Include="$(ILAsmPath)*"/>
-      <CoreCLR_Files Include="$(CoreCLRPath)*"/>
-    </ItemGroup>
-
-    <MakeDir Directories="$(ILToolsPath)" Condition="!Exists($(ILToolsPath))"/>
-
-    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
-    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
-    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
-  </Target>
+  <UsingTask TaskName="FindDotNetFrameworkILToolsTask"
+         TaskFactory="$(TaskFactory)"
+         AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <ILAsm ParameterType="System.String" Output="true"/>
+      <ILDAsm ParameterType="System.String" Output="true"/>
+      <DotNetBitness ParameterType="System.String" Required="true"/>
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="fragment" Language="cs">
+        <![CDATA[
+          var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
+          ILAsm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ILAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+          ILDAsm = ToolLocationHelper.GetPathToDotNetFrameworkSdkFile("ILDAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
 
   <UsingTask TaskName="ILDasmTask"
            TaskFactory="$(TaskFactory)"
@@ -65,10 +74,10 @@
     <ParameterGroup>
 
       <ILDAsm ParameterType="System.String" Required="true" />
-      
+
       <!-- The assembly to disassemble -->
       <Assembly ParameterType="System.String" Required="true" />
-      
+
       <Out ParameterType="System.String" Required="true" Output="true" />
 
       <!-- Output in HTML format -->
@@ -223,11 +232,11 @@
       <CvRes ParameterType="System.String" Required="false" />
 
       <!--/KEY=<keyfile>          Compile with strong signature 
-      			(<keyfile> contains private key)-->
+            (<keyfile> contains private key)-->
       <KeyFile ParameterType="System.String" Required="false" />
 
       <!--/KEY=@<keysource>       Compile with strong signature 
-			(<keysource> is the private key source name)-->
+        (<keysource> is the private key source name)-->
       <KeySource ParameterType="System.String" Required="false" />
 
       <!--/INCLUDE=<path>         Set path to search for #include'd files-->
@@ -302,7 +311,37 @@
       <Code Type="Class" Language="cs" Source="$(WpfArcadeSdkToolsDir)InjectModuleInitializer\AddModuleConstructorTask.cs" />
     </Task>
   </UsingTask>
-  
+
+  <!-- 
+       In order to run ILDAsm and ILAsm from .NET Core, we need both the IL* executables and the corresponding version 
+       of CoreCLR in the same directory.  This target ensures that for every project using module initializer
+       injection.
+  -->
+  <Target Name="CopyILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'=='true'">
+    <ItemGroup>
+      <ILDAsm_Files Include="$(ILDAsmPath)*"/>
+      <ILAsm_Files Include="$(ILAsmPath)*"/>
+      <CoreCLR_Files Include="$(CoreCLRPath)*"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(ILToolsPath)" Condition="!Exists($(ILToolsPath))"/>
+
+    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
+    <PropertyGroup>
+      <DotNetFrameworkBitness Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">Bitness64</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">Bitness32</DotNetFrameworkBitness>
+    </PropertyGroup>
+    <FindDotNetFrameworkILToolsTask DotNetBitness="$(DotNetFrameworkBitness)">
+      <Output TaskParameter="ILDAsm" PropertyName="ILDAsm" />
+      <Output TaskParameter="ILAsm" PropertyName="ILAsm" />
+    </FindDotNetFrameworkILToolsTask>
+  </Target>
+
   <Target Name="DeconstructDll"
         AfterTargets="Compile"
         Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))"
@@ -357,7 +396,7 @@
       <DebugParam>false</DebugParam>
       <DebugParam Condition="'$(Configuration)'=='Debug'">true</DebugParam>
     </PropertyGroup>
-    
+
     <ILAsmTask ILAsm="$(ILAsm)"
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"

@@ -1,7 +1,10 @@
 <Project>
 
   <Choose>
-    <!-- Use the IL Tools that are compiled and distributed with .NET Core -->
+    <!-- 
+        Use the IL Tools that are compiled and distributed with .NET Core.  WPF doesn't currently use these as default because they do not
+        support generating debugging information in the re-assembled binary.
+    -->
     <When Condition="'$(UseNetCoreILTools)'=='true'">
 
       <ItemGroup>
@@ -48,6 +51,9 @@
     <TaskFactoryReference Include="netstandard" />
   </ItemGroup>
 
+  <!--
+      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
+  -->
   <UsingTask TaskName="FindDotNetFrameworkILToolsTask"
          TaskFactory="$(TaskFactory)"
          AssemblyFile="$(TaskFactoryAssemblyFile)">
@@ -68,6 +74,7 @@
     </Task>
   </UsingTask>
 
+  <!-- Call into the supplied ILDAsm. -->
   <UsingTask TaskName="ILDasmTask"
            TaskFactory="$(TaskFactory)"
            AssemblyFile="$(TaskFactoryAssemblyFile)">
@@ -178,6 +185,7 @@
     </Task>
   </UsingTask>
 
+  <!-- Call into the supplied ILAsm. -->
   <UsingTask TaskName="ILAsmTask"
            TaskFactory="$(TaskFactory)"
            AssemblyFile="$(TaskFactoryAssemblyFile)">
@@ -299,6 +307,7 @@
     </Task>
   </UsingTask>
 
+  <!-- Add a module initializer to the supplied IL file. -->
   <UsingTask TaskName="AddModuleConstructorTask"
              TaskFactory="$(TaskFactory)"
              AssemblyFile="$(TaskFactoryAssemblyFile)">
@@ -331,6 +340,9 @@
     <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
   </Target>
 
+  <!--
+      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
+  -->
   <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
     <PropertyGroup>
       <DotNetFrameworkBitness Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">Bitness64</DotNetFrameworkBitness>
@@ -342,6 +354,7 @@
     </FindDotNetFrameworkILToolsTask>
   </Target>
 
+  <!-- Disassemble the target binary. -->
   <Target Name="DeconstructDll"
         AfterTargets="Compile"
         Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))"
@@ -362,6 +375,7 @@
 
   </Target>
 
+  <!-- Inject the module initializer into the target IL. -->
   <Target Name="AddModuleConstructor"
           AfterTargets="DeconstructDll">
     <PropertyGroup>
@@ -376,6 +390,7 @@
 
   </Target>
 
+  <!-- Re-assembly the target binary. -->
   <Target Name="ReconstituteDll"
           AfterTargets="AddModuleConstructor"
           Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))"

@@ -7,6 +7,12 @@ using Microsoft.Build.Utilities;
 
 namespace WpfArcadeSdk.Build.Tasks
 {
+    /// <summary>
+    /// Append the supplied module constructor to the supplied IL file.
+    /// Using this requires that the DLL has implemented a static class named
+    /// ModuleInitializer with a static void Initialize function.  This class
+    /// is called from the module initializer.
+    /// </summary>
     public class AddModuleConstructorTask : Task
     {
         /// <summary>

@@ -5,6 +5,9 @@ using Microsoft.Build.Utilities;
 
 namespace WpfArcadeSdk.Build.Tasks
 {
+    /// <summary>
+    /// Runs ILAsm from the path supplied on the assembly supplied.
+    /// </summary>
     public class ILAsmTask : Task
     {
         /// <summary>

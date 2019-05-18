@@ -5,6 +5,9 @@ using Microsoft.Build.Utilities;
 
 namespace WpfArcadeSdk.Build.Tasks
 {
+    /// <summary>
+    /// Runs ILDAsm from the path supplied on the assembly supplied.
+    /// </summary>
     public class ILDAsmTask : Task
     {
         [Required]

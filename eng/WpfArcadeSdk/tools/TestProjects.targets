@@ -3,6 +3,11 @@
     <RuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</RuntimeIdentifier>
     <RuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</RuntimeIdentifier>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(WpfTest)'=='true'">
+    <TestArchitectures Condition="'$(PlatformTarget)' == '' or '$(PlatformTarget)' == 'AnyCpu'">x86</TestArchitectures>
+  </PropertyGroup>
+  
   <ItemGroup Condition="'$(WpfTest)'=='true'">
     <PackageReference Include="runtime.$(RuntimeIdentifier).$(MicrosoftDotNetWpfDncEngPackage)" 
                       Version="$(MicrosoftDotNetWpfDncEngVersion)">

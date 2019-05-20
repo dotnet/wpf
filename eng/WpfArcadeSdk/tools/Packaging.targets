@@ -7,10 +7,9 @@
     <LibFolder Condition="'$(LibFolder)'==''">lib</LibFolder>
     
     <!-- 
-      Architecture-specific assembies go under runtimes\<rid>\ 
+      Architecture-specific assemblies go under runtimes\<rid>\native\ 
       https://docs.microsoft.com/en-us/nuget/create-packages/supporting-multiple-target-frameworks
     -->
-    <RuntimesFolder>runtimes</RuntimesFolder>
   </PropertyGroup>
 
   <PropertyGroup>

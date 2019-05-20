@@ -3,10 +3,8 @@
     <RuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</RuntimeIdentifier>
     <RuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</RuntimeIdentifier>
   </PropertyGroup>
-
   <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
-    <TestArchitectures>$(PlatformTarget)</TestArchitectures>
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(WpfTest)'=='true'">
     <TestArchitectures Condition="'$(PlatformTarget)' == '' or '$(PlatformTarget)' == 'AnyCpu'">x86</TestArchitectures>
   </PropertyGroup>
   

@@ -1,14 +1,97 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>BamlTestClasses40</AssemblyName>
     <RootNamespace>BamlTestClasses40</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE</DefineConstants>
+
+    <!-- 
+      Properties needed for local markup-compilation
+    -->
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+
+    <!--
+      There is no @(ApplicationDefinition), so provide a 
+      static Main() instead
+    --> 
+    <GenerateProgramFile>true</GenerateProgramFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Page Include="BamlBindingPath.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BracketCharacterAttribute.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeferContMEPV.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResDeferredDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResInsert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResOverwrite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TempDPSetOrder1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfObfus1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <None Remove="@(Page)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="mscorlib" />
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Linq" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+    <NetCoreReference Include="System.Reflection.Primitives" />
+    <NetCoreReference Include="System.Text.Encoding.Extensions" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.Tasks" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+
+  </ItemGroup>
 </Project>

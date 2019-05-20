@@ -2,17 +2,17 @@
   "tools": {
     "dotnet": "3.0.100-preview5-011568",
     "runtimes": {
-        "dotnet": [
-            "2.1.7",
-            "$(MicrosoftNETCoreAppVersion)"
-        ]
+      "dotnet": [
+        "2.1.7",
+        "$(MicrosoftNETCoreAppVersion)"
+      ]
     },
     "vs": {
       "version": "16.1"
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19270.1"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19270.2"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1"

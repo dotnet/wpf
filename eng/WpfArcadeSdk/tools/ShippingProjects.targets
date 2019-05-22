@@ -5,6 +5,6 @@
     <ExcludePdbs Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">true</ExcludePdbs>
     <IncludeAssembliesInArchNeutralPackage Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">true</IncludeAssembliesInArchNeutralPackage>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <PublishWindowsPdb Condition="'$(IsShipping)'=='true' And '$(IsPackagingProject)'!='true'">true</PublishWindowsPdb>
+    <PublishWindowsPdb Condition="'$(IsPackagingProject)'=='true' Or '$(IsRedistProject)'=='true'">false</PublishWindowsPdb>
   </PropertyGroup>
 </Project>

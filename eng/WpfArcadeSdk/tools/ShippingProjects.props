@@ -14,14 +14,14 @@
       UIAutomationTypes;
       WindowsBase;
       System.Windows.Input.Manipulations;
-    </ExternalShippingProjects>
-
-    <InternalShippingProjects>
       PresentationFramework-SystemCore;
       PresentationFramework-SystemData;
       PresentationFramework-SystemDrawing;
       PresentationFramework-SystemXml;
       PresentationFramework-SystemXmlLinq;
+    </ExternalShippingProjects>
+
+    <InternalShippingProjects>
       PresentationUI;
       System.Printing;
       System.Windows.Controls.Ribbon;

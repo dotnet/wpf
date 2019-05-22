@@ -48,6 +48,6 @@ Solutions configurations are mapped to Project configurations in the following m
 - Native projects should map `AnyCPU` solution-configuration to `x86` project configuration
 - Managed projects should map `x86` solution-configuration to `AnyCPU` project configuration
 - Use Solution->Properties->Configuration view to ensure that the mapping between solution-configuration and project configuration is consistent for every possible configuration. 
-- Note that packaging projects under `nupkg` folder have only one (`AnyCPU`) configuration
+- Note that packaging projects under `nupkg` folder have only one (`AnyCPU`) configuration. 
 
 ![](images/configurations.png)

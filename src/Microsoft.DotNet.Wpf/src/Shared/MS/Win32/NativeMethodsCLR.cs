@@ -99,8 +99,7 @@ namespace MS.Win32 {
             {
                 return this.ToString().GetHashCode();
             }
-
-        }
+}
 #endif
 
         public static IntPtr InvalidIntPtr = (IntPtr)(-1);
@@ -3319,8 +3318,7 @@ namespace MS.Win32 {
                 this.cx = cx;
                 this.cy = cy;
             }
-
-        }
+}
 
 #endif
 
@@ -4045,7 +4043,6 @@ namespace MS.Win32 {
         [StructLayout(LayoutKind.Sequential)]
         public class STATSTG
         {
-
             [MarshalAs(UnmanagedType.LPWStr)]
             public string pwcsName = null;
 
@@ -4362,8 +4359,7 @@ namespace MS.Win32 {
 
           [MarshalAs(UnmanagedType.R4)/*leftover(offset=4, y)*/]
           public float y;
-
-        }
+}
 
         [StructLayout(LayoutKind.Sequential)/*leftover(noAutoOffset)*/]
         public sealed class OLEINPLACEFRAMEINFO
@@ -4377,8 +4373,7 @@ namespace MS.Win32 {
 
           [MarshalAs(UnmanagedType.U4)/*leftover(offset=16, cAccelEntries)*/]
           public uint cAccelEntries;
-
-        }
+}
 
 #if never
         [StructLayout(LayoutKind.Sequential)]
@@ -6138,7 +6133,6 @@ namespace MS.Win32 {
 #endif
         internal abstract class CharBuffer
         {
-
             /// <SecurityNote>
             ///     Critical: Extensive use of Marshal to allocate and manipulate
             ///             Character buffers.
@@ -6168,7 +6162,6 @@ namespace MS.Win32 {
         [SecurityCritical(SecurityCriticalScope.Everything)]
         internal class AnsiCharBuffer : CharBuffer
         {
-
             internal byte[] buffer;
             internal int offset;
 
@@ -6232,7 +6225,6 @@ namespace MS.Win32 {
         [SecurityCritical(SecurityCriticalScope.Everything)]
         internal class UnicodeCharBuffer : CharBuffer
         {
-
             internal char[] buffer;
             internal int offset;
 

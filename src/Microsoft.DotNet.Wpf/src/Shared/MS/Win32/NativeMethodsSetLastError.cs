@@ -166,6 +166,5 @@ namespace MS.Internal.Drt
         public static extern IntPtr SetWindowLongPtrWndProc(HandleRef hWnd, int nIndex, NativeMethods.WndProc dwNewLong);
 
 #endif
-
     }
 }

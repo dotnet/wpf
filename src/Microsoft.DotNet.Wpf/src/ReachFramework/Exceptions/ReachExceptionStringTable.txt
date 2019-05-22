@@ -1,0 +1,94 @@
+;
+; US-EN Exception String Table
+; Default Resource (used for English and non-represented locales)
+;
+
+
+;
+; General
+;
+; Reach_SomeException=Exception string here.  Can have params like so {0}, {1}.
+
+
+;
+; Reach Packaging API
+;
+ReachPackaging_PrintTicketAlreadyCommitted=PrintTicket was already committed.
+ReachPackaging_DependantsNotCommitted=Not all opened dependents were committed.
+ReachPackaging_NotAPrintTicket=Property is not a valid instance of PrintTicket.
+ReachPackaging_PanelOrSequenceAlreadyOpen=Current DocumentSequence, FixedDocument, or FixedPage not completed.
+ReachPackaging_NotAFixedDocument=PackagePart URI does not correspond to a FixedDocument.
+ReachPackaging_NotAFixedPage=PackagePart URI does not correspond to a FixedPage.
+ReachPackaging_OpenDocOrElementAlreadyCalled=OpenDocument or OpenElement already called.
+ReachPackaging_AlreadyHasStartingPart=Container already has Starting Part.
+ReachPackaging_AlreadyHasThumbnail=PackagePart already has associated Thumbnail.
+ReachPackaging_OnlyWriters=Only writers can call this method.
+ReachPackaging_PartNotFound=Package must contain an XPS PackagePart.
+ReachPackaging_AlreadyHasRootSequenceOrDocument=Package already has a root DocumentSequence or FixedDocument.
+ReachPackaging_NotOpenForReading=Package is not open for reading.
+ReachPackaging_InvalidStartingPart=Starting Part is not a valid Package root.
+ReachPackaging_InvalidDocUri=Document PackagePart URI is not valid.
+ReachPackaging_InvalidType=String passed for type is not valid.
+ReachPackaging_ServiceTypeAlreadyAdded='{0}' service type already added.
+ReachPackaging_CannotModifyReadOnlyContainer=Cannot modify read-only container.
+ReachPackaging_MoreThanOneStartingParts=Container has more than one Starting Part relationship.
+ReachPackaging_MoreThanOneMetaDataParts=Container has more than one Core Properties relationship.
+ReachPackaging_MoreThanOneSigOriginParts=Container has more than one Signature Origin relationship.
+ReachPackaging_MoreThanOneSigDefParts=Document has more than one Signature Definition relationship.
+ReachPackaging_MoreThanOneThumbnailPart=Document has more than one Thumbnail relationship.
+ReachPackaging_MoreThanOnePrintTicketPart=PackagePart has more than one Print Ticket relationship.
+ReachPackaging_PartFromDifferentContainer=PackagePart belongs to a different container.
+ReachPackaging_PackageUriNull=XpsDocument URI is null. Use XpsDocument constructor that takes URI parameter.
+ReachPackaging_NotAFixedDocumentSequence=PackagePart URI does not correspond to a FixedDocumentSequence.
+ReachPackaging_NotSignatureDefinitionElement=ReadXML method expects reader to have just parsed start element.
+ReachPackaging_NotValidSignatureDefinitionAttribute='{0}' is not a valid attribute.
+ReachPackaging_NotValidSignatureDefinitionElement='{0}' is not a valid element.
+ReachPackaging_SpotIDRequiredAttribute=SpotId is required for a valid XpsSignatureDefinition.
+ReachPackaging_UnsupportedImageType=XPS supports only JPG, TIF, WDP, and PNG image types.
+ReachPackaging_UnsupportedThumbnailImageType=Thumbnails support only JPG and PNG image types.
+ReachPackaging_DocumentWasClosed=XPS document was closed.
+ReachPackaging_InvalidContentType='{0}' ContentType is not valid.
+Converter_ConvertToNotSupported=Cannot convert to type.
+Converter_ConvertFromNotSupported=Cannot convert from type.
+ReachPackaging_SequenceCntMustBe1=Count must be 1 when CommitPolicies is set to CommitEntireSequence.
+ReachPackaging_CommitCountPolicyLessThan1=CommitCountPolicy must be greater than zero.
+ReachPackaging_ObfucatedFontNeedGuid=Obfuscated font resources require valid GUID file name.
+ReachPackaging_MoreThanOneDocStructure=FixedDocument has more than one related document structure.
+ReachPackaging_MoreThanOneStoryFragment=FixedPage has more than one related story fragment.
+ReachPackaging_SigningDoesNotMeetPolicy=Document does not meet the signing policy.
+
+MustBeOfType='{0}' must be of type '{1}'.
+
+ReachSerialization_NoFontService=No font service is registered with resource policy.
+ReachSerialization_NoImageService=No image service is registered with resource policy.
+ReachSerialization_NotSupported=Serialization of this type of object is not supported.
+ReachSerialization_NoSerializer=Cannot find the appropriate serializer.
+ReachSerialization_CannotReleaseXmlWriter=Cannot release XmlWriter because it was already released.
+ReachSerialization_NoFixedPageWriter=No fixed page is being written to.
+ReachSerialization_MustHaveSerializationManager=Must have serialization manager.
+ReachSerialization_UnableToInstantiateSerializer=Cannot instantiate a serializer of the given type.
+ReachSerialization_WrongPropertyTypeForFixedPage=Serialized FixedPage is not a complex property.
+ReachSerialization_WrongPropertyTypeForFixedDocument=Serialized FixedDocument is not a complex property.
+ReachSerialization_WrongPropertyTypeForPageContent=Serialized PageContent is not a complex property.
+ReachSerialization_TargetNotPrintTicket=Target must be a PrintTicket.
+ReachSerialization_CycleDetectedInSerialization=Cycle detected. Object was already on the stack.
+ReachSerialization_NotXpsSerializationManagerAsync=SerializationManager passed to XpsSerializerAsync is not XpsSerializationManagerAsync.
+ReachSerializationAsync_NoType=Manager not of type XpsSerializationManagerAsync.
+ReachSerializationAsync_NoNgcType=Manager not of type NgcSerializationManagerAsync.
+ReachSerialization_WrongPackagingPolicy=SerializationManager returned packaging policy that was not an XpsPackagingPolicy.
+ReachSerialization_ExpectedFixedDocumentSequence=SerializeObject expected FixedDocumentSequence.
+ReachSerialization_ExpectedFixedDocument=SerializeObject expected FixedDocument.
+ReachSerialization_ExpectedFixedPage=SerializeObject expected FixedPage.
+ReachSerialization_FixedDocumentInDocument=FixedDocument cannot contain another FixedDocument.
+ReachSerialization_FixedDocumentInPage=FixedPage cannot contain a FixedDocument.
+ReachSerialization_NoFixedPages=FixedDocument must contain at least one FixedPage.
+ReachSerialization_FixedPageInPage=FixedPage cannot contain another FixedPage.
+ReachSerialization_NoFixedDocuments=FixedDocumentSequence must contain at least one FixedDocument.
+
+XpsSerializerFactory_WriterIsClosed=SerializerWriter was closed.
+XpsSerializerFactory_DisplayName=XPS Serializer
+XpsSerializerFactory_ManufacturerName=Microsoft
+XpsSerializerFactory_ManufacturerWebsite=http://www.microsoft.com
+
+PTProvider_InvalidDevModeBytes=Invalid DEVMODE bytes
+PTProvider_VerifyAccess=The calling thread cannot access this object because a different thread owns it.

@@ -588,7 +588,7 @@ namespace MS.Utility
             _keywords = (EventTrace.Keyword) matchAnyKeywords;
             _matchAllKeyword = (EventTrace.Keyword) matchAllKeywords;
 
-            // todo: parse data from EVENT_FILTER_DESCRIPTOR - see CLR EventProvider::GetDataFromController
+            // parse data from EVENT_FILTER_DESCRIPTOR - see CLR EventProvider::GetDataFromController
         }
 
         /// <SecurityNote>
@@ -638,8 +638,7 @@ namespace MS.Utility
 
             return ManifestEtw.EventWrite(_registrationHandle.Value, ref eventDescriptor, (uint)argc, argv);
         }
-
-    }
+}
 }
 
 #endif

@@ -21,7 +21,6 @@ namespace System.Xaml
 namespace System.Windows.Markup
 #endif
 {
-
     /// <summary>
     /// Class that provides functionality to obtain a TypeConverter from a property or the
     /// type of the property, based on logic similar to TypeDescriptor.GetConverter.

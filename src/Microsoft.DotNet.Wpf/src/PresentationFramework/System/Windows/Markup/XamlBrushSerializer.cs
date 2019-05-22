@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   XamlSerializer used to persist Brush objects in Baml
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -75,7 +73,6 @@ namespace System.Windows.Markup
             BinaryWriter   writer,           // Writer into the baml stream
             string         stringValue)      // String to convert
         {
-
 #if !PBTCOMPILER
             return SolidColorBrush.SerializeOn(writer, stringValue.Trim());
 #else

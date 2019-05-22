@@ -591,7 +591,9 @@ internal static class SecurityHelper
                 if (permissionSetAppDomain.GetPermission(siteOfOriginReadPermission.GetType()) != null)
                 {
                     permissionSetAppDomain.RemovePermission(siteOfOriginReadPermission.GetType());
-                    // Failing on a ReadOnlyPermissionSet here? See Dev10.697110.
+                    // Failing on a ReadOnlyPermissionSet here? 
+                    // (Ctrl+X to cut text in RichTextBox
+                    // in an XBAP throws InvalidOperationException)
                 }
             }
             return permissionSetAppDomain;
@@ -1417,11 +1419,8 @@ internal static class SecurityHelper
             }
 
             return value;
-
-        }
+}
 #endif // WINDOWS_BASE
-
-
 }
 }
 

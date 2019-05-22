@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+
 namespace MS.Win32
 {
     internal static class ExternDll

@@ -449,7 +449,7 @@ namespace MS.Win32
             StringBuilder userAgentBuffer = new StringBuilder(length);
             MS.Internal.Interop.HRESULT hr = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
 
-            // Dev10 821573 - Installing .NET 4.0 adds two parts to the user agent string, i.e.
+            // Installing .NET 4.0 adds two parts to the user agent string, i.e.
             // .NET4.0C and .NET4.0E, potentially causing the user agent string to overflow its
             // documented maximum length of MAX_PATH. Turns out ObtainUserAgentString can return
             // a longer string if asked to do so. Therefore we grow the string dynamically when

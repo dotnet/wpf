@@ -1,0 +1,8 @@
+1 - //depot/rs/drivers/tablet/platform/pen/wisp/hidusages.cpp
+2 - //depot/winblue_gdr/drivers/tablet/platform/pen/inteng/core/TapsParameterizer.cpp
+3 - %SDXROOT%\drivers\tablet\platform\pen\wisp\hidtab.cpp - InitHidSpecifics
+4 - %SDXROOT%\drivers\tablet\platform\pen\wisp\hidusages.cpp
+5 - %SDXROOT%\drivers\tablet\platform\pen\wisp\hidtab.cpp - CreateAllCursors
+6 - %SDXROOT%\drivers\tablet\platform\pen\wisp\HidMultiTouchTab.cpp - CreateAllCursors
+7 - %SDXROOT%\drivers\tablet\platform\pen\wisp\ctx.cpp - CContext::TabletToContextLogical
+8 - %SDXROOT%\drivers\tablet\platform\pen\wisp\mgr.cpp - CManager::ProcessFlick

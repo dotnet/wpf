@@ -147,7 +147,6 @@ namespace MS.Win32
             ///     Determines if this handle type needs a garbage collection pass.
             /// </devdoc>
             internal bool NeedCollection() {
-
                 if (handleCount > threshHold) {
                     threshHold = handleCount + ((handleCount * deltaPercent) / 100);
 #if DEBUG_HANDLECOLLECTOR
@@ -184,5 +183,4 @@ namespace MS.Win32
             }
         }
     }
-
 }

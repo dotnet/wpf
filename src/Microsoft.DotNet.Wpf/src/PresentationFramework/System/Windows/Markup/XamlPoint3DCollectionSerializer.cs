@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   XamlSerializer used to persist collections of 3D points in Baml
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -95,12 +93,10 @@ namespace System.Windows.Markup
         {
             return Point3DCollection.DeserializeFrom( reader ) ; 
         } 
-        
+
 #endif
 
 #endregion Conversions
-
-
     }
 }
 

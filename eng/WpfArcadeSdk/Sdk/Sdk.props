@@ -14,9 +14,6 @@
 
   <PropertyGroup>
     <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
-
-    <PublishWindowsPdb Condition="'$(IsShipping)'=='' And '$(IsPackagingProject)'!='true'">true</PublishWindowsPdb>
-    
     <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
@@ -57,6 +54,11 @@
       https://github.com/dotnet/arcade/issues/2304
     -->
     <NoWarn>$(NoWarn);NU3027</NoWarn>
+    
+    <!-- 
+        Suppress NU1605 (Package downgrade warnings) when building inside Visual Studio
+    -->
+    <NoWarn Condition="'$(BuildingInsideVisualStudio)'=='true'">$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 
   <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->

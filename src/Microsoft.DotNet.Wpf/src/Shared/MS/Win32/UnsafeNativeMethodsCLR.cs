@@ -46,7 +46,6 @@ namespace MS.Win32
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
     internal partial class UnsafeNativeMethods {
-
         private struct POINTSTRUCT {
             public int x;
             public int y;
@@ -603,8 +602,7 @@ namespace MS.Win32
             }
 
             return result;
-
-        }
+}
 
         ///<SecurityNote>
         ///  Critical as this code performs an UnmanagedCodeSecurity elevation.
@@ -1747,8 +1745,8 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern IntPtr SetActiveWindow(HandleRef hWnd);
 
-        //TODO: Refactor shared native methods so that parser dependency
-        // is in separate file. PS # 30845.
+        //Refactor shared native methods so that parser dependency
+        // is in separate file. 
 #if PBTCOMPILER
         [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
         public static extern IntPtr SetCursor(HandleRef hcursor);
@@ -2163,7 +2161,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000122-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleDropTarget {
-
             [PreserveSig]
             int OleDragEnter(
                 [In, MarshalAs(UnmanagedType.Interface)]
@@ -2206,7 +2203,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000121-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleDropSource {
-
             [PreserveSig]
             int OleQueryContinueDrag(
                 int fEscapePressed,
@@ -2230,7 +2226,6 @@ namespace MS.Win32
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)
         ]
         public interface IOleControlSite {
-
             [PreserveSig]
             int OnControlInfoChanged();
 
@@ -2263,8 +2258,7 @@ namespace MS.Win32
 
             [PreserveSig]
             int ShowPropertyFrame();
-
-        }
+}
 
         /// <SecurityNote>
         ///     Critical:Elevates to Unmanaged code permission
@@ -2273,7 +2267,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000118-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleClientSite {
-
             [PreserveSig]
             int SaveObject();
 
@@ -2306,7 +2299,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000119-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleInPlaceSite {
-
             IntPtr GetWindow();
 
             [PreserveSig]
@@ -2377,7 +2369,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000100-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IEnumUnknown {
-
             [PreserveSig]
             int Next(
                 [In, MarshalAs(UnmanagedType.U4)]
@@ -2405,7 +2396,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("0000011B-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleContainer {
-
             [PreserveSig]
             int ParseDisplayName(
                 [In, MarshalAs(UnmanagedType.Interface)]
@@ -2436,7 +2426,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000116-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleInPlaceFrame {
-
             IntPtr GetWindow();
 
             [PreserveSig]
@@ -2645,7 +2634,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("00000114-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleWindow {
-
              [PreserveSig]
              int GetWindow( [Out]out IntPtr hwnd );
 
@@ -2663,7 +2651,6 @@ namespace MS.Win32
         Guid("00000113-0000-0000-C000-000000000046"),
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleInPlaceObject {
-
              [PreserveSig]
              int GetWindow( [Out]out IntPtr hwnd );
 
@@ -2687,9 +2674,7 @@ namespace MS.Win32
                       NativeMethods.COMRECT lprcClipRect);
 
              void ReactivateAndUndo();
-
-
-        }
+}
 
         ///<SecurityNote>
         ///     Critical - elevates via a SUC.
@@ -2699,7 +2684,6 @@ namespace MS.Win32
         Guid("00000112-0000-0000-C000-000000000046"),
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleObject {
-
              [PreserveSig]
              int SetClientSite(
                     [In, MarshalAs(UnmanagedType.Interface)]
@@ -2833,7 +2817,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity]
         [ComImport(), Guid("1C2056CC-5EF4-101B-8BC8-00AA003E3B29"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleInPlaceObjectWindowless {
-
              [PreserveSig]
              int SetClientSite(
                     [In, MarshalAs(UnmanagedType.Interface)]
@@ -2970,8 +2953,7 @@ namespace MS.Win32
              [PreserveSig]
              int GetDropTarget(
                 [Out, MarshalAs(UnmanagedType.Interface)] object ppDropTarget);
-
-        };
+};
 
         ///<SecurityNote>
         ///     Critical - elevates via a SUC.
@@ -2981,8 +2963,6 @@ namespace MS.Win32
         Guid("B196B288-BAB4-101A-B69C-00AA00341D07"),
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IOleControl {
-
-
              [PreserveSig]
              int GetControlInfo(
                     [Out]
@@ -3002,8 +2982,7 @@ namespace MS.Win32
              int FreezeEvents(
 
                      int bFreeze);
-
-        }
+}
 
     ///<SecurityNote>
     ///     Critical - elevates via a SUC.
@@ -3013,7 +2992,6 @@ namespace MS.Win32
     Guid("B196B286-BAB4-101A-B69C-00AA00341D07"),
     InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IConnectionPoint {
-
         [PreserveSig]
         int GetConnectionInterface(out Guid iid);
 
@@ -3038,8 +3016,7 @@ namespace MS.Win32
 
         [PreserveSig]
         int EnumConnections(out object pEnum);
-
-    }
+}
 
      /// <SecurityNote>
      ///     Critical:Elevates to Unmanaged code permission
@@ -3083,8 +3060,6 @@ namespace MS.Win32
     [SuppressUnmanagedCodeSecurity]
     [ComImport(), Guid("00000104-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IEnumOLEVERB {
-
-
          [PreserveSig]
          int Next(
                 [MarshalAs(UnmanagedType.U4)]
@@ -3105,9 +3080,7 @@ namespace MS.Win32
 
          void Clone(
             out IEnumOLEVERB ppenum);
-
-
-     }
+}
 
      /// <SecurityNote>
      ///     Critical:Elevates to Unmanaged code permission
@@ -3118,7 +3091,6 @@ namespace MS.Win32
      // They are incompatable. But type cast will succeed because they have the same guid.
     [ComImport(), Guid("0000000C-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStream {
-
          int Read(
 
                  IntPtr buf,
@@ -3199,14 +3171,12 @@ namespace MS.Win32
     InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IConnectionPointContainer
     {
-
         [return: MarshalAs(UnmanagedType.Interface)]
         object EnumConnectionPoints();
 
         [PreserveSig]
         int FindConnectionPoint([In] ref Guid guid, [Out, MarshalAs(UnmanagedType.Interface)]out IConnectionPoint ppCP);
-
-    }
+}
 
      /// <SecurityNote>
      ///     Critical:Elevates to Unmanaged code permission
@@ -3234,7 +3204,6 @@ namespace MS.Win32
     [SuppressUnmanagedCodeSecurity]
     [ComImport(), Guid("00020400-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDispatch {
-
     #region <KeepInSync With="IDispatchEx">
 
          int GetTypeInfoCount();
@@ -3288,7 +3257,6 @@ namespace MS.Win32
                   IntPtr [] pArgErr);
 
     #endregion
-
     }
 
      /// <SecurityNote>
@@ -3298,7 +3266,6 @@ namespace MS.Win32
     [SuppressUnmanagedCodeSecurity]
     [ComImport(), Guid("A6EF9860-C720-11D0-9337-00A0C90DCAA9"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDispatchEx : IDispatch {
-
     #region <KeepInSync With="IDispatch">
 
          new int GetTypeInfoCount();
@@ -3376,9 +3343,7 @@ namespace MS.Win32
             /* COM interop caveat: Declaring the following just as Out seems to cause
                garbage being handed out for the native buffer (it's out anyway). Upon
                returning from the COM call, CLR copies back to the managed object but
-               chokes on the garbage string pointers trying to do memcpy, causing AV.
-               See also Dev10 work item 730339 to fix this in the CLR, by zeroing out
-               the memory that's handed over to native code in this circumstance.  */
+               chokes on the garbage string pointers trying to do memcpy, causing AV.*/
             [In, Out] NativeMethods.EXCEPINFO exceptionInfo,
             IServiceProvider serviceProvider);
 
@@ -3418,8 +3383,7 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetNameSpaceParent();
-
-    }
+}
 
      /// <SecurityNote>
      ///     Critical:Elevates to Unmanaged code permission
@@ -3428,15 +3392,13 @@ namespace MS.Win32
     [SuppressUnmanagedCodeSecurity]
     [ComImport(), Guid("6D5140C1-7436-11CE-8034-00AA006009FA"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IServiceProvider {
-
         ///<SecurityNote>
         /// Critical elevates via a SUC.
         ///</SecurityNote>
         [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object QueryService(ref Guid service, ref Guid riid);
-
-    }
+}
 
 #endif
 
@@ -3696,7 +3658,6 @@ namespace MS.Win32
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IDocHostUIHandler
         {
-
             [return: MarshalAs(UnmanagedType.I4)]
             [PreserveSig]
             int ShowContextMenu(
@@ -3811,9 +3772,7 @@ namespace MS.Win32
             int FilterDataObject(
                 IComDataObject pDO,
                 out IComDataObject ppDORet);
-
-
-        }
+}
 
         ///<SecurityNote>
         /// Critical: elevates via SUC.
@@ -3848,8 +3807,7 @@ namespace MS.Win32
             [SuppressUnmanagedCodeSecurity, SecurityCritical]
             [return: MarshalAs(UnmanagedType.IDispatch)]
             object GetScript();
-
-        }
+}
 
         ///<SecurityNote>
         /// Critical: elevates via SUC.

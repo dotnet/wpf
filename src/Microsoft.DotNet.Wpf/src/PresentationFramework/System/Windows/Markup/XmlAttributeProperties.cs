@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Attributes used by parser for Avalon
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Xml;
@@ -71,7 +69,6 @@ namespace System.Windows.Markup
             XmlNamespaceMapsProperty =
                 DependencyProperty.RegisterAttached("XmlNamespaceMaps", typeof(Hashtable), typeof(XmlAttributeProperties),
                                             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
-             
         }
 
 #if Lookups

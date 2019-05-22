@@ -1,0 +1,1840 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; US-EN String Table
+; Default Resource (used for English and non-represented locales)
+;
+; This includes table includes the following sections:
+;       Exception Strings
+;       UI Strings
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                          Exception Strings
+;
+; The following section is for all strings that will be used by exceptions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Compat with .NetFx
+Argument_InvalidOffLen=Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.
+InvalidOperation_IComparerFailed=Failed to compare two elements in the array.
+
+; Common
+Rect_WidthAndHeightCannotBeNegative=Width and Height cannot be negative.
+UnexpectedCollectionChangeAction=Unexpected collection change action '{0}'.
+Collection_NoNull=Cannot add null to a collection of type '{0}'.
+PropertyIsImmutable=The '{0}' property of the '{1}' type cannot be changed after it has been set.
+PropertyIsInitializeOnly=The '{0}' property of the '{1}' type can be set only during initialization.
+PropertyMustHaveValue=The '{0}' property of the '{1}' type must be set during initialization.
+CompatibilityPreferencesSealed=The property '{0}' cannot be changed. The '{1}' class has been sealed.
+
+; Accessibility
+
+; Audio/Video
+AudioVideo_InvalidDependencyObject=Dependency object type is not valid.
+AudioVideo_InvalidMediaState=Requested media action is not recognized.
+AudioVideo_CannotControlMedia=Cannot control media unless LoadedBehavior or UnloadedBehavior is set to Manual.
+
+; ComponentResourceKey
+ChangingTypeNotAllowed=Cannot change TypeInTargetAssembly after it has been set.
+ChangingIdNotAllowed=Cannot change ResourceId after it has been set.
+
+
+; Decorator
+CanOnlyHaveOneChild='{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.
+
+; Document
+
+; Decorator base class
+
+; DocumentApplication
+DocumentApplicationCannotInitializeUI=Cannot start the XPS viewer.
+DocumentApplicationNotInFullTrust=DocumentApplication cannot run in full trust.
+DocumentApplicationRegistryKeyNotFound=Cannot find required registry key '{0}'.
+DocumentApplicationStatusLoaded=Document loaded.
+DocumentApplicationUnableToOpenDocument=The XPS viewer cannot open the document.
+DocumentApplicationUnknownFileFormat=The XPS viewer does not support this file type.
+DocumentApplicationContextMenuPreviousPageHeader=Previous Page
+DocumentApplicationContextMenuPreviousPageInputGesture=Ctrl+Page Up
+DocumentApplicationContextMenuNextPageHeader=Next Page
+DocumentApplicationContextMenuNextPageInputGesture=Ctrl+Page Down
+DocumentApplicationContextMenuFirstPageInputGesture=Ctrl+Home
+DocumentApplicationContextMenuLastPageInputGesture=Ctrl+End
+
+; DocumentPageHost
+
+; DocumentPageView
+DocumentPageView_ParentNotDocumentPageHost=Parent of the object must be of type DocumentPageHost.
+
+; DocumentViewer
+DocumentViewerPageViewsCollectionEmpty=Cannot have empty collection of DocumentPageView objects.
+DocumentViewerOneMasterPage=Only one DocumentPageView with IsMasterPage property set to True allowed.
+DocumentViewerArgumentMustBeInteger=SetGridColumnCount command argument must contain a valid integer value.
+DocumentViewerArgumentMustBePercentage=Zoom command argument must contain a valid zoom percentage.
+DocumentViewerCanHaveOnlyOneChild=DocumentViewer element can have only one child.
+DocumentViewerChildMustImplementIDocumentPaginatorSource=The child of a DocumentViewer must implement the IDocumentPaginatorSource interface.
+DocumentViewerStyleMustIncludeContentHost=DocumentViewer's Visual Tree Style must include a ScrollViewer with Name PART_ContentHost.
+DocumentViewerOnlySupportsFixedDocumentSequence=DocumentViewer supports only FixedDocument or FixedDocumentSequence documents.
+FlowDocumentPageViewerOnlySupportsFlowDocument=FlowDocumentPageViewer supports only FlowDocument as content.
+
+; FlowDocumentScrollViewer
+FlowDocumentScrollViewerCanHaveOnlyOneChild=A FlowDocumentScrollViewer element can have only one child.
+FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready=Document belongs to another FlowDocumentScrollViewer already.
+FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent=ScrollViewer marked as PART_ContentHost must have no content.
+
+; FlowDocumentReader
+SwitchViewingMode=_Switch ViewingMode
+FlowDocumentReaderCanHaveOnlyOneChild=FlowDocumentReader element can have only one child.
+FlowDocumentReaderDecoratorMarkedAsContentHostMustHaveNoContent=Decorator marked as PART_ContentHost must have no content.
+FlowDocumentReaderCannotDisableAllViewingModes=At least one ViewingMode should be enabled.
+FlowDocumentReaderViewingModeEnabledConflict=Cannot disable this view while the FlowDocumentReader is in the same ViewingMode.
+
+; ZoomPercentageConverter
+ZoomPercentageConverterStringFormat={0:0.##}%
+
+;DocumentGrid
+DocumentGridVisualTreeContainsNonDocumentGridPage=DocumentGrid's VisualTree contains a non-DocumentGridPage element.
+DocumentGridVisualTreeContainsNonBorderAsFirstElement=DocumentGrid's VisualTree does not contain a Border as its first element.
+DocumentGridVisualTreeOutOfSync=Visual collection is out of sync with RowCache.
+DocumentGridVisualTreeContainsNonUIElement=Visual collection contains element that does not inherit from UIElement.
+DocumentGridInvalidViewMode=ViewMode set in ApplyViewParameters is not valid.
+
+;RowCache
+RowCacheRecalcWithNoPageCache=Must have PageCache assigned to recalculate rows.
+RowCacheCannotModifyNonExistentLayout=Cannot modify the RowLayout because it does not exist.
+RowCachePageNotFound=Page not found in GetRowIndexForPage.
+
+; Panel
+Panel_BoundPanel_NoChildren=Cannot explicitly modify Children collection of Panel used as ItemsPanel for ItemsControl. ItemsControl generates child elements for Panel.
+Panel_NoNullVisualParent='{0}' must be provided when instantiating '{1}'.
+Panel_NoNullChildren=Children of '{0}' cannot be null. Object derived from UIElement expected.
+Panel_ItemsControlNotFound=A panel with IsItemsHost="true" is not nested in an ItemsControl. Panel must be nested in ItemsControl to get and show items.
+
+; ItemsControl
+ItemsControl_ParentNotFrameworkElement=The Parent of the container should always be a FrameworkElement
+
+; Stack
+Stack_VisualInDifferentSubTree=Panel must be the parent or ancestor of Visual.
+
+;BulletPanel
+
+;Track
+Track_SameButtons=Must set IncreaseRepeatButton and DecreaseRepeatButton properties of Track to different RepeatButton instances.
+
+;ToolBar
+ToolBar_InvalidStyle_ToolBarPanel=ToolBar style requires ToolBarPanel type. Cannot assign StyleName="ToolBarPanel" to '{0}'.
+ToolBar_InvalidStyle_ToolBarOverflowPanel=ToolBar style requires ToolBarOverflowPanel type. Cannot assign StyleName="ToolBarOverflowPanel" to '{0}'.
+
+; ScrollViewer
+ScrollViewer_OutOfRange='{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.
+ScrollViewer_CannotBeNaN='{0}' parameter value cannot be NaN.
+
+; ScrollBar
+ScrollBar_ContextMenu_ScrollHere=Scroll Here
+ScrollBar_ContextMenu_LeftEdge=Left Edge
+ScrollBar_ContextMenu_RightEdge=Right Edge
+ScrollBar_ContextMenu_Top=Top
+ScrollBar_ContextMenu_Bottom=Bottom
+ScrollBar_ContextMenu_PageLeft=Page Left
+ScrollBar_ContextMenu_PageRight=Page Right
+ScrollBar_ContextMenu_PageUp=Page Up
+ScrollBar_ContextMenu_PageDown=Page Down
+ScrollBar_ContextMenu_ScrollLeft=Scroll Left
+ScrollBar_ContextMenu_ScrollRight=Scroll Right
+ScrollBar_ContextMenu_ScrollUp=Scroll Up
+ScrollBar_ContextMenu_ScrollDown=Scroll Down
+
+; XpsValidatingLoader
+XpsValidatingLoaderUnsupportedMimeType=Stream content type is not a supported XPS content type.
+; NOTE: "required-resource relationship" is a technical term referring to a specific resource type in the XPS specification - do not translate
+XpsValidatingLoaderUnlistedResource=XPS FixedPage markup references a resource that is not listed using a required-resource relationship or has an incorrect content type.
+XpsValidatingLoaderUriNotInSamePackage=URI in the XPS document points outside the Package.
+XpsValidatingLoaderDuplicateReference=Element that cannot be shared was referenced more than once.
+XpsValidatingLoaderMoreThanOnePrintTicketPart=PackagePart has more than one Print Ticket relationship.
+XpsValidatingLoaderMoreThanOneThumbnailInPackage=Package has more than one Thumbnail relationship.
+XpsValidatingLoaderMoreThanOneThumbnailPart=PackagePart has more than one Thumbnail relationship.
+XpsValidatingLoaderMoreThanOneDiscardControlInPackage=Package has more than one Discard Control relationship.
+XpsValidatingLoaderThumbnailHasIncorrectType=PackagePart references a Thumbnail that has an incorrect content type.
+XpsValidatingLoaderPrintTicketHasIncorrectType=PackagePart references a Print Ticket that has an incorrect content type.
+XpsValidatingLoaderDiscardControlHasIncorrectType=PackagePart references a Discard Control that has an incorrect content type.
+XpsValidatingLoaderRestrictedFontHasIncorrectType=PackagePart references a Restricted Font that has an incorrect content type.
+XpsValidatingLoaderUnsupportedEncoding=XPS markup must be in one of the following XML encodings: UTF-8, UTF-16.
+XpsValidatingLoaderUnsupportedRootNamespaceUri=Unexpected XML namespace of root element tag.
+
+
+; SerializerProvider
+SerializerProviderWrongVersion='{0}' SerializerDescriptor cannot be loaded because the version is incorrect.
+SerializerProviderCannotLoad=Cannot load serializer '{0}'.
+SerializerProviderUnknownSerializer=Unrecognized SerializerDescriptor '{0}'.
+SerializerProviderAlreadyRegistered=Cannot replace existing plug-in serializer '{0}' because it is already registered.
+SerializerProviderNotRegistered=Cannot unregister plug-in serializer '{0}' because it is not registered.
+SerializerProviderDisplayNameNull=The serializer factory provided DisplayName 'null'.
+SerializerProviderManufacturerNameNull=The serializer factory provided ManufacturerName 'null'.
+SerializerProviderManufacturerWebsiteNull=The serializer factory provided ManufacturerWebsite 'null'.
+SerializerProviderDefaultFileExtensionNull=The serializer factory provided DefaultFileExtension 'null'.
+
+; FixedDocument
+PageContentUnsupportedMimeType=PageContent.Source references an unrecognized type of page stream.
+PageContentNotFound=Cannot find PageContent.Source.
+PageContentUnsupportedPageType=PageContent can reference only FixedPage stream. The current stream is type '{0}'.
+ExceptionInGetPage=Error when requesting page '{0}'.
+PrevoiusPartialPageContentOutstanding=Cannot add PageContent while previous partial page is still loading.
+BadFixedTextPosition='{0}' is not a TextPosition supplied by this TextContainer.
+FixedDocumentReadonly=The document is read-only.
+NotInAssociatedContainer='{0}' is not in the TextContainer associated with this object.
+FixedDocumentExpectsDependencyObject=FixedDocument's GetObjectPosition expects a DependencyObject as a parameter.
+InvalidStoryFragmentsMarkup=StoryFragments part failed to load.
+InvalidSFContentType=Invalid content type for StoryFragments part.
+InvalidDSContentType=Invalid content type for DocumentStructure part.
+
+
+;FixedDocumentSequence
+DocumentReferenceUnsupportedMimeType=DocumentReference.Source references an unrecognized type of document stream.
+DocumentReferenceNotFound=DocumentReference.Source cannot be found.
+DocumentReferenceHasInvalidDocument=DocumentReference must reference a valid document that implements IDocumentPaginatorSource
+PrevoiusUninitializedDocumentReferenceOutstanding=Cannot add a DocumentReference until previous DocumentReference is initialized.
+DocumentReadOnly=The document is read-only.
+
+;FixedDocumentStructure
+DocumentStructureUnexpectedParameterType1=Parameter of unexpected type '{0}'. Expected type is '{1}'.
+DocumentStructureUnexpectedParameterType2=Parameter of unexpected type '{0}'. Expected types are '{1}', '{2}'.
+DocumentStructureUnexpectedParameterType4=Parameter of unexpected type '{0}'. Expected types are '{1}', '{2}', '{3}', '{4}'.
+DocumentStructureUnexpectedParameterType6=Parameter of unexpected type '{0}'. Expected types are '{1}', '{2}', '{3}', '{4}', '{5}', '{6}'.
+
+; Frame
+; Frame uses Decorator's "can only have one child" exception above.
+FrameNoAddChild=Cannot add content to a Frame in markup.
+
+; Glyphs markup
+
+GlyphsClusterNoNestedClusters=Cannot nest Glyphs clusters.
+GlyphsClusterNoMatchingBracket=Cannot find matching bracket in Glyphs cluster specification.
+GlyphsClusterMisplacedSeparator=Colon separator misplaced in Glyphs cluster specification.
+GlyphsClusterBadCharactersBeforeBracket=Must have only spaces before opening bracket in a Glyphs cluster specification.
+GlyphsIndexRequiredIfNoUnicode=Must have Glyph indices if no Unicode string is specified.
+GlyphsAdvanceWidthCannotBeNegative=Cannot have negative Glyph advance width.
+GlyphsTooManyCommas=Too many commas in glyph index specification.
+GlyphsIndexRequiredWithinCluster=Must have all glyph indices in a Glyphs cluster.
+GlyphsUnicodeStringAndIndicesCannotBothBeEmpty=Glyphs Indices and UnicodeString properties cannot both be empty.
+GlyphsUnicodeStringIsTooShort=UnicodeString property does not contain enough characters to correspond to the contents of Indices property.
+GlyphsCaretStopsContainsHexDigits=CaretStops string must contain only hexadecimal digits.
+GlyphsCaretStopsLengthCorrespondsToUnicodeString=The number of caret stops in CaretStops string must not exceed the number of UTF16 code points by more than 1.
+
+; Properties
+AlreadyHasLogicalChildren='{0}' element already contains a logical tree, so cannot apply the Style logical tree.
+CannotHookupFCERoot=Cannot connect the FrameworkContentElement '{0}' as the root of a VisualTree.
+ChildNameMustBeNonEmpty=Child node identifier used for Target property cannot be an empty string.
+ChildNameNamePatternReserved='{0}' ChildName is not valid. Naming pattern is reserved.
+ChildTemplateInstanceDoesNotExist=Style template refers to a child that does not exist.
+EventTriggerDoNotSetProperties=Event triggers do not support changing property values.
+EventTriggerDoesNotEnterExit=Event triggers do not support EnterActions or ExitActions.
+EventTriggerEventUnresolvable=Cannot resolve event '{0}' for EventTrigger.
+EventTriggerNeedEvent=EventTrigger requires a value for its Event property.
+EventTriggerTargetNameUnresolvable=Cannot find element '{0}' targeted by this EventTrigger.
+EventTriggerOnStyleNotAllowedToHaveTarget=A Style has no child nodes so EventTrigger cannot specify child node name '{0}'.
+NamesNotSupportedInsideResourceDictionary=Names not supported under ResourceDictionary scope.
+FrameworkElementFactoryAlreadyParented=FrameworkElementFactory is already parented.
+FrameworkElementFactoryCannotAddText=FrameworkElementFactory cannot contain both Text and object children.
+FrameworkElementFactoryMustBeSealed=FrameworkElementFactory must be in a sealed template for this operation.
+InputStreamMustBeReadable='{0}' input stream must be readable.
+InvalidPropertyValue='{0}' is not a valid value for property '{1}'.
+KeyCollectionHasInvalidKey=The key collection includes entry that is not valid. It must be an IBamlDictionaryKey.
+MustBaseOnStyleOfABaseType=Can only base on a Style with target type that is base type '{0}'.
+MustBeFrameworkDerived='{0}' type must derive from FrameworkElement or FrameworkContentElement.
+MustBeFrameworkOr3DDerived='{0}' type must derive from FrameworkElement, FrameworkContentElement, or Visual3D.
+MustBeTriggerAction=The given object must be an instance of TriggerAction or a derived type.
+MustBeCondition=The ConditionCollection can hold only an instance of Condition or a derived type.
+InvalidControlTemplateTargetType=ControlTemplate's TargetType must be Control, Page, PageFunctionBase or a subclass of the same. '{0}' type is not valid.
+Illegal_InheritanceBehaviorSettor=InheritanceBehavior must be set when the instance is not yet connected to a tree. Set InheritanceBehavior when the object is constructed.
+NullPropertyIllegal=Must have non-null value for '{0}'.
+NullTypeIllegal=Must have non-null type.
+NameScopeNameNotEmptyString=Name cannot be an empty string.
+NameScopeNameNotFound='{0}' Name is not found.
+NameScopeDuplicateNamesNotAllowed=Cannot register duplicate Name '{0}' in this scope.
+NameScopeNotFound=No NameScope found to {1} the Name '{0}'.
+NameScopeInvalidIdentifierName='{0}' name is not valid for identifier.
+CrossThreadAccessOfUnshareableFreezable=Cannot access Freezable '{0}' across threads because it cannot be frozen.
+CyclicStyleReferenceDetected=Cyclic reference found while evaluating the Style property on element '{0}'.
+CyclicThemeStyleReferenceDetected=Cyclic reference found while evaluating the ThemeStyle property on element '{0}'.
+PropertyTriggerCycleDetected='{0}' property cannot be set from a property trigger and appear in the trigger's condition at the same time.
+PropertyTriggerLayerLimitExceeded=The maximum number of property triggers has been reached and further allocation is impossible.
+ReadOnlyPropertyNotAllowed='{1}' object cannot specify value for read-only property '{0}'.
+SetterOnStyleNotAllowedToHaveTarget=A Style has no child nodes so a Style Setter cannot specify child node name '{0}'.
+SetterValueCannotBeUnset=Cannot unset a Setter value.
+StyleBasedOnHasLoop=This Style's hierarchy of BasedOn references contains a loop.
+StyleCannotBeBasedOnSelf=A Style cannot be based on itself.
+CannotChangeAfterSealed=After a '{0}' is in use (sealed), it cannot be modified.
+TemplateCircularReferenceFound=Infinite loop in references found while processing the Template for an element named '{0}' of type '{1}'.
+TemplateCannotHaveNestedContentPresenterAndGridViewRowPresenter=In a FrameworkTemplate, ContentPresenter and GridViewRowPresenter cannot be in each other inclusively or exclusively.
+Template3DValueOnly=FrameworkTemplate supports only values in 3D content. Triggers and resources, for example, are not supported (property '{0}').
+StyleForWrongType=A style intended for type '{0}' cannot be applied to type '{1}'.
+NameNotEmptyString=Name cannot be an empty string.
+NameNotFound=Child with Name '{0}' not found in VisualTree.
+StylePropertyInStyleNotAllowed=Style object is not allowed to affect the Style property of the object to which it applies.
+SystemResourceForTypeIsNotStyle=System resource for type '{0}' is not a Style object.
+TargetNameNotFound=Cannot find a FrameworkElement with Name '{0}'.
+TypeMustImplementIAddChild='{0}' type must implement IAddChild to be used in FrameworkElementFactory AppendChild.
+NestedBeginInitNotSupported=Cannot have nested BeginInit calls on the same instance.
+EndInitWithoutBeginInitNotSupported=Must call BeginInit before EndInit.
+VisualTreeRootIsFrameworkElement='{0}' Style TargetType is a FrameworkElement, but the VisualTree root element '{1}' is a FrameworkContentElement. The root of the VisualTree must be a FrameworkElement when the TargetType is FrameworkElement.
+VisualTriggerSettersIncludeUnsupportedSetterType=VisualTrigger does not support Setter type '{0}'.
+ModifyingLogicalTreeViaStylesNotImplemented='{0}' is not a valid value for '{1}'; values derived from Visual or ContentElement are not supported.
+InvalidSetterValue='{0}' is not a valid value for the '{1}.{2}' property on a Setter.
+TemplateChildIndexOutOfRange=TemplateChildIndex must be value between -1 and 65,534.
+NamedObjectMustBeFrameworkElement='{0}' is not a type derived from FrameworkElement.
+StyleHasTooManyElements=Style cannot have more than 65,534 elements.
+TemplateHasNestedNameScope=NameScopeProperty found within the content of a FrameworkTemplate, on a '{0}' object. Name scopes within templates are not supported.
+TriggerActionMustBelongToASingleTrigger=TriggerAction object must be associated with one and only one trigger object.
+TriggerActionAlreadySealed=TriggerAction is already sealed.
+TriggersSupportsEventTriggersOnly=Triggers collection members must be of type EventTrigger.
+HandlerTypeIllegal=Handler type is not valid.
+UnexpectedValueTypeForDataTrigger='{0}' ValueType is not valid for DataTrigger.
+UnexpectedValueTypeForCondition='{0}' ValueType is not valid for Condition.
+ConditionCannotUseBothPropertyAndBinding=Condition cannot use both Property and Binding.
+CannotHaveOverridesDefaultStyleInThemeStyle=Cannot set OverridesDefaultStyle property in the default Style.
+CannotHavePropertyInStyle='{0}' property cannot be set in the current element's Style.
+CannotHavePropertyInTemplate='{0}' property cannot be set in the current element's Template.
+CannotHaveEventHandlersInThemeStyle=Cannot set event handlers within a theme Style.
+StyleTargetTypeMismatchWithElement='{0}' TargetType does not match type of element '{1}'.
+StyleTriggersCannotTargetTheTemplate=Cannot set TargetName property on a Setter within Style.Setters or Style.Triggers section. TargetName applies only to a Setter in Template.Triggers section.
+CannotModifyLogicalChildrenDuringTreeWalk=Cannot modify the logical children for this node at this time because a tree walk is in progress.
+EventTriggerBadAction=EventTrigger cannot have action of type '{0}'. It must be a TriggerAction.
+SourceNameNotSupportedForDataTriggers=Cannot specify SourceName property for a DataTrigger or MultiDataTrigger.
+TriggerOnStyleNotAllowedToHaveSource=Style has no child nodes so Trigger cannot specify source node name '{0}'.
+ResourceDictionaryLoadFromFailure=ResourceDictionary LoadFrom operation failed with URI '{0}'.
+ResourceDictionaryDeferredContentFailure=Cannot add content directly to this ResourceDictionary because its Source property has already been set.
+ResourceDictionaryDuplicateDeferredContent=Cannot re-initialize ResourceDictionary instance.
+NoDefaultUpdateSourceTrigger=FrameworkPropertyMetadata.DefaultUpdateSourceTrigger cannot be set to UpdateSourceTrigger.Default; this would create a circular definition.
+UnsupportedTriggerInStyle='{0}' type trigger is not valid in a Style.
+
+; Storyboard
+Storyboard_AnimationMismatch='{0}' animation object cannot be used to animate property '{1}' because it is of incompatible type '{2}'.
+Storyboard_BeginStoryboardNameNotFound='{0}' object Name found but it is not a BeginStoryboard object.
+Storyboard_BeginStoryboardNameRequired=BeginStoryboardName required to find the target of this action.
+Storyboard_BeginStoryboardNoStoryboard='{0}' BeginStoryboard does not have an associated Storyboard object.
+Storyboard_ComplexPathNotSupported=Cannot automatically create animation clone for frozen property values on '{0}' objects. Only FrameworkElement and FrameworkContentElement (or derived) types are supported.
+Storyboard_ImmutableTargetNotSupported=Cannot animate '{0}' on an immutable object instance.
+Storyboard_MediaElementNotFound='{0}' element of Name found but it is not a MediaElement.
+Storyboard_MediaElementRequired=MediaTimeline must be attached to a MediaElement, or have a TargetName that references a MediaElement.
+Storyboard_NameNotFound='{0}' name cannot be found in the name scope of '{1}'.
+Storyboard_NoNameScope=No applicable name scope exists to resolve the name '{0}'.
+Storyboard_NeverApplied=Cannot perform action because the specified Storyboard was not applied to this object for interactive control.
+Storyboard_PropertyPathEmpty=TargetProperty path cannot be empty.
+Storyboard_PropertyPathFrozenCheckFailed='{0}' property value in the path '{1}' points to immutable instance of '{2}'.
+Storyboard_PropertyPathSealedCheckFailed='{0}' property value in the path '{1}' is on an immutable instance of '{2}'.
+Storyboard_PropertyPathIncludesNonAnimatableProperty='{0}' Storyboard.TargetProperty path contains nonanimatable property '{1}'.
+Storyboard_PropertyPathMustPointToDependencyObject='{0}' property does not point to a DependencyObject in path '{1}'.
+Storyboard_PropertyPathMustPointToDependencyProperty='{0}' Storyboard.TargetProperty path does not point to a DependencyProperty.
+Storyboard_PropertyPathObjectNotFound='{0}' property value not found in property path '{1}'.
+Storyboard_PropertyPathPropertyNotFound=Cannot resolve all property references in the property path '{0}'. Verify that applicable objects support the properties.
+Storyboard_PropertyPathUnresolved='{0}' property path cannot be resolved to an animatable property.
+Storyboard_StoryboardReferenceRequired=Must have a Storyboard object reference before this trigger action can execute.
+Storyboard_TargetNameNotDependencyObject='{0}' target object Name found but the object is not a valid target type.
+Storyboard_TargetNameNotAllowedInStyle=A Storyboard tree in a Style cannot specify a TargetName. Remove TargetName '{0}'.
+Storyboard_TargetPropertyRequired=Must specify TargetProperty for '{0}'.
+Storyboard_UnableToFreeze=Cannot freeze this Storyboard timeline tree for use across threads.
+Storyboard_UnrecognizedHandoffBehavior=HandoffBehavior value is not valid.
+Storyboard_UnrecognizedTimeSeekOrigin=TimeSeekOrigin value is not valid.
+Storyboard_NoTarget=No target was specified for '{0}'.
+
+; Templates
+TemplateInvalidBamlRecord=BAML Records of type '{0}' are not supported in Templates.
+TemplateTargetTypeMismatch='{0}' ControlTemplate TargetType does not match templated type '{1}'.
+TemplateNotTargetType=This Template does not support setting the TargetType. Set the DataType instead.
+MustNotTemplateUnassociatedControl=ControlTemplate must be associated with a Control by setting the Control.Template property before it is used to template that Control.
+UnsupportedTriggerInTemplate='{0}' type trigger is not valid in a Template.
+TemplateFindNameInInvalidElement=This operation is valid only on elements that have this template applied.
+TemplateContentSetTwice=Template's TemplateContent property can only be set once.
+ElementMustBelongToTemplate=Element must belong to a FrameworkTemplate instance.
+
+; Holes in support of Expression
+
+ConditionValueOfMarkupExtensionNotSupported='{0}' is not a valid trigger condition.
+ConditionValueOfExpressionNotSupported=Expression type is not a valid trigger condition.
+SetterValueOfMarkupExtensionNotSupported='{0}' is not valid for Setter.Value. The only supported MarkupExtension types are DynamicResourceExtension and BindingBase or derived types.
+StyleValueOfExpressionNotSupported=Expression type is not a valid Style value.
+
+; further explanation of CannotInstantiatePanel message (above). Do not add punctuation to these messages;
+; they get inserted into the parent message, which already has punctuation.
+
+; Model tree
+ReparentModelChildIllegal=Element already has a logical parent. It must be detached from the old parent before it is attached to a new one.
+CannotBeSelfParent=Element cannot be its own parent.
+LogicalTreeLoop=Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.
+HasLogicalParent=Specified element is already the logical child of another element. Disconnect it first.
+
+; Thickness
+InvalidStringThickness='{0}' value is not valid. It must contain one, two, or four delimited Lengths.
+
+; VirtualizationCacheLength
+InvalidStringVirtualizationCacheLength='{0}' value is not valid. It must contain one or two delimited Lengths.
+
+; CornerRadius
+InvalidStringCornerRadius='{0}' value is not valid. It must contain one or four delimited Lengths.
+
+; Misc Layout
+InvalidCtorParameterNoNaN='{0}' parameter cannot be NaN.
+InvalidCtorParameterNoInfinity='{0}' parameter cannot be Infinity.
+InvalidCtorParameterNoNegative='{0}' parameter cannot be negative.
+InvalidCtorParameterUnknownGridUnitType='{0}' parameter is not valid. Valid values are GridUnitType.Auto, GridUnitType.Pixel, or GridUnitType.Star.
+InvalidCtorParameterUnknownFigureUnitType='{0}' parameter is not valid. Valid values are FigureUnitType.Auto, FigureUnitType.Pixel, FigureUnitType.Column, FigureUnitType.Content, or FigureUnitType.Page.
+InvalidCtorParameterUnknownVirtualizationCacheLengthUnitType='{0}' parameter is not valid. Valid values are VirtualizationCacheUnitType.Item or VirtualizationCacheUnitType.Pixel.
+InvalidItemContainer='{0}' can only host a '{1}' or a '{2}'. '{3}' is an invalid container.
+
+
+; Property Sheet (to remove)
+
+; Text
+MeasureReentrancyInvalid=Cannot call method while measure is in progress.
+ArrangeReentrancyInvalid=Cannot call method while arrange is in progress.
+TextContainerChangingReentrancyInvalid=Cannot call method while text container is changing.
+
+; DocumentPaginator
+IDPNegativePageNumber=Page number cannot be negative.
+IDPInvalidContentPosition=ContentPosition does not exist within this element's tree.
+FlowDocumentFormattingReentrancy=Cannot make new formatting requests during page formatting.
+FlowDocumentInvalidContnetChange=Content changed during page formatting.
+
+;PTS
+PTSError=Page formatting engine did not complete formatting operation. Error code: '{0}'.
+PTSInvalidHandle=No object associated with unmanaged object handle or type mismatch.
+IllegalTreeChangeDetected=Document tree or properties were modified during measure or arrange.
+IllegalTreeChangeDetectedPostAction=Document tree or properties were modified during measure or arrange.
+FormatRestrictionsExceeded=Page dimensions exceed maximum allowed value of 3.579 million pixels.
+
+; TextFlow
+TextPanelIllegalParaTypeForIAddChild='{0}' parameter of unexpected type '{1}'. Expected type is UIElement or FrameworkContentElement.
+TextContainerDoesNotContainElement=Text Container does not exist or does not contain the specified element.
+HyphenatorDisposed=Hyphenator is called after it has been disposed.
+
+;Grid
+Grid_UnexpectedParameterType=Parameter of unexpected type '{0}'. Expected type is '{1}'.
+GridCollection_CannotModifyReadOnly=Cannot modify '{0}' in read-only state.
+GridCollection_MustBeCertainType='{0}' must be type '{1}'.
+GridCollection_InOtherCollection='{0}' already belongs to another '{1}'.
+GridCollection_DestArrayInvalidLowerBound='{0}' is less than the array's lower bound.
+GridCollection_DestArrayInvalidRank='{0}' destination is multidimensional. Expected array of rank 1.
+GridCollection_DestArrayInvalidLength='{0}' destination not long enough.
+
+; Table (ColumnCollection, RowCollection, RowCollection, Row, RowGroup, Cell)
+TableCollectionElementTypeExpected='{0}' type expected for parameter.
+TableCollectionRankMultiDimNotSupported=Only single-dimensional arrays are supported.
+TableCollectionOutOfRange=Index is out of collection's boundary.
+TableCollectionRangeOutOfRange=Requested range is out of collection's boundary.
+TableCollectionOutOfRangeNeedNonNegNum='{0}' is less than the array's lower bound.
+TableCollectionCountNeedNonNegNum=Count must be zero or positive.
+TableCollectionInvalidOffLen=Destination array not long enough.
+TableCollectionNotEnoughCapacity=Capacity is less than current size.
+TableCollectionInOtherCollection=Item belongs to another collection.
+TableCollectionWrongProxyParent=Item's proxy belongs to the wrong collection.
+TableInvalidParentNodeType='{0}' parent NodeType is not valid.
+
+;Enumeration
+EnumeratorNotStarted=Enumeration has not started. Call MoveNext.
+EnumeratorReachedEnd=Enumeration already finished.
+EnumeratorVersionChanged=Collection was modified; enumeration operation may not execute.
+EnumeratorInvalidOperation=Enumerator is located before the first element of the collection or after the last element.
+EnumeratorCollectionDisposed=Collection was disposed, enumerator operations are not valid.
+
+; List
+ListElementItemNotAChildOfList=GetListItemIndex is valid only for immediate children of this List element.
+
+; Text Tree
+TextPositionIsFrozen=Frozen TextPointer cannot be repositioned.
+NotInThisTree='{0}' is not in this document.
+NotInAssociatedTree=TextPointer is not in the TextTree associated with this object.
+BadDistance=Requested distance is outside the content of the associated document.
+NegativeValue='{0}' parameter cannot have a value less than zero.
+InDifferentTextContainers='{0}' and '{1}' TextPointers are not in the same document.
+InDifferentParagraphs='{0}' and '{1}' TextPointers are not in the same Paragraph.
+InDifferentScope='{0}' and '{1}' are not scoped by the same text element.
+BadTextPositionOrder='{0}' not expected after '{1}'.
+NoElement=No text element exists at the specified position.
+NoElementObject=No element is adjacent to this TextPointer in the specified direction.
+NoScopingElement='{0}' has no scoping text element.
+TextContainer_UndoManagerCreatedMoreThanOnce=UndoManager created more than once.
+StartIndexExceedsBufferSize=startIndex '{0}' exceeds length '{1}' of destination array textBuffer.
+MaxLengthExceedsBufferSize='{0}' maxLength value exceeds array character capacity with length '{1}' and startIndex '{2}'.
+TextElementCollection_TextElementTypeExpected='{0}' type expected.
+TextElementCollection_IndexOutOfRange=Index out of range.
+TextElementCollection_PreviousSiblingDoesNotBelongToThisCollection='{0}' PreviousSibling does not belong to this TextElementCollection.
+TextElementCollection_NextSiblingDoesNotBelongToThisCollection='{0}' NextSibling does not belong to this TextElementCollection.
+TextElementCollection_CannotCopyToArrayNotSufficientMemory=Not enough space to copy {0} elements to index {1} of array with length {2}.
+TextElementCollection_ItemHasUnexpectedType=An item of collection '{0}' has unexpected type {1} (expected type was {2}).
+TextElementCollection_NoEnumerator=The argument returned a null IEnumerator instance.
+
+; TextSchema validation
+TextSchema_TextIsNotAllowedInThisContext=Cannot have Text or UIElement at this position in '{0}'.
+TextSchema_ChildTypeIsInvalid='{1}' type element is not valid at this position as a child of type '{0}'.
+TextSchema_TheChildElementBelongsToAnotherTreeAlready='{0}' element cannot be inserted in a tree because it is already a child of a tree.
+TextSchema_TextIsNotAllowed=Text is not valid in '{0}'.
+TextSchema_UIElementNotAllowedInThisPosition=UIElement is not valid at this position.
+TextSchema_CannotInsertContentInThisPosition=Cannot insert content at this position.
+TextSchema_ThisInlineUIContainerHasAChildUIElementAlready='{0}' already has a child '{1}'. '{2}' element needs its own InlineUIContainer parent.
+TextSchema_ThisBlockUIContainerHasAChildUIElementAlready='{0}' already has a child '{1}'. '{2}' element needs its own BlockUIContainer parent.
+TextSchema_CannotSplitElement=Cannot split '{0}' element at this position.
+TextSchema_IllegalHyperlinkChild=Element of type '{0}' cannot be placed within the scope of a Hyperlink.
+TextSchema_IllegalElement=Cannot insert elements of type '{0}' into this '{1}'.
+
+; TextElement
+TextElement_UnmatchedEndPointer=Parameter 'end' must be null when parameter 'start' is null.
+TextPointer_CannotInsertTextElementBecauseItBelongsToAnotherTree=Cannot insert TextElement because it belongs to another tree.
+
+; TextRange
+TextRange_InvalidParameterValue=Parameter value is not valid.
+TextRange_UnsupportedDataFormat='{0}' data format not supported.
+TextRange_UnrecognizedStructureInDataFormat=Unrecognized structure in data format '{0}'.
+TextRange_PropertyCannotBeIncrementedOrDecremented='{0}' property cannot be incremented or decremented.
+
+; TextRangeEdit
+TextRangeEdit_InvalidStructuralPropertyApply=Cannot apply '{0}' property across the borders of TextElements of type '{1}'.
+
+; EditingCommands Keys
+KeyCorrectionList=
+KeyToggleInsert=Insert
+KeyDelete=Delete
+KeyBackspace=Backspace
+KeyShiftBackspace=Shift+Backspace
+KeyDeleteNextWord=Ctrl+Delete
+KeyDeletePreviousWord=Ctrl+Backspace
+KeyEnterParagraphBreak=Enter
+KeyEnterLineBreak=Shift+Enter
+KeyTabForward=Tab
+KeyTabBackward=Shift+Tab
+KeySpace=Space
+KeyShiftSpace=Shift+Space
+
+KeyMoveRightByCharacter=Right
+KeyMoveLeftByCharacter=Left
+KeyMoveRightByWord=Ctrl+Right
+KeyMoveLeftByWord=Ctrl+Left
+KeyMoveDownByLine=Down
+KeyMoveUpByLine=Up
+KeyMoveDownByParagraph=Ctrl+Down
+KeyMoveUpByParagraph=Ctrl+Up
+KeyMoveDownByPage=PageDown
+KeyMoveUpByPage=PageUp
+KeyMoveToLineStart=Home
+KeyMoveToLineEnd=End
+KeyMoveToColumnStart=Alt+PageUp
+KeyMoveToColumnEnd=Alt+PageDown
+KeyMoveToWindowTop=Alt+Ctrl+PageUp
+KeyMoveToWindowBottom=Alt+Ctrl+PageDown
+KeyMoveToDocumentStart=Ctrl+Home
+KeyMoveToDocumentEnd=Ctrl+End
+
+KeySelectAll=Ctrl+A
+KeySelectRightByCharacter=Shift+Right
+KeySelectLeftByCharacter=Shift+Left
+KeySelectRightByWord=Ctrl+Shift+Right
+KeySelectLeftByWord=Ctrl+Shift+Left
+KeySelectDownByLine=Shift+Down
+KeySelectUpByLine=Shift+Up
+KeySelectDownByParagraph=Ctrl+Shift+Down
+KeySelectUpByParagraph=Ctrl+Shift+Up
+KeySelectDownByPage=Shift+PageDown
+KeySelectUpByPage=Shift+PageUp
+KeySelectToLineStart=Shift+Home
+KeySelectToLineEnd=Shift+End
+KeySelectToColumnStart=Alt+Shift+PageUp
+KeySelectToColumnEnd=Alt+Shift+PageDown
+KeySelectToWindowTop=Alt+Ctrl+Shift+PageUp
+KeySelectToWindowBottom=Alt+Ctrl+Shift+PageDown
+KeySelectToDocumentStart=Ctrl+Shift+Home
+KeySelectToDocumentEnd=Ctrl+Shift+End
+
+KeyUndo=Ctrl+Z
+KeyAltUndo=Alt+Backspace
+KeyRedo=Ctrl+Y
+KeyCut=Ctrl+X
+KeyCopy=Ctrl+C
+KeyShiftDelete=Shift+Delete
+KeyCtrlInsert=Ctrl+Insert
+KeyShiftInsert=Shift+Insert
+KeyCopyFormat=Ctrl+Shift+C
+KeyPasteFormat=Ctrl+Shift+V
+KeyResetFormat=Ctrl+Space
+KeyToggleBold=Ctrl+B
+KeyToggleItalic=Ctrl+I
+KeyToggleUnderline=Ctrl+U
+KeyToggleSubscript=Ctrl+OemPlus
+KeyToggleSuperscript=Ctrl+Shift+OemPlus
+KeyIncreaseFontSize=Ctrl+OemCloseBrackets
+KeyDecreaseFontSize=Ctrl+OemOpenBrackets
+KeyApplyFontSize=
+KeyApplyFontFamily=
+KeyApplyForeground=
+KeyApplyBackground=
+KeyToggleSpellCheck=
+
+KeyAlignLeft=Ctrl+L
+KeyAlignCenter=Ctrl+E
+KeyAlignRight=Ctrl+R
+KeyAlignJustify=Ctrl+J
+KeyApplySingleSpace=Ctrl+1
+KeyApplyOneAndAHalfSpace=Ctrl+5
+KeyApplyDoubleSpace=Ctrl+2
+KeyIncreaseIndentation=Ctrl+T
+KeyDecreaseIndentation=Ctrl+Shift+T
+
+KeyRemoveListMarkers=Ctrl+Shift+R
+KeyToggleBullets=Ctrl+Shift+L
+KeyToggleNumbering=Ctrl+Shift+N
+KeyInsertTable=Alt+Ctrl+Shift+T
+KeyInsertRows=Alt+Ctrl+Shift+R
+KeyInsertColumns=Alt+Ctrl+Shift+C
+KeyDeleteRows=
+KeyDeleteColumns=Alt+Ctrl+Shift+D
+KeyMergeCells=Alt+Ctrl+Shift+M
+KeySplitCell=Alt+Ctrl+Shift+S
+
+; EditingCommands Key display strings
+KeyCorrectionListDisplayString=
+KeyToggleInsertDisplayString=Insert
+KeyDeleteDisplayString=Delete
+KeyBackspaceDisplayString=Backspace
+KeyShiftBackspaceDisplayString=Shift+Backspace
+KeyDeleteNextWordDisplayString=Ctrl+Delete
+KeyDeletePreviousWordDisplayString=Ctrl+Backspace
+KeyEnterParagraphBreakDisplayString=Enter
+KeyEnterLineBreakDisplayString=Shift+Enter
+KeyTabForwardDisplayString=Tab
+KeyTabBackwardDisplayString=Shift+Tab
+KeySpaceDisplayString=Space
+KeyShiftSpaceDisplayString=Shift+Space
+
+KeyMoveRightByCharacterDisplayString=Right
+KeyMoveLeftByCharacterDisplayString=Left
+KeyMoveRightByWordDisplayString=Ctrl+Right
+KeyMoveLeftByWordDisplayString=Ctrl+Left
+KeyMoveDownByLineDisplayString=Down
+KeyMoveUpByLineDisplayString=Up
+KeyMoveDownByParagraphDisplayString=Ctrl+Down
+KeyMoveUpByParagraphDisplayString=Ctrl+Up
+KeyMoveDownByPageDisplayString=PageDown
+KeyMoveUpByPageDisplayString=PageUp
+KeyMoveToLineStartDisplayString=Home
+KeyMoveToLineEndDisplayString=End
+KeyMoveToColumnStartDisplayString=Alt+PageUp
+KeyMoveToColumnEndDisplayString=Alt+PageDown
+KeyMoveToWindowTopDisplayString=Alt+Ctrl+PageUp
+KeyMoveToWindowBottomDisplayString=Alt+Ctrl+PageDown
+KeyMoveToDocumentStartDisplayString=Ctrl+Home
+KeyMoveToDocumentEndDisplayString=Ctrl+End
+
+KeySelectAllDisplayString=Ctrl+A
+KeySelectRightByCharacterDisplayString=Shift+Right
+KeySelectLeftByCharacterDisplayString=Shift+Left
+KeySelectRightByWordDisplayString=Ctrl+Shift+Right
+KeySelectLeftByWordDisplayString=Ctrl+Shift+Left
+KeySelectDownByLineDisplayString=Shift+Down
+KeySelectUpByLineDisplayString=Shift+Up
+KeySelectDownByParagraphDisplayString=Ctrl+Shift+Down
+KeySelectUpByParagraphDisplayString=Ctrl+Shift+Up
+KeySelectDownByPageDisplayString=Shift+PageDown
+KeySelectUpByPageDisplayString=Shift+PageUp
+KeySelectToLineStartDisplayString=Shift+Home
+KeySelectToLineEndDisplayString=Shift+End
+KeySelectToColumnStartDisplayString=Alt+Shift+PageUp
+KeySelectToColumnEndDisplayString=Alt+Shift+PageDown
+KeySelectToWindowTopDisplayString=Alt+Ctrl+Shift+PageUp
+KeySelectToWindowBottomDisplayString=Alt+Ctrl+Shift+PageDown
+KeySelectToDocumentStartDisplayString=Ctrl+Shift+Home
+KeySelectToDocumentEndDisplayString=Ctrl+Shift+End
+
+KeyUndoDisplayString=Ctrl+Z
+KeyAltUndoDisplayString=Alt+Backspace
+KeyRedoDisplayString=Ctrl+Y
+KeyCutDisplayString=Ctrl+X
+KeyCopyDisplayString=Ctrl+C
+KeyShiftDeleteDisplayString=Shift+Delete
+KeyCtrlInsertDisplayString=Ctrl+Insert
+KeyShiftInsertDisplayString=Shift+Insert
+KeyCopyFormatDisplayString=Ctrl+Shift+C
+KeyPasteFormatDisplayString=Ctrl+Shift+V
+KeyResetFormatDisplayString=Ctrl+Space
+KeyToggleBoldDisplayString=Ctrl+B
+KeyToggleItalicDisplayString=Ctrl+I
+KeyToggleUnderlineDisplayString=Ctrl+U
+KeyToggleSubscriptDisplayString=Ctrl+OemPlus
+KeyToggleSuperscriptDisplayString=Ctrl+Shift+OemPlus
+KeyIncreaseFontSizeDisplayString=Ctrl+OemCloseBrackets
+KeyDecreaseFontSizeDisplayString=Ctrl+OemOpenBrackets
+KeyApplyFontSizeDisplayString=
+KeyApplyFontFamilyDisplayString=
+KeyApplyForegroundDisplayString=
+KeyApplyBackgroundDisplayString=
+KeyToggleSpellCheckDisplayString=
+
+KeyAlignLeftDisplayString=Ctrl+L
+KeyAlignCenterDisplayString=Ctrl+E
+KeyAlignRightDisplayString=Ctrl+R
+KeyAlignJustifyDisplayString=Ctrl+J
+KeyApplySingleSpaceDisplayString=Ctrl+1
+KeyApplyOneAndAHalfSpaceDisplayString=Ctrl+5
+KeyApplyDoubleSpaceDisplayString=Ctrl+2
+KeyIncreaseIndentationDisplayString=Ctrl+T
+KeyDecreaseIndentationDisplayString=Ctrl+Shift+T
+
+KeyRemoveListMarkersDisplayString=Ctrl+Shift+R
+KeyToggleBulletsDisplayString=Ctrl+Shift+L
+KeyToggleNumberingDisplayString=Ctrl+Shift+N
+KeyInsertTableDisplayString=Alt+Ctrl+Shift+T
+KeyInsertRowsDisplayString=Alt+Ctrl+Shift+R
+KeyInsertColumnsDisplayString=Alt+Ctrl+Shift+C
+KeyDeleteRowsDisplayString=
+KeyDeleteColumnsDisplayString=Alt+Ctrl+Shift+D
+KeyMergeCellsDisplayString=Alt+Ctrl+Shift+M
+KeySplitCellDisplayString=Alt+Ctrl+Shift+S
+
+; FlowDocumentReader Command Keys
+KeySwitchViewingMode=Ctrl+M
+
+; FlowDocumentReader Key display strings
+KeySwitchViewingModeDisplayString=Ctrl+M
+
+; TextStore
+TextStore_E_NOTIMPL=Method is not implemented.
+TextStore_E_NOINTERFACE=Sink does not support ITextStoreACPSink interface.
+TextStore_CONNECT_E_CANNOTCONNECT=Unrecognized sink GUID.
+TextStore_CONNECT_E_NOCONNECTION=Sink was not previously advised with a call to AdviseSink.
+TextStore_TS_E_INVALIDPOINT=Point does not cover any text.
+TextStore_TS_E_NOLAYOUT=No layout currently available.
+TextStore_TS_E_READONLY=Document is read-only.
+TextStore_TS_E_FORMAT=Document does not support embedded objects.
+TextStore_NoSink=RequestLock called with no sink.
+TextStore_BadLockFlags=Lock flags are not valid.
+TextStore_ReentrantRequestLock=Cannot call RequestLock inside another call's scope unless changing a lock from read-only to write access.
+TextStore_CompositionRejected=Document cannot accept composition content.
+TextStore_BadIMECharOffset=Character offset {0} is not valid in document with {1} characters.
+
+; InputScopeAttribute
+InputScopeAttribute_E_OUTOFMEMORY=Insufficient memory.
+
+; Find
+
+; WpfPayload
+WpfPayload_InvalidImageSource=Image has null or empty source name.
+
+; Selector
+SelectionChangeActive=Cannot begin a new SelectionChange when another one is active.
+SelectionChangeNotActive=No SelectionChange is active.
+CannotSelectNotSelectableItem=Item is not selectable.
+ListBoxSelectAllSelectionMode=Can only call SelectAll when SelectionMode is Multiple or Extended.
+ChangingCollectionNotSupported=Can only change SelectedItems collection in multiple selection modes. Use SelectedItem in single select modes.
+
+; MultiSelector
+DeferSelectionActive=Cannot begin a new selection while a selection is in progress.
+DeferSelectionNotActive=Cannot end a selection when no selection is in progress.
+InsertInDeferSelectionActive=Cannot insert in a selection when selection is in progress. Use Add method.
+SetInDeferSelectionActive=Cannot set an item in a selection when selection is in progress. Use Add or Remove method.
+MoveInDeferSelectionActive=Cannot move an item in a selection when selection is in progress.
+MultiSelectorSelectAll=Can only call SelectAll when CanSelectMultipleItems is true.
+
+;ListBox
+ListBoxSelectAllKey=Ctrl+A
+ListBoxSelectAllKeyDisplayString=Ctrl+A
+ListBoxSelectAllText=Select All
+ListBoxInvalidAnchorItem=AnchorItem '{0}' does not have a realized container and hence is invalid.
+
+; Popup
+CreateRootPopup_ChildHasLogicalParent='{0}' must be the root element of a tree, but has a logical parent '{1}'.
+CreateRootPopup_ChildHasVisualParent='{0}' must be the root element of a tree, but has a visual parent '{1}'.
+ElementMustBeInPopup='{0}' cannot have a logical or visual parent.
+PopupReopeningNotAllowed=Cannot reopen a popup in the closed event handler.
+
+;ContextMenu
+ContextMenuInDifferentDispatcher=ContextMenu value does not share the object's Dispatcher.
+
+;ToolTip
+ToolTipStaysOpenFalseNotAllowed=By default, ToolTip property does not support ToolTip element with StaysOpen set to false.
+
+; StyleParser
+StyleImpliedAndComplexChildren=Cannot use both '{0}' tags and Style.'{1}' property tags for a single Style. Use one or the other.
+StyleInvalidElementTag='{0}' type element tags are not valid at this location in a Style section.
+StyleKnownTagWrongLocation='{0}' property element location is not valid. It must immediately follow a Style tag.
+StyleNoTemplateBindInSetters='{0}' cannot be set to a TemplateBinding because it is in the Setters section.
+StyleNoTemplateBindInVisualTrigger='{0}' cannot be set to a TemplateBinding because VisualTriggers do not support TemplateBinding.
+StyleNoClrEvent='{0}' CLR event cannot be set in a Style EventSetter. Only routed events are valid.
+StyleNoDef='{0}' attribute is not valid at this location in a style.
+StyleNoDictionaryKey=This Style has no key. Styles in a Dictionary must have either a TargetType or Name attribute specified.
+StyleNoSetterResource=Setter resource references are not supported.
+StyleNoTopLevelElement=Only Setter or EventSetter elements are valid direct children of Style element. '{0}' is not valid.
+StylePropertyCustom='{0}' property set is not valid at this location in a Style declaration.
+StylePropertySetterMinAttrs=Must specify both Property and Value for Setter.
+StylePropTriggerPropMissing=Must specify both Property and Value for Trigger.
+StyleDataTriggerBindingMissing=Must specify both Binding and Value for DataTrigger.
+StyleDataTriggerBindingHasBadValue='{0}' value for DataTrigger.Binding is not a Binding object.
+StyleSetterUnknownProp='{0}' property cannot use markup extensions or property element syntax on Setter. Only the Value property can use markup extensions or property element syntax.
+StyleTagNotSupported='{0}' type tags are not valid in Style sections.
+StyleTextNotSupported='{0}' text is not valid at this location in a Style section.
+StyleUnknownProp='{0}' property cannot be set as a property element on Style.
+StyleUnknownTrigger='{0}' trigger type in Style not recognized.
+StyleNoEventSetters=Cannot load XAML file that has EventSetters. Try compiling the XAML.
+SourceNameNotSupportedForStyleTriggers=Cannot set SourceName property within Style.Triggers section. SourceName applies only to Trigger or MultiTrigger in Template.Triggers section.
+StyleNoPropOrEvent=Cannot find the Style {0} '{1}' on the type '{2}'.
+StyleNoTarget=Cannot resolve the Style {0} '{1}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the {0}.
+TargetNameNotSupportedForStyleSetters=Cannot set TargetName property on a Style Setter.
+
+; TemplateParser
+TemplateDupName=The Name '{0}' has already been defined. Names must be unique.
+TemplateBadDictionaryKey=Cannot create dictionary key because of a problem with the DataType property.
+TemplateInvalidRootElementTag=The root of a Template content section cannot contain an element of type '{0}'. Only FrameworkElement and FrameworkContentElement types are valid.
+TemplateKnownTagWrongLocation='{0}' property element must immediately follow a Template tag.
+TemplateNoTemplateBindInVisualTrigger='{0}' value is not valid because VisualTriggers do not support TemplateBinding.
+TemplateNoMultipleRoots=Template can have only a single root element. '{0}' is not valid.
+TemplateNoTriggerTarget=Cannot find the Trigger target '{0}'. (The target must appear before any Setters, Triggers, or Conditions that use it.)
+TemplateNoProp=Cannot find the '{0}' template property on type '{1}'.
+TemplateNoTarget=Cannot resolve the template property '{0}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the property.
+TemplateTagNotSupported='{0}' type tags are not valid in Template sections.
+TemplateTextNotSupported='{0}' text is not valid at this location in a Template section.
+TemplateUnknownProp='{0}' property cannot be set as a property element on Template.
+
+
+; ContentControl
+ContentControlCannotHaveMultipleContent=Content of a ContentControl must be a single element.
+
+; ContentPresenter
+MissingContentSource=Cannot bind properties of ContentPresenter because there is no property named '{0}' on type '{1}'.
+
+; Page
+CannotQueryPropertiesWhenPageNotInTreeWithWindow=Cannot read Page properties because it is not in a tree with Window as its root.
+ParentOfPageMustBeWindowOrFrame=Page can have only Window or Frame as parent.
+PageCannotHaveMultipleContent=Page can have only one child.
+
+; UserControl
+
+; Window
+WindowMustBeRoot=Window must be the root of the tree. Cannot add Window as a child of Visual.
+CircularOwnerChild='{0}' Window is already a child of Window '{1}'.
+CannotSetOwnerToItself=Cannot set Owner property to itself.
+CantSetOwnerToClosedWindow=Cannot set Owner property to a Window that has been closed.
+CantSetOwnerWhosHwndIsNotCreated=Cannot set Owner property to a Window that has not been shown previously.
+ShowDialogOnVisible=ShowDialog can be called only on hidden windows.
+ShowDialogOnModal=Already called ShowDialog on this Window.
+CantSetOwnerAfterDialogIsShown=Cannot set Owner property after Dialog is shown.
+DragMoveFail=Can only call DragMove when primary mouse button is down.
+IncorrectFlowDirection=FlowDirection for Window is not valid.
+CantSetInMarkup=DialogResult property cannot be set in markup or serialized to string.
+ValueNotBetweenInt32MinMax='{0}' is not a valid value for this property. Valid values are from Int32.MinValue through Int32.MaxValue.
+InvalidValueForTopLeft='{0}' is not a valid value for Top or Left property.
+TransformNotSupported=Transform is not valid for Window.
+ClipToBoundsNotSupported=ClipToBounds is not valid for Window.
+DialogResultMustBeSetAfterShowDialog=DialogResult can be set only after Window is created and shown as dialog.
+IconMustBeBitmapFrame=ImageSource for Icon property must be an icon file.
+ReshowNotAllowed=Cannot set Visibility or call Show, ShowDialog, or WindowInteropHelper.EnsureHandle after a Window has closed.
+InvalidOperationDuringClosing=Cannot set Visibility to Visible or call Show, ShowDialog, Close, or WindowInteropHelper.EnsureHandle while a Window is closing.
+InvalidCompositionTarget=Cannot set Visibility or call Show, ShowDialog, or Hide while the composition target is not valid.
+ChangeNotAllowedAfterShow=Cannot change AllowsTransparency after a Window has been shown or WindowInteropHelper.EnsureHandle has been called.
+MustUseWindowStyleNone=WindowStyle.None is the only valid value for WindowStyle when AllowsTransparency is true.
+ShowNonActivatedAndMaximized=Cannot show Window when ShowActivated is false and WindowState is set to Maximized.
+NotAllowedBeforeShow=Cannot call DragMove or Activate before a Window is shown.
+
+; RootBrowserWindow
+NotSupportedInBrowser=Cannot perform this operation when hosted in browser.
+WebBrowserOverlap=Frames hosting HTML content cannot overlap each other in partial trust.
+PrintJobDescription={0} - {1}
+UntitledPrintJobDescription=Untitled
+
+; WebBrowser
+CannotBeInsidePopup=Cannot host WebBrowser in a popup.
+CannotInvokeScript=The HTML document is not available.
+NeedToBeComVisible=The object type is not visible to COM. You need to set ComVisibleAttribute attribute to True.
+AbsoluteUriOnly=Relative URIs are not allowed.
+
+; MessageBox
+CantShowMBServiceWithOwner=Cannot show MessageBox Service with Owner.
+
+; Weak event pattern
+NoMulticastHandlers=WeakEventManager supports only delegates with one target.
+
+; PropertyPath
+PropertyPathSyntaxError=Syntax error in PropertyPath '{0}'.
+PropertyPathNoProperty=Property path is not valid. '{0}' does not have a public property named '{1}'.
+PropertyPathNoOwnerType=Property path is not valid. Cannot resolve type name '{0}'.
+PropertyPathInvalidAccessor=Object '{0}' cannot be used as an accessor parameter for a PropertyPath. An accessor parameter must be DependencyProperty, PropertyInfo, or PropertyDescriptor.
+
+; Data binding
+BindingConflict=Binding.{0} cannot be set while using Binding.{1}.
+PropertyNotBindable='{0}' property cannot be data-bound.
+RequiresExplicitCulture=Binding for property '{0}' cannot use the target element's Language for conversion; if a culture is required, ConverterCulture must be explicitly specified on the Binding.
+BindingExpressionStatusChanged=Internal error: internal WPF code tried to reactivate a BindingExpression that was already marked as detached.
+PathSyntax=Syntax error in Binding.Path '{0}' ... '{1}'.
+UnmatchedBracket=Unmatched bracket '{0}'.
+UnmatchedParen=Unmatched parenthesis '{0}'.
+BindingListCanOnlySortByOneProperty=IBindingList can sort by only one property.
+BindingListCannotCustomFilter=Underlying list of this CollectionView does not support filtering.
+InconsistentBindingList=IBindingList '{0}' has unexpected length after a '{1}' event.\nThis can happen if the IBindingList has been changed without raising a corresponding ListChanged event.
+RequiresXmlNamespaceMapping=XmlDataNamespaceMappingCollection child does not have type XmlNamespaceMapping '{0}'.
+RequiresXmlNamespaceMappingUri=XmlDataNamespaceMappingCollection cannot use XmlNamespaceMapping that has null URI.
+ChildHasWrongType='{0}' child does not have type '{1}' : '{2}'.
+BadTargetArray=CopyTo target is not a one-dimensional array.
+CopyToNotEnoughSpace=Number of elements in source Enumerable is greater than available space from index to the end of destination array.
+MissingValueConverter=Cannot find converter.
+MultiBindingHasNoConverter=Cannot set MultiBinding because MultiValueConverter must be specified.
+NoUpdateSourceTriggerForInnerBindingOfMultiBinding=Cannot set UpdateSourceTrigger on inner Binding of MultiBinding. Only the default Immediate UpdateSourceTrigger is valid.
+BindingExpressionIsDetached=Cannot perform this operation when binding is detached.
+DuplicatesNotAllowed=Cannot have duplicates in this Collection.
+ImplementOtherMembersWithSort=If SortDescriptions is overridden in derived classes, then must also override '{0}'.
+NoCheckOrChangeWhenDeferred=Cannot change or check the contents or Current position of CollectionView while Refresh is being deferred.
+TwoWayBindingNeedsPath=Two-way binding requires Path or XPath.
+AdornedElementPlaceholderMustBeInTemplate=Can only use AdornedElementPlaceholder as part of Template.
+BindingCollectionContainsNonBinding=BindingCollection does not support items of type {0}. Only Binding is allowed.
+CannotWriteToReadOnly=A TwoWay or OneWayToSource binding cannot work on the read-only property '{1}' of type '{0}'.
+PathParametersIndexOutOfRange=Index {0} is out of range of the PathParameters list, which has length {1}.
+PathParameterIsNull=PathParameters list contains null at index {0}.
+PropertyPathIndexWrongType=Path indexer parameter has value that cannot be resolved to specified type: '{0}'
+ChangeSealedBinding=Binding cannot be changed after it has been used.
+CannotChangeLiveShaping=Cannot set '{0}' property when '{1}' property is false.
+
+; ObjectDataProvider
+ObjectDataProviderHasNoSource=ObjectDataProvider needs either an ObjectType or ObjectInstance.
+ObjectDataProviderCanHaveOnlyOneSource=ObjectDataProvider can only be assigned an ObjectType or an ObjectInstance, not both.
+ObjectDataProviderNonCLSException=Unknown exception while creating type '{0}' for ObjectDataProvider.
+ObjectDataProviderNonCLSExceptionInvoke=Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.
+ObjectDataProviderParameterCollectionIsNotInUse=ConstructorParameters cannot be changed because ObjectDataProvider is using user-assigned ObjectInstance.
+
+; RelativeSource
+RelativeSourceNotInFindAncestorMode=RelativeSource is not in FindAncestor mode.
+RelativeSourceInvalidAncestorLevel=AncestorLevel cannot be set to less than 1.
+RelativeSourceNeedsMode=Mode must be specified for RelativeSource.
+RelativeSourceNeedsAncestorType=AncestorType must be specified for RelativeSource in FindAncestor mode.
+RelativeSourceModeIsImmutable=RelativeSource.Mode is immutable after initialization; instead of changing the Mode on this instance, create a new RelativeSource or use a different static instance.
+RelativeSourceModeInvalid=Invalid value for RelativeSourceMode enum.
+
+; Validation
+ExceptionValidationRuleValidateNotSupported=Calling Validate method of ExceptionValidationRule is not supported. Validation results for ExceptionValidationRule are set implicitly by the binding engine when exceptions are caught.
+ValidationRule_UnexpectedValue=Validation rule '{0}' received unexpected value '{1}'.  (This could be caused by assigning the wrong ValidationStep to the rule.)
+ValidationRule_UnknownStep=Unrecognized ValidationStep '{0}' obtained from '{1}'.
+Validation_ConversionFailed=Value '{0}' could not be converted.
+
+; BindingGroup
+BindingGroup_NoEntry=The binding group has no binding that uses item '{0}' and property '{1}'.
+BindingGroup_ValueUnavailable=The value for item '{0}' and property '{1}' is not available because a previous validation rule deemed the value invalid, or because the value could not be computed (e.g., conversion failure).
+BindingGroup_CannotChangeGroups=The binding expression already belongs to a BindingGroup;  it cannot be added to a different BindingGroup.
+
+;PropertyPathWorker
+IndexedPropDescNotImplemented=Cannot use indexed Value on PropertyDescriptor.
+NonCLSException=Unknown exception during '{0}'.
+
+;ItemsControl
+DisplayMemberPathAndItemTemplateSelectorDefined=Cannot set both DisplayMemberPath and ItemTemplateSelector. When one is nonempty, it must be cleared before the other can be set.
+DisplayMemberPathAndItemTemplateDefined=Cannot set both DisplayMemberPath and ItemTemplate.
+ItemTemplateSelectorBreaksDisplayMemberPath=Cannot set ItemTemplateSelector while DisplayMemberPath is in use.
+
+; Template expansion / Replication
+CannotFindRemovedItem=Cannot find removed item.
+PanelIsNotItemsHost=Panel must have IsItemsHost set to true.
+CannotRemoveUnrealizedItems=Range of Remove({0},{1}) cannot include items without a corresponding user interface element.
+GenerationInProgress=Cannot call StartAt when content generation is in progress.
+GenerationNotInProgress=Must call GenerateNext while content generation is in progress.
+RemoveRequiresOffsetZero=GeneratorPosition '{0},{1}' passed to Remove does not have Offset equal to 0.
+RemoveRequiresPositiveCount='{0}' Count passed to Remove must be positive.
+MustBeTypeOrString='{0}' is not a valid type for DataTemplate.DataType; it must be String or Type.
+DataTypeCannotBeObject=DataTemplate.DataType cannot be type Object.
+ItemsPanelNotAPanel=VisualTree of ItemsPanelTemplate must contain a Panel. '{0}' is not a Panel.
+ItemsPanelNotSingleNode=VisualTree of ItemsPanelTemplate must be a single element.
+TemplateMustBeFE=A '{0}' type object is not valid as the root of a template; the root must be a FrameworkElement or derived type.
+
+; CollectionViewSource
+CollectionViewTypeIsInitOnly=CollectionViewType property can only be set during initialization.
+CannotSortView='{0}' view does not support sorting.
+CannotFilterView='{0}' view does not support filtering.
+CannotGroupView='{0}' view does not support grouping.
+
+; ListCollectionView
+RangeActionsNotSupported=Range actions are not supported.
+AddedItemNotInCollection=A collection Add event refers to item that does not belong to collection.
+AddedItemNotAtIndex=Added item does not appear at given index '{0}'.
+RemovedItemNotFound=Collection Remove event must specify item position.
+CollectionChangeIndexOutOfRange='{0}' index in collection change event is not valid for collection of size '{1}'.
+MultiThreadedCollectionChangeNotSupported=This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread.
+CannotMoveToUnknownPosition=Cannot Move items to an unknown position (-1).
+
+; CompositeCollectionView
+CompositeCollectionResetOnlyOnClear=CompositeCollectionView only supports NotifyCollectionChangeAction.Reset when the collection is empty or is being cleared.
+CollectionContainerMustBeUniqueForComposite=CompositeCollection can accept only CollectionContainers it does not already have.
+
+; EditableCollectionView
+MemberNotAllowedDuringAddOrEdit='{0}' is not allowed during an AddNew or EditItem transaction.
+MemberNotAllowedForView='{0}' is not allowed for this view.
+MemberNotAllowedDuringTransaction='{0}' is not allowed during a transaction begun by '{1}'.
+RemovingPlaceholder=Removing the NewItem placeholder is not allowed.
+CannotEditPlaceholder=Editing the NewItem placeholder is not allowed.
+CancelEditNotSupported=CancelEdit is not supported for the current edit item.
+
+; Application
+MultiSingleton=Cannot create more than one System.Windows.Application instance in the same AppDomain.
+ApplicationAlreadyRunning=Application is already running the Dispatcher.
+CannotCallRunMultipleTimes='{0}' cannot run multiple times.
+WindowPassedShouldBeOnApplicationThread='{0}' instance passed to Run method must be created on the same thread as object '{1}'.
+ShutdownModeWhenAppShutdown=Cannot set ShutdownMode when application is shutting down or already shut down.
+UnknownContainerFormat=Container is unrecognized format.
+ContentTypeNotSupported='{0}' ContentType is not valid.
+UriNotMatchWithRootType=The component '{0}' does not have a resource identified by the URI '{1}'.
+WebRequestCreationFailed=Cannot create web request for specified Pack URI.
+GetResponseFailed=Cannot get response for web request to '{0}'.
+GetStreamFailed=Cannot get stream from WebResponse for URI '{0}'.
+EntryAssemblyIsNull=Assembly.GetEntryAssembly() returns null. Set the Application.ResourceAssembly property or use the pack://application:,,,/assemblyname;component/ syntax to specify the assembly to load the resource from.
+UnableToLocateResource=Cannot locate resource '{0}'.
+CannotCallRunFromBrowserHostedApp=Browser-hosted application cannot call Application.Run method explicitly.
+AbsoluteUriNotAllowed=Cannot use absolute URI.
+CannotChangeMainWindowInBrowser=Cannot change MainWindow in a browser-hosted application.
+ArgumentPropertyMustNotBeNull='{1}' property of argument '{0}' must not be null.
+NonPackAppAbsoluteUriNotAllowed=Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.
+NonPackSooAbsoluteUriNotAllowed=Unsupported URI syntax. Method expects a relative URI or a pack://siteoforigin:,,,/ form of absolute URI.
+NonClsActivationException=Nonstandard exception occurred while activating the application.
+AppActivationException=Unable to activate application. Try deleting the online application cache.
+KillBitEnforcedShutdown=Unsecure component was detected while loading this application. The unsecure assembly was:
+ApplicationShuttingDown=The Application object is being shut down.
+AffectedByMsCtfIssue=The security configuration of this computer is incompatible with certain features used by this application.\nFor more information, see {0}.\n\nContact your administrator to change the security configuration or to apply the available hotfix.
+
+; ActiveXControls
+AxRequiresApartmentThread='{0}' ActiveX control cannot be instantiated because current thread is not in single-threaded apartment.
+AXNohWnd=Cannot get window handle for control '{0}'. Windowless ActiveX controls are not supported.
+AxNoEventInterface=Source object does not expose event interface '{0}'.
+AxNoSinkImplementation=The given sink object does not implement event interface '{0}'.
+AxNoSinkAdvise=Cannot Advise event interface '{0}'. ('{1}')
+AxNoConnectionPointContainer=Source object does not expose IConnectionPointContainer.
+AxNoConnectionPoint=Cannot create connection point for event interface '{0}'.
+WebBrowserNoCastToIWebBrowser2=Cannot get IWebBrowser2 from the native ActiveX control.
+AxWindowlessControl=ActiveX control is windowless. Windowless ActiveX controls are not supported.
+
+; Navigation
+HyperLinkTargetNotFound=Hyperlink Target not found.
+FailToNavigateUsingHyperlinkTarget=Failed to navigate using the Hyperlink target.
+WrongNavigateRootElement='{0}' root element is not valid for navigation.
+LoopDetected=Loop detected in markup page '{0}'.
+RequestNavigateEventMustHaveRoutedEvent=RequestNavigateEvent must have associated non-null RoutedEvent.
+MustImplementIUriContext=RequestNavigateEventArgs.OriginalSource must implement '{1}'.
+FailedToConvertResource=Failed to convert resource into object.
+WindowAlreadyClosed=NavigationWindow of PageFunction was already closed or navigated to different content.
+BamlIsNotSupportedOutsideOfApplicationResources=Navigation to BAML outside of the application is not supported.
+UiLessPageFunctionNotCallingOnReturn=A PageFunction without Content must either initiate a navigation or call OnReturn.
+
+; AppSecurityManager
+FailToLaunchDefaultBrowser=Failed to launch default browser.
+
+; NavigationWindow
+NoBackEntry=Cannot navigate because there is no entry in the Back stack of the journal.
+NoForwardEntry=Cannot navigate because there is no entry in the Forward stack of the journal.
+NoAddChild=Cannot add content to a NavigationWindow in markup.
+
+; Journaling
+InvalidOperation_CannotClearFwdStack=The forward journal stack cannot be cleared during forward navigation.
+InvalidOperation_MustImplementIPCCSOrHandleNavigating='{0}' root element must implement IProvideCustomContentState, or a Navigating event handler must set NavigatingCancelEventArgs.ContentStateToSave property.
+CustomContentStateMustBeSerializable='{0}' CustomContentState object must be serializable.
+InvalidOperation_CantChangeJournalOwnership=Journal ownership cannot be changed while there is a navigation in progress.
+InvalidOperation_NoJournal=This operation is available only when Frame has its own journal.
+InvalidOperation_AddBackEntryNoContent=A custom journal entry cannot be added for null content.
+InvalidPageFunctionType=Type '{0}' is not a valid PageFunction type.
+
+
+; PageFunction
+InvalidOperation_CannotReenterPageFunction=A PageFunction object cannot be started again before it has returned.
+ReturnEventHandlerMustBeOnParentPage=The PageFunction's Return event handler is required to be an instance method on the parent page object.
+FailedResumePageFunction=Failed to resume the page function of type {0}. Make sure the type has a default constructor and its assembly is accessible.
+
+; Data
+PropertyToSortByNotFoundOnType='{0}' type does not have property named '{1}', so cannot sort data collection.
+CannotDetermineSortByPropertiesForCollection=Cannot find type information on collection; property names to SortBy cannot be resolved.
+
+; Design
+
+;IntPtrStream
+
+; BamlReader
+BamlReaderClosed=BamlReader was closed or end of document was reached.
+BamlReaderNoOwnerType=Cannot find owner type of attribute '{0}' from assembly '{1}'. Assembly might not have been loaded properly.
+BamlScopeError='{0}' record found but expected '{1}'. BAML file might be corrupted.
+BamlBadExtensionValue=Cannot resolve known MarkupExtension value. BAML file might be corrupted.
+
+; BamlWriter
+BamlWriterBadAssembly='{0}' assembly cannot be loaded from current working directory or from the GAC.
+BamlWriterBadScope=Start and end write calls do not match. Start record = '{0}' End record = '{1}'.
+BamlWriterBadStream=Must pass a valid writable stream to BamlWriter constructor.
+BamlWriterBadXmlns=Cannot define xmlns declaration when writing record '{0}'.
+BamlWriterClosed=Cannot perform operation after BamlWriter.Close has been called.
+BamlWriterNoInElement='{0}' method can be called only after WriteStartElement. Cannot call after '{1}' record has been written.
+BamlWriterStartDoc=WriteStartDocument can be called only once and must be the first call made to BamlWriter.
+BamlWriterUnknownMarkupExtension=Unrecognized section in markup extension.
+
+; Markup Extensions
+MarkupExtensionDynamicOrBindingOnClrProp=A '{0}' cannot be set on the '{1}' property of type '{2}'. A '{0}' can only be set on a DependencyProperty of a DependencyObject.
+MarkupExtensionDynamicOrBindingInCollection=A '{0}' cannot be used within a '{1}' collection. A '{0}' can only be set on a DependencyProperty of a DependencyObject.
+MarkupExtensionNoContext=Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.
+MarkupExtensionProperty=TemplateBinding markup extension must have Property set before ProvideValue can be called.
+MarkupExtensionResourceKey=Resource markup extension must have ResourceKey property set before ProvideValue can be called.
+MarkupExtensionResourceNotFound='{0}' resource not found.
+
+; ColorConvertedBitmapExtension
+ColorConvertedBitmapExtensionSyntax=The syntax for the ProfileImage markup is not correct.
+ColorConvertedBitmapExtensionNoSourceImage=The source image for the ProfileImage markup is not specified.
+ColorConvertedBitmapExtensionNoSourceProfile=The source profile for the ProfileImage markup is not specified.
+
+; Parser
+ParserAbandonedTypeConverterText=TypeConverter syntax error encountered while processing initialization string '{0}'. Cannot have property elements on objects created via TypeConverter.
+ParserAsyncOnRoot=AsyncRecords attribute must be on the root tag.
+ParserAttachedPropInheritError='{0}' attached property is not defined on '{1}' or one of its base classes.
+ParserAttributeArgsLow='{0}' requires more attributes.
+ParserBadAssemblyName=Empty assemblyName is not valid for Mapper.SetAssemblyPath.
+ParserBadAssemblyPath=Empty assemblyPath is not valid for Mapper.SetAssemblyPath.
+ParserBadChild='{0}' type element cannot be set on complex property '{1}'. They are not compatible types.
+ParserBadConstructorParams=Cannot find public constructor for '{0}' that takes '{1}' arguments.
+ParserBadName='{0}' value for Name property is not valid. Name must start with a letter or an underscore and can contain only letters, digits, or underscores.
+ParserBadUidOrNameME=Markup extensions are not allowed for Uid or Name property values, so '{0}' is not valid.
+ParserBadNullableType='{0}' property cannot be set to object of type '{2}' because it is of incompatible type Nullable<{1}>.
+ParserBadKey=Key for dictionary cannot be type '{0}'. Only String, TypeExtension, and StaticExtension are valid.
+ParserBadSyncMode=Unrecognized SynchronousMode. Valid values are 'Async' and 'Sync' and are case sensitive.
+ParserBadTypeInArrayProperty='{1}' type object being added to array property is not expected type '{0}'.
+ParserBadEncoding=XAML stream is not encoded using Unicode or UTF8. These are the only valid XAML text encoding formats.
+ParserBamlEvent=Events are not supported in BAML files. '{0}' event handler is not valid.
+ParserBamlVersion=Version mismatch. BAML stream has version number '{0}' but parser can read only version '{1}'.
+ParserCannotAddChild='{0}' object cannot be added to '{1}'.
+ParserCannotConvertString='{0}' string cannot be converted to object of type '{1}'.
+ParserCannotSetValue='{2}' value cannot be assigned to property '{1}' of object '{0}'.
+ParserCantCreateTextComplexProp=A property of type '{0}' cannot be created from the string '{1}'.
+ParserCantCreateInstanceType=Cannot create instance for type '{0}'. Type must be public and have a public default constructor.
+ParserCantGetDPOrPi=Cannot find DependencyProperty or PropertyInfo for property named '{0}'. Property names are case sensitive.
+ParserCompatDuplicate=Cannot have two new namespaces compatible with the same old namespace using an XmlnsCompatibility attribute. '{0}' namespace is already marked compatible with '{1}'.
+ParserDefaultConverterProperty=The property '{1}' has type '{0}' and does not have an associated TypeConverter to parse the string '{2}'.
+ParserDefaultConverterElement=The Element type '{0}' does not have an associated TypeConverter to parse the string '{1}'.
+ParserDeferContentAsync=Cannot defer loaded content when loading from asynchronous BAML stream.
+ParserDefTag=The 'http://schemas.microsoft.com/winfx/2006/xaml' Namespace tag named '{0}' is not valid. Try compiling the XAML.
+ParserDefSharedOnlyInCompiled=Shared attribute in namespace 'http://schemas.microsoft.com/winfx/2006/xaml' can be used only in compiled resource dictionaries.
+ParserDictionarySealed=Cannot modify data in sealed XmlnsDictionary.
+ParserDupDictionaryKey='{0}' dictionary key is already used. Key attributes must be unique.
+ParserDuplicateMarkupExtensionProperty='{0}' property is already set on this markup extension and cannot be duplicated.
+ParserDuplicateProperty1='{0}' property has already been set and can be set only once.
+ParserDuplicateProperty2='{0}' and '{1}' properties refer to the same property. Duplicate property settings are not allowed.
+ParserEmptyComplexProp='{0}' property element cannot be empty. It must contain child elements or text.
+ParserEntityReference=Unrecognized EntityReference &{0};.
+ParserErrorCreatingInstance=Cannot create instance of '{0}' defined in assembly '{1}'.
+ParserErrorParsingAttrib='{1}' string is not a valid value for '{0}' property of type '{2}'.
+ParserErrorParsingAttribType='{1}' string cannot be set on '{0}' property. Consider using TypeExtension for '{1}'.
+ParserFailFindType=Cannot find type '{0}'. The assembly used when compiling might be different than that used when loading and the type is missing.
+ParserFailedToCreateFromConstructor=The type '{0}' failed construction.
+ParserFilterXmlReaderNoDefinitionPrefixChangeAllowed=Cannot change xmlns prefix of 'xaml' namespace within this scope.
+ParserFilterXmlReaderNoIndexAttributeAccess=Index-based access to attributes is not allowed. Access by name or use MoveToFirstAttribute or MoveToNextAttribute.
+ParserCannotAddAnyChildren=Cannot add content to an object of type '{0}'.
+ParserCannotAddAnyChildren2=Cannot add content of type '{1}' to an object of type '{0}'.
+ParserIAddChildText='{0}' does not support text children, so '{1}' cannot be added.
+ParserIEnumerableIAddChild='{0}' is a read-only IEnumerable property, so '{1}' must implement IAddChild.
+ParserInvalidContentPropertyAttribute=Invalid ContentPropertyAttribute on type '{0}', property '{1}' not found.
+ParserInvalidIdentifierName='{0}' name is not valid for identifier.
+ParserKeyOnExplicitDictionary=Cannot set '{0}' attribute in '{1}' element used as an explicit tag of dictionary-type property '{2}'.
+ParserKeysAreStrings=Keys and values in XmlnsDictionary must be strings.
+ParserLineAndOffset=Line '{0}' Position '{1}'.
+ParserMapPIMissingKey=Missing XmlNamespace, Assembly, or ClrNamespace in Mapping instruction.
+ParserMapPIMissingAssembly=Cannot find assembly information referred to in Mapping instruction. BAML stream might be corrupted or BAML version is incompatible with this version of parser.
+ParserMappingUriInvalid=Mapping URI '{0}' is not valid.
+ParserMarkupExtensionBadConstructorParam=Format is not valid for markup extension that specifies constructor arguments in '{0}'.
+ParserMarkupExtensionBadDelimiter=Arguments '{0}' are not valid. Markup extensions require one equal sign between name and value, and one comma between constructor parameters and name/value pairs.
+ParserMarkupExtensionNoEndCurlie=Markup extension expressions must end with '{0}'.
+ParserMarkupExtensionNoNameValue=Name/value pairs in markup extensions must have the format 'Name = Value' with each pair separated by a comma. '{0}' does not follow this format.
+ParserMarkupExtensionNoQuotesInName=Names and Values in a markup extension cannot contain quotes. '{0}' markup extension arguments are not valid.
+ParserMarkupExtensionTrailingGarbage='{1}' text is not valid after the closing '{0}' of a markup extension expression.
+ParserMarkupExtensionUnknownAttr=Unrecognized property '{0}' for type '{1}' found while parsing markup extension.
+ParserMarkupExtensionDelimiterBeforeFirstAttribute=Arguments '{0}' are not valid. Markup extensions require only spaces between the markup extension name and the first parameter. A comma or equal sign is not allowed before the first parameter.
+ParserMetroUnknownAttribute=Unrecognized '{0}' attribute in namespace '{1}'. Only Key attribute is valid in this namespace.
+ParserMultiBamls=Cannot use multiple writable BamlRecords at the same time.
+ParserMultiRoot=Cannot have multiple roots on a stream that is being parsed asynchronously.
+ParserAttributeNamespaceMisMatch='{0}' property must be in default namespace or in element namespace '{1}'.
+ParserNestedComplexProp='{0}' property element cannot be nested directly inside another property element.
+ParserNoAttrArray=Cannot use attributes on Array tags.
+ParserNoChildrenTag=Element content is not valid for type '{0}'.
+ParserNoComplexMulti=Cannot have more than one tag under property element '{0}'.
+ParserNoDefaultConstructor=There is no public default constructor for '{0}'. This might be referenced by a '{0}' tag, or it might be the default type for a property element.
+ParserNoDefaultPropConstructor='{1}' property is set to element of type '{0}', but instance of '{0}' cannot be created. It might be the default type for that property and is either abstract or does not have a default constructor.
+ParserNoDictionaryKey=Objects added to IDictionary must have Key attribute or some other type of associated Key.
+ParserNoDictionaryName=Key attribute can be used only on a tag contained in an IDictionary type property.
+ParserNoDigitEnums='{1}' cannot be used as a value for '{0}'. Numbers are not valid enumeration values.
+ParserNoElementCreate2=Cannot create object of type '{0}'. CreateInstance failed, which can be caused by not having a public default constructor for '{0}'.
+ParserNoEvents=Must compile XAML file that specifies events.
+ParserNoEventTag='{0}' event handler cannot be specified using property element syntax.
+ParserNoMatchingArray='{0}' property of unexpected type. Expected type is Array.
+ParserNoMatchingIDictionary='{0}' attribute in 'http://schemas.microsoft.com/winfx/2006/xaml' namespace is valid only when used with an IDictionary property.
+ParserNoMatchingIList='{0}' property must implement IList so that an item can be added to it.
+ParserNoNamespace=Must define namespace URI for object '{0}'.
+ParserNoPropOnComplexProp=Cannot set properties on property elements.
+ParserNoResource=Cannot find resource named '{0}'. Resource names are case sensitive.
+ParserNoSerializer='{0}' does not have custom serializer so it cannot be parsed.
+ParserNoSetterChild=Style Setters cannot have child elements. '{0}' type tag is not valid.
+ParserNotMarkupExtension='{0}' is not a valid markup extension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be subclass of MarkupExtension.
+ParserNoType=Cannot find type '{0}'. Type names are case sensitive.
+ParserNoTypeConv='{0}' type does not have a public TypeConverter class.
+ParserNotMarkedPublic=Cannot create an instance of type '{0}'. It is not marked as a public type.
+ParserNotAllowedInternalType=Cannot create an instance of type '{0}'. It is not an accessible type.
+ParserNullReturned=The '{0}' property with a string value of '{1}' was converted and a null value returned. TypeConverter might not be able to convert string.
+ParserNullPropertyCollection=Cannot add element to '{0}'; the property value is null.
+ParserOwnerEventMustBePublic=Mapper.GetRoutedEvent requires a public ownerType. '{0}' is not public.
+ParserParentDO=DependencyProperty can be set only on DependencyObject. '{0}' is not a DependencyObject.
+ParserPrefixNSProperty='{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve property '{1}'.
+ParserPrefixNSElement='{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve element '{1}'.
+ParserPropertyCollectionClosed=Cannot add element to property '{0}', because the property can have only one child element if it uses an explicit collection tag.
+ParserPropNoValue='{0}' property does not have a value.
+ParserPublicType=Only public classes can be used in markup. '{0}' type is not public.
+ParserReadOnlyProp='{0}' property is read-only and cannot be set from markup.
+ParserResourceKeyType=Type reference cannot find public type named '{0}'.
+ParserSyncOnRoot=SynchronousMode attribute must be on root tag.
+ParserTextInvalidInArrayOrDictionary=Text is not valid in IDictionary or Array property.
+ParserTextInComplexProp=Cannot have both text '{0}' and child element '{1}' in a property element.
+ParserTooManyAssemblies=Only 4095 different assemblies can be referenced in a single XAML file.
+ParserUndeclaredNS='{0}' is an undeclared namespace.
+ParserUnexpectedEndEle=Unexpected end of element when parsing an object. BAML stream might be corrupted.
+ParserUnexpInBAML='{0}' record unexpected in BAML stream. BAML stream might be corrupted.
+ParserUnknownAttribute=The property '{0}' does not exist in XML namespace '{1}'.
+ParserUnknownBaml=Unrecognized BAML record of type '{0}'. BAML stream might be corrupted or there is a version mismatch between BAML stream and parser.
+ParserUnknownDefAttribute=The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.
+ParserUnknownPresentationOptionsAttribute='{0}' attribute does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml/presentation/options'.
+ParserUnknownDefAttributeCompiler='{0}' attribute does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml' namespace.
+ParserUnknownTag=The tag '{0}' does not exist in XML namespace '{1}'.
+ParserUnknownXmlType='{0}' XML node not supported.
+ParserWriterNoSeekEnd=XAML stream writer does not support seek from end.
+ParserWriterUnknownOrigin=SeekOrigin value is not valid. Only SeekOrigin.Begin and SeekOrigin.Current are valid.
+ParserXmlReaderNoLineInfo='{0}' class must implement IXmlLineInfo to get position information for the XAML being parsed.
+ParserNoNameOnType='{0}' type cannot have Name attribute. Value types and types without a default constructor cannot be used as items within a dictionary.
+ParserErrorContext_Type=Error at object '{0}'.
+ParserErrorContext_File=Error in markup file '{0}'.
+ParserErrorContext_Type_File=Error at object '{0}' in markup file '{1}'.
+ParserErrorContext_Line=Error at Line {0} Position {1}.
+ParserErrorContext_Type_Line=Error at object '{0}', Line {1} Position {2}.
+ParserErrorContext_File_Line=Error in markup file '{0}' Line {1} Position {2}.
+ParserErrorContext_Type_File_Line=Error at object '{0}' in markup file '{1}' Line {2} Position {3}.
+ParserCannotConvertInitializationText=Cannot convert the string '{0}' into a '{1}' object.
+ParserCannotConvertPropertyValueString=Cannot convert string '{0}' in attribute '{1}' to object of type '{2}'.
+ParserCannotConvertPropertyValue=Cannot convert the value in attribute '{0}' to object of type '{1}'.
+ParserCantSetAttribute={0} '{1}' cannot be set because it does not have an accessible {2} accessor.
+ParserCantGetProperty='{0}' is a read only property of type IList or IDictionary and cannot be set as it does not have an accessible get accessor.
+ParserReadOnlyNullProperty='{0}' is a read-only property of type IList or IDictionary and get accessor returns null.
+ParserCantSetTriggerCondition='{0}' cannot be set as the value of a Trigger's Property attribute because it does not have a public get accessor.
+ParserEventDelegateTypeNotAccessible=Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.
+ParserCantCreateDelegate=Cannot create event delegate '{0}' for handler method '{1}'. '{0}' has incorrect access level or its assembly does not allow access.
+ParserNoNestedXmlDataIslands=Cannot nest XML data islands.
+ParserXmlIslandUnexpected=XML data island cannot be consumed by element or property '{0}'.
+ParserXmlIslandMissing=Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in <x:XData> ... </x:XData>.
+ParserCantSetContentProperty=Cannot set content property '{0}' on element '{1}'. '{0}' has incorrect access level or its assembly does not allow access.
+ParserContentMustBeContiguous=Property elements cannot be in the middle of an element's content. They must be before or after the content.
+ParserCanOnlyHaveOneChild='{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.
+ParserProvideValueCantSetUri=Cannot set BaseUri on this IUriContext implementation.
+ParserTypeConverterTextUnusable=TypeConverter syntax error encountered while processing initialization string '{0}'. Element attributes are not allowed on objects created via TypeConverter.
+ParserXmlLangPropertyValueInvalid=XmlLangProperty attribute must specify a property name.
+ParserNoNameUnderDefinitionScopeType=Cannot set Name attribute value '{0}' on element '{1}'. '{1}' is under the scope of element '{2}', which already had a name registered when it was defined in another scope.
+ParserBadString=Cannot convert string value '{0}' to type '{1}'.
+ParserTypeConverterTextNeedsEndElement=TypeConverter initialization string '{0}' must be immediately followed by the close tag.
+ParserInvalidStaticMember=Cannot find the static member '{0}' on the type '{1}'.
+ParserBadMemberReference='{0}' member is not valid because it does not have a qualifying type name.
+ParserNoDPOnOwner='{0}' property is not a valid DependencyProperty on the type '{1}'. Verify that the property has a DependencyProperty defined with a member field that ends with the 'Property' suffix.
+ParserNoPropType=Cannot find the type of the property '{0}'.
+ParserFailedEndInit=Failed object initialization (ISupportInitialize.EndInit).
+ParserCannotReuseXamlReader=The XamlReader instance is in use, so it cannot be used for another load operation.
+PositionalArgumentsWrongLength=Cannot create MarkupExtension Arguments is the wrong length vector.
+
+
+;Serialization
+InvalidDeSerialize=Serializer does not support Convert operations.
+InvalidCustomSerialize=Serializer does not support custom BAML serialization operations.
+MustBeOfType='{0}' must be of type '{1}'.
+NonWhiteSpaceInAddText='{0}' text cannot be added because text is not valid in this element.
+TypeValueSerializerUnavailable=Conversion by ValueSerializer failed because no value serializer could be found for Type '{0}'.
+UnserializableKeyValue=Key value of type '{0}' cannot be serialized. Keys can only be a string, a type, or an enumeration value.
+ValueSerializerContextUnavailable=Conversion by a ValueSerializer failed because the IValueSerializerContext was not provided '{0}'.
+MarkupWriter_CannotSerializeNonPublictype=Cannot serialize a non-public type '{0}'.
+MarkupWriter_CannotSerializeNestedPublictype=Cannot serialize a nested public type '{0}'.
+MarkupWriter_CannotSerializeGenerictype=Cannot serialize a generic type '{0}'.
+
+; Table
+
+; StyleRuleCollectionParser (to remove)
+
+; Hosting
+
+; Filtering
+FilterBindRegionNotImplemented=BindRegion is not implemented.
+FilterInitInvalidAttributes=Count and contents of attributes passed to IFilter::Init do not match.
+FilterGetValueMustBeStringOrDateTime=Only string and DateTime types are supported for marshalling to PROPVARIANT.
+FilterGetValueAlreadyCalledOnCurrentChunk=GetValue was already called on current chunk.
+FilterGetTextBufferOverflow=Returned string is too long for the buffer provided.
+FilterGetTextNotSupported=GetText operation is not supported on current chunk.
+FilterGetValueNotSupported=GetValue operation is not supported on current chunk.
+FilterPropSpecUnknownUnionSelector=PROPSPEC union selector is unrecognized.
+FilterGetChunkNoStream=Filter does not have a working file. This is typically caused by a missing or failed call to IPersistFile::Load.
+FileNameNullOrEmpty=File name is null or empty.
+FileToFilterNotLoaded=File to filter is not loaded.
+FilterLoadInvalidModeFlag=Mode word contains flags that are not valid.
+XamlFilterNestedFixedPage=Cannot nest FixedPage in FixedPage.
+FilterEndOfChunks=Filter has no more chunks to return.
+FilterNullGetTextBufferPointer=Buffer address passed to GetText cannot be NULL.
+XmlGlyphRunInfoIsNonGraphic=XmlGlyphRunInfo does not support access to graphic information.
+UnexpectedXmlNodeInXmlFixedPageInfoConstructor=\"{{{0}}}{1}\" element found. Expected fixed page element ({{{2}}}{3}).
+StreamDoesNotSupportWrite=Cannot change content of read-only stream.
+FilterIPersistFileIsReadOnly=The only IPersistFile operation supported by the component is Load.
+FilterIPersistStreamIsReadOnly=The only IPersistStream operation supported by the component is Load.
+AuxiliaryFilterReturnedAnomalousCountOfCharacters=Auxiliary filter returned count of characters greater than size of GetText buffer.
+CorePropertyEnumeratorPositionedOutOfBounds=Enumerator for core properties is positioned outside bounds of collection.
+CannotSetNegativePosition=Cannot set position of the stream to a negative value.
+
+; AnnotationAdorner
+AnnotationAdorner_NotUIElement=The argument component has to be a UIElement
+
+; Annotations - Commands
+CreateHighlight=_Highlight
+CreateTextNote=Add Text _Note
+CreateInkNote=Add In_k Note
+ClearHighlight=_Clear Highlight
+DeleteNotes=D_elete Notes
+DeleteAnnotations=_Delete Notes and Highlights
+
+; Annotations - Object Model
+XmlNodeAlreadyOwned=Cannot add '{0}' more than once to the same '{1}'.
+InvalidGuid=Guid.Empty is not a valid value.
+TypeNameMustBeSpecified=Must specify type name and namespace.
+ModificationEarlierThanCreation=Last modification time cannot be earlier than creation time.
+AlreadyHasParent=Item is already part of another parent.
+
+; Annotations -  Printing
+OnlyFlowAndFixedSupported=Only FlowDocument and FixedDocument are supported DocumentPaginators.
+
+; Annotations -  Serialization
+RequiredAttributeMissing=The required '{0}' attribute is missing from element '{1}'.
+InvalidXmlContent='{0}' element contains invalid content.
+CannotSerializeInvalidInstance=Cannot serialize Annotation created with default constructor. Cannot use default constructor directly.
+UnexpectedAttribute=Unexpected attribute '{0}' in element '{1}'.
+InvalidAttributeValue=The required '{0}' attribute value is not valid.
+
+; Annotations - Stores
+AnnotationAlreadyExists=Annotation with this ID already exists in the store.
+CannotParseId=Cannot parse ID attribute into GUID.
+StreamNotSet=Stream not set on XmlStreamStore.
+ObjectDisposed_StoreClosed=Cannot access a closed store.
+StreamCannotBeWritten=Cannot write to stream.
+SeekNegative=Cannot set seek pointer to negative position.
+NullUri=null URI in supported namespaces list.
+DuplicatedUri=Duplicated URI in supported namespaces.
+DuplicatedCompatibleUri=Duplicated URI in compatible namespaces list.
+InvalidNamespace='{0}' namespace is not a valid URI.
+StreamDoesNotSupportSeek=The stream is not valid because it does not support seeking.
+
+; Annotations -  Anchoring
+TextSegmentsMustNotOverlap=TextSegments in the same anchor must not overlap.
+SelectionMustBeServiceProvider=Selection for this processor must be an IServiceProvider.
+IncorrectLocatorPartType='{0}' locator part type is not valid.
+InvalidLocatorPart=Locator part is not valid. Missing or malformed name/value pair: '{0}'.
+InvalidSubTreeProcessor='{0}' subtree processor is not valid.
+NoProcessorForSelectionType=Must register SelectionProcessor for selection type '{0}'.
+WrongSelectionType=Selection type is not valid for this SelectionHandler.
+StartNodeMustBeDocumentPageViewOrFixedPage=startNode must be a DocumentPageView or FixedPage.
+StartNodeMustBeFixedPageProxy=startNode must be a FixedPageProxy.
+SelectionDoesNotResolveToAPage='{0}' selection point does not belong to DocumentViewer page.
+IncorrectAnchorLength=Zero-length TextRange is not valid for this processor.
+InvalidStartNodeForTextSelection=Start node is not valid because it does not contain text selection's boundaries.
+
+; Annotations - Service
+AnnotationServiceNotEnabled=AnnotationService is not enabled.
+AnnotationServiceIsAlreadyEnabled=AnnotationService is already enabled.
+AnnotationAlreadyExistInService=Added annotation already exists in annotation service.
+ParameterMustBeLogicalNode=Parameter must be FrameworkElement or FrameworkContentElement.
+OnlyFlowFixedSupported=AnnotationService supports only FlowDocument and FixedDocument.
+AnnotationServiceAlreadyExists=AnnotationService is already enabled for this element.
+
+; Annotations - Helper
+EmptySelectionNotSupported=Cannot create annotations anchored to empty text selection.
+InvalidHighlightColor=Highlight colors must be of type SolidColorBrush.
+InvalidSelectionPages=Selection is not valid because it spans pages that do not exist.
+
+; Annotations - Components
+NotHighlightAnnotationType='{0}' annotation type is not valid, only Highlights are supported.
+ComponentNotInPresentationContext='{0}' component is not in presentation context.
+ComponentAlreadyInPresentationContext='{0}' component is already in presentation context.
+NoPresentationContextForGivenElement=Cannot find presentation context for element '{0}'.
+MoreThanOneAttachedAnnotation=Component cannot have more than one AttachedAnnotation.
+InvalidAttachedAnnotation=AttachedAnnotation is not valid.
+MissingAnnotationHighlightLayer=AnnotationHighlightLayer was removed.
+NoAttachedAnnotationToModify=There is no AttachedAnnotation to modify.
+InvalidAttachedAnchor=AttachedAnchor is not valid.
+InvalidValueSpecified=AttachedAnnotation value is not valid.
+UndefinedHighlightAnchor=Undefined HighlightAnchor.
+
+;Undo
+UndoNotInNormalState=This method can only be called while UndoService.State == UndoState.Normal.
+UndoUnitAlreadyOpen=Cannot Reopen undo unit while another unit is already open.
+UndoUnitNotOnTopOfStack=Cannot Reopen undo unit that is not on top of stack.
+UndoContainerTypeMismatch=Value of Container must be type IUndoService or IParentUndoUnit.
+UndoUnitCantBeOpenedTwice=Cannot open undo unit that is already open.
+UndoUnitCantBeAddedTwice=Cannot add undo unit to itself or one of its own children.
+UndoServiceDisabled=Cannot use UndoService while it is disabled.
+UndoUnitLocked=Cannot modify locked unit.
+UndoNoOpenUnit=Cannot close undo unit because no opened unit exists.
+UndoNoOpenParentUnit=Cannot add nonparent undo unit when there is no open IParentUndoUnit.
+UndoUnitNotFound=Cannot close unit. Cannot find unit as open unit in this ParentUndoUnit or its children.
+UndoManagerAlreadyAttached=UndoManager is already attached to some scope.
+UndoUnitOpen=Cannot Undo or Redo while undo unit is open.
+
+;TextBoxBase
+TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock=Cannot set the IsUndoEnabled property inside the scope of DeclareChangeBlock or BeginChange/EndChange calls.
+TextBoxBase_UnmatchedEndChange=This call to EndChange does not follow a matching BeginChange call.
+
+;TextBox
+TextBoxInvalidTextContainer=Only Decorator or ScrollViewer elements can be used as PART_ContentHost.
+TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent=ScrollViewer marked as PART_ContentHost must have no content.
+TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent=Decorator marked as PART_ContentHost must have no content.
+TextBoxMinMaxLinesMismatch=Value of MaxLines must be greater than or equal to value of MinLines.
+TextBoxInvalidChild=The object '{0}' cannot be added to the TextBox, since it can contain only plain text.
+
+;RichTextBox
+RichTextBox_DocumentBelongsToAnotherRichTextBoxAlready=Document already belongs to another RichTextBox.
+RichTextBox_PointerNotInSameDocument=Cannot set CaretPosition to be outside of RichTextBox.
+RichTextBox_CantSetDocumentInsideChangeBlock=Cannot set the Document property inside the scope of DeclareChangeBlock or BeginChange/EndChange calls.
+
+;PasswordBox
+PasswordBoxInvalidTextContainer=Only Decorator and ScrollViewer can be used as PART_ContentHost.
+
+;TextEditor
+TextEditorCanNotRegisterCommandHandler='{0}' class editing commands cannot be registered because they are registered on its derived class '{1}'.
+TextEditorPropertyIsNotApplicableForTextFormatting='{0}' property is not valid for text formatting.
+TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty='{0}' parameter type is not valid for formatting property '{1}'.
+TextEditorCopyPaste_EntryPartIsMissingInXamlPackage=Entry part is missing in XAML package
+TextEditorSpellerInteropHasBeenDisposed=Cannot use spelling checker because it was previously disposed.
+
+;CustomDictionarySources
+CustomDictionarySourcesUnsupportedURI=Only local file path or pack Uri is supported.
+CustomDictionaryFailedToLoadDictionaryUri=Loading custom dictionary file at {0} failed.
+CustomDictionaryFailedToUnLoadDictionaryUri=Unloading custom dictionary file at {0} failed.
+CustomDictionaryNullItem=Input collection cannot contain null item.
+CustomDictionaryItemAlreadyExists=Specified item has already been added to the collection.
+
+;Isolation
+
+;Byte Stream
+SetLengthNotSupported=Stream does not support SetLength.
+ReadCountNegative=Count of bytes to read cannot be negative.
+WriteNotSupported=Stream does not support writing.
+
+;Adorners
+AdornedElementNotFound=Cannot access adorners on element that has no adorners.
+AdornerNotFound=Cannot access adorner that has not been added to this AdornerLayer.
+
+; ItemCollection
+ItemsSourceInUse=Operation is not valid while ItemsSource is in use. Access and modify elements with ItemsControl.ItemsSource instead.
+CannotUseItemsSource=Items collection must be empty before using ItemsSource.
+ItemCollectionRemoveArgumentOutOfRange=removeIndex is less than zero or greater than or equal to Count.
+ItemCollectionShouldUseInnerSyncRoot=ItemCollection cannot provide a sync root for synchronization because the underlying collection can be changed. Use ItemsControl.ItemsSource or ItemCollection.InnerList to get the sync root for the respective inner collections.
+ItemCollectionHasNoCollection=Operation is not valid while ItemCollection has no inner collection. ItemCollection is uninitialized or binding on ItemsControl.ItemSource supplied null for collection.
+
+; Reach Package
+MoreThanOneStartingParts=Container has more than one Starting Part relationship.
+
+; ItemContainerGenerator
+CollectionAddEventMissingItem=After a CollectionChange.Add event, Items collection does not contain the added item '{0}'.\n This could happen if the event sender supplied incorrect information in CollectionChangedEventArgs.
+CannotRecyleHeterogeneousTypes=ItemsHost panel cannot use VirtualizationMode == Recycling because the IGeneratorHost.GetContainerForItemOverride method returns containers that have different types.
+Generator_Readme0=Information for developers (use Text Visualizer to read this):
+Generator_Readme1=This exception was thrown because the generator for control '{0}' with name '{1}' has received sequence of CollectionChanged events that do not agree with the current state of the Items collection.
+Generator_Readme2=The following differences were detected:
+Generator_Readme3=One or more of the following sources may have raised the wrong events:
+Generator_Readme4=(The starred sources are considered more likely to be the cause of the problem.)
+Generator_Readme5=The most common causes are (a) changing the collection or its Count without raising a corresponding event, and (b) raising an event with an incorrect index or item parameter.
+Generator_Readme6=The exception's stack trace describes how the inconsistencies were detected, not how they occurred.
+Generator_Readme7=To get a more timely exception, set the attached property '{0}' on the generator to value '{1}' and rerun the scenario.
+Generator_Readme8=One way to do this is to run a command similar to the following:\n   {0}
+Generator_Readme9=from the Immediate window.  This causes the detection logic to run after every CollectionChanged event, so it will slow down the application.
+Generator_CountIsWrong=Accumulated count {0} is different from actual count {1}.  [Accumulated count is (Count at last Reset + #Adds - #Removes since last Reset).]
+Generator_ItemIsWrong=At index {0}:  Generator's item '{1}' is different from actual item '{2}'.
+Generator_MoreErrors=   (... {0} more instances ...)
+Generator_Unnamed=(unnamed)
+Generator_Inconsistent=An ItemsControl is inconsistent with its items source.\n  See the inner exception for more information.
+
+; ViewManager
+CollectionView_NameTypeDuplicity=Cannot get CollectionView of type '{0}' for CollectionViewSource that already uses type '{1}'.
+CollectionView_ViewTypeInsufficient='{0}' does not have a constructor that accepts collection type '{1}'.
+CollectionView_WrongType='{0}' type is not a CollectionView type.
+CollectionView_MissingSynchronizationCallback=Synchronization callback for '{0}' collection is no longer available.\n This could happen if the callback is an anonymous method.
+AccessCollectionAfterShutDown=AccessCollection for '{0}' collection cannot be called after shutdown.
+
+; ComboBox
+
+; ListView
+ListView_IllegalChildrenType=Cannot add object data other than GridViewColumn type.
+ListView_NotAllowShareColumnToTwoColumnCollection=Sharing GridViewColumn among multiple GridViewColumnCollections or adding the same GridViewColumn into one GridViewColumnCollection more than once is not allowed.
+ListView_GridViewColumnCollectionIsReadOnly=GridViewColumnCollection is read-only now.
+ListView_ViewCannotBeShared=View can't be shared by more than one ListView.
+ListView_MissingParameterlessConstructor='{0}' does not have a parameterless constructor. GridViewHeaderRowPresenter needs the constructor to create a floating header during column reorder operation.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; US-EN String Table For DataGrid and DatePicker
+; Default Resource (used for English and non-represented locales)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; DataGrid Automation Strings
+DataGridCellItemAutomationPeer_NameCoreFormat=Item: {0}, Column Display Index: {1}
+DataGridCellItemAutomationPeer_LocalizedControlType=data grid cell
+DataGridColumnHeaderItemAutomationPeer_NameCoreFormat=Column Header: Display Index: {0}
+
+; DataGid Automation Exception Strings
+DataGridColumnHeaderItemAutomationPeer_Unsupported=Can not move or rotate DataGridColumnHeader.
+DataGridColumnHeaderItemAutomationPeer_Unresizable=That column can not be resized.
+
+CalendarAutomationPeer_CalendarButtonLocalizedControlType=Calendar button
+CalendarAutomationPeer_DayButtonLocalizedControlType=Day button
+CalendarAutomationPeer_BlackoutDayHelpText=Blackout Day - {0}
+Calendar_NextButtonName=Next button
+Calendar_PreviousButtonName=Previous button
+
+DatePickerAutomationPeer_LocalizedControlType=date picker
+DatePickerTextBox_DefaultWatermarkText=<Enter text here>
+DatePicker_DropDownButtonName=Show Calendar
+DatePicker_WatermarkText=Select a date
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                    DataGrid and DatePicker Exception Strings
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; DataGrid
+DataGrid_ColumnIndexOutOfRange=The index for the DataGridColumn with Header '{0}' is out of range. Index must be greater than or equal to 0 and less than Columns.Count.
+DataGrid_ColumnDisplayIndexOutOfRange=The DisplayIndex for the DataGridColumn with Header '{0}' is out of range.  DisplayIndex must be greater than or equal to 0 and less than Columns.Count.
+DataGrid_DisplayIndexOutOfRange=The given DisplayIndex is out of range.  DisplayIndex must be greater than or equal to 0 and less than Columns.Count.
+DataGrid_InvalidColumnReuse=DataGridColumn with Header '{0}' already exists in the Columns collection of a DataGrid. DataGrids cannot share columns and cannot contain duplicate column instances.
+DataGrid_DuplicateDisplayIndex=DisplayIndex is already used for other column.  DisplayIndex should be unique per column.
+DataGrid_NewColumnInvalidDisplayIndex=Cannot add a column with an invalid DisplayIndex to the DataGrid.Columns collection.
+DataGrid_NullColumn=Cannot add a null column to a DataGrid's column collection.
+DataGrid_ReadonlyCellsItemsSource=The ItemsSource for the DataGridCellsPresenter is read-only.
+DataGrid_InvalidSortDescription=The SortDescriptions added are not valid. The probable solutions are to set the CanUserSort on the Column to false, or to use SortMemberPath property on the Column, or to handle the Sorting event on DataGrid.
+DataGrid_ProbableInvalidSortDescription=Items refresh of the DataGrid failed. One of the probable causes is that the SortDescriptions added are not valid, in which case probable solutions are to set the CanUserSort on the Column to false, or to use SortMemberPath property on the Column, or to handle the Sorting event on DataGrid.
+DataGrid_AutomationInvokeFailed=Invoke operation failed. Cannot edit another cell or row while the current one has validation errors.
+DataGrid_ColumnIsReadOnly=Cannot edit a cell when the DataGridColumn is in Read-Only mode.
+
+; DataGrid Length
+DataGridLength_InvalidType=Invalid type.
+DataGridLength_Infinity=Value should not be infinity.
+
+; DataGrid Selection
+DataGrid_CannotSelectCell=Cannot change cell selection when the SelectionUnit is FullRow.
+DataGridRow_CannotSelectRowWhenCells=The current value of the SelectionUnit property on the parent DataGrid prevents rows from being selected.
+
+; SelectedCellsCollection
+SelectedCellsCollection_InvalidItem=The DataGridItem is invalid.
+SelectedCellsCollection_DuplicateItem=The collection already contains the item.
+
+; VirtualizedCellInfoCollection
+VirtualizedCellInfoCollection_IsReadOnly=The collection cannot be modified.
+VirtualizedCellInfoCollection_DoesNotSupportIndexChanges=This collection does not support changing values with specific indexes.
+
+; Copy
+ClipboardCopyMode_Disabled=Cannot perform copy if ClipboardCopyMode is None.
+
+;Calendar
+Calendar_OnDisplayModePropertyChanged_InvalidValue=DisplayMode value is not valid.
+Calendar_OnFirstDayOfWeekChanged_InvalidValue=FirstDayOfWeek value is not valid.
+Calendar_OnSelectedDateChanged_InvalidValue=SelectedDate value is not valid.
+Calendar_OnSelectedDateChanged_InvalidOperation=The SelectedDate property cannot be set when the selection mode is None.
+CalendarCollection_MultiThreadedCollectionChangeNotSupported=This type of Collection does not support changes to its SourceCollection from a thread different from the Dispatcher thread.
+Calendar_CheckSelectionMode_InvalidOperation=The SelectedDates collection can be changed only in a multiple selection mode. Use the SelectedDate in a single selection mode.
+Calendar_OnSelectionModeChanged_InvalidValue=SelectionMode value is not valid.
+Calendar_UnSelectableDates=Value is not valid.
+
+;DatePicker
+DatePickerTextBox_TemplatePartIsOfIncorrectType=The template part {0} is not an instance of {1}.
+DatePicker_OnSelectedDateFormatChanged_InvalidValue=DatePickerFormat value is not valid.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                 Calender UIAutomation strings
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+CalendarAutomationPeer_MonthMode=Month
+CalendarAutomationPeer_YearMode=Year
+CalendarAutomationPeer_DecadeMode=Decade
+CalendarNamePropertyValueNotValid=It must be possible to parse 'value' to a DateTime and the result must be greater than 'startAfter'.
+
+; Accessibility
+SetFocusFailed=The target element cannot receive focus.
+PropertyNotSupported=Cannot call FindItemByProperty on this ItemsControl because the specified property is not supported.
+InavalidStartItem=StartItem is not valid.
+VirtualizedElement=Element does not exist or it is virtualized; use VirtualizedItem Pattern if it is supported.
+UIA_OperationCannotBePerformed=Cannot perform operation.
+TextProvider_InvalidPoint=Point is not within the client area of TextPattern provider.
+TextProvider_InvalidChildElement=Element is not within the document range.
+TextProvider_TextSelectionNotSupported=Text selection is not supported on this element.
+TextRangeProvider_WrongTextRange=Range must come from the same text provider.
+TextRangeProvider_InvalidParameterValue='{0}' value is not valid for parameter '{1}'.
+TextRangeProvider_EmptyStringParameter='{0}' string cannot be empty.
+
+; TextView
+TextViewInvalidLayout=Layout information on TextView is not valid. Must call Validate before calling this method.
+
+; ThemeDictionaryExtension
+ThemeDictionaryExtension_Name=AssemblyName property must be specified on ThemeDictionaryExtension.
+ThemeDictionaryExtension_Source=ThemeDictionaryExtension can be applied only to the Source property on ResourceDictionary.
+
+; ProgressBar
+ProgressBarReadOnly=Cannot set value on ProgressBar because it is read-only.
+
+; File Open and Save Common Dialogs
+CantShowModalOnNonInteractive=Cannot show a file dialog unless the application is running in UserInteractive mode.
+FileDialogInvalidFilter=Provided filter string is not valid. Filter string should contain a description of the filter, followed by a vertical bar and the filter pattern. Must also separate multiple filter description and pattern pairs by a vertical bar. Must separate multiple extensions in a filter pattern with a semicolon. Example: \"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"
+FileDialogInvalidFilterIndex=Filter index is not valid.
+FileDialogSubClassFailure=Cannot subclass a file dialog because sufficient memory is not available.
+FileNameMustNotBeNull=Cannot access file because file name is null or empty.
+CantShowOnDifferentThread=Cannot show a dialog that was created on a different thread.
+
+; ResourceDictionary
+ResourceDictionaryIsReadOnly=ResourceDictionary is read-only and cannot be modified.
+StaticResourceInXamlOnly=The StaticResource extension can only be used in the context of loading XAML.
+ResourceDictionaryInvalidMergedDictionary=The merged dictionary is invalid. Either a ResourceDictionary is being placed into its own MergedDictionaries collection or a it is being added to the same MergedDictionary collection twice.
+
+; XamlSerializers
+IntegerCollectionLengthLessThanZero=Integer collection size cannot be negative.
+UnknownIndexType=Unrecognized integer index type. Stream might be corrupted.
+
+; VirtualizingStackPanel
+CantSwitchVirtualizationModePostMeasure=Cannot change the VirtualizationMode attached property on an ItemsControl after Measure is called on the ItemsHost panel.
+PageCacheSizeNotAllowed=VirtualizationCacheLength of Unit 'Page' is not a valid value for IHierarchicalVirtualizationAndScrollInfo.ConstraintCacheSizeAfter/BeforeViewport property.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  end Exception Strings section
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                          UI Strings
+;
+; The following section is for all strings that will be seen by our users.
+; e.g., button labels, UA Text, tooltips, etc.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Common
+Untitled=Untitled
+
+; ApplicationContextException
+
+;HyperLink
+
+; XamlLengthSerializer
+LengthFormatError='{0}' string cannot be converted to Length.
+
+; HwndHost and HwndVisualHost
+HostedWindowMustBeAChildWindow=Hosted HWND must be a child window.
+ChildWindowNotCreated=BuildWindowCore failed to return the hosted child window handle.
+ChildWindowMustHaveCorrectParent=Hosted HWND must be a child window of the specified parent.
+HwndHostDoesNotSupportChildKeyboardSinks=HwndHost does not support child IKeyboardInputSinks. Derived classes must add this support if needed.
+
+; Designer Metadata
+DesignerMetadata_CustomCategory_Accessibility=Accessibility
+DesignerMetadata_CustomCategory_Content=Content
+DesignerMetadata_CustomCategory_Navigation=Navigation
+
+; ToString Format strings
+ToStringFormatString_Control={0}: {1}
+ToStringFormatString_ToggleButton={0} Content:{1} IsChecked:{2}
+ToStringFormatString_ItemsControl={0} Items.Count:{1}
+ToStringFormatString_HeaderedContentControl={0} Header:{1} Content:{2}
+ToStringFormatString_HeaderedItemsControl={0} Header:{1} Items.Count:{2}
+ToStringFormatString_RangeBase={0} Minimum:{1} Maximum:{2} Value:{3}
+ToStringFormatString_GridView={0} Columns.Count:{1}
+ToStringFormatString_GridViewColumn={0} Header:{1}
+ToStringFormatString_GridViewRowPresenterBase={0} Columns.Count:{1}
+ToStringFormatString_GridViewRowPresenter={0} Content:{1} Columns.Count:{2}
+
+; TextBox/RichTextBox context menu.
+TextBox_ContextMenu_Cut=Cu_t
+TextBox_ContextMenu_Copy=_Copy
+TextBox_ContextMenu_Paste=_Paste
+TextBox_ContextMenu_NoSpellingSuggestions=(no spelling suggestions)
+TextBox_ContextMenu_IgnoreAll=_Ignore All
+TextBox_ContextMenu_More=M_ore...
+TextBox_ContextMenu_Description_SBCSSpace=(SBCS Space)
+TextBox_ContextMenu_Description_DBCSSpace=(DBCS Space)
+
+; DocumentViewer UI Strings
+DocumentViewerSearchDownCompleteLabel=Searched to the end of this document. Cannot find '{0}'.
+DocumentViewerSearchUpCompleteLabel=Searched to the beginning of this document. Cannot find '{0}'.
+DocumentViewerSearchCompleteTitle=Find
+
+; DocumentViewer Commands Text
+DocumentViewerViewThumbnailsCommandText=View Thumbnails
+DocumentViewerViewFitToWidthCommandText=Page Width
+DocumentViewerViewFitToHeightCommandText=Page Height
+DocumentViewerViewFitToMaxPagesAcrossCommandText=Fit Pages
+
+; FlowDocumentReader UI Automation Strings
+FlowDocumentReader_MultipleViewProvider_PageViewName=Page
+FlowDocumentReader_MultipleViewProvider_TwoPageViewName=Two Page
+FlowDocumentReader_MultipleViewProvider_ScrollViewName=Scroll
+
+; File and Save Dialog error messages
+FileDialogBufferTooSmall=Too many files selected. Select fewer files and try again.
+FileDialogCreatePrompt='{0}' does not exist.\r\nDo you want to create it?
+FileDialogFileNotFound='{0}' does not exist.\r\nVerify that the file name is correct.
+FileDialogInvalidFileName='{0}' is not a valid file name.
+FileDialogOverwritePrompt='{0}' already exists.\r\nDo you want to replace it?
+
+; Navigation Window
+NavWindowMenuCurrentPage=Current Page
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  end UI Strings section
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Baml Localization API
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+InvalidStartOfBaml=The first BAML node in a BAML document must be 'StartDocument'.
+UnRecognizedBamlNodeType='{0}' BamlNodeType is not recognized.
+InvalidEndOfBaml=The last BAML node in a BAML document must be 'EndDocument'.
+NullParentNode=Non-null parent node expected. BAML stream might be corrupted.
+BamlTypeIdNotFound=BAML TypeId {0} is not known.
+BamlAssemblyIdNotFound=BAML AssemblyId {0} is not known.
+
+;Localization comments
+InvalidLocCommentTarget=Localization comment target property is not valid in string '{0}'.
+InvalidLocCommentValue=Localization comment value is not valid for target property '{0}' in string '{1}'.
+UnmatchedLocComment=Localization comment has no value for target property '{0}'.
+InvalidLocalizabilityValue='{0}' localizability attribute setting is not valid.
+
+; Progressive Download
+InvalidTempFileName=Temporary file name cannot be empty.
+InvalidByteRanges=Byte ranges are not valid in '{0}'.
+ByteRangeDownloaderNotInitialized=HTTP byte range downloader is not initialized.
+InvalidEventHandle=The event handle is not usable.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Text effect
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Exception strings of StickyNoteControl
+CannotProcessInkCommand=StickyNoteControl.InkCommand can only be processed on StickyNoteControl of type StickyNoteType.Ink with IsExpanded equal to true.
+InvalidStickyNoteTemplate=IsExpanded template for StickyNoteControl of type '{0}' must contain element of type '{1}' with Name set to '{2}'.
+InvalidInkForeground=Only SolidColorBrush can be used as Foreground for StickyNoteControl of type StickyNoteType.Ink.
+AddAnnotationsNotImplemented=Cannot attach multiple annotations.
+AnnotationIsNull=Annotation property for AttachedAnnotation is null.
+NotSupported=This annotation component does not support the ModifyAttachedAnnotation API.
+InvalidAnchorPosition=Anchor position is not valid.
+InvalidStickyNoteAnnotation=StickyNoteControl cannot accept an Annotation that contains both ink strokes and text.
+MaximumNoteSizeExceeded=Maximum StickyNoteControl size has been exceeded.
+
+
+; Exception strings for InkCanvas
+InvalidEmptyStrokeCollection=Specified StrokeCollection must contain at least one stroke.
+InvalidEmptyArray=Specified array cannot be empty.
+InvalidClipboardFormat=Specified InkCanvasClipboardFormat is not valid.
+InvalidPoint=Invalid Point value.
+
+
+; InkCanvas Commands Keys
+InkCanvasDeselectKey=Esc
+
+; InkCanvas Commands Key display strings
+InkCanvasDeselectKeyDisplayString=Esc
+
+; Exception strings for UIS
+InvalidDiameter=Value is out of range.
+
+; Status strings for hosting download application
+HostingStatusDownloadAppInfo=Downloading Application Information
+HostingStatusVerifying=Verifying Application Requirements
+HostingStatusDownloadApp=Downloading Application
+HostingStatusFailed=Application Deployment Failed
+HostingStatusCancelled=Application Deployment Canceled
+HostingStatusPreparingToRun=Preparing to Run Application
+
+; UI strings for hosting Installation Error and Cancel Page
+CancelledTitle=Application Deployment Canceled
+CancelledText=The application deployment was canceled.
+InvalidDeployTitle=Application File Not Valid
+InvalidDeployText=There is a problem with how the application was built or published. Contact the application publisher for assistance.
+PlatformRequirementTitle=Platform Requirements Not Met
+TrustNotGrantedTitle=Trust Not Granted
+TrustNotGrantedText=The application cannot be deployed because it is not trusted and possibly unsafe.
+DeployTitle=Application Deployment Error
+DeployText=The application cannot be deployed. Contact the application publisher for assistance.
+DownloadTitle=Application Download Error
+DownloadText=The application cannot be downloaded. Check for network connectivity issues or contact the application publisher for assistance.
+UnknownErrorTitle=Unknown Error
+UnknownErrorText=The application cannot be deployed because of an unknown error. Contact the application publisher for more information.
+IncompatibleWinFXText=Unable to install or run the application. The application requires Microsoft .NET Framework v{0} or compatible to be installed.
+IncompatibleCLRText=Unable to install or run the application. The application requires Microsoft .NET Framework containing Common Language Runtime v{0} to be installed.
+
+; Stream Helper
+SetPositionNotSupported=Stream does not support setting the Position property.
+SeekFailed=Cannot seek to given position.
+SeekNotSupported=Stream does not support Seek.
+ReadNotSupported=Stream does not support reading.
+BufferOffsetNegative=Buffer offset cannot be negative.
+BufferTooSmall=Buffer size is too small to accommodate the specified parameters.
+StreamObjectDisposed=Current stream object was closed and disposed. Cannot access a closed stream.
+
+;PrintDialog UI exception strings
+PrintDialogPageRange={0}-{1}
+PrintDialogZeroNotAllowed=Zero is not a valid value for this property.
+PrintDialogInvalidPageRange=Start and end pages of a page range must be greater than zero.
+PartialTrustPrintDialogMustBeInvoked=Operation can be invoked only if the Print dialog was instantiated and shown.
+PrintDialogInstallPrintSupportCaption=Install Printing Component
+PrintDialogInstallPrintSupportMessageBox=To enable printing, follow the instructions at http://go.microsoft.com/fwlink?LinkID=119805.
+
+;MediaElement
+MediaElement_CannotSetSourceOnMediaElementDrivenByClock=Cannot set source on MediaElement driven by clock.
+
+; IRME
+UnexpectedType=Expected {0}, got {1}.
+UnexpectedProperty=Expected {0} property, got {1}.
+
+; Baml2006
+ArgumentLengthMismatch=Expected {0} argument(s) to method {1}.{2}.
+AttachablePropertyNotFound=Attachable Property {0}.{1} not found.
+PropertyNotFound=Property {0}.{1} not found.
+PropertyFoundOutsideStartElement=Start property found outside of ElementStart, ElementEnd.
+PropertyOutOfOrder=Start property found before ending {0}.
+MissingTagInNamespace=Missing '{0}' in URI {1}.
+AssemblyTagMissing=Part between ';' and '=' is not '{0}' URI {1}.
+UnableToConvertInt32=Unable to convert to Int32Collection.
+MultipleAssemblyMatches=Matched multiple loaded assemblies with short name {0}.
+AssemblyIdOutOfSequence=Unexpected Assembly Id {0}. Assembly IDs must be sequential.
+TypeIdOutOfSequence=Unexpected Type Id {0}. Type IDs must be sequential.
+PropertyIdOutOfSequence=Unexpected Property Id {0}. Property IDs must be sequential.
+StringIdOutOfSequence=Unexpected String Id {0}. String IDs must be sequential.
+RecordOutOfOrder=Unexpected record in Baml stream.  Trying to add to {0} which is not a collection or has a TypeConverter.
+UnknownBamlRecord="Found unknown BAML record {0}".
+
+; TemplateContentConverter
+ValueMustBeXamlReader=Type of 'value' must be XamlReader.
+
+; DeferrableContentConverter
+ExpectedBinaryContent=Unexpected value. Deferrable content must be provided as a System.Stream or System.Byte[].
+DeferringLoaderNoContext=Deferring loader '{0}' requires that '{1}' be implemented in the IServiceProvider.
+ExpectedBamlSchemaContext=DeferrableContentConverter requires that the SchemaContext be of type System.Windows.Baml2006.Baml2006SchemaContext.
+ExpectedResourceDictionaryTarget=DeferrableContent is only allowed on ResourceDictionaries.
+DeferringLoaderNoSave=Deferring loader '{0}' does not support the Save operation.
+
+; StaticExtension
+MarkupExtensionBadStatic='{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.
+MarkupExtensionStaticMember=StaticExtension must have Member property set before ProvideValue can be called.
+
+; JumpList
+JumpList_CantNestBeginInitCalls=Cannot nest calls to BeginInit nor call it after modifying the JumpList.
+JumpList_CantCallUnbalancedEndInit=Cannot call EndInit without previously calling BeginInit.
+JumpList_CantApplyUntilEndInit=The JumpList cannot be applied after calling BeginInit until there has been a matching call to EndInit.
+JumpItemsRejectedEventArgs_CountMismatch=The count of rejected items doesn't match the count of the reasons for rejection.
+
+; WpfSharedSchemaContext
+RuntimeTypeRequired=Type {0} is not a RuntimeType. XamlReader.Load does not support the use of other types of Type.
+AssemblyIdNegative=An internal error was encountered parsing BAML content: assemblyId should be negative.
+KnownTypeIdNegative=An internal error was encountered parsing BAML content: known typeIds must be negative.
+
+; Trigger
+MissingTriggerProperty=Property can not be null on Trigger.
+
+; WpfXamlLoader
+SharedAttributeInLooseXaml=Shared attribute in namespace 'http://schemas.microsoft.com/winfx/2006/xaml' can be used only in compiled resource dictionaries.
+
+; MarkupExtensionBracketCharacters
+ParserMarkupExtensionInvalidClosingBracketCharacers=Encountered a closing BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' without a corresponding opening BracketCharacter.
+ParserMarkupExtensionMalformedBracketCharacers=BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' does not have a corresponding opening/closing BracketCharacter.

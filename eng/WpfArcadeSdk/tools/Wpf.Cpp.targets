@@ -25,7 +25,10 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory);$(WpfTracingDir)native\</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(WpfSharedDir)inc\ddbanned.h</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
@@ -212,7 +215,7 @@ using namespace System::Runtime::Versioning;
     </PropertyGroup>
 
     <ItemGroup>
-      <CppClrSupportProject Include="Project">
+      <CppClrSupportProject Include="ProjectHeader">
         <!-- 
             In the CDATA section that follows, 
               %40 ~= @
@@ -227,12 +230,27 @@ using namespace System::Runtime::Versioning;
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU%3Bx64</Platforms>
   </PropertyGroup>
-  
+  ]]>
+        </Text>
+      </CppClrSupportProject>
+
+      <!-- 
+        We need a reference to Microsoft.DotNet.Wpf.GitHub when building from dotnet-wpf-int. 
+        When building from dotnet/wpf, this refernece is not needed.
+      -->
+      <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
+        <Text>
+          <![CDATA[
   <ItemGroup>
     <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
   </ItemGroup>
-  
-  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run -->
+  ]]>
+        </Text>
+      </CppClrSupportProject>
+      <CppClrSupportProject Include="ProjectBody">
+        <Text>
+          <![CDATA[
+  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
   <PropertyGroup>
     <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
   </PropertyGroup>
@@ -283,9 +301,11 @@ using namespace System::Runtime::Versioning;
     <MakeDir Condition="!Exists('$(IntermediateOutputPath)CppCliSupport\')"
              Directories="$(IntermediateOutputPath)CppCliSupport\" />
 
+    <Delete Files="$(CppCliHelperProject)" Condition="Exists('$(CppCliHelperProject)')" />
+    
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
                       File="$(CppCliHelperProject)" 
-                      Overwrite="true"/>
+                      Overwrite="false"/>
 
     <!-- 
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information

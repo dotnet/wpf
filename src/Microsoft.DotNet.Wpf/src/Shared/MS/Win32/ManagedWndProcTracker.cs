@@ -143,8 +143,7 @@ namespace MS.Win32
                 {
                     CodeAccessPermission.RevertAssert();
                 }
-
-            }
+}
         }
 
         /// <SecurityNote>
@@ -154,7 +153,6 @@ namespace MS.Win32
         [SecurityTreatAsSafe, SecurityCritical]
         private static void HookUpDefWindowProc(IntPtr hwnd)
         {
-
             SecurityHelper.DemandUnmanagedCode();
 
 #if LOGGING
@@ -176,8 +174,7 @@ namespace MS.Win32
                 try
                 {
                     result = UnsafeNativeMethods.SetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_WNDPROC, defWindowProc);
-
-                }
+}
                 catch(System.ComponentModel.Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
@@ -230,7 +227,6 @@ namespace MS.Win32
         [SecurityCritical, SecurityTreatAsSafe]
         private static IntPtr GetUser32ProcAddress(string export)
         {
-
             SecurityHelper.DemandUnmanagedCode();
             IntPtr hModule = UnsafeNativeMethods.GetModuleHandle(ExternDll.User32);
 
@@ -238,8 +234,7 @@ namespace MS.Win32
             if (hModule != IntPtr.Zero)
             {
                 return UnsafeNativeMethods.GetProcAddress(new HandleRef(null, hModule), export);
-
-            }
+}
             return IntPtr.Zero;
         }
 

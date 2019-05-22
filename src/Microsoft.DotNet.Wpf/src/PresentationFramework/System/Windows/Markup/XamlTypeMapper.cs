@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //  Maps namespaceURI and LocalName to appropriate element, properties, and events.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Xml;
@@ -49,7 +47,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     ///<summary>
     /// Handles mapping between XML NamepaceURI and .NET namespace types
     ///</summary>
@@ -479,7 +476,6 @@ namespace System.Windows.Markup
                 as RoutedEvent;
 
             return Event;
-
         }
 
 #endif
@@ -1367,7 +1363,6 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-
                             // See if attached property first - start from a Setter
                             memberInfo = objectType.GetMethod("Set" + localName,
                                 defaultBinding |
@@ -1679,7 +1674,6 @@ namespace System.Windows.Markup
                     else
                     {
                         memInfo = DependencyProperty.FromName(localName, baseType);
-
                     }
 
                     if (null != memInfo)
@@ -2096,7 +2090,6 @@ namespace System.Windows.Markup
         /// </summary>
         internal static string GetPropertyName(object propertyMember)
         {
-
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
             if (dp != null)
@@ -2137,7 +2130,6 @@ namespace System.Windows.Markup
             }
             else
             {
-
 #if !PBTCOMPILER
                 Debug.Assert( propertyMember is DependencyProperty);
                 validType = ((DependencyProperty)propertyMember).OwnerType;
@@ -2249,7 +2241,6 @@ namespace System.Windows.Markup
 
             // Didn't find a match, so return null.
             return null;
-
        }
 #endif
 
@@ -2415,7 +2406,6 @@ namespace System.Windows.Markup
                 string    xmlNamespace,     // xml namespace for the type
                 string    localName)        // local name of the type without any '.'
         {
-
             Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
             Debug.Assert(null != localName,"null value passed for localName");
 
@@ -2455,7 +2445,6 @@ namespace System.Windows.Markup
                 string    localName,        // local name of the type without any '.'
                 object    dpOrPiorMi)       // property associated with the type
         {
-
             Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
             Debug.Assert(null != localName,"null value passed for localName");
 
@@ -2649,7 +2638,6 @@ namespace System.Windows.Markup
                     try
                     {
                         type = assembly.GetType(fullTypeName);
-
                     }
                     catch (Exception e)
                     {
@@ -3408,7 +3396,6 @@ namespace System.Windows.Markup
                 // now walk through any using statements we got and add them
                 if (null != namespaceAssemblyPair)
                 {
-
                     for (int j = 0; j < namespaceAssemblyPair.Count; j++)
                     {
                         ClrNamespaceAssemblyPair mapping = namespaceAssemblyPair[j];
@@ -3558,7 +3545,6 @@ namespace System.Windows.Markup
         internal static List<ClrNamespaceAssemblyPair> GetClrNamespacePairFromCache(
                 string namespaceUri)
         {
-
             List<ClrNamespaceAssemblyPair> mappingArray = null;
 
             if (_xmlnsCache == null)
@@ -4360,7 +4346,6 @@ namespace System.Windows.Markup
     public class NamespaceMapEntry
 #endif
     {
-
         #region Constructors
 
         ///<summary>
@@ -4534,7 +4519,6 @@ namespace System.Windows.Markup
         string   _clrNamespace;
 
 #endregion Data
-
     }
 
     // This is a convenience holder for all the possible IDs that Xaml understands which could
@@ -4552,7 +4536,6 @@ namespace System.Windows.Markup
     // class for getting and setting mapping defaults.
     internal static class XmlParserDefaults
     {
-
 #region Methods
 
         /// <summary>
@@ -4604,7 +4587,6 @@ namespace System.Windows.Markup
 #endregion Data
     }
 #endregion XmlParserDefaults Class
-
 }
 
 

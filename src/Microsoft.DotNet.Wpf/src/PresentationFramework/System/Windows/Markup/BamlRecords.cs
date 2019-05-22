@@ -7,6 +7,7 @@
 * Purpose:  Contains implementation for specific BamlRecords
 *
 \***************************************************************************/
+
 using System;
 using System.Xml;
 using System.IO;
@@ -801,7 +802,6 @@ namespace System.Windows.Markup
         // from being created.
 
         BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
-
     }
 
     // The base of all baml records.  This gives a fixed size record that contains
@@ -809,7 +809,6 @@ namespace System.Windows.Markup
     // line number information is not currently written out to the baml stream.
     internal abstract class BamlRecord
     {
-
  #region Methods
 
 #if !PBTCOMPILER
@@ -906,7 +905,6 @@ namespace System.Windows.Markup
             {
                 return PinnedCount > 0;
             }
-
         }
 
         // (See comment on IsPinned.)
@@ -1019,7 +1017,6 @@ namespace System.Windows.Markup
                    bamlRecordType == BamlRecordType.PropertyIDictionaryStart
                    ||
                    bamlRecordType == BamlRecordType.Text;
-            
         }
 
 #endif
@@ -1176,7 +1173,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlXmlnsPropertyRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1201,7 +1197,6 @@ namespace System.Windows.Markup
             {
                 AssemblyIds = null;
             }
-
         }
 #endif
 
@@ -1281,7 +1276,6 @@ namespace System.Windows.Markup
         short[] _assemblyIds;
 
 #endregion Data
-
     }
 
     // <SecurityNote>
@@ -1290,7 +1284,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPIMappingRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1345,7 +1338,6 @@ namespace System.Windows.Markup
 
         internal short AssemblyId
         {
-
             get
             {
                 short value = (short) _flags[_assemblyIdLowSection];
@@ -1359,7 +1351,6 @@ namespace System.Windows.Markup
                 _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
                 _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
         }
 
         // Allocate space in _flags.
@@ -1398,7 +1389,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal abstract class BamlStringValueRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1789,7 +1779,6 @@ namespace System.Windows.Markup
             {
                 _flags[_sharedSection] = value ? 1 : 0;
             }
-
         }
 
         // Whether Shared was set
@@ -1804,7 +1793,6 @@ namespace System.Windows.Markup
             {
                 _flags[_sharedSetSection] = value ? 1 : 0;
             }
-
         }
 
         // Allocate space in _flags.
@@ -1893,7 +1881,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlDefAttributeRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1988,7 +1975,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPresentationOptionsAttributeRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -2074,7 +2060,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyComplexStartRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -2343,7 +2328,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3012,7 +2996,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyArrayEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3029,7 +3012,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlConstructorParametersStartRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3038,7 +3020,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3047,7 +3028,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlConstructorParametersEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3056,7 +3036,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3123,7 +3102,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyIListEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3132,7 +3110,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3141,7 +3118,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyIDictionaryEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3150,7 +3126,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3159,7 +3134,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyComplexEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3168,7 +3142,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
 
@@ -3178,7 +3151,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyArrayStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3187,7 +3159,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3196,7 +3167,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyIListStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3205,7 +3175,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3214,7 +3183,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlPropertyIDictionaryStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3223,7 +3191,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // <SecurityNote>
@@ -3232,7 +3199,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlRoutedEventRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3293,7 +3259,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlLiteralContentRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3301,9 +3266,6 @@ namespace System.Windows.Markup
         {
             Value  =  bamlBinaryReader.ReadString();
 
-            // TODO - peterost - Why are these stored?  They aren't needed and
-            //                   should be removed with an M8 breaking change, and
-            //                   then remove this method.
             Int32 _lineNumber = bamlBinaryReader.ReadInt32();
             Int32 _linePosition = bamlBinaryReader.ReadInt32();
         }
@@ -3313,9 +3275,6 @@ namespace System.Windows.Markup
         {
             bamlBinaryWriter.Write(Value);
 
-            // TODO - peterost - Why are these stored?  They aren't needed and
-            //                   should be removed with an M8 breaking change, and
-            //                   then remove this method.
             bamlBinaryWriter.Write((Int32)0);
             bamlBinaryWriter.Write((Int32)0);
         }
@@ -3330,7 +3289,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
      }
 
     // An record for the connection id that the (Style)BamlRecordReader uses to
@@ -3392,7 +3350,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlElementStartRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3424,7 +3381,6 @@ namespace System.Windows.Markup
         // Id of the type of this object
         internal short TypeId
         {
-
             get
             {
                 short value = (short) _flags[_typeIdLowSection];
@@ -3438,8 +3394,6 @@ namespace System.Windows.Markup
                 _flags[_typeIdLowSection] = (short)  (value & 0xff);
                 _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
-
         }
 
         // Whether this object instance is expected to be created via TypeConverter
@@ -3531,7 +3485,6 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
     internal class BamlNamedElementStartRecord : BamlElementStartRecord
     {
-
 #region Methods
 
         #if !PBTCOMPILER
@@ -3714,7 +3667,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
 
         byte[] _valuesBuffer;
-        
+
 #endif
 
 #endregion Data
@@ -3730,7 +3683,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceStartRecord : BamlElementStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3739,7 +3691,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3752,7 +3703,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceEndRecord : BamlElementEndRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3761,7 +3711,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3774,7 +3723,6 @@ namespace System.Windows.Markup
     
     internal class BamlOptimizedStaticResourceRecord : BamlRecord, IOptimizedMarkupExtension
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3902,7 +3850,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceIdRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3980,7 +3927,6 @@ namespace System.Windows.Markup
     
     internal class BamlPropertyWithStaticResourceIdRecord : BamlStaticResourceIdRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -4180,7 +4126,6 @@ namespace System.Windows.Markup
         short _converterTypeId = 0;
 
 #endregion Data
-
     }
 
     // Marks the start of a Baml document.  This must always be the first
@@ -4315,7 +4260,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlElementEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4324,7 +4268,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the start tag of an element being used as the key for an IDictionary
@@ -4343,13 +4286,11 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the end tag of an element being used as the key for an IDictionary
     internal class BamlKeyElementEndRecord : BamlElementEndRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4358,7 +4299,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the end of the baml stream, or document.
@@ -4368,7 +4308,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlDocumentEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4377,7 +4316,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // The following records are used internally in the baml stream to
@@ -4437,7 +4375,6 @@ namespace System.Windows.Markup
         // ID of this assembly
         internal short AssemblyId
         {
-
             get
             {
                 short value = (short) _flags[_assemblyIdLowSection];
@@ -4451,7 +4388,6 @@ namespace System.Windows.Markup
                 _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
                 _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
         }
 
         // Allocate space in _flags.
@@ -4571,7 +4507,6 @@ namespace System.Windows.Markup
         // Type is needed.
         internal short TypeId
         {
-
             get
             {
                 short value = (short) _flags[_typeIdLowSection];
@@ -4585,8 +4520,6 @@ namespace System.Windows.Markup
                 _flags[_typeIdLowSection] = (short)  (value & 0xff);
                 _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
-
         }
 
         // Assembly id of the assembly where this type is defined.
@@ -5401,7 +5334,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlLineAndPositionRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -5478,7 +5410,6 @@ namespace System.Windows.Markup
     // </SecurityNote>
     internal class BamlLinePositionRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -5535,6 +5466,4 @@ namespace System.Windows.Markup
         }
 #endif
     }
-
-
 }

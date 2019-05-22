@@ -79,5 +79,9 @@
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
       <Sha>9d4340c064627887a27dff7681367124823fffd8</Sha>
     </Dependency>
+    <Dependency Name="System.IO.Packaging" Version="4.6.0-preview6.19270.2" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>189766719a059512a515d488efc5c65c7abf0650</Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

@@ -30,16 +30,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         private:
 
             /// <summary>
-            /// This variable stores the GUID of the IDWriteFactory interface.
-            /// The reason we are not using __uuidof(IDWriteFactory) is because the complier generates a global
-            /// variable and a static method to initialize it which is not annotated properly with security tags.
-            /// This makes the static method fail NGENing and causes Jitting which affects perf.
-            /// If the complier gets fixed then we can remove this scheme and use __uuidof(IDWriteFactory).
-            /// </summary>
-            [SecurityCritical]
-            static NativePointerWrapper<_GUID>^ _guidForIDWriteFactory;
-            
-            /// <summary>
             /// A pointer to the wrapped DWrite factory object.
             /// </summary>
             /// <SecurityNote>
@@ -47,12 +37,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </SecurityNote>
             [SecurityCritical]
             IDWriteFactory* _pFactory;
-
-            /// <summary>
-            /// static ctor to initialize the GUID of IDWriteFactory interface.
-            /// </summary>
-            static Factory();
-
+                      
             /// <summary>
             /// Constructs a factory object.
             /// </summary>

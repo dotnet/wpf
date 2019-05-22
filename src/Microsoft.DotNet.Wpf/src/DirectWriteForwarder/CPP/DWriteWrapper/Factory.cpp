@@ -24,26 +24,6 @@ extern void *GetDWriteCreateFactoryFunctionPointer();
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    /// <summary>
-    /// static ctor to initialize the GUID of IDWriteFactory interface.
-    /// </summary>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permissions.
-    ///          - Assigns security critical _guidForIDWriteFactory
-    /// Safe     - The data used to initialize _guidForIDWriteFactory is const.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-#ifndef _CLR_NETCORE
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
-#endif
-    static Factory::Factory()
-    {
-        System::Guid guid = System::Guid("b859ee5a-d838-4b5b-a2e8-1adc7d93db48");
-        _GUID* pGuidForIDWriteFactory = new _GUID();
-        *pGuidForIDWriteFactory = Native::Util::ToGUID(guid);
-        _guidForIDWriteFactory = gcnew NativePointerWrapper<_GUID>(pGuidForIDWriteFactory);  
-    }
-
     /// <SecurityNote>
     /// Critical - Calls security critical Factory ctor().
     /// </SecurityNote>
@@ -129,7 +109,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         HRESULT hr = (*pfnDWriteCreateFactory)(
             DWriteTypeConverter::Convert(factoryType),
-            (REFIID)(*(_guidForIDWriteFactory->Value)),
+            __uuidof(IDWriteFactory),
             &factoryTemp
             );
         

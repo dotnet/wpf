@@ -253,12 +253,6 @@
       <!-- WPF builds have historically used StdCall by default for all x86 native C++ builds -->
       <CallingConvention Condition="('$(ManagedCxx)'=='false') And ('$(Architecture)'=='x86')">StdCall</CallingConvention>
 
-
-      <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
-
-      <ForcedIncludeFiles>ddbanned.h</ForcedIncludeFiles>
-      
       <!-- See https://developercommunity.visualstudio.com/content/problem/297504/all-cppwinrt-code-fails-to-build-from-abi-and-to-a.html -->
       <!--<AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>-->
       <!--<ConformanceMode>false</ConformanceMode>-->

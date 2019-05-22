@@ -1,11 +1,3 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  <PropertyGroup>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
-    <WpfCommonDir>$(MSBuildThisFileDirectory)Common\</WpfCommonDir>
-    <WpfGraphicsPath>$(MSBuildThisFileDirectory)WpfGfx\</WpfGraphicsPath>
-    <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>
-    <WpfPresentationNativeDir>$(MSBuildThisFileDirectory)PresentationNative\</WpfPresentationNativeDir>
-  </PropertyGroup>
 </Project>

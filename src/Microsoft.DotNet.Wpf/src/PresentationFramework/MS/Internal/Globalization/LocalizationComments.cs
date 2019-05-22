@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description: Localization comments related class
 //
-//---------------------------------------------------------------------------
+
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -44,7 +43,6 @@ namespace MS.Internal.Globalization
         {
             return "Attributes" == property
                 && "System.Windows.Localization" == type;
-
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace MS.Internal.Globalization
             {
                 for (int i = 0; i < pairs.Length; i++)
                 {
-                    pairs[i].Value = LookupAndSetLocalizabilityAttribute((string) pairs[i].Value);
+                    pairs[i].Value = LookupAndSetLocalizabilityAttribute((string)pairs[i].Value);
                 }
             }
 
@@ -89,10 +87,10 @@ namespace MS.Internal.Globalization
             //
             if (input == null) return null;
 
-            List<PropertyComment> tokens  = new List<PropertyComment>(8);
+            List<PropertyComment> tokens = new List<PropertyComment>(8);
             StringBuilder tokenBuffer = new StringBuilder();
-            PropertyComment currentPair   = new PropertyComment();
-            bool escaped              = false;
+            PropertyComment currentPair = new PropertyComment();
+            bool escaped = false;
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -105,7 +103,7 @@ namespace MS.Internal.Globalization
                         {
                             // terminate the PropertyName by an unesacped whitespace
                             currentPair.PropertyName = tokenBuffer.ToString();
-                            tokenBuffer        = new StringBuilder();
+                            tokenBuffer = new StringBuilder();
                         }
 
                         // else ignore whitespace at the beginning of the PropertyName name
@@ -123,7 +121,6 @@ namespace MS.Internal.Globalization
                             }
                             else
                             {
-
                                 // can't begin with unescaped comment start char.
                                 throw new FormatException(SR.Get(SRID.InvalidLocCommentTarget, input));
                             }
@@ -220,7 +217,7 @@ namespace MS.Internal.Globalization
             LocalizabilityGroup attributeGroup = new LocalizabilityGroup();
 
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < input.Length; i ++)
+            for (int i = 0; i < input.Length; i++)
             {
                 if (Char.IsWhiteSpace(input[i]))
                 {
@@ -252,26 +249,26 @@ namespace MS.Internal.Globalization
         }
 
         private static void ParseLocalizabilityString(
-            string               value,
-            LocalizabilityGroup  attributeGroup
+            string value,
+            LocalizabilityGroup attributeGroup
             )
         {
             int enumValue;
             if (ReadabilityIndexTable.TryGet(value, out enumValue))
             {
-                attributeGroup.Readability = (Readability) enumValue;
+                attributeGroup.Readability = (Readability)enumValue;
                 return;
             }
 
             if (ModifiabilityIndexTable.TryGet(value, out enumValue))
             {
-                attributeGroup.Modifiability = (Modifiability) enumValue;
+                attributeGroup.Modifiability = (Modifiability)enumValue;
                 return;
             }
 
             if (LocalizationCategoryIndexTable.TryGet(value, out enumValue))
             {
-                attributeGroup.Category = (LocalizationCategory) enumValue;
+                attributeGroup.Category = (LocalizationCategory)enumValue;
                 return;
             }
 
@@ -280,16 +277,16 @@ namespace MS.Internal.Globalization
 
 
         private const char CommentStart = '(';
-        private const char CommentEnd   = ')';
-        private const char EscapeChar   = '\\';
+        private const char CommentEnd = ')';
+        private const char EscapeChar = '\\';
 
         // loc comments file recognized element
-        internal const string LocDocumentRoot            = "LocalizableAssembly";
-        internal const string LocResourcesElement        = "LocalizableFile";
-        internal const string LocCommentsElement         = "LocalizationDirectives";
-        internal const string LocFileNameAttribute       = "Name";
-        internal const string LocCommentIDAttribute      = "Uid";
-        internal const string LocCommentsAttribute       = "Comments";
+        internal const string LocDocumentRoot = "LocalizableAssembly";
+        internal const string LocResourcesElement = "LocalizableFile";
+        internal const string LocCommentsElement = "LocalizationDirectives";
+        internal const string LocFileNameAttribute = "Name";
+        internal const string LocCommentIDAttribute = "Uid";
+        internal const string LocCommentsAttribute = "Comments";
         internal const string LocLocalizabilityAttribute = "Attributes";
 
         //
@@ -363,7 +360,7 @@ namespace MS.Internal.Globalization
             internal bool TryGet(string enumName, out int enumIndex)
             {
                 enumIndex = 0;
-                if (enumName.StartsWith(_enumPrefix , StringComparison.Ordinal))
+                if (enumName.StartsWith(_enumPrefix, StringComparison.Ordinal))
                 {
                     // get the real enum name after the prefix.
                     enumName = enumName.Substring(_enumPrefix.Length);
@@ -380,7 +377,6 @@ namespace MS.Internal.Globalization
                 return false;
             }
         }
-
     }
 
     internal class PropertyComment
@@ -388,7 +384,7 @@ namespace MS.Internal.Globalization
         string _target;
         object _value;
 
-        internal PropertyComment() {}
+        internal PropertyComment() { }
 
         internal string PropertyName
         {
@@ -398,8 +394,8 @@ namespace MS.Internal.Globalization
 
         internal object Value
         {
-            get { return _value;}
-            set { _value = value;}
+            get { return _value; }
+            set { _value = value; }
         }
     }
 
@@ -407,39 +403,39 @@ namespace MS.Internal.Globalization
     {
         private const int InvalidValue = -1;
 
-        internal Modifiability         Modifiability;
-        internal Readability           Readability;
-        internal LocalizationCategory  Category;
+        internal Modifiability Modifiability;
+        internal Readability Readability;
+        internal LocalizationCategory Category;
 
         internal LocalizabilityGroup()
         {
-            Modifiability = (Modifiability) InvalidValue;
-            Readability   = (Readability) InvalidValue;
-            Category      = (LocalizationCategory) InvalidValue;
+            Modifiability = (Modifiability)InvalidValue;
+            Readability = (Readability)InvalidValue;
+            Category = (LocalizationCategory)InvalidValue;
         }
 
 #if !PBTCOMPILER
         // Helper to override a localizability attribute. Not needed for compiler
         internal LocalizabilityAttribute Override(LocalizabilityAttribute attribute)
         {
-            Modifiability modifiability   = attribute.Modifiability;
-            Readability   readability     = attribute.Readability;
+            Modifiability modifiability = attribute.Modifiability;
+            Readability readability = attribute.Readability;
             LocalizationCategory category = attribute.Category;
 
             bool overridden = false;
-            if (((int) Modifiability)!= InvalidValue)
+            if (((int)Modifiability) != InvalidValue)
             {
                 modifiability = Modifiability;
                 overridden = true;
             }
 
-            if (((int) Readability) != InvalidValue)
+            if (((int)Readability) != InvalidValue)
             {
                 readability = Readability;
                 overridden = true;
             }
 
-            if (((int) Category) != InvalidValue)
+            if (((int)Category) != InvalidValue)
             {
                 category = Category;
                 overridden = true;
@@ -449,7 +445,7 @@ namespace MS.Internal.Globalization
             {
                 attribute = new LocalizabilityAttribute(category);
                 attribute.Modifiability = modifiability;
-                attribute.Readability   = readability;
+                attribute.Readability = readability;
             }
 
             return attribute;

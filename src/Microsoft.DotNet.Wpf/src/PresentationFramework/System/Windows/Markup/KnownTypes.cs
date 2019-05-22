@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //      Definition of known types in PresentationFramework.dll and
@@ -45,7 +44,6 @@
 //   The code marked with #if !PBTCOMPILER is compiled into PresenationFramework.dll
 //   The code without #if flag will be compiled into both dlls.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -2543,7 +2541,6 @@ namespace System.Windows.Markup
 
         internal static bool CanCollectionTypeAcceptStrings(KnownElements knownElement)
         {
-
             switch(knownElement)
             {
                 case KnownElements.BitmapEffectCollection:

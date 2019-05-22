@@ -53,7 +53,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class MarkupExtensionParser
     {
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -111,7 +110,6 @@ namespace System.Windows.Markup
 
             return FillDefAttributeData(declaringType, typeName, args, attrValue,
                                         lineNumber, linePosition, depth);
-
         }
 
         /// <summary>
@@ -625,7 +623,6 @@ namespace System.Windows.Markup
                 AttributeData data = (AttributeData)markupExtensionList[i];
 
                 CompileAttribute(xamlNodes, data);
-
             }
             return xamlNodes;
         }
@@ -883,7 +880,6 @@ namespace System.Windows.Markup
                                data.LineNumber,
                                data.LinePosition,
                                data.Depth--));
-
         }
 
         /// <summary>
@@ -1114,7 +1110,6 @@ namespace System.Windows.Markup
                                 // a delimiter is the first item.
                                 ThrowException(SRID.ParserMarkupExtensionBadDelimiter, args,
                                                lineNumber, linePosition);
-
                             }
 
                             if (args[i] == '=')
@@ -1764,5 +1759,4 @@ namespace System.Windows.Markup
         {
         }
     }
-
 }

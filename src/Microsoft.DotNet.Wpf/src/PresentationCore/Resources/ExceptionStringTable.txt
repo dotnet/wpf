@@ -1,0 +1,1034 @@
+;
+; US-EN Exception String Table
+; Default Resource (used for English and non-represented locales)
+;
+
+
+; Dispatcher
+
+; Source
+HwndSourceDisposed=Cannot access a disposed HwndSource.
+NullHwnd=Hwnd of zero is not valid.
+UsesPerPixelOpacityIsObsolete=UsesPerPixelOpacity is obsolete and should not be set when using UsesPerPixelTransparency
+
+;ParameterValidation
+ParameterMustBeGreaterThanZero=The parameter value must be greater than zero.
+ParameterCannotBeLessThan=The parameter value cannot be less than '{0}'.
+ParameterCannotBeGreaterThan=The parameter value cannot be greater than '{0}'.
+ParameterMustBeBetween=The parameter value must be between '{0}' and '{1}'.
+ParameterValueCannotBeInfinity=The parameter value must be finite.
+ParameterValueCannotBeNegative='{0}' parameter value cannot be negative.
+
+; General
+General_BadType=The object passed to '{0}' is not a valid type.
+General_Expected_Type=Expected object of type '{0}'.
+General_ObjectIsReadOnly=The object is marked 'Read Only'.
+
+; Collection
+CollectionNumberOfElementsShouldBeEqualTo=The number of elements in this collection should equal '{0}'.
+CollectionNumberOfElementsMustBeGreaterThanZero=The number of elements in this collection must be greater than zero.
+CollectionIsFixedSize=This collection is fixed size.
+CollectionDuplicateKey='{0}' key already exists in the collection.
+
+; Enumerator
+Enumerator_CollectionChanged=The enumerator is not valid because the collection changed.
+Enumerator_NotStarted=The enumerator has not been started.
+Enumerator_ReachedEnd=The enumerator has reached the end of the collection.
+
+; Primitives
+Rect_Empty=Rectangle cannot be empty.
+
+; Keyboard Input
+KeyboardSinkNotAChild=The specified keyboard sink is not a child of this source.
+KeyboardSinkAlreadyOwned=The specified keyboard sink is already owned by a site.
+KeyboardSinkMustBeAnElement=The specified keyboard sink must be a UIElement.
+OnlyAcceptsKeyMessages=Keyboard processing can only process keyboard messages.
+
+; Input
+InvalidCursorType='{0}' cursor type is not valid.
+Cursor_LoadImageFailure=Failed to load cursor file '{0}'.
+Cursor_UnsupportedFormat='{0}' has unsupported extension for cursor.
+Cursor_InvalidStream=Failed to load cursor from the stream.
+NotAllowedToAccessStagingArea=Only PreProcessInput and PostProcessInput events can access InputManager staging area.
+Invalid_IInputElement='{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.
+RequiresSTA=The calling thread must be STA, because many UI components require this.
+InputProviderSiteDisposed=The InputProviderSite has already been disposed.
+
+; Stylus
+Penservice_Disposed=Cannot access a disposed pen service.
+PenService_InvalidPacketData=Unexpected size of packet from pen service.
+PenService_WindowAlreadyRegistered=The window is already registered for stylus input.
+PenService_WindowNotRegistered=The window is not registered for stylus input.
+Stylus_InvalidMax='{0}' must be greater than or equal to '{1}'.
+Stylus_IndexOutOfRange='{0}' is not a valid index in the collection.
+Stylus_MatrixNotInvertable=Matrix is not invertible.
+Stylus_PenContextFailure=Stylus input encountered an error.
+Stylus_EnumeratorFailure=No current object to return.
+Stylus_PlugInIsNull='{0}' must be non-null.
+Stylus_PlugInIsDuplicated='{0}' already exists in the collection.
+Stylus_PlugInNotExist='{0}' does not exist in the collection.
+Stylus_CanOnlyCallForDownMoveOrUp=NotifyWhenProcessed can be called only during OnStylusDown, OnStylusMove, or OnStylusUp.
+Stylus_StylusPointsCantBeEmpty=Count of points must be greater than zero.
+Stylus_MustBeDownToCallReset=Stylus or Mouse must be in the down state when calling Reset.
+
+; XamlSerializers
+UnknownPathOperationType=Unknown path operation attempted.
+
+; Layout
+
+UIElement_Layout_PositiveInfinityReturned=Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.
+UIElement_Layout_NaNReturned=Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.
+UIElement_Layout_InfinityArrange=Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.
+UIElement_Layout_NaNMeasure=UIElement.Measure(availableSize) cannot be called with NaN size.
+LayoutManager_DeepRecursion=Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.
+
+; Line Services
+
+CreateContextFailure=Text formatting engine cannot create text formatting context due to error: '{0}'.
+CreateLineFailure=Text formatting engine cannot format a line of text due to error: '{0}'.
+CreateParaBreakingSessionFailure=Text formatting engine cannot format a paragraph cache due to error: '{0}'.
+CreateBreaksFailure=Text formatting engine cannot format breakpoints due to error: '{0}'.
+EnumLineFailure=Text formatting engine cannot enumerate contents in a line due to error: '{0}'.
+SetDocFailure=Text formatting engine cannot set document context due to error: '{0}'.
+SetTabsFailure=Text formatting engine cannot set tab stop due to error: '{0}'.
+SetBreakingFailure=Text formatting engine cannot set breaking conditions due to error: '{0}'.
+QueryLineFailure=Text formatting engine cannot query text information due to error: '{0}'.
+NonCLSException=Text formatting engine encountered a non-CLS exception.
+AcquireBreakRecordFailure=Text formatting engine cannot acquire break record due to error: '{0}'.
+AcquirePenaltyModuleFailure=Text formatting engine cannot acquire text penalty module due to error: '{0}'.
+CloneBreakRecordFailure=Text formatting engine cannot clone break record due to error: '{0}'.
+RelievePenaltyResourceFailure=Text formatting engine cannot release penalty resource due to error: '{0}'.
+GetPenaltyModuleHandleFailure=Text formatting engine cannot retrieve penalty module handle due to error: '{0}'.
+OptimalParagraphMustWrap=Paragraph must be allowed to wrap in total-fit formatting.
+
+; Loader service
+MultiSingleton=Cannot have more than one '{0}' instance in the same AppDomain.
+
+; Commands
+Unsupported_MouseAction=Unsupported MouseAction '{0}'.
+ReadOnlyInputGesturesCollection=Operation not supported on a read-only InputGestureCollection.
+CollectionOnlyAcceptsCommandBindings=Collection accepts only objects of type CommandBinding.
+CollectionOnlyAcceptsInputGestures=Collection accepts only objects of type InputGesture.
+CollectionOnlyAcceptsInputBindings=Collection accepts only objects of type InputBinding.
+KeyGesture_Invalid='{0}+{1}' key and modifier combination is not supported for KeyGesture.
+InputBinding_ExpectedInputGesture=Gesture accepts only objects of type '{0}'.
+
+; Navigation
+InvalidSiteOfOriginUri='{0}' must be a relative URI for site of origin.
+CannotNavigateToApplicationResourcesInWebBrowser=Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.
+GetResponseFailed=Cannot get response for web request to '{0}'.
+
+; ApplicationCommands Keys
+CutKey=Ctrl+X;Shift+Delete
+CopyKey=Ctrl+C;Ctrl+Insert
+PasteKey=Ctrl+V;Shift+Insert
+UndoKey=Ctrl+Z
+RedoKey=Ctrl+Y
+DeleteKey=Del
+FindKey=Ctrl+F
+ReplaceKey=Ctrl+H
+HelpKey=F1
+SelectAllKey=Ctrl+A
+NewKey=Ctrl+N
+OpenKey=Ctrl+O
+SaveKey=Ctrl+S
+PrintKey=Ctrl+P
+PrintPreviewKey=Ctrl+F2
+PropertiesKey=F4
+ContextMenuKey=Shift+F10;Apps
+CorrectionListKey=
+StopKey=Esc
+
+; ApplicationCommands Key display strings
+CutKeyDisplayString=Ctrl+X;Shift+Delete
+CopyKeyDisplayString=Ctrl+C;Ctrl+Insert
+PasteKeyDisplayString=Ctrl+V;Shift+Insert
+UndoKeyDisplayString=Ctrl+Z
+RedoKeyDisplayString=Ctrl+Y
+DeleteKeyDisplayString=Del
+FindKeyDisplayString=Ctrl+F
+ReplaceKeyDisplayString=Ctrl+H
+HelpKeyDisplayString=F1
+SelectAllKeyDisplayString=Ctrl+A
+NewKeyDisplayString=Ctrl+N
+OpenKeyDisplayString=Ctrl+O
+SaveKeyDisplayString=Ctrl+S
+PrintKeyDisplayString=Ctrl+P
+PrintPreviewKeyDisplayString=Ctrl+F2
+PropertiesKeyDisplayString=F4
+ContextMenuKeyDisplayString=Shift+F10;Apps
+CorrectionListKeyDisplayString=
+StopKeyDisplayString=Esc
+
+; ApplicationCommands Text
+CutText=Cut
+CopyText=Copy
+PasteText=Paste
+UndoText=Undo
+RedoText=Redo
+DeleteText=Delete
+FindText=Find
+ReplaceText=Replace
+HelpText=Help
+SelectAllText=Select All
+NewText=New
+OpenText=Open
+SaveText=Save
+SaveAsText=Save As
+CloseText=Close
+PrintText=Print
+CancelPrintText=Cancel Print
+PrintPreviewText=Print Preview
+PropertiesText=Properties
+ContextMenuText=Context Menu
+CorrectionListText=Correction List
+StopText=Stop
+NotACommandText=Not a Command
+
+;EditCommands Keys
+
+;EditCommands Text
+
+
+; ComponentCommands Text
+ScrollPageUpText=Scroll Page Up
+ScrollPageDownText=Scroll Page Down
+ScrollPageLeftText=Scroll Page Left
+ScrollPageRightText=Scroll Page Right
+ScrollByLineText=Scroll By Line
+MoveLeftText=Move Left
+MoveRightText=Move Right
+MoveUpText=Move Up
+MoveDownText=Move Down
+ExtendSelectionUpText=Extend Selection Up
+ExtendSelectionDownText=Extend Selection Down
+ExtendSelectionLeftText=Extend Selection Left
+ExtendSelectionRightText=Extend Selection Right
+MoveToHomeText=Move To Home
+MoveToEndText=Move To End
+MoveToPageUpText=Move To Page Up
+MoveToPageDownText=Move To Page Down
+SelectToHomeText=Select To Home
+SelectToEndText=Select To End
+SelectToPageDownText=Select To PageDown
+SelectToPageUpText=Select To PageUp
+MoveFocusUpText=Move Focus Up
+MoveFocusDownText=Move Focus Down
+MoveFocusBackText=Move Focus Back
+MoveFocusForwardText=Move Focus Forward
+MoveFocusPageUpText=Move Focus Page Up
+MoveFocusPageDownText=Move Focus Page Down
+
+; ComponentCommands Keys
+ScrollPageUpKey=PageUp
+ScrollPageDownKey=PageDown
+ScrollPageLeftKey=
+ScrollPageRightKey=
+ScrollByLineKey=
+MoveLeftKey=Left
+MoveRightKey=Right
+MoveUpKey=Up
+MoveDownKey=Down
+ExtendSelectionUpKey=Shift+Up
+ExtendSelectionDownKey=Shift+Down
+ExtendSelectionLeftKey=Shift+Left
+ExtendSelectionRightKey=Shift+Right
+MoveToHomeKey=Home
+MoveToEndKey=End
+MoveToPageUpKey=PageUp
+MoveToPageDownKey=PageDown
+SelectToHomeKey=Shift+Home
+SelectToEndKey=Shift+End
+SelectToPageDownKey=Shift+PageDown
+SelectToPageUpKey=Shift+PageUp
+MoveFocusUpKey=Ctrl+Up
+MoveFocusDownKey=Ctrl+Down
+MoveFocusBackKey=Ctrl+Left
+MoveFocusForwardKey=Ctrl+Right
+MoveFocusPageUpKey=Ctrl+PageUp
+MoveFocusPageDownKey=Ctrl+PageDown
+
+; ComponentCommands Key display strings
+ScrollPageUpKeyDisplayString=PageUp
+ScrollPageDownKeyDisplayString=PageDown
+ScrollPageLeftKeyDisplayString=
+ScrollPageRightKeyDisplayString=
+ScrollByLineKeyDisplayString=
+MoveLeftKeyDisplayString=Left
+MoveRightKeyDisplayString=Right
+MoveUpKeyDisplayString=Up
+MoveDownKeyDisplayString=Down
+ExtendSelectionUpKeyDisplayString=Shift+Up
+ExtendSelectionDownKeyDisplayString=Shift+Down
+ExtendSelectionLeftKeyDisplayString=Shift+Left
+ExtendSelectionRightKeyDisplayString=Shift+Right
+MoveToHomeKeyDisplayString=Home
+MoveToEndKeyDisplayString=End
+MoveToPageUpKeyDisplayString=PageUp
+MoveToPageDownKeyDisplayString=PageDown
+SelectToHomeKeyDisplayString=Shift+Home
+SelectToEndKeyDisplayString=Shift+End
+SelectToPageDownKeyDisplayString=Shift+PageDown
+SelectToPageUpKeyDisplayString=Shift+PageUp
+MoveFocusUpKeyDisplayString=Ctrl+Up
+MoveFocusDownKeyDisplayString=Ctrl+Down
+MoveFocusBackKeyDisplayString=Ctrl+Left
+MoveFocusForwardKeyDisplayString=Ctrl+Right
+MoveFocusPageUpKeyDisplayString=Ctrl+PageUp
+MoveFocusPageDownKeyDisplayString=Ctrl+PageDown
+
+; MediaCommands Text
+MediaPlayText=Play
+MediaPauseText=Pause
+MediaStopText=Stop
+MediaRecordText=Record
+MediaNextTrackText=Next Track
+MediaPreviousTrackText=Previous Track
+MediaFastForwardText=Fast Forward
+MediaRewindText=Rewind
+MediaChannelUpText=Channel Up
+MediaChannelDownText=Channel Down
+MediaSelectText=Select
+MediaTogglePlayPauseText=Toggle Play Pause
+MediaIncreaseVolumeText=Increase Volume
+MediaDecreaseVolumeText=Decrease Volume
+MediaMuteVolumeText=Mute Volume
+MediaIncreaseTrebleText=Increase Treble
+MediaDecreaseTrebleText=Decrease Treble
+MediaIncreaseBassText=Increase Bass
+MediaDecreaseBassText=Decrease Bass
+MediaBoostBassText=Boost Bass
+MediaIncreaseMicrophoneVolumeText=Increase Microphone Volume
+MediaDecreaseMicrophoneVolumeText=Decrease Microphone Volume
+MediaMuteMicrophoneVolumeText=Mute Microphone Volume
+MediaToggleMicrophoneOnOffText=Toggle Microphone OnOff
+
+;MediaCommands Keys
+MediaPlayKey=
+MediaPauseKey=
+MediaStopKey=
+MediaRecordKey=
+MediaNextTrackKey=
+MediaPreviousTrackKey=
+MediaFastForwardKey=
+MediaRewindKey=
+MediaChannelUpKey=
+MediaChannelDownKey=
+MediaSelectKey=
+MediaTogglePlayPauseKey=
+MediaIncreaseVolumeKey=
+MediaDecreaseVolumeKey=
+MediaMuteVolumeKey=
+MediaIncreaseTrebleKey=
+MediaDecreaseTrebleKey=
+MediaIncreaseBassKey=
+MediaDecreaseBassKey=
+MediaBoostBassKey=
+MediaIncreaseMicrophoneVolumeKey=
+MediaDecreaseMicrophoneVolumeKey=
+MediaMuteMicrophoneVolumeKey=
+MediaToggleMicrophoneOnOffKey=
+
+;MediaCommands Key display strings
+MediaPlayKeyDisplayString=
+MediaPauseKeyDisplayString=
+MediaStopKeyDisplayString=
+MediaRecordKeyDisplayString=
+MediaNextTrackKeyDisplayString=
+MediaPreviousTrackKeyDisplayString=
+MediaFastForwardKeyDisplayString=
+MediaRewindKeyDisplayString=
+MediaChannelUpKeyDisplayString=
+MediaChannelDownKeyDisplayString=
+MediaSelectKeyDisplayString=
+MediaTogglePlayPauseKeyDisplayString=
+MediaIncreaseVolumeKeyDisplayString=
+MediaDecreaseVolumeKeyDisplayString=
+MediaMuteVolumeKeyDisplayString=
+MediaIncreaseTrebleKeyDisplayString=
+MediaDecreaseTrebleKeyDisplayString=
+MediaIncreaseBassKeyDisplayString=
+MediaDecreaseBassKeyDisplayString=
+MediaBoostBassKeyDisplayString=
+MediaIncreaseMicrophoneVolumeKeyDisplayString=
+MediaDecreaseMicrophoneVolumeKeyDisplayString=
+MediaMuteMicrophoneVolumeKeyDisplayString=
+MediaToggleMicrophoneOnOffKeyDisplayString=
+
+; NavigationCommands Keys
+BrowseBackKey=Alt+Left;Backspace
+BrowseForwardKey=Alt+Right;Shift+Backspace
+BrowseHomeKey=Alt+Home;BrowserHome
+BrowseStopKey=Alt+Esc;BrowserStop
+RefreshKey=F5
+FavoritesKey=Ctrl+I
+SearchKey=F3
+IncreaseZoomKey=
+DecreaseZoomKey=
+ZoomKey=
+NextPageKey=
+PreviousPageKey=
+FirstPageKey=
+LastPageKey=
+GoToPageKey=
+NavigateJournalKey=
+
+; NavigationCommands Key display strings
+BrowseBackKeyDisplayString=Alt+Left;Backspace
+BrowseForwardKeyDisplayString=Alt+Right;Shift+Backspace
+BrowseHomeKeyDisplayString=Alt+Home;BrowserHome
+BrowseStopKeyDisplayString=Alt+Esc;BrowserStop
+RefreshKeyDisplayString=F5
+FavoritesKeyDisplayString=Ctrl+I
+SearchKeyDisplayString=F3
+IncreaseZoomKeyDisplayString=
+DecreaseZoomKeyDisplayString=
+ZoomKeyDisplayString=
+NextPageKeyDisplayString=
+PreviousPageKeyDisplayString=
+FirstPageKeyDisplayString=
+LastPageKeyDisplayString=
+GoToPageKeyDisplayString=
+NavigateJournalKeyDisplayString=
+
+; NavigationCommands Text
+BrowseBackText=Back
+BrowseForwardText=Forward
+BrowseHomeText=Home
+BrowseStopText=Stop
+RefreshText=Refresh
+FavoritesText=Favorites
+SearchText=Search
+IncreaseZoomText=Increase Zoom
+DecreaseZoomText=Decrease Zoom
+ZoomText=Zoom
+NextPageText=Next Page
+PreviousPageText=Previous Page
+FirstPageText=First Page
+LastPageText=Last Page
+GoToPageText=Go To Page
+NavigateJournalText=Navigate Journal
+
+; Text layout
+ParameterValueCannotBeNaN=The parameter value must be a number.
+ParameterValueMustBeGreaterThanZero='{0}' parameter value must be greater than zero.
+GlyphIndexOutOfRange='{0}' glyph index is not valid for the specified font.
+CodePointOutOfRange='{0}' character is outside the Unicode code point range.
+SidewaysRTLTextIsNotSupported=Sideways right to left text is not supported.
+GlyphTypefaceNotRecorded=Glyph typeface URI does not point to a previously recorded glyph typeface.
+CompileFeatureSet_InvalidTypographyProperties=Typography properties are not valid.
+FaceIndexValidOnlyForTTC=Nonzero font face index values are valid only for TrueType collections (.ttc).
+FaceIndexMustBePositiveOrZero=Font face index must be greater than or equal to zero.
+UriNotAbsolute=URI must be absolute.
+UriMustBeFileOrPack=Font family Uri should have either file:// or pack://application: scheme.
+InvalidAbsoluteUriInFontFamilyName=An absolute URI in a font family name must have file:// scheme.
+NullBaseUriParam='{0}' parameter cannot be null unless '{1}' is an absolute URI.
+ClusterMapFirstEntryMustBeZero=The first element in the cluster map must equal zero.
+ClusterMapEntriesShouldNotDecrease=A cluster map entry must be greater than or equal to a previous entry.
+ClusterMapEntryShouldPointWithinGlyphIndices=A cluster map entry must point to a valid glyph indices element.
+InvalidTextDecorationCollectionString=The requested TextDecorationCollection string is not valid: '{0}'.
+TextLineHasBeenDisposed=Text line was previously disposed.
+TextBreakpointHasBeenDisposed=Text breakpoint was previously disposed.
+TextPenaltyModuleHasBeenDisposed=Text penalty module was previously disposed.
+TextObjectMetrics_WidthOutOfRange=The return value of TextEmbeddedObject.Format contains an out-of-range value for the Width property.
+SpecificNumberCultureRequired=The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.
+TextRunPropertiesCannotBeNull=The Properties member of this text run cannot be null.
+GlyphCoordinateTooBig= advanceWidths and glyphOffsets constitute coordinate too large for glyph at index '{0}'. For renderingEmSize '{1}' the values cannot exceed '{2}'.
+GlyphAreaTooBig=Values for advanceWidths and glyphOffsets constitute too large of a GlyphRun. The area of its bounding box, measured in renderingEmSize squares, is '{0}' but it cannot exceed '{1}'.
+TooManyGlyphRuns=Too many glyph runs in the scene to render.
+PropertyValueCannotBeNaN='{0}' property value cannot be NaN.
+PropertyMustBeGreaterThanZero='{0}' property value must be greater than zero.
+PropertyOfClassMustBeGreaterThanZero='{0}' property of the '{1}' class must be greater than zero.
+PropertyOfClassCannotBeGreaterThan='{0}' property of the '{1}' class must be less than or equal to '{2}'.
+PropertyOfClassCannotBeNull='{0}' property of the '{1}' class cannot be null.
+PropertyCannotBeNegative='{0}' property value must be greater than or equal to zero.
+TextFormatterReentranceProhibited=Cannot reenter Text formatting engine during optimal paragraph formatting.
+CurrentDispatcherNotFound=Current dispatcher cannot be found.
+InitializationIncomplete=The operation fails because the object is not fully initialized.
+OnlyOneInitialization=The object is already initialized and cannot be initialized again.
+InInitialization=The object is already being initialized.
+NotInInitialization=The object is not being initialized.
+
+; Composite fonts
+CompositeFontUnknownElement='{0}' element in XML namespace '{1}' not recognized. Note that element names are case sensitive.
+CompositeFontUnknownAttribute='{0}' attribute in XML namespace '{1}' not recognized. Note that attribute names are case sensitive.
+CompositeFontMissingElement=Missing required element '{0}'.
+CompositeFontMissingAttribute=Missing required attribute '{0}'.
+CompositeFontAttributeValue1=Invalid value for {0} attribute.
+CompositeFontAttributeValue2=Invalid value for {0} attribute: {1}
+CompositeFontInvalidUnicodeRange=Unicode range is not valid.
+CompositeFontSignificantWhitespace=The composite font contains significant whitespace where none is expected.
+CompositeFont_TooManyFamilyMaps=The FontFamily cannot hold any more FamilyMaps.
+CompositeFont_DuplicateTypeface=A FontFamily cannot have more than one FamilyTypeface with the same Style, Weight, and Stretch.
+FamilyMap_TargetNotSet=Cannot add FamilyMap because Target property is not set.
+CharacterMetrics_MissingRequiredField=The Metrics property of CharacterMetrics is missing a required field.
+CharacterMetrics_TooManyFields=The Metrics property of CharacterMetrics has too many fields.
+CharacterMetrics_NegativeHorizontalAdvance=CharacterMetrics is not valid. The horizontal advance (defined as the sum of BlackBoxWidth, LeftSideBearing, and RightSideBearing) cannot be negative.
+CharacterMetrics_NegativeVerticalAdvance=CharacterMetrics is not valid. The vertical advance (defined as the sum of BlackBoxHeight, TopSideBearing, and BottomSideBearing) cannot be negative.
+FontFamily_ReadOnly=A named FontFamily object cannot be modified.
+FamilyCollection_CannotFindCompositeFontsLocation=Cannot load system composite fonts. Location not found.
+
+; Visual System
+
+MilErr_UnsupportedVersion=Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.
+
+DrawingGroup_AlreadyOpen=This object has an outstanding DrawingContext. The DrawingContext must be Closed or Disposed before making Open or Append calls.
+DrawingGroup_CannotAppendToNullCollection=Cannot append to a null DrawingGroup.Children collection.
+DrawingGroup_CannotAppendToFrozenCollection=Cannot append to a frozen DrawingGroup.Children collection.
+
+DrawingContext_TooManyPops=This Pop operation has no corresponding Push to remove from the stack because the stack depth of the DrawingContext is zero.
+
+Visual_NotAVisual='{0}' is not a Visual or Visual3D.
+Visual_NotA3DVisual='{0}' is not a Visual3D.
+Visual_NoCommonAncestor=The specified Visual and this Visual do not share a common ancestor, so there is no valid transformation between the two Visuals.
+Visual_NotADescendant=The specified Visual is not a descendant of this Visual.
+Visual_NotAnAncestor=The specified Visual is not an ancestor of this Visual.
+Visual_HasParent=Must disconnect specified child from current parent Visual before attaching to new parent Visual.
+Visual_NotChild=Specified Visual is not a child of this Visual.
+Visual_NoPresentationSource=This Visual is not connected to a PresentationSource.
+Visual_CannotTransformPoint=This Visual cannot transform the given point.
+
+VisualTarget_AnotherTargetAlreadyConnected=Another target is already connected to this HostVisual.
+
+HwndTarget_InvalidWindowHandle=The specified handle is not a valid window handle.
+HwndTarget_InvalidWindowProcess=The specified window does not belong to the current process.
+HwndTarget_InvalidWindowThread=The specified window does not belong to the current thread.
+HwndTarget_WindowAlreadyHasContent=Another HwndTarget is associated with this window.
+HwndTarget_HardwareNotSupportDueToProtocolMismatch=Due to protocol mismatch hardware support is not available.
+
+
+VisualCollection_NotEnoughCapacity=Number of entries exceeds specified capacity of the VisualCollection.
+VisualCollection_EntryInUse=Specified index is already in use. Disconnect the Visual child at the specified index first.
+VisualCollection_VisualHasParent=Specified Visual is already a child of another Visual or the root of a CompositionTarget.
+VisualCollection_ReadOnly=This VisualCollection is read only and cannot be modified.
+
+MediaContext_APINotAllowed=Cannot call this API during the OnRender callback. During OnRender, only drawing operations that draw the content of the Visual can be performed.
+MediaContext_InfiniteTickLoop=An infinite loop appears to have resulted from repeatedly invalidating the TimeManager during the Layout/Render process.
+MediaContext_InfiniteLayoutLoop=An infinite loop appears to have resulted from cross-dependent views.
+MediaContext_RenderThreadError=An unspecified error occurred on the render thread.
+MediaSystem_ApiInvalidContext=This API was accessed with arguments from the wrong context.
+MediaSystem_OutOfOrderConnectOrDisconnect=Received an out of order connect or disconnect message.
+MediaContext_OutOfVideoMemory=Out of video memory.
+MediaContext_NoBadShaderHandler=Invalid user-specified pixel shader.  Register a PixelShader.InvalidPixelShaderEncountered event handler to avoid this exception being raised.
+
+CompositionTarget_RootVisual_HasParent=The root Visual of a VisualTarget cannot have a parent.
+
+Channel_InvalidCommandBufferPointer=Cannot read from the specified command buffer pointer.
+
+Collection_BadDestArray=Destination array is not compatible with objects within '{0}'.
+Collection_BadRank=Input array is not a valid rank.
+Collection_NoNull=Cannot add null to the collection.
+PathGeometry_InternalReadBackError=Internal error in newly produced path figures.
+HitTest_Invalid='{0}' HitTestParameters are not supported on '{1}'.
+
+
+Converter_ConvertToNotSupported=Cannot convert to type.
+Converter_ConvertFromNotSupported=Cannot convert from type.
+
+;
+; Parsing
+;
+
+Parsers_IllegalToken=Token is not valid.
+Parsers_IllegalToken_250_Chars=Token is not valid because it is more than 250 characters.
+Parser_UnexpectedToken=Unexpected token '{0}' encountered at position '{1}'.
+Parser_BadForm=Incorrect form '{0}' found parsing '{1}' string.
+Parser_Empty=Empty string not allowed.
+BrushUnknownBamlType=Unrecognized brush type in BAML file.
+FloatUnknownBamlType=Unrecognized float type in BAML file.
+
+;
+; Imaging
+;
+Image_NoArgument='{0}' property is not set.
+Image_NeitherArgument=Property '{0}' or property '{1}' must be set.
+Image_SizeOutOfRange=The image dimensions are out of the range supported by this codec.
+Image_SizeOptionsAngle=Bad Rotation parameter. Only Rotate0, Rotate90, Rotate180, and Rotate270 are supported.
+Image_ComponentNotFound=No imaging component suitable to complete this operation was found.
+Image_NoFrames=Cannot save an image with no frames.
+Image_BadPixelFormat='{0}' not a valid pixel format.
+Image_PaletteFixedType=Must use a fixed palette type. '{0}' not supported here.
+Image_CantBeFrozen=The Image passed to the ImageVisualManager cannot be frozen.
+Image_CantDealWithStream=The codec cannot use the type of stream provided.
+Image_CantDealWithUri=The codec cannot use the type of URI provided.
+Image_NoDecodeFrames=Image does not contain any frames.
+Image_OnlyOneSave=Cannot call Save on an Encoder more than once.
+Image_OnlyOrthogonal=Transform must be a combination of scales, flips, and 90 degree rotations.
+Image_BadVersion=DLL version not correct.
+WIC_NotInitialized=Object must be initialized before operation can be performed.
+Image_NotInitialized=BitmapImage has not been initialized.  Call the BeginInit method, set the appropriate properties, and then call the EndInit method.
+Image_PropertyNotFound=Property cannot be found.
+Image_PropertyNotSupported=This codec does not support the specified property.
+Image_PropertySize=Property is corrupted.
+Image_CodecPresent=Codec added more than once.
+Image_NoThumbnail=Bitmap does not contain thumbnail.
+Image_SingularMatrix=Cannot invert singular matrix.
+Image_NoPalette=The specified image does not contain a palette.
+Image_PaletteZeroColors=Cannot create a palette with less than 1 color or more than 256 colors.
+Image_PaletteColorsDoNotMatchFormat=The number of colors in the palette is larger than the maximum allowed by the supplied pixel format.
+Image_BadDimensions=The bitmap specified does not have the correct dimensions.
+Image_TooManyScanlines=The bitmap has too many scanlines for the specified encoder.
+Image_InternalError=An error occurred.
+Image_DisplayStateInvalid=The system display state is not valid.
+Image_NoCodecsFound=No codec found that can decode the specified file.
+Image_NoPixelFormatFound=No information was found about this pixel format.
+Image_FrameMissing=The image is missing a frame.
+Image_UnsupportedPixelFormat=Pixel format not supported.
+Image_UnsupportedOperation=Operation not supported.
+Image_BadMetadataHeader=The image has corrupted metadata header.
+Image_BadStreamData=The stream is corrupted.
+Image_StreamWrite=Cannot write to the stream.
+Image_StreamRead=Cannot read from the stream.
+Image_GuidEmpty=Empty GUID is not valid for '{0}'.
+Image_InvalidArrayForPixel=Cannot match the type of this array to a pixel format.
+Image_InitializationIncomplete=BitmapImage initialization is not complete. Call the EndInit method to complete the initialization.
+Image_OnlyOneInit=Cannot set the initializing state more than once.
+Image_InInitialize=Already in an initializing state.
+Image_EndInitWithoutBeginInit=Cannot call EndInit without a matching BeginInit call.
+Image_SetPropertyOutsideBeginEndInit=Cannot set this property outside a BeginInit/EndInit block.
+Image_EncoderNoGlobalThumbnail=The designated BitmapEncoder does not support global thumbnails.
+Image_EncoderNoGlobalMetadata=The designated BitmapEncoder does not support global metadata.
+Image_EncoderNoPreview=The designated BitmapEncoder does not support previews.
+Image_EncoderNoColorContext=The designated BitmapEncoder does not support ColorContexts.
+Image_IndexedPixelFormatRequiresPalette=Must specify a palette when using an indexed pixel format.
+Image_WrongState=Operation caused an invalid state.
+Image_Overflow=The image data generated an overflow during processing.
+Image_FreezableCloneNotAllowed=This class does not support cloning.
+Image_UnexpectedMetadataType=Unexpected type of metadata.
+Image_InvalidQueryRequest=Metadata query request is not valid.
+Image_RequestOnlyValidAtMetadataRoot=The metadata query is valid only at the root of the metadata hierarchy.
+Image_InvalidQueryCharacter=Character is not valid in metadata query request.
+Image_DuplicateMetadataPresent=Duplicate copies of metadata present.
+Image_PropertyUnexpectedType=Unexpected property type or value.
+Image_TooMuchMetadata=Commit unsuccessful because too much metadata changed.
+Image_OriginalStreamReadOnly=In place editing of bitmap metadata is not allowed because the original source is not writable.
+Image_MetadataReadOnly=Bitmap metadata cannot be changed.
+Image_MetadataSizeFixed=Cannot add any more top-level metadata blocks.
+Image_MetadataInitializationIncomplete=BitmapMetadata initialization incomplete.
+Image_InplaceMetadataNoCopy=InPlaceBitmapMetadataWriter cannot be copied.
+Image_InsufficientBufferSize=Buffer not large enough to copy memory.
+Image_MetadataNotCompatible=The bitmap metadata is not compatible with this container format.
+Image_ContentTypeDoesNotMatchDecoder=The mime type registered with the system does not match the mime type of the file.
+Image_CannotCreateTempFile=Unable to create temporary file for download.
+Image_MetadataNotSupported=BitmapMetadata is not available on BitmapImage.
+Image_AlphaThresholdOutOfRange=Alpha threshold must be from 0 through 100.
+Image_StreamNotAvailable=Metadata stream is not available for this operation.
+Image_InvalidColorContext=Bitmap color context is not valid.
+Image_InsufficientBuffer=Buffer size is not sufficient.
+Image_LockCountLimit=The lock count cannot exceed UInt32.MaxValue.
+Image_MustBeLocked=Cannot call this method while the image is unlocked.
+
+D3DImage_MustHaveBackBuffer=Cannot call this method without a back buffer.
+D3DImage_SurfaceTooBig=Back buffer's size is too large.
+D3DImage_InvalidUsage=Back buffer's usage does not meet the requirements for the resource type.
+D3DImage_InvalidPool=Back buffer's pool does not meet the requirements for the resource type.
+D3DImage_InvalidDevice=Back buffer's device is not valid.
+D3DImage_AARequires9Ex=An antialiased back buffer requires a IDirect3DDevice9Ex device.
+
+AddText_Invalid=Cannot add text to '{0}'.
+
+; Animation
+
+Animation_AnimationTimelineTypeMismatch=AnimationTimeline of type '{0}' cannot be used to animate the '{1}' property of type '{2}'.
+Animation_CalculatedValueIsInvalidForProperty=The animation(s) applied to the '{0}' property calculate a current value of '{1}', which is not a valid value for the property.
+IAnimatable_CantAnimateSealedDO=Cannot animate the '{0}' property on '{1}' because the object is sealed or frozen.
+Animation_ChildTypeMismatch=One of the animations in the timeline is a '{0}' and cannot be used to animate a property of type '{1}'.
+Animation_DependencyPropertyIsNotAnimatable='{0}' property is not animatable on '{1}' class because the IsAnimationProhibited flag has been set on the UIPropertyMetadata used to associate the property with the class.
+Animation_KeySpline_InvalidValue=Cannot set '{0}' to '{1}'. KeySpline values must be between 0.0 and 1.0.
+Animation_KeyTime_LessThanZero=Cannot create a KeyTime with the value '{0}' because it is less than zero.
+Animation_KeyTime_InvalidPercentValue='{0}' is not a valid Percent value for a KeyTime. The Percent value must be a number from 0.0 to 1.0.
+Animation_NoAnimationsSpecified='{0}' value is not valid because it contains no animations.
+Animation_Exception=Cannot animate the '{0}' property on a '{1}' using a '{2}'. For details see the inner exception.
+Animation_ReturnedUnsetValueInstance=A '{0}' on the '{1}' property of a '{2}' returned a current value of UnsetValue.Instance, which is not valid.
+Animation_UnrecognizedHandoffBehavior=The HandoffBehavior value is not valid.
+
+; Timing
+
+Timing_ChildMustBeTimeline=A child of a Timeline in "XAML" must also be a Timeline or a class that derives from Timeline.
+Timing_CreateClockMustReturnNewClock=The {0}.CreateClock method returned a pre-existing object, rather than a new object inheriting from TimelineClock.
+Timing_DifferentThreads=The specified timeline belongs to a different thread than this timeline.
+Timing_EnumeratorInvalidated=The enumeration is no longer valid because the collection it enumerates has changed.
+Timing_EnumeratorOutOfRange=The enumerator is out of range.
+Timing_InvalidArgAccelAndDecel=Property value must be between 0.0 and 1.0.
+Timing_AccelAndDecelGreaterThanOne=The sum of AccelerationRatio and DecelerationRatio must be less than or equal to one.
+Timing_InvalidArgFiniteNonNegative=Property value must be finite and greater than or equal to zero.
+Timing_InvalidArgFinitePositive=Property value must be finite and greater than zero.
+Timing_InvalidArgNonNegative=Property value must be greater than or equal to zero or indefinite.
+Timing_InvalidArgPositive=Property value must be greater than zero or indefinite.
+Timing_NoTextChildren=Timeline objects cannot have text objects as children.
+Timing_NotTimeSpan=Unable to return a TimeSpan property value for a Duration value of '{0}'. Check the HasTimeSpan property before requesting the TimeSpan property value from a Duration.
+Timing_OperationEnqueuedOutOfOrder=A timing operation has been not been queued in the appropriate order.
+Timing_RepeatBehaviorInvalidIterationCount='{0}' is not a valid IterationCount value for a RepeatBehavior structure. An IterationCount value must represent a number that is greater than or equal to zero but not infinite.
+Timing_RepeatBehaviorInvalidRepeatDuration='{0}' is not a valid RepeatDuration value for a RepeatBehavior structure. A RepeatDuration value must be a TimeSpan value greater than or equal to zero ticks.
+Timing_RepeatBehaviorNotIterationCount='{0}' RepeatBehavior does not represent an iteration count and does not have an IterationCount value.
+Timing_RepeatBehaviorNotRepeatDuration='{0}' RepeatBehavior does not represent a repeat duration and does not have a RepeatDuration value.
+Timing_SeekDestinationAmbiguousDueToSlip=The ClockController.Seek method was called with arguments that describe a seek destination that seeks a child with Slip but no defined duration. It is unclear if we are seeking the child or seeking past the child's duration.
+Timing_SeekDestinationIndefinite=The ClockController.Seek method was called using TimeSeekOrigin.Duration as the seekOrigin parameter for a Clock that has a duration of Forever. Clocks that have duration of Forever must use TimeSeekOrigin.BeginTime.
+Timing_SeekDestinationNegative=The ClockController.Seek method was called with arguments that describe a seek destination with a negative value. The seek destination must be a time greater than or equal to zero.
+Timing_SkipToFillDestinationIndefinite=Cannot call the ClockController.SkipToFill method for a Clock that has a Duration or RepeatDuration of Forever, because this Clock will never reach its fill period.
+Timing_SlipBehavior_SlipOnlyOnSimpleTimelines=SlipBehavior.Slip is supported only on root ParallelTimelines that do not reverse, accelerate, decelerate, or have a RepeatBehavior specified as a Duration.
+Timing_SlipBehavior_SyncOnlyWithSimpleParents=Clocks with CanSlip cannot have parents or ancestors with AutoReverse, AccelerationRatio, or DecelerationRatio.
+Timing_CanSlipOnlyOnSimpleTimelines=CanSlip is supported only on timelines without AutoReverse, AccelerationRatio, or DecelerationRatio.
+
+; Setter
+
+
+; Events
+
+SourceNotSet=Must set Source in RoutedEventArgs before building event route or invoking handlers.
+Mismatched_RoutedEvent=RoutedEvent in RoutedEventArgs and EventRoute are mismatched.
+HandlerTypeIllegal=Handler type is mismatched.
+DuplicateEventName=RoutedEvent Name '{0}' for OwnerType '{1}' already used.
+TreeLoop=Potential cycle in tree found while building the event route.
+RoutedEventArgsMustHaveRoutedEvent=Every RoutedEventArgs must have a non-null RoutedEvent associated with it.
+ClassTypeIllegal=Class handlers can be registered only for UIElement or ContentElement and their subtypes.
+TooManyRoutedEvents=RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.
+CannotModifyVisualChildrenDuringTreeWalk=Cannot modify the Visual children for this node because a tree walk is in progress.
+RoutedEventCannotChangeWhileRouting=Cannot change the RoutedEvent property while the RoutedEvent is being routed.
+
+; Color
+
+Color_DimensionMismatch=Color context dimensions mismatch.
+Color_ColorContextTypeMismatch=Color context types mismatch.
+Color_ColorContextNotsRGB_or_scRGB=Color context must be sRGB or scRGB for this operation.
+Color_NullColorContext=Color context is null.
+ColorContext_FileTooLarge=File is too large to be a valid ColorContext.
+
+; 3D
+
+HitTest_Singular=Hit testing with a singular MatrixCamera is not supported.
+Matrix3D_NotInvertible=Cannot invert the matrix, because the matrix is not invertible.
+Size3D_DimensionCannotBeNegative=Cannot set a negative dimension.
+Size3D_CannotModifyEmptySize=Cannot modify this property on the Empty Size3D.
+Rect3D_CannotModifyEmptyRect=Cannot modify this property on the Empty Rect3D.
+Rect3D_CannotCallMethod=Cannot call the method.
+Quaternion_ZeroAxisSpecified=Zero axis of rotation specified.
+Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial=MaterialGroup cannot be an interactive Material (IsVisualHostMaterial is true).
+Viewport2DVisual3D_MultipleInteractiveMaterials=Viewport2DVisual3D supports only one interactive Material.
+
+; DataTransfer
+ScopeMustBeUIElementOrContent=The scope must be a UIElement or ContentElement.
+OleRegisterDragDropFailure=OleRegisterDragDrop failed with return code '{0}' and window handle '{1}'.
+OleRevokeDragDropFailure=OleRevokeDragDrop failed with return code '{0}' and window handle '{1}'.
+DragDrop_DragDropEffectsInvalid='{0}' DragDropEffects is not valid.
+DragDrop_DragActionInvalid='{0}' DragAction is not valid.
+DataObject_DataFormatNotPresentOnDataObject='{0}' data format is not present on DataObject.
+DataObject_DataObjectMustHaveAtLeastOneFormat=Data object must have at least one format.
+DataObject_CannotSetDataOnAFozenOLEDataDbject=Cannot SetData on a frozen OLE data object.
+DataObject_NotImplementedEnumFormatEtc='{0}' dwDirection parameter value is not supported.
+DataObject_FileDropListIsEmpty='{0}' must contain at least one file drop path.
+DataObject_FileDropListHasInvalidFileDropPath='{0}' file drop path is not valid.
+DataObject_EmptyFormatNotAllowed=Empty string is not a valid value for parameter 'format'.
+
+; AnimationEffects
+AnimEffect_CollectionInUse=This AnimationEffectCollection is already being used by another UIElement.
+AnimEffect_NoVisual=This AnimationEffect is not attached to a Visual.
+AnimEffect_AlreadyAttached=This AnimationEffect is already attached to a UIElement.
+
+; ImageEffects
+Effect_PixelFormat='{0}' PixelFormat is not supported for this operation.
+
+; SafeMILHandle
+
+;
+; Media
+;
+Media_UninitializedResource=Accessed an uninitialized media resource.
+Media_StreamClosed=Cannot access the stream after it is closed.
+Media_InvalidArgument=Value does not fall within the expected range.
+Media_InvalidWmpVersion=Windows Media Player version 10 or later is required.
+Media_UriNotSpecified=Must specify URI.
+Media_InsufficientVideoResources=There are insufficient video resources available for video or audio playback.
+Media_HardwareVideoAccelerationNotAvailable=Display driver must support video acceleration for video or audio playback.
+Media_LogonFailure=Access was denied on the media file.
+Media_FileNotFound=Cannot find the media file.
+Media_DownloadFailed=Media file download failed.
+Media_FileFormatNotSupported=Installed codecs do not support the media file format.
+Media_PlaylistFormatNotSupported=Unrecognized playlist file format.
+Media_NotAllowedWhileTimingEngineInControl=Cannot perform this operation while a clock is assigned to the media player.
+Media_UnknownMediaExecption=An unknown media error occurred.
+Media_PlayerIsClosed=No operations are valid on a closed media player except open and close.
+Media_UnknownChannelType=Channel type is not recognized.
+Media_PackURIsAreNotSupported=Only site-of-origin pack URIs are supported for media.
+
+; AccessKeyManager
+AccessKeyManager_NotAUnicodeCharacter='{0}' is not a single Unicode character.
+
+; InputMethod
+InputMethod_InvalidConversionMode='{0}' is not a valid ImeConversionMode.
+InputMethod_InvalidSentenceMode='{0}' is not a valid ImeSentenceMode.
+
+; InputLanguageManager
+InputLanguageManager_NotReadyToChangeCurrentLanguage=InputLanguageManager is not ready to change the current input languages.
+
+
+; InputScope
+InputScope_InvalidInputScopeName='{0}' is not a valid InputScopeName.
+
+; TextComposition
+TextComposition_NullResultText=Result text cannot be null.
+
+; TextCompositionManager
+TextCompositionManager_TextCompositionHasStarted='{0}' has already started.
+TextCompositionManager_TextCompositionNotStarted='{0}' has not yet started.
+TextCompositionManager_TextCompositionHasDone='{0}' has already finished.
+TextCompositionManager_NoInputManager='{0}' does not have a valid InputManager.
+
+;Progressivity
+ByteRangeDownloaderDisposed=Cannot access a disposed HTTP byte range downloader.
+ByteRangeRequestIsNotSupported=Server does not support byte range request.
+ByteRangeDownloaderErroredOut=Byte range request failed.
+InvalidScheme=HTTP byte range downloader can support only HTTP or HTTPS schemes.
+InvalidByteRanges=Byte ranges are not valid in '{0}'.
+InvalidTempFileName=Cannot have empty name of a temporary file.
+RequestAlreadyStarted=The operation is not allowed after the first request is made.
+InvalidEventHandle=The event handle is not usable.
+
+; CompoundFile WebRequest/Response classes - most strings duplicated from base dll
+
+FlushNotSupported=Stream does not support Flush.
+OffsetNegative=Offset must be non-negative.
+IOBufferOverflow=A read or write operation references a location outside the bounds of the buffer provided.
+
+ReadCountNegative=Count of bytes to read cannot be negative.
+SeekOriginInvalid=SeekOrigin value is not valid.
+SetLengthNotSupported=Stream does not support SetLength.
+WriteNotSupported=Stream does not support writing.
+WebResponseFailure=Error processing WebResponse.
+WebResponseCloseFailure=Error closing the WebResponse.
+WebRequestTimeout=WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.
+PackWebRequestCachePolicyIllegal=Cache policy is not valid.
+WebResponsePartNotFound=Requested PackagePart not found in target resource.
+UriSchemeMismatch=This factory supports only URIs with the '{0}' scheme.
+UriMustBeAbsolute=URI must be absolute. Relative URIs are not supported.
+
+PackageAlreadyExists=A package with the same URI is already in the package store.
+NotAllowedPackageUri=The package URI is not allowed in the package store.
+InnerRequestNotAllowed=InnerRequest not available for preloaded packages.
+SchemaInvalidForTransport=Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.
+ResourceNotFoundUnderCacheOnlyPolicy=Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.
+SeekNegative=Cannot set seek pointer to a negative position.
+
+; DeobfuscatingStream
+InvalidPartName=The part name does not correspond to its content type.
+
+; Serialization
+NonWhiteSpaceInAddText=Text content is not allowed on this element. Cannot add the text '{0}'.
+
+; OleServicesContext
+OleServicesContext_oleInitializeFailure=OleInitialize failed for '{0}'.
+OleServicesContext_ThreadMustBeSTA=Current thread must be set to single thread apartment (STA) mode before OLE calls can be made.
+
+; Accessibility
+SetFocusFailed=The target element cannot receive focus.
+AutomationTimeout=Timeout occurred while attempting to access UI. The application might be busy or unresponsive.
+AutomationDispatcherShutdown=Automation client cannot access UI because application is shutting down.
+TextProvider_InvalidChild='{0}' parameter value is not a valid child element of the text provider.
+TextRangeProvider_InvalidRangeProvider='{0}' parameter value is not a valid ITextRangeProvider.
+
+; Standard message for using FileNotFoundException with only a file name.
+FileNotFoundExceptionWithFileName=Cannot find file '{0}'.
+
+; Standard message for using DirectoryNotFoundException with only a file name.
+DirectoryNotFoundExceptionWithFileName=Cannot find a part of the path '{0}'.
+
+; Standard message for using UnauthorizedAccessException with only a file name.
+UnauthorizedAccessExceptionWithFileName=Access denied to the path '{0}'.
+
+; Standard message for using IOException with only a file name.
+IOExceptionWithFileName=I/O error when opening file '{0}'.
+
+; Standard message for using PathTooLongException with only a file name.
+PathTooLongExceptionWithFileName='{0}' file name is longer than the system-defined maximum length.
+
+; Tablet Common Exception strings
+EventArgIsNull=Event arguments must be non-null.
+
+; Tablet Exception strings for ExtendedPropertyCollection and DrawingAttributes.
+InvalidDrawingAttributesHeight=Height must be greater than or equal to DrawingAttributes.MinHeight and less than or equal to DrawingAttribute.MaxHeight.
+InvalidDrawingAttributesWidth=Width must be greater than or equal to DrawingAttributes.MinWidth and less than or equal to DrawingAttribute.MaxWidth.
+
+EPExists=ExtendedProperty is already part of the ExtendedPropertyCollection.
+EPNotFound=Property not set.
+EPGuidNotFound=The GUID is not part of the ExtendedPropertyCollection.
+ValueNotValidForGuid=Value is not valid for the specified GUID.
+CannotBothBeNull='{0}' and '{1}' cannot both be null.
+
+; Tablet Exception strings for Stroke and StrokeCollection.
+Invalid_isfData_Length=The length of the ISF data must be greater than zero.
+InvalidRemovedStroke=The stroke being removed does not exist in the current collection.
+StrokeIsDuplicated=A duplicate stroke cannot be added to StrokeCollection.
+InvalidReplacedStroke=The stroke being replaced does not exist in the current collection.
+EmptyScToReplaceWith=The replacement StrokeCollection cannot be empty.
+EmptyScToReplace=Collection cannot be empty.
+StrokesNotContiguously=The strokes being replaced must exist contiguously in the current StrokeCollection.
+CollectionEnumerationError=Collection was modified during enumeration.
+InvalidDiameter=The value is out of range.
+EmptyArray=Empty arrays are not a valid argument value.
+SCEraseShape=Erasing Shape cannot be null.
+SCErasePath=Path of erasing stroke cannot be null.
+SCDataChanged=The Strokes have changed.
+StrokeCollectionIsReadOnly=The specified StrokeCollection is read-only.
+
+; Tablet Exception strings for Renderer
+EmptyArrayNotAllowedAsArgument=The array cannot be empty.
+VisualCannotBeDetached=Specified Visual cannot be detached.
+EndHitTestingCalled=EndHitTesting has already been called on the IncrementalHitTester.
+CannotAttachVisualTwice=Cannot attach a Visual that is already attached.
+UnknownStroke=Unrecognized Stroke in PropertyDataChangedEventArgs.Owner.
+UnknownStroke1=Unrecognized Stroke in Stroke.Invalidated event arguments.
+UnknownStroke3=Unrecognized Stroke in StrokeCollectionChangedEventArgs.Removed.
+UnexpectedStroke=Unexpected Stroke in PropertyDataChangedEventArgs.Owner.
+DuplicateStrokeAdded=Duplicate Stroke in StrokeCollectionChangedEventArgs.Added.
+
+; Tablet Exception for Renderer and ISF
+InvalidGuid=GUID cannot be empty.
+InvalidValueType=Value must be of type '{0}'.
+InvalidValueType1=Value must be of type '{0}' or '{1}'.
+InvalidSttValue=Translation is not valid.
+InvalidValueOfType=Invalid value '{0}' for type '{1}'.
+
+; Tablet Exception strings for ISF
+InitializingCompressorFailed=Cannot initialize compressor.
+DecompressPacketDataFailed=Decompression of packet data failed.
+DecompressPropertyFailed=Decompression of property data failed.
+InvalidEpInIsf=Extended property data type is not valid.
+EmptyDataToLoad=No data to load.
+IsfOperationFailed=InkSerializedFormat operation failed.
+InvalidStream=Stream is not valid.
+InvalidDataTypeForExtendedProperty=Property data must be a non-reference variant compatible type.
+MatrixNotInvertible=The specified Matrix must be invertible.
+InvalidSizeSpecified=The specified size is less than the information decoded in the ISF stream.
+InvalidDataInISF=The specified data is invalid, see inner exception for details.
+
+
+; Tablet Exception strings for shared utilities
+InvalidBufferLength=Maximum buffer length must be within actual buffer length.
+EndOfStreamReached=End of stream reached.
+CountOfBitsOutOfRange=Count must be less than or equal to bits per byte and greater than zero.
+CountOfBitsGreatThanRemainingBits=Count must be less than or equal to remaining number of bits in stream.
+ConstructorRecursion=Possible constructor recursion detected.
+InvalidMatrixContainsNaN=NaN is not a valid value for Matrix member.
+InvalidMatrixContainsInfinity=Infinity member value is not valid in Matrix.
+
+
+; Tablet Exception strings for GestureRecognizer
+GestureRecognizerNotAvailable=No gesture recognizer is available on the system.
+ApplicationGestureArrayLengthIsZero=The ApplicationGesture array must contain at least one member.
+AllGesturesMustExistAlone=If AllGestures is specified, it must be the only ApplicationGesture in the ApplicationGesture array.
+ApplicationGestureIsInvalid=The specified ApplicationGesture is not valid.
+DuplicateApplicationGestureFound=Duplicate ApplicationGesture values are not allowed.
+UnspecifiedGestureException=Gesture recognition failed.
+UnspecifiedGestureConstructionException=Failed to initialize GestureRecognizer.
+UnspecifiedSetEnabledGesturesException=Failed to set enabled gestures.
+StrokeCollectionCountTooBig=Maximum number of strokes is two.
+
+; Tablet Exception strings for StylusPoints
+InvalidPressureValue=Pressure must be a value between 0 and 1.
+InvalidStylusPointProperty=The StylusPoint does not support the specified StylusPointProperty.
+InvalidIsButtonForId=The specified GUID represents a button, so isButton must be true.
+InvalidIsButtonForId2=The specified GUID does not represent a button, so isButton must be false.
+InvalidStylusPointDescription=StylusPointDescription must contain at least X, Y and NormalPressure in that order.
+InvalidStylusPointDescriptionDuplicatesFound=StylusPointDescription cannot contain duplicate StylusPointPropertyInfos.
+IncompatibleStylusPointDescriptions=The StylusPointDescriptions are incompatible. Use the StylusPointDescription.GetCommonDescription method to find a common StylusPointDescription and then call StylusPointCollection.Reformat to return a compatible StylusPointCollection.
+InvalidStylusPointDescriptionButtonsMustBeLast=When constructing a StylusPointDescription, any StylusPointPropertyInfos that represent buttons must be placed at the end of the collection.
+InvalidMinMaxForButton=StylusPointPropertyInfos that are buttons must have a minimum of 0 and a maximum of 1.
+
+InvalidStylusPointDescriptionSubset=The specified StylusPointDescription must be a subset.
+InvalidStylusPointCollectionZeroCount=StylusPointCollection cannot be empty when attached to a Stroke.
+InvalidAdditionalDataForStylusPoint=The additional data passed in does not match what is expected based on the StylusPointDescription.
+InvalidStylusPointDescriptionTooManyButtons=StylusPointDescription supports no more than 31 buttons.
+InvalidStylusPointConstructionZeroLengthCollection=The specified collection cannot be empty.
+InvalidStylusPointPropertyInfoResolution=Resolution must be at least 0.0f.
+InvalidStylusPointXYNaN=Value cannot be Double.NaN.
+
+; Imaging
+Image_DecoderError=The image decoder cannot decode the image. The image might be corrupted.
+Image_HeaderError=The image cannot be decoded. The image header might be corrupted.
+Image_UnknownFormat=The image format is unrecognized.
+Image_ColorTransformInvalid=Color transform is not valid.
+Image_ColorContextInvalid=Color context is not valid.
+
+; Effects
+Effect_No_InputSource=There is no input set.
+Effect_No_ContextInputSource=Cannot call BitmapEffect.GetOutput directly with a ContextInputSource. Provide a valid BitmapSource.
+GeneralTransform_TransformFailed=The transform is not defined for the point.
+Effect_CombinedLegacyAndNew=BitmapEffect and Effect cannot be combined on a Visual.
+Effect_ShaderConstantType=Shader constant of type '{0}' is not allowed.
+Effect_Shader20ConstantRegisterLimit=Pixel Shader Model 2.0 requires floating point constants to be in registers [0-31].
+Effect_Shader30FloatConstantRegisterLimit=Pixel Shader Model 3.0 requires floating point constants to be in registers [0-223].
+Effect_Shader30IntConstantRegisterLimit=Pixel Shader Model 3.0 requires integer constants to be in registers [0-15].
+Effect_Shader30BoolConstantRegisterLimit=Pixel Shader Model 3.0 requires boolean constants to be in registers [0-15].
+Effect_ShaderSamplerType=Pixel shader sampler must be Effect.ImplicitInput, or an instance of BitmapCacheBrush, VisualBrush, or ImageBrush.
+Effect_Shader20SamplerRegisterLimit=Pixel Shader Model 2.0 requires sampler constants to be in registers [0-3].
+Effect_Shader30SamplerRegisterLimit=Pixel Shader Model 3.0 requires sampler constants to be in registers [0-7].
+Effect_ShaderPixelShaderSet=PixelShader must be set on ShaderEffect.
+Effect_SourceUriMustBeFileOrPack=Uri must be a file or pack Uri.
+Effect_ShaderSeekableStream=PixelShader only accepts seekable streams.
+Effect_ShaderBytecodeSize=Shader bytecode must be an integral number of 4-byte words.
+Effect_ShaderBytecodeSource=No shader bytecode present.  Must either set UriSource or call SetStreamSource.
+Effect_20ShaderUsing30Registers=A pixel shader using Pixel Shader Model 2.0 cannot be set because registers only available in Pixel Shader Model 3.0 are being used.
+Effect_RenderThreadError=An error occurred on the render thread with a user-supplied shader.
+Effect_ShaderEffectPadding=Padding must be non-negative.
+
+; CacheMode
+BitmapCacheBrush_OpacityChanged=BitmapCacheBrush does not support Opacity.
+BitmapCacheBrush_TransformChanged=BitmapCacheBrush does not support Transform.
+BitmapCacheBrush_RelativeTransformChanged=BitmapCacheBrush does not support RelativeTransform.
+
+; Automation
+Automation_UnsupportedUIAutomationEventAssociation=Unsupported UI Automation event association.
+
+; ResourceManagerWrapper
+NonPackAppAbsoluteUriNotAllowed=Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.
+WrongFirstSegment=The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.
+
+; Geometry
+Geometry_BadNumber=Arithmetic error found while trying to perform this operation.
+StreamGeometry_NeedBeginFigure=BeginFigure must be called before this API.
+
+; Paginator
+PaginatorNegativePageNumber=Page number cannot be negative.
+PaginatorMissingContentPosition=Specified ContentPosition is not valid for this element.
+
+; Automation
+Automation_RecursivePublicCall=Recursive call to Automation Peer API is not valid.
+Automation_InvalidEventId='{0}' is not a valid System.Windows.Automation.AutomationEvent.
+Automation_InvalidConnectedPeer='{0}' is not a valid System.Windows.Automation.AutomationPeer. It is expected to be associated with a Window known to Automation.
+Automation_InvalidSynchronizedInputType='{0}' is not a valid System.Windows.Automation.SynchronizedInputType.
+
+;XmlLanguage
+XmlLangMalformed='{0}' language tag must be empty or must conform to grammar defined in IETF RFC 3066.
+XmlLangGetSpecificCulture=Cannot find non-neutral culture related to '{0}'.
+XmlLangGetCultureFailure=There is no registered CultureInfo with the IetfLanguageTag '{0}'.
+
+;MapUrlToZoneWrapper
+Invalid_URI=The URI specified is invalid.
+
+;Freezable
+Freezable_CloneInvalidType=Clone of an instance of type '{0}' is null or not an instance of '{0}'.
+Freezable_Reentrant=Cannot change FreezableCollection during a CollectionChanged event.
+Freezable_UnexpectedChange=Unknown/unexpected change event
+
+; XamlSerializers
+IntegerCollectionLengthLessThanZero=Integer collection size cannot be negative.
+
+; Manipulation
+Manipulation_InvalidManipulationMode=An unrecognized ManipulationMode flag was encountered.
+Manipulation_ManipulationNotEnabled=IsManipulationEnabled is not set to true on the specified element.
+Manipulation_ManipulationNotActive=Manipulation is not active on the specified element.
+
+; Touch Strings
+Touch_Category=Touch
+
+;Touch Exception Strings
+Touch_DeviceAlreadyActivated=The TouchDevice is already activated.
+Touch_DeviceNotActivated=The TouchDevice is not activated.
+
+;CompatibilityPreferences
+CompatibilityPreferencesSealed=The property '{0}' cannot be changed. The '{1}' class has been sealed.
+
+;Visual Diagnostics
+MethodCallNotAllowed=The '{0}' method cannot be called at this time.
+ReentrantVisualTreeChangeWarning=WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.
+ReentrantVisualTreeChangeError=The visual tree has been changed during a '{0}' event.

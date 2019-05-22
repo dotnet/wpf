@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Class that serializes and deserializes Templates.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
@@ -40,7 +38,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class XamlTemplateSerializer : XamlSerializer
     {
-
 #if PBTCOMPILER
         #region Construction
 

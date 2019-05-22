@@ -231,7 +231,6 @@ namespace System.Windows.Media
 
         static internal string MatchColor(string colorString, out bool isKnownColor, out bool isNumericColor, out bool isContextColor, out bool isScRgbColor)
         {
-
             string trimmedString = colorString.Trim();
 
             if (((trimmedString.Length == 4) ||

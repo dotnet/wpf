@@ -2,11 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description: Utilities for converting types to custom Binary format
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.IO; 
@@ -33,7 +31,6 @@ using TypeConverterHelper = System.Windows.Markup;
 namespace MS.Internal.Media
 #endif
 {
-
 #if PBTCOMPILER     
 
     
@@ -165,7 +162,6 @@ namespace MS.Internal.Media
 
     internal static class XamlSerializationHelper 
     {
-
         // =====================================================
         // 
         // All PBT specific types and methods go here. 
@@ -360,8 +356,7 @@ namespace MS.Internal.Media
                 default: 
                     throw new ArgumentException(SR.Get(SRID.FloatUnknownBamlType));                 
             }
-
-        }
+}
 
         internal static double ReadScaledInteger(BinaryReader reader )
         {
@@ -463,6 +458,5 @@ namespace MS.Internal.Media
                 return true ; 
             }                     
         }
-
-    }
+}
 }

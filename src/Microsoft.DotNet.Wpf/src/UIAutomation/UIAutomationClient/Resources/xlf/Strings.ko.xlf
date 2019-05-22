@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ko" original="../Strings.resx">
+    <body>
+      <trans-unit id="Assembly0NotFound">
+        <source>'{0}' assembly not found.</source>
+        <target state="translated">'{0}' 어셈블리를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AtLeastOnePropertyMustBeSpecified">
+        <source>Must specify at least one property for AddAutomationPropertyChangedHandler.</source>
+        <target state="translated">AddAutomationPropertyChangedHandler에 대해 최소한 하나의 속성을 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCanOnlyPopTop">
+        <source>CacheRequest.Pop was called on a CacheRequest that was not the current top-of-stack request.</source>
+        <target state="translated">현재 스택 맨 위에 있는 요청이 아닌 CacheRequest에서 CacheRequest.Pop을 호출했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCantModifyWhileActive">
+        <source>Cannot modify a CacheRequest while it is active on any thread.</source>
+        <target state="translated">CacheRequest가 스레드에서 활성화 상태이면 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedCache">
+        <source>Cannot access cached properties on a pattern returned from GetCurrentPattern.</source>
+        <target state="translated">GetCurrentPattern에서 반환된 패턴의 캐시된 속성에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedElementReference">
+        <source>Cannot perform this operation on an AutomationElement that contains only cached data. The requested operation requires a Full or Lightweight reference.</source>
+        <target state="translated">캐시된 데이터만 있는 AutomationElement에서 이 작업을 수행할 수 없습니다. 요청한 작업에는 Full 또는 Lightweight 참조가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedLiveForProperties">
+        <source>Cannot access current properties on a pattern that contains only cached data.</source>
+        <target state="translated">캐시된 데이터만 있는 패턴의 현재 속성에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CachedPropertyNotRequested">
+        <source>Cannot request a property or pattern that is not cached.</source>
+        <target state="translated">캐시되지 않은 속성 또는 패턴을 요청할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantPrefetchTextPattern">
+        <source>Text pattern cannot be cached.</source>
+        <target state="translated">텍스트 패턴을 캐시할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindRegisterMethodOnType0InAssembly1">
+        <source>Cannot find Register method on type '{0}' in assembly '{1}'.</source>
+        <target state="translated">'{1}' 어셈블리에서 '{0}' 형식의 Register 메서드를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindType0InAssembly1">
+        <source>Cannot find type '{0}' in assembly '{1}'.</source>
+        <target state="translated">'{1}' 어셈블리에서 '{0}' 형식을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationFocusChanged">
+        <source>eventId not valid. Use AddAutomationFocusChangedEventHandler to listen for focus changes.</source>
+        <target state="translated">eventId가 잘못되었습니다. AddAutomationFocusChangedEventHandler를 사용하여 포커스 변경 내용을 수신 대기하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationPropertyChanged">
+        <source>eventId not valid. Use AddAutomationPropertyChangedEventHandler to listen for property changes.</source>
+        <target state="translated">eventId가 잘못되었습니다. AddAutomationPropertyChangedEventHandler를 사용하여 속성 변경 내용을 수신 대기하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeStructureChanged">
+        <source>eventId not valid. Use AddStructureChangedEventHandler to listen for tree structure changes.</source>
+        <target state="translated">eventId가 잘못되었습니다. AddStructureChangedEventHandler를 사용하여 트리 구조 변경 내용을 수신 대기하십시오.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GenericInvalidArgument">
+        <source>'{0}' is not a valid type or is not a valid value.</source>
+        <target state="translated">'{0}'이(가) 잘못된 형식이거나 잘못된 값입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndMustBeNonNULL">
+        <source>hwnd cannot be IntPtr.Zero or null.</source>
+        <target state="translated">hwnd는 IntPtr.Zero 또는 null이 될 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IgnoreCaseRequiresString">
+        <source>IgnoreCase flag can only be used with string arguments.</source>
+        <target state="translated">IgnoreCase 플래그는 문자열 인수를 사용하는 경우에만 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LogicalElementNoClickablePoint">
+        <source>The AutomationElement has no clickable point.</source>
+        <target state="translated">AutomationElement에 클릭할 수 있는 포인트가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeAtLeastTwoConditions">
+        <source>Must specify at least two conditions.</source>
+        <target state="translated">최소한 두 개의 조건을 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonclientClassnameCannotBeUsedWithFlagsOrImagename">
+        <source>#nonclient classname cannot be used with flags or image name.</source>
+        <target state="translated">#nonclient classname을 플래그 또는 이미지 이름과 함께 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParamsNotApplicableToWindowClosedEvent">
+        <source>WindowClosed event is only applicable to RootElement and TreeScope.Subtree or an element that implements WindowPattern.</source>
+        <target state="translated">RootElement와 TreeScope.Subtree 또는 WindowPattern을 구현하는 요소에만 WindowClosed 이벤트를 적용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyConditionIncorrectType">
+        <source>PropertyCondition value for property '{0}' must be '{1}'.</source>
+        <target state="translated">'{0}' 속성에 대한 PropertyCondition 값은 '{1}'이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScreenCoordinatesOutsideBoundingRect">
+        <source>Screen coordinate is outside the bounding rectangle.</source>
+        <target state="translated">화면 좌표가 경계 사각형의 외부에 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">대상 요소가 포커스를 받을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextAttributeValueWrongType">
+        <source>'{0}' text attribute value is type '{1}', but expected type '{2}'.</source>
+        <target state="translated">'{0}' 텍스트 특성 값이 '{1}' 형식이지만 필요한 형식은 '{2}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextMustNotBeNullOrEmpty">
+        <source>Text argument cannot be a null or empty string.</source>
+        <target state="translated">텍스트 인수는 null이거나 비어 있는 문자열일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeElementChildrenDescendantsOnly">
+        <source>Only TreeScope.Element, TreeScope.Children, and TreeScope.Descendants are valid for this call.</source>
+        <target state="translated">이 호출에 TreeScope.Element, TreeScope.Children 및 TreeScope.Descendants만 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeNeedAtLeastOne">
+        <source>Must specify at least one of TreeScope.Element, TreeScope.Children, or TreeScope.Descendants.</source>
+        <target state="translated">TreeScope.Element, TreeScope.Children, TreeScope.Descendants 중 하나 이상을 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedWindowState">
+        <source>Unrecognized WindowVisualState value.</source>
+        <target state="translated">인식할 수 없는 WindowVisualState 값입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownCoreAPIError">
+        <source>Unrecognized error.</source>
+        <target state="translated">인식할 수 없는 오류입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedAttribute">
+        <source>Unsupported TextAttribute.</source>
+        <target state="translated">지원되지 않는 TextAttribute입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedPattern">
+        <source>Unsupported Pattern.</source>
+        <target state="translated">지원되지 않는 Pattern입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedProperty">
+        <source>Unsupported Property.</source>
+        <target state="translated">지원되지 않는 Property입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">값이 읽기 전용입니다.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

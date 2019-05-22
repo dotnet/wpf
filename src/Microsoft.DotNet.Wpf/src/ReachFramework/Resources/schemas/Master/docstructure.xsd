@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+            targetNamespace="http://schemas.microsoft.com/xps/2005/06/documentstructure" 
+            xmlns="http://schemas.microsoft.com/xps/2005/06/documentstructure" 
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+            elementFormDefault="qualified"
+            blockDefault="#all">
+
+	<xs:import
+		namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://metroportal/working%20group/Markup%20Schema/Master/xmllang.xsd"/>
+
+	<!-- ===============DocumentStructure Part=================== -->
+	<!-- Complex Types -->
+	<xs:complexType name="CT_DocumentStructure">
+		<xs:annotation>
+			<xs:appinfo>CT_DocumentStructure</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="DocumentStructure.Outline" minOccurs="0"/>
+			<xs:element ref="Story" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CT_CP_Outline">
+ 		<xs:annotation>
+ 			<xs:appinfo>CT_CP_Outline</xs:appinfo>
+ 		</xs:annotation>
+ 		<xs:sequence>
+ 			<xs:element ref="DocumentOutline"/>
+ 		</xs:sequence>
+ 	</xs:complexType>
+	<xs:complexType name="CT_DocumentOutline">
+		<xs:annotation>
+			<xs:appinfo>CT_DocumentOutline</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="OutlineEntry" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_DocumentOutline"/>
+	</xs:complexType>
+	<xs:complexType name="CT_OutlineEntry">
+		<xs:annotation>
+			<xs:appinfo>CT_OutlineEntry</xs:appinfo>
+		</xs:annotation>
+		<xs:attributeGroup ref="AG_OutlineEntry"/>
+	</xs:complexType>
+	<xs:complexType name="CT_Story">
+		<xs:annotation>
+			<xs:appinfo>CT_Story</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StoryFragmentReference" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_Story"/>
+	</xs:complexType>
+	<xs:complexType name="CT_StoryFragmentReference">
+		<xs:annotation>
+			<xs:appinfo>CT_StoryFragmentReference</xs:appinfo>
+		</xs:annotation>
+		<xs:attributeGroup ref="AG_StoryFragmentReference"/>
+	</xs:complexType>
+	<!-- Simple Types -->
+	<!-- A Name (ID with pattern restriction according to XPS spec) -->
+	<xs:simpleType name="ST_Name">
+		<xs:annotation>
+			<xs:appinfo>ST_Name</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl})(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Lm}|_)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- A Unique Name (ID with pattern restriction according to XPS spec) -->
+	<xs:simpleType name="ST_NameUnique">
+		<xs:annotation>
+			<xs:appinfo>ST_NameUnique</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:ID">
+			<xs:pattern value="(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl})(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Lm}|_)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- integer greater than or equal to 1 inclusive -->
+	<xs:simpleType name="ST_IntGEOne">
+		<xs:annotation>
+			<xs:appinfo>ST_IntGEOne</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Elements -->
+	<xs:element name="DocumentStructure" type="CT_DocumentStructure">
+		<xs:annotation>
+			<xs:appinfo>DocumentStructure</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentStructure.Outline" type="CT_CP_Outline">
+		<xs:annotation>
+			<xs:appinfo>DocumentStructure.Outline</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentOutline" type="CT_DocumentOutline">
+		<xs:annotation>
+			<xs:appinfo>DocumentOutline</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OutlineEntry" type="CT_OutlineEntry">
+		<xs:annotation>
+			<xs:appinfo>OutlineEntry</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Story" type="CT_Story">
+		<xs:annotation>
+			<xs:appinfo>Story</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StoryFragmentReference" type="CT_StoryFragmentReference">
+		<xs:annotation>
+			<xs:appinfo>StoryFragmentReference</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- Attribute Groups -->
+	<xs:attributeGroup name="AG_DocumentOutline">
+		<xs:attribute ref="xml:lang" use="required">
+			<xs:annotation>
+				<xs:appinfo>xmllang</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_OutlineEntry">
+		<xs:attribute name="OutlineLevel" type="ST_IntGEOne" use="optional" default="1">
+			<xs:annotation>
+				<xs:appinfo>OutlineLevel</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OutlineTarget" type="xs:anyURI" use="required">
+			<xs:annotation>
+				<xs:appinfo>OutlineTarget</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Description" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:appinfo>Description</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute ref="xml:lang" use="optional">
+			<xs:annotation>
+				<xs:appinfo>xmllang</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_Story">
+		<xs:attribute name="StoryName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:appinfo>StoryName</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_StoryFragmentReference">
+		<xs:attribute name="FragmentName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>FragmentName</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Page" type="ST_IntGEOne" use="required">
+			<xs:annotation>
+				<xs:appinfo>Page</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!-- =====================StoryFragments Part==================== -->
+	<!-- Complex Types -->
+	<xs:complexType name="CT_StoryFragments">
+		<xs:annotation>
+			<xs:appinfo>CT_StoryFragments</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StoryFragment" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CT_StoryFragment">
+		<xs:annotation>
+			<xs:appinfo>CT_StoryFragment</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="StoryBreak" minOccurs="0"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="SectionStructure"/>
+				<xs:element ref="ParagraphStructure"/>
+				<xs:element ref="ListStructure"/>
+				<xs:element ref="TableStructure"/>
+				<xs:element ref="FigureStructure"/>
+			</xs:choice>
+			<xs:element ref="StoryBreak" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_StoryFragment"/>
+	</xs:complexType>
+	<xs:complexType name="CT_Break">
+		<xs:annotation>
+			<xs:appinfo>CT_Break</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="CT_Section">
+		<xs:annotation>
+			<xs:appinfo>CT_Section</xs:appinfo>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure"/>
+			<xs:element ref="ListStructure"/>
+			<xs:element ref="TableStructure"/>
+			<xs:element ref="FigureStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_Paragraph">
+		<xs:annotation>
+			<xs:appinfo>CT_Paragraph</xs:appinfo>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="NamedElement"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_Table">
+		<xs:annotation>
+			<xs:appinfo>CT_Table</xs:appinfo>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableRowGroupStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableRowGroup">
+		<xs:annotation>
+			<xs:appinfo>CT_TableRowGroup</xs:appinfo>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableRowStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableRow">
+		<xs:annotation>
+			<xs:appinfo>CT_TableRow</xs:appinfo>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableCellStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableCell">
+		<xs:annotation>
+			<xs:appinfo>CT_TableCell</xs:appinfo>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure"/>
+			<xs:element ref="ListStructure"/>
+			<xs:element ref="TableStructure"/>
+			<xs:element ref="FigureStructure"/>
+		</xs:choice>
+		<xs:attributeGroup ref="AG_TableCell"/>
+	</xs:complexType>
+	<xs:complexType name="CT_List">
+		<xs:annotation>
+			<xs:appinfo>CT_List</xs:appinfo>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="ListItemStructure"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_ListItem">
+		<xs:annotation>
+			<xs:appinfo>CT_ListItem</xs:appinfo>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure"/>
+			<xs:element ref="ListStructure"/>
+			<xs:element ref="TableStructure"/>
+			<xs:element ref="FigureStructure"/>
+		</xs:choice>
+		<xs:attributeGroup ref="AG_ListItem"/>
+	</xs:complexType>
+	<xs:complexType name="CT_Figure">
+		<xs:annotation>
+			<xs:appinfo>CT_Figure</xs:appinfo>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="NamedElement"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_NamedElement">
+		<xs:annotation>
+			<xs:appinfo>CT_NamedElement</xs:appinfo>
+		</xs:annotation>
+		<xs:attributeGroup ref="AG_NamedElement"/>
+	</xs:complexType>
+	<!-- Simple Types -->
+	<!-- FragmentType enumeration -->
+	<xs:simpleType name="ST_FragmentType">
+		<xs:annotation>
+			<xs:appinfo>ST_FragmentType</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Content"/>
+			<xs:enumeration value="Header"/>
+			<xs:enumeration value="Footer"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_Location">
+		<xs:annotation>
+			<xs:appinfo>ST_Location</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9][0-9]*)(\,[0-9][0-9]*)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_TableSpan">
+		<xs:annotation>
+			<xs:appinfo>ST_TableSpan</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_ElementIndex">
+		<xs:annotation>
+			<xs:appinfo>ST_ElementIndex</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Elements -->
+	<xs:element name="StoryFragments" type="CT_StoryFragments">
+		<xs:annotation>
+			<xs:appinfo>StoryFragments</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StoryFragment" type="CT_StoryFragment">
+		<xs:annotation>
+			<xs:appinfo>StoryFragment</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StoryBreak" type="CT_Break">
+		<xs:annotation>
+			<xs:appinfo>Break</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SectionStructure" type="CT_Section">
+		<xs:annotation>
+			<xs:appinfo>Section</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ParagraphStructure" type="CT_Paragraph">
+		<xs:annotation>
+			<xs:appinfo>Paragraph</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TableStructure" type="CT_Table">
+		<xs:annotation>
+			<xs:appinfo>Table</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TableRowGroupStructure" type="CT_TableRowGroup">
+		<xs:annotation>
+			<xs:appinfo>TableRowGroup</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TableRowStructure" type="CT_TableRow">
+		<xs:annotation>
+			<xs:appinfo>TableRow</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TableCellStructure" type="CT_TableCell">
+		<xs:annotation>
+			<xs:appinfo>TableCell</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ListStructure" type="CT_List">
+		<xs:annotation>
+			<xs:appinfo>List</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ListItemStructure" type="CT_ListItem">
+		<xs:annotation>
+			<xs:appinfo>ListItem</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FigureStructure" type="CT_Figure">
+		<xs:annotation>
+			<xs:appinfo>Figure</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="NamedElement" type="CT_NamedElement">
+		<xs:annotation>
+			<xs:appinfo>NamedElement</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- Attribute Groups -->
+	<xs:attributeGroup name="AG_StoryFragment">
+		<xs:attribute name="StoryName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>StoryName</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FragmentName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>FragmentName</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FragmentType" type="ST_FragmentType" use="required">
+			<xs:annotation>
+				<xs:appinfo>FragmentType</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_TableCell">
+		<xs:attribute name="RowSpan" type="ST_TableSpan" use="optional" default="1">
+			<xs:annotation>
+				<xs:appinfo>RowSpan</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ColumnSpan" type="ST_TableSpan" use="optional" default="1">
+			<xs:annotation>
+				<xs:appinfo>ColumnSpan</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_ListItem">
+		<xs:attribute name="Marker" type="ST_NameUnique" use="optional">
+			<xs:annotation>
+				<xs:appinfo>MarkerElement</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_NamedElement">
+		<xs:attribute name="NameReference" type="ST_Name" use="required">
+			<xs:annotation>
+				<xs:appinfo>NameReference</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+</xs:schema>

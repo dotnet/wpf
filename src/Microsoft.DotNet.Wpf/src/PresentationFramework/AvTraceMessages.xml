@@ -1,0 +1,658 @@
+<!--
+  This file contains trace information used to generate wrapper classes.
+
+  The format of the info is a set of Sources, where each Source contains:
+  
+  Name:  This is the name of the trace source, and the name that you use to enable
+  this group of traces in the .config file.  This should be named with the appropriate
+  CLR namespace for the feature area.  If the feature area doesn't have its own namespace,
+  e.g. the code is in the root System.Windows namespace, either use a class name, or
+  what the namespace would be if it had one.
+
+  SourceName: This is the name of the area and is used to construct the static property
+  names for the PresenationTraceSources class.
+
+  TraceNameOverride [Optional]: By default, this is "Trace" followed by the Source.Name property.
+  This property allows you to specify a different name then the default that is provided.
+
+  TraceDetails:
+      Message: Basic message for the event
+      Parameters [Optional]: Variable argument list for parameter names in the trace call
+ -->
+<Sources>
+  <Source Name="DataBinding" SourceName="System.Windows.Data" TraceNameOverride="TraceData">
+    <TraceDetails Name="CannotCreateDefaultValueConverter">
+      <Labels Message="Cannot create default converter to perform '{2}' conversions between types '{0}' and '{1}'. Consider using Converter property of Binding." />
+    </TraceDetails>
+    <TraceDetails Name="NoMentor">
+      <Labels Message="Cannot find governing FrameworkElement or FrameworkContentElement for target element." />
+    </TraceDetails>
+    <TraceDetails Name="NoDataContext">
+      <Labels Message="UpdateCannot find element that provides DataContext." />
+    </TraceDetails>
+    <TraceDetails Name="NoSource">
+      <Labels Message="Cannot find source for binding with reference '{0}'." />
+    </TraceDetails>
+    <TraceDetails Name="BadValueAtTransfer">
+      <Labels Message="Value produced by BindingExpression is not valid for target property.">
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="BadConverterForTransfer">
+      <Labels Message="'{0}' converter failed to convert value '{1}' (type '{2}'); fallback value will be used, if available." />
+    </TraceDetails>
+    <TraceDetails Name="BadConverterForUpdate">
+      <Labels Message="ConvertBack cannot convert value '{0}' (type '{1}')." />
+    </TraceDetails>
+    <TraceDetails Name="WorkerUpdateFailed">
+      <Labels Message="Cannot save value from target back to source." />
+    </TraceDetails>
+    <TraceDetails Name="RequiresExplicitCulture">
+      <Labels Message="Binding for property cannot use the target element's Language for conversion; if a culture is required, ConverterCulture must be explicitly specified on the Binding.">
+        <Parameter>Property</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="NoValueToTransfer">
+      <Labels Message="Cannot retrieve value using the binding and no valid fallback value exists; using default instead." />
+    </TraceDetails>
+    <TraceDetails Name="FallbackConversionFailed">
+      <Labels Message="Fallback value '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')." />
+    </TraceDetails>
+    <TraceDetails Name="TargetNullValueConversionFailed">
+      <Labels Message="TargetNullValue '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')." />
+    </TraceDetails>
+    <TraceDetails Name="BindingGroupNameMatchFailed">
+      <Labels Message="No BindingGroup found with name matching '{0}'." />
+    </TraceDetails>
+    <TraceDetails Name="BindingGroupWrongProperty">
+      <Labels Message="BindingGroup used as a value of property '{0}' on object of type '{1}'.  This may disable its normal behavior." />
+    </TraceDetails>
+    <TraceDetails Name="BindingGroupMultipleInheritance">
+      <Labels Message="BindingGroup used as a value of multiple properties.  This disables its normal behavior." />
+    </TraceDetails>
+    <TraceDetails Name="SharesProposedValuesRequriesImplicitBindingGroup">
+      <Labels Message="Binding expression '{0}' with BindingGroupName '{1}' has joined BindingGroup '{2}' with SharesProposedValues='true'.  The SharesProposedValues feature only works for binding expressions that implicitly join a binding group." />
+    </TraceDetails>
+    <TraceDetails Name="CannotGetClrRawValue">
+      <Labels Message="Cannot get '{0}' value (type '{1}') from '{2}' (type '{3}')." />
+    </TraceDetails>
+    <TraceDetails Name="CannotSetClrRawValue">
+      <Labels Message="'{3}' is not a valid value for '{0}' of '{2}'." />
+    </TraceDetails>
+    <TraceDetails Name="MissingDataItem">
+      <Labels Message="BindingExpression has no source data item. This could happen when currency is moved to a null data item or moved off the list." />
+    </TraceDetails>
+    <TraceDetails Name="MissingInfo">
+      <Labels Message="BindingExpression cannot retrieve value due to missing information." />
+    </TraceDetails>
+    <TraceDetails Name="NullDataItem">
+      <Labels Message="BindingExpression cannot retrieve value from null data item. This could happen when binding is detached or when binding to a Nullable type that has no value." />
+    </TraceDetails>
+    <TraceDetails Name="DefaultValueConverterFailed">
+      <Labels Message="Cannot convert '{0}' from type '{1}' to type '{2}' with default conversions; consider using Converter property of Binding." />
+    </TraceDetails>
+    <TraceDetails Name="DefaultValueConverterFailedForCulture">
+      <Labels Message="Cannot convert '{0}' from type '{1}' to type '{2}' for '{3}' culture with default conversions; consider using Converter property of Binding." />
+    </TraceDetails>
+    <TraceDetails Name="StyleAndStyleSelectorDefined">
+      <Labels Message="Both '{0}Style' and '{0}StyleSelector' are set;  '{0}StyleSelector' will be ignored." />
+    </TraceDetails>
+    <TraceDetails Name="TemplateAndTemplateSelectorDefined">
+      <Labels Message="Both '{0}Template' and '{0}TemplateSelector' are set;  '{0}TemplateSelector' will be ignored." />
+    </TraceDetails>
+    <TraceDetails Name="ItemTemplateForDirectItem">
+      <Labels Message="ItemTemplate and ItemTemplateSelector are ignored for items already of the ItemsControl's container type">
+        <Parameter>Type</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="BadMultiConverterForUpdate">
+      <Labels Message="'{0}' MultiValueConverter failed to convert back value '{1}' (type '{2}'). Check the converter's ConvertBack method." />
+    </TraceDetails>
+    <TraceDetails Name="MultiValueConverterMissingForTransfer">
+      <Labels Message="MultiBinding failed because it has no valid Converter." />
+    </TraceDetails>
+    <TraceDetails Name="MultiValueConverterMissingForUpdate">
+      <Labels Message="MultiBinding cannot update value on source item because there is no valid Converter." />
+    </TraceDetails>
+    <TraceDetails Name="MultiValueConverterMismatch">
+      <Labels Message="MultiValueConverter did not return the same number of values as the count of inner bindings.">
+        <Parameter>Converter</Parameter>
+        <Parameter>Expected</Parameter>
+        <Parameter>Returned</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="MultiBindingHasNoConverter">
+      <Labels Message="Cannot set MultiBinding because MultiValueConverter must be specified." />
+    </TraceDetails>
+    <TraceDetails Name="UnsetValueInMultiBindingExpressionUpdate">
+      <Labels Message="'{0}' MultiValueConverter returned UnsetValue after converting '{1}' for source binding '{2}' (type '{3}')." />
+    </TraceDetails>
+    <TraceDetails Name="ObjectDataProviderHasNoSource">
+      <Labels Message="ObjectDataProvider needs either an ObjectType or ObjectInstance." />
+    </TraceDetails>
+    <TraceDetails Name="ObjDPCreateFailed">
+      <Labels Message="ObjectDataProvider cannot create object">
+        <Parameter>Type</Parameter>
+        <Parameter>Error</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ObjDPInvokeFailed">
+      <Labels Message="ObjectDataProvider: Failure trying to invoke method on type">
+        <Parameter>Method</Parameter>
+        <Parameter>Type</Parameter>
+        <Parameter>Error</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="RefPreviousNotInContext">
+      <Labels Message="Cannot find previous element for use as RelativeSource because there is no parent in generated context." />
+    </TraceDetails>
+    <TraceDetails Name="RefNoWrapperInChildren">
+      <Labels Message="Cannot find previous element for use as RelativeSource because children cannot be found for parent element." />
+    </TraceDetails>
+    <TraceDetails Name="RefAncestorTypeNotSpecified">
+      <Labels Message="Reference error: cannot find ancestor element; no AncestorType was specified on RelativeSource." />
+    </TraceDetails>
+    <TraceDetails Name="RefAncestorLevelInvalid">
+      <Labels Message="Reference error: cannot find ancestor element; AncestorLevel on RelativeSource must be greater than 0." />
+    </TraceDetails>
+    <TraceDetails Name="ClrReplaceItem">
+      <Labels Message="BindingExpression path error: '{0}' property not found on '{2}' '{1}'." />
+    </TraceDetails>
+    <TraceDetails Name="NullItem">
+      <Labels Message="BindingExpression path error: '{0}' property not found for '{1}' because data item is null. This could happen because the data provider has not produced any data yet." />
+    </TraceDetails>
+    <TraceDetails Name="PlaceholderItem">
+      <Labels Message="BindingExpression path error: '{0}' property not found for '{1}' because data item is the NewItemPlaceholder." />
+    </TraceDetails>
+    <TraceDetails Name="DataErrorInfoFailed">
+      <Labels Message="Cannot obtain IDataErrorInfo.Error[{0}] from source of type {1} - {2} '{3}'" />
+    </TraceDetails>
+    <TraceDetails Name="DisallowTwoWay">
+      <Labels Message="Binding mode has been changed to OneWay because source property '{0}.{1}' has a non-public setter." />
+    </TraceDetails>
+    <TraceDetails Name="XmlBindingToNonXml">
+      <Labels Message="BindingExpression with XPath cannot bind to non-XML object.">
+        <Parameter>XPath</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="XmlBindingToNonXmlCollection">
+      <Labels Message="BindingExpression with XPath cannot bind to a collection with non-XML objects.">
+        <Parameter>XPath</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="CannotGetXmlNodeCollection">
+      <Labels Message="XML binding failed. Cannot obtain result node collection because of bad source node or bad Path.">
+        <Parameter>SourceNode</Parameter>
+        <Parameter>Path</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="BadXPath">
+      <Labels Message="XPath '{0}' returned no results on XmlNode '{1}'" />
+    </TraceDetails>
+    <TraceDetails Name="XmlDPInlineDocError">
+      <Labels Message="XmlDataProvider cannot load inline document because of load or parse error in XML." />
+    </TraceDetails>
+    <TraceDetails Name="XmlNamespaceNotSet">
+      <Labels Message="XmlDataProvider has inline XML that does not explicitly set its XmlNamespace (xmlns='')." />
+    </TraceDetails>
+    <TraceDetails Name="XmlDPAsyncDocError">
+      <Labels Message="XmlDataProvider cannot load asynchronous document from Source because of load or parse error in XML stream.">
+        <Parameter>Source</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="XmlDPSelectNodesFailed">
+      <Labels Message="Cannot select nodes because XPath for Binding is not valid">
+        <Parameter>XPath</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="CollectionViewIsUnsupported">
+      <Labels Message="Using CollectionView directly is not fully supported. The basic features work, although with some inefficiencies, but advanced features may encounter known bugs. Consider using a derived class to avoid these problems." />
+    </TraceDetails>
+    <TraceDetails Name="CollectionChangedWithoutNotification">
+      <Labels Message="Collection of type '{0}' has been changed without raising a CollectionChanged event. Support for this is incomplete and inconsistent, and will be removed completely in a future version of WPF. Consider either (a) implementing INotifyCollectionChanged, or (b) avoiding changes to this type of collection." />
+    </TraceDetails>
+    <TraceDetails Name="CannotSort">
+      <Labels Message="Cannot sort by '{0}'" />
+    </TraceDetails>
+    <TraceDetails Name="CreatedExpression">
+      <Labels Message="Created {0} for {1}" />
+    </TraceDetails>
+    <TraceDetails Name="CreatedExpressionInParent">
+      <Labels Message="Created {0} for {1} within {2}" />
+    </TraceDetails>
+    <TraceDetails Name="BindingPath">
+      <Labels Message=" Path: {0}" />
+    </TraceDetails>
+    <TraceDetails Name="BindingXPathAndPath">
+      <Labels Message=" XPath: {0} Path: {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ResolveDefaultMode">
+      <Labels Message="{0}: Default mode resolved to {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ResolveDefaultUpdate">
+      <Labels Message="{0}: Default update trigger resolved to {1}" />
+    </TraceDetails>
+    <TraceDetails Name="AttachExpression">
+      <Labels Message="{0}: Attach to {1}.{2} (hash={3})" />
+    </TraceDetails>
+    <TraceDetails Name="DetachExpression">
+      <Labels Message="{0}: Detach" />
+    </TraceDetails>
+    <TraceDetails Name="UseMentor">
+      <Labels Message="{0}: Use Framework mentor {1}" />
+    </TraceDetails>
+    <TraceDetails Name="DeferAttachToContext">
+      <Labels Message="{0}: Resolve source deferred" />
+    </TraceDetails>
+    <TraceDetails Name="SourceRequiresTreeContext">
+      <Labels Message="{0}: {1} requires tree context" />
+    </TraceDetails>
+    <TraceDetails Name="AttachToContext">
+      <Labels Message="{0}: Resolving source {1}" />
+    </TraceDetails>
+    <TraceDetails Name="PathRequiresTreeContext">
+      <Labels Message="{0}: Path '{1}' requires namespace information" />
+    </TraceDetails>
+    <TraceDetails Name="NoMentorExtended">
+      <Labels Message="{0}: Framework mentor not found" />
+    </TraceDetails>
+    <TraceDetails Name="ContextElement">
+      <Labels Message="{0}: Found data context element: {1} ({2})" />
+    </TraceDetails>
+    <TraceDetails Name="NullDataContext">
+      <Labels Message="{0}: DataContext is null" />
+    </TraceDetails>
+    <TraceDetails Name="RelativeSource">
+      <Labels Message=" RelativeSource.{0} found {1}" />
+    </TraceDetails>
+    <TraceDetails Name="AncestorLookup">
+      <Labels Message="  Lookup ancestor of type {0}: queried {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ElementNameQuery">
+      <Labels Message="  Lookup name {0}: queried {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ElementNameQueryTemplate">
+      <Labels Message="  Lookup name {0}: queried template of {1}" />
+    </TraceDetails>
+    <TraceDetails Name="UseCVS">
+      <Labels Message="{0}: Use View from {1}" />
+    </TraceDetails>
+    <TraceDetails Name="UseDataProvider">
+      <Labels Message="{0}: Use Data from {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ActivateItem">
+      <Labels Message="{0}: Activate with root item {1}" />
+    </TraceDetails>
+    <TraceDetails Name="Deactivate">
+      <Labels Message="{0}: Deactivate" />
+    </TraceDetails>
+    <TraceDetails Name="GetRawValue">
+      <Labels Message="{0}: TransferValue - got raw value {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ConvertDBNull">
+      <Labels Message="{0}: TransferValue - converted DBNull to {1}" />
+    </TraceDetails>
+    <TraceDetails Name="UserConverter">
+      <Labels Message="{0}: TransferValue - user's converter produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="NullConverter">
+      <Labels Message="{0}: TransferValue - null-value conversion produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="DefaultConverter">
+      <Labels Message="{0}: TransferValue - implicit converter produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="FormattedValue">
+      <Labels Message="{0}: TransferValue - string formatting produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="FormattingFailed">
+      <Labels Message="{0}: TransferValue - string formatting failed, using format '{1}'" />
+    </TraceDetails>
+    <TraceDetails Name="BadValueAtTransferExtended">
+      <Labels Message="{0}: TransferValue - value {1} is not valid for target" />
+    </TraceDetails>
+    <TraceDetails Name="UseFallback">
+      <Labels Message="{0}: TransferValue - using fallback/default value {1}" />
+    </TraceDetails>
+    <TraceDetails Name="TransferValue">
+      <Labels Message="{0}: TransferValue - using final value {1}" />
+    </TraceDetails>
+    <TraceDetails Name="UpdateRawValue">
+      <Labels Message="{0}: Update - got raw value {1}" />
+    </TraceDetails>
+    <TraceDetails Name="ValidationRuleFailed">
+      <Labels Message="{0}: Update - {1} failed" />
+    </TraceDetails>
+    <TraceDetails Name="UserConvertBack">
+      <Labels Message="{0}: Update - user's converter produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="DefaultConvertBack">
+      <Labels Message="{0}: Update - implicit converter produced {1}" />
+    </TraceDetails>
+    <TraceDetails Name="Update">
+      <Labels Message="{0}: Update - using final value {1}" />
+    </TraceDetails>
+    <TraceDetails Name="GotEvent">
+      <Labels Message="{0}: Got {1} event from {2}" />
+    </TraceDetails>
+    <TraceDetails Name="GotPropertyChanged">
+      <Labels Message="{0}: Got PropertyChanged event from {1} for {2}" />
+    </TraceDetails>
+    <TraceDetails Name="PriorityTransfer">
+      <Labels Message="{0}: TransferValue '{1}' from child {2} - {3}" />
+    </TraceDetails>
+    <TraceDetails Name="ChildNotAttached">
+      <Labels Message="{0}: One or more children have not resolved sources" />
+    </TraceDetails>
+    <TraceDetails Name="GetRawValueMulti">
+      <Labels Message="{0}: TransferValue - got raw value {1}: {2}" />
+    </TraceDetails>
+    <TraceDetails Name="UserConvertBackMulti">
+      <Labels Message="{0}: Update - multiconverter produced value {1}: {2}" />
+    </TraceDetails>
+    <TraceDetails Name="GetValue">
+      <Labels Message="{0}: GetValue at level {1} from {2} using {3}: {4}" />
+    </TraceDetails>
+    <TraceDetails Name="SetValue">
+      <Labels Message="{0}: SetValue at level {1} to {2} using {3}: {4}" />
+    </TraceDetails>
+    <TraceDetails Name="ReplaceItemShort">
+      <Labels Message="{0}: Replace item at level {1} with {2}" />
+    </TraceDetails>
+    <TraceDetails Name="ReplaceItemLong">
+      <Labels Message="{0}: Replace item at level {1} with {2}, using accessor {3}" />
+    </TraceDetails>
+    <TraceDetails Name="GetInfo_Reuse">
+      <Labels Message="{0}:   Item at level {1} has same type - reuse accessor {2}" />
+    </TraceDetails>
+    <TraceDetails Name="GetInfo_Null">
+      <Labels Message="{0}:   Item at level {1} is null - no accessor" />
+    </TraceDetails>
+    <TraceDetails Name="GetInfo_Cache">
+      <Labels Message="{0}:   At level {1} using cached accessor for {2}.{3}: {4}" />
+    </TraceDetails>
+    <TraceDetails Name="GetInfo_Property">
+      <Labels Message="{0}:   At level {1} - for {2}.{3} found accessor {4}" />
+    </TraceDetails>
+    <TraceDetails Name="GetInfo_Indexer">
+      <Labels Message="{0}:   At level {1} - for {2}[{3}] found accessor {4}" />
+    </TraceDetails>
+    <TraceDetails Name="XmlContextNode">
+      <Labels Message="{0}: Context for XML binding set to {1}" />
+    </TraceDetails>
+    <TraceDetails Name="XmlNewCollection">
+      <Labels Message="{0}: Building collection from {1}" />
+    </TraceDetails>
+    <TraceDetails Name="XmlSynchronizeCollection">
+      <Labels Message="{0}: Synchronizing collection with {1}" />
+    </TraceDetails>
+    <TraceDetails Name="SelectNodes">
+      <Labels Message="{0}: SelectNodes at {1} using XPath {2}: {3}" />
+    </TraceDetails>
+    <TraceDetails Name="BeginQuery">
+      <Labels Message="{0}: Begin query ({1})" />
+    </TraceDetails>
+    <TraceDetails Name="QueryFinished">
+      <Labels Message="{0}: Query finished ({1}) with data {2} and error {3}" />
+    </TraceDetails>
+    <TraceDetails Name="QueryResult">
+      <Labels Message="{0}: Update result (on UI thread) with data {1}" />
+    </TraceDetails>
+    <TraceDetails Name="XmlLoadSource">
+      <Labels Message="{0}: Request download ({1}) from {2}" />
+    </TraceDetails>
+    <TraceDetails Name="XmlLoadDoc">
+      <Labels Message="{0}: Load document from stream" />
+    </TraceDetails>
+    <TraceDetails Name="XmlLoadInline">
+      <Labels Message="{0}: Load inline document" />
+    </TraceDetails>
+    <TraceDetails Name="XmlBuildCollection">
+      <Labels Message="{0}: Build XmlNode collection" />
+    </TraceDetails>
+  </Source>
+  <Source Name="Documents" SourceName="System.Windows.Documents" TraceNameOverride="TracePageFormatting">
+    <TraceDetails Name="FormatPage">
+      <Labels Message="Formatting page">
+        <Parameter>PageContext</Parameter>
+        <Parameter>PtsContext</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="PageFormattingError">
+      <Labels Message="Error. Page formatting engine could not complete the formatting operation.">
+        <Parameter>PtsContext</Parameter>
+        <Parameter>Message</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="UnableToFreezeFreezableSubProperty">
+      <Labels Message="CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a Freezable that has also returned false from CanFreeze">
+        <Parameter>Freezable</Parameter>
+        <Parameter>DP</Parameter>
+        <Parameter>DpOwnerType</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="UnableToFreezeAnimatedProperties">
+      <Labels Message="CanFreeze is returning false because at least one DependencyProperty on the Freezable is animated.">
+        <Parameter>Freezable</Parameter>
+      </Labels>
+    </TraceDetails>
+  </Source>
+  <Source Name="ResourceDictionary" SourceName="System.Windows.ResourceDictionary">
+    <TraceDetails Name="AddResource">
+      <Labels Message="Resource has been added to ResourceDictionary">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="RealizeDeferContent">
+      <Labels Message="Delayed creation of resource">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceOnElement">
+      <Labels Message="Found resource item on an element">
+        <Parameter>Element</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceInStyle">
+      <Labels Message="Found resource item in a style">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Style</Parameter>
+        <Parameter>Element</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceInTemplate">
+      <Labels Message="Found resource item in a template">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Template</Parameter>
+        <Parameter>Element</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceInThemeStyle">
+      <Labels Message="Found resource item in a theme style">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>ThemeStyle</Parameter>
+        <Parameter>Element</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceInApplication">
+      <Labels Message="Found resource item in application">
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FoundResourceInTheme">
+      <Labels Message="Found resource item in theme">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ResourceNotFound">
+      <Labels Message="Resource not found">
+        <Parameter>ResourceKey</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="NewResourceDictionary">
+      <Labels Message="New resource dictionary set">
+        <Parameter>Owner</Parameter>
+        <Parameter>OldDictionary</Parameter>
+        <Parameter>NewDictionary</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="FindResource">
+      <Labels Message="Searching for resource">
+        <Parameter>Element</Parameter>
+        <Parameter>ResourceKey</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="SetKey">
+      <Labels Message="Deferred resource has been added to ResourceDictionary">
+        <Parameter>Dictionary</Parameter>
+        <Parameter>ResourceKey</Parameter>
+      </Labels>
+    </TraceDetails>
+  </Source>
+  <Source Name="Markup" SourceName="System.Windows.Markup">
+    <TraceDetails Name="AddValueToAddChild">
+      <Labels Message="Add value to IAddChild">
+        <Parameter>Object</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="AddValueToArray">
+      <Labels Message="Add value to an array property">
+        <Parameter>Object</Parameter>
+        <Parameter>Property</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="AddValueToDictionary">
+      <Labels Message="Add value to a dictionary property">
+        <Parameter>Object</Parameter>
+        <Parameter>Property</Parameter>
+        <Parameter>Key</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="AddValueToList">
+      <Labels Message="CanFreezeAdd value to a collection property">
+        <Parameter>Object</Parameter>
+        <Parameter>Property</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="BeginInit">
+      <Labels Message="Start initialization of object (ISupportInitialize.BeginInit)">
+        <Parameter>Object</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="CreateMarkupExtension">
+      <Labels Message="Create MarkupExtension">
+        <Parameter>Type</Parameter>
+        <Parameter>MarkupExtension</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="CreateObject">
+      <Labels Message="Create object">
+        <Parameter>Type</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="EndInit">
+      <Labels Message="End initialization of object (ISupportInitialize.EndInit)">
+        <Parameter>Object</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="Load">
+      <Labels Message="Load xaml/baml">
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ProcessConstructorParameter">
+      <Labels Message="Convert constructor parameter">
+        <Parameter>Type</Parameter>
+        <Parameter>ConverterType</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ProvideValue">
+      <Labels Message="Converted a MarkupExtension">
+        <Parameter>MarkuExtension</Parameter>
+        <Parameter>Object</Parameter>
+        <Parameter>Property</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="SetCPA">
+      <Labels Message="Set property value to the ContentProperty">
+        <Parameter>Object</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="SetPropertyValue">
+      <Labels Message="Set property value">
+        <Parameter>Object</Parameter>
+        <Parameter>PropertyName</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ThrowException">
+      <Labels Message="A xaml exception has been thrown">
+        <Parameter>Exception</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="TypeConvert">
+      <Labels Message="Converted value">
+        <Parameter>TypeConverter</Parameter>
+        <Parameter>String</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="TypeConvertFallback">
+      <Labels Message="CanFreezeAdd value to a collection property">
+        <Parameter>Object</Parameter>
+        <Parameter>Property</Parameter>
+        <Parameter>Value</Parameter>
+      </Labels>
+    </TraceDetails>
+  </Source>
+  <Source Name="HwndHost" SourceName="System.Windows.Interop.HwndHost">
+    <TraceDetails Name="HwndHostIn3D">
+      <Labels Message="An HwndHost may not be embedded in a 3D scene." />
+    </TraceDetails>
+  </Source>
+  <Source Name="Shell" SourceName="System.Windows.Shell">
+    <TraceDetails Name="NotOnWindows7">
+      <Labels Message="Shell integration features are not being applied because the host OS does not support the feature." />
+    </TraceDetails>
+    <TraceDetails Name="ExplorerTaskbarTimeout">
+      <Labels Message="Communication with Explorer timed out while trying to update the taskbar item for the window." />
+    </TraceDetails>
+    <TraceDetails Name="ExplorerTaskbarRetrying">
+      <Labels Message="Making another attempt to update the taskbar." />
+    </TraceDetails>
+    <TraceDetails Name="ExplorerTaskbarNotRunning">
+      <Labels Message="Halting attempts at Shell integration with the taskbar because it appears that Explorer is not running." />
+    </TraceDetails>
+    <TraceDetails Name="NativeTaskbarError">
+      <Labels Message="The native ITaskbarList3 interface failed a method call with error {0}." />
+    </TraceDetails>
+    <TraceDetails Name="RejectingJumpItemsBecauseCatastrophicFailure">
+      <Labels Message="Failed to apply items to the JumpList because the native interfaces failed." />
+    </TraceDetails>
+    <TraceDetails Name="RejectingJumpListCategoryBecauseNoRegisteredHandler">
+      <Labels Message="Rejecting the category {0} from the jump list because this application is not registered for file types contained in the list.  JumpPath items will be removed and the operation will be retried." />
+    </TraceDetails>
+  </Source>
+</Sources>

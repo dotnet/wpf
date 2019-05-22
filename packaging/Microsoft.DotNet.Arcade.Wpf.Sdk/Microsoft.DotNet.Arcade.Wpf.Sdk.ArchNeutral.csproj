@@ -29,4 +29,12 @@
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\rev1\*" SubFolder="root\tools\WppConfig\rev1" />
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeAnalysis\*" SubFolder="root\tools\CodeAnalysis" />
   </ItemGroup>
+
+  <!-- 
+    Pack $(WpfSharedDir) and $(WpfCommonDir) sources for use by dotnet-wpf-int
+  -->
+  <ItemGroup>
+    <PackagingContent Include="$(WpfSharedDir)**\*" SubFolder="root\Src\Shared\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfCommonDir)**\*" SubFolder="root\Src\Common\%(RecursiveDir)" />
+  </ItemGroup>
 </Project>

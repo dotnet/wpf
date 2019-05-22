@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="pt-BR" original="../System.Printing.resx">
+    <body>
+      <trans-unit id="ArgumentException.InvalidHandle">
+        <source>Handle value is not valid.</source>
+        <target state="translated">O valor do identificador não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.InvalidValue">
+        <source>Value is not valid.</source>
+        <target state="translated">O valor não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.NonNegativeValue">
+        <source>Value must be non-negative.</source>
+        <target state="translated">O valor deve ser não negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.PositiveValue">
+        <source>Value must be positive.</source>
+        <target state="translated">O valor deve ser positivo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.AddXmlnsFailAtRootElement">
+        <source>Cannot add standard namespace declaration at root element.</source>
+        <target state="translated">Não é possível adicionar a declaração de namespace padrão ao elemento raiz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidRootElement">
+        <source>Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</source>
+        <target state="translated">O elemento raiz não é válido: NamespaceURI='{0}', LocalName='{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidXMLIntValue">
+        <source>'{0}' integer value at line number '{1}' line position '{2}' is not valid.</source>
+        <target state="translated">O valor inteiro '{0}' no número de linha '{1}', posição de linha '{2}' não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.MissingRequiredChildElement">
+        <source>Must have '{0}' child element at line number '{1}' line position '{2}'.</source>
+        <target state="translated">É necessário ter o elemento filho '{0}' no número de linha '{1}', posição de linha '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.ParameterDefMissOrInvalid">
+        <source>Referenced {0} {1} is either missing or not valid.</source>
+        <target state="translated">O {0} referenciado {1} está ausente ou não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.PrivateXMLTextValue">
+        <source>Private text value '{0}' found at line number '{1}' line position '{2}'.</source>
+        <target state="translated">Valor de texto privado '{0}' encontrado no número de linha '{1}', posição de linha '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootChildMissingAttribute">
+        <source>'{0}' child element of root element is missing the required '{1}' attribute.</source>
+        <target state="translated">O elemento filho '{0}' do elemento raiz não tem o atributo '{1}' necessário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidAttribute">
+        <source>'{1}' value not valid for root element attribute '{0}'.</source>
+        <target state="translated">O valor '{1}' não é válido para o atributo do elemento raiz '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidChildElement">
+        <source>'{0}' is not a valid child element of root element.</source>
+        <target state="translated">'{0}' não é um elemento filho válido do elemento raiz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootMissingAttribute">
+        <source>Root element is missing required attribute '{0}'.</source>
+        <target state="translated">O elemento raiz não tem o atributo '{0}' necessário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.VersionNotSupported">
+        <source>'{0}' version number is not supported.</source>
+        <target state="translated">Não há suporte para o número de versão '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.XMLNotWellFormed">
+        <source>XML is not well-formed.</source>
+        <target state="translated">XML não está bem formado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IndexOutOfRangeException.InvalidSize">
+        <source>'{0}' array should be the same size as array '{1}'.</source>
+        <target state="translated">A matriz '{0}' deve ter o mesmo tamanho da matriz '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.BindFail">
+        <source>PrintTicket provider failed to bind to printer. Win32 error: {0}</source>
+        <target state="translated">Falha do fornecedor PrintTicket ao ligar à impressora. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.DevMode2PTFail">
+        <source>PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</source>
+        <target state="translated">Falha do fornecedor PrintTicket ao converter DEVMODE em PrintTicket. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.GetPrintCapFail">
+        <source>PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</source>
+        <target state="translated">Falha do fornecedor PrintTicket ao recuperar PrintCapabilities. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.MergeValidateFail">
+        <source>PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</source>
+        <target state="translated">Falha do fornecedor PrintTicket ao mesclar e validar PrintTicket. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PT2DevModeFail">
+        <source>PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</source>
+        <target state="translated">Falha do fornecedor PrintTicket ao converter PrintTicket em DEVMODE. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PTStreamContentFail">
+        <source>{0} stream content reading failed.</source>
+        <target state="translated">Falha na leitura do conteúdo de fluxo {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.CommitPrintSystemAttributesException">
+        <source>An exception occurred while committing the properties.</source>
+        <target state="translated">Exceção ao confirmar as propriedades.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.Generic">
+        <source>Print System exception.</source>
+        <target state="translated">Exceção Print System.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintJob.PopulateJobProperties">
+        <source>An exception occurred while populating the object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao preencher o objeto. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.AddPrinter">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">Exceção ao instalar uma fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Commit">
+        <source>An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao confirmar as propriedades do objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Generic">
+        <source>An exception occurred while creating the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao criar o objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao inicializar um atributo do objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Pause">
+        <source>An exception occurred while the queue was paused. Win32 error: {0}</source>
+        <target state="translated">Exceção ao colocar a fila em pausa. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Populate">
+        <source>An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao preencher as propriedades do objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Purge">
+        <source>An exception occurred while the queue was purged. Win32 error: {0}</source>
+        <target state="translated">Exceção ao depurar a fila. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao atualizar as propriedades do objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Resume">
+        <source>An exception occurred while the queue was resumed. Win32 error: {0}</source>
+        <target state="translated">Exceção ao retomar a fila. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.XpsDeviceQuery">
+        <source>An exception occurred while querying the identity of the device.</source>
+        <target state="translated">Exceção ao consultar a identidade do dispositivo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Flush">
+        <source>An exception occurred while trying to flush the print queue stream. Win32 error: {0}</source>
+        <target state="translated">Exceção ao tentar liberar o fluxo da fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Write">
+        <source>An exception occurred while trying to write to the print queue stream. Win32 error: {0}</source>
+        <target state="translated">Exceção ao tentar gravar no fluxo da fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueues.Enumerate">
+        <source>An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</source>
+        <target state="translated">Exceção ao enumerar os objetos PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddConnection">
+        <source>An exception occurred while creating the printer connection. Win32 error: {0}</source>
+        <target state="translated">Exceção ao criar a conexão da impressora. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddPrinter">
+        <source>An exception occurred while installing the print queue. Win32 error: {0}</source>
+        <target state="translated">Exceção ao instalar a fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Commit">
+        <source>An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao confirmar as propriedades do objeto PrintServer. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.DeletePrintQueue">
+        <source>An exception occurred while deleting a print queue. Win32 error: {0}</source>
+        <target state="translated">Exceção ao excluir uma fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Generic">
+        <source>An exception occurred while creating the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao criar o objeto PrintServer. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetDefaultPrinter">
+        <source>An exception occurred while getting the default printer. Win32 error: {0}</source>
+        <target state="translated">Exceção ao obter a impressora padrão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao inicializar um atributo do objeto PrintQueue. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.InstallPrintQueue">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">Exceção ao instalar uma fila de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MajorVersionCannotChange">
+        <source>The major version of a PrintServer object cannot be changed. </source>
+        <target state="translated">A versão principal de um objeto PrintServer não pode ser alterada. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MinorVersionCannotChange">
+        <source>The minor version of a PrintServer object cannot be changed.</source>
+        <target state="translated">A versão secundária de um objeto PrintServer não pode ser alterada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.NameCannotChange">
+        <source>The name of a PrintServer object cannot be changed. </source>
+        <target state="translated">O nome de um objeto PrintServer não pode ser alterado. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">Exceção ao atualizar as propriedades do objeto PrintServer. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SetDefaultPrinter">
+        <source>An exception occurred while setting the default printer. Win32 error: {0}</source>
+        <target state="translated">Exceção ao configurar a impressora padrão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SubSystemVersionCannotChange">
+        <source>The OS version of a PrintServer object cannot be changed.</source>
+        <target state="translated">A versão do sistema operacional de um objeto PrintServer não pode ser alterada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemAttributeValueDictionary.IsReadOnly">
+        <source>The collection is read-only.</source>
+        <target state="translated">A coleção é somente leitura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.AddJob">
+        <source>An exception occurred while adding a job. Win32 error: {0}</source>
+        <target state="translated">Exceção ao adicionar um trabalho. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Create">
+        <source>An exception occurred while creating print job information. Check inner exception for details.</source>
+        <target state="translated">Exceção ao criar as informações do trabalho de impressão. Verifique detalhes na exceção interna.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Deleted">
+        <source>The print job was deleted.</source>
+        <target state="translated">O trabalho de impressão foi excluído.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Generic">
+        <source>An exception occurred while setting the print job. Win32 error: {0}</source>
+        <target state="translated">Exceção ao configurar o trabalho de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Refresh">
+        <source>An exception occurred while refreshing print job information. Win32 error: {0}</source>
+        <target state="translated">Exceção ao atualizar as informações do trabalho de impressão. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.XpsDocumentEvent">
+        <source>An exception occurred while calling XpsDocumentEvent.</source>
+        <target state="translated">Exceção ao chamar XpsDocumentEvent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintingCancelled.Generic">
+        <source>Printing was canceled. Win32 error: {0}</source>
+        <target state="translated">A impressão foi cancelada. Erro do Win32: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PropertyIsReadOnly">
+        <source>Property is read-only.</source>
+        <target state="translated">A propriedade é somente leitura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.UnknownWin32Error">
+        <source>Unknown Win32 error</source>
+        <target state="translated">Erro do Win32 desconhecido</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemJobInfo_disableXPSOMPrinting_RegValue">
+        <source>DisableXPSOMPrinting</source>
+        <target state="translated">DisableXPSOMPrinting</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.AccessLevel">
+        <source>SecurityElement does not have a valid "AccessLevel" attribute.</source>
+        <target state="translated">SecurityElement não tem um atributo "AccessLevel" válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Class">
+        <source>SecurityElement does not have a valid "class" attribute.</source>
+        <target state="translated">SecurityElement não tem um atributo "class" válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.State">
+        <source>PermissionState value is not valid.</source>
+        <target state="translated">O valor de PermissionState não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Type">
+        <source>IPermission type is not valid.</source>
+        <target state="translated">O tipo de IPermission não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Attribute">
+        <source>Attribute type is not valid.</source>
+        <target state="translated">O tipo de atributo não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Entries">
+        <source>IDictionaryEnumerator does not have valid entries.</source>
+        <target state="translated">IDictionaryEnumerator não tem entradas válidas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Printer">
+        <source>UNC printer name is not valid.</source>
+        <target state="translated">O nome de impressora UNC não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Server">
+        <source>UNC server name is not valid.</source>
+        <target state="translated">O nome do servidor UNC não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.UNC">
+        <source>UNC name is not valid.</source>
+        <target state="translated">O nome UNC não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RegKeyBasePath">
+        <source>HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</source>
+        <target state="translated">HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchAsync">
+        <source>Batch Writer is using asynchronous writes and cannot process synchronous writes.</source>
+        <target state="translated">O Gravador de Lote está utilizando gravações assíncronas e não pode processar gravações síncronas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchDoneWriting">
+        <source>Batch Writer is done writing and cannot process any more batch write requests.</source>
+        <target state="translated">O Gravador de Lote concluiu a gravação e não pode processar outras solicitações de gravação em lote.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchMode">
+        <source>Document Writer is in batch mode and cannot process non-batch write requests.</source>
+        <target state="translated">O Gravador de Documento está no modo de lote e não pode processar solicitações de gravação diferentes de lote.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchSync">
+        <source>Batch Writer is using synchronous writes and cannot process asynchronous writes.</source>
+        <target state="translated">O Gravador de Lote está utilizando gravações síncronas e não pode processar gravações assíncronas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.Cancelled">
+        <source>Write has already been canceled.</source>
+        <target state="translated">A gravação já foi cancelada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.DoneWriting">
+        <source>Document Writer is done writing and cannot process any more write requests.</source>
+        <target state="translated">O Gravador de Documento concluiu a gravação e não pode processar mais solicitações de gravação.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.InvalidState">
+        <source>Writer state not valid.</source>
+        <target state="translated">O estado do Gravador não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.WriteNotCalled">
+        <source>Must call Write before calling cancel.</source>
+        <target state="translated">É necessário chamar Write antes de cancelar a chamada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsPrintJobStream.CommitTimeout_RegValue">
+        <source>CommitXpsPrintJobStreamTimeout</source>
+        <target state="translated">CommitXpsPrintJobStreamTimeout</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.InvalidXps">
+        <source>The XpsDocument has no FixedDocumentSequence.</source>
+        <target state="translated">XpsDocument não tem FixedDocumentSequence.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.WriteNotCalledEndBatchWrite">
+        <source>Must call Write before calling EndBatchWrite.</source>
+        <target state="translated">É necessário chamar Write antes de chamar EndBatchWrite.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

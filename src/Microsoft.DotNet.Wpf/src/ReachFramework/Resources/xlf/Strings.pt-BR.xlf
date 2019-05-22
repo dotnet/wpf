@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="pt-BR" original="../Strings.resx">
+    <body>
+      <trans-unit id="Converter_ConvertFromNotSupported">
+        <source>Cannot convert from type.</source>
+        <target state="translated">Não é possível converter do tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertToNotSupported">
+        <source>Cannot convert to type.</source>
+        <target state="translated">Não é possível converter no tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' precisa ser do tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_InvalidDevModeBytes">
+        <source>Invalid DEVMODE bytes</source>
+        <target state="translated">Bytes DEVMODE inválidos</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">O thread de chamada não pode acessar este objeto porque ele pertence a um thread diferente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasRootSequenceOrDocument">
+        <source>Package already has a root DocumentSequence or FixedDocument.</source>
+        <target state="translated">Package já tem um DocumentSequence ou FixedDocument raiz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasStartingPart">
+        <source>Container already has Starting Part.</source>
+        <target state="translated">O contêiner já tem a Starting Part.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasThumbnail">
+        <source>PackagePart already has associated Thumbnail.</source>
+        <target state="translated">Thumbnail já está associado a PackagePart.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CannotModifyReadOnlyContainer">
+        <source>Cannot modify read-only container.</source>
+        <target state="translated">Não é possível modificar o contêiner somente leitura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CommitCountPolicyLessThan1">
+        <source>CommitCountPolicy must be greater than zero.</source>
+        <target state="translated">CommitCountPolicy deve ser maior que zero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DependantsNotCommitted">
+        <source>Not all opened dependents were committed.</source>
+        <target state="translated">Nem todos os dependentes abertos foram confirmados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DocumentWasClosed">
+        <source>XPS document was closed.</source>
+        <target state="translated">O documento XPS foi fechado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidContentType">
+        <source>'{0}' ContentType is not valid.</source>
+        <target state="translated">ContentType '{0}' não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidDocUri">
+        <source>Document PackagePart URI is not valid.</source>
+        <target state="translated">O URI PackagePart do documento não é válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidStartingPart">
+        <source>Starting Part is not a valid Package root.</source>
+        <target state="translated">Starting Part não é um Package raiz válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidType">
+        <source>String passed for type is not valid.</source>
+        <target state="translated">A cadeia de caracteres transferida para o tipo não é válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneDocStructure">
+        <source>FixedDocument has more than one related document structure.</source>
+        <target state="translated">FixedDocument tem mais de uma estrutura de documento relacionada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneMetaDataParts">
+        <source>Container has more than one Core Properties relationship.</source>
+        <target state="translated">O contêiner tem mais de uma Core Properties relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOnePrintTicketPart">
+        <source>PackagePart has more than one Print Ticket relationship.</source>
+        <target state="translated">PackagePart tem mais de uma Print Ticket relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigDefParts">
+        <source>Document has more than one Signature Definition relationship.</source>
+        <target state="translated">O documento tem mais de uma Signature Definition relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigOriginParts">
+        <source>Container has more than one Signature Origin relationship.</source>
+        <target state="translated">O contêiner tem mais de uma Signature Origin relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStartingParts">
+        <source>Container has more than one Starting Part relationship.</source>
+        <target state="translated">O contêiner tem mais de uma Starting Part relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStoryFragment">
+        <source>FixedPage has more than one related story fragment.</source>
+        <target state="translated">FixedPage tem mais de um fragmento de história relacionada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneThumbnailPart">
+        <source>Document has more than one Thumbnail relationship.</source>
+        <target state="translated">O documento tem mais de uma Thumbnail relationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocument">
+        <source>PackagePart URI does not correspond to a FixedDocument.</source>
+        <target state="translated">O URI PackagePart não corresponde a um FixedDocument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocumentSequence">
+        <source>PackagePart URI does not correspond to a FixedDocumentSequence.</source>
+        <target state="translated">O URI PackagePart não corresponde a um FixedDocumentSequence.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedPage">
+        <source>PackagePart URI does not correspond to a FixedPage.</source>
+        <target state="translated">O URI PackagePart não corresponde a um FixedPage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAPrintTicket">
+        <source>Property is not a valid instance of PrintTicket.</source>
+        <target state="translated">A propriedade não é uma instância válida de PrintTicket.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotOpenForReading">
+        <source>Package is not open for reading.</source>
+        <target state="translated">Package não está aberto para leitura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotSignatureDefinitionElement">
+        <source>ReadXML method expects reader to have just parsed start element.</source>
+        <target state="translated">O método ReadXML espera que o leitor tenha analisado o elemento inicial.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionAttribute">
+        <source>'{0}' is not a valid attribute.</source>
+        <target state="translated">'{0}' não é um atributo válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionElement">
+        <source>'{0}' is not a valid element.</source>
+        <target state="translated">'{0}' não é um elemento válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ObfucatedFontNeedGuid">
+        <source>Obfuscated font resources require valid GUID file name.</source>
+        <target state="translated">Recursos de fonte ofuscados requerem um nome de arquivo GUID válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OnlyWriters">
+        <source>Only writers can call this method.</source>
+        <target state="translated">Somente gravadores podem chamar este método.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OpenDocOrElementAlreadyCalled">
+        <source>OpenDocument or OpenElement already called.</source>
+        <target state="translated">OpenDocument ou OpenElement já chamados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PackageUriNull">
+        <source>XpsDocument URI is null. Use XpsDocument constructor that takes URI parameter.</source>
+        <target state="translated">XpsDocument URI é nulo. Utilize o construtor XpsDocument que aceita o parâmetro do URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PanelOrSequenceAlreadyOpen">
+        <source>Current DocumentSequence, FixedDocument, or FixedPage not completed.</source>
+        <target state="translated">DocumentSequence, FixedDocument ou FixedPage atuais não concluídos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartFromDifferentContainer">
+        <source>PackagePart belongs to a different container.</source>
+        <target state="translated">PackagePart pertence a um contêiner diferente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartNotFound">
+        <source>Package must contain an XPS PackagePart.</source>
+        <target state="translated">Package deve conter um PackagePart de XPS.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PrintTicketAlreadyCommitted">
+        <source>PrintTicket was already committed.</source>
+        <target state="translated">PrintTicket já foi confirmado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SequenceCntMustBe1">
+        <source>Count must be 1 when CommitPolicies is set to CommitEntireSequence.</source>
+        <target state="translated">A contagem deve ser 1 quando CommitPolicies estiver definido para CommitEntireSequence.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ServiceTypeAlreadyAdded">
+        <source>'{0}' service type already added.</source>
+        <target state="translated">Tipo de serviço '{0}' já adicionado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SigningDoesNotMeetPolicy">
+        <source>Document does not meet the signing policy.</source>
+        <target state="translated">O documento não atende à política de assinatura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SpotIDRequiredAttribute">
+        <source>SpotId is required for a valid XpsSignatureDefinition.</source>
+        <target state="translated">SpotId é necessário para um XpsSignatureDefinition válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedImageType">
+        <source>XPS supports only JPG, TIF, WDP, and PNG image types.</source>
+        <target state="translated">XPS oferece suporte somente a imagens dos tipos JPG, TIF, WDP e PNG.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedThumbnailImageType">
+        <source>Thumbnails support only JPG and PNG image types.</source>
+        <target state="translated">As miniaturas suportam somente imagens do tipo JPG e PNG.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoNgcType">
+        <source>Manager not of type NgcSerializationManagerAsync.</source>
+        <target state="translated">Manager não é do tipo NgcSerializationManagerAsync.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoType">
+        <source>Manager not of type XpsSerializationManagerAsync.</source>
+        <target state="translated">Manager não é do tipo XpsSerializationManagerAsync.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CannotReleaseXmlWriter">
+        <source>Cannot release XmlWriter because it was already released.</source>
+        <target state="translated">Não é possível liberar o XmlWriter porque já foi liberado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CycleDetectedInSerialization">
+        <source>Cycle detected. Object was already on the stack.</source>
+        <target state="translated">Ciclo detectado. O objeto já estava na pilha.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocument">
+        <source>SerializeObject expected FixedDocument.</source>
+        <target state="translated">SerializeObject esperava FixedDocument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocumentSequence">
+        <source>SerializeObject expected FixedDocumentSequence.</source>
+        <target state="translated">SerializeObject esperava FixedDocumentSequence.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedPage">
+        <source>SerializeObject expected FixedPage.</source>
+        <target state="translated">SerializeObject esperava FixedPage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInDocument">
+        <source>FixedDocument cannot contain another FixedDocument.</source>
+        <target state="translated">FixedDocument não pode conter outro FixedDocument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInPage">
+        <source>FixedPage cannot contain a FixedDocument.</source>
+        <target state="translated">FixedPage não pode conter um FixedDocument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedPageInPage">
+        <source>FixedPage cannot contain another FixedPage.</source>
+        <target state="translated">FixedPage não pode conter outro FixedPage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_MustHaveSerializationManager">
+        <source>Must have serialization manager.</source>
+        <target state="translated">É necessário ter um gerenciador de serialização.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedDocuments">
+        <source>FixedDocumentSequence must contain at least one FixedDocument.</source>
+        <target state="translated">FixedDocumentSequence deve conter pelo menos um FixedDocument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPageWriter">
+        <source>No fixed page is being written to.</source>
+        <target state="translated">Nenhuma página fixa está sendo gravada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPages">
+        <source>FixedDocument must contain at least one FixedPage.</source>
+        <target state="translated">FixedDocument deve conter pelo menos um FixedPage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFontService">
+        <source>No font service is registered with resource policy.</source>
+        <target state="translated">Nenhum serviço de fonte está registrado na política de recurso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoImageService">
+        <source>No image service is registered with resource policy.</source>
+        <target state="translated">Nenhum serviço de imagem está registrado na política de recurso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoSerializer">
+        <source>Cannot find the appropriate serializer.</source>
+        <target state="translated">Não é possível localizar o serializador adequado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotSupported">
+        <source>Serialization of this type of object is not supported.</source>
+        <target state="translated">Não há suporte para a serialização deste tipo de objeto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotXpsSerializationManagerAsync">
+        <source>SerializationManager passed to XpsSerializerAsync is not XpsSerializationManagerAsync.</source>
+        <target state="translated">SerializationManager transferido para XpsSerializerAsync não é XpsSerializationManagerAsync.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_TargetNotPrintTicket">
+        <source>Target must be a PrintTicket.</source>
+        <target state="translated">O destino deve ser um PrintTicket.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_UnableToInstantiateSerializer">
+        <source>Cannot instantiate a serializer of the given type.</source>
+        <target state="translated">Não é possível criar uma instância de um serializador de determinado tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPackagingPolicy">
+        <source>SerializationManager returned packaging policy that was not an XpsPackagingPolicy.</source>
+        <target state="translated">SerializationManager retornou uma política de marshalling que não era um XpsPackagingPolicy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedDocument">
+        <source>Serialized FixedDocument is not a complex property.</source>
+        <target state="translated">O FixedDocument serializado não é uma propriedade complexa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedPage">
+        <source>Serialized FixedPage is not a complex property.</source>
+        <target state="translated">O FixedPage serializado não é uma propriedade complexa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForPageContent">
+        <source>Serialized PageContent is not a complex property.</source>
+        <target state="translated">O PageContent serializado não é uma propriedade complexa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_DisplayName">
+        <source>XPS Serializer</source>
+        <target state="translated">Serializador XPS</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerName">
+        <source>Microsoft</source>
+        <target state="translated">Microsoft</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerWebsite">
+        <source>http://www.microsoft.com</source>
+        <target state="translated">http://www.microsoft.com</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_WriterIsClosed">
+        <source>SerializerWriter was closed.</source>
+        <target state="translated">O SerializerWriter foi fechado.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

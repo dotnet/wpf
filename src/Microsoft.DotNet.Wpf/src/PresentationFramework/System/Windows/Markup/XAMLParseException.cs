@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Parser exceptions
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Xml;
@@ -43,7 +41,6 @@ namespace System.Windows.Markup
     public class XamlParseException : SystemException
 #endif
     {
-
         #region Public
 
         #region Constructors
@@ -327,7 +324,6 @@ namespace System.Windows.Markup
                                                 XamlObjectIds xamlObjectIds,
                                                 Type objectType)
         {
-
             string message = " ";
             string xamlFile = GetMarkupFilePath(baseUri);
             string simpleObjectId = null;
@@ -432,7 +428,6 @@ namespace System.Windows.Markup
                                             Type objectType
                                             )
         {
-
             // If there's an inner exception, we'll append its message to our own.
 
             if (innerException != null && innerException.Message != null)

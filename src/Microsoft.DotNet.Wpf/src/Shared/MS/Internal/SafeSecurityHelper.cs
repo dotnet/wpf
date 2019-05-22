@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 // Purpose:  Helper functions that require elevation but are safe to use.
-// History:
-//   10/15/04:    Microsoft        Created
 
 using System;
 using System.Collections.Generic;

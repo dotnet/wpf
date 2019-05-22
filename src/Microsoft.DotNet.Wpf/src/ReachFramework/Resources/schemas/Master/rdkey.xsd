@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+            targetNamespace="http://schemas.microsoft.com/xps/2005/06/resourcedictionary-key" 
+            xmlns="http://schemas.microsoft.com/xps/2005/06/resourcedictionary-key" 
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+            elementFormDefault="qualified" blockDefault="#all">
+            
+  <xs:attribute name="Key">
+    <xs:annotation>
+      <xs:appinfo>Key</xs:appinfo>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <!-- A Key (pattern restriction according to XPS spec) -->
+        <xs:pattern value="(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lo}|\p{Nl}|_)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lo}|\p{Nl}|\p{Mn}|\p{Mc}|\p{Nd}|_)*"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+            
+</xs:schema>

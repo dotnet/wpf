@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="../Strings.resx">
+    <body>
+      <trans-unit id="DoesNotSupportMultipleSelection">
+        <source>Selection container does not support multiple selection.</source>
+        <target state="translated">Контейнер выбора не поддерживает множественный выбор.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EditControlsHaveNoChildren">
+        <source>Win32 edit control cannot have a child element.</source>
+        <target state="translated">Элемент управления Win32 edit не может иметь дочерний элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridColumnOutOfRange">
+        <source>Grid column must be set between 0 and column maximum.</source>
+        <target state="translated">Столбец таблицы должен иметь значение между 0 и максимальным числом столбцов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridRowOutOfRange">
+        <source>Grid row must be set between 0 and row maximum.</source>
+        <target state="translated">Строка Grid должна иметь значение между 0 и максимальным числом строк.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameter">
+        <source>Parameter not valid.</source>
+        <target state="translated">Недопустимый параметр.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRangeEndpoint">
+        <source>Start or end specified is past the end of the text range.</source>
+        <target state="translated">Указанные начало или окончание лежат за окончанием текстового диапазона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTextRangeOffset">
+        <source>Character offset not valid in TextRange.</source>
+        <target state="translated">Смещение символов недопустимо в TextRange.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyAlt">
+        <source>Alt</source>
+        <target state="translated">Alt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyControl">
+        <source>Control</source>
+        <target state="translated">Управление</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyCtrl">
+        <source>Ctrl</source>
+        <target state="translated">CTRL</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDel">
+        <source>Del</source>
+        <target state="translated">Удалить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDelete">
+        <source>Delete</source>
+        <target state="translated">Удалить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEnd">
+        <source>End</source>
+        <target state="translated">Завершить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEsc">
+        <source>Esc</source>
+        <target state="translated">ESC</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHelp">
+        <source>Help</source>
+        <target state="translated">Справка</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHome">
+        <source>Home</source>
+        <target state="translated">Главная</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyIns">
+        <source>Ins</source>
+        <target state="translated">Ins</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyInsert">
+        <source>Insert</source>
+        <target state="translated">Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageDown">
+        <source>Page Down</source>
+        <target state="translated">Страница вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageUp">
+        <source>Page Up</source>
+        <target state="translated">Страница вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPause">
+        <source>Pause</source>
+        <target state="translated">Приостановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPrtScn">
+        <source>PrtScn</source>
+        <target state="translated">PrtScn</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyScrLk">
+        <source>ScrLk</source>
+        <target state="translated">ScrLk</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyShift">
+        <source>Shift</source>
+        <target state="translated">Shift</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySpace">
+        <source>Space</source>
+        <target state="translated">Пробел.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySysRq">
+        <source>SysRq</source>
+        <target state="translated">SysRq</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyTab">
+        <source>Tab</source>
+        <target state="translated">Вкладка</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyWinKey">
+        <source>WinKey</source>
+        <target state="translated">WinKey</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeContainer">
+        <source>Container</source>
+        <target state="translated">Контейнер</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDialog">
+        <source>Dialog</source>
+        <target state="translated">Диалоговое окно</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeGrip">
+        <source>Grip</source>
+        <target state="translated">Захват</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeIPAddress">
+        <source>ip address</source>
+        <target state="translated">Адрес IP</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeOctet">
+        <source>Octet</source>
+        <target state="translated">Октет</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebar">
+        <source>Rebar</source>
+        <target state="translated">Главная панель</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebarBand">
+        <source>Rebar Band</source>
+        <target state="translated">Полоса главной панели</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsComboButton">
+        <source>Drop Down Button</source>
+        <target state="translated">Кнопка раскрытия списка</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsHorizontalScrollBar">
+        <source>Horizontal Scroll Bar</source>
+        <target state="translated">Горизонтальная полоса прокрутки</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenu">
+        <source>Menu</source>
+        <target state="translated">Меню</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuBar">
+        <source>Application</source>
+        <target state="translated">Приложение</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuSeparator">
+        <source>separator</source>
+        <target state="translated">Разделитель</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsReBarBandItem">
+        <source>Rebar Band</source>
+        <target state="translated">Полоса главной панели</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">Далеко назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackBySmallAmount">
+        <source>Back by small amount</source>
+        <target state="translated">Немного назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">Далеко вперед</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardBySmallAmount">
+        <source>Forward by small amount</source>
+        <target state="translated">Немного вперед</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsThumb">
+        <source>Thumb</source>
+        <target state="translated">Бегунок</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">Далеко назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">Далеко вперед</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemThumb">
+        <source>Thumb</source>
+        <target state="translated">Бегунок</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemBackward">
+        <source>Backward</source>
+        <target state="translated">Обратная</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemForward">
+        <source>Forward</source>
+        <target state="translated">Прямая</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSysHeader">
+        <source>Header</source>
+        <target state="translated">Header</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuBar">
+        <source>System Menu Bar</source>
+        <target state="translated">Системное меню</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuItem">
+        <source>System</source>
+        <target state="translated">Система</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonClose">
+        <source>Close</source>
+        <target state="translated">Закрыть</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonContextHelp">
+        <source>Context help</source>
+        <target state="translated">Контекстная справка</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMaximize">
+        <source>Maximize</source>
+        <target state="translated">Развернуть</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMinimize">
+        <source>Minimize</source>
+        <target state="translated">Свернуть</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonRestore">
+        <source>Restore</source>
+        <target state="translated">Восстановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonUnknown">
+        <source>Unknown title bar button</source>
+        <target state="translated">Неизвестная кнопка строки названия</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsUpDown">
+        <source>Spin</source>
+        <target state="translated">Регулятор</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsVerticalScrollBar">
+        <source>Vertical Scroll Bar</source>
+        <target state="translated">Вертикальная полоса прокрутки</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoITextDocumentFromRichEdit">
+        <source>Cannot obtain ITextDocument from RichEdit control.</source>
+        <target state="translated">Не удается получить ITextDocument из элемента управления RichEdit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidValue">
+        <source>'{0}' is not a valid value for this control.</source>
+        <target state="translated">"{0}" не является допустимым значением для этого элемента управления.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">Не удается выполнить операцию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMax">
+        <source>Value is greater than Maximum.</source>
+        <target state="translated">Это значение больше максимально допустимого.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMin">
+        <source>Value is less than Minimum.</source>
+        <target state="translated">Это значение меньше минимально допустимого.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RichEditTextPatternHasNoChildren">
+        <source>RangeFromChild method is not supported in this implementation.</source>
+        <target state="translated">Метод RangeFromChild не поддерживается в данном внедрении.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollBarOutOfRange">
+        <source>ScrollBar percent must be between 0 and 100.</source>
+        <target state="translated">Процент ScrollBar должен находиться в диапазоне от 0 до 100.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectionRequired">
+        <source>Selection container requires one selection.</source>
+        <target state="translated">Для контейнера выбора требуется один выбранный элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">Конечному элементу не удается получить фокус.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldBeZero">
+        <source>Must be zero.</source>
+        <target state="translated">Должно быть нулем.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">Значение доступно только для чтения.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

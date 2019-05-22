@@ -1754,8 +1754,8 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern IntPtr SetActiveWindow(HandleRef hWnd);
 
-        //TODO: Refactor shared native methods so that parser dependency
-        // is in separate file. PS # 30845.
+        //Need to Refactor shared native methods so that parser dependency
+        // is in separate file.
 #if PBTCOMPILER
         [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
         public static extern IntPtr SetCursor(HandleRef hcursor);
@@ -3384,8 +3384,7 @@ namespace MS.Win32
                garbage being handed out for the native buffer (it's out anyway). Upon
                returning from the COM call, CLR copies back to the managed object but
                chokes on the garbage string pointers trying to do memcpy, causing AV.
-               See also Dev10 work item 730339 to fix this in the CLR, by zeroing out
-               the memory that's handed over to native code in this circumstance.  */
+            */
             [In, Out] NativeMethods.EXCEPINFO exceptionInfo,
             IServiceProvider serviceProvider);
 

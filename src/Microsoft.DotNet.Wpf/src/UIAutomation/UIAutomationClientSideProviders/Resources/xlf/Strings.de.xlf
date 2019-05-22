@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="de" original="../Strings.resx">
+    <body>
+      <trans-unit id="DoesNotSupportMultipleSelection">
+        <source>Selection container does not support multiple selection.</source>
+        <target state="translated">Der Auswahlcontainer unterstützt die Mehrfachauswahl nicht.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EditControlsHaveNoChildren">
+        <source>Win32 edit control cannot have a child element.</source>
+        <target state="translated">Das Win32-Bearbeitungssteuerelement kann keine untergeordneten Elemente haben.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridColumnOutOfRange">
+        <source>Grid column must be set between 0 and column maximum.</source>
+        <target state="translated">Die Rasterspalte muss auf einen Wert zwischen 0 und dem Spaltenmaximum festgelegt werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridRowOutOfRange">
+        <source>Grid row must be set between 0 and row maximum.</source>
+        <target state="translated">Die Grid-Zeile muss auf einen Wert zwischen 0 und dem Zeilenmaximum festgelegt werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameter">
+        <source>Parameter not valid.</source>
+        <target state="translated">Der Parameter ist ungültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRangeEndpoint">
+        <source>Start or end specified is past the end of the text range.</source>
+        <target state="translated">Der angegebene Start bzw. das angegebene Ende liegt nach dem Ende des Textbereichs.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTextRangeOffset">
+        <source>Character offset not valid in TextRange.</source>
+        <target state="translated">Das Zeichenoffset in TextRange ist ungültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyAlt">
+        <source>Alt</source>
+        <target state="translated">ALT</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyControl">
+        <source>Control</source>
+        <target state="translated">STRG-TASTE</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyCtrl">
+        <source>Ctrl</source>
+        <target state="translated">STRG</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDel">
+        <source>Del</source>
+        <target state="translated">ENTF</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDelete">
+        <source>Delete</source>
+        <target state="translated">Löschen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEnd">
+        <source>End</source>
+        <target state="translated">ENDE</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEsc">
+        <source>Esc</source>
+        <target state="translated">ESC</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHelp">
+        <source>Help</source>
+        <target state="translated">Hilfe</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHome">
+        <source>Home</source>
+        <target state="translated">Startseite</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyIns">
+        <source>Ins</source>
+        <target state="translated">EINFG</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyInsert">
+        <source>Insert</source>
+        <target state="translated">Einfg</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageDown">
+        <source>Page Down</source>
+        <target state="translated">Nach unten</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageUp">
+        <source>Page Up</source>
+        <target state="translated">Nach oben</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPause">
+        <source>Pause</source>
+        <target state="translated">Anhalten</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPrtScn">
+        <source>PrtScn</source>
+        <target state="translated">DRUCK</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyScrLk">
+        <source>ScrLk</source>
+        <target state="translated">ROLLEN</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyShift">
+        <source>Shift</source>
+        <target state="translated">Umschalttaste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySpace">
+        <source>Space</source>
+        <target state="translated">Speicherplatz</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySysRq">
+        <source>SysRq</source>
+        <target state="translated">SysRq</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyTab">
+        <source>Tab</source>
+        <target state="translated">Tab</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyWinKey">
+        <source>WinKey</source>
+        <target state="translated">WINDOWS-TASTE</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeContainer">
+        <source>Container</source>
+        <target state="translated">Container</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDialog">
+        <source>Dialog</source>
+        <target state="translated">Dialogfeld</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeGrip">
+        <source>Grip</source>
+        <target state="translated">Ziehpunkt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeIPAddress">
+        <source>ip address</source>
+        <target state="translated">IP-Adresse</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeOctet">
+        <source>Octet</source>
+        <target state="translated">Oktett</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebar">
+        <source>Rebar</source>
+        <target state="translated">Grundleiste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebarBand">
+        <source>Rebar Band</source>
+        <target state="translated">Grundleistenbereich</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsComboButton">
+        <source>Drop Down Button</source>
+        <target state="translated">Dropdown-Schaltfläche</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsHorizontalScrollBar">
+        <source>Horizontal Scroll Bar</source>
+        <target state="translated">Horizontale Bildlaufeiste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenu">
+        <source>Menu</source>
+        <target state="translated">Menü</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuBar">
+        <source>Application</source>
+        <target state="translated">Anwendung</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuSeparator">
+        <source>separator</source>
+        <target state="translated">Trennzeichen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsReBarBandItem">
+        <source>Rebar Band</source>
+        <target state="translated">Grundleistenbereich</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">Zurück um große Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackBySmallAmount">
+        <source>Back by small amount</source>
+        <target state="translated">Zurück um kleine Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">Vorwärts um große Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardBySmallAmount">
+        <source>Forward by small amount</source>
+        <target state="translated">Vorwärts um kleine Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsThumb">
+        <source>Thumb</source>
+        <target state="translated">Ziehpunkt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">Zurück um große Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">Vorwärts um große Menge</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemThumb">
+        <source>Thumb</source>
+        <target state="translated">Ziehpunkt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemBackward">
+        <source>Backward</source>
+        <target state="translated">Rückwärts</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemForward">
+        <source>Forward</source>
+        <target state="translated">Weiterleiten</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSysHeader">
+        <source>Header</source>
+        <target state="translated">Header</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuBar">
+        <source>System Menu Bar</source>
+        <target state="translated">Systemmenüleiste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuItem">
+        <source>System</source>
+        <target state="translated">System</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonClose">
+        <source>Close</source>
+        <target state="translated">Schließen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonContextHelp">
+        <source>Context help</source>
+        <target state="translated">Kontexthilfe</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMaximize">
+        <source>Maximize</source>
+        <target state="translated">Maximieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMinimize">
+        <source>Minimize</source>
+        <target state="translated">Minimieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonRestore">
+        <source>Restore</source>
+        <target state="translated">Wiederherstellen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonUnknown">
+        <source>Unknown title bar button</source>
+        <target state="translated">Unbekannte Titelleistenschaltfläche</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsUpDown">
+        <source>Spin</source>
+        <target state="translated">Drehfeld</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsVerticalScrollBar">
+        <source>Vertical Scroll Bar</source>
+        <target state="translated">Vertikale Bildlaufleiste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoITextDocumentFromRichEdit">
+        <source>Cannot obtain ITextDocument from RichEdit control.</source>
+        <target state="translated">ITextDocument kann nicht aus dem RichEdit-Steuerelement abgerufen werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidValue">
+        <source>'{0}' is not a valid value for this control.</source>
+        <target state="translated">"{0}" ist kein gültiger Wert für dieses Steuerelement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">Der Vorgang kann nicht ausgeführt werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMax">
+        <source>Value is greater than Maximum.</source>
+        <target state="translated">Der Wert ist größer als das Maximum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMin">
+        <source>Value is less than Minimum.</source>
+        <target state="translated">Der Wert ist kleiner als das Minimum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RichEditTextPatternHasNoChildren">
+        <source>RangeFromChild method is not supported in this implementation.</source>
+        <target state="translated">Die RangeFromChild-Methode wird in dieser Implementierung nicht unterstützt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollBarOutOfRange">
+        <source>ScrollBar percent must be between 0 and 100.</source>
+        <target state="translated">Als Prozentwert für ScrollBar muss ein Wert zwischen 0 und 100 festgelegt werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectionRequired">
+        <source>Selection container requires one selection.</source>
+        <target state="translated">Der Auswahlcontainer erfordert eine Auswahl.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">Das Zielelement kann keinen Fokus erhalten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldBeZero">
+        <source>Must be zero.</source>
+        <target state="translated">Muss Null sein.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">Der Wert ist schreibgeschützt.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

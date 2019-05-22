@@ -133,7 +133,7 @@ namespace MS.Internal.Utility
 
                 Debug.Assert(baseuri.OriginalString == BaseUriHelper.FixFileUri(baseuri).OriginalString, "Base Uri is legacy file Uri and may not resolve relative uris correctly. This method should be updated");
 
-                // ToDo (younggk): PS# 25616 Once we move to PackUri, we don't need a special way
+                // Once we move to PackUri, we don't need a special way
                 //  of resolving Uri. We can use the regurlar one.
                 if (isContainer)
                 {

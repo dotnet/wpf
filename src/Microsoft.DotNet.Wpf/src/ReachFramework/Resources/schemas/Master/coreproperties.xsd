@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	targetNamespace="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" 
+	xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" 
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	elementFormDefault="qualified" 	
+	blockDefault="#all">
+	
+	<!-- schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dc.xsd" -->
+	<xs:import namespace="http://purl.org/dc/elements/1.1/" 
+            schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dc.xsd" />
+	
+	<!-- schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dcterms.xsd" -->
+	<xs:import namespace="http://purl.org/dc/terms/" 
+            schemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/dcterms.xsd" />
+  
+	<xs:element name="coreProperties" type="CT_coreProperties">
+        <xs:annotation>
+          <xs:appinfo>CoreProperties</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+  
+    <xs:complexType name="CT_coreProperties">
+        <xs:all>
+            <xs:element ref="dc:creator" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Creator</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dcterms:created" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>DateCreated</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:identifier" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contentType" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>ContentType</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:title" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Title</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:subject" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Subject</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Description</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="keywords" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>Keywords</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:language" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Language</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="category" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>Category</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="version" minOccurs="0"  maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>Version</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="revision" minOccurs="0"  maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>Revision</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="lastModifiedBy" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>LastModifiedBy</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dcterms:modified" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>DateModified</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="lastPrinted" minOccurs="0"  maxOccurs="1" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:appinfo>LastPrinted</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contentStatus" minOccurs="0" maxOccurs="1" type="xs:string">
+                <xs:annotation>
+                    <xs:appinfo>ContentStatus</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+</xs:schema>

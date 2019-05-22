@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   class for the main TypeConverterContext object passed to type converters
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Reflection;
@@ -30,7 +28,6 @@ using MS.Internal;
 namespace System.Windows.Markup
 #endif
 {
-
 #if PBTCOMPILER
 
     ///<summary>
@@ -62,7 +59,6 @@ namespace System.Windows.Markup
     public class ParserContext : IUriContext
 #endif
     {
-
 #region Public Methods
 
         ///    <summary>
@@ -257,7 +253,6 @@ namespace System.Windows.Markup
             // Wait till the context needs XmlnsDictionary, create on first use.
             if (_xmlnsDictionary != null)
                 _xmlnsDictionary.PopScope();
-
         }
 
         /// <summary>
@@ -707,12 +702,10 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal void TrimState()
         {
-
                 if( _nameScopeStack != null && _nameScopeStack.Count == 0 )
                 {
                     _nameScopeStack = null;
                 }
-
         }
 #endif
 

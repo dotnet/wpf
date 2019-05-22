@@ -4,7 +4,7 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview6</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemIOPackagingVersion>4.6.0-preview6.19264.8</SystemIOPackagingVersion>
+    <SystemIOPackagingVersion>4.6.0-preview6.19270.2</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -57,6 +57,7 @@
     <RestoreSources>
       $(RestoreSources);
       https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
+      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json;
       https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
     </RestoreSources>
   </PropertyGroup>
@@ -67,6 +68,8 @@
     <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
     <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
     <MicrosoftDotNetWpfDncEngPackage>Microsoft.DotNet.Wpf.DncEng</MicrosoftDotNetWpfDncEngPackage>
+    <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <!-- 
     This is a toolset dependency added for use *only* by tests 

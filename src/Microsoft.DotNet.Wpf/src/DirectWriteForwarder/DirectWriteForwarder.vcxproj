@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CLRSupport>pure</CLRSupport>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <!-- Target .Net Core 3.0 -->
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
+  </PropertyGroup>
+  
+  <Import Project="$(WpfCppProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</ProjectGuid>
+    <UseClrCrt>true</UseClrCrt>
+    <OutputName>DirectWriteForwarder</OutputName>
+    <TargetType>DYNLINK</TargetType>
+    <LinkSubSystem>CONSOLE</LinkSubSystem>
+    <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
+  </PropertyGroup>
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\;.\CPP</AdditionalIncludeDirectories>
+      <CompileAsManaged>pure</CompileAsManaged>
+      <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>precomp.hxx</PrecompiledHeaderFile>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <PreprocessorDefinitions>$(CDefines);_NO_CRT_STDIO_INLINE;_INC_SWPRINTF_INL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj">
+        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+        <OutputItemType>_WindowsBaseReference</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Link Include="Shlwapi.lib" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClInclude Include="precomp.hxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CPP\DirectWriteForwarder.cpp" />
+    <ClCompile Include="CPP\precomp.cxx">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <CLCompile Include="$(WpfSharedDir)\cpp\dwriteloader.cpp" />
+    <CLCompile Include="$(WpfSharedDir)\cpp\Utils.cxx" />
+    <CLCompile Include="main.cpp" />
+    <CLCompile Include="OtherAssemblyAttrs.cpp" />
+  </ItemGroup>
+
+  <!-- 
+    PackageReferences to pass to CppCliHelper target
+  -->
+  <ItemGroup>
+    <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+  </ItemGroup>
+
+  <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
+      <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
+      <PropertyGroup>
+      <_windowsBasePath>%(_WindowsBaseReference.FullPath)</_windowsBasePath>
+    </PropertyGroup>
+    <ItemGroup>
+      <CLCompile>
+        <!-- We need access to the internal members of WindowsBase.  WindowsBase already has an
+             InternalsVisibleTo attribute for us, but managed C++ requires that we also request
+             access by using the "#using WindowsBase.dll as_friend" syntax.  This line is in
+             precomp.hxx.  We build the full path and put it in angle brackets here, and pass
+             it to precomp.hxx as a macro.
+        -->
+        <PreprocessorDefinitions>%(CLCompile.PreprocessorDefinitions);WINDOWS_BASE_DLL=&lt;$(_windowsBasePath)&gt;</PreprocessorDefinitions>
+      </CLCompile>
+    </ItemGroup>
+  </Target>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+</Project>

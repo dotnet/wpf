@@ -1,0 +1,8 @@
+::BEGIN_TEMPLATE
+COLLECTIONTYPE:ColumnDefinitionCollection
+ITEMTYPE:ColumnDefinition
+OWNERTYPE:Grid
+WIDTHHEIGHT:Width
+::END_TEMPLATE
+
+::END

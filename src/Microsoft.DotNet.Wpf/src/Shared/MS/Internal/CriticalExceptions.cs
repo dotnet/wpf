@@ -10,6 +10,7 @@ namespace MS.Internal.Markup
 namespace System.Xaml
 #else
 using MS.Internal.WindowsBase; // FriendAccessAllowed
+
 namespace MS.Internal
 #endif
 {

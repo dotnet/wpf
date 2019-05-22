@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://purl.org/dc/dcmitype/" targetNamespace="http://purl.org/dc/dcmitype/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:simpleType name="DCMIType">
+     <xs:union>
+        <xs:simpleType>
+           <xs:restriction base="xs:Name">
+		<xs:enumeration value="Collection" />
+		<xs:enumeration value="Dataset" />
+		<xs:enumeration value="Event" />
+		<xs:enumeration value="Image" />
+		<xs:enumeration value="InteractiveResource" />
+		<xs:enumeration value="Service" />
+		<xs:enumeration value="Software" />
+		<xs:enumeration value="Sound" />
+		<xs:enumeration value="Text" />
+		<xs:enumeration value="PhysicalObject" />
+            </xs:restriction>
+        </xs:simpleType> 
+     </xs:union>
+  </xs:simpleType>
+
+</xs:schema>

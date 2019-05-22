@@ -2,13 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//-----------------------------------------------------------------------------
 //
 // Description:
 //  Common container-related operations that can be shared among internal
 //  components.
 //
-//-----------------------------------------------------------------------------
 
 using System;
 using System.Collections;   // for IList
@@ -36,7 +34,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// </summary>
     static internal class ContainerUtilities
     {
-
         static private readonly Int32 _int16Size = SizeOfInt16();
         static private readonly Int32 _int32Size = SizeOfInt32();
         static private readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
@@ -519,6 +516,5 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         }
 
 #endif
-
     }
 }

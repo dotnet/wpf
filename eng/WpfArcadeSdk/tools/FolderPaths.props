@@ -2,6 +2,8 @@
   <PropertyGroup>
     <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
     <WpfSourceDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\</WpfSourceDir>
-    <WpfSharedDir>$(WpfSourceDir)shared\</WpfSharedDir>
+    <WpfGraphicsPath>$(WpfSourceDir)WpfGfx\</WpfGraphicsPath>
+    <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>
+    <WpfPresentationNativeDir>$(WpfSourceDir)PresentationNative\</WpfPresentationNativeDir>
   </PropertyGroup>
 </Project>

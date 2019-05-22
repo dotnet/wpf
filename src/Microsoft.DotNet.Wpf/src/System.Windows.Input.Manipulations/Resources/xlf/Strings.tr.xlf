@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
+    <body>
+      <trans-unit id="ArgumentOutOfRange">
+        <source>Value of {0} is outside of the allowed range.</source>
+        <target state="translated">{0} değeri izin verilen aralığın dışında.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeParameterDuringInertia">
+        <source>The value of {0} cannot be changed while the inertia processor is running.</source>
+        <target state="translated">Eylemsizlik işlemcisi çalışırken {0} değeri değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalPivotRadius">
+        <source>Value of {0} must be either NaN, or a finite value greater than or equal to 1.</source>
+        <target state="translated">{0} değeri NaN veya 1'den büyük ya da buna eşit bir sonlu değer olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified1and2">
+        <source>Either {0}, or {1} and {2}, needs to be specified.</source>
+        <target state="translated">{0} veya {1} ile {2} belirtilmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified2">
+        <source>Either {0} or {1} needs to be specified.</source>
+        <target state="translated">{0} veya {1} belirtilmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaProcessorInvalidRadius">
+        <source>InitialRadius should be a finite number, greater than or equal to 1.</source>
+        <target state="translated">InitialRadius sonlu bir sayı olmalı ve 1'den büyük veya buna eşit olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTimestamp">
+        <source>Timestamp values must not decrease.</source>
+        <target state="translated">Timestamp değerleri azalmamalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoInertiaVelocitiesSpecified">
+        <source>At least one of the following must be specified: linear velocity ({0} or {1}), angular velocity ({2}), or expansion velocity ({3} or {4}).</source>
+        <target state="translated">Şunlardan en az biri belirtilmelidir: doğrusal hız ({0} veya {1}), açısal hız ({2}), veya genişletme hızı ({3} veya {4}).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyProportionalExpansionSupported">
+        <source>Currently, only proportional expansion is supported. {0} must equal {1}.</source>
+        <target state="translated">Şu anda yalnızca orantılı genişletme desteklenmektedir. {0}, {1} değerine eşit olmalıdır.</target>
+        <note>{0} and {1} are the names of arguments.</note>
+      </trans-unit>
+      <trans-unit id="ValueMustBeFinite">
+        <source>Value of {0} must be finite.</source>
+        <target state="translated">{0} değeri sonlu olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteNonNegative">
+        <source>Value of {0} must be finite and non-negative.</source>
+        <target state="translated">{0} değeri sonlu ve negatif olmayan bir değer olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteOrNaN">
+        <source>Value of {0} must be finite or NaN.</source>
+        <target state="translated">{0} değeri sonlu veya NaN olmalıdır.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

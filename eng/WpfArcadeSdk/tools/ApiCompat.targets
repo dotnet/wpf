@@ -1,0 +1,54 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1"/> 
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
+    <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TaskFactoryReference Include="mscorlib" />
+    <TaskFactoryReference Include="netstandard" />
+  </ItemGroup>
+
+  <!-- Find .NET Framework binary locations that are associated with the current assembly being produced. -->
+  <UsingTask TaskName="FindDotNetFrameworkFilesTask"
+        TaskFactory="$(TaskFactory)"
+        AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <FrameworkFileName ParameterType="System.String" Output="true" Required="true"/>
+      <DotNetBitness ParameterType="System.String" Required="true"/>
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="fragment" Language="cs">
+        <![CDATA[
+          var        
+        
+          var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
+          FrameworkFileName = ToolLocationHelper.GetPathToDotNetFrameworkFile(FrameworkFileName, TargetDotNetFrameworkVersion.VersionLatest, bitness);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the latest in .NET Framework -->
+  <Target Name="ResolveNetFrameworkApiCompatContract" BeforeTargets="ValidateApiCompatForSrc">
+    <PropertyGroup>
+      <DotNetFrameworkBitness Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">Bitness64</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">Bitness32</DotNetFrameworkBitness>
+    </PropertyGroup>
+    <FindDotNetFrameworkFilesTask DotNetBitness="$(DotNetFrameworkBitness)" FrameworkFileName="$(AssemblyName).dll">
+      <Output TaskParameter="FrameworkFileName" PropertyName="ContractFileName" />
+    </FindDotNetFrameworkFilesTask>
+
+    <ItemGroup>
+      <ResolvedMatchingContract Include="$(ContractFileName)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Do Reverse API Compat from hand-crafted ref assemblies to their associated binaries. -->
+  
+</Project>

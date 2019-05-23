@@ -356,7 +356,7 @@
 
   <!-- Disassemble the target binary. -->
   <Target Name="DeconstructDll"
-        AfterTargets="Compile"
+        AfterTargets="CreateSatelliteAssemblies"
         Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))"
         Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))">
     <PropertyGroup>

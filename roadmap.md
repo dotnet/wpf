@@ -39,6 +39,12 @@ The port from WPF for .NET Framework is still in progress.  All components appli
     * [UIAutomationClientSideProviders](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationClientSideProviders)
     * [UIAutomationProvider](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationProvider)
     * [UIAutomationType](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationTypes)
+  * [WPF Extensions](src/Microsoft.DotNet.Wpf/src/Extensions)
+    * [PresentationFramework-SystemCore](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemCore)
+    * [PresentationFramework-SystemData](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemData)
+    * [PresentationFramework-SystemDrawing](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemDrawing)
+    * [PresentationFramework-SystemXml](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXml)
+    * [PresentationFramework-SystemXmlLinq](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXmlLinq)
   
 * Tests:
   * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)
@@ -55,12 +61,6 @@ Note: This list is in rough priority order and may change.
     * `PresentationFramework-Classic`
     * `PresentationFramework-Luna`
     * `PresentationFramework-Royale`
-  * `WPF Extensions`
-    * `PresentationFramework-SystemCore`
-    * `PresentationFramework-SystemData`
-    * `PresentationFramework-SystemDrawing`
-    * `PresentationFramework-SystemXml`
-    * `PresentationFramework-SystemXmlLinq`
   * `System.Windows.Presentation`
   * `PresentationUI`
   * `System.Printing`

@@ -1,5 +1,12 @@
 <Project>
 
+  <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
+  <PropertyGroup>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'=='x64' or '$(Platform)'=='x86' or '$(Platform)'=='arm' or '$(Platform)'=='arm64'">win-$(Platform)</LocalRuntimeIdentifier>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'=='Win32' or '$(Platform)'=='AnyCPU'">win-x86</LocalRuntimeIdentifier>
+    <LocalRuntimeIdentifier Condition="'$(Architecture)'==''">win-x64</LocalRuntimeIdentifier>
+  </PropertyGroup>
+
   <Choose>
     <!-- 
         Use the IL Tools that are compiled and distributed with .NET Core.  WPF doesn't currently use these as default because they do not
@@ -13,12 +20,6 @@
         <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
       </ItemGroup>
 
-      <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
-      <PropertyGroup>
-        <LocalRuntimeIdentifier Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">win-$(Platform)</LocalRuntimeIdentifier>
-        <LocalRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">win-x86</LocalRuntimeIdentifier>
-      </PropertyGroup>
-
       <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
         <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
         <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
@@ -29,7 +30,7 @@
         <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
         <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
         <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
-      
+
       </PropertyGroup>
 
       <PropertyGroup>
@@ -55,8 +56,8 @@
       Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
   -->
   <UsingTask TaskName="FindDotNetFrameworkILToolsTask"
-         TaskFactory="$(TaskFactory)"
-         AssemblyFile="$(TaskFactoryAssemblyFile)">
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
     <ParameterGroup>
       <ILAsm ParameterType="System.String" Output="true"/>
       <ILDAsm ParameterType="System.String" Output="true"/>
@@ -66,9 +67,16 @@
       <Using Namespace="Microsoft.Build.Utilities" />
       <Code Type="fragment" Language="cs">
         <![CDATA[
-          var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
-          ILAsm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ILAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
-          ILDAsm = ToolLocationHelper.GetPathToDotNetFrameworkSdkFile("ILDAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+          try
+          {
+            var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
+            ILAsm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ILAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+            ILDAsm = ToolLocationHelper.GetPathToDotNetFrameworkSdkFile("ILDAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+          }
+          catch(Exception e)
+          {
+            Log.LogError("FindDotNetFrameworkILToolsTask: Could not find .NET Framework IL Tools: " + e.ToString());
+          }
         ]]>
       </Code>
     </Task>
@@ -76,8 +84,8 @@
 
   <!-- Call into the supplied ILDAsm. -->
   <UsingTask TaskName="ILDasmTask"
-           TaskFactory="$(TaskFactory)"
-           AssemblyFile="$(TaskFactoryAssemblyFile)">
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
     <ParameterGroup>
 
       <ILDAsm ParameterType="System.String" Required="true" />
@@ -187,8 +195,8 @@
 
   <!-- Call into the supplied ILAsm. -->
   <UsingTask TaskName="ILAsmTask"
-           TaskFactory="$(TaskFactory)"
-           AssemblyFile="$(TaskFactoryAssemblyFile)">
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
     <ParameterGroup>
       <ILAsm ParameterType="System.String" Required="true" />
       <SourceFile ParameterType="System.String" Required="true" />
@@ -325,6 +333,8 @@
        In order to run ILDAsm and ILAsm from .NET Core, we need both the IL* executables and the corresponding version 
        of CoreCLR in the same directory.  This target ensures that for every project using module initializer
        injection.
+       
+       See: https://github.com/dotnet/coreclr/issues/23840 and https://github.com/dotnet/coreclr/issues/15059
   -->
   <Target Name="CopyILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'=='true'">
     <ItemGroup>
@@ -345,8 +355,8 @@
   -->
   <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
     <PropertyGroup>
-      <DotNetFrameworkBitness Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">Bitness64</DotNetFrameworkBitness>
-      <DotNetFrameworkBitness Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">Bitness32</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">Bitness64</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">Bitness32</DotNetFrameworkBitness>
     </PropertyGroup>
     <FindDotNetFrameworkILToolsTask DotNetBitness="$(DotNetFrameworkBitness)">
       <Output TaskParameter="ILDAsm" PropertyName="ILDAsm" />

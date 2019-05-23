@@ -4,7 +4,7 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview6</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemIOPackagingVersion>4.6.0-preview6.19270.2</SystemIOPackagingVersion>
+    <SystemIOPackagingVersion>4.6.0-preview6.19270.12</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -91,6 +91,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview6.19270.5</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview6.19272.11</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

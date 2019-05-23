@@ -407,16 +407,11 @@
           DestinationFiles="$(TargetFile).bak"
           Condition="Exists('$(TargetFile)')" />
 
-    <PropertyGroup>
-      <DebugParam>false</DebugParam>
-      <DebugParam Condition="'$(Configuration)'=='Debug'">true</DebugParam>
-    </PropertyGroup>
-
     <ILAsmTask ILAsm="$(ILAsm)"
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"
                Dll="true"
-               Debug="$(DebugParam)" />
+               Debug="true" />
 
   </Target>
 

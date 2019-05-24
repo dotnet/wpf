@@ -67,10 +67,17 @@
     </ItemGroup>
   </Target>
 
-  <!-- Do ApiCompat from hand-crafted ref assemblies to their associated lib binaries. -->
+  <!--
+    Do ApiCompat from hand-crafted ref assemblies to their associated lib binaries.
+    Arcade's supplied reverse API Compat target, RunMatchingRefApiCompat, is not flexible
+    enough out of the box as it specifies the intermediate assembly as the contract.  Since
+    our hand-crafted reference assemblies are separate projects, this won't work for us.
+    Instead, we should resolve the associated lib assembly explicitly.
+  -->
   <Target Name="ResolveLibAssemblyForRefApiCompatContract"
           BeforeTargets="ValidateApiCompatForSrc"
           Condition="'$(RunReferenceApiCompat)'=='true'">
+    <ResolvedMatchingContract Include="$(ArtifactsDir)bin\$(Configuration)\$(Platform)\$(AssemblyName).dll" />
   </Target>
 
 </Project>

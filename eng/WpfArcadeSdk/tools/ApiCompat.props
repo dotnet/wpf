@@ -2,7 +2,7 @@
   <PropertyGroup>
 
     <!-- These assemblies need to be compared against the equivalent .NET Framework 4.8 assemblies. -->
-    <!--<Net48CompatNeededAssemblies>
+    <Net48CompatNeededAssemblies>
       PresentationBuildTasks;
       PresentationCore;
       PresentationCore-CommonResources;
@@ -31,21 +31,19 @@
       System.Xaml;
       WindowsBase;
       WindowsFormsIntegration;
-    </Net48CompatNeededAssemblies>-->
-
-    <Net48CompatNeededAssemblies>
-      System.Xaml;
     </Net48CompatNeededAssemblies>
 
+    <!-- TODO:  Figure out if we can enable this with reverse API Compat.  Attempts to enable this via regular API Compat seem
+         very noisy.  I'm not convinced that is the correct solution.  We may have to do some work to override reverse compat props
+         or, in the worst case, craft a custom baseline for this class. -->
     <!-- 
       These assemblies need their ref assemblies compared against their lib assemblies.
       This is because they have hand-crafted reference assemblies whose public surface area must be kept in sync
       with their lib counterparts.
     -->
-    <!--<ReferenceAssemblyCompatNeeded>
-      DirectWriteForwarder;
+    <!--<ReferenceCompatNeededAssemblies>
       System.Printing;
-    </ReferenceAssemblyCompatNeeded>-->
+    </ReferenceCompatNeededAssemblies>-->
 
     <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
   </PropertyGroup>
@@ -57,19 +55,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
-    <!--<RunReferenceApiCompat>false</RunReferenceApiCompat>
-    <RunReferenceApiCompat Condition="$(ReferenceAssemblyCompatNeeded.Contains('$(AssemblyName)')
-                                      and $(MSBuildProjectFullPath.Contains('ref\$(AssemblyName).cs')">true</RunReferenceApiCompat>-->
+    <RunReferenceApiCompat>false</RunReferenceApiCompat>
+    <RunReferenceApiCompat Condition="$(ReferenceCompatNeededAssemblies.Contains('$(AssemblyName)'))
+                                      and $(MSBuildProjectName.Contains('$(AssemblyName)-ref'))">true</RunReferenceApiCompat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RunApiCompat)'==''">
     <RunApiCompat>false</RunApiCompat>
-    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RunMatchingRefApiCompat)'==''">
-    <RunMatchingRefApiCompat>false</RunMatchingRefApiCompat>
-      <RunMatchingRefApiCompat Condition="'$(RunReferenceApiCompat)'=='true'">true</RunMatchingRefApiCompat>
+    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunReferenceApiCompat)'=='true'">true</RunApiCompat>
   </PropertyGroup>
 
 </Project>

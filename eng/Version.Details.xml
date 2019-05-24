@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
-  <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19270.4">
-      <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>1bbe43f12010997cd55e308fc50d438273bc24f2</Sha>
-    </Dependency>
-  </ProductDependencies>
   <ToolsetDependencies>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview6.19270.15" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -74,6 +68,10 @@
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview6.19270.15" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>11eba7947e9736109c588a1cfcb77987cb80f570</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19270.4" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/winforms</Uri>
+      <Sha>1bbe43f12010997cd55e308fc50d438273bc24f2</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-preview6.19273.7">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>

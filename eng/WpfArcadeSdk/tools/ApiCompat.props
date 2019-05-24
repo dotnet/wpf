@@ -2,10 +2,9 @@
   <PropertyGroup>
 
     <!-- These assemblies need to be compared against the equivalent .NET Framework 4.8 assemblies. -->
-    <Net48CompatNeededAssemblies>
+    <Net48CompatNeededProjects>
       PresentationBuildTasks;
       PresentationCore;
-      PresentationCore-CommonResources;
       PresentationFramework;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
@@ -31,16 +30,16 @@
       System.Xaml;
       WindowsBase;
       WindowsFormsIntegration;
-    </Net48CompatNeededAssemblies>
+    </Net48CompatNeededProjects>
 
     <!-- 
       These assemblies need their ref assemblies compared against their lib assemblies.
       This is because they have hand-crafted reference assemblies whose public surface area must be kept in sync
       with their lib counterparts.
     -->
-    <ReferenceCompatNeededAssemblies>
-      System.Printing;
-    </ReferenceCompatNeededAssemblies>
+    <ReferenceCompatNeededProjects>
+      System.Printing-ref;
+    </ReferenceCompatNeededProjects>
 
     <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
   </PropertyGroup>

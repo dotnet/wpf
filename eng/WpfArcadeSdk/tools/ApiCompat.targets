@@ -6,8 +6,8 @@
   <!-- Only enable API Compat when needed for some building assembly -->
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
     <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
-    <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededAssemblies)'!='' 
-                                          and $(Net48CompatNeededAssemblies.Contains('$(AssemblyName)'))">true</RunNetFrameworkApiCompat>
+    <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededProjects)'!='' 
+                                          and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName)'))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
@@ -17,9 +17,8 @@
 
     <!-- TODO:  Re-enable and fix matching. -->
     <!-- Since some of our ref/lib pairs can potentially be built internally, only run when the paired lib exists. -->
-    <!--<RunReferenceApiCompat Condition="'$(ReferenceCompatNeededAssemblies)'!='' 
-                                      and $(ReferenceCompatNeededAssemblies.Contains('$(AssemblyName)'))
-                                      and $(MSBuildProjectName.Contains('$(AssemblyName)-ref'))
+    <!--<RunReferenceApiCompat Condition="'$(ReferenceCompatNeededProjects)'!='' 
+                                      and $(ReferenceCompatNeededProjects.Contains('$(MSBuildProjectName)'))
                                       and Exists('$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll')">true</RunReferenceApiCompat>-->
 
   </PropertyGroup>

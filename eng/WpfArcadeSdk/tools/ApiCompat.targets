@@ -3,6 +3,38 @@
     <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1"/>
   </ItemGroup>
 
+  <!-- Only enable API Compat when needed for some building assembly -->
+  <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
+    <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
+    <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededAssemblies)'!='' 
+                                          and $(Net48CompatNeededAssemblies.Contains('$(AssemblyName)'))">true</RunNetFrameworkApiCompat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
+    <RunReferenceApiCompat>false</RunReferenceApiCompat>
+
+    <RefBin>$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll</RefBin>
+
+    <!-- TODO:  Re-enable and fix matching. -->
+    <!-- Since some of our ref/lib pairs can potentially be built internally, only run when the paired lib exists. -->
+    <!--<RunReferenceApiCompat Condition="'$(ReferenceCompatNeededAssemblies)'!='' 
+                                      and $(ReferenceCompatNeededAssemblies.Contains('$(AssemblyName)'))
+                                      and $(MSBuildProjectName.Contains('$(AssemblyName)-ref'))
+                                      and Exists('$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll')">true</RunReferenceApiCompat>-->
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RunApiCompat>false</RunApiCompat>
+    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunReferenceApiCompat)'=='true'">true</RunApiCompat>
+
+    <RunApiCompatForSrc>false</RunApiCompatForSrc>
+    <RunApiCompatForSrc Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompatForSrc>
+
+    <RunMatchingRefApiCompat>false</RunMatchingRefApiCompat>
+    <RunMatchingRefApiCompat Condition="'$(RunReferenceApiCompat)'=='true'">true</RunMatchingRefApiCompat>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
     <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
@@ -68,16 +100,14 @@
   </Target>
 
   <!--
-    Do ApiCompat from hand-crafted ref assemblies to their associated lib binaries.
-    Arcade's supplied reverse API Compat target, RunMatchingRefApiCompat, is not flexible
-    enough out of the box as it specifies the intermediate assembly as the contract.  Since
-    our hand-crafted reference assemblies are separate projects, this won't work for us.
-    Instead, we should resolve the associated lib assembly explicitly.
+    This target sets up the matching contracts to run ApiCompat from ref assemblies against the matching lib assembly.
   -->
   <Target Name="ResolveLibAssemblyForRefApiCompatContract"
           BeforeTargets="ValidateApiCompatForSrc"
-          Condition="'$(RunReferenceApiCompat)'=='true'">
-    <ResolvedMatchingContract Include="$(ArtifactsDir)bin\$(Configuration)\$(Platform)\$(AssemblyName).dll" />
+          Condition="'$(RunMatchingRefApiCompat)'=='true'">
+    <ItemGroup>
+      <ResolvedMatchingContract Include="$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll" />
+    </ItemGroup>
   </Target>
 
 </Project>

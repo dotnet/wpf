@@ -33,36 +33,16 @@
       WindowsFormsIntegration;
     </Net48CompatNeededAssemblies>
 
-    <!-- TODO:  Figure out if we can enable this with reverse API Compat.  Attempts to enable this via regular API Compat seem
-         very noisy.  I'm not convinced that is the correct solution.  We may have to do some work to override reverse compat props
-         or, in the worst case, craft a custom baseline for this class. -->
     <!-- 
       These assemblies need their ref assemblies compared against their lib assemblies.
       This is because they have hand-crafted reference assemblies whose public surface area must be kept in sync
       with their lib counterparts.
     -->
-    <!--<ReferenceCompatNeededAssemblies>
+    <ReferenceCompatNeededAssemblies>
       System.Printing;
-    </ReferenceCompatNeededAssemblies>-->
+    </ReferenceCompatNeededAssemblies>
 
     <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
-  </PropertyGroup>
-
-  <!-- Only enable API Compat when needed for some building assembly -->
-  <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
-    <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
-    <RunNetFrameworkApiCompat Condition="$(Net48CompatNeededAssemblies.Contains('$(AssemblyName)'))">true</RunNetFrameworkApiCompat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
-    <RunReferenceApiCompat>false</RunReferenceApiCompat>
-    <RunReferenceApiCompat Condition="$(ReferenceCompatNeededAssemblies.Contains('$(AssemblyName)'))
-                                      and $(MSBuildProjectName.Contains('$(AssemblyName)-ref'))">true</RunReferenceApiCompat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RunApiCompat)'==''">
-    <RunApiCompat>false</RunApiCompat>
-    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunReferenceApiCompat)'=='true'">true</RunApiCompat>
   </PropertyGroup>
 
 </Project>

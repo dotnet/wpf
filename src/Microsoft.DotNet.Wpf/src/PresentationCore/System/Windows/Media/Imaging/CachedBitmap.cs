@@ -224,6 +224,34 @@ namespace System.Windows.Media.Imaging
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
         }
+        
+        [SecurityCritical, SecurityTreatAsSafe]
+        unsafe internal CachedBitmap<TSource>(
+            int pixelWidth,
+            int pixelHeight,
+            double dpiX,
+            double dpiY,
+            PixelFormat pixelFormat,
+            BitmapPalette palette,
+            TSource[] pixels,
+            int stride
+            ) where TSource : unmanaged
+            : base(true) // Use base class virtuals
+         {
+            if (pixels == null)
+                throw new System.ArgumentNullException ("pixels");
+
+            if (pixels.Rank != 1)
+                throw new ArgumentException (SR.Get (SRID.Collection_BadRank), "pixels");
+
+            int elementSize = sizeof(T);
+            int destBufferSize = elementSize * pixels.Length;
+
+            fixed(void * pixelArray = pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+        }
 
         /// <summary>
         /// Common implementation for CloneCore(), CloneCurrentValueCore(),

@@ -68,6 +68,35 @@ namespace System.Windows.Media.Imaging
                         pixelFormat, palette,
                         pixels, stride);
         }
+        
+        /// <summary>
+        /// Create a BitmapSource from an array of pixels.
+        /// </summary>
+        /// <param name="pixelWidth">Width of the Bitmap</param>
+        /// <param name="pixelHeight">Height of the Bitmap</param>
+        /// <param name="dpiX">Horizontal DPI of the Bitmap</param>
+        /// <param name="dpiY">Vertical DPI of the Bitmap</param>
+        /// <param name="pixelFormat">Format of the Bitmap</param>
+        /// <param name="palette">Palette of the Bitmap</param>
+        /// <param name="pixels">Array of pixels</param>
+        /// <param name="stride">stride</param>
+        public static BitmapSource Create<TSource>(
+            int pixelWidth,
+            int pixelHeight,
+            double dpiX,
+            double dpiY,
+            PixelFormat pixelFormat,
+            Imaging.BitmapPalette palette,
+            TSource[] pixels,
+            int stride
+            ) where TSource : unmanaged
+        {
+            return new CachedBitmap(
+                        pixelWidth, pixelHeight,
+                        dpiX, dpiY,
+                        pixelFormat, palette,
+                        pixels, stride);
+        }
 
 
         /// <summary>

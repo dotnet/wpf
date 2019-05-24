@@ -95,5 +95,10 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>89df4b9d928c7f21550d487328f5db000a498bdf</Sha>
     </Dependency>
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1">
+      <Uri>https://www.github.com/dotnet/arcade</Uri>
+      <Sha>
+      </Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

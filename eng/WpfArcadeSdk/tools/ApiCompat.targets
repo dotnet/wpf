@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1"/>
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)"/>
   </ItemGroup>
 
   <!-- Only enable API Compat when needed for some building assembly -->

@@ -3,7 +3,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
   
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
-  <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.targets" Condition="'$(RunApiCompat)'=='true'"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)FolderPaths.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />

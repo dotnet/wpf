@@ -7,7 +7,6 @@
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
     <EnableAnalyzers>true</EnableAnalyzers>
-    <RunApiCompat>true</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>

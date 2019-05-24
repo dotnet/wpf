@@ -32,6 +32,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
 
   <PropertyGroup>
     <DebugType>full</DebugType>

@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1"/> 
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19270.1"/>
   </ItemGroup>
 
   <PropertyGroup>
@@ -15,32 +15,50 @@
 
   <!-- Find .NET Framework binary locations that are associated with the current assembly being produced. -->
   <UsingTask TaskName="FindDotNetFrameworkFilesTask"
-        TaskFactory="$(TaskFactory)"
-        AssemblyFile="$(TaskFactoryAssemblyFile)">
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
     <ParameterGroup>
       <FrameworkFileName ParameterType="System.String" Output="true" Required="true"/>
-      <DotNetBitness ParameterType="System.String" Required="true"/>
     </ParameterGroup>
     <Task>
       <Using Namespace="Microsoft.Build.Utilities" />
       <Code Type="fragment" Language="cs">
         <![CDATA[
-          var        
-        
-          var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
-          FrameworkFileName = ToolLocationHelper.GetPathToDotNetFrameworkFile(FrameworkFileName, TargetDotNetFrameworkVersion.VersionLatest, bitness);
+          try
+          {
+            var net48RefPath = ToolLocationHelper.GetProgramFilesReferenceAssemblyRoot();
+            
+            if (string.IsNullOrEmpty(net48RefPath))
+            {
+              Log.LogError("Could not find .NET 4.8 Ref Directory");
+              return false;
+            }
+            else
+            {
+              FrameworkFileName = Path.Combine(net48RefPath, ".NETFramework", "v4.8", FrameworkFileName);
+              
+              if (string.IsNullOrEmpty(FrameworkFileName))
+              {
+                 Log.LogError(string.Format("Could not find .NET 4.8 Ref Assembly for: {0}{1}", FrameworkFileName, Environment.NewLine));
+                return false;
+              }
+            }
+          }
+          catch (Exception e)
+          {
+            Log.LogError(string.Format("Could not find .NET 4.8 Ref Assembly for: {0}{1}{2}", FrameworkFileName, Environment.NewLine, e.ToString()));
+            return false;
+          }
         ]]>
       </Code>
     </Task>
   </UsingTask>
 
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the latest in .NET Framework -->
-  <Target Name="ResolveNetFrameworkApiCompatContract" BeforeTargets="ValidateApiCompatForSrc">
-    <PropertyGroup>
-      <DotNetFrameworkBitness Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">Bitness64</DotNetFrameworkBitness>
-      <DotNetFrameworkBitness Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32'">Bitness32</DotNetFrameworkBitness>
-    </PropertyGroup>
-    <FindDotNetFrameworkFilesTask DotNetBitness="$(DotNetFrameworkBitness)" FrameworkFileName="$(AssemblyName).dll">
+  <Target Name="ResolveNetFrameworkApiCompatContract"
+          BeforeTargets="ValidateApiCompatForSrc"
+          Condition="'$(RunNetFrameworkApiCompat)'=='true'">
+    <FindDotNetFrameworkFilesTask FrameworkFileName="$(AssemblyName).dll">
       <Output TaskParameter="FrameworkFileName" PropertyName="ContractFileName" />
     </FindDotNetFrameworkFilesTask>
 
@@ -49,6 +67,10 @@
     </ItemGroup>
   </Target>
 
-  <!-- Do Reverse API Compat from hand-crafted ref assemblies to their associated binaries. -->
-  
+  <!-- Do ApiCompat from hand-crafted ref assemblies to their associated lib binaries. -->
+  <Target Name="ResolveLibAssemblyForRefApiCompatContract"
+          BeforeTargets="ValidateApiCompatForSrc"
+          Condition="'$(RunReferenceApiCompat)'=='true'">
+  </Target>
+
 </Project>

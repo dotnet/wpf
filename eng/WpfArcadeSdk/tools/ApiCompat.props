@@ -1,0 +1,75 @@
+<Project>
+  <PropertyGroup>
+
+    <!-- These assemblies need to be compared against the equivalent .NET Framework 4.8 assemblies. -->
+    <!--<Net48CompatNeededAssemblies>
+      PresentationBuildTasks;
+      PresentationCore;
+      PresentationCore-CommonResources;
+      PresentationFramework;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      PresentationFramework-SystemCore;
+      PresentationFramework-SystemData;
+      PresentationFramework-SystemDrawing;
+      PresentationFramework-SystemXml;
+      PresentationFramework-SystemXmlLinq;
+      PresentationUI;
+      ReachFramework;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      System.Printing;
+      System.Windows.Controls.Ribbon;
+      System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
+      System.Xaml;
+      WindowsBase;
+      WindowsFormsIntegration;
+    </Net48CompatNeededAssemblies>-->
+
+    <Net48CompatNeededAssemblies>
+      System.Xaml;
+    </Net48CompatNeededAssemblies>
+
+    <!-- 
+      These assemblies need their ref assemblies compared against their lib assemblies.
+      This is because they have hand-crafted reference assemblies whose public surface area must be kept in sync
+      with their lib counterparts.
+    -->
+    <!--<ReferenceAssemblyCompatNeeded>
+      DirectWriteForwarder;
+      System.Printing;
+    </ReferenceAssemblyCompatNeeded>-->
+
+    <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
+  </PropertyGroup>
+
+  <!-- Only enable API Compat when needed for some building assembly -->
+  <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
+    <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
+    <RunNetFrameworkApiCompat Condition="$(Net48CompatNeededAssemblies.Contains('$(AssemblyName)'))">true</RunNetFrameworkApiCompat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
+    <!--<RunReferenceApiCompat>false</RunReferenceApiCompat>
+    <RunReferenceApiCompat Condition="$(ReferenceAssemblyCompatNeeded.Contains('$(AssemblyName)')
+                                      and $(MSBuildProjectFullPath.Contains('ref\$(AssemblyName).cs')">true</RunReferenceApiCompat>-->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RunApiCompat)'==''">
+    <RunApiCompat>false</RunApiCompat>
+    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RunMatchingRefApiCompat)'==''">
+    <RunMatchingRefApiCompat>false</RunMatchingRefApiCompat>
+      <RunMatchingRefApiCompat Condition="'$(RunReferenceApiCompat)'=='true'">true</RunMatchingRefApiCompat>
+  </PropertyGroup>
+
+</Project>

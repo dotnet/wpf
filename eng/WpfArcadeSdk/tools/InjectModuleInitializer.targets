@@ -15,9 +15,9 @@
     <When Condition="'$(UseNetCoreILTools)'=='true'">
 
       <ItemGroup>
-        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
-        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
-        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-preview6-27710-71" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="MicrosoftNETCoreILDAsmVersion" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="MicrosoftNETCoreILAsmVersion" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="MicrosoftNETCoreRuntimeCoreCLRVersion" GeneratePathProperty="true" />
       </ItemGroup>
 
       <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">

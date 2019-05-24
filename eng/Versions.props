@@ -10,6 +10,12 @@
   <PropertyGroup>
     <MicrosoftPrivateWinformsVersion>4.8.0-preview6.19270.4</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/coreclr -->
+  <PropertyGroup>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>3.0.0-preview6-27710-71</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>3.0.0-preview6-27710-71</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>3.0.0-preview6-27710-71</MicrosoftNETCoreILAsmVersion>
+  </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
     <MicrosoftNETCoreAppVersion>3.0.0-preview6-27720-09</MicrosoftNETCoreAppVersion>

@@ -83,9 +83,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Printing-ref", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B0EFDB12-C931-4E7F-A6C2-D4AC111D7EDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml.Tests", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\DrtXaml\DrtXaml.Tests.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\DrtXaml\DrtXaml.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "src\Microsoft.DotNet.Wpf\test\Common\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "src\Microsoft.DotNet.Wpf\test\Common\DRT\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\XamlTestClasses\XamlTestClasses.csproj", "{3C1FC36C-E3E6-4EED-9ECA-CFF2EB950486}"
 EndProject

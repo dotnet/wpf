@@ -1,4 +1,3 @@
-
 <Project Sdk="Microsoft.DotNet.Helix.Sdk" DefaultTargets="Test">
   <PropertyGroup>
     <!-- These properties help ensure proper and consistent restore behavior -->

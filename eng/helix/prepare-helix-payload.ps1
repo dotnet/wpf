@@ -49,11 +49,6 @@ $drtArtifactsLocation = [System.IO.Path]::Combine($env:BUILD_SOURCESDIRECTORY, "
 $drtPayloadLocation = Join-Path $payloadDir "Test\DRT"
 CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
 
-# Copy built assemblies to dotnet install location
-$eng = Join-Path $env:BUILD_SOURCESDIRECTORY "eng"
-$configArgs = if ($configuration -eq "Release") { "-release" } else { }
-& "$eng\copy-wpf.ps1" -local -arch $platform $configArgs
-
 # Copy scripts
 Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
 Copy-Item "eng\helix\runtests.ps1" $payloadDir

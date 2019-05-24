@@ -44,23 +44,25 @@ namespace WpfArcadeSdk.Build.Tasks
 
                 using (var outputIL = new StreamWriter(File.Open(ILFile, FileMode.Truncate)))
                 {
-                    if (Regex.Match(sourceIL, "\\.class.+?ModuleInitializer.+?\\.method.+?static.+?Initialize\\(\\).+?end of class ModuleInitializer", RegexOptions.Singleline) == Match.Empty)
+                    if (Regex.Match(sourceIL, @"\.class.+?ModuleInitializer.+?\.method.+?static.+?Initialize\(\).+?end of class ModuleInitializer", RegexOptions.Singleline) == Match.Empty)
                     {
                         Log.LogError("Inserting a module initializer requires the assembly to implement a class named ModuleInitializer with a static parameterless method named Initialize.");
+                        return false;
                     }
 
-                    if (Regex.Match(sourceIL, "\\.assembly extern mscorlib", RegexOptions.Singleline) == Match.Empty)
+                    if (Regex.Match(sourceIL, @"\.assembly extern mscorlib", RegexOptions.Singleline) == Match.Empty)
                     {
                         outputIL.WriteLine(msCorLibAssemblySectionIL);
                     }
 
-                    if (Regex.Match(sourceIL, "\\.class private auto ansi '\\<Module\\>'.+?\\.method private hidebysig specialname rtspecialname static void \\.cctor \\(\\) cil managed ", RegexOptions.Singleline) == Match.Empty)
+                    if (Regex.Match(sourceIL, @"\.class private auto ansi '\<Module\>'.+?\.method private hidebysig specialname rtspecialname static void \.cctor \(\) cil managed ", RegexOptions.Singleline) == Match.Empty)
                     {
                         outputIL.WriteLine(moduleConstructorIL);
                     }
                     else
                     {
                         Log.LogError("Cannot insert a module initializer into an assembly that already contains one.");
+                        return false;
                     }
 
                     outputIL.WriteLine(sourceIL);
@@ -70,7 +72,7 @@ namespace WpfArcadeSdk.Build.Tasks
             }
             catch (Exception e)
             {
-                Log.LogError(e.ToString() + e.StackTrace);
+                Log.LogError(e.ToString() + Environment.NewLine + e.StackTrace);
                 return false;
             }
         }

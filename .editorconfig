@@ -1,7 +1,6 @@
 # editorconfig.org
 
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
-
 # top-most EditorConfig file
 root = true
 

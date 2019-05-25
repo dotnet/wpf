@@ -10,7 +10,7 @@ namespace System.Windows.Media
     {
         public BitmapCache()
         {
-}
+        }
 
         public BitmapCache(double renderAtScale)
         {

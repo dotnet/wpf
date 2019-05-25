@@ -360,7 +360,7 @@ namespace System.Security.Permissions
         ///</summary>         
         public WebBrowserPermissionAttribute(SecurityAction action) : base(action) 
         {
-}
+        }
 
         #endregion Constructors
  

@@ -71,7 +71,7 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public D3DImage() : this(96.0, 96.0)
         {
-}
+        }
 
         /// <summary>
         ///     DPI constructor

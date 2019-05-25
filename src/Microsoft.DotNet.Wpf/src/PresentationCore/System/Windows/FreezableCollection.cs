@@ -1039,7 +1039,7 @@ namespace System.Windows
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.

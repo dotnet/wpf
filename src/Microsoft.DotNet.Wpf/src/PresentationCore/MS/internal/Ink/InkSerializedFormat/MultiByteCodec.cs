@@ -29,7 +29,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         internal MultiByteCodec()
         {
-}
+        }
 
         /// <summary>
         /// Encode

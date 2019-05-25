@@ -15,7 +15,7 @@ namespace System.Windows.Media.Animation
     {
         public ElasticEase()
         {
-}
+        }
 
         /// <summary>
         /// Bounces Property

@@ -582,7 +582,7 @@ namespace System.Security.Permissions
         ///</summary>         
         public MediaPermissionAttribute(SecurityAction action) : base(action) 
         {
-}
+        }
 
         #endregion Constructors
  

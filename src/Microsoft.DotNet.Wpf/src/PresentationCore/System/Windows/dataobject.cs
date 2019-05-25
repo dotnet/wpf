@@ -3739,7 +3739,7 @@ namespace System.Windows
             /// </summary>
             private class RestrictedTypeDeserializationException : Exception
             {
-}
+            }
         }
 
         #endregion OleConverter Class

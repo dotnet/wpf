@@ -15,7 +15,7 @@ namespace System.Windows.Media
     {
         internal CacheMode ()
         {
-}
+        }
         
         /// <summary>
         /// Parse - this method is called by the type converter to parse a CacheMode's string 

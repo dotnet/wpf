@@ -784,7 +784,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.

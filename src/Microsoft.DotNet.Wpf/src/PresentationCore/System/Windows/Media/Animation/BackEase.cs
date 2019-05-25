@@ -13,7 +13,7 @@ namespace System.Windows.Media.Animation
     {
         public BackEase()
         {
-}
+        }
 
         /// <summary>
         /// Amplitude Property

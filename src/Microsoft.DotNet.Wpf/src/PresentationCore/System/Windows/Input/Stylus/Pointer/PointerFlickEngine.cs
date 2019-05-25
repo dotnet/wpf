@@ -95,7 +95,7 @@ namespace System.Windows.Input.StylusPointer
         [Flags]
         private enum FlickState
         {
-}
+        }
 
         #endregion
 

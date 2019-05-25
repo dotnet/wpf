@@ -27,7 +27,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public EmbossBitmapEffect()
         {
-}
+        }
 
         /// <summary>
         /// Creates the unmanaged effect handle

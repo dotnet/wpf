@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
-  <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19274.2">
-      <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>f38a7a167d8f83924d43f8d2d8f2b03034351eb7</Sha>
-    </Dependency>
-  </ProductDependencies>
   <ToolsetDependencies>
     <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0-preview6.19273.5" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -63,17 +57,21 @@
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>20426e8c486d8715337cb6438ec70bc3619a514d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19274.4">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19274.6">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>ed3510aaa6610514c484e23a4b7f17963bf16e0c</Sha>
+      <Sha>b5016f5688dc8ca9f3e4811ee7e2e86ad8907a40</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19274.4">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19274.6">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>ed3510aaa6610514c484e23a4b7f17963bf16e0c</Sha>
+      <Sha>b5016f5688dc8ca9f3e4811ee7e2e86ad8907a40</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview6.19273.5" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>41489a93acf3f36abcaaaea2003a8fdbb577cf35</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview6.19258.6" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/winforms</Uri>
+      <Sha>ee51a187ba1d2174233dacb6e2056e5403f9d36e</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-preview6.19274.6">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>

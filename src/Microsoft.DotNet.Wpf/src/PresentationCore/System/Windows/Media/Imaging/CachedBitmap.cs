@@ -151,12 +151,6 @@ namespace System.Windows.Media.Imaging
             int stride
             ) : base(true) // Use base class virtuals
          {
-            if (pixels == null)
-                throw new System.ArgumentNullException("pixels");
-
-            if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
-
             int elementSize = sizeof(T);
             int destBufferSize = elementSize * pixels.Length;
 
@@ -175,7 +169,7 @@ namespace System.Windows.Media.Imaging
         /// Critical - calls critical InitFromWICSource
         /// </SecurityNote>
         [SecurityCritical]
-        private void CopyCommon(CachedBitmap sourceBitmap)
+        private void CopyCommon(CachedBitmap<T> sourceBitmap)
         {
             // Avoid Animatable requesting resource updates for invalidations that occur during construction
             Animatable_IsResourceInvalidationNecessary = false;
@@ -255,7 +249,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public new CachedBitmap Clone()
         {
-            return (CachedBitmap)base.Clone();
+            return (CachedBitmap<T>)base.Clone();
         }
 
         /// <summary>
@@ -264,7 +258,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public new CachedBitmap CloneCurrentValue()
         {
-            return (CachedBitmap)base.CloneCurrentValue();
+            return (CachedBitmap<T>)base.CloneCurrentValue();
         }
 
         #endregion Public Methods

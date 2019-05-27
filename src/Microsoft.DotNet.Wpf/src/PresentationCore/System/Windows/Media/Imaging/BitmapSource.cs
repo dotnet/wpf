@@ -62,33 +62,12 @@ namespace System.Windows.Media.Imaging
             int stride
             )
         {
-            if(pixels == null)
-                throw new System.ArgumentNullException("pixels");
-
-            if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
-
-            switch (pixels)
-            {
-                case byte[] byteArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, byteArray, stride);
-                case short[] shortArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, shortArray, stride);
-                case ushort[] ushortArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, ushortArray, stride);
-                case int[] intArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, intArray, stride);
-                case uint[] uintArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, uintArray, stride);
-                case float[] floatArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, floatArray, stride);
-                case double[] dblArray:
-                    return new CachedBitmap(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, dblArray, stride);
-                default:
-                    throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
-            }
+            return new CachedBitmap(
+                        pixelWidth, pixelHeight,
+                        dpiX, dpiY,
+                        pixelFormat, palette,
+                        pixels, stride);
         }
-        
         /// <summary>
         /// Create a BitmapSource from an array of pixels.
         /// </summary>
@@ -100,31 +79,23 @@ namespace System.Windows.Media.Imaging
         /// <param name="palette">Palette of the Bitmap</param>
         /// <param name="pixels">Array of pixels</param>
         /// <param name="stride">stride</param>
-        public static BitmapSource Create<TSource>(
+        public static BitmapSource Create<T>(
             int pixelWidth,
             int pixelHeight,
             double dpiX,
             double dpiY,
             PixelFormat pixelFormat,
-            BitmapPalette palette,
-            TSource[] pixels,
+            Imaging.BitmapPalette palette,
+            T[] pixels,
             int stride
-            ) where TSource : unmanaged
+            ) where T : unmanaged
         {
-
-            if (pixels == null)
-                throw new System.ArgumentNullException("pixels");
-
-            if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
-
-            return new CachedBitmap(
+            return CachedBitmap.Create(
                         pixelWidth, pixelHeight,
                         dpiX, dpiY,
                         pixelFormat, palette,
                         pixels, stride);
         }
-
 
         /// <summary>
         /// Create a BitmapSource from an array of pixels in unmanaged memory.

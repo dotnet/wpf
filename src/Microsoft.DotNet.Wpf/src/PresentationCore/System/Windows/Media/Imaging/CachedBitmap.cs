@@ -35,7 +35,7 @@ namespace System.Windows.Media.Imaging
     /// <summary>
     /// CachedBitmap provides caching functionality for a BitmapSource.
     /// </summary>
-    public sealed class CachedBitmap<T> : System.Windows.Media.Imaging.BitmapSource where T : unmanaged
+    public sealed class CachedBitmap : System.Windows.Media.Imaging.BitmapSource
     {
         /// <summary>
         /// Construct a CachedBitmap
@@ -147,18 +147,115 @@ namespace System.Windows.Media.Imaging
             double dpiY,
             PixelFormat pixelFormat,
             BitmapPalette palette,
+            System.Array pixels,
+            int stride
+            )
+            : base(true) // Use base class virtuals
+        {
+            if (pixels == null)
+                throw new System.ArgumentNullException ("pixels");
+
+            if (pixels.Rank != 1)
+                throw new ArgumentException (SR.Get (SRID.Collection_BadRank), "pixels");
+
+            int elementSize = -1;
+
+            if (pixels is byte[])
+                elementSize = 1;
+            else if (pixels is short[] || pixels is ushort[])
+                elementSize = 2;
+            else if (pixels is int[] || pixels is uint[] || pixels is float[])
+                elementSize = 4;
+            else if (pixels is double[])
+                elementSize = 8;
+
+            if (elementSize == -1)
+                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+
+            int destBufferSize = elementSize * pixels.Length;
+
+            if (pixels is byte[])
+            {
+                fixed(void * pixelArray = (byte[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is short[])
+            {
+                fixed(void * pixelArray = (short[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is ushort[])
+            {
+                fixed(void * pixelArray = (ushort[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is int[])
+            {
+                fixed(void * pixelArray = (int[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is uint[])
+            {
+                fixed(void * pixelArray = (uint[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is float[])
+            {
+                fixed(void * pixelArray = (float[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+            else if (pixels is double[])
+            {
+                fixed(void * pixelArray = (double[])pixels)
+                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
+                                      pixelFormat, palette,
+                                      (IntPtr)pixelArray, destBufferSize, stride);
+            }
+        }
+
+        public unsafe static CachedBitmap Create<T>(
+            int pixelWidth,
+            int pixelHeight,
+            double dpiX,
+            double dpiY,
+            PixelFormat pixelFormat,
+            BitmapPalette palette,
             T[] pixels,
             int stride
-            ) : base(true) // Use base class virtuals
-         {
+            ) where T : unmanaged
+        {
+
+
+            if (pixels == null)
+                throw new System.ArgumentNullException("pixels");
+
+            if (pixels.Rank != 1)
+                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
+
             int elementSize = sizeof(T);
             int destBufferSize = elementSize * pixels.Length;
 
-            fixed (void* pixelArray = pixels) {
-                        InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-                }
+            fixed (void* pixelArray = pixels)
+            {
+                CachedBitmap cachedBitmap = new CachedBitmap();
+                cachedBitmap.InitFromMemoryPtr(pixelWidth, pixelHeight, 
+                                               dpiX, dpiY, 
+                                               pixelFormat, palette,
+                                               (IntPtr)pixelArray, destBufferSize, stride);
+                return cachedBitmap;
+            }
         }
 
         /// <summary>
@@ -169,7 +266,7 @@ namespace System.Windows.Media.Imaging
         /// Critical - calls critical InitFromWICSource
         /// </SecurityNote>
         [SecurityCritical]
-        private void CopyCommon(CachedBitmap<T> sourceBitmap)
+        private void CopyCommon(CachedBitmap sourceBitmap)
         {
             // Avoid Animatable requesting resource updates for invalidations that occur during construction
             Animatable_IsResourceInvalidationNecessary = false;
@@ -247,18 +344,18 @@ namespace System.Windows.Media.Imaging
         ///     Shadows inherited Copy() with a strongly typed
         ///     version for convenience.
         /// </summary>
-        public new CachedBitmap<T> Clone()
+        public new CachedBitmap Clone()
         {
-            return (CachedBitmap<T>)base.Clone();
+            return (CachedBitmap)base.Clone();
         }
 
         /// <summary>
         ///     Shadows inherited CloneCurrentValue() with a
         ///     strongly typed version for convenience.
         /// </summary>
-        public new CachedBitmap<T> CloneCurrentValue()
+        public new CachedBitmap CloneCurrentValue()
         {
-            return (CachedBitmap<T>)base.CloneCurrentValue();
+            return (CachedBitmap)base.CloneCurrentValue();
         }
 
         #endregion Public Methods

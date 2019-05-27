@@ -19,6 +19,9 @@ New-Item -ItemType Directory -Force -Path $payloadDir
 
 function CopyFolderStructure($from, $to)
 {
+    Write-Output "Copying from: $from"
+    Write-Output "          to: $to"
+    
     if(Test-Path $to)
     {
         Remove-Item $to -Recurse
@@ -33,8 +36,6 @@ function CopyFolderStructure($from, $to)
     {
         Write-Output "Location doesn't exist: $from"
     }
-
-    Get-ChildItem $to -Recurse
 }
 
 # Copy files from nuget packages.

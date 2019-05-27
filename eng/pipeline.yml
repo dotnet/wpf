@@ -18,7 +18,7 @@ jobs:
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
-    enablePublishTestResults: true
+    enablePublishTestResults: false # tests run in helix
     enablePublishBuildAssets: true
     enablePublishUsingPipelines: $(_PublishUsingPipelines)
     enableTelemetry: true

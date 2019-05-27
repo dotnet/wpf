@@ -97,6 +97,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlTestClasses40", "src\Mi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BamlAvoidXmlTest", "src\Microsoft.DotNet.Wpf\test\DRT\DrtXaml\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComonData", "src\Microsoft.DotNet.Wpf\test\BranchCommon\data\CommonData.csproj", "{9163F98E-E941-45F5-9A57-47F375F50333}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

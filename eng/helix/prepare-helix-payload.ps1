@@ -1,11 +1,10 @@
 [CmdLetBinding()]
 Param(
     [string]$platform,
-    [string]$configuration,
-    [string]$testPackageVersion
+    [string]$configuration
 )
 
-$payloadDir = "HelixPayload\$configuration\$platform"
+$payloadDir = "$PSScriptRoot\HelixPayload\$configuration\$platform"
 
 $nugetPackagesDir = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "packages"
 
@@ -39,7 +38,7 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages.
-$testNugetLocation = Resolve-Path (Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\*\tools\win-$platform\Test")
+$testNugetLocation = Resolve-Path (Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test.*\tools\win-$platform\Test")
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 
@@ -50,5 +49,5 @@ $drtPayloadLocation = Join-Path $payloadDir "Test\DRT"
 CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
 
 # Copy scripts
-Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
-Copy-Item "eng\helix\runtests.ps1" $payloadDir
+Copy-Item "$PSScriptRoot\configure-helix-machine.ps1" $payloadDir
+Copy-Item "$PSScriptRoot\runtests.ps1" $payloadDir

@@ -541,7 +541,6 @@ Rundrtlist
       <SupportFile>BamlAvoidXmlTest.exe</SupportFile>
       <SupportFile>XamlTestClasses.FriendWithKey.dll</SupportFile>
       <SupportFile>XamlTestClasses.FriendWithoutKey.dll</SupportFile>
-      <SupportFile>DrtXaml.PartialTrustTests.dll</SupportFile>
     </SupportFiles>
   </Drt>
   <Drt Executable="DrtXpsApi.cmd" Architecture="all" OS="all" Team="DigitalDocuments" >

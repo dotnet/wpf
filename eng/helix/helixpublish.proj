@@ -19,7 +19,7 @@
     <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
 
     <!-- Semi-colon delimited list of commands that are executed before every test.-->
-    <HelixPreCommands>$(HelixPreCommands);powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\configure-helix-machine.ps1 -version Xaml"</HelixPreCommands>
+    <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
 
     <!-- These are the list of Windows versions that we run tests on-->
     <!--<HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>-->

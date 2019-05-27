@@ -247,7 +247,7 @@ namespace System.Windows.Media.Imaging
         ///     Shadows inherited Copy() with a strongly typed
         ///     version for convenience.
         /// </summary>
-        public new CachedBitmap Clone()
+        public new CachedBitmap<T> Clone()
         {
             return (CachedBitmap<T>)base.Clone();
         }
@@ -256,7 +256,7 @@ namespace System.Windows.Media.Imaging
         ///     Shadows inherited CloneCurrentValue() with a
         ///     strongly typed version for convenience.
         /// </summary>
-        public new CachedBitmap CloneCurrentValue()
+        public new CachedBitmap<T> CloneCurrentValue()
         {
             return (CachedBitmap<T>)base.CloneCurrentValue();
         }

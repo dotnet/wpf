@@ -22,5 +22,5 @@ if (Test-Path "$testLocation\rundrts.cmd")
 # Need to copy the xUnit log to a known location that helix can understand
 if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
 {
-    Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" "..\testResults.xml"
+    Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" ".\testResults.xml"
 }

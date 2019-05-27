@@ -1,6 +1,6 @@
 <Project>
   <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
   <PropertyGroup>
-    <PublishDir>$(WpfTestBasePublishPath)\Common</PublishDir>
+    <PublishDir>$(WpfTestBasePublishPath)\DRT</PublishDir>
   </PropertyGroup>
 </Project>

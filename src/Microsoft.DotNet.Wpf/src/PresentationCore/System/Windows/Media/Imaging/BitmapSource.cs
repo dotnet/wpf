@@ -86,7 +86,7 @@ namespace System.Windows.Media.Imaging
             double dpiX,
             double dpiY,
             PixelFormat pixelFormat,
-            Imaging.BitmapPalette palette,
+            BitmapPalette palette,
             TSource[] pixels,
             int stride
             ) where TSource : unmanaged

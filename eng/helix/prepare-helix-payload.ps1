@@ -4,12 +4,10 @@ Param(
     [string]$configuration
 )
 
-$payloadDir = "$PSScriptRoot\HelixPayload\$configuration\$platform"
+$payloadDir = "HelixPayload\$configuration\$platform"
 
 $nugetPackagesDir = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "packages"
 
-# TODO: Once we have the nuget package from the dotnet-wpf-test, we can better understand what we 
-# need to do here.
 # Create the payload directory. Remove it if it already exists.
 if(Test-Path $payloadDir)
 {
@@ -19,9 +17,6 @@ New-Item -ItemType Directory -Force -Path $payloadDir
 
 function CopyFolderStructure($from, $to)
 {
-    Write-Output "Copying from: $from"
-    Write-Output "          to: $to"
-    
     if(Test-Path $to)
     {
         Remove-Item $to -Recurse
@@ -50,5 +45,5 @@ $drtPayloadLocation = Join-Path $payloadDir "Test\DRT"
 CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
 
 # Copy scripts
-Copy-Item "$PSScriptRoot\configure-helix-machine.ps1" $payloadDir
-Copy-Item "$PSScriptRoot\runtests.ps1" $payloadDir
+Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
+Copy-Item "eng\helix\runtests.ps1" $payloadDir

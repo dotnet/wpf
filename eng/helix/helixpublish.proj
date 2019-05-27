@@ -13,7 +13,9 @@
     <DotNetCliPackageType>sdk</DotNetCliPackageType>
     <!-- Set to match global.json.tools.dotnet by pre-build.ps1 -->
     <DotNetCliVersion>$(DotNetCliVersion)</DotNetCliVersion>
-    
+    <DotNetCliRuntime>win-x86</DotNetCliRuntime>
+    <DotNetCliRuntime Condition="'$(Platform)' == 'x64'">win-x64</DotNetCliRuntime>
+
     <EnableXUnitReporter>true</EnableXUnitReporter>
     <EnableAzurePipelinesReporter>true</EnableAzurePipelinesReporter>
     <FailOnMissionControlTestFailure>true</FailOnMissionControlTestFailure>
@@ -26,7 +28,6 @@
     <!-- Just cutting down the total queues while bootstrapping to speed things up-->
     <HelixTargetQueues>Windows.10.Amd64.Open</HelixTargetQueues>
 
-    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,96 +35,96 @@
     <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 -area Xaml"</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>
     </HelixWorkItem>
    <!-- 
    <HelixWorkItem Include="Annotations">
       <Timeout>00:20:00</Timeout> 
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Annotations"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Annotations</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="AppModel">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=AppModel"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=AppModel</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="DigitalDocuments">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=DigitalDocuments"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DigitalDocuments</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Media">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Media"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Media</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Editing">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Editing"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Editing</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="ElementServices">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=ElementServices"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementServices</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Text">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Text"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Text</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Animation">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Animation"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Animation</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="3D">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=3D"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=3D</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="2D">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=2D"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=2D</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Controls">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Controls"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Controls</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Imaging">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Imaging"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Imaging</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="FlowLayout">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=FlowLayout"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=FlowLayout</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="DataServices">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=DataServices"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DataServices</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="ElementLayout">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=ElementLayout"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementLayout</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Xaml"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Globalization">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Globalization"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Globalization</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Tablet">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Tablet"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Tablet</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Integration">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Integration"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Integration</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="XET">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=XET"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=XET</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Printing">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=Printing"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Printing</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="WindowsFormsIntegration">
       <Timeout>00:20:00</Timeout>
-      <Command>powershell -ExecutionPolicy ByPass -NoProfile -command "&amp; %HELIX_CORRELATION_PAYLOAD%\runtests.ps1 /Area=WindowsFormsIntegration"</Command>
+      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=WindowsFormsIntegration</Command>
     </HelixWorkItem>
     -->
   </ItemGroup>

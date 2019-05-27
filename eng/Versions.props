@@ -58,6 +58,7 @@
     <XUnitVersion>2.4.0</XUnitVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
+    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreSources>

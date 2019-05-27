@@ -34,12 +34,11 @@ function CopyFolderStructure($from, $to)
 }
 
 # Copy files from nuget packages.
-$testNugetLocation = Resolve-Path (Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test.*\tools\win-$platform\Test")
+$testNugetLocation = Resolve-Path (Join-Path $nugetPackagesDir "runtime.win-$platform.Microsoft.DotNet.Wpf.Test\*\tools\win-$platform\Test")
 $testPayloadLocation = Join-Path $payloadDir "Test"
 CopyFolderStructure $testNugetLocation $testPayloadLocation
 
 # Copy local DRT assemblies to test location
-CopyFolderStructure $testNugetLocation $testPayloadLocation
 $drtArtifactsLocation = [System.IO.Path]::Combine($env:BUILD_SOURCESDIRECTORY, "artifacts\test", $configuration, $platform, "Test\DRT")
 $drtPayloadLocation = Join-Path $payloadDir "Test\DRT"
 CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
@@ -47,3 +46,4 @@ CopyFolderStructure $drtArtifactsLocation $drtPayloadLocation
 # Copy scripts
 Copy-Item "eng\helix\configure-helix-machine.ps1" $payloadDir
 Copy-Item "eng\helix\runtests.ps1" $payloadDir
+Copy-Item "eng\helix\runtests.cmd" $payloadDir

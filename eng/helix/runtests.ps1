@@ -1,6 +1,6 @@
 [CmdLetBinding()]
 Param(
-    [string]$area
+    [string]$command
 )
 
 # Configure the machine before running tests
@@ -10,7 +10,7 @@ Param(
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
 if (Test-Path "$testLocation\rundrts.cmd")
 {
-    Invoke-Expression "$testLocation\rundrts.cmd /Area=$area"
+    Invoke-Expression "$testLocation\rundrts.cmd $command"
 }
 
 # We can use $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py to upload any QV specific logs and/or screenshots that we are interested in.
@@ -20,5 +20,7 @@ if (Test-Path "$testLocation\rundrts.cmd")
 # Need to copy the xUnit log to a known location that helix can understand
 if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
 {
-    Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" ".\testResults.xml"
+    $resultLocation = $PSScriptRoot
+    Write-Output "Copying test results to $resultLocation"
+    Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" $resultLocation
 }

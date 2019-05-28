@@ -42,6 +42,10 @@
     </CollectionTemplate>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="System\AppContextDefaultValues.cs" />
+    
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
@@ -1473,28 +1477,21 @@
     </CompileDependsOn>
   </PropertyGroup>
 
-  <Target Name="GenerateTemplates"
-          DependsOnTargets="GenerateTemplatesCore"
-          Returns="@(Compile)">
-    <Error Condition="!Exists('$(IntermediateOutputPath)\%(CollectionTemplate.Identity)')"
-           Text="$(IntermediateOutputPath)\%(CollectionTemplate.Identity) does not exist" />
+  <Target Name="GenerateTemplates" DependsOnTargets="GenerateTemplatesCore" Returns="@(Compile)">
+    <Error Condition="!Exists('$(IntermediateOutputPath)\%(CollectionTemplate.Identity)')" Text="$(IntermediateOutputPath)\%(CollectionTemplate.Identity) does not exist" />
     <ItemGroup>
       <Compile Include="$(IntermediateOutputPath)%(CollectionTemplate.Identity)" />
     </ItemGroup>
   </Target>
   
-  <Target Name="GenerateTemplatesCore" 
-          Inputs="%(CollectionTemplate.Template).ti;%(CollectionTemplate.Pattern).tb;%(CollectionTemplate.Pattern).th" 
-          Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)">
+  <Target Name="GenerateTemplatesCore" Inputs="%(CollectionTemplate.Template).ti;%(CollectionTemplate.Pattern).tb;%(CollectionTemplate.Pattern).th" Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)">
     <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
     <Error Text="CollectionTemplate must have Pattern (header and body) and Template (instances) child elements set." Condition="'%(CollectionTemplate.Pattern)' == '' OR '%(CollectionTemplate.Template)' == ''" />
     <Error Text="The header file %(CollectionTemplate.Pattern).th is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Pattern).th')" />
     <Error Text="The body file %(CollectionTemplate.Pattern).tb is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Pattern).tb')" />
     <Error Text="The instances file %(Template).ti is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Template).ti')" />
     <Message Text="Generating template in %(CollectionTemplate.Identity)" />
-    <Exec Command="$(PerlCommand) template.pl %(CollectionTemplate.Pattern) %(CollectionTemplate.Template) &gt; $(IntermediateOutputPath)\%(CollectionTemplate.Identity)" 
-          Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)" 
-          StandardOutputImportance="normal" />
+    <Exec Command="$(PerlCommand) template.pl %(CollectionTemplate.Pattern) %(CollectionTemplate.Template) &gt; $(IntermediateOutputPath)\%(CollectionTemplate.Identity)" Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)" StandardOutputImportance="normal" />
   </Target>
   <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
   <!-- DevDiv Bug 888747: Re-enable AvTrace codegen -->

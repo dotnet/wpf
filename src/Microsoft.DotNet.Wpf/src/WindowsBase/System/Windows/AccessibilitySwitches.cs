@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal.WindowsBase;
 using System;
 using System.Diagnostics;
@@ -32,7 +29,7 @@ namespace System.Windows
         /// This id is used by .NET to report a fatal error.
         /// </summary>
         const int EventId = 1023;
-        
+
         /// <summary>
         /// This source is used by .NET to report events.
         /// </summary>
@@ -41,6 +38,11 @@ namespace System.Windows
         #endregion
 
         #region Fields
+
+        /// <summary>
+        /// Guards against multiple definitions of default switch values.
+        /// </summary>
+        static int s_DefaultsSet = 0;
 
         /// <summary>
         /// Guards against multiple verifications of the switch values.
@@ -159,6 +161,45 @@ namespace System.Windows
 
         #region Switch Functions
 
+        /// <summary>
+        /// Sets the defaults for all accessibility AppContext switches.
+        /// </summary>
+        /// <remarks>
+        /// Only call this method from within AppContextDefaultValues.PopulateDefaultValuesPartial.
+        /// This ensures defaults are set only under the lock from AppContextDefaultValues.
+        /// </remarks>
+        /// <param name="targetFrameworkVersion"></param>
+        internal static void SetSwitchDefaults(int targetFrameworkVersion)
+        {
+            if(Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
+            {
+// The AppContext analyzer expects an enclosing statement like this
+// switch (platformIdentifier) {
+//        case ".NETFramework": ...
+// }
+// The caller of this method has such a statement, but the analyzer isn't aware so we have to disable this warning here.
+#pragma warning disable BCL0012
+
+                if (targetFrameworkVersion <= 40700)
+                {
+                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
+                }
+
+                if (targetFrameworkVersion <= 40701)
+                {
+                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
+                }
+
+                if (targetFrameworkVersion <= 40702)
+                {
+                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
+                    LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
+                    LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
+                }
+
+#pragma warning restore BCL0012
+            }
+        }
 
         /// <summary>
         /// Verifies that the appropriate switch combinations are set.

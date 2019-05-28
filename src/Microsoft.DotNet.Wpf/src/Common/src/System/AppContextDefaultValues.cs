@@ -34,28 +34,53 @@ namespace System
         /// </summary>
         private static void ParseTargetFrameworkName(out string identifier, out string profile, out int version)
         {
-            string targetFrameworkMoniker = AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName;
+            // AppDomain.CurrentDomain.SetupInformation is not available on .NET Core prior to 3.0
+            // Use Reflection to obtain this value if available. 
+            string targetFrameworkMoniker = null;
 
-            // If we don't have a TFM then we should default to the 4.0 behavior where all quirks are turned on.
+            var pSetupInformation = typeof(AppDomain).GetProperty("SetupInformation");
+            if (pSetupInformation != null)
+            {
+                object appDomainSetup = pSetupInformation.GetValue(AppDomain.CurrentDomain);
+                if (appDomainSetup != null)
+                {
+                    Type tAppDomainSetup = Type.GetType("System.AppDomainSetup");
+                    if (tAppDomainSetup != null)
+                    {
+                        var pTargetFrameworkName = tAppDomainSetup.GetProperty("TargetFrameworkName");
+                        if (pTargetFrameworkName != null)
+                        {
+                            targetFrameworkMoniker = pTargetFrameworkName.GetValue(appDomainSetup) as string;
+                        }
+                    }
+                }
+            }
+
+            // This is our default
+            // When TFM cannot be found, it probably means we are running 
+            // on .NET Core 2.2 or lower, in which case we will default to .NET Core 3.0
+            if (targetFrameworkMoniker == null)
+            {
+                targetFrameworkMoniker = ".NETCoreApp,Version=v3.0";
+            }
+
+            // If we don't have a TFM then we should default to the .NET Framework 4.8+ behavior where all quirks are turned on.
             if (!TryParseFrameworkName(targetFrameworkMoniker, out identifier, out version, out profile))
             {
-#if FEATURE_CORECLR
-                if (CompatibilitySwitches.UseLatestBehaviorWhenTFMNotSpecified)
-                {
-                    // If we want to use the latest behavior it is enough to set the value of the switch to string.Empty.
-                    // When the get to the caller of this method (PopulateDefaultValuesPartial) we are going to use the 
-                    // identifier we just set to decide which switches to turn on. By having an empty string as the 
-                    // identifier we are simply saying -- don't turn on any switches, and we are going to get the latest
-                    // behavior for all the switches
-                    identifier = string.Empty;
-                }
-                else
-#endif
-                {
-                    identifier = ".NETFramework";
-                    version = 40000;
-                    profile = string.Empty;
-                }
+                // If we want to use the latest behavior it is enough to set the value of the switch to string.Empty.
+                // When the get to the caller of this method (PopulateDefaultValuesPartial) we are going to use the 
+                // identifier we just set to decide which switches to turn on. By having an empty string as the 
+                // identifier we are simply saying -- don't turn on any switches, and we are going to get the latest
+                // behavior for all the switches
+                identifier = string.Empty;
+
+                //identifier = ".NETCore";
+                //version = 30000;
+                //profile = string.Empty;
+            }
+            else
+            {
+
             }
         }
 

@@ -70,16 +70,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
-    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\AppContextDefaultValues.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
     <Compile Include="MS\Internal\BuildTasksAppContextSwitches.cs" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
-    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
-  </ItemGroup>
+ 
   
   <ItemGroup>
     <Compile Include="SR.cs" />

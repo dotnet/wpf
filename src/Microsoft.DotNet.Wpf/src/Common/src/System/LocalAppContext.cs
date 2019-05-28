@@ -9,6 +9,9 @@ using System.Reflection;
 
 namespace System
 {
+// error CS0436: When building PresentationFramework, the type 'LocalAppContext' 
+// conflicts with the imported type 'LocalAppContext' in 'PresentationCore
+#pragma warning disable 436
     internal partial class LocalAppContext
     {
         private delegate bool TryGetSwitchDelegate(string switchName, out bool value);
@@ -121,4 +124,5 @@ namespace System
             s_switchMap[switchName] = initialValue;
         }
     }
+#pragma warning restore 436
 }

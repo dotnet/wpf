@@ -776,12 +776,16 @@ namespace System.Windows
                 Thread.Sleep(OleRetryDelay);
             }
 
-            if (oleDataObject is IDataObject)
+            if (oleDataObject is IDataObject && !Marshal.IsComObject(oleDataObject))
             {
                 dataObject = (IDataObject)oleDataObject;
             }
             else if (oleDataObject != null)
             {
+                // Wrap any COM objects or objects that don't implement <see cref="T:System.Windows.IDataObject"/>.
+                // In the case of COM objects, this protects us from a <see cref="T:System.InvalidOperationException"/> from the marshaler 
+                // when calling <see cref="M:System.Windows.IDataObject.GetData(T:System.Type)"/> due to <see cref="T:System.Type"/> 
+                // not being marked with the <see cref="T:System.Runtime.InteropServices.COMVisibleAttribute"/>.
                 dataObject = new DataObject(oleDataObject);
             }
             else

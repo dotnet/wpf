@@ -24,10 +24,7 @@
     <HelixPreCommands>$(HelixPreCommands);</HelixPreCommands>
 
     <!-- These are the list of Windows versions that we run tests on-->
-    <!--<HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>-->
-    <!-- Just cutting down the total queues while bootstrapping to speed things up-->
-    <HelixTargetQueues>Windows.10.Amd64.Open</HelixTargetQueues>
-
+    <HelixTargetQueues>Windows.10.Amd64.Open;Windows.7.Amd64.Open;Windows.10.Amd64.ServerRS5.Open</HelixTargetQueues>
   </PropertyGroup>
 
   <ItemGroup>

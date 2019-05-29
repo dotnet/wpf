@@ -10,9 +10,9 @@
     </RestoreSources>
 
     <IncludeDotNetCli>true</IncludeDotNetCli>
-    <DotNetCliPackageType>sdk</DotNetCliPackageType>
+    <DotNetCliPackageType>runtime</DotNetCliPackageType>
     <!-- Set to match global.json.tools.dotnet by pre-build.ps1 -->
-    <DotNetCliVersion>$(DotNetCliVersion)</DotNetCliVersion>
+    <DotNetCliVersion>$(MicrosoftNetCoreAppVersion)</DotNetCliVersion>
     <DotNetCliRuntime>win-x86</DotNetCliRuntime>
     <DotNetCliRuntime Condition="'$(Platform)' == 'x64'">win-x64</DotNetCliRuntime>
 

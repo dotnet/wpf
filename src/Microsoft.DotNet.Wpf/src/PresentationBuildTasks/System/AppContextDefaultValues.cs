@@ -28,7 +28,18 @@ namespace System
 
                         break;
                     }
+
+                case ".NETCoreApp":
+                    {
+                        InitializeNetFxSwitchDefaultsForNetCoreRuntime();
+                    }
+                    break;
             }
+        }
+
+        private static void InitializeNetFxSwitchDefaultsForNetCoreRuntime()
+        {
+            LocalAppContext.DefineSwitchDefault(BuildTasksAppContextSwitches.DoNotUseSha256ForMarkupCompilerChecksumAlgorithmSwitchName, false);
         }
     }
 #pragma warning restore 436

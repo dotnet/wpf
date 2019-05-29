@@ -36,25 +36,7 @@ namespace System
         {
             // AppDomain.CurrentDomain.SetupInformation is not available on .NET Core prior to 3.0
             // Use Reflection to obtain this value if available. 
-            string targetFrameworkMoniker = null;
-
-            var pSetupInformation = typeof(AppDomain).GetProperty("SetupInformation");
-            if (pSetupInformation != null)
-            {
-                object appDomainSetup = pSetupInformation.GetValue(AppDomain.CurrentDomain);
-                if (appDomainSetup != null)
-                {
-                    Type tAppDomainSetup = Type.GetType("System.AppDomainSetup");
-                    if (tAppDomainSetup != null)
-                    {
-                        var pTargetFrameworkName = tAppDomainSetup.GetProperty("TargetFrameworkName");
-                        if (pTargetFrameworkName != null)
-                        {
-                            targetFrameworkMoniker = pTargetFrameworkName.GetValue(appDomainSetup) as string;
-                        }
-                    }
-                }
-            }
+            string targetFrameworkMoniker = GetTargetFrameworkMoniker();
 
             // This is our default
             // When TFM cannot be found, it probably means we are running 
@@ -65,6 +47,10 @@ namespace System
             }
 
             // If we don't have a TFM then we should default to the .NET Framework 4.8+ behavior where all quirks are turned on.
+            // For .NET Core 3.0, the result would be something like this: 
+            //      identifier = ".NETCore";
+            //      version = 30000;
+            //      profile = string.Empty;
             if (!TryParseFrameworkName(targetFrameworkMoniker, out identifier, out version, out profile))
             {
                 // If we want to use the latest behavior it is enough to set the value of the switch to string.Empty.
@@ -72,15 +58,37 @@ namespace System
                 // identifier we just set to decide which switches to turn on. By having an empty string as the 
                 // identifier we are simply saying -- don't turn on any switches, and we are going to get the latest
                 // behavior for all the switches
+                // 
+                // In practices, this may not work reliably due to the lack of targetFrameworkMoniker information.
                 identifier = string.Empty;
-
-                //identifier = ".NETCore";
-                //version = 30000;
-                //profile = string.Empty;
             }
-            else
-            {
+        }
 
+        /// <summary>
+        ///  This is equivalent to calling <code>AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName</code>
+        /// </summary>
+        /// <remarks>
+        /// <code>AppDomain.CurrentDomain.SetupInformation</code> is not available until .NET Core 3.0, but we 
+        /// have a need to run this code in .NET Core 2.2, we attempt to obtain this information via Reflection.
+        /// </remarks>
+        /// <returns>TargetFrameworkMoniker on .NET Framework and .NET Core 3.0+; null on .NET Core 2.2 or older runtimes</returns>
+        private static string GetTargetFrameworkMoniker()
+        {
+            try
+            {
+                var pSetupInformation = typeof(AppDomain).GetProperty("SetupInformation");
+                object appDomainSetup = pSetupInformation?.GetValue(AppDomain.CurrentDomain);
+                Type tAppDomainSetup = Type.GetType("System.AppDomainSetup");
+                var pTargetFrameworkName = tAppDomainSetup?.GetProperty("TargetFrameworkName");
+
+                return
+                    appDomainSetup != null ?
+                    pTargetFrameworkName?.GetValue(appDomainSetup) as string :
+                    null;
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

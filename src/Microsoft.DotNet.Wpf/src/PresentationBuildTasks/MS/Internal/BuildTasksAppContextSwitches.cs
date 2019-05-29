@@ -18,6 +18,7 @@ namespace MS.Internal
 
         internal const string DoNotUseSha256ForMarkupCompilerChecksumAlgorithmSwitchName = "Switch.System.Windows.Markup.DoNotUseSha256ForMarkupCompilerChecksumAlgorithm";
         private static int _doNotUseSha256ForMarkupCompilerChecksumAlgorithm;
+
         public static bool DoNotUseSha256ForMarkupCompilerChecksumAlgorithm
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -168,36 +168,44 @@ namespace System.Windows
         /// Only call this method from within AppContextDefaultValues.PopulateDefaultValuesPartial.
         /// This ensures defaults are set only under the lock from AppContextDefaultValues.
         /// </remarks>
+        /// <param name="platformIdentifier"></param>
         /// <param name="targetFrameworkVersion"></param>
-        internal static void SetSwitchDefaults(int targetFrameworkVersion)
+        internal static void SetSwitchDefaults(string platformIdentifier, int targetFrameworkVersion)
         {
-            if(Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
+            switch (platformIdentifier)
             {
-// The AppContext analyzer expects an enclosing statement like this
-// switch (platformIdentifier) {
-//        case ".NETFramework": ...
-// }
-// The caller of this method has such a statement, but the analyzer isn't aware so we have to disable this warning here.
-#pragma warning disable BCL0012
 
-                if (targetFrameworkVersion <= 40700)
-                {
-                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
-                }
+                case ".NETFramework":
+                    if (Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
+                    {
+                        if (targetFrameworkVersion <= 40700)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
+                        }
 
-                if (targetFrameworkVersion <= 40701)
-                {
-                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
-                }
+                        if (targetFrameworkVersion <= 40701)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
+                        }
 
-                if (targetFrameworkVersion <= 40702)
-                {
-                    LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
-                    LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
-                    LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
-                }
+                        if (targetFrameworkVersion <= 40702)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
+                            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
+                            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
+                        }
+                    }
+                    break;
 
-#pragma warning restore BCL0012
+                case ".NETCoreApp":
+                    {
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
+                    }
+                    break;
             }
         }
 

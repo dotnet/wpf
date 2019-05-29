@@ -9,6 +9,7 @@
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
+    <InjectModuleInitializer>true</InjectModuleInitializer>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -96,6 +97,7 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
+    <Compile Include="ModuleInitializer.cs" />
     <Compile Include="otherassemblyattrs.cs" />
     <Compile Include="SR.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />

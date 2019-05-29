@@ -15,7 +15,7 @@
 
     <!-- This repo builds a transport package - we don't ship from here -->
     <IsShippingPackage>false</IsShippingPackage>
-    
+
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright Condition="'$(CopyrightNetFoundation)' != ''">$(CopyrightNetFoundation)</Copyright>
 
@@ -25,7 +25,7 @@
   <PropertyGroup>
     <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
     <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
-    
+
     <!-- When ready to go live, remove .private suffix -->
     <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
   </PropertyGroup>

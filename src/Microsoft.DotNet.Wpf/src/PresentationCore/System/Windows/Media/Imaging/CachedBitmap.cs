@@ -225,7 +225,7 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        unsafe internal CachedBitmap InternalCreate<T>(
+        unsafe static internal CachedBitmap InternalCreate<T>(
             int pixelWidth,
             int pixelHeight,
             double dpiX,

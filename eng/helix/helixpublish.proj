@@ -28,100 +28,102 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="runtime.win-$(Platform).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" />
-    <HelixCorrelationPayload Include="..\..\HelixPayload\$(Configuration)\$(Platform)" /> 
+    <HelixCorrelationPayload Include="artifacts\test\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
       <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>
     </HelixWorkItem>
-   <!-- 
+   
+   <!--
+   Uncomment when bringing appropriate DRTs out into the open
+   
    <HelixWorkItem Include="Annotations">
       <Timeout>00:20:00</Timeout> 
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Annotations</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Annotations</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="AppModel">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=AppModel</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=AppModel</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="DigitalDocuments">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DigitalDocuments</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DigitalDocuments</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Media">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Media</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Media</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Editing">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Editing</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Editing</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="ElementServices">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementServices</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementServices</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Text">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Text</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Text</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Animation">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Animation</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Animation</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="3D">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=3D</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=3D</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="2D">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=2D</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=2D</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Controls">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Controls</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Controls</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Imaging">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Imaging</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Imaging</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="FlowLayout">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=FlowLayout</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=FlowLayout</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="DataServices">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DataServices</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=DataServices</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="ElementLayout">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementLayout</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=ElementLayout</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Globalization">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Globalization</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Globalization</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Tablet">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Tablet</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Tablet</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Integration">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Integration</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Integration</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="XET">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=XET</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=XET</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="Printing">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Printing</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Printing</Command>
     </HelixWorkItem>
     <HelixWorkItem Include="WindowsFormsIntegration">
       <Timeout>00:20:00</Timeout>
-      <Command>%HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=WindowsFormsIntegration</Command>
+      <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=WindowsFormsIntegration</Command>
     </HelixWorkItem>
     -->
   </ItemGroup>

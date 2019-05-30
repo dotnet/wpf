@@ -90,7 +90,7 @@ namespace System.Windows.Media.Imaging
             int stride
             ) where T : unmanaged
         {
-            return CachedBitmap.Create(
+            return CachedBitmap.InternalCreate(
                         pixelWidth, pixelHeight,
                         dpiX, dpiY,
                         pixelFormat, palette,

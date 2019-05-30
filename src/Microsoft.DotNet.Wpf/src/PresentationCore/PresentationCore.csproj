@@ -18,6 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="System\AppContextDefaultValues.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>

@@ -58,7 +58,7 @@ namespace MS.Internal.FontCache
 
         #endregion Private Fields
 
-        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.PresentationCoreCommonResources)};component/fonts/";
+        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.PresentationCore)};component/fonts/";
 
         /// <SecurityNote>
         ///     Critical    : Accesses the Security Critical FontSource.GetStream().

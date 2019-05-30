@@ -130,29 +130,6 @@ jobs:
           $(_PlatformArgs)
         displayName: Windows Build / Publish
 
-      - powershell: eng\common\build.ps1
-          -restore
-          -configuration $(_BuildConfig) 
-          $(_OfficialBuildIdArgs)
-          $(_PlatformArgs)
-          -projects $(Build.SourcesDirectory)\eng\helix\helixpublish.proj
-        displayName: Restoring Nuget Dependencies for Helix
-        env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-          HelixSource: $(_HelixSource)
-          HelixType: 'tests/drt'
-          HelixBuild: $(Build.BuildNumber)
-          HelixTargetQueues: $(_TestHelixAgentPool)
-          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
-          Creator: $(_HelixCreator)
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)
-
-      # Prepare the helix payload
-      - powershell: eng\helix\prepare-helix-payload.ps1
-         -configuration $(_BuildConfig) -platform $(_Platform)
-        displayName: Preparing Helix Payload
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)
-
       # Run DRTs
       - powershell: eng\common\cibuild.cmd
           -configuration $(_BuildConfig)

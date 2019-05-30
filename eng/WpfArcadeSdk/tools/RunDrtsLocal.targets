@@ -1,0 +1,5 @@
+<Project>
+  <Target Name="RunDrts" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)'!='True'">
+    <Exec Command="$(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\runtests.cmd"/>
+  </Target>
+</Project>

@@ -1,0 +1,39 @@
+<Project>
+
+    <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
+  <PropertyGroup>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'=='x64' or '$(Platform)'=='x86' or '$(Platform)'=='arm' or '$(Platform)'=='arm64'">win-$(Platform)</LocalRuntimeIdentifier>
+    <LocalRuntimeIdentifier Condition="'$(Platform)'=='Win32' or '$(Platform)'=='AnyCPU'">win-x86</LocalRuntimeIdentifier>
+
+    <NoWarn>$(NoWarn);NU3027;NU3018</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="runtime.$(LocalRuntimeIdentifier).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
+    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_Test)\tools\$(LocalRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">
+    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_Test)\tools\$(LocalRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+  </PropertyGroup>
+
+  <Target Name="CreateTestPayload" BeforeTargets="Test">
+    <ItemGroup>
+      <MicrosoftDotNetWpfTestContents Include="$(MicrosoftDotNetWpfTestPath)\**\*.*" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-helix-machine.ps1" Condition="'$(ContinousIntegrationBuild)'=='True'" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"
+          DestinationFiles="@(MicrosoftDotNetWpfTestContents->'$(WpfTestBasePublishPath)\%(RecursiveDir)%(Filename)%(Extension)')"  />
+
+    <Copy SourceFiles="@(OtherPayloadContents)"
+          DestinationFolder="$(PublishDir)"  />
+
+  </Target>
+
+</Project>

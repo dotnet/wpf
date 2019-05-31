@@ -1,0 +1,2 @@
+Compat issues with assembly UIAutomationClientsideProviders:
+Total Issues: 1

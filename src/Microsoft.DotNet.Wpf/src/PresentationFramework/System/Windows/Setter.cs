@@ -23,7 +23,8 @@ namespace System.Windows
     ///     TargetType property setting class.
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
+    [ContentProperty(nameof(Value))]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>

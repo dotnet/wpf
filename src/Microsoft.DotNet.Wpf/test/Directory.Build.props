@@ -11,15 +11,7 @@
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <CLSCompliant>false</CLSCompliant>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-
-    <SelfContained>false</SelfContained>
-
-    <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
-    <PlatformFolder>x86</PlatformFolder>
-    <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
-    <PublishRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PublishRoot>
-
-    <WpfTestBasePublishPath>$(PublishRoot)\Test</WpfTestBasePublishPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <EmbeddedResource>

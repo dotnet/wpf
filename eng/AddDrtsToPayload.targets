@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <!-- AnyCPU/x86 builds don't produce an output folder in artifacts. This only exists for x64 builds. -->
+    <PlatformFolder Condition="'$(Platform)'=='x64'">x64</PlatformFolder>
+
+    <!-- For the test payload, we default to x86 for AnyCPU platform --> 
+    <PayloadPlatformFolder>x86</PayloadPlatformFolder>
+    <PayloadPlatformFolder Condition="'$(Platform)'=='x64'">x64</PayloadPlatformFolder>
+    <PayloadBaseLocation>$(RepoRoot)artifacts\test\$(Configuration)\$(PayloadPlatformFolder)</PayloadBaseLocation>
+    <PayloadDrtLocation>$(PayloadBaseLocation)\Test\DRT</PayloadDrtLocation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- List of DRTs to include -->
+    <DRT Include="DrtXaml" />
+  </ItemGroup>
+
+  <Target Name="AddDrtsToPayload" BeforeTargets="RunDrts">
+    <ItemGroup>
+      <DrtPayloadContents Include="$(RepoRoot)artifacts\bin\%(DRT.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(DrtPayloadContents)"
+          DestinationFiles="@(DrtPayloadContents->'$(PayloadDrtLocation)\%(RecursiveDir)%(Filename)%(Extension)')"  />
+  </Target>
+
+</Project>

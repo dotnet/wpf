@@ -12,11 +12,6 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      PresentationFramework-SystemCore;
-      PresentationFramework-SystemData;
-      PresentationFramework-SystemDrawing;
-      PresentationFramework-SystemXml;
-      PresentationFramework-SystemXmlLinq;
       PresentationUI;
       ReachFramework;
       UIAutomationClient;

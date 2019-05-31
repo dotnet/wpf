@@ -8,11 +8,4 @@
      </PropertyGroup>
    </Target>
 
-  <!-- 
-  Don't copy the code coverage artifacts. These are always trying to be copied to the 
-  same location and so we get errors trying to overwrite files that are locked by a parallel
-  instance of MSBuild. We don't currently need these files. If we do, we can come up with a better
-  solution.
-  -->
-  <Target Name="CopyTraceDataCollectorArtifacts" />
 </Project>

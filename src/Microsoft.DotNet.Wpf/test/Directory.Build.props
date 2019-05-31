@@ -1,56 +1,29 @@
 <Project>
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-
   <PropertyGroup>
-    <WpfTestBasePath>$(MsBuildThisFileDirectory)</WpfTestBasePath>
-    <DrtCommonRoot>$(WpfTestBasePath)\Common\DRT</DrtCommonRoot>
-    <WpfSharedRoot>$(WpfTestBasePath)\Shared</WpfSharedRoot>
-    <PublishRoot>$(RepoRoot)artifacts\test\</PublishRoot>
+    <WpfTest>true</WpfTest>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
+    <SignAssembly>false</SignAssembly>
+    <IsTestProject Condition="'$(IsTestProject)'!='false'">true</IsTestProject>
+    <IsShipping>false</IsShipping>
+    <EnableXlfLocalization>false</EnableXlfLocalization>
+    <CLSCompliant>false</CLSCompliant>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+
+    <SelfContained>false</SelfContained>
+
+    <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
     <PlatformFolder>x86</PlatformFolder>
     <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
-  </PropertyGroup>
- 
-  <Import Project="$(WpfArcadeSdkToolsDir)\Publish.props"/>
-  <Import Project="$(WpfArcadeSdkToolsDir)\StrongName.props"/>
+    <PublishRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PublishRoot>
 
+    <WpfTestBasePublishPath>$(PublishRoot)\Test</WpfTestBasePublishPath>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <EmbeddedResource>
       <GenerateSource>false</GenerateSource>
     </EmbeddedResource>
-    
-    <PackageReference>
-      <PrivateAssets>contentfiles;analyzers;build</PrivateAssets>
-    </PackageReference>
   </ItemDefinitionGroup>
-
-  <PropertyGroup>
-    <InternalUtilitiesProject>$(WpfTestBasePath)\Infra\TestUtilities\InternalUtilities\InternalUtilities.csproj</InternalUtilitiesProject>
-    <TestContractsProject>$(WpfTestBasePath)\Infra\CommunityChest\TestContracts\TestContracts.csproj</TestContractsProject>
-    <TestApiCoreProject>$(WpfTestBasePath)\Infra\TestApi\TestApiCore\Code\TestApiCore.csproj</TestApiCoreProject>
-    <TestRuntimeProject>$(WpfTestBasePath)\Common\TestRuntime\TestRuntime.csproj</TestRuntimeProject>
-    <TestServicesProject>$(WpfTestBasePath)\Common\Drt\TestServices\TestServices.csproj</TestServicesProject>
-    <QualityVaultUtilitiesProject>$(WpfTestBasePath)\Infra\QualityVault\QualityVaultUtilities\QualityVaultUtilities.csproj</QualityVaultUtilitiesProject>
-    <DrtToolsProject>$(WpfTestBasePath)\Common\DRT\Tools\DrtTools.csproj</DrtToolsProject>
-  </PropertyGroup>
-
-  <Import Project="$(WpfArcadeSdkToolsDir)\SourceLocations.props"/>
-
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <EnableDefaultItems>false</EnableDefaultItems>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- CS0618 - UnmanagedType.Struct usage -->
-    <!-- VSTHRD002 - Synchronous awaits from IPC since we can't convert the entire logging/IPC mechanism to async -->
-    <!-- VSTHRD001 - Legacy sync code -->
-    <NoWarn>CS0618;VSTHRD002;VSTHRD001</NoWarn>
-    
-    <!-- Remove these when open sourcing -->
-    <NoWarn>$(NoWarn);CS3005;CS3001;CS3002;CS3003;CS0169</NoWarn>
-  </PropertyGroup>
 </Project>

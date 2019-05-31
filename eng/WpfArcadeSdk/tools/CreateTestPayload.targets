@@ -1,5 +1,4 @@
 <Project>
-
     <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
   <PropertyGroup>
     <LocalRuntimeIdentifier Condition="'$(Platform)'=='x64' or '$(Platform)'=='x86' or '$(Platform)'=='arm' or '$(Platform)'=='arm64'">win-$(Platform)</LocalRuntimeIdentifier>
@@ -32,7 +31,10 @@
           DestinationFiles="@(MicrosoftDotNetWpfTestContents->'$(WpfTestBasePublishPath)\%(RecursiveDir)%(Filename)%(Extension)')"  />
 
     <Copy SourceFiles="@(OtherPayloadContents)"
-          DestinationFolder="$(PublishDir)"  />
+          DestinationFolder="$(PublishRoot)"  />
+
+    <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
+          DestinationFolder="$(WpfTestBasePublishPath)\DRT"  />
 
   </Target>
 

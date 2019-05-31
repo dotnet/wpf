@@ -62,8 +62,6 @@
     <Page Include="XmlSpace3.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="BCMarkupExtension.cs" />
-    <Compile Include="TempDPSetOrder1ListBox.cs" />
     <None Remove="@(Page)" />
   </ItemGroup>
 

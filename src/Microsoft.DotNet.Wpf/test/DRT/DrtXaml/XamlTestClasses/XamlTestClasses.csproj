@@ -6,7 +6,6 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>DrtXaml.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   

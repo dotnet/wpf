@@ -17,12 +17,14 @@ namespace DrtXaml
 {
     public sealed class XamlDrt : DrtBase
     {
-        public void RunTests(params string[] args)
+        [STAThread]
+        public static int Main(string[] args)
         {
-            Run(args);
+            DrtBase drt = new XamlDrt();
+            return drt.Run(args);
         }
 
-        public XamlDrt(ITestOutputHelper output) : base(output)
+        private XamlDrt()
         {
             DrtName = "DrtXaml";
             WindowTitle = "XAML DRT";

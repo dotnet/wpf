@@ -1,7 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <PublishDir>$(WpfDrtTestBasePublishPath)</PublishDir>
-    <IsTestProject>true</IsTestProject>
-    <SkipTests>true</SkipTests>
-  </PropertyGroup>
-</Project>

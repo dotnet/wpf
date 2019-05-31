@@ -135,8 +135,8 @@ jobs:
           -configuration $(_BuildConfig)
           $(_OfficialBuildIdArgs) 
           $(_PlatformArgs)
-          -projects $(Build.SourcesDirectory)\eng\helix\helixpublish.proj
-          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixUnit.binlog
+          -projects $(Build.SourcesDirectory)\eng\helixpublish.proj
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixDrt.binlog
         displayName: Run Developer Regression Tests on Helix Machine (Release)
         env:
           HelixSource: $(_HelixSource)

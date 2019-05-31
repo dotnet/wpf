@@ -23,6 +23,28 @@ We use the following workflow for building and testing features and fixes.
 
 You first need to [Fork](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#fork-the-repository) and [Clone](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#clone-the-repository) this WPF repository. This is a one-time task.
 
+
+### Running DRTs locally ###
+In order to run the set of DRTs on your local machine, pass the `-test` parameter to the `build.cmd` script. At the end of the run, you should see something like this:
+
+```
+  A total of 1 test Infos were processed, with the following results.
+   Passed: 1
+   Failed (need to analyze): 0
+   Failed (with BugIDs): 0
+   Ignore: 0
+
+```
+If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\Test and run the tests manually with the `/debugtests` flag. This will open a cmd window, where you can open the test executable in Visual Studio and debug it. For example, to debug DrtXaml.exe you would enter this into the command window:
+
+`"%ProgramFiles%\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe" DrtXaml.exe`
+
+Once Visual Studio is open, you will first need to manually change the debugger type from `Auto` to `Mixed (CoreCLR)`. From there you can F5 and the test will execute.
+
+*Note: To run a specific test, you can pass the name of the test like this: `/name=DrtXaml`.*
+
+**NOTE: This requires being run from an admin window at the moment. This restriction will be removed shortly.**
+
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,
 and not automated testing. There are a few different ways this can be done, and for the most part,

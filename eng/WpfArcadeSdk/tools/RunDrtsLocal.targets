@@ -1,4 +1,6 @@
 <Project>
+  <!-- The internal and external repos each define their own drts to add that need running. -->
+  <Import Project="$(RepoRoot)\eng\AddDrtsToPayload.targets" Condition="Exists('$(RepoRoot)\eng\AddDrtsToPayload.targets')" />
   <Target Name="RunDrts" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)'!='True'">
     <Exec Command="$(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\runtests.cmd"/>
   </Target>

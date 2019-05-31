@@ -7,8 +7,7 @@
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(WpfTest)'=='true'">
     <TestArchitectures Condition="'$(PlatformTarget)' == '' or '$(PlatformTarget)' == 'AnyCpu'">x86</TestArchitectures>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <CopyLocalLockFileAssemblies Condition="'$(CreateTestPayload)'=='true'">true</CopyLocalLockFileAssemblies>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IsSelfContained>true</IsSelfContained>
   </PropertyGroup>
 
@@ -19,8 +18,7 @@
     -->
     <PackageReference Include="runtime.$(RuntimeIdentifier).$(MicrosoftDotNetWpfDncEngPackage)"
                       Condition="'$(RepositoryName)'=='wpf'"
-                      Version="$(MicrosoftDotNetWpfDncEngVersion)"
-                      Publish="$(CreateTestPayload)">
+                      Version="$(MicrosoftDotNetWpfDncEngVersion)">
       <CopyLocal>true</CopyLocal>
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
@@ -28,24 +26,24 @@
     <!-- 
       PackageReference from individual WPF projects here 
     -->
-    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" Publish="$(CreateTestPayload)" />
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" CopyLocal="true" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" Publish="$(CreateTestPayload)"  />
-    <PackageReference Include="System.Diagnostics.EventLog" Version="$(SystemDiagnosticsEventLogPackageVersion)" Publish="$(CreateTestPayload)" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="$(SystemSecurityCryptographyXmlPackageVersion)" Publish="$(CreateTestPayload)" />
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" Publish="$(CreateTestPayload)" />
-    <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" Publish="$(CreateTestPayload)" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" CopyLocal="true"  />
+    <PackageReference Include="System.Diagnostics.EventLog" Version="$(SystemDiagnosticsEventLogPackageVersion)" CopyLocal="true" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="$(SystemSecurityCryptographyXmlPackageVersion)" CopyLocal="true" />
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" CopyLocal="true" />
+    <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" CopyLocal="true" />
 
-    <PackageReference Include="System.Security.AccessControl" Version="$(SystemSecurityAccessControlPackageVersion)" Publish="$(CreateTestPayload)" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindowsPackageVersion)" Publish="$(CreateTestPayload)" />
+    <PackageReference Include="System.Security.AccessControl" Version="$(SystemSecurityAccessControlPackageVersion)" CopyLocal="true" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindowsPackageVersion)" CopyLocal="true" />
 
 
 
     <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-    <None Condition="'$(RuntimeIdentifier)'=='win-x64' And '$(CreateTestPayload)'=='true'"
+    <None Condition="'$(RuntimeIdentifier)'=='win-x64'"
           Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
-    <None Condition="'$(RuntimeIdentifier)'=='win-x86' And '$(CreateTestPayload)'=='true'"
+    <None Condition="'$(RuntimeIdentifier)'=='win-x86'"
            Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
 

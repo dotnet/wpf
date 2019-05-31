@@ -12,7 +12,6 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      PresentationUI;
       ReachFramework;
       UIAutomationClient;
       UIAutomationClientSideProviders;

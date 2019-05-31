@@ -1,14 +1,6 @@
 <Project Sdk="Microsoft.DotNet.Helix.Sdk" DefaultTargets="Test">
   <PropertyGroup>
-    <!-- These properties help ensure proper and consistent restore behavior -->
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RestorePackagesPath>$(MSBuildThisFileDirectory)packages</RestorePackagesPath>
-    <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
-    <RestoreSources>
-      $(RestoreSources);
-      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json
-    </RestoreSources>
-
     <IncludeDotNetCli>true</IncludeDotNetCli>
     <DotNetCliPackageType>runtime</DotNetCliPackageType>
     <!-- Set to match global.json.tools.dotnet by pre-build.ps1 -->
@@ -28,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <HelixCorrelationPayload Include="artifacts\test\$(Configuration)\$(Platform)" /> 
+    <HelixCorrelationPayload Include="$(ArtifactsDir)\test\$(Configuration)\$(Platform)" /> 
     <HelixWorkItem Include="Xaml">
       <Timeout>00:20:00</Timeout>
       <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=Xaml</Command>

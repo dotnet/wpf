@@ -5,12 +5,12 @@
     <LinkSubsystem>console</LinkSubsystem>
     <OutputType>WinExe</OutputType>
     <Platforms>AnyCPU;x64</Platforms>
+    <StartupObject>DrtXaml.XamlDrt</StartupObject>
+    <CreateTestPayload>true</CreateTestPayload>
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsTestProject>true</IsTestProject>
     <IsIntegrationTestProject>false</IsIntegrationTestProject>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
   <ItemGroup>
@@ -24,12 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <PackageReference Include="System.IO.Packaging" Version="$(SystemIOPackagingVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
   </ItemGroup>
 
   <PropertyGroup>

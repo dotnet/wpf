@@ -34,6 +34,44 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorSelection
     {
+        internal const string KeyMoveLeftByCharacter =     "Left";
+        internal const string KeyMoveLeftByWord =     "Ctrl+Left";
+        internal const string KeyMoveRightByCharacter =     "Right";
+        internal const string KeyMoveRightByWord =     "Ctrl+Right";
+        internal const string KeyMoveDownByLine =     "Down";
+        internal const string KeyMoveUpByLine =     "Up";
+        internal const string KeyMoveDownByPage =     "PageDown";
+        internal const string KeyMoveDownByParagraph =     "Ctrl+Down";
+        internal const string KeyMoveUpByPage =     "PageUp";
+        internal const string KeyMoveUpByParagraph =     "Ctrl+Up";
+        internal const string KeyMoveToColumnEnd =     "Alt+PageDown";
+        internal const string KeyMoveToColumnStart =     "Alt+PageUp";
+        internal const string KeyMoveToDocumentEnd =     "Ctrl+End";
+        internal const string KeyMoveToDocumentStart =     "Ctrl+Home";
+        internal const string KeyMoveToLineEnd =     "End";
+        internal const string KeyMoveToLineStart =     "Home";
+        internal const string KeyMoveToWindowBottom =     "Alt+Ctrl+PageDown";
+        internal const string KeyMoveToWindowTop =     "Alt+Ctrl+PageUp";
+        internal const string KeySelectDownByPage =     "Shift+PageDown";
+        internal const string KeySelectDownByParagraph =     "Ctrl+Shift+Down";
+        internal const string KeySelectLeftByCharacter =     "Shift+Left";
+        internal const string KeySelectLeftByWord =     "Ctrl+Shift+Left";
+        internal const string KeySelectRightByCharacter =     "Shift+Right";
+        internal const string KeySelectRightByWord =     "Ctrl+Shift+Right";
+        internal const string KeySelectToColumnEnd =     "Alt+Shift+PageDown";
+        internal const string KeySelectToColumnStart =     "Alt+Shift+PageUp";
+        internal const string KeySelectToDocumentEnd =     "Ctrl+Shift+End";
+        internal const string KeySelectToDocumentStart =     "Ctrl+Shift+Home";
+        internal const string KeySelectToLineEnd =     "Shift+End";
+        internal const string KeySelectToLineStart =     "Shift+Home";
+        internal const string KeySelectToWindowBottom =     "Alt+Ctrl+Shift+PageDown";
+        internal const string KeySelectToWindowTop =     "Alt+Ctrl+Shift+PageUp";
+        internal const string KeySelectUpByLine =     "Shift+Up";
+        internal const string KeySelectUpByPage =     "Shift+PageUp";
+        internal const string KeySelectUpByParagraph =     "Ctrl+Shift+Up";
+        internal const string KeySelectDownByLine =     "Shift+Down";
+      
+
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -63,45 +101,45 @@ namespace System.Windows.Documents
 
             // Editing Commands : Caret Navigation
             // -----------------------------------
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveRightByCharacter, new ExecutedRoutedEventHandler(OnMoveRightByCharacter), queryStatusCaretNavigationHandler, SRID.KeyMoveRightByCharacter, SRID.KeyMoveRightByCharacterDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveLeftByCharacter, new ExecutedRoutedEventHandler(OnMoveLeftByCharacter), queryStatusCaretNavigationHandler, SRID.KeyMoveLeftByCharacter, SRID.KeyMoveLeftByCharacterDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveRightByWord, new ExecutedRoutedEventHandler(OnMoveRightByWord), queryStatusCaretNavigationHandler, SRID.KeyMoveRightByWord, SRID.KeyMoveRightByWordDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveLeftByWord, new ExecutedRoutedEventHandler(OnMoveLeftByWord), queryStatusCaretNavigationHandler, SRID.KeyMoveLeftByWord, SRID.KeyMoveLeftByWordDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByLine, new ExecutedRoutedEventHandler(OnMoveDownByLine), queryStatusCaretNavigationHandler, SRID.KeyMoveDownByLine, SRID.KeyMoveDownByLineDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByLine, new ExecutedRoutedEventHandler(OnMoveUpByLine), queryStatusCaretNavigationHandler, SRID.KeyMoveUpByLine, SRID.KeyMoveUpByLineDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByParagraph, new ExecutedRoutedEventHandler(OnMoveDownByParagraph), queryStatusCaretNavigationHandler, SRID.KeyMoveDownByParagraph, SRID.KeyMoveDownByParagraphDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByParagraph, new ExecutedRoutedEventHandler(OnMoveUpByParagraph), queryStatusCaretNavigationHandler, SRID.KeyMoveUpByParagraph, SRID.KeyMoveUpByParagraphDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByPage, new ExecutedRoutedEventHandler(OnMoveDownByPage), queryStatusCaretNavigationHandler, SRID.KeyMoveDownByPage, SRID.KeyMoveDownByPageDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByPage, new ExecutedRoutedEventHandler(OnMoveUpByPage), queryStatusCaretNavigationHandler, SRID.KeyMoveUpByPage, SRID.KeyMoveUpByPageDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToLineStart, new ExecutedRoutedEventHandler(OnMoveToLineStart), queryStatusCaretNavigationHandler, SRID.KeyMoveToLineStart, SRID.KeyMoveToLineStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToLineEnd, new ExecutedRoutedEventHandler(OnMoveToLineEnd), queryStatusCaretNavigationHandler, SRID.KeyMoveToLineEnd, SRID.KeyMoveToLineEndDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToColumnStart, nyiCommandHandler, queryStatusCaretNavigationHandler, SRID.KeyMoveToColumnStart, SRID.KeyMoveToColumnStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToColumnEnd, nyiCommandHandler, queryStatusCaretNavigationHandler, SRID.KeyMoveToColumnEnd, SRID.KeyMoveToColumnEndDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToWindowTop, nyiCommandHandler, queryStatusCaretNavigationHandler, SRID.KeyMoveToWindowTop, SRID.KeyMoveToWindowTopDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToWindowBottom, nyiCommandHandler, queryStatusCaretNavigationHandler, SRID.KeyMoveToWindowBottom, SRID.KeyMoveToWindowBottomDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToDocumentStart, new ExecutedRoutedEventHandler(OnMoveToDocumentStart), queryStatusCaretNavigationHandler, SRID.KeyMoveToDocumentStart, SRID.KeyMoveToDocumentStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToDocumentEnd, new ExecutedRoutedEventHandler(OnMoveToDocumentEnd), queryStatusCaretNavigationHandler, SRID.KeyMoveToDocumentEnd, SRID.KeyMoveToDocumentEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveRightByCharacter, new ExecutedRoutedEventHandler(OnMoveRightByCharacter), queryStatusCaretNavigationHandler, KeyMoveRightByCharacter, SRID.KeyMoveRightByCharacterDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveLeftByCharacter, new ExecutedRoutedEventHandler(OnMoveLeftByCharacter), queryStatusCaretNavigationHandler, KeyMoveLeftByCharacter, SRID.KeyMoveLeftByCharacterDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveRightByWord, new ExecutedRoutedEventHandler(OnMoveRightByWord), queryStatusCaretNavigationHandler, KeyMoveRightByWord, SRID.KeyMoveRightByWordDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveLeftByWord, new ExecutedRoutedEventHandler(OnMoveLeftByWord), queryStatusCaretNavigationHandler, KeyMoveLeftByWord, SRID.KeyMoveLeftByWordDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByLine, new ExecutedRoutedEventHandler(OnMoveDownByLine), queryStatusCaretNavigationHandler, KeyMoveDownByLine, SRID.KeyMoveDownByLineDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByLine, new ExecutedRoutedEventHandler(OnMoveUpByLine), queryStatusCaretNavigationHandler, KeyMoveUpByLine, SRID.KeyMoveUpByLineDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByParagraph, new ExecutedRoutedEventHandler(OnMoveDownByParagraph), queryStatusCaretNavigationHandler, KeyMoveDownByParagraph, SRID.KeyMoveDownByParagraphDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByParagraph, new ExecutedRoutedEventHandler(OnMoveUpByParagraph), queryStatusCaretNavigationHandler, KeyMoveUpByParagraph, SRID.KeyMoveUpByParagraphDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveDownByPage, new ExecutedRoutedEventHandler(OnMoveDownByPage), queryStatusCaretNavigationHandler, KeyMoveDownByPage, SRID.KeyMoveDownByPageDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveUpByPage, new ExecutedRoutedEventHandler(OnMoveUpByPage), queryStatusCaretNavigationHandler, KeyMoveUpByPage, SRID.KeyMoveUpByPageDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToLineStart, new ExecutedRoutedEventHandler(OnMoveToLineStart), queryStatusCaretNavigationHandler, KeyMoveToLineStart, SRID.KeyMoveToLineStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToLineEnd, new ExecutedRoutedEventHandler(OnMoveToLineEnd), queryStatusCaretNavigationHandler, KeyMoveToLineEnd, SRID.KeyMoveToLineEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToColumnStart, nyiCommandHandler, queryStatusCaretNavigationHandler, KeyMoveToColumnStart, SRID.KeyMoveToColumnStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToColumnEnd, nyiCommandHandler, queryStatusCaretNavigationHandler, KeyMoveToColumnEnd, SRID.KeyMoveToColumnEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToWindowTop, nyiCommandHandler, queryStatusCaretNavigationHandler, KeyMoveToWindowTop, SRID.KeyMoveToWindowTopDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToWindowBottom, nyiCommandHandler, queryStatusCaretNavigationHandler, KeyMoveToWindowBottom, SRID.KeyMoveToWindowBottomDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToDocumentStart, new ExecutedRoutedEventHandler(OnMoveToDocumentStart), queryStatusCaretNavigationHandler, KeyMoveToDocumentStart, SRID.KeyMoveToDocumentStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MoveToDocumentEnd, new ExecutedRoutedEventHandler(OnMoveToDocumentEnd), queryStatusCaretNavigationHandler, KeyMoveToDocumentEnd, SRID.KeyMoveToDocumentEndDisplayString);
 
             // Editing Commands: Selection Building
             // ------------------------------------
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectRightByCharacter, new ExecutedRoutedEventHandler(OnSelectRightByCharacter), queryStatusKeyboardSelectionHandler, SRID.KeySelectRightByCharacter, SRID.KeySelectRightByCharacterDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectLeftByCharacter, new ExecutedRoutedEventHandler(OnSelectLeftByCharacter), queryStatusKeyboardSelectionHandler, SRID.KeySelectLeftByCharacter, SRID.KeySelectLeftByCharacterDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectRightByWord, new ExecutedRoutedEventHandler(OnSelectRightByWord), queryStatusKeyboardSelectionHandler, SRID.KeySelectRightByWord, SRID.KeySelectRightByWordDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectLeftByWord, new ExecutedRoutedEventHandler(OnSelectLeftByWord), queryStatusKeyboardSelectionHandler, SRID.KeySelectLeftByWord, SRID.KeySelectLeftByWordDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByLine, new ExecutedRoutedEventHandler(OnSelectDownByLine), queryStatusKeyboardSelectionHandler, SRID.KeySelectDownByLine, SRID.KeySelectDownByLineDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByLine, new ExecutedRoutedEventHandler(OnSelectUpByLine), queryStatusKeyboardSelectionHandler, SRID.KeySelectUpByLine, SRID.KeySelectUpByLineDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByParagraph, new ExecutedRoutedEventHandler(OnSelectDownByParagraph), queryStatusKeyboardSelectionHandler, SRID.KeySelectDownByParagraph, SRID.KeySelectDownByParagraphDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByParagraph, new ExecutedRoutedEventHandler(OnSelectUpByParagraph), queryStatusKeyboardSelectionHandler, SRID.KeySelectUpByParagraph, SRID.KeySelectUpByParagraphDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByPage, new ExecutedRoutedEventHandler(OnSelectDownByPage), queryStatusKeyboardSelectionHandler, SRID.KeySelectDownByPage, SRID.KeySelectDownByPageDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByPage, new ExecutedRoutedEventHandler(OnSelectUpByPage), queryStatusKeyboardSelectionHandler, SRID.KeySelectUpByPage, SRID.KeySelectUpByPageDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToLineStart, new ExecutedRoutedEventHandler(OnSelectToLineStart), queryStatusKeyboardSelectionHandler, SRID.KeySelectToLineStart, SRID.KeySelectToLineStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToLineEnd, new ExecutedRoutedEventHandler(OnSelectToLineEnd), queryStatusKeyboardSelectionHandler, SRID.KeySelectToLineEnd, SRID.KeySelectToLineEndDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToColumnStart, nyiCommandHandler, queryStatusKeyboardSelectionHandler, SRID.KeySelectToColumnStart, SRID.KeySelectToColumnStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToColumnEnd, nyiCommandHandler, queryStatusKeyboardSelectionHandler, SRID.KeySelectToColumnEnd, SRID.KeySelectToColumnEndDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToWindowTop, nyiCommandHandler, queryStatusKeyboardSelectionHandler, SRID.KeySelectToWindowTop, SRID.KeySelectToWindowTopDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToWindowBottom, nyiCommandHandler, queryStatusKeyboardSelectionHandler, SRID.KeySelectToWindowBottom, SRID.KeySelectToWindowBottomDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentStart, new ExecutedRoutedEventHandler(OnSelectToDocumentStart), queryStatusKeyboardSelectionHandler, SRID.KeySelectToDocumentStart, SRID.KeySelectToDocumentStartDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentEnd, new ExecutedRoutedEventHandler(OnSelectToDocumentEnd), queryStatusKeyboardSelectionHandler, SRID.KeySelectToDocumentEnd, SRID.KeySelectToDocumentEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectRightByCharacter, new ExecutedRoutedEventHandler(OnSelectRightByCharacter), queryStatusKeyboardSelectionHandler, KeySelectRightByCharacter, SRID.KeySelectRightByCharacterDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectLeftByCharacter, new ExecutedRoutedEventHandler(OnSelectLeftByCharacter), queryStatusKeyboardSelectionHandler, KeySelectLeftByCharacter, SRID.KeySelectLeftByCharacterDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectRightByWord, new ExecutedRoutedEventHandler(OnSelectRightByWord), queryStatusKeyboardSelectionHandler, KeySelectRightByWord, SRID.KeySelectRightByWordDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectLeftByWord, new ExecutedRoutedEventHandler(OnSelectLeftByWord), queryStatusKeyboardSelectionHandler, KeySelectLeftByWord, SRID.KeySelectLeftByWordDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByLine, new ExecutedRoutedEventHandler(OnSelectDownByLine), queryStatusKeyboardSelectionHandler, KeySelectDownByLine, SRID.KeySelectDownByLineDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByLine, new ExecutedRoutedEventHandler(OnSelectUpByLine), queryStatusKeyboardSelectionHandler, KeySelectUpByLine, SRID.KeySelectUpByLineDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByParagraph, new ExecutedRoutedEventHandler(OnSelectDownByParagraph), queryStatusKeyboardSelectionHandler, KeySelectDownByParagraph, SRID.KeySelectDownByParagraphDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByParagraph, new ExecutedRoutedEventHandler(OnSelectUpByParagraph), queryStatusKeyboardSelectionHandler, KeySelectUpByParagraph, SRID.KeySelectUpByParagraphDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectDownByPage, new ExecutedRoutedEventHandler(OnSelectDownByPage), queryStatusKeyboardSelectionHandler, KeySelectDownByPage, SRID.KeySelectDownByPageDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectUpByPage, new ExecutedRoutedEventHandler(OnSelectUpByPage), queryStatusKeyboardSelectionHandler, KeySelectUpByPage, SRID.KeySelectUpByPageDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToLineStart, new ExecutedRoutedEventHandler(OnSelectToLineStart), queryStatusKeyboardSelectionHandler, KeySelectToLineStart, SRID.KeySelectToLineStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToLineEnd, new ExecutedRoutedEventHandler(OnSelectToLineEnd), queryStatusKeyboardSelectionHandler, KeySelectToLineEnd, SRID.KeySelectToLineEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToColumnStart, nyiCommandHandler, queryStatusKeyboardSelectionHandler, KeySelectToColumnStart, SRID.KeySelectToColumnStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToColumnEnd, nyiCommandHandler, queryStatusKeyboardSelectionHandler, KeySelectToColumnEnd, SRID.KeySelectToColumnEndDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToWindowTop, nyiCommandHandler, queryStatusKeyboardSelectionHandler, KeySelectToWindowTop, SRID.KeySelectToWindowTopDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToWindowBottom, nyiCommandHandler, queryStatusKeyboardSelectionHandler, KeySelectToWindowBottom, SRID.KeySelectToWindowBottomDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentStart, new ExecutedRoutedEventHandler(OnSelectToDocumentStart), queryStatusKeyboardSelectionHandler, KeySelectToDocumentStart, SRID.KeySelectToDocumentStartDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentEnd, new ExecutedRoutedEventHandler(OnSelectToDocumentEnd), queryStatusKeyboardSelectionHandler, KeySelectToDocumentEnd, SRID.KeySelectToDocumentEndDisplayString);
         }
         
         /// <summary>

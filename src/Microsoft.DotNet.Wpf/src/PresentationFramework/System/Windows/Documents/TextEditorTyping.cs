@@ -36,6 +36,19 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorTyping
     {
+        internal const string KeyBackspace = "Backspace";
+        internal const string KeyShiftBackspace = "Shift+Backspace";
+        internal const string KeySpace = "Space";
+        internal const string KeyEnterLineBreak = "Shift+Enter";
+        internal const string KeyDelete = "Delete";
+        internal const string KeyDeleteNextWord = "Ctrl+Delete";
+        internal const string KeyDeletePreviousWord = "Ctrl+Backspace";
+        internal const string KeyEnterParagraphBreak = "Enter";
+        internal const string KeyToggleInsert = "Insert";
+        internal const string KeyTabBackward = "Shift+Tab";
+        internal const string KeyTabForward = "Tab";
+        internal const string KeyShiftSpace = "Shift+Space";
+
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -77,18 +90,18 @@ namespace System.Windows.Documents
             EventManager.RegisterClassHandler(controlType, Mouse.MouseLeaveEvent, new MouseEventHandler(OnMouseLeave), true /* handledEventsToo */);
 
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.CorrectionList   , new ExecutedRoutedEventHandler(OnCorrectionList)       , new CanExecuteRoutedEventHandler(OnQueryStatusCorrectionList)       , SRID.KeyCorrectionList,   SRID.KeyCorrectionListDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleInsert         , new ExecutedRoutedEventHandler(OnToggleInsert)         , onQueryStatusNYI                  , SRID.KeyToggleInsert,     SRID.KeyToggleInsertDisplayString           );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Delete               , new ExecutedRoutedEventHandler(OnDelete)               , onQueryStatusNYI                  , SRID.KeyDelete,           SRID.KeyDeleteDisplayString                 );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteNextWord       , new ExecutedRoutedEventHandler(OnDeleteNextWord)       , onQueryStatusNYI                  , SRID.KeyDeleteNextWord,   SRID.KeyDeleteNextWordDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeletePreviousWord   , new ExecutedRoutedEventHandler(OnDeletePreviousWord)   , onQueryStatusNYI                  , SRID.KeyDeletePreviousWord, SRID.KeyDeletePreviousWordDisplayString   );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterParagraphBreak  , onEnterBreak                                           , onQueryStatusEnterBreak           , SRID.KeyEnterParagraphBreak, SRID.KeyEnterParagraphBreakDisplayString );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterLineBreak       , onEnterBreak                                           , onQueryStatusEnterBreak           , SRID.KeyEnterLineBreak,   SRID.KeyEnterLineBreakDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabForward           , new ExecutedRoutedEventHandler(OnTabForward)           , new CanExecuteRoutedEventHandler(OnQueryStatusTabForward)           , SRID.KeyTabForward,       SRID.KeyTabForwardDisplayString             );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabBackward          , new ExecutedRoutedEventHandler(OnTabBackward)          , new CanExecuteRoutedEventHandler(OnQueryStatusTabBackward)          , SRID.KeyTabBackward,      SRID.KeyTabBackwardDisplayString            );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Space                , onSpace                                                , onQueryStatusNYI                  , SRID.KeySpace,            SRID.KeySpaceDisplayString                  );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ShiftSpace           , onSpace                                                , onQueryStatusNYI                  , SRID.KeyShiftSpace,       SRID.KeyShiftSpaceDisplayString             );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleInsert         , new ExecutedRoutedEventHandler(OnToggleInsert)         , onQueryStatusNYI                  , KeyToggleInsert,     SRID.KeyToggleInsertDisplayString           );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Delete               , new ExecutedRoutedEventHandler(OnDelete)               , onQueryStatusNYI                  , KeyDelete,           SRID.KeyDeleteDisplayString                 );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteNextWord       , new ExecutedRoutedEventHandler(OnDeleteNextWord)       , onQueryStatusNYI                  , KeyDeleteNextWord,   SRID.KeyDeleteNextWordDisplayString         );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeletePreviousWord   , new ExecutedRoutedEventHandler(OnDeletePreviousWord)   , onQueryStatusNYI                  , KeyDeletePreviousWord, SRID.KeyDeletePreviousWordDisplayString   );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterParagraphBreak  , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyEnterParagraphBreak, SRID.KeyEnterParagraphBreakDisplayString );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterLineBreak       , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyEnterLineBreak,   SRID.KeyEnterLineBreakDisplayString         );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabForward           , new ExecutedRoutedEventHandler(OnTabForward)           , new CanExecuteRoutedEventHandler(OnQueryStatusTabForward)           , KeyTabForward,       SRID.KeyTabForwardDisplayString             );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabBackward          , new ExecutedRoutedEventHandler(OnTabBackward)          , new CanExecuteRoutedEventHandler(OnQueryStatusTabBackward)          , KeyTabBackward,      SRID.KeyTabBackwardDisplayString            );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Space                , onSpace                                                , onQueryStatusNYI                  , KeySpace,            SRID.KeySpaceDisplayString                  );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ShiftSpace           , onSpace                                                , onQueryStatusNYI                  , KeyShiftSpace,       SRID.KeyShiftSpaceDisplayString             );
 
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Backspace            , new ExecutedRoutedEventHandler(OnBackspace)            , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyBackspace),        SR.Get(SRID.KeyBackspaceDisplayString)),   KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyShiftBackspace), SR.Get(SRID.KeyShiftBackspaceDisplayString)) );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Backspace            , new ExecutedRoutedEventHandler(OnBackspace)            , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyBackspace,        SR.Get(SRID.KeyBackspaceDisplayString)),   KeyGesture.CreateFromResourceStrings(KeyShiftBackspace, SR.Get(SRID.KeyShiftBackspaceDisplayString)) );
         }
 
         /// <summary>

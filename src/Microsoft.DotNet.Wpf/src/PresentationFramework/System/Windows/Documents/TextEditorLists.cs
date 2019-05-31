@@ -33,6 +33,11 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorLists
     {
+        internal const string KeyDecreaseIndentation = "Ctrl+Shift+T";
+        internal const string KeyToggleBullets = "Ctrl+Shift+L";
+        internal const string KeyToggleNumbering = "Ctrl+Shift+N"; 
+        internal const string KeyRemoveListMarkers = "Ctrl+Shift+R";
+
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -43,11 +48,11 @@ namespace System.Windows.Documents
         // Registers all text editing command handlers for a given control type
         internal static void _RegisterClassHandlers(Type controlType, bool registerEventListeners)
         {
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.RemoveListMarkers   , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), SRID.KeyRemoveListMarkers, SRID.KeyRemoveListMarkersDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBullets       , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), SRID.KeyToggleBullets, SRID.KeyToggleBulletsDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleNumbering     , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), SRID.KeyToggleNumbering, SRID.KeyToggleNumberingDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.RemoveListMarkers   , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyRemoveListMarkers, SRID.KeyRemoveListMarkersDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBullets       , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyToggleBullets, SRID.KeyToggleBulletsDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleNumbering     , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyToggleNumbering, SRID.KeyToggleNumberingDisplayString);
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.IncreaseIndentation , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusTab), SRID.KeyIncreaseIndentation, SRID.KeyIncreaseIndentationDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseIndentation , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusTab), SRID.KeyDecreaseIndentation, SRID.KeyDecreaseIndentationDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseIndentation , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusTab), KeyDecreaseIndentation, SRID.KeyDecreaseIndentationDisplayString);
         }
 
         // Decreases the indent level of the Block at selection start.

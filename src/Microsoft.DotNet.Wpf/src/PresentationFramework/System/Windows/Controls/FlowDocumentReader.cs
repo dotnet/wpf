@@ -35,6 +35,9 @@ namespace System.Windows.Controls
     [ContentProperty("Document")]
     public class FlowDocumentReader : Control, IAddChild, IJournalState
     {
+        internal const string KeySwitchViewingMode = "Ctrl+M";
+        internal const string Switch_ViewingMode =  "_Switch ViewingMode";
+
         //-------------------------------------------------------------------
         //
         //  Constructors
@@ -652,7 +655,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Switch ViewingMode command
         /// </summary>
-        public static readonly RoutedUICommand SwitchViewingModeCommand = new RoutedUICommand(SR.Get(SRID.SwitchViewingMode), "SwitchViewingMode", typeof(FlowDocumentReader), null);
+        public static readonly RoutedUICommand SwitchViewingModeCommand = new RoutedUICommand(Switch_ViewingMode, "SwitchViewingMode", typeof(FlowDocumentReader), null);
 
         #endregion
 
@@ -1339,7 +1342,7 @@ namespace System.Windows.Controls
 
             // Command: SwitchViewingMode
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), FlowDocumentReader.SwitchViewingModeCommand,
-                executedHandler, canExecuteHandler, SRID.KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString);
+                executedHandler, canExecuteHandler, KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString);
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), ApplicationCommands.Find,

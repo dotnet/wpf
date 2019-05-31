@@ -33,6 +33,13 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorParagraphs
     {
+        internal const string KeyAlignCenter = "Ctrl+E";
+        internal const string KeyAlignLeft = "Ctrl+L";
+        internal const string KeyAlignRight = "Ctrl+R";
+        internal const string KeyApplyDoubleSpace = "Ctrl+2";
+        internal const string KeyApplySingleSpace =     "Ctrl+1";
+        internal const string KeyApplyOneAndAHalfSpace = "Ctrl+5";
+        
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -46,17 +53,18 @@ namespace System.Windows.Documents
         {
             CanExecuteRoutedEventHandler onQueryStatusNYI = new CanExecuteRoutedEventHandler(OnQueryStatusNYI);
 
+
             if (acceptsRichContent)
             {
                 // Editing Commands: Paragraph Editing
                 // -----------------------------------
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignLeft                 , new ExecutedRoutedEventHandler(OnAlignLeft)                 , onQueryStatusNYI, SRID.KeyAlignLeft,             SRID.KeyAlignLeftDisplayString             );
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignCenter               , new ExecutedRoutedEventHandler(OnAlignCenter)               , onQueryStatusNYI, SRID.KeyAlignCenter,           SRID.KeyAlignCenterDisplayString           );
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignRight                , new ExecutedRoutedEventHandler(OnAlignRight)                , onQueryStatusNYI, SRID.KeyAlignRight,            SRID.KeyAlignRightDisplayString            );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignLeft                 , new ExecutedRoutedEventHandler(OnAlignLeft)                 , onQueryStatusNYI, KeyAlignLeft,             SRID.KeyAlignLeftDisplayString             );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignCenter               , new ExecutedRoutedEventHandler(OnAlignCenter)               , onQueryStatusNYI, KeyAlignCenter,           SRID.KeyAlignCenterDisplayString           );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignRight                , new ExecutedRoutedEventHandler(OnAlignRight)                , onQueryStatusNYI, KeyAlignRight,            SRID.KeyAlignRightDisplayString            );
                 CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignJustify              , new ExecutedRoutedEventHandler(OnAlignJustify)              , onQueryStatusNYI, SRID.KeyAlignJustify,          SRID.KeyAlignJustifyDisplayString          );
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplySingleSpace          , new ExecutedRoutedEventHandler(OnApplySingleSpace)          , onQueryStatusNYI, SRID.KeyApplySingleSpace,      SRID.KeyApplySingleSpaceDisplayString      );
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyOneAndAHalfSpace     , new ExecutedRoutedEventHandler(OnApplyOneAndAHalfSpace)     , onQueryStatusNYI, SRID.KeyApplyOneAndAHalfSpace, SRID.KeyApplyOneAndAHalfSpaceDisplayString );
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyDoubleSpace          , new ExecutedRoutedEventHandler(OnApplyDoubleSpace)          , onQueryStatusNYI, SRID.KeyApplyDoubleSpace,      SRID.KeyApplyDoubleSpaceDisplayString      );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplySingleSpace          , new ExecutedRoutedEventHandler(OnApplySingleSpace)          , onQueryStatusNYI, KeyApplySingleSpace,      SRID.KeyApplySingleSpaceDisplayString      );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyOneAndAHalfSpace     , new ExecutedRoutedEventHandler(OnApplyOneAndAHalfSpace)     , onQueryStatusNYI, KeyApplyOneAndAHalfSpace, SRID.KeyApplyOneAndAHalfSpaceDisplayString );
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyDoubleSpace          , new ExecutedRoutedEventHandler(OnApplyDoubleSpace)          , onQueryStatusNYI, KeyApplyDoubleSpace,      SRID.KeyApplyDoubleSpaceDisplayString      );
             }
 
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyParagraphFlowDirectionLTR, new ExecutedRoutedEventHandler(OnApplyParagraphFlowDirectionLTR), onQueryStatusNYI);

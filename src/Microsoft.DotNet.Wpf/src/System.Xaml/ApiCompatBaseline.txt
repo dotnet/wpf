@@ -30,4 +30,5 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlObjectWriterException' d
 CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlSchemaException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlXmlWriterException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotChangeAttribute : Attribute 'System.Diagnostics.DebuggerDisplayAttribute' on 'System.Xaml.Schema.XamlTypeName' changed from '[DebuggerDisplayAttribute("{{{Namespace}}}{Name}{TypeArgStringForDebugger}")]' in the contract to '[DebuggerDisplayAttribute("{ToString()}")]' in the implementation.
 Total Issues: 33

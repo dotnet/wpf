@@ -6,20 +6,26 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms" 
                       Version="$(MicrosoftNETCorePlatformsVersion)" 
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(WpfTest)'!='true'"/>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
     
     <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
                                 Version="$(MicrosoftNETCorePlatformsVersion)" 
-                                Condition="'$(ManagedCxx)'=='true' And '$(WpfTest)'!='true'"/>
+                                Condition="'$(ManagedCxx)'=='true'"/>
     
     <FrameworkReference Update="Microsoft.NETCore.App"
-                      Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true' And $(TargetFramework.StartsWith('netcoreapp3.')) And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(WpfTest)'!='true'">
+                      Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true' And $(TargetFramework.StartsWith('netcoreapp3.')) And '$(MSBuildProjectExtension)'!='.vcxproj'">
       <TargetingPackVersion>$(MicrosoftNETCoreAppVersion)</TargetingPackVersion>
     </FrameworkReference>
+
+    <!-- 
+      Workaround - this should be removed when our tests are converted from Microsoft.NET.Sdk.WindowsDesktop => Microsoft.NET.Sdk
+      project
+    -->
+    <KnownFrameworkReference Remove="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <PropertyGroup>
     <!-- If TargetFramework is not netcoreapp3.x, then reset RuntimeFrameworkVersion -->
-    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.')) And '$(WpfTest)'=='true'" />
+    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.'))" />
   </PropertyGroup>
 </Project>

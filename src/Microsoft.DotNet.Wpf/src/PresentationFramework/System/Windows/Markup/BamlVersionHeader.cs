@@ -110,7 +110,6 @@ namespace System.Windows.Markup
                                  "Incorrect Baml Version Header Size");
             }
 #endif
-
         }
 
         FormatVersion _bamlVersion;

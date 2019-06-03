@@ -1,7 +1,6 @@
 # editorconfig.org
 
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
-
 # top-most EditorConfig file
 root = true
 
@@ -138,6 +137,10 @@ csharp_space_between_square_brackets = false
 [*.{cpp,h,in}]
 curly_bracket_next_line = true
 indent_brace_style = Allman
+
+# Visual Studio Solution files
+[*.sln]
+end_of_line = lf
 
 # Xml project files
 [*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]

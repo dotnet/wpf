@@ -133,8 +133,8 @@ namespace Microsoft.Build.Tasks.Windows
                 // odd things with project names that already contains a period (like System.Windows.
                 // Contols.Ribbon.csproj). Instead, just append the extension - after all, we already know
                 // for a fact that this name (i.e., tempProj) lacks a file extension.
-                string tempProj = string.Join("_", currentProjectName, randomFileName, WPFTMP);
-                tempProj = tempProj  + currentProjectExtension;
+                string tempProjPrefix = string.Join("_", currentProjectName, randomFileName, WPFTMP);
+                string tempProj = tempProjPrefix  + currentProjectExtension;
 
 
                 // Save the xmlDocument content into the temporary project file.
@@ -157,12 +157,18 @@ namespace Microsoft.Build.Tasks.Windows
 
                 retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, null);
 
-                // Delete the temporary project file unless diagnostic mode has been requested
+                // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
                 {
                     try
                     {
                         File.Delete(tempProj);
+
+                        DirectoryInfo intermediateOutputPath = new DirectoryInfo(IntermediateOutputPath);
+                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(tempProjPrefix, "*")))
+                        {
+                            temporaryProjectFile.Delete();
+                        }
                     }
                     catch (IOException e)
                     {

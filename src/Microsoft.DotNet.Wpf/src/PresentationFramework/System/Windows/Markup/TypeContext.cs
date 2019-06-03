@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   class for the main TypeConverterContext object passed to type converters
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
@@ -22,7 +20,6 @@ namespace System.Windows.Markup
     ///<summary>TypeConverterContext class used for parsing Attributes.</summary>
     internal class TypeConvertContext : ITypeDescriptorContext
     {
-
 #region Public
 
 #region Methods
@@ -191,5 +188,4 @@ namespace System.Windows.Markup
 #endregion Private
 
     }
-
 }

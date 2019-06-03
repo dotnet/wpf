@@ -1,4 +1,7 @@
 <Project>
+  <PropertyGroup>
+    <RepositoryName>wpf</RepositoryName>
+  </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
     <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>

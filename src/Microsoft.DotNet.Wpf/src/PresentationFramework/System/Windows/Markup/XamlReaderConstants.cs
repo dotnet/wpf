@@ -9,9 +9,6 @@
 \***************************************************************************/
 
 // set this flag to turn on whitespace collapse rules.
-// todo: need a whitespace DRT
-// todo: need to know if parent Accepts textNodes
-// todo: need to know if parent wants a TextFlow
 // #define UseValidatingReader
 
 using System;
@@ -52,7 +49,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     internal partial class XamlReaderHelper
     {
         // Define for the Definition NamespaceURI so not hardcoded everywhere.
@@ -80,7 +76,7 @@ namespace System.Windows.Markup
         internal const string DefaultNamespaceURI = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
 
         // Default URI for Metro.  Note that this is used to map Key attribute for resource
-        // dictionaries only. Refer to Windows bug # 1100953 for more info.
+        // dictionaries only. 
         internal const string DefinitionMetroNamespaceURI = "http://schemas.microsoft.com/xps/2005/06/resourcedictionary-key";
 
         // URI for WPF parsing options (currently only used for option to Freeze Freezables)

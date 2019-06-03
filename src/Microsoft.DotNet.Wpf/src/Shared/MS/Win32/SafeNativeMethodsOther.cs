@@ -337,7 +337,6 @@ namespace MS.Win32 {
               internal static extern int GetMessageTime();
 #endif
         }
-
-    }
+}
 }
 

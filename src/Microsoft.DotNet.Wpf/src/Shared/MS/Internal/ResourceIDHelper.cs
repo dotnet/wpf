@@ -9,7 +9,6 @@ using System.Globalization;
 namespace MS.Internal
 {
     internal static class ResourceIDHelper {
-
         //
         // Convert relative path to the right format which is used 
         // as ResourceID.
@@ -77,8 +76,6 @@ namespace MS.Internal
             }
 
             return resourceID;
-
-        }
-
-    }
+}
+}
 }

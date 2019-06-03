@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Handles local caching operations on the XmlnsCache file used for parsing
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.IO;
@@ -41,7 +39,6 @@ namespace System.Windows.Markup
 {
     internal class XmlnsCache
     {
-
 #if PBTCOMPILER
         static XmlnsCache()
         {
@@ -467,5 +464,4 @@ namespace System.Windows.Markup
         string _assemblyName;
         string _clrNamespace;
     }
-
 }

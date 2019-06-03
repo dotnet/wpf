@@ -38,7 +38,6 @@ using System.Windows;
 namespace System.Windows.Markup
 #endif
 {
-
     #region enums
 
     /// <summary>
@@ -1459,6 +1458,5 @@ namespace System.Windows.Markup
 
             throw parseException;
         }
-
     }
 }

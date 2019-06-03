@@ -18,7 +18,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     internal class BamlBinaryWriter: BinaryWriter
     {
         public BamlBinaryWriter(Stream stream, Encoding code)

@@ -160,6 +160,5 @@ namespace MS.Utility
     }
 
     #endregion Trace
-
 }
 #endif 

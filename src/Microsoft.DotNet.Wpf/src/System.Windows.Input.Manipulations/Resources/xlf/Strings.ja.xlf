@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
+    <body>
+      <trans-unit id="ArgumentOutOfRange">
+        <source>Value of {0} is outside of the allowed range.</source>
+        <target state="translated">値 {0} は許容された範囲内にありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeParameterDuringInertia">
+        <source>The value of {0} cannot be changed while the inertia processor is running.</source>
+        <target state="translated">慣性プロセッサの動作中は {0} の値を変更できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalPivotRadius">
+        <source>Value of {0} must be either NaN, or a finite value greater than or equal to 1.</source>
+        <target state="translated">{0} の値は、NaN または 1 以上の有限数でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified1and2">
+        <source>Either {0}, or {1} and {2}, needs to be specified.</source>
+        <target state="translated">{0}、または {1} と {2} のどちらかを指定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified2">
+        <source>Either {0} or {1} needs to be specified.</source>
+        <target state="translated">{0} または {1} のどちらかを指定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaProcessorInvalidRadius">
+        <source>InitialRadius should be a finite number, greater than or equal to 1.</source>
+        <target state="translated">InitialRadius は 1 以上の有限数でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTimestamp">
+        <source>Timestamp values must not decrease.</source>
+        <target state="translated">タイムスタンプ値を小さくすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoInertiaVelocitiesSpecified">
+        <source>At least one of the following must be specified: linear velocity ({0} or {1}), angular velocity ({2}), or expansion velocity ({3} or {4}).</source>
+        <target state="translated">少なくとも次のいずれか 1 つを指定する必要があります: 線速度 ({0} または {1})、角速度 ({2})、または膨張速度 ({3} または {4})。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyProportionalExpansionSupported">
+        <source>Currently, only proportional expansion is supported. {0} must equal {1}.</source>
+        <target state="translated">現在は比例拡大のみがサポートされています。{0} は {1} と等しくなければなりません。</target>
+        <note>{0} and {1} are the names of arguments.</note>
+      </trans-unit>
+      <trans-unit id="ValueMustBeFinite">
+        <source>Value of {0} must be finite.</source>
+        <target state="translated">{0} の値は有限数でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteNonNegative">
+        <source>Value of {0} must be finite and non-negative.</source>
+        <target state="translated">{0} の値は負でない有限数でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteOrNaN">
+        <source>Value of {0} must be finite or NaN.</source>
+        <target state="translated">{0} の値は有限数または NaN でなければなりません。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

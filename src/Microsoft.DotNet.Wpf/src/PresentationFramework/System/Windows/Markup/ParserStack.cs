@@ -41,7 +41,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     /// <summary>
     /// Parser Context stack
     /// The built-in Stack class doesn't let you do things like look at nodes beyond the top of the stack...

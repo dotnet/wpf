@@ -63,7 +63,6 @@ namespace MS.Win32
             IntPtr parent,
             HwndWrapperHook[] hooks)
         {
-
             _ownerThreadID = new SecurityCriticalDataForSet<int>(Thread.CurrentThread.ManagedThreadId);
 
 

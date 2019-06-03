@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//-----------------------------------------------------------------------------
 //
 // Description:
 //  A major, minor version number pair.
 //
-//-----------------------------------------------------------------------------
 
 // Allow use of presharp warning numbers [6506] unknown to the compiler
 #pragma warning disable 1634, 1691
@@ -376,8 +374,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         private Int16 _major;             // Major number
         private Int16 _minor;             // Minor number
-        
-        #endregion Member Variables
 
+        #endregion Member Variables
     }
 }

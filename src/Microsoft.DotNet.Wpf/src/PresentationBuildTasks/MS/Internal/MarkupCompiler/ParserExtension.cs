@@ -691,7 +691,13 @@ namespace MS.Internal
                 _compiler.CheckForNestedNameScope();
             }
 
-            // Clear the compiler's generic type argument list (see Dev11 923).
+            // Clear the compiler's generic type argument list 
+            // (Strange xaml compilation error MC6025 in unrelated class)
+            // The bug arises because the markup compiler's _typeArgsList is set for any tag 
+            // that has an x:TypeArguments attribute.   It should be cleared upon reaching the
+            // end of the tag's attributes, but this only happens in the non-pass2 case.  If the
+            // tag needs pass2 processing, the list is set but not cleared, leading to a mysterious
+            // exception in the next tag (<ResourceDictionary>, in the repro).
             _compiler.ClearGenericTypeArgs();
 
             base.WriteEndAttributes(xamlEndAttributesNode);

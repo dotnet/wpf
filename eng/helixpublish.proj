@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <HelixCorrelationPayload Include="$(ArtifactsDir)\test\$(Configuration)\$(Platform)" /> 
-    <HelixWorkItem Include="@(DRT->'%(Identity)'">
+    <HelixWorkItem Include="@(DRT)">
       <Timeout>00:20:00</Timeout>
       <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=%(Area)</Command>
     </HelixWorkItem>

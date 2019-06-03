@@ -17,6 +17,10 @@
     <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
+
+    <!-- Properly calculates the RuntimeIdentifier based on the Platform type. Doesn't actually set the RuntimeIdentifier property. -->
+    <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</WpfRuntimeIdentifier>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>

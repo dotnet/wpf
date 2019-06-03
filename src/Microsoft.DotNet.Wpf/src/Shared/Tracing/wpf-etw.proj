@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Dogfood">
+
+  <Import Project="$(_NTDRIVE)$(_NTROOT)\tools\Microsoft.DevDiv.Settings.targets" />
+    
+    <PropertyGroup>
+        <OutputPath>$(BinariesDirectory)\WPF</OutputPath>
+        <RootOutputPath>$(OutputPath)</RootOutputPath>
+        <OutDir>$(OutputPath)</OutDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <DataFile Include="wpf-etw.evxml" />
+    </ItemGroup>
+
+    <Import Project="$(ToolsPath)\Microsoft.DevDiv.Native.targets" />
+
+    <Target Name="BeforeBuildCompiled"
+            DependsOnTargets="WriteOldStyleNDPVersionIncFile" 
+            Inputs="$(OldStyleNDPVersionIncFile)"
+            Outputs="$(OutputPath)\wpf-etw.man" >
+        <Exec Command="EventTraceCodeGen.cmd /updateversion -i wpf-etw.man -o $(OutputPath)\wpf-etw.man --verfile $(OldStyleNDPVersionIncFile)" />
+    </Target>
+</Project>
+

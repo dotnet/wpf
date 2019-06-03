@@ -21,7 +21,6 @@ using System.Diagnostics;
 #endif
 namespace MS.Win32
 {
-
     using Accessibility;
     using System.Runtime.CompilerServices;
     using System.Runtime.ConstrainedExecution;
@@ -37,7 +36,6 @@ namespace MS.Win32
     
     //[SuppressUnmanagedCodeSecurity()]
     internal partial class UnsafeNativeMethods {
-
         //------------------------------------------------------
         //
         //  public Methods
@@ -2365,7 +2363,7 @@ namespace MS.Win32
             ///     Critical - calls unmanaged code
             /// </SecurityNote>
             [SecurityCritical]
-            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // todo: "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
             //                 [in] LONG cchReq,
@@ -2376,7 +2374,7 @@ namespace MS.Win32
             ///     Critical - calls unmanaged code
             /// </SecurityNote>
             [SecurityCritical]
-            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // todo: "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,
@@ -2603,7 +2601,7 @@ namespace MS.Win32
             ///     Critical - calls unmanaged code
             /// </SecurityNote>
             [SecurityCritical]
-            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // todo: "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
             //                 [in] LONG cchReq,
@@ -2614,7 +2612,7 @@ namespace MS.Win32
             ///     Critical - calls unmanaged code
             /// </SecurityNote>
             [SecurityCritical]
-            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // todo: "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,
@@ -3037,7 +3035,6 @@ namespace MS.Win32
             //                                  [in] ULONG cProperties,
             //                                  [out] IEnumTfRanges **ppEnum);
             //
-            // TODO: yutakas
             //
             // Use "ref IntPtr" Temporarily.
             // See the comment in InputMethodProperty.GetPropertyUpdate().
@@ -3412,8 +3409,7 @@ namespace MS.Win32
             /// </SecurityNote>
             [SecurityCritical]
             void GetDisplayAttributeInfo(ref Guid guid, out ITfDisplayAttributeInfo info, out Guid clsid);
-
-        }
+}
 
         /// <summary></summary>
         /// <SecurityNote>

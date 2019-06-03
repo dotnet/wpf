@@ -1,0 +1,79 @@
+;
+;  This file contains trace information used to generate wrapper
+;  classes.
+;
+;  The format of the info is a set of sections, where each section
+;  contains:
+;
+;      [TraceName,TraceArea,WrapperClassName]
+;      Trace1=1,,{"Base message 1","Param1","Param2"}
+;      Trace2=,,{"Base message 2","Param1","Param2"}
+;      Trace3=AUTO,,{"Base message 3","InParam1","InParam2"}
+;      Trace4=PREVIOUS,,{"Base message 4","OutParam1","OutParam2"}
+;      Trace5=,FORMAT,{"{0} is broken","Param1","Param2"}
+;      ...
+;      [end]
+;
+;  These sections break down as follows ...
+;
+;  TraceName:  This is the name of the trace source, and the name that you use to enable
+;  this group of traces in the .config file.  This should be named with the appropriate
+;  CLR namespace for the feature area.  If the feature area doesn't have its own namespace,
+;  e.g. the code is in the root System.Windows namespace, either use a class name, or
+;  what the namespace would be if it had one.
+;
+;  TraceArea: This is the name of the area and is used to construct the static property
+;  names for the PresenationTraceSources class.
+;
+;  WrapperClassName: This is the name of a class that will be generated to wrap
+;  the trace messages that follow.  By convention, this should start with "Trace".
+;
+;  Trace detail:
+;      In the trace details, the first comma-delimited value is the trace ID (integer),
+;      and each trace ID should generally be unique within the section.
+;      The keyword 'AUTO' may be used to auto-generate the id: (= max_id_in_section + 1)
+;      The keyword 'PREVIOUS' will repeat the last used id.  Blank is the same as 'AUTO'.
+;      Trace strings with hard-coded ID should be listed before the AUTO ones to avoid duplicate ID.
+;
+;      The second value indicates whether the message should be treated as a format string:
+;      blank or '0' means NOT a format string.
+;
+;      The remainder is a string array:
+;      The first string in the array is the basic message, and the remaining strings correspond 
+;      to the variable argument list in the trace call.
+;
+;
+;  Example:
+;
+;  [System.Windows,Area,TraceClass]
+;  TraceBasic=,,{"basic msg", "data1", "data2"}
+;  TraceFormat=,FORMAT,{"{0} is doing something to {1}.", "data1", "data2"}
+;  [end]
+;
+;  In code, the TraceClass is used like this:
+;
+;  // basic message
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceBasic, data1, data2 );
+;
+;  // message with format string
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceFormat( arg1, arg2 ), data1, data2 );
+;  
+
+[System.Windows.RoutedEvent,RoutedEvent,TraceRoutedEvent]
+RaiseEvent=,,{"Raise RoutedEvent", "RoutedEvent", "Element", "RoutedEventArgs", "Handled"}
+ReRaiseEventAs=,,{"Raise RoutedEvent", "RoutedEvent", "Element", "RoutedEventArgs", "Handled"}
+HandleEvent=,,{ "RoutedEvent has set Handled", "Handled", "EventOwnerType", "EventName", "RoutedEventArgs" }
+InvokeHandlers=,,{ "InvokeHandlers", "Element", "RoutedEventArgs", "Handled" }
+[end]
+
+[System.Windows.Media.Animation,Animation,TraceAnimation]
+StoryboardBegin=,,{"Storyboard has begun", "Storyboard", "StoryboardName", "TargetElement", "NameScope"}
+StoryboardPause=,,{"Storyboard has been paused", "Storyboard", "StoryboardName", "TargetElement"}
+StoryboardRemove=,,{"Storyboard has been removed", "Storyboard", "StoryboardName", "TargetElement"}
+StoryboardResume=,,{"Storyboard has been resumed", "Storyboard", "StoryboardName", "TargetElement"}
+StoryboardStop=,,{"Storyboard has been stopped", "Storyboard", "StoryboardName", "TargetElement"}
+StoryboardNotApplied=,,{"Unable to perform action because the specified Storyboard was never applied to this object for interactive control.", "Action", "Storyboard", "TargetElement"}
+AnimateStorageValidationFailed=,,{"Animated property failed validation. Animated value not set.", "AnimationStorage", "AnimatedValue", "AnimatedObject", "AnimatedProperty"}
+AnimateStorageValidationNoLongerFailing=,,{"Animated property no longer failing validation.", "AnimationStorage", "AnimatedValue", "AnimatedObject", "AnimatedProperty"}
+[end]
+

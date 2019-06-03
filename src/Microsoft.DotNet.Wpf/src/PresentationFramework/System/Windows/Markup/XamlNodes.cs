@@ -41,7 +41,6 @@ namespace System.Windows.Markup
         /// </summary>
         internal enum XamlNodeType
         {
-
             /// <summary>
             /// Unknown Node
             /// </summary>
@@ -320,7 +319,6 @@ namespace System.Windows.Markup
             int _lineNumber;
             int _linePosition;
             int _depth;
-
         }
 
 
@@ -339,7 +337,6 @@ namespace System.Windows.Markup
                 : base (XamlNodeType.DocumentStart,lineNumber,linePosition,depth)
             {
             }
-
         }
 
         /// <summary>
@@ -1076,7 +1073,6 @@ namespace System.Windows.Markup
             string _name;
 
             BamlAttributeUsage _attributeUsage;
-           
         }
      
         /// <summary>
@@ -1338,7 +1334,6 @@ namespace System.Windows.Markup
                 : base (tokenType,lineNumber,linePosition,depth)
             {
             }
-
         }
 
         /// <summary>
@@ -1401,7 +1396,6 @@ namespace System.Windows.Markup
             }
 
             string _value;
-
         }
         
         /// <summary>
@@ -1542,7 +1536,6 @@ namespace System.Windows.Markup
             string         _assemblyName;
             string         _typeFullName;
             string         _routedEventName;
-
         }
 
 #endif
@@ -1566,7 +1559,6 @@ namespace System.Windows.Markup
             {
                 _prefix = prefix;
                 _xmlNamespace = xmlNamespace;
-
             }
 
             /// <summary>
@@ -1784,7 +1776,6 @@ namespace System.Windows.Markup
             string _eventName;
             MemberInfo _eventMember;
 #endif
-            
         }
 
         /// <summary>
@@ -1812,7 +1803,6 @@ namespace System.Windows.Markup
                                                     propertyName)
             {
             }
-            
         }
 
         /// <summary>
@@ -1847,7 +1837,6 @@ namespace System.Windows.Markup
                                                     propertyName)
             {
             }
-            
         }
         
         /// <summary>
@@ -1875,7 +1864,6 @@ namespace System.Windows.Markup
                                                     propertyName)
             {
             }
-            
         }
 
 

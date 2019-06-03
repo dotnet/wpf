@@ -93,7 +93,6 @@ namespace Microsoft.Internal.Interop
         [SecurityCritical]
         static OSVersionHelper()
         {
-
             IsOsWindows10RS5OrGreater = IsWindows10RS5OrGreater();
 
             IsOsWindows10RS3OrGreater = IsWindows10RS3OrGreater();
@@ -279,7 +278,7 @@ namespace Microsoft.Internal.Interop
         {
             if (IsOsWindows10RS5OrGreater)
             {
-                return OperatingSystemVersion.Windows10RS3;
+                return OperatingSystemVersion.Windows10RS5;
             }
             else if (IsOsWindows10RS3OrGreater)
             {

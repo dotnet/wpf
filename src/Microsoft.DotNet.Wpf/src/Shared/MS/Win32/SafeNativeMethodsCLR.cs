@@ -40,7 +40,6 @@ namespace MS.Win32
     ///</SecurityNote>
     internal static partial class SafeNativeMethods
     {
-
         /// <SecurityNote>
         ///    Critical: This code calls into unmanaged code which elevates
         ///    TreatAsSafe: This method is ok to give out
@@ -470,8 +469,7 @@ namespace MS.Win32
         public static IntPtr GetCapture()
         {
             return SafeNativeMethodsPrivate.GetCapture();
-
-        }
+}
 #if BASE_NATIVEMETHODS
         /// <SecurityNote>
         /// This function cannot be used to capture mouse input for another process.
@@ -859,7 +857,6 @@ namespace MS.Win32
         [SuppressUnmanagedCodeSecurity,SecurityCritical(SecurityCriticalScope.Everything)]
         private partial class SafeNativeMethodsPrivate
         {
-
             [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern int GetCurrentProcessId();
 

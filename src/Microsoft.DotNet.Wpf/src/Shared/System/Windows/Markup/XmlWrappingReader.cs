@@ -17,7 +17,6 @@ namespace System.Xaml
 namespace System.Windows.Markup 
 #endif
 {
-
     internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver {
 //
 // Fields

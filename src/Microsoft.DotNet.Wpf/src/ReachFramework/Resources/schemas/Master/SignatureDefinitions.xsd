@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/xps/2005/06/signature-definitions"
+            xmlns="http://schemas.microsoft.com/xps/2005/06/signature-definitions"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+            elementFormDefault="qualified" blockDefault="#all">
+
+    <xs:import
+        namespace="http://www.w3.org/XML/1998/namespace"
+        schemaLocation="http://metroportal/working%20group/Markup%20Schema/Master/xmllang.xsd"/>
+        
+    <xs:complexType name="SignatureDefinitionsType">
+        <xs:annotation>
+            <xs:appinfo>SignatureDefinitionsType</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SignatureDefinition" type="SignatureDefinitionType" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>SignatureDefinition</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="SpotLocationType">
+        <xs:annotation>
+            <xs:appinfo>SpotLocationType</xs:appinfo>
+        </xs:annotation>
+        <xs:attribute name="PageURI" type="xs:anyURI" use="required">
+            <xs:annotation>
+                <xs:appinfo>PageURI</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="StartX" type="xs:double" use="required">
+            <xs:annotation>
+                <xs:appinfo>StartX</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="StartY" type="xs:double" use="required">
+            <xs:annotation>
+                <xs:appinfo>StartY</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="SignatureDefinitionType">
+        <xs:annotation>
+            <xs:appinfo>SignatureDefinitionType</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SpotLocation" type="SpotLocationType" minOccurs="0" >
+                <xs:annotation>
+                    <xs:appinfo>SpotLocation</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Intent" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Intent</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SignBy" type="xs:dateTime" minOccurs="0" >
+                <xs:annotation>
+                    <xs:appinfo>SignBy</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SigningLocation" type="xs:string" minOccurs="0" >
+                <xs:annotation>
+                    <xs:appinfo>SigningLocation</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="SpotID" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:appinfo>SpotID</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SignerName" type="xs:string" >
+            <xs:annotation>
+                <xs:appinfo>SignerName</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    <xs:attribute ref="xml:lang">
+        <xs:annotation>
+            <xs:appinfo>xmllang</xs:appinfo>
+        </xs:annotation>
+    </xs:attribute>
+    </xs:complexType>
+    
+    <xs:element name="SignatureDefinitions" type="SignatureDefinitionsType" >
+        <xs:annotation>
+            <xs:appinfo>SignatureDefinitions</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

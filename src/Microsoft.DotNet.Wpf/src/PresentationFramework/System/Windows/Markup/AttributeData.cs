@@ -167,5 +167,4 @@ namespace System.Windows.Markup
     }
 
     #endregion CompactSyntaxData
-
 }

@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   XamlSerializer used to persist collections of integer indices in Baml
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -45,7 +43,6 @@ namespace System.Windows.Markup
 
     internal class XamlInt32CollectionSerializer : XamlSerializer
     {
-
         //
         // Internal only class.         
         //  We actually create a class here - to avoid jitting for use of struct/value type
@@ -213,7 +210,6 @@ namespace System.Windows.Markup
                                             ints.Internal_GetItem(i)
 #endif                                  
                                         );
-                            
                         }
                     }
                     break; 
@@ -336,7 +332,6 @@ namespace System.Windows.Markup
                     
                     default:
                         throw new ArgumentException(SR.Get(SRID.UnknownIndexType)); 
-                        
                 }
             }
 
@@ -354,8 +349,6 @@ namespace System.Windows.Markup
             UShort= 3, 
             Integer=  4
         }
-
-
     }
 }
 

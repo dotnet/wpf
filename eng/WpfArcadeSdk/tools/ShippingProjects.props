@@ -2,24 +2,29 @@
   <PropertyGroup>
     <ExternalShippingProjects>
       System.Xaml;
-      PresentationBuildTasks
-    </ExternalShippingProjects>
-
-    <InternalShippingProjects>
+      PresentationBuildTasks;
       PresentationCore;
       DirectWriteForwarder;
       PresentationCore-CommonResources;
       PresentationFramework;
+      ReachFramework;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      System.Windows.Input.Manipulations;
       PresentationFramework-SystemCore;
       PresentationFramework-SystemData;
       PresentationFramework-SystemDrawing;
       PresentationFramework-SystemXml;
       PresentationFramework-SystemXmlLinq;
+    </ExternalShippingProjects>
+
+    <InternalShippingProjects>
       PresentationUI;
-      ReachFramework;
       System.Printing;
       System.Windows.Controls.Ribbon;
-      System.Windows.Input.Manipulations;
       System.Windows.Presentation;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
@@ -27,11 +32,6 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      UIAutomationClient;
-      UIAutomationClientSideProviders;
-      UIAutomationProvider;
-      UIAutomationTypes;
-      WindowsBase;
       WindowsFormsIntegration;
       PenImc;
       PresentationNative;

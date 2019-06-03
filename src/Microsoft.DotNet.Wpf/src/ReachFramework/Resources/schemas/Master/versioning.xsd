@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+            targetNamespace="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+-->
+            
+<xs:schema 
+            targetNamespace="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+            elementFormDefault="qualified" blockDefault="#all">
+
+    <!-- Attributes -->
+    <xs:attribute name="Ignorable" type="frlrfSystemStringClassTopic" >
+        <xs:annotation>
+            <xs:appinfo>Ignorable</xs:appinfo>
+        </xs:annotation>
+    </xs:attribute>
+    
+    <xs:attribute name="ProcessContent" type="frlrfSystemStringClassTopic" >
+        <xs:annotation>
+            <xs:appinfo>ProcessContent</xs:appinfo>
+        </xs:annotation>
+    </xs:attribute>
+        
+    <xs:attribute name="MustUnderstand" type="frlrfSystemStringClassTopic" >
+        <xs:annotation>
+            <xs:appinfo>MustUnderstand</xs:appinfo>
+        </xs:annotation>
+    </xs:attribute>
+    
+    <!-- Elements -->
+    <xs:element type="dAlternateContent" name="AlternateContent" >
+        <xs:annotation>
+            <xs:appinfo>dAlternateContent</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    
+    <xs:complexType name="dCode" mixed="true" >
+        <xs:annotation>
+            <xs:appinfo>dCode</xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+        
+    <xs:complexType name="dAlternateContent">
+        <xs:annotation>
+            <xs:appinfo>dAlternateContent</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+            <xs:element type="dChoice" name="Choice" minOccurs="1" maxOccurs="unbounded" >
+                <xs:annotation>
+                    <xs:appinfo>Choice</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="dFallback" name="Fallback" minOccurs="0" maxOccurs="1" >
+                <xs:annotation>
+                    <xs:appinfo>Fallback</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="dChoice">
+        <xs:annotation>
+            <xs:appinfo>dChoice</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+            <xs:any namespace="##any" processContents="skip" />
+        </xs:sequence>
+        <xs:attribute name="Requires" type="frlrfSystemStringClassTopic" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="dFallback">
+        <xs:annotation>
+            <xs:appinfo>dFallback</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+            <xs:any namespace="##any" processContents="skip" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="frlrfSystemStringClassTopic" >
+        <xs:annotation>
+            <xs:appinfo>frlrfSystemStringClassTopic</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+</xs:schema>

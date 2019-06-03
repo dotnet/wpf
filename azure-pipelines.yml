@@ -9,11 +9,6 @@ variables:
 
   # clean the local repo on the build agents
   Build.Repository.Clean: true
-  # When set to true in a manual built, it produces and publishes 
-  # Microsoft.DotNet.Arcade.Wpf.Sdk
-  BuildMsBuildSdkPackages: false
-  _PublishUsingPipelines: true
-  _DotNetArtifactsCategory: WINDOWSDESKTOP
 
 
   _PublishUsingPipelines: true

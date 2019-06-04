@@ -314,20 +314,6 @@
       Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
     -->
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
-    
-    <!-- 
-      Workaround for https://github.com/dotnet/corefx/issues/37943
-    -->
-    <PackageReference Include="System.Memory" Version="4.5.2">
-      <NoWarn>$(NoWarn);NU1605</NoWarn>
-    </PackageReference>
-    <!-- 
-      Provide S.R.CompilerServices.Unsafe with AssermblyVersion=4.0.4.1
-      System.Memory/v4.5.2/AssemblyVersion=4.0.1.0 depends on this. 
-      
-      This is also a consequence of https://github.com/dotnet/corefx/issues/37943
-    -->
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@
 
     <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
 
-    <WindowsDesktopPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.WindowsDesktop.App\</WindowsDesktopPayloadPath>
+    <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,12 +31,7 @@
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-helix-machine.ps1" Condition="'$(ContinuousIntegrationBuild)'=='True'" />
-
-      <!-- 
-        We have to ship over the WindowsDesktop for our test infrastructure.
-        Once https://github.com/dotnet/wpf/issues/816 is done we can remove this.
-      -->
-      <WindowsDesktopContents Include="$(RepoRoot).dotnet\shared\Microsoft.WindowsDesktop.App\**\*.*" />
+      <MicrosoftNetCoreAppContents Include="$(DotNetRoot)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"
@@ -48,8 +43,14 @@
     <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
           DestinationFolder="$(WpfTestBasePayloadPath)DRT"  />
 
-    <Copy SourceFiles="@(WindowsDesktopContents)"
-          DestinationFiles="@(WindowsDesktopContents->'$(WindowsDesktopPayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"
+      <!-- 
+        We have to ship over the MicrosoftNetCoreApp that we run against for our tests. This is primarily due to QualityVault
+        being built against WindowsDesktop and there not being a way to install WindowsDesktop via the multi-framework support
+        by arcade due to https://github.com/dotnet/core-setup/issues/6370. Once https://github.com/dotnet/wpf/issues/816
+        is done we can remove this.
+      -->
+    <Copy SourceFiles="@(MicrosoftNetCoreAppContents)"
+          DestinationFiles="@(MicrosoftNetCoreAppContents->'$(NETCoreAppPayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"
           Condition="'$(ContinuousIntegrationBuild)'=='True'"/>
   </Target>
 

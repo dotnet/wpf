@@ -58,6 +58,10 @@
     <XUnitVersion>2.4.0</XUnitVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
+    <!--
+    This is the version of the test infrastructure package is compiled against. This should be
+    removed as part of https://github.com/dotnet/wpf/issues/816 
+    -->
     <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
   </PropertyGroup>
   <PropertyGroup>

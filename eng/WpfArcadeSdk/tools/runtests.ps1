@@ -4,28 +4,17 @@ Param(
     [switch]$ci
 )
 
-if ($ci)
+# Run any configuration needed for the test pass
+if (Test-Path "$PSScriptRoot\configure-machine.ps1")
 {
-    # When running in ci, the dotnet install is located at %HELIX_CORRELATION_PAYLOAD% along with all our test content.
-    $dotnetLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "dotnet"
-    # Only either the x86 or x64 versions of dotnet are installed on the helix machine, and they both go to the same location
-    $x86dotnetLocation = $dotnetLocation
-
-    # Run any extra machine setup required for Helix
-    . "$PSScriptRoot\configure-helix-machine.ps1"
-}
-else
-{
-    # When running local, we run out of $(RepoRoot)artifacts\test\$(Configuration)\$(Platform)
-    # The dotnet install is located at $(RepoRoot).dotnet
-    $dotnetLocation =  Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "..\..\..\..\.dotnet" -Resolve
-    # The x86 location installed by Arcade is in the x86 directory
-    $x86dotnetLocation = "$dotnetLocation\x86"
+    . "$PSScriptRoot\configure-machine.ps1" -ci:$ci
 }
 
-# Set DOTNET_ROOT variables so the host can find it
-Set-Item -Path "env:DOTNET_ROOT(x86)" -Value $x86dotnetLocation
-Set-Item -Path "env:DOTNET_ROOT" -Value $dotnetLocation
+if (Test-Path "$env:AppData\QualityVault")
+{
+    # Cleanup any QualityVault stuff left behind before executing the tests
+    Remove-Item "$env:AppData\QualityVault" -Recurse
+}
 
 # Run the tests
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
@@ -41,7 +30,13 @@ if (Test-Path "$testLocation\rundrts.cmd")
 # Need to copy the xUnit log to a known location that helix can understand
 if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
 {
-    $resultLocation = $PSScriptRoot
-    Write-Output "Copying test results to $resultLocation"
+    $resultLocation = Get-Location
+    Write-Output "Copying testResults.xml to $resultLocation"
     Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" $resultLocation
+}
+
+if (Test-Path "$env:AppData\QualityVault")
+{
+    # Cleanup what QualityVault left behind in AppData to save space on Helix machines
+    Remove-Item "$env:AppData\QualityVault" -Recurse
 }

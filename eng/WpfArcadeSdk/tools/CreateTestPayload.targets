@@ -26,12 +26,17 @@
   </PropertyGroup>
 
   <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build">
+    <PropertyGroup>
+      <LocalDotnetLocation>$(DotNetRoot)x86\</LocalDotnetLocation>
+      <LocalDotnetLocation Condition="'$(Platform)' == 'x64'">$(DotNetRoot)</LocalDotnetLocation>
+
+    </PropertyGroup>
     <ItemGroup>
       <MicrosoftDotNetWpfTestContents Include="$(MicrosoftDotNetWpfTestPath)**\*.*" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
-      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-helix-machine.ps1" Condition="'$(ContinuousIntegrationBuild)'=='True'" />
-      <MicrosoftNetCoreAppContents Include="$(DotNetRoot)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-machine.ps1" />
+      <MicrosoftNetCoreAppContents Include="$(LocalDotnetLocation)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"

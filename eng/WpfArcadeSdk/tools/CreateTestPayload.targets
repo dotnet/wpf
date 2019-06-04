@@ -6,9 +6,11 @@
      <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
     <PlatformFolder>x86</PlatformFolder>
     <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
-    <PublishRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PublishRoot>
+    <PayloadRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PayloadRoot>
 
-    <WpfTestBasePublishPath>$(PublishRoot)\Test\</WpfTestBasePublishPath>
+    <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
+
+    <WindowsDesktopPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.WindowsDesktop.App\</WindowsDesktopPayloadPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,16 +31,26 @@
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-helix-machine.ps1" Condition="'$(ContinuousIntegrationBuild)'=='True'" />
+
+      <!-- 
+        We have to ship over the WindowsDesktop for our test infrastructure.
+        Once https://github.com/dotnet/wpf/issues/816 is done we can remove this.
+      -->
+      <WindowsDesktopContents Include="$(RepoRoot).dotnet\shared\Microsoft.WindowsDesktop.App\**\*.*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"
-          DestinationFiles="@(MicrosoftDotNetWpfTestContents->'$(WpfTestBasePublishPath)%(RecursiveDir)%(Filename)%(Extension)')"  />
+          DestinationFiles="@(MicrosoftDotNetWpfTestContents->'$(WpfTestBasePayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"  />
 
     <Copy SourceFiles="@(OtherPayloadContents)"
-          DestinationFolder="$(PublishRoot)"  />
+          DestinationFolder="$(PayloadRoot)"  />
 
     <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
-          DestinationFolder="$(WpfTestBasePublishPath)DRT"  />
+          DestinationFolder="$(WpfTestBasePayloadPath)DRT"  />
+
+    <Copy SourceFiles="@(WindowsDesktopContents)"
+          DestinationFiles="@(WindowsDesktopContents->'$(WindowsDesktopPayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"
+          Condition="'$(ContinuousIntegrationBuild)'=='True'"/>
   </Target>
 
 </Project>

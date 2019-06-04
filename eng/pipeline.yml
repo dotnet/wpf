@@ -119,7 +119,11 @@ jobs:
       steps:
       - checkout: self
         clean: true
-      
+
+      # Set VSO Variable(s)
+      - powershell: eng\pre-build.ps1
+        displayName: Pre-Build - Set VSO Variables
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
           -configuration $(_BuildConfig) 

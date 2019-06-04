@@ -3,7 +3,8 @@
   <PropertyGroup>
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview7</PreReleaseVersionLabel>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>    <SystemIOPackagingVersion>4.6.0-preview7.19303.1</SystemIOPackagingVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <SystemIOPackagingVersion>4.6.0-preview7.19303.1</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -39,7 +40,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19303.8</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19303.9</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

@@ -10,7 +10,6 @@
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <CLSCompliant>false</CLSCompliant>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -18,4 +17,5 @@
       <GenerateSource>false</GenerateSource>
     </EmbeddedResource>
   </ItemDefinitionGroup>
+  <Import Project="$(WpfTestsDir)MultiTargeting.props" />
 </Project>

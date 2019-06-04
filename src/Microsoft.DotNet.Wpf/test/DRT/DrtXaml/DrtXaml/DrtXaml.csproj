@@ -3,7 +3,7 @@
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
     <LinkSubsystem>console</LinkSubsystem>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>DrtXaml.XamlDrt</StartupObject>
     <CreateTestPayload>true</CreateTestPayload>

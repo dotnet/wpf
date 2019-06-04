@@ -1,12 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>BamlAvoidXmlTest</AssemblyName>
-    <LinkSubsystem>console</LinkSubsystem>
-    <AssemblyIdentityVersionName>WCP</AssemblyIdentityVersionName>
-    <GenerateAssemblyAttribute>false</GenerateAssemblyAttribute>
-    <AddTargetFrameworkAttributeToWpfTestExe>true</AddTargetFrameworkAttributeToWpfTestExe>
-
-    <!-- Avoid auto-generating a main -->
     <RootNamespace>BamlAvoidXmlTest</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>

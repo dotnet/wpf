@@ -34,16 +34,41 @@
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" IsImplicitlyDefined="true" />
   </ItemGroup>
 
+  <!--
+    Traditionally, Visual Studio has supplied these references for .NET Framework based
+    WPF Projects: 
+    
+    .NET 3.x:   PresentationCore, PresentationFramework, WindowsBase 
+    .NET 4.x:   PresentationCore, PresentationFramework, WindowsBase, System.Xaml 
+
+
+    Microsoft.NET.WindowsDesktop.SDK will supply the following references to .NET Framework based 
+    WPF Projects: 
+    
+    .NET 3.x:   PresentationCore, PresentationFramework, WindowsBase 
+    
+    .NET 4.0:   PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
+                UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
+                
+    .NET 4.5+:  PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
+                UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
+                System.Windows.Controls.Ribbon
+  --> 
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' ">
     <_SDKImplicitReference Include="WindowsBase"/>
     <_SDKImplicitReference Include="PresentationCore"/>
     <_SDKImplicitReference Include="PresentationFramework"/>
-    <_SDKImplicitReference Include="System.Windows.Controls.Ribbon"/>
-    <_SDKImplicitReference Include="System.Xaml"/>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' And $(TargetFramework.StartsWith('net4'))">
+    <_SDKImplicitReference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </_SDKImplicitReference>
     <_SDKImplicitReference Include="UIAutomationClient"/>
     <_SDKImplicitReference Include="UIAutomationClientSideProviders"/>
     <_SDKImplicitReference Include="UIAutomationProvider"/>
     <_SDKImplicitReference Include="UIAutomationTypes"/>
+    <_SDKImplicitReference Condition="'$(TargetFramework)' != 'net40'" Include="System.Windows.Controls.Ribbon"/>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' ">

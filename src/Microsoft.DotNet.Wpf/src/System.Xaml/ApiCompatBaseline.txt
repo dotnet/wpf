@@ -14,6 +14,8 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.RuntimeNamePropert
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.TrimSurroundingWhitespaceAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.UidPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.UsableDuringInitializationAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.ValueSerializerAttribute' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ValueSerializerAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.WhitespaceSignificantCollectionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlDeferLoadAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlSetMarkupExtensionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -31,4 +33,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlParseException' does not
 CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlSchemaException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Xaml.XamlXmlWriterException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotChangeAttribute : Attribute 'System.Diagnostics.DebuggerDisplayAttribute' on 'System.Xaml.Schema.XamlTypeName' changed from '[DebuggerDisplayAttribute("{{{Namespace}}}{Name}{TypeArgStringForDebugger}")]' in the contract to '[DebuggerDisplayAttribute("{ToString()}")]' in the implementation.
-Total Issues: 33
+Total Issues: 34

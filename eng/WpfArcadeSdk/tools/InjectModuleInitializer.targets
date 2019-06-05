@@ -381,7 +381,8 @@
                 Assembly="$(InFile)"
                 Condition="Exists('$(InFile)')"
                 LineNum="true"
-                Out="$(OutFile)" />
+                Out="$(OutFile)"
+                NoBar="true" />
 
   </Target>
 
@@ -421,7 +422,8 @@
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"
                Dll="true"
-               Debug="true" />
+               Debug="true"
+               Quiet="true" />
 
   </Target>
 

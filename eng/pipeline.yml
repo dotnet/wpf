@@ -50,7 +50,7 @@ jobs:
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
         - name: _TestHelixAgentPool
-          value: 'Windows.10.Amd64.Open'
+          value: 'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ServerRS5.Open'
         - name: _HelixStagingDir
           value: $(BUILD.STAGINGDIRECTORY)\helix\functests
         - name: _HelixSource
@@ -96,6 +96,8 @@ jobs:
             value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
           - name: _HelixCreator
             value: '' #if _HelixToken is set, Creator must be empty
+          - name: _TestHelixAgentPool
+            value: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ServerRS5'
       strategy:
         matrix:
           Build_Debug_x86:

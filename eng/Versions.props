@@ -56,6 +56,7 @@
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
+    <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>

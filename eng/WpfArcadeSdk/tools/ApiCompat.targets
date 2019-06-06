@@ -44,57 +44,12 @@
     <TaskFactoryReference Include="netstandard" />
   </ItemGroup>
 
-  <!-- Find .NET Framework binary locations that are associated with the current assembly being produced. -->
-  <UsingTask TaskName="FindDotNetFrameworkFilesTask"
-             TaskFactory="$(TaskFactory)"
-             AssemblyFile="$(TaskFactoryAssemblyFile)">
-    <ParameterGroup>
-      <FrameworkFileName ParameterType="System.String" Output="true" Required="true"/>
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="Microsoft.Build.Utilities" />
-      <Code Type="fragment" Language="cs">
-        <![CDATA[
-          try
-          {
-            var net48RefPath = ToolLocationHelper.GetProgramFilesReferenceAssemblyRoot();
-            
-            if (string.IsNullOrEmpty(net48RefPath))
-            {
-              Log.LogError("Could not find .NET 4.8 Ref Directory");
-              return false;
-            }
-            else
-            {
-              FrameworkFileName = Path.Combine(net48RefPath, ".NETFramework", "v4.8", FrameworkFileName);
-              
-              if (string.IsNullOrEmpty(FrameworkFileName))
-              {
-                 Log.LogError(string.Format("Could not find .NET 4.8 Ref Assembly for: {0}{1}", FrameworkFileName, Environment.NewLine));
-                return false;
-              }
-            }
-          }
-          catch (Exception e)
-          {
-            Log.LogError(string.Format("Could not find .NET 4.8 Ref Assembly for: {0}{1}{2}", FrameworkFileName, Environment.NewLine, e.ToString()));
-            return false;
-          }
-        ]]>
-      </Code>
-    </Task>
-  </UsingTask>
-
-  <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the latest in .NET Framework -->
+  <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
   <Target Name="ResolveNetFrameworkApiCompatContract"
           BeforeTargets="ValidateApiCompatForSrc"
           Condition="'$(RunNetFrameworkApiCompat)'=='true'">
-    <FindDotNetFrameworkFilesTask FrameworkFileName="$(AssemblyName).dll">
-      <Output TaskParameter="FrameworkFileName" PropertyName="ContractFileName" />
-    </FindDotNetFrameworkFilesTask>
-
     <ItemGroup>
-      <ResolvedMatchingContract Include="$(ContractFileName)" />
+      <ResolvedMatchingContract Include="$(Net48RefAssembliesDir)$(AssemblyName).dll" />
     </ItemGroup>
   </Target>
 

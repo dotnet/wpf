@@ -35,6 +35,12 @@
       System.Printing-ref;
     </ReferenceCompatNeededProjects>
 
+    <!-- 
+      We use blob storage to ensure that all machines we build on have the .NET Framework 4.8 reference assemblies.  
+      This allows us to sidestep a requirement to have the .NET 4.8 Dev Pack installed.
+    -->
+    <Net48RefAssembliesDir>$(RepositoryToolsDir)native\bin\net-framework-48-ref-assemblies\$(NetFramework48RefAssembliesVersion)\</Net48RefAssembliesDir>
+
     <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
   </PropertyGroup>
 

@@ -46,8 +46,9 @@
            Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
 
-    <_wpfProjectsNotWindowsBase Include="@(WpfProjectPath)" Exclude="WindowsBase" />
-    <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsWindowsBase)" />
+    <_wpfProjectsNotWindowsBaseNotNative Include="@(WpfProjectPath)" Exclude="WindowsBase;PresentationNative_cor3;WpfGfx_cor3;PenImc_cor3" />
+    <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBase)" />
+    <_wpfNativeProjects Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBaseNotNative)" />
 
     <!-- 
     Do not include WindowsBase. There is a bug in the SDK that will prevent proper deps.json generation when WindowsBase.csproj
@@ -59,7 +60,7 @@
     
     Also make sure that Microsoft.NetCore.App/WindowsBase.dll is removed from @(Reference). 
     -->
-    <ProjectReference Include="@(_wpfProjectsNotWindowsBase->'%(ProjectPath)')" >
+    <ProjectReference Include="@(_wpfProjectsNotWindowsBaseNotNative->'%(ProjectPath)')" >
       <Private>True</Private>
       <OutputItemType>_wpfProjectReferenceLocallyBuildAssemblies</OutputItemType>
     </ProjectReference>
@@ -68,6 +69,14 @@
       <Private>True</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>_windowsBaseAssemblyLocallyBuiltPath</OutputItemType>
+    </ProjectReference>
+
+    <!-- Native assemblies can't be restored for our test projects.-->
+    <ProjectReference Include="@(_wpfNativeProjects->'%(ProjectPath)')" >
+      <Private>True</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ProjectReference>
   </ItemGroup>
 

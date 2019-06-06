@@ -39,6 +39,14 @@
       VCRuntime
     </InternalShippingProjects>
 
+    <InternalTestProjects>
+      QualityVaultFrontEnd;
+      QualityVaultDebugger;
+      sti;
+      TestApiCore;
+      TestRuntime
+    </InternalTestProjects>
+
     <ShippingProjects>
       $(ExternalShippingProjects);
       $(InternalShippingProjects)
@@ -101,6 +109,7 @@
       $(CycleBreakerProjects);
       $(ExternalHandCraftedReferenceProjects);
       $(InternalHandCraftedReferenceProjects);
+      $(InternalTestProjects)
     </HelperProjects>
 
     <!--
@@ -176,6 +185,10 @@
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
     <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+
+    <!-- Test package overrides Internal, External etc. -->
+    <RepoLocation Condition="$(InternalTestProjects.Contains('$(NormalizedMSBuildProjectName)'))">InternalTest</RepoLocation>
+
   </PropertyGroup>
 
 </Project>

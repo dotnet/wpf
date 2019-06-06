@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <LibFolder Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">tools</LibFolder>
+    <LibFolder Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)' or '$(PackageName)'=='$(PackageRuntimeIdentifierPrefix).$(DncEngTestPackageName)'">tools</LibFolder>
     <ExcludeRefAssemblies Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">true</ExcludeRefAssemblies>
     <ExcludePdbs Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">true</ExcludePdbs>
     <IncludeAssembliesInArchNeutralPackage Condition="'$(PackageName)'=='$(WindowsDesktopSdkPackageName)'">true</IncludeAssembliesInArchNeutralPackage>

@@ -6,7 +6,6 @@
   <PropertyGroup>
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
     <SignAssembly>false</SignAssembly>
-    <IsTestProject Condition="'$(IsTestProject)'!='false'">true</IsTestProject>
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <CLSCompliant>false</CLSCompliant>

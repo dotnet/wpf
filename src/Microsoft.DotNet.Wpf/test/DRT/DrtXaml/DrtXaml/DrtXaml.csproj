@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
     <IsIntegrationTestProject>false</IsIntegrationTestProject>
   </PropertyGroup>
   

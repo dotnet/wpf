@@ -18,11 +18,16 @@ if (Test-Path "$env:AppData\QualityVault")
 
 # Run the tests
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
-if (Test-Path "$testLocation\rundrts.cmd")
+if (Test-Path "$testLocation\QV.cmd")
 {
-    Invoke-Expression "$testLocation\rundrts.cmd $command"
+    # We invoke QV directly instead of rundrts to prevent the "RunDrtReport" script being generated. 
+    Invoke-Expression "$testLocation\QV.cmd Run /DiscoveryInfoPath=$testLocation\DiscoveryInfoDrts.xml /RunDirectory=$env:AppData\QualityVault\Run $command"
 }
 
+if ($ci -and (Test-Path "$env:AppData\QualityVault\Run\Report\DrtReport.xml"))
+{
+    Invoke-Expression "$env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py -result $env:AppData\QualityVault\Run\Report\DrtReport.xml -result_name DrtReport.xml"
+}
 # We can use $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT\upload_result.py to upload any QV specific logs and/or screenshots that we are interested in.
 # For example: $env:HELIX_PYTHONPATH $env:HELIX_SCRIPT_ROOT%\upload_result.py -result screenshot.jpg -result_name screenshot.jpg
 # Then, links to these artifacts can then be included in the xUnit logs.
@@ -30,7 +35,8 @@ if (Test-Path "$testLocation\rundrts.cmd")
 # Need to copy the xUnit log to a known location that helix can understand
 if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
 {
-    $resultLocation = Get-Location
+    Get-ChildItem env:
+    $resultLocation = if($ci) { Get-Location } else { $PSScriptRoot }
     Write-Output "Copying testResults.xml to $resultLocation"
     Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" $resultLocation
 }

@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>TestServices</AssemblyName>
-        <RootNamespace>TestServices</RootNamespace>
-        <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;CORE_NATIVEMETHODS;DRT</DefineConstants>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <NoWarn>$(NoWarn);CS0618;0618</NoWarn>
-        <Platforms>AnyCPU;x64</Platforms>
+      <AssemblyName>TestServices</AssemblyName>
+      <RootNamespace>TestServices</RootNamespace>
+      <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;CORE_NATIVEMETHODS;DRT</DefineConstants>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <NoWarn>$(NoWarn);CS0618;0618</NoWarn>
+      <Platforms>AnyCPU;x64</Platforms>
+      <CLSCompliant>false</CLSCompliant>
+      <OutputType>Library</OutputType>
     </PropertyGroup>
 
   <ItemGroup>

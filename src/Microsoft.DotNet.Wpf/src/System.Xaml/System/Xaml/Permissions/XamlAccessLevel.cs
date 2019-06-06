@@ -15,7 +15,7 @@ namespace System.Xaml.Permissions
         public static XamlAccessLevel AssemblyAccessTo(AssemblyName assemblyName) { return default(XamlAccessLevel); }
         public static XamlAccessLevel PrivateAccessTo(Type type) { return default(XamlAccessLevel); }
         public static XamlAccessLevel PrivateAccessTo(string assemblyQualifiedTypeName) { return default(XamlAccessLevel); }
-        public AssemblyName AssemblyAccessToAssemblyName { get; set; }
+        public AssemblyName AssemblyAccessToAssemblyName { get { return new AssemblyName(); } }
         public string PrivateAccessToTypeName { get; private set; }
     }
 }

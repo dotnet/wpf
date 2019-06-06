@@ -35,7 +35,7 @@ namespace System.Security.Permissions
         public MediaPermission(MediaPermissionAudio permissionAudio, 
                                MediaPermissionVideo permissionVideo, 
                                MediaPermissionImage permissionImage ) { }
-        public bool IsUnrestricted() { return false; }
+        public bool IsUnrestricted() { return true; }
         public override bool IsSubsetOf(IPermission target) { return false; }
         public override IPermission Intersect(IPermission target) { return default(IPermission); }
         public override IPermission Union(IPermission target) { return default(IPermission); }        

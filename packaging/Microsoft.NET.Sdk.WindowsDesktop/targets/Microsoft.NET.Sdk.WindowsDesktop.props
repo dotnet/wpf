@@ -53,22 +53,30 @@
     .NET 4.5+:  PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
                 UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
                 System.Windows.Controls.Ribbon
-  --> 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' ">
-    <_SDKImplicitReference Include="WindowsBase"/>
-    <_SDKImplicitReference Include="PresentationCore"/>
-    <_SDKImplicitReference Include="PresentationFramework"/>
+                
+    Note:
+      Please see https://github.com/microsoft/msbuild/issues/3212 for a discussion about the use of 
+      the private $(_TargetFrameworkVersionWithoutV) property - which will likely remain supported and
+      is safe to use here. 
+  -->
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(_TargetFrameworkVersionWithoutV)' != ''">
+    <_WpfCommonNetFxReference Include="WindowsBase" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
+    <_WpfCommonNetFxReference Include="PresentationCore" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
+    <_WpfCommonNetFxReference Include="PresentationFramework" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
+
+    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </_WpfCommonNetFxReference>
+    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
+
+    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.5'" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' And $(TargetFramework.StartsWith('net4'))">
-    <_SDKImplicitReference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </_SDKImplicitReference>
-    <_SDKImplicitReference Include="UIAutomationClient"/>
-    <_SDKImplicitReference Include="UIAutomationClientSideProviders"/>
-    <_SDKImplicitReference Include="UIAutomationProvider"/>
-    <_SDKImplicitReference Include="UIAutomationTypes"/>
-    <_SDKImplicitReference Condition="'$(TargetFramework)' != 'net40'" Include="System.Windows.Controls.Ribbon"/>
+  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' ">
+    <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' ">

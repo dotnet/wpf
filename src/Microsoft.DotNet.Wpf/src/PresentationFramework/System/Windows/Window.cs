@@ -399,7 +399,7 @@ namespace System.Windows
 
             Debug.Assert(_threadWindowHandles == null, "_threadWindowHandles must be null before enumerating the thread windows");
 
-            // NOTE: 
+            // NOTE:
             // _threadWindowHandles is created here.  This reference is nulled out in EnableThreadWindows
             // when it is called with a true parameter.  Please do not null it out anywhere else.
             // EnableThreadWindow(true) is called when dialog is going away.  Once dialog is closed and
@@ -423,7 +423,7 @@ namespace System.Windows
             if (hWndCapture != IntPtr.Zero)
             {
                 //
-                // NOTE: 
+                // NOTE:
                 // EnableWindow(false) (called from EnableThreadWindows(false)
                 // sends WM_CANCELMODE to the window, so we don't need
                 // to send it again.  However, if we change our impl
@@ -455,7 +455,7 @@ namespace System.Windows
             }
             catch
             {
-                // NOTE: 
+                // NOTE:
                 // See BUG 929740.
                 // _threadWindowHandles is created before calling ShowDialog and is deleted in
                 // EnableThreadWindows (when it's called with true).
@@ -1768,8 +1768,8 @@ namespace System.Windows
         ///     this <see cref="Window"/> object is modified
         /// </summary>
         /// <remarks>
-        ///     This corresponds to <see cref="OnVisualChildrenChanged(DependencyObject, DependencyObject)"/>. 
-        ///     The primary consumer of this event is <see cref="System.Windows.Shell.WindowChromeWorker"/>, 
+        ///     This corresponds to <see cref="OnVisualChildrenChanged(DependencyObject, DependencyObject)"/>.
+        ///     The primary consumer of this event is <see cref="System.Windows.Shell.WindowChromeWorker"/>,
         ///     which only needs to be aware of the fact that Visual children have changed, but doesn't
         ///     need to know which children have changed. Therefore the <see cref="DependencyObject"/>
         ///     parameters of <see cref="OnVisualChildrenChanged(DependencyObject, DependencyObject)"/> are
@@ -2423,7 +2423,7 @@ namespace System.Windows
             // detach all events
             Utilities.SafeDispose(ref _events);
 #endif
-            // NOTE: 
+            // NOTE:
             // This InternalDispose method is called while
             // processing WM_DESTROY msg. Once we're done
             // processing this msg, HwndWrapper does its processing.
@@ -2573,15 +2573,15 @@ namespace System.Windows
 
             GetRequestedDimensions(ref requestedLeft, ref requestedTop, ref requestedWidth, ref requestedHeight);
 
-            // Initially, an HWND created in a Per-Monitor Aware process may not 
-            // have a reliable DPI. Instead, it would be associated with the monitor in which the screen point (0,0) 
+            // Initially, an HWND created in a Per-Monitor Aware process may not
+            // have a reliable DPI. Instead, it would be associated with the monitor in which the screen point (0,0)
             // happens to be, but the screen point corresponding to a WPF Window's (requestedLeft, requestedTop) may
             // not map into that monitor. Our initial DeviceToLogicalUnits and LogicalToDeviceUnits transforms
             // would normally have to rely on the DPI obtained from this HWND, which may lead us to
-            // an incorrect result when calculating screen points. To avoid this, we use a special heuristic here 
-            // to identify the (screenLeft, screenTop) initially without relying on the HWND, and then 
+            // an incorrect result when calculating screen points. To avoid this, we use a special heuristic here
+            // to identify the (screenLeft, screenTop) initially without relying on the HWND, and then
             // supply it to HwndSourceParameters at the time of HWND creation. This would in turn set up the HWND
-            // with the correct DPI from the start, and all our transformations would also follow suit. 
+            // with the correct DPI from the start, and all our transformations would also follow suit.
             var topLeftPointHelper = new WindowStartupTopLeftPointHelper(new Point(requestedLeft, requestedTop));
 
             using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd))
@@ -2598,7 +2598,7 @@ namespace System.Windows
                     var screenTopLeft = topLeftPointHelper.ScreenTopLeft.Value;
                     param.SetPosition((int)screenTopLeft.X, (int)screenTopLeft.Y);
                 }
-                
+
                 // HwndSource disposes itself when HwndWrapper process the WM_DESTROY message.
                 // Window sends WM_CLOSE (which in turn sends WM_DESTROY) to the hwnd when
                 // Window.Close() is called.  Thus, this HwndSource created by window is always
@@ -2614,7 +2614,7 @@ namespace System.Windows
                 // the Win32 style bits.
                 sm.Dirty = false;
 
-                // NOTE: 
+                // NOTE:
                 // HwndSource COULD ADD STYLE/STYLEEX BITS TO THE ONES SUPPLIED. TODAY,
                 // HwndSource ADDS WS_CLIPCHILDREN TO THE STYLE WHICH MAY NOT
                 // BE REFLECTED IN OUR CACHED STYLE BITS.  IF WE WERE
@@ -2931,7 +2931,7 @@ namespace System.Windows
         ///</SecurityNote>
         [SecurityCritical]
         internal void SetRootVisual()
-        { 
+        {
             //FxCop: ConstructorsShouldNotCallBaseClassVirtualMethods::
             // System.Windows (presentationframework.dll 2 violation)
             //
@@ -3846,7 +3846,7 @@ namespace System.Windows
                 case WindowStartupLocation.Manual:
                     break;
                 case WindowStartupLocation.CenterScreen:
-                    // NOTE: 
+                    // NOTE:
                     // Which screen to center the
                     // window on?
                     //
@@ -4270,7 +4270,7 @@ namespace System.Windows
         [SecurityCritical]
         private void SetOwnerHandle(IntPtr ownerHandle)
         {
-            // Note: 
+            // Note:
             // "SetWindowLong failed.  Error = 1400" appears in console when setting
             // Window.Owner to a Window hasn't been shown (chk build)
             //
@@ -4370,7 +4370,7 @@ namespace System.Windows
             IntPtr retInt = IntPtr.Zero ;
             WindowMessage message = (WindowMessage)msg;
 
-            // 
+            //
             // we need to process WM_GETMINMAXINFO before _swh is assigned to
             // b/c we want to store the max/min size allowed by win32 for the hwnd
             // which is later used in GetWindowMinMax.  WmGetMinMaxInfo can handle
@@ -4769,7 +4769,7 @@ namespace System.Windows
             // WM_GETMINMAXINFO synchronously from CreateWindowEx thus we want
             // to explicitly add the null check below, at all other places.
             //
-            // Adding IsCompositionTargetInvalid check here 
+            // Adding IsCompositionTargetInvalid check here
             // Add this check here means that we won't fire WindowStateChanged event.
             // However, since the hwnd is going away anyways, not firing StateChanged
             // should not be a big deal.  The other side effect is that Width/Height DPs
@@ -4855,12 +4855,12 @@ namespace System.Windows
                             }
                             WindowState = WindowState.Maximized;
                         }
-                        // The maximizing size we get from WM_GETMINMAXINFO is only valid for the primary monitor, if the primary monitor 
+                        // The maximizing size we get from WM_GETMINMAXINFO is only valid for the primary monitor, if the primary monitor
                         // happens to be smaller than the secondary monitor, we may end up not maximizing correctly in the secondary monitor.
                         // Here we are sure that this size value is coming from the OS so it is safe to update our maximizing size.
                         _windowMaxWidthDeviceUnits = Math.Max(_windowMaxWidthDeviceUnits, windowSize.X);
                         _windowMaxHeightDeviceUnits = Math.Max(_windowMaxHeightDeviceUnits, windowSize.Y);
-                        
+
                         _previousWindowState = WindowState.Maximized;
                         OnStateChanged(EventArgs.Empty);
                     }
@@ -8255,24 +8255,24 @@ namespace System.Windows
 
         /// <summary>
         /// A helper class to convert (Left, Top) <see cref="Point"/> expressed
-        /// in WPF-space (1/96" units) to Screen units. 
+        /// in WPF-space (1/96" units) to Screen units.
         /// </summary>
         /// <remarks>
-        /// Initially, an HWND created in <see cref="Window"/> in a Per-Monitor Aware process may not 
-        /// have a relaible DPI. Instead, it would be associated with the monitor where the screen point (0,0) 
+        /// Initially, an HWND created in <see cref="Window"/> in a Per-Monitor Aware process may not
+        /// have a relaible DPI. Instead, it would be associated with the monitor where the screen point (0,0)
         /// happens to be, but the screen point corresponding to a WPF Window's (requestedLeft, requestedTop) may not map
         /// to that monitor. Our initial DeviceToLogicalUnits and LogicalToDeviceUnits transforms
         /// would normally have to rely on the DPI obtained from this HWND, which may lead us to
-        /// an incorrect result when calculating screen points. To avoid this, we use a special heuristic here 
-        /// to identify the (screenLeft, screenTop) initially without relying on the HWND, and then 
+        /// an incorrect result when calculating screen points. To avoid this, we use a special heuristic here
+        /// to identify the (screenLeft, screenTop) initially without relying on the HWND, and then
         /// supply it to HwndSourceParameters at the time of HWND creation. This would in turn set up the HWND
-        /// with the correct DPI from the start, and all our transformations would also follow suit. 
+        /// with the correct DPI from the start, and all our transformations would also follow suit.
         /// </remarks>
         private class WindowStartupTopLeftPointHelper
         {
             /// <summary>
-            /// The (Left, Top) logical point, in WPF coordinate space, 
-            /// that must be translated into Screen space. 
+            /// The (Left, Top) logical point, in WPF coordinate space,
+            /// that must be translated into Screen space.
             /// </summary>
             internal Point LogicalTopLeft { get; }
 
@@ -8296,9 +8296,9 @@ namespace System.Windows
             }
 
             /// <summary>
-            /// Decides whether this helper should be used. 
-            /// This helper is used when - 
-            ///     a. WPF supports DPI scaling (HwndTarget.IsPerMonitorDpiScalingEnabled), and 
+            /// Decides whether this helper should be used.
+            /// This helper is used when -
+            ///     a. WPF supports DPI scaling (HwndTarget.IsPerMonitorDpiScalingEnabled), and
             ///     b. The process is PMA (HwndTarget.IsProcessPerMonitorDpiAware)
             /// </summary>
             /// <remarks>
@@ -8331,22 +8331,22 @@ namespace System.Windows
                         return HwndTarget.IsProcessPerMonitorDpiAware.Value;
                     }
 
-                    // WPF supports Per-Monitor scaling, but HwndTarget has not 
-                    // yet been initialized with the first HWND, and therefore 
-                    // HwndTarget.IsProcessPerMonitorDpiAware is not queryable. 
-                    // Let's use the current process' DPI awareness as a proxy. 
+                    // WPF supports Per-Monitor scaling, but HwndTarget has not
+                    // yet been initialized with the first HWND, and therefore
+                    // HwndTarget.IsProcessPerMonitorDpiAware is not queryable.
+                    // Let's use the current process' DPI awareness as a proxy.
                     return DpiUtil.GetProcessDpiAwareness(IntPtr.Zero) == NativeMethods.PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE;
                 }
             }
 
             /// <summary>
-            /// Uses EnumDisplayDevices to iterate through each monitor, and looks to see if 
-            /// <see cref="LogicalTopLeft"/> exists within that monitor's rectangle. To do this, 
-            /// it scales that monitors coordinate space by its corresponding DPI scale factor (this 
+            /// Uses EnumDisplayDevices to iterate through each monitor, and looks to see if
+            /// <see cref="LogicalTopLeft"/> exists within that monitor's rectangle. To do this,
+            /// it scales that monitors coordinate space by its corresponding DPI scale factor (this
             /// happens in <see cref="MonitorEnumProc(IntPtr, IntPtr, ref Runtime.InteropServices.NativeMethods.RECT, IntPtr)"/>)
             /// and normalizes it to a 96 DPI space - which is the space in which WPF itself operates - and then sees whether
             /// <see cref="LogicalTopLeft"/> lies within that rectangle. If it does, then it updates <see cref="ScreenTopLeft"/>
-            /// with the corresponding unscaled monitor-space point. 
+            /// with the corresponding unscaled monitor-space point.
             /// </summary>
             /// <SecurityNote>
             ///     Critical - Calls into Native methods
@@ -8355,12 +8355,14 @@ namespace System.Windows
             [SecuritySafeCritical]
             private void IdentifyScreenTopLeft()
             {
-                var hdc = UnsafeNativeMethods.GetDC(new HandleRef(null, IntPtr.Zero));
+                var nullHandle = new HandleRef(null, IntPtr.Zero);
+                var hdc = UnsafeNativeMethods.GetDC(nullHandle);
                 UnsafeNativeMethods.EnumDisplayMonitors(
                     hdc,
                     IntPtr.Zero,
                     MonitorEnumProc,
                     IntPtr.Zero);
+                UnsafeNativeMethods.ReleaseDC(nullHandle, new HandleRef(null, hdc));
             }
 
             /// <summary>
@@ -8371,11 +8373,11 @@ namespace System.Windows
             /// <param name="hdcMonitor">A handle to the device context</param>
             /// <param name="lprcMonitor">
             /// A pointer to a RECT structure.
-            /// 
+            ///
             /// If hdcMonitor is non-NULL, this rectangle is the intersection of the clipping area of the device
             /// context identified by hdcMonitor and the display monitor rectangle.The rectangle coordinates are
             /// device-context coordinates.
-            /// 
+            ///
             /// If hdcMonitor is NULL, this rectangle is the display monitor rectangle. The rectangle coordinates
             /// are virtual-screen coordinates.
             /// </param>
@@ -8391,7 +8393,7 @@ namespace System.Windows
             private bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, ref NativeMethods.RECT lprcMonitor, IntPtr dwData)
             {
                 // The call the EnumDisplayMonitors set hdc to null
-                // This means that hdcMonitor will be null, and 
+                // This means that hdcMonitor will be null, and
                 // lprcMonitor will represent the RECT of the whole monitor
                 // skip the checks and trust the API contract that this will
                 // be so

@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)" Condition="'$(RunApiCompat)'=='true'"/>
   </ItemGroup>
-    
+
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
   <Target Name="ResolveNetFrameworkApiCompatContract"
           BeforeTargets="ValidateApiCompatForSrc"

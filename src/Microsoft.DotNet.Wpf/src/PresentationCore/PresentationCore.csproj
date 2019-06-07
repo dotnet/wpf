@@ -1415,7 +1415,6 @@
 
   <ItemGroup>
     <!-- required for internals access -->
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
@@ -1424,6 +1423,21 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+  </ItemGroup>
+
+  <!-- 
+    Need Microsoft.WinFx.targets to embed *.compositefont 
+    files using MainResourcesGeneration target
+  -->
+  <PropertyGroup>
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.CompositeFont">
+      <GenerateSource>false</GenerateSource>
+      <XlfSource>false</XlfSource>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

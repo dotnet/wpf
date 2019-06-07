@@ -4,7 +4,8 @@
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
     <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
     <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededProjects)'!='' 
-                                          and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName)'))">true</RunNetFrameworkApiCompat>
+                                          and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName)'))
+                                          and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
   <PropertyGroup>

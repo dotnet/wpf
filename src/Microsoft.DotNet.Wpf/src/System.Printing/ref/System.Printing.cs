@@ -5,6 +5,8 @@
 // Changes to this file must follow the http://aka.ms/api-review process.
 // ------------------------------------------------------------------------------
 
+using System.Reflection;
+
 namespace System.Printing
 {
     [System.FlagsAttribute]
@@ -607,6 +609,7 @@ namespace System.Printing.IndexedProperties
         protected virtual void InternalDispose(bool disposing) { }
         public virtual void OnDeserialization(object sender) { }
     }
+    [DefaultMember("Property")]
     public partial class PrintPropertyDictionary : System.Collections.Hashtable, System.IDisposable, System.Runtime.Serialization.IDeserializationCallback, System.Runtime.Serialization.ISerializable
     {
         public PrintPropertyDictionary() { }

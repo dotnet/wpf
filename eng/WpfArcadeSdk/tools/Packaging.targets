@@ -120,6 +120,16 @@ $(PreparePackageAssetsDependsOn):
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
+    <CreateItem Include="$(OutDir)*.deps.json"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+    <CreateItem Include="$(OutDir)*.runtimeconfig.json"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">

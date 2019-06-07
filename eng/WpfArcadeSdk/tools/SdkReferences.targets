@@ -169,7 +169,7 @@
       
       It will get translated into something like this:
       <ItemGroup>
-        <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\ref\netcoreapp3.0\System.Xaml.dll" />
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\lib\netcoreapp3.0\System.Xaml.dll" />
       </ItemGroup>
     -->
     <PropertyGroup>
@@ -194,14 +194,14 @@
       
     It will get translated into something like this:
       <ItemGroup>
-        <Reference Include="C:\Users\username\.nuget\packages\microsoft.private.winforms\4.8.0-preview4.19170.4\lib\netcoreapp3.0\Accessibility.dll" />
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.private.winforms\4.8.0-preview4.19170.4\lib\netcoreapp3.0\Accessibility.dll"/>
       </ItemGroup>
    -->
   <Target Name="ResolveWinFormsReferences"
           Condition="'@(MicrosoftPrivateWinFormsReference)'!='' And $(TargetFramework.StartsWith('netcoreapp3'))">
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
     </ItemGroup>

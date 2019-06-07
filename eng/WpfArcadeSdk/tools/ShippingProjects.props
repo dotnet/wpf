@@ -42,7 +42,7 @@
     <InternalTestProjects>
       QualityVaultFrontEnd;
       QualityVaultDebugger;
-      sti;
+      Sti;
       TestApiCore;
       TestRuntime
     </InternalTestProjects>

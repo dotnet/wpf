@@ -1,7 +1,4 @@
 <Project>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)"/>
-  </ItemGroup>
 
   <!-- Only enable API Compat when needed for some building assembly -->
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
@@ -12,11 +9,15 @@
 
   <PropertyGroup>
     <RunApiCompat>false</RunApiCompat>
-    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunReferenceApiCompat)'=='true'">true</RunApiCompat>
+    <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompat>
 
     <RunApiCompatForSrc>false</RunApiCompatForSrc>
     <RunApiCompatForSrc Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompatForSrc>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)" Condition="'$(RunApiCompat)'=='true'"/>
+  </ItemGroup>
 
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
   <Target Name="ResolveNetFrameworkApiCompatContract"

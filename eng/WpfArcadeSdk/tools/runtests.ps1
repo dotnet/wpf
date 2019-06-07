@@ -35,7 +35,6 @@ if ($ci -and (Test-Path "$env:AppData\QualityVault\Run\Report\DrtReport.xml"))
 # Need to copy the xUnit log to a known location that helix can understand
 if (Test-Path "$env:AppData\QualityVault\Run\Report\testResults.xml")
 {
-    Get-ChildItem env:
     $resultLocation = if($ci) { Get-Location } else { $PSScriptRoot }
     Write-Output "Copying testResults.xml to $resultLocation"
     Copy-Item "$env:AppData\QualityVault\Run\Report\testResults.xml" $resultLocation

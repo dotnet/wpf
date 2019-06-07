@@ -19,11 +19,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)" Condition="'$(RunApiCompat)'=='true'"/>
   </ItemGroup>
-
+    
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
   <Target Name="ResolveNetFrameworkApiCompatContract"
           BeforeTargets="ValidateApiCompatForSrc"
           Condition="'$(RunNetFrameworkApiCompat)'=='true'">
+    <PropertyGroup>
+      <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-Net48.baseline.txt</ApiCompatBaseline>
+    </PropertyGroup>
     <ItemGroup>
       <ResolvedMatchingContract Include="$(Net48RefAssembliesDir)$(AssemblyName).dll" />
     </ItemGroup>

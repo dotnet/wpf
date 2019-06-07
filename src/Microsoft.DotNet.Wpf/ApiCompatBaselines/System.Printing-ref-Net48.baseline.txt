@@ -18,4 +18,4 @@ ParameterModifiersCannotChange : Custom modifiers on parameter 'attribRef' on me
 ParameterModifiersCannotChange : Custom modifiers on parameter 'attribRef' on method 'System.Printing.IndexedProperties.PrintThreadPriorityProperty.op_Implicit(System.Printing.IndexedProperties.PrintThreadPriorityProperty)' are '<no custom modifiers>' in the implementation but 'System.Runtime.CompilerServices.IsImplicitlyDereferenced' in the contract.
 ParameterModifiersCannotChange : Custom modifiers on parameter 'attribRef' on method 'System.Printing.IndexedProperties.PrintTicketProperty.op_Implicit(System.Printing.IndexedProperties.PrintTicketProperty)' are '<no custom modifiers>' in the implementation but 'System.Runtime.CompilerServices.IsImplicitlyDereferenced' in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsWriterException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-Total Issues: 20
+Total Issues: 19

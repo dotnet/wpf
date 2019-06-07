@@ -18,6 +18,7 @@
       UIAutomationProvider;
       UIAutomationTypes;
       System.Printing;
+      System.Printing-ref;
       System.Windows.Controls.Ribbon;
       System.Windows.Input.Manipulations;
       System.Windows.Presentation;
@@ -27,21 +28,16 @@
     </Net48CompatNeededProjects>
 
     <!-- 
-      These assemblies need their ref assemblies compared against their lib assemblies.
-      This is because they have hand-crafted reference assemblies whose public surface area must be kept in sync
-      with their lib counterparts.
-    -->
-    <ReferenceCompatNeededProjects>
-      System.Printing-ref;
-    </ReferenceCompatNeededProjects>
-
-    <!-- 
       We use blob storage to ensure that all machines we build on have the .NET Framework 4.8 reference assemblies.  
       This allows us to sidestep a requirement to have the .NET 4.8 Dev Pack installed.
     -->
     <Net48RefAssembliesDir>$(RepositoryToolsDir)native\bin\net-framework-48-ref-assemblies\$(NetFramework48RefAssembliesVersion)\</Net48RefAssembliesDir>
 
-    <!-- TODO: Can we use this to validate cycle breakers against the assemblies they break for? -->
+    <!-- TODO:  
+          Compare hand-crafted ref assemblies against their lib counterparts.
+          Compare cycle breaker assemblies against what they break cycles for.
+    -->
+    
   </PropertyGroup>
 
 </Project>

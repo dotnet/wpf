@@ -10,28 +10,12 @@
                                           and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName)'))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(RunReferenceApiCompat)'==''">
-    <RunReferenceApiCompat>false</RunReferenceApiCompat>
-
-    <RefBin>$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll</RefBin>
-
-     <!-- TODO:  Re-enable and fix matching. -->
-    <!-- Since some of our ref/lib pairs can potentially be built internally, only run when the paired lib exists. -->
-    <!--<RunReferenceApiCompat Condition="'$(ReferenceCompatNeededProjects)'!='' 
-                                      and $(ReferenceCompatNeededProjects.Contains('$(MSBuildProjectName)'))
-                                      and Exists('$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll')">true</RunReferenceApiCompat>-->
-
-  </PropertyGroup>
-
   <PropertyGroup>
     <RunApiCompat>false</RunApiCompat>
     <RunApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunReferenceApiCompat)'=='true'">true</RunApiCompat>
 
     <RunApiCompatForSrc>false</RunApiCompatForSrc>
     <RunApiCompatForSrc Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunApiCompatForSrc>
-
-    <RunMatchingRefApiCompat>false</RunMatchingRefApiCompat>
-    <RunMatchingRefApiCompat Condition="'$(RunReferenceApiCompat)'=='true'">true</RunMatchingRefApiCompat>
   </PropertyGroup>
 
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
@@ -40,15 +24,6 @@
           Condition="'$(RunNetFrameworkApiCompat)'=='true'">
     <ItemGroup>
       <ResolvedMatchingContract Include="$(Net48RefAssembliesDir)$(AssemblyName).dll" />
-    </ItemGroup>
-  </Target>
-
-  <!-- This target sets up the matching contracts to run ApiCompat from ref assemblies against the matching lib assembly. -->
-  <Target Name="ResolveLibAssemblyForRefApiCompatContract"
-          BeforeTargets="ValidateApiCompatForSrc"
-          Condition="'$(RunMatchingRefApiCompat)'=='true'">
-    <ItemGroup>
-      <ResolvedMatchingContract Include="$(ArtifactsDir)bin\$(AssemblyName)\$(Configuration)\$(Platform)\$(AssemblyName).dll" />
     </ItemGroup>
   </Target>
 

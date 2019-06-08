@@ -81,8 +81,19 @@
     <_apiCompatTargetSuffix>$(TargetGroup)</_apiCompatTargetSuffix>
     <_apiCompatTargetSuffix Condition="'$(_apiCompatTargetSuffix)' == ''">$(TargetFramework)</_apiCompatTargetSuffix>
 
+    <!-- 
+        We're guaranteed that .NET Framework 4.8 API compat is run on C# projects since they are all reference assemblies that are auto-generated
+        from their associated libs (via the compiler) or are separate C# projects that generate the reference assembly.  This allows the target
+        to always run post-compilation.
+    -->
     <TargetsTriggeredByCompilation Condition="'$(RunNetFrameworkApiCompat)' == 'true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForNetFramework</TargetsTriggeredByCompilation>
-    <AfterLinkTargets Condition="'$(RunRefApiCompat)' == 'true'">$(AfterLibTargets);WpfValidateApiCompatForRef</AfterLinkTargets>
+
+    <!-- 
+        When running targets for hand-crafted ref assemblies, the lib project type determines how the target should run.
+        When building Managed C++ we need to run post-link, when building C# we run post-compilation.
+    -->
+    <TargetsTriggeredByCompilation Condition="'$(RunNetFrameworkApiCompat)' == 'true'  and '$(ManagedCxx)'=='true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForRef</TargetsTriggeredByCompilation>
+    <AfterLinkTargets Condition="'$(RunRefApiCompat)' == 'true' and '$(ManagedCxx)'=='true'">$(AfterLibTargets);WpfValidateApiCompatForRef</AfterLinkTargets>
   </PropertyGroup>
 
   <ItemGroup>

@@ -33,11 +33,13 @@
     -->
     <Net48RefAssembliesDir>$(RepositoryToolsDir)native\bin\net-framework-48-ref-assemblies\$(NetFramework48RefAssembliesVersion)\</Net48RefAssembliesDir>
 
+    <!-- These assemblies need to be compared against their hand-crafted reference assemblies. -->
+    <RefApiCompatNeededProjects>
+      System.Printing;
+    </RefApiCompatNeededProjects>
+
     <!-- TODO:  
-          Compare hand-crafted ref assemblies against their lib counterparts.
           Compare cycle breaker assemblies against what they break cycles for.
     -->
-
   </PropertyGroup>
-
 </Project>

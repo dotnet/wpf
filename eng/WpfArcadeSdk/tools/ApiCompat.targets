@@ -8,21 +8,27 @@
                                           and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
+  <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies -->
+  <PropertyGroup Condition="'$(RunRefApiCompat)'==''">
+    <RunRefApiCompat>false</RunRefApiCompat>
+    <RunRefApiCompat Condition="'$(RefApiCompatNeededProjects)'!=''
+                                 and $(RefApiCompatNeededProjects.Contains('$(MSBuildProjectName)'))
+                                 and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunRefApiCompat>
+  </PropertyGroup>
+
   <PropertyGroup>
     <!-- Turn off default API Compat targets in favor of WPF ones. -->
     <RunApiCompat>false</RunApiCompat>
-
-    <RunWpfApiCompat>false</RunWpfApiCompat>
-    <RunWpfApiCompat Condition="'$(RunNetFrameworkApiCompat)'=='true'">true</RunWpfApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)" GeneratePathProperty="true" Condition="'$(RunWpfApiCompat)'=='true'"/>
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="$(MicrosoftDotNetApiCompatVersion)" GeneratePathProperty="true"
+                      Condition="'$(RunNetFrameworkApiCompat)'=='true' or '$(RunRefApiCompat)'=='true'"/>
   </ItemGroup>
 
   <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against the .NET Framework 4.8 reference assemblies. -->
   <Target Name="ResolveNetFrameworkApiCompatItems"
-          BeforeTargets="WpfValidateApiCompatForSrc"
+          BeforeTargets="WpfValidateApiCompatForNetFramework"
           Condition="'$(RunNetFrameworkApiCompat)'=='true'">
     <PropertyGroup>
       <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-Net48.baseline.txt</ApiCompatBaseline>
@@ -33,6 +39,20 @@
       <!-- If building a hand-crafted ref assembly, compare against the current output.  Otherwise, use the ref directory (compiler generated ref). -->
       <ResolvedImplementationAssembly Include="$(IntermediateOutputPath)$(AssemblyName).dll" Condition="!Exists('$(IntermediateOutputPath)ref\$(AssemblyName).dll')" />
       <ResolvedImplementationAssembly Include="$(IntermediateOutputPath)ref\$(AssemblyName).dll" Condition="Exists('$(IntermediateOutputPath)ref\$(AssemblyName).dll')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- This target sets up the matching contracts to run ApiCompat from .NET Core assemblies against their reference assemblies. -->
+  <Target Name="ResolveRefApiCompatItems"
+          BeforeTargets="WpfValidateApiCompatForRef"
+          Condition="'$(RunRefApiCompat)'=='true'">
+    <PropertyGroup>
+      <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-ref.baseline.txt</ApiCompatBaseline>
+    </PropertyGroup>
+    <ItemGroup>
+      <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" />
+      <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\**\$(AssemblyName).dll" />
     </ItemGroup>
   </Target>
 
@@ -57,14 +77,12 @@
     <_ApiCompatSemaphoreFile>$(MSBuildThisFileName).semaphore</_ApiCompatSemaphoreFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(RunWpfApiCompat)' == 'true'">
+  <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)' == 'true' or '$(RunRefApiCompat)'=='true'">
     <_apiCompatTargetSuffix>$(TargetGroup)</_apiCompatTargetSuffix>
     <_apiCompatTargetSuffix Condition="'$(_apiCompatTargetSuffix)' == ''">$(TargetFramework)</_apiCompatTargetSuffix>
 
-    <ApiCompatBaseline Condition="!Exists('$(ApiCompatBaseline)')">$(MSBuildProjectDirectory)\ApiCompatBaseline.$(_apiCompatTargetSuffix).txt</ApiCompatBaseline>
-    <ApiCompatBaseline Condition="!Exists('$(ApiCompatBaseline)')">$(MSBuildProjectDirectory)\ApiCompatBaseline.txt</ApiCompatBaseline>
-
-    <TargetsTriggeredByCompilation Condition="'$(RunWpfApiCompat)' == 'true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForSrc</TargetsTriggeredByCompilation>
+    <TargetsTriggeredByCompilation Condition="'$(RunNetFrameworkApiCompat)' == 'true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForNetFramework</TargetsTriggeredByCompilation>
+    <AfterLinkTargets Condition="'$(RunRefApiCompat)' == 'true'">$(AfterLibTargets);WpfValidateApiCompatForRef</AfterLinkTargets>
   </PropertyGroup>
 
   <ItemGroup>
@@ -76,9 +94,68 @@
     
       Modified for WPF to take a specific ResolvedImplementationAssembly item.  This allows ApiCompat on generated ref assemblies
       vs .NET Framework 4.8 and also on any two specific assemblies.  This is important for both hand-crafted ref assemblies and for cycle-breakers.
+      
+      Note that we need a target for each type of API compat we are running.  This is so we can provide completely different inputs for each kind of compat.
   -->
-  <Target Name="WpfValidateApiCompatForSrc"
-          Condition="'$(RunWpfApiCompat)' == 'true'">
+  <Target Name="WpfValidateApiCompatForNetFramework"
+          Condition="'$(RunNetFrameworkApiCompat)' == 'true'">
+
+    <Error Condition="'@(ResolvedImplementationAssembly)' == ''"
+        Text="ResolvedImplementationAssembly item must be specified to run API compat." />
+    <Error Condition="!Exists('%(ResolvedImplementationAssembly.FullPath)')"
+           Text="ResolvedImplementationAssembly '%(ResolvedImplementationAssembly.FullPath)' did not exist." />
+    <Error Condition="'@(ResolvedMatchingContract)' == ''"
+           Text="ResolvedMatchingContract item must be specified to run API compat." />
+    <Error Condition="!Exists('%(ResolvedMatchingContract.FullPath)')"
+           Text="ResolvedMatchingContract '%(ResolvedMatchingContract.FullPath)' did not exist." />
+
+    <ItemGroup>
+      <_DependencyDirectoriesTemp Include="@(ReferencePath -> '%(RootDir)%(Directory)')" />
+      <!-- Remove duplicate directories by batching over them -->
+      <!-- Add project references first to give precedence to project-specific files -->
+      <_DependencyDirectories Condition="'%(_DependencyDirectoriesTemp.ReferenceSourceTarget)' == 'ProjectReference'" Include="%(_DependencyDirectoriesTemp.Identity)" />
+      <_DependencyDirectories Condition="'%(_DependencyDirectoriesTemp.ReferenceSourceTarget)' != 'ProjectReference'" Include="%(_DependencyDirectoriesTemp.Identity)" />
+      <_ContractDependencyDirectories Include="@(ResolvedMatchingContract -> '%(RootDir)%(Directory)')" />
+      <_ContractDependencyDirectories Include="@(ResolvedMatchingContract -> '%(DependencyPaths)')" />
+      <_ContractDependencyDirectories Include="$(ContractDependencyPaths)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <ApiCompatArgs>$(ApiCompatArgs) "@(ResolvedMatchingContract)"</ApiCompatArgs>
+      <ApiCompatArgs>$(ApiCompatArgs) --contract-depends "@(_ContractDependencyDirectories, ','),"</ApiCompatArgs>
+      <ApiCompatArgs Condition="'$(ApiCompatExcludeAttributeList)' != ''">$(ApiCompatArgs) --exclude-attributes "$(ApiCompatExcludeAttributeList)"</ApiCompatArgs>
+      <ApiCompatArgs Condition="'$(ApiCompatEnforceOptionalRules)' == 'true'">$(ApiCompatArgs) --enforce-optional-rules</ApiCompatArgs>
+      <ApiCompatArgs Condition="'$(BaselineAllAPICompatError)' != 'true' and Exists('$(ApiCompatBaseline)')">$(ApiCompatArgs) --baseline "$(ApiCompatBaseline)"</ApiCompatArgs>
+      <!-- Must be last option. -->
+      <ApiCompatArgs>$(ApiCompatArgs) --impl-dirs "@(ResolvedImplementationAssembly -> '%(RootDir)%(Directory)'),@(_DependencyDirectories, ','),"</ApiCompatArgs>
+      <ApiCompatBaselineAll Condition="'$(BaselineAllAPICompatError)' == 'true'">&gt; $(ApiCompatBaseline)</ApiCompatBaselineAll>
+      <ApiCompatExitCode>0</ApiCompatExitCode>
+
+      <ApiCompatResponseFile>$(IntermediateOutputPath)apicompat.rsp</ApiCompatResponseFile>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <WriteLinesToFile File="$(ApiCompatResponseFile)" Lines="$(ApiCompatArgs)" Overwrite="true" />
+
+    <Exec Command="$(_ApiCompatCommand) @&quot;$(ApiCompatResponseFile)&quot; $(ApiCompatBaselineAll)"
+          CustomErrorRegularExpression="^[a-zA-Z]+ :"
+          StandardOutputImportance="Low"
+          IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="ApiCompatExitCode" />
+    </Exec>
+
+    <!--
+      To force incremental builds to show failures again we are invalidating
+      one compile input.
+    -->
+    <Touch Condition="'$(ApiCompatExitCode)' != '0'" Files="$(IntermediateOutputPath)$(_ApiCompatSemaphoreFile)" AlwaysCreate="true">
+      <Output TaskParameter="TouchedFiles" ItemName="FileWrites" />
+    </Touch>
+    <Error Condition="'$(ApiCompatExitCode)' != '0'" Text="ApiCompat failed for '$(TargetPath)'" />
+  </Target>
+
+  <Target Name="WpfValidateApiCompatForRef"
+          Condition="'$(RunRefApiCompat)' == 'true'">
 
     <Error Condition="'@(ResolvedImplementationAssembly)' == ''"
         Text="ResolvedImplementationAssembly item must be specified to run API compat." />

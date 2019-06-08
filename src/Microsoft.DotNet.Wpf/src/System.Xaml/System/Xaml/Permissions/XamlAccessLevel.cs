@@ -60,22 +60,22 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentException(SR.Get(SRID.ExpectedQualifiedTypeName, assemblyQualifiedTypeName), nameof(assemblyQualifiedTypeName));
             }
-
+            
             string typeName = assemblyQualifiedTypeName.Substring(0, nameBoundary).Trim();
             string assemblyFullName = assemblyQualifiedTypeName.Substring(nameBoundary + 1).Trim();
             AssemblyName assemblyName = new AssemblyName(assemblyFullName);
             ValidateAssemblyName(assemblyName, "assemblyQualifiedTypeName");
-
+            
             return new XamlAccessLevel(assemblyName.FullName, typeName);
         }
 
         // Read-only: these properties should not be allowed to be modified once this object
         // has been passed to XamlLoadPermission
-
+        
         // Stored as string: we need to store the assembly and type names, rather than Assembly or
         // Type references, because permissions can be serialized, and we don't want to force an
         // assembly load on deserialization in a different AppDomain.
-
+        
         public AssemblyName AssemblyAccessToAssemblyName
         {
             get { return new AssemblyName(AssemblyNameString); }
@@ -96,7 +96,7 @@ namespace System.Xaml.Permissions
             {
                 throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.XamlAccessLevel), nameof(elem));
             }
-
+            
             string assemblyNameString = elem.Attribute(XmlConstants.AssemblyName);
             if (assemblyNameString == null)
             {

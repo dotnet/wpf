@@ -63,13 +63,13 @@
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>451922936e2ae806ec03275051806145d630cc80</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19305.13">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19307.62">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>d05c046913964e880be08b804e7249f297617c2f</Sha>
+      <Sha>29999b2846623e2d96733577165968d09bc2bcc1</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19305.13">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19307.62">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>d05c046913964e880be08b804e7249f297617c2f</Sha>
+      <Sha>29999b2846623e2d96733577165968d09bc2bcc1</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview7.19306.6" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -95,9 +95,9 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>1a495118c005b9a5409c81fea1813bd2b3044cbd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19278.1">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19307.62">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>11f90a2a260422201895de58e57170131ab4efe7</Sha>
+      <Sha>29999b2846623e2d96733577165968d09bc2bcc1</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

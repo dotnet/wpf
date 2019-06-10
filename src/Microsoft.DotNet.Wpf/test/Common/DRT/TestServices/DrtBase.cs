@@ -22,7 +22,6 @@ using System.Windows.Interop;
 using System.Text;
 
 using Microsoft.Win32;
-using Xunit.Abstractions;
 using MS.Internal;
 
 /************************************************************************
@@ -214,7 +213,7 @@ namespace DRT
             Application app = Application.Current;  // runs Application.Init(), which sets up Avalon services
         }
 
-        protected DrtBase(ITestOutputHelper output)
+        protected DrtBase()
         {
             string assertExit = Environment.GetEnvironmentVariable("AVALON_ASSERTEXIT");
             if (assertExit != null && assertExit.Length > 0)
@@ -233,7 +232,6 @@ namespace DRT
             }
 
             _dispatcher = Dispatcher.CurrentDispatcher;
-            _output = output;
         }
 
         /// <summary>
@@ -250,7 +248,7 @@ namespace DRT
         /// <returns>DRT exit code -- to be returned from Main()</returns>
         public int Run(string[] args)
         {
-            _delayedConsoleOutput = new StringAndFileWriter(DrtName, _output);
+            _delayedConsoleOutput = new StringAndFileWriter(DrtName);
 
             _retcode = ReadCommandLineArguments(args);
 
@@ -422,7 +420,6 @@ namespace DRT
                     case "help":
                         PrintUsage();
 
-                        Xunit.Assert.True(true);
                         Environment.Exit(0);
                         break;
 
@@ -1138,7 +1135,6 @@ namespace DRT
 
                 // Write any delayed output for debugging purposes
                 WriteDelayedOutput();
-                Xunit.Assert.True(cond, s);
 
                 if (_loudAsserts)
                 {
@@ -2051,7 +2047,6 @@ namespace DRT
                         _testIndex++;
                     }
 
-                    Xunit.Assert.False(aborting);
 
                     // Schedule the next test.
                     // Special situation: The current test may have called Suspend() and then
@@ -2099,7 +2094,6 @@ namespace DRT
 
             ReportDrtInfo();
 
-            Xunit.Assert.True(_retcode == 0);
             Environment.Exit(_retcode);
         }
 
@@ -2626,10 +2620,9 @@ namespace DRT
 
         private class StringAndFileWriter : StringWriter
         {
-            public StringAndFileWriter(string drtName, ITestOutputHelper output) : base(new StringBuilder())
+            public StringAndFileWriter(string drtName) : base(new StringBuilder())
             {
                 _buffer = GetStringBuilder();
-                _output = output;
                 if (string.IsNullOrEmpty(drtName))
                 {
                     throw new ArgumentException("DrtName must be defined");
@@ -2715,14 +2708,6 @@ namespace DRT
                         _logFile.Write(value);
                         _logFile.Flush();
                     }
-
-                    try
-                    {
-                        _output.WriteLine($"{value}");
-                    }
-                    catch
-                    {
-                    }
                 }
             }
 
@@ -2740,14 +2725,6 @@ namespace DRT
                         _logFile.Write(buffer, index, count);
                         _logFile.Flush();
                     }
-
-                    var sb = new StringBuilder();
-                    sb.Append(buffer, index, count);
-                    try
-                    {
-                        _output.WriteLine(sb.ToString());
-                    }
-                    catch { }
                 }
             }
 
@@ -2777,12 +2754,6 @@ namespace DRT
                         _logFile.Write(value);
                         _logFile.Flush();
                     }
-
-                    try
-                    {
-                        _output.WriteLine(value);
-                    }
-                    catch { }
                 }
             }
 
@@ -2806,8 +2777,6 @@ namespace DRT
             private StringBuilder _buffer;
             private bool _isClosed = false;
             private object _instanceLock = new object();
-
-            private ITestOutputHelper _output;
         }
 
         private class DualWriter : StringWriter
@@ -2920,8 +2889,6 @@ namespace DRT
         //
 
         private Dispatcher _dispatcher;
-        private ITestOutputHelper _output;
-       
 
         private HwndSource _source = null;
         private Visual _rootElement;

@@ -59,7 +59,7 @@ hand-crafted reference assembly.  This will generate and MSBuild error for each 
 an idea of the kinds of errors that can be reported.
 
 If the tool fails completely, an error of the form "ApiCompat failed for..." will be generated.  If this occurs, please [file an issue](https://github.com/dotnet/wpf/issues/new/choose) and include a link to your fork and branch that failed.
-## [Baseline Files](/src/Microsoft.DotNet.Wpf/ApiCompat\Baselines)
+## [Baseline Files](/src/Microsoft.DotNet.Wpf/ApiCompat/Baselines)
 This directory contains the aggregate baseline files for all initial API compatibility checks.  The filenames are of the general form
 "{Project}-{APICompatType}.baseline.txt", where `APICompatType` is either `Net48` or `ref`.
 

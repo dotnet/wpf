@@ -58,7 +58,7 @@ namespace System.Xaml.Permissions
             int nameBoundary = assemblyQualifiedTypeName.IndexOf(',');
             if (nameBoundary < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedQualifiedTypeName, assemblyQualifiedTypeName), nameof(assemblyQualifiedTypeName));
+                throw new ArgumentException("", nameof(assemblyQualifiedTypeName));
             }
             
             string typeName = assemblyQualifiedTypeName.Substring(0, nameBoundary).Trim();
@@ -94,13 +94,13 @@ namespace System.Xaml.Permissions
         {
             if (elem.Tag != XmlConstants.XamlAccessLevel)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlUnexpectedTag, elem.Tag, XmlConstants.XamlAccessLevel), nameof(elem));
+                throw new ArgumentException("", nameof(elem));
             }
             
             string assemblyNameString = elem.Attribute(XmlConstants.AssemblyName);
             if (assemblyNameString == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SecurityXmlMissingAttribute, XmlConstants.AssemblyName), nameof(elem));
+                throw new ArgumentException("", nameof(elem));
             }
             AssemblyName assemblyName = new AssemblyName(assemblyNameString);
             ValidateAssemblyName(assemblyName, "elem");
@@ -136,7 +136,7 @@ namespace System.Xaml.Permissions
             if (assemblyName.Name == null || assemblyName.Version == null ||
                 assemblyName.CultureInfo == null || assemblyName.GetPublicKeyToken() == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedQualifiedAssemblyName, assemblyName.FullName), argName);
+                throw new ArgumentException("", argName);
             }
         }
 

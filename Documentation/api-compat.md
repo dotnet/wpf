@@ -7,7 +7,7 @@ For `WPF on .NET Core`, this means the following:
 
 This is accomplished by the use of the [Arcade API Compatibility tool](https://github.com/dotnet/arcade/blob/master/src/Microsoft.DotNet.ApiCompat) with some modifications to fit our specific needs.
 
-## [ApiCompat.props](eng/WpfArcadeSdk/tools/ApiCompat.props)
+## [ApiCompat.props](/eng/WpfArcadeSdk/tools/ApiCompat.props)
 This props file implements necessary elements to trigger and control the usage of API Compatibility checks.
 ### Net48CompatNeededProjects
 This property contains a list of projects that should have their reference assemblies compared against reference assemblies for `WPF on .NET Framework 4.8`.
@@ -18,7 +18,7 @@ contains a copy of these assemblies.
 ### RefApiCompatNeededProjects
 This property contains a list of projects that have hand-crafted references assemblies that must be compared against their corresponding runtime assemblies during API Compatibility checks.
 
-## [ApiCompat.targets](eng/WpfArcadeSdk/tools/ApiCompat.targets)
+## [ApiCompat.targets](/eng/WpfArcadeSdk/tools/ApiCompat.targets)
 This targets file implements necessary targets to run API compatibility checks.
 ### Properties
 #### RunNetFrameworkApiCompat
@@ -59,7 +59,7 @@ hand-crafted reference assembly.  This will generate and MSBuild error for each 
 an idea of the kinds of errors that can be reported.
 
 If the tool fails completely, an error of the form "ApiCompat failed for..." will be generated.  If this occurs, please [file an issue](https://github.com/dotnet/wpf/issues/new/choose) and include a link to your fork and branch that failed.
-## [Baseline Files](src\Microsoft.DotNet.Wpf\ApiCompat\Baselines)
+## [Baseline Files](/src/Microsoft.DotNet.Wpf/ApiCompat\Baselines)
 This directory contains the aggregate baseline files for all initial API compatibility checks.  The filenames are of the general form
 "{Project}-{APICompatType}.baseline.txt", where `APICompatType` is either `Net48` or `ref`.
 

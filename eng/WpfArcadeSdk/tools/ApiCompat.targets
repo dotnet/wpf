@@ -1,5 +1,7 @@
 <Project>
 
+  <!-- For full documentation of this file see: https://github.com/dotnet/wpf/blob/master/Documentation/api-compat.md -->
+  
   <!-- Only enable API Compat against .NET Framework 4.8 when needed for some building assembly -->
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
     <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>

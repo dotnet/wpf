@@ -5,7 +5,6 @@
       PresentationBuildTasks;
       PresentationCore;
       DirectWriteForwarder;
-      PresentationCore-CommonResources;
       PresentationFramework;
       ReachFramework;
       UIAutomationClient;

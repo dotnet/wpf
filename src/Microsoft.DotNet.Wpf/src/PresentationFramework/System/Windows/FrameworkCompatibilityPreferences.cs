@@ -6,6 +6,7 @@ using System;
 using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 using System.Runtime.Versioning;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -15,9 +16,14 @@ namespace System.Windows
 
         static FrameworkCompatibilityPreferences()
         {
-#if NETFX
+#if NETFX && !NETCOREAPP
             _targetsDesktop_V4_0 = BinaryCompatibility.AppWasBuiltForFramework == TargetFrameworkId.NetFramework
                 && !BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
+#elif NETCOREAPP
+            // When building for NETCOREAPP, set this to false
+            // to indicate that quirks should be treated as if they are running on 
+            // .NET 4.5+
+            _targetsDesktop_V4_0 = false;
 #else
             _targetsDesktop_V4_0 = false;
 #endif
@@ -59,8 +65,10 @@ namespace System.Windows
 
         #region AreInactiveSelectionHighlightBrushKeysSupported
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _areInactiveSelectionHighlightBrushKeysSupported = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
 #else
         private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
 #endif
@@ -93,8 +101,10 @@ namespace System.Windows
 
         #region KeepTextBoxDisplaySynchronizedWithTextProperty
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
 #else
         private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
 #endif
@@ -178,13 +188,16 @@ namespace System.Windows
         //      partial-trust           -> Throw    (plug security hole)
         //      wrong target framework  -> Disallow (app probably not built by VS.  E.g. ServerManager)
         //      target = 4.5            -> Allow    (compat with 4.5RTM)
-        //      any other target        -> Throw    (compat with 4.0)
-#if NETFX
+        //      any other unknown target -> Throw   (compat with 4.0)
+        //      .NET Core               -> Allow    (compat with 4.5RTM)
+#if NETFX && !NETCOREAPP
         private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter =
                 !MS.Internal.SecurityHelper.IsFullTrustCaller() ? HandleBindingOptions.Throw :
                 BinaryCompatibility.AppWasBuiltForFramework != TargetFrameworkId.NetFramework ? HandleBindingOptions.Disallow :
                 BinaryCompatibility.AppWasBuiltForVersion == 40500 ? HandleBindingOptions.Allow :
                 /* else */  HandleBindingOptions.Throw;
+#elif NETCOREAPP
+        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter = HandleBindingOptions.Allow;
 #else
         private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter = HandleBindingOptions.Throw;
 #endif
@@ -233,7 +246,7 @@ namespace System.Windows
 
         #endregion AllowTwoWayBindingToPropertyWithNonPublicSetter
 
-        // DevDiv #681144:  There is a bug in the Windows desktop window manager which can cause
+        // There is a bug in the Windows desktop window manager which can cause
         // incorrect z-order for windows when several conditions are all met:
         // (a) windows are parented/owned across different threads or processes
         // (b) a parent/owner window is also owner of a topmost window (which needn't be visible)

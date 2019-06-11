@@ -1,12 +1,4 @@
 <Project>
-
-  <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
-  <PropertyGroup>
-    <LocalRuntimeIdentifier Condition="'$(Platform)'=='x64' or '$(Platform)'=='x86' or '$(Platform)'=='arm' or '$(Platform)'=='arm64'">win-$(Platform)</LocalRuntimeIdentifier>
-    <LocalRuntimeIdentifier Condition="'$(Platform)'=='Win32' or '$(Platform)'=='AnyCPU'">win-x86</LocalRuntimeIdentifier>
-    <LocalRuntimeIdentifier Condition="'$(Architecture)'==''">win-x64</LocalRuntimeIdentifier>
-  </PropertyGroup>
-
   <Choose>
     <!-- 
         Use the IL Tools that are compiled and distributed with .NET Core.  WPF doesn't currently use these as default because they do not
@@ -20,16 +12,16 @@
         <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="MicrosoftNETCoreRuntimeCoreCLRVersion" GeneratePathProperty="true" />
       </ItemGroup>
 
-      <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">
-        <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
-        <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
-        <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
+      <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
+        <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
       </PropertyGroup>
 
-      <PropertyGroup Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">
-        <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILDAsmPath>
-        <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(LocalRuntimeIdentifier)\native\</ILAsmPath>
-        <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(LocalRuntimeIdentifier)\native\</CoreCLRPath>
+      <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
+        <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
 
       </PropertyGroup>
 
@@ -355,8 +347,8 @@
   -->
   <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
     <PropertyGroup>
-      <DotNetFrameworkBitness Condition="'$(LocalRuntimeIdentifier)'=='win-x64'">Bitness64</DotNetFrameworkBitness>
-      <DotNetFrameworkBitness Condition="'$(LocalRuntimeIdentifier)'=='win-x86'">Bitness32</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">Bitness64</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">Bitness32</DotNetFrameworkBitness>
     </PropertyGroup>
     <FindDotNetFrameworkILToolsTask DotNetBitness="$(DotNetFrameworkBitness)">
       <Output TaskParameter="ILDAsm" PropertyName="ILDAsm" />
@@ -381,7 +373,8 @@
                 Assembly="$(InFile)"
                 Condition="Exists('$(InFile)')"
                 LineNum="true"
-                Out="$(OutFile)" />
+                Out="$(OutFile)"
+                NoBar="true" />
 
   </Target>
 
@@ -421,7 +414,8 @@
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"
                Dll="true"
-               Debug="true" />
+               Debug="true"
+               Quiet="true" />
 
   </Target>
 

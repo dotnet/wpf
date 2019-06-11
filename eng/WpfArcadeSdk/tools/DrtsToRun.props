@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <!--
+    List of Drts to run that are built out of dotnet/wpf. Note that this is incredibly
+    similar to DrtList.xml. https://github.com/dotnet/wpf/issues/815 tracks producing this
+    file based on what is in that list. -->
+    <DRT Include="DrtXaml" Area="Xaml"/>
+  </ItemGroup>
+</Project>

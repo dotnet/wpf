@@ -103,8 +103,10 @@ namespace System.Windows
             return ReuseDispatcherSynchronizationContextInstance;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _reuseDispatcherSynchronizationContextInstance = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? false : true;
+#elif NETCOREAPP
+        private static bool _reuseDispatcherSynchronizationContextInstance = false;
 #else
         private static bool _reuseDispatcherSynchronizationContextInstance = false;
 #endif
@@ -152,8 +154,10 @@ namespace System.Windows
             return FlowDispatcherSynchronizationContextPriority;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _flowDispatcherSynchronizationContextPriority = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _flowDispatcherSynchronizationContextPriority = true;
 #else
         private static bool _flowDispatcherSynchronizationContextPriority = true;
 #endif
@@ -200,8 +204,10 @@ namespace System.Windows
             return InlineDispatcherSynchronizationContextSend;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _inlineDispatcherSynchronizationContextSend = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _inlineDispatcherSynchronizationContextSend = true;
 #else
         private static bool _inlineDispatcherSynchronizationContextSend = true;
 #endif

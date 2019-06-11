@@ -35,10 +35,6 @@ namespace System.Windows.Documents
     /// </summary>
     internal class TextEditor
     {
-        internal const string KeyAltUndo = "Alt+Backspace";
-        internal const string KeyUndo =     "Ctrl+Z";
-        internal const string KeyRedo =     "Ctrl+Y";
-
         //------------------------------------------------------
         //
         //  Constructors
@@ -2139,5 +2135,9 @@ namespace System.Windows.Documents
         internal bool _isNextLineAdvanceMovingPositionAtDocumentHead;
 
         #endregion Private Fields
+
+        private const string KeyAltUndo = "Alt+Backspace";
+        private const string KeyRedo = "Ctrl+Y";
+        private const string KeyUndo = "Ctrl+Z";
     }
 }

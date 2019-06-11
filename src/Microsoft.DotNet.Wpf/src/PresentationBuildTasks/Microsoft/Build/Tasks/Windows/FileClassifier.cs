@@ -82,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                TaskHelper.DisplayLogo(Log, SR.Get(SRID.FileClassifierTask));
+                TaskHelper.DisplayLogo(Log, "FileClassifier");
 
                 ret = VerifyTaskInputs();
 

@@ -1596,9 +1596,6 @@
   <data name="KeyAlignCenterDisplayString" xml:space="preserve">
     <value>Ctrl+E</value>
   </data>
-  <data name="KeyAlignJustify" xml:space="preserve">
-    <value>Ctrl+J</value>
-  </data>
   <data name="KeyAlignJustifyDisplayString" xml:space="preserve">
     <value>Ctrl+J</value>
   </data>
@@ -1701,9 +1698,6 @@
   <data name="KeyIncreaseFontSizeDisplayString" xml:space="preserve">
     <value>Ctrl+OemCloseBrackets</value>
   </data>
-  <data name="KeyIncreaseIndentation" xml:space="preserve">
-    <value>Ctrl+T</value>
-  </data>
   <data name="KeyIncreaseIndentationDisplayString" xml:space="preserve">
     <value>Ctrl+T</value>
   </data>
@@ -1784,9 +1778,6 @@
   </data>
   <data name="KeyResetFormatDisplayString" xml:space="preserve">
     <value>Ctrl+Space</value>
-  </data>
-  <data name="KeySelectAll" xml:space="preserve">
-    <value>Ctrl+A</value>
   </data>
   <data name="KeySelectAllDisplayString" xml:space="preserve">
     <value>Ctrl+A</value>
@@ -1872,9 +1863,6 @@
   <data name="KeyTabForwardDisplayString" xml:space="preserve">
     <value>Tab</value>
   </data>
-  <data name="KeyToggleBold" xml:space="preserve">
-    <value>Ctrl+B</value>
-  </data>
   <data name="KeyToggleBoldDisplayString" xml:space="preserve">
     <value>Ctrl+B</value>
   </data>
@@ -1883,9 +1871,6 @@
   </data>
   <data name="KeyToggleInsertDisplayString" xml:space="preserve">
     <value>Insert</value>
-  </data>
-  <data name="KeyToggleItalic" xml:space="preserve">
-    <value>Ctrl+I</value>
   </data>
   <data name="KeyToggleItalicDisplayString" xml:space="preserve">
     <value>Ctrl+I</value>

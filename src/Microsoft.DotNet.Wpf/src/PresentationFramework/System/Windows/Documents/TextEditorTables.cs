@@ -33,13 +33,6 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorTables
     {
-        internal const string KeyInsertRows =     "Alt+Ctrl+Shift+R";
-        internal const string KeyInsertTable =     "Alt+Ctrl+Shift+T";
-        internal const string KeyInsertColumns =     "Alt+Ctrl+Shift+C";
-        internal const string KeyDeleteColumns =     "Alt+Ctrl+Shift+D";
-        internal const string KeyMergeCells =     "Alt+Ctrl+Shift+M";
-        internal const string KeySplitCell =     "Alt+Ctrl+Shift+S";
-
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -144,5 +137,12 @@ namespace System.Windows.Documents
         #endregion Misceleneous Commands
 
         #endregion Private methods
+
+        private const string KeyDeleteColumns = "Alt+Ctrl+Shift+D";
+        private const string KeyInsertColumns = "Alt+Ctrl+Shift+C";
+        private const string KeyInsertRows = "Alt+Ctrl+Shift+R";
+        private const string KeyInsertTable = "Alt+Ctrl+Shift+T";
+        private const string KeyMergeCells = "Alt+Ctrl+Shift+M";
+        private const string KeySplitCell = "Alt+Ctrl+Shift+S";
     }
 }

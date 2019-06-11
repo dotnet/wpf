@@ -36,19 +36,6 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorTyping
     {
-        internal const string KeyBackspace = "Backspace";
-        internal const string KeyShiftBackspace = "Shift+Backspace";
-        internal const string KeySpace = "Space";
-        internal const string KeyEnterLineBreak = "Shift+Enter";
-        internal const string KeyDelete = "Delete";
-        internal const string KeyDeleteNextWord = "Ctrl+Delete";
-        internal const string KeyDeletePreviousWord = "Ctrl+Backspace";
-        internal const string KeyEnterParagraphBreak = "Enter";
-        internal const string KeyToggleInsert = "Insert";
-        internal const string KeyTabBackward = "Shift+Tab";
-        internal const string KeyTabForward = "Tab";
-        internal const string KeyShiftSpace = "Shift+Space";
-
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -1943,5 +1930,18 @@ namespace System.Windows.Documents
         }
 
         #endregion Private Methods
+
+        private const string KeyBackspace = "Backspace";
+        private const string KeyDelete = "Delete";
+        private const string KeyDeleteNextWord = "Ctrl+Delete";
+        private const string KeyDeletePreviousWord = "Ctrl+Backspace";
+        private const string KeyEnterLineBreak = "Shift+Enter";
+        private const string KeyEnterParagraphBreak = "Enter";
+        private const string KeyShiftBackspace = "Shift+Backspace";
+        private const string KeyShiftSpace = "Shift+Space";
+        private const string KeySpace = "Space";
+        private const string KeyTabBackward = "Shift+Tab";
+        private const string KeyTabForward = "Tab";
+        private const string KeyToggleInsert = "Insert";
     }
 }

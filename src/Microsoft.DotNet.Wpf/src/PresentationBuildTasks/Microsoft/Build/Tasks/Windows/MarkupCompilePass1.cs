@@ -102,7 +102,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.MarkupCompilePass1Task));
+            TaskHelper.DisplayLogo(Log, "MarkupCompilePass1");
 
             bool bSuccess = true;
 

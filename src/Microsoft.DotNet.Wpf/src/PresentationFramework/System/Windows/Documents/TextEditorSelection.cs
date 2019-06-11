@@ -34,44 +34,6 @@ namespace System.Windows.Documents
     /// </summary>
     internal static class TextEditorSelection
     {
-        internal const string KeyMoveLeftByCharacter =     "Left";
-        internal const string KeyMoveLeftByWord =     "Ctrl+Left";
-        internal const string KeyMoveRightByCharacter =     "Right";
-        internal const string KeyMoveRightByWord =     "Ctrl+Right";
-        internal const string KeyMoveDownByLine =     "Down";
-        internal const string KeyMoveUpByLine =     "Up";
-        internal const string KeyMoveDownByPage =     "PageDown";
-        internal const string KeyMoveDownByParagraph =     "Ctrl+Down";
-        internal const string KeyMoveUpByPage =     "PageUp";
-        internal const string KeyMoveUpByParagraph =     "Ctrl+Up";
-        internal const string KeyMoveToColumnEnd =     "Alt+PageDown";
-        internal const string KeyMoveToColumnStart =     "Alt+PageUp";
-        internal const string KeyMoveToDocumentEnd =     "Ctrl+End";
-        internal const string KeyMoveToDocumentStart =     "Ctrl+Home";
-        internal const string KeyMoveToLineEnd =     "End";
-        internal const string KeyMoveToLineStart =     "Home";
-        internal const string KeyMoveToWindowBottom =     "Alt+Ctrl+PageDown";
-        internal const string KeyMoveToWindowTop =     "Alt+Ctrl+PageUp";
-        internal const string KeySelectDownByPage =     "Shift+PageDown";
-        internal const string KeySelectDownByParagraph =     "Ctrl+Shift+Down";
-        internal const string KeySelectLeftByCharacter =     "Shift+Left";
-        internal const string KeySelectLeftByWord =     "Ctrl+Shift+Left";
-        internal const string KeySelectRightByCharacter =     "Shift+Right";
-        internal const string KeySelectRightByWord =     "Ctrl+Shift+Right";
-        internal const string KeySelectToColumnEnd =     "Alt+Shift+PageDown";
-        internal const string KeySelectToColumnStart =     "Alt+Shift+PageUp";
-        internal const string KeySelectToDocumentEnd =     "Ctrl+Shift+End";
-        internal const string KeySelectToDocumentStart =     "Ctrl+Shift+Home";
-        internal const string KeySelectToLineEnd =     "Shift+End";
-        internal const string KeySelectToLineStart =     "Shift+Home";
-        internal const string KeySelectToWindowBottom =     "Alt+Ctrl+Shift+PageDown";
-        internal const string KeySelectToWindowTop =     "Alt+Ctrl+Shift+PageUp";
-        internal const string KeySelectUpByLine =     "Shift+Up";
-        internal const string KeySelectUpByPage =     "Shift+PageUp";
-        internal const string KeySelectUpByParagraph =     "Ctrl+Shift+Up";
-        internal const string KeySelectDownByLine =     "Shift+Down";
-      
-
         //------------------------------------------------------
         //
         //  Class Internal Methods
@@ -97,7 +59,7 @@ namespace System.Windows.Documents
             
             // Standard Commands: Select All
             // -----------------------------
-            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.SelectAll, new ExecutedRoutedEventHandler(OnSelectAll), queryStatusKeyboardSelectionHandler, SRID.KeySelectAll, SRID.KeySelectAllDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.SelectAll, new ExecutedRoutedEventHandler(OnSelectAll), queryStatusKeyboardSelectionHandler, KeySelectAll, SRID.KeySelectAllDisplayString);
 
             // Editing Commands : Caret Navigation
             // -----------------------------------
@@ -2537,5 +2499,43 @@ namespace System.Windows.Documents
         #endregion Misceleneous Private Methods
 
         #endregion Private methods
+
+        private const string KeyMoveDownByLine = "Down";
+        private const string KeyMoveDownByPage = "PageDown";
+        private const string KeyMoveDownByParagraph = "Ctrl+Down";
+        private const string KeyMoveLeftByCharacter = "Left";
+        private const string KeyMoveLeftByWord = "Ctrl+Left";
+        private const string KeyMoveRightByCharacter = "Right";
+        private const string KeyMoveRightByWord = "Ctrl+Right";
+        private const string KeyMoveToColumnEnd = "Alt+PageDown";
+        private const string KeyMoveToColumnStart = "Alt+PageUp";
+        private const string KeyMoveToDocumentEnd = "Ctrl+End";
+        private const string KeyMoveToDocumentStart = "Ctrl+Home";
+        private const string KeyMoveToLineEnd = "End";
+        private const string KeyMoveToLineStart = "Home";
+        private const string KeyMoveToWindowBottom = "Alt+Ctrl+PageDown";
+        private const string KeyMoveToWindowTop = "Alt+Ctrl+PageUp";
+        private const string KeyMoveUpByLine = "Up";
+        private const string KeyMoveUpByPage = "PageUp";
+        private const string KeyMoveUpByParagraph = "Ctrl+Up";
+        private const string KeySelectAll = "Ctrl+A";
+        private const string KeySelectDownByLine = "Shift+Down";
+        private const string KeySelectDownByPage = "Shift+PageDown";
+        private const string KeySelectDownByParagraph = "Ctrl+Shift+Down";
+        private const string KeySelectLeftByCharacter = "Shift+Left";
+        private const string KeySelectLeftByWord = "Ctrl+Shift+Left";
+        private const string KeySelectRightByCharacter = "Shift+Right";
+        private const string KeySelectRightByWord = "Ctrl+Shift+Right";
+        private const string KeySelectToColumnEnd = "Alt+Shift+PageDown";
+        private const string KeySelectToColumnStart = "Alt+Shift+PageUp";
+        private const string KeySelectToDocumentEnd = "Ctrl+Shift+End";
+        private const string KeySelectToDocumentStart = "Ctrl+Shift+Home";
+        private const string KeySelectToLineEnd = "Shift+End";
+        private const string KeySelectToLineStart = "Shift+Home";
+        private const string KeySelectToWindowBottom = "Alt+Ctrl+Shift+PageDown";
+        private const string KeySelectToWindowTop = "Alt+Ctrl+Shift+PageUp";
+        private const string KeySelectUpByLine = "Shift+Up";
+        private const string KeySelectUpByPage = "Shift+PageUp";
+        private const string KeySelectUpByParagraph = "Ctrl+Shift+Up";
     }
 }

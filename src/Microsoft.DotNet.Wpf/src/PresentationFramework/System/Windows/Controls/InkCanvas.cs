@@ -2581,7 +2581,7 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Cut,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                SRID.KeyShiftDelete, SRID.KeyShiftDeleteDisplayString);
+                KeyShiftDelete, SRID.KeyShiftDeleteDisplayString);
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Copy,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
                 KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString);
@@ -3240,6 +3240,7 @@ namespace System.Windows.Controls
         private const string InkCanvasDeselectKey   = "Esc";
         private const string KeyCtrlInsert = "Ctrl+Insert";
         private const string KeyShiftInsert = "Shift+Insert";
+        private const string KeyShiftDelete = "Shift+Delete";
 
         #endregion Private Members
     }

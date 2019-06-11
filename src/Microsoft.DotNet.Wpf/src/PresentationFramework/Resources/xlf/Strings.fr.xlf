@@ -2587,11 +2587,6 @@
         <target state="translated">Ctrl+E</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyAlignJustify">
-        <source>Ctrl+J</source>
-        <target state="translated">Ctrl+J</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyAlignJustifyDisplayString">
         <source>Ctrl+J</source>
         <target state="translated">Ctrl+J</target>
@@ -2700,11 +2695,6 @@
       <trans-unit id="KeyIncreaseFontSizeDisplayString">
         <source>Ctrl+OemCloseBrackets</source>
         <target state="translated">Ctrl+OemCloseBrackets</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyIncreaseIndentation">
-        <source>Ctrl+T</source>
-        <target state="translated">Ctrl+T</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyIncreaseIndentationDisplayString">
@@ -2840,11 +2830,6 @@
       <trans-unit id="KeyResetFormatDisplayString">
         <source>Ctrl+Space</source>
         <target state="translated">Ctrl+Espace</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectAll">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectAllDisplayString">
@@ -2987,11 +2972,6 @@
         <target state="translated">Onglet</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleBold">
-        <source>Ctrl+B</source>
-        <target state="translated">Ctrl+G</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleBoldDisplayString">
         <source>Ctrl+B</source>
         <target state="translated">Ctrl+G</target>
@@ -3005,11 +2985,6 @@
       <trans-unit id="KeyToggleInsertDisplayString">
         <source>Insert</source>
         <target state="translated">Insert</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyToggleItalic">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+I</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyToggleItalicDisplayString">

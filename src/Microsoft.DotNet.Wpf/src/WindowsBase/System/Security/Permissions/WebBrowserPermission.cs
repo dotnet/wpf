@@ -17,10 +17,10 @@ namespace System.Security.Permissions
         public WebBrowserPermission(PermissionState state) { }
         public WebBrowserPermission(WebBrowserPermissionLevel webBrowserPermissionLevel) { }
         public bool IsUnrestricted() { return true;  }
-        public override bool IsSubsetOf(IPermission target) { return false;  }
-        public override IPermission Intersect(IPermission target) { return default(IPermission); } 
-        public override IPermission Union(IPermission target) { return default(IPermission); }
-        public override IPermission Copy() { return default(IPermission); }
+        public override bool IsSubsetOf(IPermission target) { return true;  }
+        public override IPermission Intersect(IPermission target) { return new WebBrowserPermission(); } 
+        public override IPermission Union(IPermission target) { return new WebBrowserPermission(); }
+        public override IPermission Copy() { return new WebBrowserPermission(); }
         public override SecurityElement ToXml() { return default(SecurityElement); }
         public override void FromXml(SecurityElement securityElement) { }
         public WebBrowserPermissionLevel Level { get; set; }

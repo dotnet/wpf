@@ -36,10 +36,10 @@ namespace System.Security.Permissions
                                MediaPermissionVideo permissionVideo, 
                                MediaPermissionImage permissionImage ) { }
         public bool IsUnrestricted() { return true; }
-        public override bool IsSubsetOf(IPermission target) { return false; }
-        public override IPermission Intersect(IPermission target) { return default(IPermission); }
-        public override IPermission Union(IPermission target) { return default(IPermission); }        
-        public override IPermission Copy() { return default(IPermission); }
+        public override bool IsSubsetOf(IPermission target) { return true; }
+        public override IPermission Intersect(IPermission target) { return new MediaPermission(); }
+        public override IPermission Union(IPermission target) { return new MediaPermission(); }        
+        public override IPermission Copy() { return new MediaPermission(); }
         public override SecurityElement ToXml() { return default(SecurityElement); }
         public override void FromXml(SecurityElement securityElement) { }
         public MediaPermissionAudio Audio { get; }

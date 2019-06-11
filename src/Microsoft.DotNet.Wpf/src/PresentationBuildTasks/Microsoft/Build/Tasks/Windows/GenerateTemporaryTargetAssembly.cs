@@ -11,7 +11,7 @@
 //              to compile it.
 //              
 //              The new project file will replace all the Reference Items with the 
-//              resolved ReferenctPath, add all the generated code file into Compile 
+//              resolved ReferencePath, add all the generated code file into Compile 
 //              Item list.
 //
 //---------------------------------------------------------------------------

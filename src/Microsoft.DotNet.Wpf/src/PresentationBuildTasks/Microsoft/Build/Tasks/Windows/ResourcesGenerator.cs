@@ -151,7 +151,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.ResourcesGeneratorTask));
+            TaskHelper.DisplayLogo(Log, nameof(ResourcesGenerator));
 
             //
             // Validate the property settings

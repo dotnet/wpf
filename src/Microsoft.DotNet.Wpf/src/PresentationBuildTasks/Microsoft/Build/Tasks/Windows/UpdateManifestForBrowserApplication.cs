@@ -70,7 +70,7 @@ namespace Microsoft.Build.Tasks.Windows
         public override bool Execute()
         {
             bool successful = true;
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.UpdateManifestForBrowserApplicationTask));
+            TaskHelper.DisplayLogo(Log, nameof(UpdateManifestForBrowserApplication));
 
             if (HostInBrowser != true)
             {

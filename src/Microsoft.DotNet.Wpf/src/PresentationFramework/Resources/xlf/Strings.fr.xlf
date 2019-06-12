@@ -1873,8 +1873,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
-        <source>   (... {0} more instances ...)</source>
-        <target state="translated">   (... {0} autres instances ...)</target>
+        <source>(... {0} more instances ...)</source>
+        <target state="needs-review-translation">   (... {0} autres instances ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -2185,11 +2185,6 @@
       <trans-unit id="IndexedPropDescNotImplemented">
         <source>Cannot use indexed Value on PropertyDescriptor.</source>
         <target state="translated">Impossible d'utiliser une valeur Value indexée sur PropertyDescriptor.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InkCanvasDeselectKey">
-        <source>Esc</source>
-        <target state="translated">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="InkCanvasDeselectKeyDisplayString">
@@ -2587,19 +2582,9 @@
         <target state="translated">Impossible d'imbriquer des appels BeginInit ou d'appeler BeginInit après la modification de JumpList.</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyAlignCenter">
-        <source>Ctrl+E</source>
-        <target state="translated">Ctrl+E</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyAlignCenterDisplayString">
         <source>Ctrl+E</source>
         <target state="translated">Ctrl+E</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyAlignJustify">
-        <source>Ctrl+J</source>
-        <target state="translated">Ctrl+J</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyAlignJustifyDisplayString">
@@ -2607,19 +2592,9 @@
         <target state="translated">Ctrl+J</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyAlignLeft">
-        <source>Ctrl+L</source>
-        <target state="translated">Ctrl+L</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyAlignLeftDisplayString">
         <source>Ctrl+L</source>
         <target state="translated">Ctrl+L</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyAlignRight">
-        <source>Ctrl+R</source>
-        <target state="translated">Ctrl+R</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyAlignRightDisplayString">
@@ -2627,19 +2602,9 @@
         <target state="translated">Ctrl+R</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyAltUndo">
-        <source>Alt+Backspace</source>
-        <target state="translated">Alt+Ret. arr</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyAltUndoDisplayString">
         <source>Alt+Backspace</source>
         <target state="translated">Alt+Ret. arr</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyApplyDoubleSpace">
-        <source>Ctrl+2</source>
-        <target state="translated">Ctrl+2</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyApplyDoubleSpaceDisplayString">
@@ -2647,29 +2612,14 @@
         <target state="translated">Ctrl+2</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyApplyOneAndAHalfSpace">
-        <source>Ctrl+5</source>
-        <target state="translated">Ctrl+5</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyApplyOneAndAHalfSpaceDisplayString">
         <source>Ctrl+5</source>
         <target state="translated">Ctrl+5</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyApplySingleSpace">
-        <source>Ctrl+1</source>
-        <target state="translated">Ctrl+1</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyApplySingleSpaceDisplayString">
         <source>Ctrl+1</source>
         <target state="translated">Ctrl+1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyBackspace">
-        <source>Backspace</source>
-        <target state="translated">Ret. arr</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyBackspaceDisplayString">
@@ -2682,19 +2632,9 @@
         <target state="translated">La collection de clés comporte une entrée non valide. Il doit s'agir d'un IBamlDictionaryKey.</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyCopy">
-        <source>Ctrl+C</source>
-        <target state="translated">Ctrl+C</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyCopyDisplayString">
         <source>Ctrl+C</source>
         <target state="translated">Ctrl+C</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyCopyFormat">
-        <source>Ctrl+Shift+C</source>
-        <target state="translated">Ctrl+Maj+C</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyCopyFormatDisplayString">
@@ -2702,19 +2642,9 @@
         <target state="translated">Ctrl+Maj+C</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyCtrlInsert">
-        <source>Ctrl+Insert</source>
-        <target state="translated">Ctrl+Insert</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyCtrlInsertDisplayString">
         <source>Ctrl+Insert</source>
         <target state="translated">Ctrl+Insert</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyCut">
-        <source>Ctrl+X</source>
-        <target state="translated">Ctrl+X</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyCutDisplayString">
@@ -2722,34 +2652,14 @@
         <target state="translated">Ctrl+X</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyDecreaseFontSize">
-        <source>Ctrl+OemOpenBrackets</source>
-        <target state="translated">Ctrl+OemOpenBrackets</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyDecreaseFontSizeDisplayString">
         <source>Ctrl+OemOpenBrackets</source>
         <target state="translated">Ctrl+OemOpenBrackets</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyDecreaseIndentation">
-        <source>Ctrl+Shift+T</source>
-        <target state="translated">Ctrl+Maj+T</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyDecreaseIndentationDisplayString">
         <source>Ctrl+Shift+T</source>
         <target state="translated">Ctrl+Maj+T</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyDelete">
-        <source>Delete</source>
-        <target state="translated">Supprimer</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyDeleteColumns">
-        <source>Alt+Ctrl+Shift+D</source>
-        <target state="translated">Alt+Ctrl+Maj+D</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyDeleteColumnsDisplayString">
@@ -2762,19 +2672,9 @@
         <target state="translated">Supprimer</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyDeleteNextWord">
-        <source>Ctrl+Delete</source>
-        <target state="translated">Ctrl+Suppr</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyDeleteNextWordDisplayString">
         <source>Ctrl+Delete</source>
         <target state="translated">Ctrl+Suppr</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyDeletePreviousWord">
-        <source>Ctrl+Backspace</source>
-        <target state="translated">Ctrl+Ret. arr</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyDeletePreviousWordDisplayString">
@@ -2782,19 +2682,9 @@
         <target state="translated">Ctrl+Ret. arr</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyEnterLineBreak">
-        <source>Shift+Enter</source>
-        <target state="translated">Maj+Entrée</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyEnterLineBreakDisplayString">
         <source>Shift+Enter</source>
         <target state="translated">Maj+Entrée</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyEnterParagraphBreak">
-        <source>Enter</source>
-        <target state="translated">Entrer</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyEnterParagraphBreakDisplayString">
@@ -2802,19 +2692,9 @@
         <target state="translated">Entrer</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyIncreaseFontSize">
-        <source>Ctrl+OemCloseBrackets</source>
-        <target state="translated">Ctrl+OemCloseBrackets</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyIncreaseFontSizeDisplayString">
         <source>Ctrl+OemCloseBrackets</source>
         <target state="translated">Ctrl+OemCloseBrackets</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyIncreaseIndentation">
-        <source>Ctrl+T</source>
-        <target state="translated">Ctrl+T</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyIncreaseIndentationDisplayString">
@@ -2822,19 +2702,9 @@
         <target state="translated">Ctrl+T</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyInsertColumns">
-        <source>Alt+Ctrl+Shift+C</source>
-        <target state="translated">Alt+Ctrl+Maj+C</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyInsertColumnsDisplayString">
         <source>Alt+Ctrl+Shift+C</source>
         <target state="translated">Alt+Ctrl+Maj+C</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyInsertRows">
-        <source>Alt+Ctrl+Shift+R</source>
-        <target state="translated">Alt+Ctrl+Maj+R</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyInsertRowsDisplayString">
@@ -2842,19 +2712,9 @@
         <target state="translated">Alt+Ctrl+Maj+R</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyInsertTable">
-        <source>Alt+Ctrl+Shift+T</source>
-        <target state="translated">Alt+Ctrl+Maj+T</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyInsertTableDisplayString">
         <source>Alt+Ctrl+Shift+T</source>
         <target state="translated">Alt+Ctrl+Maj+T</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMergeCells">
-        <source>Alt+Ctrl+Shift+M</source>
-        <target state="translated">Alt+Ctrl+Maj+M</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMergeCellsDisplayString">
@@ -2862,19 +2722,9 @@
         <target state="translated">Alt+Ctrl+Maj+M</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveDownByLine">
-        <source>Down</source>
-        <target state="translated">Descendre</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveDownByLineDisplayString">
         <source>Down</source>
         <target state="translated">Descendre</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveDownByPage">
-        <source>PageDown</source>
-        <target state="translated">Pg. suiv</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveDownByPageDisplayString">
@@ -2882,19 +2732,9 @@
         <target state="translated">Pg. suiv</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveDownByParagraph">
-        <source>Ctrl+Down</source>
-        <target state="translated">Ctrl+Bas</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveDownByParagraphDisplayString">
         <source>Ctrl+Down</source>
         <target state="translated">Ctrl+Bas</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveLeftByCharacter">
-        <source>Left</source>
-        <target state="translated">Gauche</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveLeftByCharacterDisplayString">
@@ -2902,19 +2742,9 @@
         <target state="translated">Gauche</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveLeftByWord">
-        <source>Ctrl+Left</source>
-        <target state="translated">Ctrl+Gauche</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveLeftByWordDisplayString">
         <source>Ctrl+Left</source>
         <target state="translated">Ctrl+Gauche</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveRightByCharacter">
-        <source>Right</source>
-        <target state="translated">Droit</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveRightByCharacterDisplayString">
@@ -2922,19 +2752,9 @@
         <target state="translated">Droit</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveRightByWord">
-        <source>Ctrl+Right</source>
-        <target state="translated">Ctrl+Droite</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveRightByWordDisplayString">
         <source>Ctrl+Right</source>
         <target state="translated">Ctrl+Droite</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveToColumnEnd">
-        <source>Alt+PageDown</source>
-        <target state="translated">Alt+Pg. suiv</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveToColumnEndDisplayString">
@@ -2942,19 +2762,9 @@
         <target state="translated">Alt+Pg. suiv</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveToColumnStart">
-        <source>Alt+PageUp</source>
-        <target state="translated">Alt+Pg. préc</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveToColumnStartDisplayString">
         <source>Alt+PageUp</source>
         <target state="translated">Alt+Pg. préc</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveToDocumentEnd">
-        <source>Ctrl+End</source>
-        <target state="translated">Ctrl+Fin</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveToDocumentEndDisplayString">
@@ -2962,19 +2772,9 @@
         <target state="translated">Ctrl+Fin</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveToDocumentStart">
-        <source>Ctrl+Home</source>
-        <target state="translated">Ctrl+Début</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveToDocumentStartDisplayString">
         <source>Ctrl+Home</source>
         <target state="translated">Ctrl+Début</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveToLineEnd">
-        <source>End</source>
-        <target state="translated">Fin </target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveToLineEndDisplayString">
@@ -2982,19 +2782,9 @@
         <target state="translated">Fin </target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveToLineStart">
-        <source>Home</source>
-        <target state="translated">Accueil</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveToLineStartDisplayString">
         <source>Home</source>
         <target state="translated">Accueil</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveToWindowBottom">
-        <source>Alt+Ctrl+PageDown</source>
-        <target state="translated">Alt+Ctrl+Pg. suiv</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveToWindowBottomDisplayString">
@@ -3002,19 +2792,9 @@
         <target state="translated">Alt+Ctrl+Pg. suiv</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveToWindowTop">
-        <source>Alt+Ctrl+PageUp</source>
-        <target state="translated">Alt+Ctrl+Pg. préc</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveToWindowTopDisplayString">
         <source>Alt+Ctrl+PageUp</source>
         <target state="translated">Alt+Ctrl+Pg. préc</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveUpByLine">
-        <source>Up</source>
-        <target state="translated">Monter</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveUpByLineDisplayString">
@@ -3022,19 +2802,9 @@
         <target state="translated">Monter</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyMoveUpByPage">
-        <source>PageUp</source>
-        <target state="translated">Pg. préc</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyMoveUpByPageDisplayString">
         <source>PageUp</source>
         <target state="translated">Pg. préc</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyMoveUpByParagraph">
-        <source>Ctrl+Up</source>
-        <target state="translated">Ctrl+Haut</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyMoveUpByParagraphDisplayString">
@@ -3042,19 +2812,9 @@
         <target state="translated">Ctrl+Haut</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyPasteFormat">
-        <source>Ctrl+Shift+V</source>
-        <target state="translated">Ctrl+Maj+V</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyPasteFormatDisplayString">
         <source>Ctrl+Shift+V</source>
         <target state="translated">Ctrl+Maj+V</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyRedo">
-        <source>Ctrl+Y</source>
-        <target state="translated">Ctrl+Y</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyRedoDisplayString">
@@ -3062,19 +2822,9 @@
         <target state="translated">Ctrl+Y</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyRemoveListMarkers">
-        <source>Ctrl+Shift+R</source>
-        <target state="translated">Ctrl+Maj+R</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyRemoveListMarkersDisplayString">
         <source>Ctrl+Shift+R</source>
         <target state="translated">Ctrl+Maj+R</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyResetFormat">
-        <source>Ctrl+Space</source>
-        <target state="translated">Ctrl+Espace</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyResetFormatDisplayString">
@@ -3082,19 +2832,9 @@
         <target state="translated">Ctrl+Espace</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectAll">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectAllDisplayString">
         <source>Ctrl+A</source>
         <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectDownByLine">
-        <source>Shift+Down</source>
-        <target state="translated">Maj+Bas</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectDownByLineDisplayString">
@@ -3102,19 +2842,9 @@
         <target state="translated">Maj+Bas</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectDownByPage">
-        <source>Shift+PageDown</source>
-        <target state="translated">Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectDownByPageDisplayString">
         <source>Shift+PageDown</source>
         <target state="translated">Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectDownByParagraph">
-        <source>Ctrl+Shift+Down</source>
-        <target state="translated">Ctrl+Maj+Bas</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectDownByParagraphDisplayString">
@@ -3122,19 +2852,9 @@
         <target state="translated">Ctrl+Maj+Bas</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectLeftByCharacter">
-        <source>Shift+Left</source>
-        <target state="translated">Maj+Gauche</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectLeftByCharacterDisplayString">
         <source>Shift+Left</source>
         <target state="translated">Maj+Gauche</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectLeftByWord">
-        <source>Ctrl+Shift+Left</source>
-        <target state="translated">Ctrl+Maj+Gauche</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectLeftByWordDisplayString">
@@ -3142,19 +2862,9 @@
         <target state="translated">Ctrl+Maj+Gauche</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectRightByCharacter">
-        <source>Shift+Right</source>
-        <target state="translated">Maj+Droite</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectRightByCharacterDisplayString">
         <source>Shift+Right</source>
         <target state="translated">Maj+Droite</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectRightByWord">
-        <source>Ctrl+Shift+Right</source>
-        <target state="translated">Ctrl+Maj+Droite</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectRightByWordDisplayString">
@@ -3162,19 +2872,9 @@
         <target state="translated">Ctrl+Maj+Droite</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectToColumnEnd">
-        <source>Alt+Shift+PageDown</source>
-        <target state="translated">Alt+Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectToColumnEndDisplayString">
         <source>Alt+Shift+PageDown</source>
         <target state="translated">Alt+Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectToColumnStart">
-        <source>Alt+Shift+PageUp</source>
-        <target state="translated">Alt+Maj+Pg. préc</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectToColumnStartDisplayString">
@@ -3182,19 +2882,9 @@
         <target state="translated">Alt+Maj+Pg. préc</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectToDocumentEnd">
-        <source>Ctrl+Shift+End</source>
-        <target state="translated">Ctrl+Maj+Fin</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectToDocumentEndDisplayString">
         <source>Ctrl+Shift+End</source>
         <target state="translated">Ctrl+Maj+Fin</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectToDocumentStart">
-        <source>Ctrl+Shift+Home</source>
-        <target state="translated">Ctrl+Maj+Début</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectToDocumentStartDisplayString">
@@ -3202,19 +2892,9 @@
         <target state="translated">Ctrl+Maj+Début</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectToLineEnd">
-        <source>Shift+End</source>
-        <target state="translated">Maj+Fin</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectToLineEndDisplayString">
         <source>Shift+End</source>
         <target state="translated">Maj+Fin</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectToLineStart">
-        <source>Shift+Home</source>
-        <target state="translated">Maj+Début</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectToLineStartDisplayString">
@@ -3222,19 +2902,9 @@
         <target state="translated">Maj+Début</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectToWindowBottom">
-        <source>Alt+Ctrl+Shift+PageDown</source>
-        <target state="translated">Alt+Ctrl+Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectToWindowBottomDisplayString">
         <source>Alt+Ctrl+Shift+PageDown</source>
         <target state="translated">Alt+Ctrl+Maj+Pg. suiv</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectToWindowTop">
-        <source>Alt+Ctrl+Shift+PageUp</source>
-        <target state="translated">Alt+Ctrl+Maj+Pg. préc</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectToWindowTopDisplayString">
@@ -3242,19 +2912,9 @@
         <target state="translated">Alt+Ctrl+Maj+Pg. préc</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectUpByLine">
-        <source>Shift+Up</source>
-        <target state="translated">Maj+Haut</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectUpByLineDisplayString">
         <source>Shift+Up</source>
         <target state="translated">Maj+Haut</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySelectUpByPage">
-        <source>Shift+PageUp</source>
-        <target state="translated">Maj+Pg. préc</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySelectUpByPageDisplayString">
@@ -3262,19 +2922,9 @@
         <target state="translated">Maj+Pg. préc</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySelectUpByParagraph">
-        <source>Ctrl+Shift+Up</source>
-        <target state="translated">Ctrl+Maj+Haut</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySelectUpByParagraphDisplayString">
         <source>Ctrl+Shift+Up</source>
         <target state="translated">Ctrl+Maj+Haut</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyShiftBackspace">
-        <source>Shift+Backspace</source>
-        <target state="translated">Maj+Ret.arr</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyShiftBackspaceDisplayString">
@@ -3282,19 +2932,9 @@
         <target state="translated">Maj+Ret.arr</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyShiftDelete">
-        <source>Shift+Delete</source>
-        <target state="translated">Maj+Suppr</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyShiftDeleteDisplayString">
         <source>Shift+Delete</source>
         <target state="translated">Maj+Suppr</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyShiftInsert">
-        <source>Shift+Insert</source>
-        <target state="translated">Maj+Inser</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyShiftInsertDisplayString">
@@ -3302,19 +2942,9 @@
         <target state="translated">Maj+Inser</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyShiftSpace">
-        <source>Shift+Space</source>
-        <target state="translated">Maj+Espace</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyShiftSpaceDisplayString">
         <source>Shift+Space</source>
         <target state="translated">Maj+Espace</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySpace">
-        <source>Space</source>
-        <target state="translated">L'espace</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySpaceDisplayString">
@@ -3322,19 +2952,9 @@
         <target state="translated">L'espace</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeySplitCell">
-        <source>Alt+Ctrl+Shift+S</source>
-        <target state="translated">Alt+Ctrl+Maj+S</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeySplitCellDisplayString">
         <source>Alt+Ctrl+Shift+S</source>
         <target state="translated">Alt+Ctrl+Maj+S</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeySwitchViewingMode">
-        <source>Ctrl+M</source>
-        <target state="translated">Ctrl+M</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySwitchViewingModeDisplayString">
@@ -3342,19 +2962,9 @@
         <target state="translated">Ctrl+M</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyTabBackward">
-        <source>Shift+Tab</source>
-        <target state="translated">Maj+Tab</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyTabBackwardDisplayString">
         <source>Shift+Tab</source>
         <target state="translated">Maj+Tab</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyTabForward">
-        <source>Tab</source>
-        <target state="translated">Onglet</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyTabForwardDisplayString">
@@ -3362,19 +2972,9 @@
         <target state="translated">Onglet</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleBold">
-        <source>Ctrl+B</source>
-        <target state="translated">Ctrl+G</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleBoldDisplayString">
         <source>Ctrl+B</source>
         <target state="translated">Ctrl+G</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyToggleBullets">
-        <source>Ctrl+Shift+L</source>
-        <target state="translated">Ctrl+Maj+L</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyToggleBulletsDisplayString">
@@ -3382,19 +2982,9 @@
         <target state="translated">Ctrl+Maj+L</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleInsert">
-        <source>Insert</source>
-        <target state="translated">Insert</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleInsertDisplayString">
         <source>Insert</source>
         <target state="translated">Insert</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyToggleItalic">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+I</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyToggleItalicDisplayString">
@@ -3402,19 +2992,9 @@
         <target state="translated">Ctrl+I</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleNumbering">
-        <source>Ctrl+Shift+N</source>
-        <target state="translated">Ctrl+Maj+N</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleNumberingDisplayString">
         <source>Ctrl+Shift+N</source>
         <target state="translated">Ctrl+Maj+N</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyToggleSubscript">
-        <source>Ctrl+OemPlus</source>
-        <target state="translated">Ctrl+OemPlus</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyToggleSubscriptDisplayString">
@@ -3422,29 +3002,14 @@
         <target state="translated">Ctrl+OemPlus</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleSuperscript">
-        <source>Ctrl+Shift+OemPlus</source>
-        <target state="translated">Ctrl+Maj+OemPlus</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleSuperscriptDisplayString">
         <source>Ctrl+Shift+OemPlus</source>
         <target state="translated">Ctrl+Maj+OemPlus</target>
         <note />
       </trans-unit>
-      <trans-unit id="KeyToggleUnderline">
-        <source>Ctrl+U</source>
-        <target state="translated">Ctrl+U</target>
-        <note />
-      </trans-unit>
       <trans-unit id="KeyToggleUnderlineDisplayString">
         <source>Ctrl+U</source>
         <target state="translated">Ctrl+U</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="KeyUndo">
-        <source>Ctrl+Z</source>
-        <target state="translated">Ctrl+Z</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyUndoDisplayString">
@@ -3470,11 +3035,6 @@
       <trans-unit id="ListBoxInvalidAnchorItem">
         <source>AnchorItem '{0}' does not have a realized container and hence is invalid.</source>
         <target state="translated">AnchorItem '{0}' ne possède pas de conteneur réalisé et par conséquent n'est pas valide.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ListBoxSelectAllKey">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
         <note />
       </trans-unit>
       <trans-unit id="ListBoxSelectAllKeyDisplayString">
@@ -5802,11 +5362,6 @@
         <target state="translated">Le type d'expression n'est pas une valeur Style valide.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SwitchViewingMode">
-        <source>_Switch ViewingMode</source>
-        <target state="translated">_Switch ViewingMode</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SystemResourceForTypeIsNotStyle">
         <source>System resource for type '{0}' is not a Style object.</source>
         <target state="translated">La ressource système pour le type '{0}' n'est pas un objet Style.</target>
@@ -6910,11 +6465,6 @@
       <trans-unit id="XpsValidatingLoaderUriNotInSamePackage">
         <source>URI in the XPS document points outside the Package.</source>
         <target state="translated">L'URI du document XPS pointe à l'extérieur du Package.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ZoomPercentageConverterStringFormat">
-        <source>{0:0.##}%</source>
-        <target state="translated">{0:0.##}%</target>
         <note />
       </trans-unit>
     </body>

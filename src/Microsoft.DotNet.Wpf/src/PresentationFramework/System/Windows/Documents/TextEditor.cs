@@ -416,8 +416,8 @@ namespace System.Windows.Documents
             // ---------
             if (!readOnly)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyUndo), SR.Get(SRID.KeyUndoDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyAltUndo), SR.Get(SRID.KeyAltUndoDisplayString)));
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), SRID.KeyRedo, SRID.KeyRedoDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(SR.Get(KeyUndo), SR.Get(SRID.KeyUndoDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(KeyAltUndo), SR.Get(SRID.KeyAltUndoDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), KeyRedo, SRID.KeyRedoDisplayString);
             }
         }
 
@@ -2135,5 +2135,9 @@ namespace System.Windows.Documents
         internal bool _isNextLineAdvanceMovingPositionAtDocumentHead;
 
         #endregion Private Fields
+
+        private const string KeyAltUndo = "Alt+Backspace";
+        private const string KeyRedo = "Ctrl+Y";
+        private const string KeyUndo = "Ctrl+Z";
     }
 }

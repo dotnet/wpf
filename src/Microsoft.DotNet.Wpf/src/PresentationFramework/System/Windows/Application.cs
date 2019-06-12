@@ -2535,8 +2535,8 @@ namespace System.Windows
             Window w = root as Window;
             if (w == null)
             {
-                //Creates and returns a NavigationWindow for standalone cases
-                //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
+                // Creates and returns a NavigationWindow for standalone cases
+                // Browser hosted cases are no longer supported since .NET Core 3.0
                 NavigationWindow appWin = GetAppWindow();
 
                 //Since we cancel PreBPReady event here, the other navigation events won't fire twice.

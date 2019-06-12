@@ -9,5 +9,6 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Controls.PrintDialogExcep
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueConversionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueUnavailableException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Documents.TextElementEditingBehaviorAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+TypesMustExist : Type 'System.Windows.Interop.DocObjHost' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-Total Issues: 11
+Total Issues: 12

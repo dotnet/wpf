@@ -53,8 +53,9 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,
-and not automated testing. There are a few different ways this can be done, and for the most part,
-it can be a matter of personal preference on which workflow you choose.
+and not automated testing. For automated testing, see the [Running DRTs locally](#Running-DRTs-locally) section above. There are a few different ways this can be done, and for the most part, it depends on what you are trying to accomplish. This section tries to lay out which scenarios require which workflow.
+
+*NOTE: You should build locally with the `-pack` param to ensure the binaries are put in the correct location for manual testing.*
 
 #### Copying binaries to publish location of a self-contained application
 The simplest approach is to publish your sample app using `dotnet publish -r <rid> --self-contained`.
@@ -67,23 +68,25 @@ Then to copy the WPF assemblies to this published location, simply run the copy-
 located in the `eng` folder of the repo and point it to the location of your test application:
 > eng\copy-wpf.ps1 -destination "c:\mysampleproj"
 
-#### Copying binaries to local dotnet installation
+#### Copying binaries to testhost installation of dotnet
 
-If you want/need to test an existing application that targets the shared installation, 
-it is safest to setup a test host, rather than trying to copy assemblies over the shared installation.
-The arcade infrastructure creates a local dotnet installation in the `.dotnet` folder contained at the root
-of the repository when you do a full build using the `build.cmd` or `build.sh` script.
-You can run the copy-wpf.ps1 script again, except you can leave out the destination and be sure to pass in the 
-the `-testhost` parameter:
-> eng\copy-wpf.ps1 -testhost  
-```cmd eng\copy-wpf.ps1 -testhost  ```
+If you want/need to test an existing application that targets the shared installation, it is safest to setup a test host, rather than trying to copy assemblies over the shared installation. This method is also effective for internal contributors who are working on porting our current test corpus from .NET Framework to .NET Core and wants to run the tests against locally built assemblies. Note that there is nothing fundamentally different between a testhost installation of dotnet and the one installed in `$env:ProgramFiles`. However the dotnet host dll won't be able to find the testhost install if the appropriate environment variables aren't set. Note that these environment variables are set for you by copy-wpf.ps1 
 
-You need to set environment variables so that your testhost installation is used when launching the application.
-Once these are set, you should be able to launch the executable from the command line and then your assemblies
-will be used.
+You can run the copy-wpf.ps1 script again and be sure to pass in the `-testhost` parameter:
+> eng\copy-wpf.ps1 -testhost -destination "c:\testhost\x86"
 
-- DOTNET_ROOT=<path_to_wpf_repo>\\.dotnet
-- DOTNET_MULTILEVEL_LOOKUP=0
+If your testhost directory has multiple versions of the `Microsoft.WindowsDesktop.App` shared runtime in it, you canuse the `-version` parameter to specify which one you want:
+
+> eng\copy-wpf.ps1 -testhost -destination "c:\testhost\x86" -version "3.0.0-preview6-27728-04"  
+
+If there are multiple versions, you will see a warning and the last installed runtime will be selected. You can backup the folder by creating a copy of it, and the script will ensure that this folder isn't touched as long as the word "Copy" is in the path. This was chosen because the default for Windows Explorer is to append "- Copy" to the folder. This allows you to easily backup folders containing the runtime assemblies knowing you can restore them to their original state if needed. 
+
+If you are installing to a special test host location, you will see output from the script that confirms the appropriate environment variables are set:
+
+```
+** Setting env:DOTNET_ROOT(x86) to c:\testhost\x86 **
+** Setting env:DOTNET_MULTILEVEL_LOOKUP to 0 **
+```
 
 **How to find location of the exe to test?**
 If you are testing an application and don't know where the executable is located, the easiest thing to do
@@ -97,7 +100,6 @@ When the C# compiler detects a collision with assembly references, the assembly 
 higher version number is chosen. Assuming our locally built binaries are newer than what is
 installed, we can then simply reference those local binaries directly from the project file, like this:
 
-*Note: you should build locally with the `-pack` param to ensure the binaries are put in the correct location.*
 ```xml
   <PropertyGroup>
      <!-- Change this value based on where your local repo is located -->
@@ -117,7 +119,7 @@ installed, we can then simply reference those local binaries directly from the p
 ```
 
 ### Testing specific versions of the Microsoft.WindowsDesktop.App runtime
-At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occuring.
+At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occuring, or need to compare functionality between two different versions.
 
 For testing different versions of the runtime, you can install a specific version of the runtimes via the dotnet install script: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
 **Note**: These install the versions to your %user% directory, so you can use the DOTNET_ROOT environment variables to ensure these get used as described above. Otherwise, you can point them to install in %programfiles% and specify which version of the runtime should be picked up.
@@ -154,7 +156,7 @@ In this example, the version of `Microsoft.WindowsDesktop.App` associated with t
 **Note**: The ability to install the WindowsDesktop runtime via the dotnet install script is being tracked by: https://github.com/dotnet/cli/issues/11115 
 
 #### Specifying which version of the runtime to use
-If you can build directly from source, you can add this to your project file to pick up the version of the shared runtime you want to test:
+If you can build directly from source, and want to test your application against a certain version of the `Microsoft.WindowsDesktop.App` shared runtime, you can add this to your project file to pick up the version of the shared runtime you want to test:
 ```xml
  <PropertyGroup>
     <MicrosoftWindowsDesktopAppVersion>3.0.0-preview5-27619-18</MicrosoftWindowsDesktopAppVersion>

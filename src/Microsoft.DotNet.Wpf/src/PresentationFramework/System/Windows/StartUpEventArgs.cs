@@ -59,50 +59,22 @@ namespace System.Windows
 
         private string[] GetCmdLineArgs()
         {
-            string[] retValue = null;
+            string[] args = Environment.GetCommandLineArgs();
+            Invariant.Assert(args.Length >= 1);
 
-            if (!BrowserInteropHelper.IsBrowserHosted && 
-                 ( ( Application.Current.MimeType != MimeType.Application ) 
-                   || ! IsOnNetworkShareForDeployedApps() ))
-            {
-                string[] args = Environment.GetCommandLineArgs();
-                Invariant.Assert(args.Length >= 1);
+            int newLength = args.Length - 1;
+            newLength = (newLength >= 0 ? newLength : 0);
 
-                int newLength = args.Length - 1;
-                newLength = (newLength >=0 ? newLength : 0);
-                
-                retValue = new string[newLength];
-                
-                for (int i = 1; i < args.Length; i++)
-                {
-                    retValue[i-1] = args[i];
-                }
-            }
-            else
+            string[] retValue = new string[newLength];
+
+            for (int i = 1; i < args.Length; i++)
             {
-                retValue = new string[0];
+                retValue[i - 1] = args[i];
             }
 
             return retValue;
         }
         
-        //
-        // Put this into a separate Method to avoid loading of this code at JIT time. 
-        // 
-
-        //
-        // Explicitly tell the compiler that we don't want to be inlined. 
-        // This will prevent loading of system.deployment unless we are a click-once app. 
-        // 
-        [MethodImplAttribute (MethodImplOptions.NoInlining )]
-        private bool IsOnNetworkShareForDeployedApps()
-        {
-#if NETFX
-            return System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed ; 
-#else
-            return false;
-#endif
-        }
         
         private String[]    _args;
         private bool        _performDefaultAction;

@@ -54,7 +54,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, "MergeLocalizationDirectives");
+            TaskHelper.DisplayLogo(Log, MergeLocalizationDirectivesTaskString);
             if (GeneratedLocalizationFiles.Length > 0)
             {
                 try {
@@ -145,6 +145,7 @@ namespace Microsoft.Build.Tasks.Windows
         //---------------------------------
         private ITaskItem[] _generatedLocalizationFiles;
         private string      _outputFile;
+        private const string MergeLocalizationDirectivesTaskString = "MergeLocalizationDirectives";
     }
 }
 

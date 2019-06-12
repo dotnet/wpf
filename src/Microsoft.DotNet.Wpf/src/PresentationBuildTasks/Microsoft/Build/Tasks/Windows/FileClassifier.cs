@@ -82,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                TaskHelper.DisplayLogo(Log, "FileClassifier");
+                TaskHelper.DisplayLogo(Log, FileClassifierTaskString);
 
                 ret = VerifyTaskInputs();
 
@@ -374,6 +374,8 @@ namespace Microsoft.Build.Tasks.Windows
         private string _culture;
 
         private const string UnknownErrorID = "FC1000";
+
+        private const string FileClassifierTaskString = "FileClassifier";
 
         #endregion Private Fields
 

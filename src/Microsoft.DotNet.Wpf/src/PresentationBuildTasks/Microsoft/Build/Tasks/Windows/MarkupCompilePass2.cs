@@ -83,7 +83,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, "MarkupCompilePass2");
+            TaskHelper.DisplayLogo(Log, MarkupCompilePass2TaskString);
 
             //
             // Create the TaskFileService instance here
@@ -889,6 +889,7 @@ namespace Microsoft.Build.Tasks.Windows
 
 
         private const string UnknownErrorID = "MC2000";
+        private const string MarkupCompilePass2TaskString = "MarkupCompilePass2";
 
         #endregion Private Fields
 

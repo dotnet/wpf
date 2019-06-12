@@ -74,7 +74,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, "UidManagerTask");
+            TaskHelper.DisplayLogo(Log, UidManagerTaskString);
 
             if (MarkupFiles == null || MarkupFiles.Length == 0)
             {
@@ -605,6 +605,7 @@ namespace Microsoft.Build.Tasks.Windows
         private string        _taskAsString;    // task string
         private string        _backupPath;      // path to store to backup source Xaml files
         private const string UnknownErrorID = "UM1000";
+        private const string UidManagerTaskString = "UidManager";
     }
 
     // represent all the information about a Uid

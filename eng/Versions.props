@@ -5,6 +5,7 @@
     <PreReleaseVersionLabel>preview7</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemIOPackagingVersion>4.6.0-preview7.19311.9</SystemIOPackagingVersion>
+    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19312.5</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
@@ -40,8 +41,8 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19311.2</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19311.2</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19312.5</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19312.5</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

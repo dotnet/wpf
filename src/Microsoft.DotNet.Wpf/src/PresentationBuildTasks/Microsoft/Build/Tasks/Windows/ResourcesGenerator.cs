@@ -151,7 +151,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, ResourcesGeneratorTaskString);
+            TaskHelper.DisplayLogo(Log, nameof(ResourcesGenerator));
 
             //
             // Validate the property settings
@@ -438,8 +438,6 @@ namespace Microsoft.Build.Tasks.Windows
         private string                     _outputPath;
 
         private const string UnknownErrorID = "RG1000";
-
-        private const string ResourcesGeneratorTaskString = "ResourcesGenerator";
 
         #endregion Private Fields
 

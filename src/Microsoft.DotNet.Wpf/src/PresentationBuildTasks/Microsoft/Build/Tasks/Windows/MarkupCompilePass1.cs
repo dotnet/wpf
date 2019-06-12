@@ -102,7 +102,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, MarkupCompilePass1TaskString);
+            TaskHelper.DisplayLogo(Log, nameof(MarkupCompilePass1));
 
             bool bSuccess = true;
 
@@ -1895,7 +1895,6 @@ namespace Microsoft.Build.Tasks.Windows
         #region const string
 
         private const string UnknownErrorID = "MC1000";
-        private const string MarkupCompilePass1TaskString = "MarkupCompilePass1";
 
         #endregion const string
 

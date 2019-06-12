@@ -70,7 +70,7 @@ namespace Microsoft.Build.Tasks.Windows
         public override bool Execute()
         {
             bool successful = true;
-            TaskHelper.DisplayLogo(Log, UpdateManifestForBrowserApplicationTaskString);
+            TaskHelper.DisplayLogo(Log, nameof(UpdateManifestForBrowserApplication));
 
             if (HostInBrowser != true)
             {
@@ -218,7 +218,6 @@ namespace Microsoft.Build.Tasks.Windows
         private const string c_entryPoint = "entryPoint";
         private const string c_hostInBrowser ="hostInBrowser";
         private const string c_asmv3= "urn:schemas-microsoft-com:asm.v3";
-        private const string UpdateManifestForBrowserApplicationTaskString = "UpdateManifestForBrowserApplication";
 
         #endregion Private Fields
 

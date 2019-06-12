@@ -259,17 +259,14 @@ namespace System.Windows
 
         /// <summary>
         /// This will return true IFF this is a browser hosted, and this is the user's deployed
-        /// application, not our deployment application. We can't use BrowserCallbackServices for
-        /// this test, because it may not be hooked up yet. BrowserInteropHelper.IsBrowserHosted
-        /// is set before any of the code in the new AppDomain will be run yet.
+        /// application, not our deployment application. 
         /// </summary>
+        /// <remarks>
+        /// Always returns <code>false</code> on .NET core 3+
+        /// </remarks>
         internal static bool InBrowserHostedApp()
         {
-#if NETFX
-            return BrowserInteropHelper.IsBrowserHosted && !(Application.Current is XappLauncherApp);
-#else
             return false;
-#endif
         }
 
         /// <summary>

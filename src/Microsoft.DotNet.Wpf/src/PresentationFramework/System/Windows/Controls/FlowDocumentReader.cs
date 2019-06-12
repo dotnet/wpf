@@ -35,9 +35,6 @@ namespace System.Windows.Controls
     [ContentProperty("Document")]
     public class FlowDocumentReader : Control, IAddChild, IJournalState
     {
-        internal const string KeySwitchViewingMode = "Ctrl+M";
-        internal const string Switch_ViewingMode =  "_Switch ViewingMode";
-
         //-------------------------------------------------------------------
         //
         //  Constructors
@@ -1938,6 +1935,9 @@ namespace System.Windows.Controls
         private const string _contentHostTemplateName = "PART_ContentHost";         // Name for ContentHost
         private const string _findToolBarHostTemplateName = "PART_FindToolBarHost"; // Name for the Find ToolBar host
         private const string _findButtonTemplateName = "FindButton"; // Name for the Find Button
+
+        private const string KeySwitchViewingMode = "Ctrl+M";
+        private const string Switch_ViewingMode =  "_Switch ViewingMode";
 
         #endregion Private Fields
 

@@ -5,110 +5,101 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using Xunit;
-using Xunit.Sdk;
 
 namespace DrtXaml.XamlTestFramework
 {
-    public class EqualException2 : EqualException
-    {
-        public EqualException2(object expected, object actual) : base(expected, actual)
-        {
-        }
-
-        public EqualException2(string expected, string actual, int expectedIndex, int actualIndex) : base(expected, actual, expectedIndex, actualIndex)
-        {
-        }
-
-        public EqualException2(object expected, object actual, string message): this(expected, actual)
-        {
-            UserMessage = message;
-        }
-    }
-
-    public class NotEqualException2 : NotEqualException
-    {
-        public NotEqualException2(NotEqualException inner, string message): base(inner.Expected, inner.Actual)
-        {
-            UserMessage = message;
-        }
-    }
-
-    public class NotNullException2 : NotNullException
-    {
-        public NotNullException2()
-        {
-        }
-
-        public NotNullException2(string message)
-        {
-            UserMessage = message;
-        }
-    }
-
-    public class NullException2 : NullException
-    {
-        public NullException2(object actual) : base(actual)
-        {
-        }
-
-        public NullException2(object actual, string message): this(actual)
-        {
-            UserMessage = message;
-        }
-    }
-
-    public class IsAssignableFromException2 : IsAssignableFromException
-    {
-        public IsAssignableFromException2(Type expected, object actual) : base(expected, actual)
-        {
-        }
-
-        public IsAssignableFromException2(Type expected, object actual, string message) : this(expected, actual)
-        {
-            UserMessage = message;
-        }
-    }
-
-
     public static class Assert
     {
-
-        public static void AreEqual<T>(T expected, T actual)
+        public static void AreEqual(decimal expected, decimal actual)
         {
-            AreEqual<T>(expected, actual, "Are not equal");
+            AreEqual(expected, actual, "Are not equal");
         }
 
-        public static void AreEqual<T>(T expected, T actual, string message)
+        public static void AreEqual(int expected, int actual)
         {
-            try
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(uint expected, uint actual)
+        {
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(string expected, string actual)
+        {
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(float expected, float actual)
+        {
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(double expected, double actual)
+        {
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(object expected, object actual)
+        {
+            AreEqual(expected, actual, "Are not equal");
+        }
+
+        public static void AreEqual(decimal expected, decimal actual, string message)
+        {
+            if (expected != actual)
             {
-                Xunit.Assert.Equal<T>(expected, actual);
-            }
-            catch (EqualException)
-            {
-                throw new EqualException2(expected, actual, message);
+                Fail(message);
             }
         }
 
-        public static void AreNotEqual<T>(T expected, T actual)
+        public static void AreEqual(int expected, int actual, string message)
         {
-            AreNotEqual<T>(expected, actual, "Should not be equal");
-        }
-
-        public static void AreNotEqual<T>(T expected, T actual, string message)
-        {
-            try
+            if (expected != actual)
             {
-                Xunit.Assert.NotEqual<T>(expected, actual);
-            }
-            catch (NotEqualException e)
-            {
-                throw new NotEqualException2(e, message);
+                Fail(message);
             }
         }
 
+        public static void AreEqual(uint expected, uint actual, string message)
+        {
+            if (expected != actual)
+            {
+                Fail(message);
+            }
+        }
 
+        public static void AreEqual(string expected, string actual, string message)
+        {
+            if (expected != actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreEqual(float expected, float actual, string message)
+        {
+            if (expected != actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreEqual(double expected, double actual, string message)
+        {
+            if (expected != actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreEqual(object expected, object actual, string message)
+        {
+            if (!(expected.Equals(actual)))
+            {
+                Fail(message);
+            }
+        }
 
         public static void AreEqualOrdered<T>(IList<T> actual, params T[] expected)
         {
@@ -128,7 +119,96 @@ namespace DrtXaml.XamlTestFramework
             }
         }
         
+        public static void AreNotEqual(decimal expected, decimal actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(int expected, int actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(uint expected, uint actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(string expected, string actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(float expected, float actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
         
+        public static void AreNotEqual(double expected, double actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(object expected, object actual)
+        {
+            AreNotEqual(expected, actual, "Should not be equal");
+        }
+
+        public static void AreNotEqual(decimal expected, decimal actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(int expected, int actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(uint expected, uint actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(string expected, string actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(float expected, float actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(double expected, double actual, string message)
+        {
+            if (expected == actual)
+            {
+                Fail(message);
+            }
+        }
+
+        public static void AreNotEqual(object expected, object actual, string message)
+        {
+            if (object.Equals(expected, actual))
+            {
+                Fail(message);
+            }
+        }
 
         public static void AreSame(object expected, object actual)
         {
@@ -137,7 +217,10 @@ namespace DrtXaml.XamlTestFramework
 
         public static void AreSame(object expected, object actual, string message)
         {
-            Assert.AreEqual<object>(expected, actual, message);
+            if (!(object.ReferenceEquals(expected, actual)))
+            {
+                Assert.Fail(message);
+            }
         }
 
         public static void AreNotSame(object expected, object actual)
@@ -147,7 +230,20 @@ namespace DrtXaml.XamlTestFramework
 
         public static void AreNotSame(object expected, object actual, string message)
         {
-            Assert.AreNotEqual<object>(expected, actual, message);
+            if (object.ReferenceEquals(expected, actual))
+            {
+                Assert.Fail(message);
+            }
+        }
+
+        public static void Fail()
+        {
+            Fail("Please call Fail(message) not Fail()");
+        }
+
+        public static void Fail(string message)
+        {
+            throw new InvalidOperationException(message);
         }
 
         public static void IsEmpty(ICollection collection)
@@ -170,7 +266,10 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsFalse(bool condition, string message)
         {
-            Xunit.Assert.False(condition, message);
+            if (condition)
+            {
+                Assert.Fail(message);
+            }
         }
 
         public static void IsNotNull(object o)
@@ -180,13 +279,9 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsNotNull(object o, string message)
         {
-            try
+            if (o == null)
             {
-                Xunit.Assert.NotNull(o);
-            }
-            catch (NotNullException)
-            {
-                throw new NotNullException2(message);
+                Assert.Fail(message);
             }
         }
 
@@ -197,13 +292,9 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsNull(object o, string message)
         {
-            try
+            if (o != null)
             {
-                Xunit.Assert.Null(o);
-            }
-            catch (NullException)
-            {
-                throw new NullException2(o, message);
+                Assert.Fail(message);
             }
         }
 
@@ -214,7 +305,7 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsTrue(bool condition, string message)
         {
-            Xunit.Assert.True(condition, message);
+            AreEqual(true, condition, message);
         }
 
         public static void IsInstanceOfType(Type expected, object actual)
@@ -224,19 +315,10 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsInstanceOfType(Type expected, object actual, string message)
         {
-            try
+            if (!(expected.IsInstanceOfType(actual)))
             {
-                Xunit.Assert.IsAssignableFrom(expected, actual);
+                Assert.Fail(message);
             }
-            catch(IsAssignableFromException)
-            {
-                throw new IsAssignableFromException2(expected, actual, message);
-            }
-        }
-
-        public static void Fail(string message)
-        {
-            Xunit.Assert.True(false, message);
         }
     }
 }

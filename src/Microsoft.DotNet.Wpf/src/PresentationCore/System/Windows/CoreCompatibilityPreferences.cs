@@ -41,8 +41,10 @@ namespace System.Windows
         {
             get
             {
-#if NETFX
+#if NETFX && !NETCOREAPP
                 return BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
+#elif NETCOREAPP
+                return true;
 #else
                 return true;
 #endif

@@ -169,7 +169,7 @@ namespace System.Windows.Automation.Peers
                         // Ignore such children. 
                         if (dataItem == DependencyProperty.UnsetValue)
                         {
-                            dataItem = null;
+                            continue;
                         }
                     }
                     else

@@ -92,7 +92,7 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, InkCanvas.DeselectCommand,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                SRID.InkCanvasDeselectKey, SRID.InkCanvasDeselectKeyDisplayString);
+                InkCanvasDeselectKey, SRID.InkCanvasDeselectKeyDisplayString);
 
             //
             //set our clipping
@@ -2581,15 +2581,15 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Cut,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                SRID.KeyShiftDelete, SRID.KeyShiftDeleteDisplayString);
+                KeyShiftDelete, SRID.KeyShiftDeleteDisplayString);
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Copy,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                SRID.KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString);
+                KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString);
 
             // Use temp variables to reduce code under elevation
             ExecutedRoutedEventHandler pasteExecuteEventHandler = new ExecutedRoutedEventHandler(_OnCommandExecuted);
             CanExecuteRoutedEventHandler pasteQueryEnabledEventHandler = new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled);
-            InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyShiftInsert), SR.Get(SRID.KeyShiftInsertDisplayString));
+            InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.Get(SRID.KeyShiftInsertDisplayString));
 
             new UIPermission(UIPermissionClipboard.AllClipboard).Assert(); // BlessedAssert:
             try
@@ -3236,6 +3236,11 @@ namespace System.Windows.Controls
         private RTIHighContrastCallback     _rtiHighContrastCallback;
 
         private const double                    c_pasteDefaultLocation = 0.0;
+
+        private const string InkCanvasDeselectKey   = "Esc";
+        private const string KeyCtrlInsert = "Ctrl+Insert";
+        private const string KeyShiftInsert = "Shift+Insert";
+        private const string KeyShiftDelete = "Shift+Delete";
 
         #endregion Private Members
     }

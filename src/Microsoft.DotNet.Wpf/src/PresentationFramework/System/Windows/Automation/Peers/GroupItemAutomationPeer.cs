@@ -211,7 +211,7 @@ namespace System.Windows.Automation.Peers
                             // Ignore such children.
                             if (item == DependencyProperty.UnsetValue)
                             {
-                                item = null;
+                                continue;
                             }
 
                             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client

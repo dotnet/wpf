@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//---------------------------------------------------------------------------
-//
-
-// 
-// File: AppContextDefaultValues.cs
-//---------------------------------------------------------------------------
-
 using System.Windows;
 using MS.Internal;
 
@@ -44,7 +37,30 @@ namespace System
 
                         break;
                     }
+                case ".NETCoreApp":
+                    {
+                        InitializeNetFxSwitchDefaultsForNetCoreRuntime();
+                    }
+                    break;
             }
+        }
+
+        private static void InitializeNetFxSwitchDefaultsForNetCoreRuntime()
+        {
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotScaleForDpiChangesSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.OverrideExceptionWithNullReferenceExceptionName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotUsePresentationDpiCapabilityTier2OrGreaterSwitchName, false);
+
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableStylusAndTouchSupportSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.EnablePointerSupportSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableDiagnosticsSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.AllowChangesDuringVisualTreeChangedSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableImplicitTouchKeyboardInvocationSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailableSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStationSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotUsePresentationDpiCapabilityTier3OrGreaterSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.AllowExternalProcessToBlockAccessToTemporaryFilesSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.EnableLegacyDangerousClipboardDeserializationModeSwitchName, false);
         }
     }
 #pragma warning restore 436

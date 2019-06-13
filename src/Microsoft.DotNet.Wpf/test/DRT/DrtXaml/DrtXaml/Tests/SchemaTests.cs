@@ -1244,9 +1244,7 @@ Add(Test.Elements.DoubleCollection,23.666)";
         }
 
          [TestMethod]
-#if NETCOREAPP3_X
          [TestKnownFailure(Reason = ".NET Core does not support Assembly.ReflectionOnlyLoad. Contact wpfdev for additional details")]
-#endif
         public void ReflectionOnlyTypes()
         {
             XamlSchemaContext oldXsc = _schemaContext;

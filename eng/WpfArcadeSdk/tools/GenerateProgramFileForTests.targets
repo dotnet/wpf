@@ -1,6 +1,6 @@
 <Project>
   <Target Name="EnsureProgramFileIsGeneratedOnlyForTests"
-          Condition="'$(IsTestProject)'=='true' And '$(GenerateProgramFile)'!='true'"
+          Condition="'$(IsTestProject)'=='true' And '$(GenerateProgramFile)'!='false'"
           BeforeTargets="CoreCompile">
     <PropertyGroup>
       <GenerateProgramFile Condition="'$(InternalMarkupCompilation)'!='true'">true</GenerateProgramFile>

@@ -9,6 +9,7 @@
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
+    <InjectModuleInitializer>true</InjectModuleInitializer>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -16,6 +17,11 @@
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="System\AppContextDefaultValues.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
@@ -96,6 +102,7 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
+    <Compile Include="ModuleInitializer.cs" />
     <Compile Include="otherassemblyattrs.cs" />
     <Compile Include="SR.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
@@ -1408,7 +1415,6 @@
 
   <ItemGroup>
     <!-- required for internals access -->
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
@@ -1417,6 +1423,21 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+  </ItemGroup>
+
+  <!-- 
+    Need Microsoft.WinFx.targets to embed *.compositefont 
+    files using MainResourcesGeneration target
+  -->
+  <PropertyGroup>
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.CompositeFont">
+      <GenerateSource>false</GenerateSource>
+      <XlfSource>false</XlfSource>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

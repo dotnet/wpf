@@ -59,8 +59,11 @@ function CopyManagedBinariesToLocation($location, $localBinLocation)
 function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binaryLocationInPackage)
 {
     $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
-    $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "lib", $binaryLocationInPackage)
-    Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
+    $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "lib", $binaryLocationInPackage, "*")
+    if (Test-Path $BinLocation)
+    {
+        Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
+    }
 }
 
 if ($help -or ([string]::IsNullOrEmpty($destination) -and !$local))

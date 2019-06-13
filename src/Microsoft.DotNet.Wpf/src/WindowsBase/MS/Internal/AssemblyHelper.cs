@@ -36,12 +36,10 @@ namespace MS.Internal
     internal enum UncommonAssembly
     {
         // Each enum name must match the assembly name, with dots replaced by underscores
-        System_Drawing,
-        System_Xml,
+        System_Drawing_Common,
         System_Private_Xml,
-        System_Xml_Linq,
         System_Private_Xml_Linq,
-        System_Data,
+        System_Data_Common,
         System_Linq_Expressions,
     }
 
@@ -109,7 +107,7 @@ namespace MS.Internal
         internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force=false)
         {
             if (_systemDrawingExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Drawing)))
+                (force || IsLoaded(UncommonAssembly.System_Drawing_Common)))
             {
                 _systemDrawingExtensionMethods = (SystemDrawingExtensionMethods)LoadExtensionFor("SystemDrawing");
             }
@@ -127,7 +125,7 @@ namespace MS.Internal
         internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force=false)
         {
             if (_systemXmlExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Xml) || IsLoaded(UncommonAssembly.System_Private_Xml)))
+                (force || IsLoaded(UncommonAssembly.System_Private_Xml)))
             {
                 _systemXmlExtensionMethods = (SystemXmlExtensionMethods)LoadExtensionFor("SystemXml");
             }
@@ -145,7 +143,7 @@ namespace MS.Internal
         internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force=false)
         {
             if (_systemXmlLinqExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Xml_Linq) || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
+                (force || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
             {
                 _systemXmlLinqExtensionMethods = (SystemXmlLinqExtensionMethods)LoadExtensionFor("SystemXmlLinq");
             }
@@ -163,7 +161,7 @@ namespace MS.Internal
         internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force=false)
         {
             if (_systemDataExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Data)))
+                (force || IsLoaded(UncommonAssembly.System_Data_Common)))
             {
                 _systemDataExtensionMethods = (SystemDataExtensionMethods)LoadExtensionFor("SystemData");
             }

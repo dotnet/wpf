@@ -1477,45 +1477,55 @@ namespace System.Windows.Input
                                 break;
                             }
                         }
-                        if (evt != PenEventTimeout)
+
+                        try
                         {
-                            // dispatch the event
+                            if (evt != PenEventTimeout)
+                            {
+                                // dispatch the event
 #if TRACEPTW
-                            Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FireEvent [evt={0}, stylusId={1}]", evt, stylusPointerId));
+                                Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FireEvent [evt={0}, stylusId={1}]", evt, stylusPointerId));
 #endif
                             
-                            // This comment addresses and IndexOutOfRangeException in PenThreadWorker which is related and likely caused by the above.
-                            // This index is safe as long as there are no corruption issues within PenIMC.  There have been
-                            // instances of IndexOutOfRangeExceptions from this code but this should not occur in practice.
-                            // If this throws, check that the handles list generated in CPimcContext::GetPenEventMultiple
-                            // is not corrupted (it has appropriate wait handles and does not point to invalid memory).
-                            PenContext penContext = _penContexts[iHandleEvt].Target as PenContext;
-                            // If we get an event from a GC'd PenContext then just ignore.
-                            if (penContext != null)
-                            {
-                                FireEvent(penContext, evt, stylusPointerId, cPackets, cbPacket, pPackets);
-                                penContext = null;
-                            }
-                        }
-                        else
-                        {
-#if TRACEPTW
-                            Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FlushInput"));
-#endif
-                            FlushCache(true);
-
-                            // we hit the timeout, make sure that all our devices are in the correct out-of-range state
-                            // we are doing this to compinsate for drivers that send a move after they send a outofrange
-                            for (int i = 0; i < _penContexts.Length; i++)
-                            {
-                                PenContext penContext = _penContexts[i].Target as PenContext;
+                                // This comment addresses and IndexOutOfRangeException in PenThreadWorker which is related and likely caused by the above.
+                                // This index is safe as long as there are no corruption issues within PenIMC.  There have been
+                                // instances of IndexOutOfRangeExceptions from this code but this should not occur in practice.
+                                // If this throws, check that the handles list generated in CPimcContext::GetPenEventMultiple
+                                // is not corrupted (it has appropriate wait handles and does not point to invalid memory).
+                                PenContext penContext = _penContexts[iHandleEvt].Target as PenContext;
+                                // If we get an event from a GC'd PenContext then just ignore.
                                 if (penContext != null)
                                 {
-                                    // we send 0 as the stulyspointerId to trigger code in PenContext::FirePenOutOfRange
-                                    penContext.FirePenOutOfRange(0, Environment.TickCount);
+                                    FireEvent(penContext, evt, stylusPointerId, cPackets, cbPacket, pPackets);
                                     penContext = null;
                                 }
                             }
+                            else
+                            {
+#if TRACEPTW
+                                Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FlushInput"));
+#endif
+                                FlushCache(true);
+
+                                // we hit the timeout, make sure that all our devices are in the correct out-of-range state
+                                // we are doing this to compinsate for drivers that send a move after they send a outofrange
+                                for (int i = 0; i < _penContexts.Length; i++)
+                                {
+                                    PenContext penContext = _penContexts[i].Target as PenContext;
+                                    if (penContext != null)
+                                    {
+                                        // we send 0 as the stulyspointerId to trigger code in PenContext::FirePenOutOfRange
+                                        penContext.FirePenOutOfRange(0, Environment.TickCount);
+                                        penContext = null;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // If the code above throw an exception that the Stylus Input thread will be break. And we can not use any way to repair it.
+                            // Maybe only some touch device be crash but other touch device can run still.
+                            // To catch all the exception to make the application can run when the code throw an exception.
                         }
                     }
                 }

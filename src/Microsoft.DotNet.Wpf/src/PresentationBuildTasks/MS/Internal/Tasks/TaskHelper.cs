@@ -212,17 +212,17 @@ namespace MS.Internal.Tasks
             return bValid;
         }
 
-#if false
+#if NETFX 
+        // The Global Assembly Cache does not exist on .NET Core.  Only include GacPath
+        // check for .NET Framework. 
         [DllImport("fusion.dll", CharSet = CharSet.Unicode)]
         internal static extern int GetCachePath(AssemblyCacheFlags cacheFlags, StringBuilder cachePath, ref int pcchPath);
-#endif
 
         private static List<string> _gacPaths;
         internal static IEnumerable<string> GetGacPaths()
         {
             if (_gacPaths != null) return _gacPaths;
 
-#if false
             List<string> gacPaths = new List<string>();
 
             AssemblyCacheFlags[] flags = new AssemblyCacheFlags[] {
@@ -261,12 +261,10 @@ namespace MS.Internal.Tasks
             {
                 _gacPaths = gacPaths;
             }
-#else
-            _gacPaths = new List<string>();
-#endif
+
             return _gacPaths;
         }
-
+#endif
 
         //
         // Detect whether the referenced assembly could be changed during the build procedure.
@@ -318,6 +316,8 @@ namespace MS.Internal.Tasks
                         }
                     }
                 }
+#if NETFX
+                // Check the Global Assembly Cache (GAC) on .NET Framework only.
                 if (bCouldbeChanged)
                 {
                     IEnumerable<string> gacRoots = GetGacPaths();
@@ -332,6 +332,7 @@ namespace MS.Internal.Tasks
                         }
                     }
                 }
+#endif
             }
 
             return bCouldbeChanged;

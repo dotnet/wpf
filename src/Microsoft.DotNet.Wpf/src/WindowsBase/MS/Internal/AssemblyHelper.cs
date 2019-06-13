@@ -42,7 +42,7 @@ namespace MS.Internal
         System_Xml_Linq,
         System_Private_Xml_Linq,
         System_Data,
-        System_Core,
+        System_Linq_Expressions,
     }
 
     [FriendAccessAllowed]
@@ -180,8 +180,13 @@ namespace MS.Internal
         // load the extension class for System.Core
         internal static SystemCoreExtensionMethods ExtensionsForSystemCore(bool force=false)
         {
+            // System.Core is always loaded by default on .NET Framework. On .NET Core, 
+            // System.Core is a facade assembly never loaded by the CLR, and System.Core types 
+            // have been forwarded to System.Runtime (always loaded by default) and 
+            // System.Linq.Expressions.  Only load the extension assembly if System.Linq.Expressions 
+            // has already been loaded (e.g., a System.Dynamic type has been created).  
             if (_systemCoreExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Core)))
+                (force || IsLoaded(UncommonAssembly.System_Linq_Expressions)))
             {
                 _systemCoreExtensionMethods = (SystemCoreExtensionMethods)LoadExtensionFor("SystemCore");
             }

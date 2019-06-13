@@ -1,3 +1,6 @@
 <Project>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.GenAPI" Version="$(MicrosoftDotNetGenAPIVersion)" GeneratePathProperty="true"
+                      Condition="true"/>
+  </ItemGroup>
 </Project>

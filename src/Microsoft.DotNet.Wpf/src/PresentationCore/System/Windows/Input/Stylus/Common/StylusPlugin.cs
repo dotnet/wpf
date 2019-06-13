@@ -92,17 +92,34 @@ namespace System.Windows.Input.StylusPlugIns
             // Only fire if plugin is enabled and hooked up to plugincollection.
             if (__enabled && _pic != null)
             {
-                switch (rawStylusInput.Report.Actions)
+                try
                 {
-                    case RawStylusActions.Down:
-                        OnStylusDown(rawStylusInput);
-                        break;
-                    case RawStylusActions.Move:
-                        OnStylusMove(rawStylusInput);
-                        break;
-                    case RawStylusActions.Up:
-                        OnStylusUp(rawStylusInput);
-                        break;
+                    switch (rawStylusInput.Report.Actions)
+                    {
+                        case RawStylusActions.Down:
+                            OnStylusDown(rawStylusInput);
+                            break;
+                        case RawStylusActions.Move:
+                            OnStylusMove(rawStylusInput);
+                            break;
+                        case RawStylusActions.Up:
+                            OnStylusUp(rawStylusInput);
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    // this code running in Stylus Input thread
+                    // and the developer will re-write the method with their code
+                    // If they throw any exceptions careless, that the thread will break and the application crash and the application will stop responding touch
+                    // But we should not ignore the exception, and we can re-throw it in the main thread
+                    // Why we should use InvokeAsync to replace Invoke? Because maybe some friend will make the main thread wait for the code above
+                    _pic.Element.Dispatcher.InvokeAsync(() =>
+                    {
+                        System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
+                    },
+                        // Why we should use `Send` priority? Maybe the main thread is busy that the developer can not find the exception timely
+                        DispatcherPriority.Send);
                 }
             }
         }

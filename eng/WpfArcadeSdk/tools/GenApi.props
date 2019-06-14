@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+
+    <GenAPIEnabledProjects>
+      PresentationCore;
+      PresentationFramework;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      ReachFramework;
+      System.Windows.Controls.Ribbon;
+      System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
+      System.Xaml;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      WindowsFormsIntegration;
+    </GenAPIEnabledProjects>
+
+    <GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'==''
+                                                and '$(GenAPIEnabledProjects)'!=''
+                                                and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</GenerateReferenceAssemblySource>
+    
+  </PropertyGroup>
+</Project>

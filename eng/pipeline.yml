@@ -97,7 +97,7 @@ jobs:
           - name: _HelixCreator
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
-            value: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.Client19H1.Open'
+            value: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.Client19H1'
       strategy:
         matrix:
           Build_Debug_x86:

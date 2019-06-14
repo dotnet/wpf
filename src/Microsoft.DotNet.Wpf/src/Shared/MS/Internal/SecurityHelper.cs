@@ -112,32 +112,12 @@ internal static class SecurityHelper
         /// Create a UserInitiatedRoutedEvent permission.
         /// Separate helper exists to make it easy to change what the permission is.
         ///</summary>
-        internal static CodeAccessPermission CreateUserInitiatedRoutedEventPermission()
-        {
-            if(_userInitiatedRoutedEventPermission == null)
-            {
-                _userInitiatedRoutedEventPermission = new UserInitiatedRoutedEventPermission();
-            }
-            return _userInitiatedRoutedEventPermission;
-        }
+        internal static CodeAccessPermission CreateUserInitiatedRoutedEventPermission() { return default(CodeAccessPermission); }
 
         ///<summary>
         /// Check whether the call stack has the permissions needed for UserInitiated RoutedEvents.
         /// </summary>
-        internal static bool CallerHasUserInitiatedRoutedEventPermission()
-        {
-            try
-            {
-                CreateUserInitiatedRoutedEventPermission().Demand();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        static UserInitiatedRoutedEventPermission _userInitiatedRoutedEventPermission = null;
+        internal static bool CallerHasUserInitiatedRoutedEventPermission() { return true; }
 
 #endif // PRESENTATION_CORE
 
@@ -175,34 +155,14 @@ internal static class SecurityHelper
         /// Check to see if we have User initiated navigation permission.
         ///</summary>
         /// <returns>true if call stack has UserInitiatedNavigation permission</returns>
-        internal static bool CallerHasUserInitiatedNavigationPermission()
-        {
-            try
-            {
-                CreateUserInitiatedNavigationPermission();
-                _userInitiatedNavigationPermission.Demand();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-            return true;
-        }
+        internal static bool CallerHasUserInitiatedNavigationPermission() { return true; }
 
 
         ///<summary>
         /// Create a UserInitiatedNavigation permission.
         /// Separate helper exists to make it easy to change what the permission is.
         ///</summary>
-        internal static CodeAccessPermission CreateUserInitiatedNavigationPermission()
-        {
-            if(_userInitiatedNavigationPermission == null)
-            {
-                _userInitiatedNavigationPermission = new UserInitiatedNavigationPermission();
-            }
-            return _userInitiatedNavigationPermission;
-        }
-        static UserInitiatedNavigationPermission _userInitiatedNavigationPermission = null;
+        internal static CodeAccessPermission CreateUserInitiatedNavigationPermission() { return default(CodeAccessPermission); }
 
         /// <summary>
         /// Demands for permissions needed to construct the PrintDialog in
@@ -606,9 +566,6 @@ internal static class SecurityHelper
         private static PermissionSet CreateEnvelopePermissionSet()
         {
             PermissionSet permissionSet = new PermissionSet(PermissionState.None);
-            permissionSet.AddPermission(new RightsManagementPermission());
-            permissionSet.AddPermission(new CompoundFileIOPermission());
-
             return permissionSet;
         }
 

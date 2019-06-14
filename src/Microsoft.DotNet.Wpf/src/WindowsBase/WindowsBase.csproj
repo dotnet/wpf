@@ -140,7 +140,6 @@
     <Compile Include="MS\Internal\Permissions\CompoundFileIOPermission.cs" />
     <Compile Include="MS\Internal\Permissions\RightsManagementPermission.cs" />
     <Compile Include="MS\Internal\Permissions\UserInitiatedRoutedEventPermission.cs" />
-    <Compile Include="MS\Internal\Permissions\UserInitiatedRoutedEventPermissionAttribute.cs" />
     <Compile Include="MS\Internal\PlatformCulture.cs" />
     <Compile Include="MS\Internal\Security\AttachmentService.cs" />
     <Compile Include="MS\Internal\ShutDownListener.cs" />

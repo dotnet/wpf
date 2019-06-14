@@ -1,3 +1,13 @@
 Compat issues with assembly PresentationBuildTasks:
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.CompileTypeName.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.CompileTypeName.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.GeneratedCodeFiles.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.GeneratedCodeFiles.set(Microsoft.Build.Framework.ITaskItem[])' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.MSBuildBinPath.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.MSBuildBinPath.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePath.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePath.set(Microsoft.Build.Framework.ITaskItem[])' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePathTypeName.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly.ReferencePathTypeName.set(System.String)' does not exist in the implementation but it does exist in the contract.
 TypesMustExist : Type 'Microsoft.Build.Tasks.Windows.GetWinFXPath' does not exist in the implementation but it does exist in the contract.
-Total Issues: 1
+Total Issues: 11

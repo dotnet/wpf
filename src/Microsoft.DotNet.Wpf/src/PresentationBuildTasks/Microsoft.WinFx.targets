@@ -20,6 +20,8 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.CreateTemporaryTargetAssemblyProject" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.RunProjectBuildTarget" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
 
@@ -380,6 +382,8 @@
   <PropertyGroup>
 
        <MarkupCompilePass2ForMainAssemblyDependsOn>
+                     CreateTemporaryTargetAssemblyProject;
+                     RestoreTemporaryTargetAssemblyProject;
                      GenerateTemporaryTargetAssembly;
                      MarkupCompilePass2;
                      AfterMarkupCompilePass2;
@@ -400,6 +404,57 @@
 
   </Target>
 
+  <!--
+
+                ==========================================
+                  CreateTemporaryTargetAssemblyProject
+                ==========================================
+
+                Name : CreateTemporaryTargetAssemblyProject
+
+  -->
+
+   <Target Name="CreateTemporaryTargetAssemblyProject"
+               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' " >
+
+       <CreateTemporaryTargetAssemblyProject 
+                CurrentProject="$(MSBuildProjectFullPath)"
+                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
+                CompileTypeName="Compile"
+                ReferencePath="@(ReferencePath)"
+                ReferencePathTypeName="ReferencePath" >
+           <Output TaskParameter="TemporaryTargetAssemblyProjectName" PropertyName="_TemporaryTargetAssemblyProjectName"/>
+       </CreateTemporaryTargetAssemblyProject>
+
+      <Message Text="GenerateTemporaryTargetAssembyProject project is $(_TemporaryTargetAssemblyProjectName)" />
+
+  </Target>
+
+  <!--
+
+                ==========================================
+                   RestoreTemporaryTargetAssemblyProject
+                ==========================================
+
+                Name : RestoreTemporaryTargetAssemblyProject
+
+  -->
+
+   <Target Name="RestoreTemporaryTargetAssemblyProject"
+               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' " >
+
+      <Message Text="RestoreTemporaryTargetAssemblyProject project is $(_TemporaryTargetAssemblyProjectName)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+
+      <RunProjectBuildTarget 
+          ProjectName="$(_TemporaryTargetAssemblyProjectName)"
+          BuildTarget="Restore"
+          />
+
+       <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
+               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
+       </CreateItem>
+
+  </Target>
 
   <!--
 
@@ -418,13 +473,9 @@
 
        <GenerateTemporaryTargetAssembly
                 CurrentProject="$(MSBuildProjectFullPath)"
-                MSBuildBinPath="$(MSBuildBinPath)"
-                ReferencePathTypeName="ReferencePath"
-                CompileTypeName="Compile"
-                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
-                ReferencePath="@(ReferencePath)"
                 IntermediateOutputPath="$(IntermediateOutputPath)"
                 AssemblyName="$(AssemblyName)"
+                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
                  >

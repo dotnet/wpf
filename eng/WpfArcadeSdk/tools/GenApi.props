@@ -2,6 +2,7 @@
   <PropertyGroup>
 
     <GenAPIEnabledProjects>
+      PresentationBuildTasks;
       PresentationCore;
       PresentationFramework;
       PresentationFramework.Aero;

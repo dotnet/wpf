@@ -34,4 +34,6 @@ Intellisense XML's are produced in `dotnet/dotnet-api-docs` repo. They are curre
 
 5. Upload the zip files using Azure Storage Explorer to `netcorenativeassets` blob store under this path: 
   - `resource-packages -> external -> windows -> dotnet-api-docs_netcoreapp3.0` 
-6. Update the version in `global.json` for `native-tools.dotnet-api-docs_netcoreapp3.0`
+6. Update the versions
+    - `global.json` for `native-tools.dotnet-api-docs_netcoreapp3.0`
+    - `eng\Versions.props` for `DotNetApiDocsNetCoreApp30` property

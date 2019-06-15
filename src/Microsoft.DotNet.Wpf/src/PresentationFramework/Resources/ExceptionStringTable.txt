@@ -1672,10 +1672,10 @@ FlowDocumentReader_MultipleViewProvider_ScrollViewName=Scroll
 
 ; File and Save Dialog error messages
 FileDialogBufferTooSmall=Too many files selected. Select fewer files and try again.
-FileDialogCreatePrompt='{0}' does not exist.\r\nDo you want to create it?
-FileDialogFileNotFound='{0}' does not exist.\r\nVerify that the file name is correct.
+FileDialogCreatePrompt='{0}' does not exist.\nDo you want to create it?
+FileDialogFileNotFound='{0}' does not exist.\nVerify that the file name is correct.
 FileDialogInvalidFileName='{0}' is not a valid file name.
-FileDialogOverwritePrompt='{0}' already exists.\r\nDo you want to replace it?
+FileDialogOverwritePrompt='{0}' already exists.\nDo you want to replace it?
 
 ; Navigation Window
 NavWindowMenuCurrentPage=Current Page

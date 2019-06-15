@@ -1613,12 +1613,12 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
-        <source>'{0}' does not exist.\r\nDo you want to create it?</source>
+        <source>'{0}' does not exist.\nDo you want to create it?</source>
         <target state="needs-review-translation">'{0}' ist nicht vorhanden.]D;]A;Möchten Sie das Element erstellen?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
-        <source>'{0}' does not exist.\r\nVerify that the file name is correct.</source>
+        <source>'{0}' does not exist.\nVerify that the file name is correct.</source>
         <target state="needs-review-translation">'{0}' ist nicht vorhanden.]D;]A;Überprüfen Sie den Dateinamen.</target>
         <note />
       </trans-unit>
@@ -1638,7 +1638,7 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogOverwritePrompt">
-        <source>'{0}' already exists.\r\nDo you want to replace it?</source>
+        <source>'{0}' already exists.\nDo you want to replace it?</source>
         <target state="needs-review-translation">'{0}' ist bereits vorhanden.]D;]A;Möchten Sie das Element ersetzen?</target>
         <note />
       </trans-unit>

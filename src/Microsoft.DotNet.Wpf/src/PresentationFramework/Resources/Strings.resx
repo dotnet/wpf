@@ -1027,10 +1027,10 @@
     <value>Too many files selected. Select fewer files and try again.</value>
   </data>
   <data name="FileDialogCreatePrompt" xml:space="preserve">
-    <value>'{0}' does not exist.\r\nDo you want to create it?</value>
+    <value>'{0}' does not exist.\nDo you want to create it?</value>
   </data>
   <data name="FileDialogFileNotFound" xml:space="preserve">
-    <value>'{0}' does not exist.\r\nVerify that the file name is correct.</value>
+    <value>'{0}' does not exist.\nVerify that the file name is correct.</value>
   </data>
   <data name="FileDialogInvalidFileName" xml:space="preserve">
     <value>'{0}' is not a valid file name.</value>
@@ -1042,7 +1042,7 @@
     <value>Filter index is not valid.</value>
   </data>
   <data name="FileDialogOverwritePrompt" xml:space="preserve">
-    <value>'{0}' already exists.\r\nDo you want to replace it?</value>
+    <value>'{0}' already exists.\nDo you want to replace it?</value>
   </data>
   <data name="FileDialogSubClassFailure" xml:space="preserve">
     <value>Cannot subclass a file dialog because sufficient memory is not available.</value>
@@ -1609,31 +1609,31 @@
     <value>Alt+Backspace</value>
   </data>
   <data name="KeyApplyBackground" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyBackgroundDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyDoubleSpaceDisplayString" xml:space="preserve">
     <value>Ctrl+2</value>
   </data>
   <data name="KeyApplyFontFamily" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyFontFamilyDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyFontSize" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyFontSizeDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyForeground" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyForegroundDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyApplyOneAndAHalfSpaceDisplayString" xml:space="preserve">
     <value>Ctrl+5</value>
@@ -1654,10 +1654,10 @@
     <value>Ctrl+Shift+C</value>
   </data>
   <data name="KeyCorrectionList" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyCorrectionListDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyCtrlInsertDisplayString" xml:space="preserve">
     <value>Ctrl+Insert</value>
@@ -1684,10 +1684,10 @@
     <value>Ctrl+Backspace</value>
   </data>
   <data name="KeyDeleteRows" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyDeleteRowsDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyEnterLineBreakDisplayString" xml:space="preserve">
     <value>Shift+Enter</value>
@@ -1879,10 +1879,10 @@
     <value>Ctrl+Shift+N</value>
   </data>
   <data name="KeyToggleSpellCheck" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyToggleSpellCheckDisplayString" xml:space="preserve">
-    <value/>
+    <value />
   </data>
   <data name="KeyToggleSubscriptDisplayString" xml:space="preserve">
     <value>Ctrl+OemPlus</value>

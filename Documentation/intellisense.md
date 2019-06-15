@@ -36,5 +36,5 @@ Intellisense XML's are produced in `dotnet/dotnet-api-docs` repo. They are curre
   - `resource-packages -> external -> windows -> dotnet-api-docs_netcoreapp3.0` 
 6. Update the versions
     - `global.json` for `native-tools.dotnet-api-docs_netcoreapp3.0`
-    - `eng\Versions.props` for `DotNetApiDocsNetCoreApp30` property
-    - Also update `global.json` and `eng\Versions.props` in `dotnet-wpf-int` repository (if applicable).
+    - `ReferenceAssembly.targets` for `DotNetApiDocsNetCoreApp30` property
+    - Also update `global.json` in `dotnet-wpf-int` repository (if applicable).

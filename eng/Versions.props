@@ -67,7 +67,6 @@
     <!-- These versions are specified in global.json -->
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
-    <DotNetApiDocsNetCoreApp30>0.0.0.1</DotNetApiDocsNetCoreApp30>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreSources>

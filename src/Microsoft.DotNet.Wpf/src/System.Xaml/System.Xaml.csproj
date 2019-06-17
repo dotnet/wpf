@@ -119,6 +119,8 @@
     <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)">
+      <IncludeGeneratedReferenceProject>true</IncludeGeneratedReferenceProject>
+    </PackageReference>
   </ItemGroup>
 </Project>

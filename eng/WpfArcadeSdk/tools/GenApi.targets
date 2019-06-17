@@ -45,8 +45,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU%3Bx64</Platforms>
+    <IsShipping>true</IsShipping>
   </PropertyGroup>
-  ]]>
+ ]]>
         </Text>
       </ReferenceAssemblyProjectContents>
 
@@ -114,35 +115,12 @@
                       File="$(ReferenceAssemblyProjectFile)"
                       Overwrite="false"/>
 
-    <PropertyGroup>
-      <!-- 
-        Some packages can enable behaviors (targets, etc) that we do not want to run on 
-        generated reference assembly code.  This filter exists to limit what PackageReferences 
-        reach the reference assembly project so we don't enable them.
-        
-        Note:
-          We exclude all code analysis since the generated hollowed out file will run afoul of many rules.
-      -->
-      <PackageReferenceExclusions>
-        Microsoft.DotNet.CodeAnalysis;
-        Microsoft.CodeAnalysis.Common;
-        Microsoft.CodeAnalysis.FxCopAnalyzers;
-        System.Runtime.Analyzers;
-        System.Runtime.InteropServices.Analyzers;
-      </PackageReferenceExclusions>
-    </PropertyGroup>
-    
-    <!-- 
-    Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information
-    we are looking for, namely the list of .NET Core Sdk references. 
-    -->
     <ItemGroup>
       <!-- 
-        Add all PackageReferences from the runtime project that is generating the reference assembly apart from
-        anything that has been implicitly added (via FrameworkReferences, etc) or is explicitly excluded.
+        Add all specifically flagged PackageReferences from the source project.  Projects should use IncludeGeneratedReferenceProject as Item Metadata
+        in any PackageReference that needs to be included here.
       -->
-      <_AdditionalPackageReferences Include="@(PackageReference)" Condition="'%(PackageReference.IsImplicitlyDefined)'!='true' 
-                                                                              and !$(PackageReferenceExclusions.Contains('%(PackageReference.Identity);'))" />
+      <_AdditionalPackageReferences Include="@(PackageReference)" Condition="'%(PackageReference.IncludeGeneratedReferenceProject)'=='true'" />
       <_AdditionalProjectReferences Include="@(ProjectReference)" />
       <ProjectToBuild Remove="@(ProjectToBuild)" />
       <ProjectToBuild Include="$(ReferenceAssemblyProjectFile)">

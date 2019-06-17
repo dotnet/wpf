@@ -50,7 +50,7 @@ jobs:
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
         - name: _TestHelixAgentPool
-          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'
+          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
         - name: _HelixStagingDir
           value: $(BUILD.STAGINGDIRECTORY)\helix\functests
         - name: _HelixSource

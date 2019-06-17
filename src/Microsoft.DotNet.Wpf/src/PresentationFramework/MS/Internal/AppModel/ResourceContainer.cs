@@ -217,7 +217,7 @@ namespace MS.Internal.AppModel
             // old version dll when a newer one is loaded. So whenever the AssemblyLoad event is fired, we will need to update the cache 
             // with the newly loaded assembly. This is currently only for designer so not needed for browser hosted apps. 
             // Attach the event handler before the first time we get the ResourceManagerWrapper.
-            if ((!assemblyLoadhandlerAttached) && (!BrowserInteropHelper.IsBrowserHosted))
+            if (!assemblyLoadhandlerAttached)
             {
                 AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(OnAssemblyLoadEventHandler);
                 assemblyLoadhandlerAttached = true;

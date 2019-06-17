@@ -26,6 +26,7 @@
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Drawing" />
+    <NetCoreReference Include="System.Security.Permission" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="$(SystemDrawingCommonPackage)" Version="$(SystemDrawingCommonVersion)" />

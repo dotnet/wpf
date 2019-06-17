@@ -2989,11 +2989,10 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (!_isChildPopupInitialized)
                     {
-                        // Force popup to be a child window if it we don't have unmanaged code permission (needed by bitmap effect)
+                        // Force popup to be a child window if it we don't have unmanaged code permission (needed by bitmap effect) 
+                        //      - we will always have unmanaged code permission on .NET Core 3.0+
                         // This is a tighter restriction than just UIWindowPermission
-                        _isChildPopup = BrowserInteropHelper.IsBrowserHosted ||
-                                        !SecurityHelper.CheckUnmanagedCodePermission();
-
+                        _isChildPopup = false;
                         _isChildPopupInitialized = true;
                     }
                     return (_isChildPopup);

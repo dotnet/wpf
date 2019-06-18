@@ -38,7 +38,6 @@ namespace System.Windows.Interop
         [SecurityCritical, SecurityTreatAsSafe]
         static BrowserInteropHelper()
         {
-            SetBrowserHosted(false);
             IsInitialViewerNavigation = true;
         }
 
@@ -119,25 +118,7 @@ namespace System.Windows.Interop
         /// Note that HostingFlags may not be set at the time this property is queried first. 
         /// That's why they are still separate. Also, this one is public.
         /// </remarks>
-        public static bool IsBrowserHosted
-        {
-            get
-            {
-                return _isBrowserHosted.Value;
-            }
-        }
-
-        /// <SecurityNote>
-        /// This is critical because setting the BrowserHosted status is a critical resource.
-        /// </SecurityNote>
-        /// <remarks>
-        /// HostingFlags is set after this property.
-        /// </remarks>
-        [SecurityCritical]
-        internal static void SetBrowserHosted(bool value)
-        {
-            _isBrowserHosted.Value = value;
-        }
+        public static bool IsBrowserHosted => false;
 
         /// <SecurityNote>
         /// Critical: These flags are a critical resource because they are used in security decisions.
@@ -173,22 +154,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <summary>
-        /// Returns true if avalon it top level.
-        /// Also returns true if not browser-hosted.
-        /// </summary>
-        /// <SecurityNote>
-        /// Critical: setting this information is a critical resource.
-        /// </SecurityNote>
-        internal static bool IsAvalonTopLevel
-        {
-            get
-            {
-                if (!IsBrowserHosted)
-                    return true;
-                return (HostingFlags & HostingFlags.hfHostedInFrame) == 0;
-            }
-        }
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
@@ -397,7 +362,6 @@ namespace System.Windows.Interop
             }
         }
 
-        private static SecurityCriticalDataForSet<bool> _isBrowserHosted;
         private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;
         private static SecurityCriticalDataForSet<bool> _isInitialViewerNavigation;
         private static SecurityCriticalDataForSet<bool?> _isScriptInteropDisabled;

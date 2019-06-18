@@ -145,12 +145,6 @@ namespace System.Windows
                 }
             }
 
-            // Post a work item to start the Dispatcher (if we are browser hosted) so that the Dispatcher
-            // will be running before OnStartup is fired. We can't check to see if we are browser-hosted
-            // in the app ctor because BrowerInteropHelper.IsBrowserHosted hasn't been set yet.
-            Dispatcher.BeginInvoke(
-                DispatcherPriority.Send,
-                new DispatcherOperationCallback(StartDispatcherInBrowser), null);
 
             //
             // (Application not shutting down when calling
@@ -1837,10 +1831,7 @@ namespace System.Windows
             //Shutdown DispatcherOperationCallback
 
             // Invoke the Dispatcher synchronously if we are not in the browser
-            if (!BrowserInteropHelper.IsBrowserHosted)
-            {
-                RunDispatcher(null);
-            }
+            RunDispatcher(null);
 
             return _exitCode;
         }
@@ -2721,35 +2712,6 @@ namespace System.Windows
             return isRootElement;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code starts dispatcher run
-        /// </SecurityNote>
-        [SecurityCritical]
-        [DebuggerNonUserCode] // to treat this method as non-user code even when symbols are available
-        private object StartDispatcherInBrowser(object unused)
-        {
-            if (BrowserInteropHelper.IsBrowserHosted)
-            {
-                BrowserInteropHelper.InitializeHostFilterInput();
-
-                // This seemingly meaningless try-catch-throw is a workaround for a CLR deficiency/bug in
-                // exception handling. When an unhandled exception on the main thread crosses
-                // the AppDomain boundary, the p/invoke layer catches it and throws another exception. Thus,
-                // the original exception is lost before the debugger is notified. The result is no managed
-                // callstack whatsoever. The workaround is based on a debugger/CLR feature that notifies of
-                // exceptions unhandled in 'user code'. This works only when the Just My Code feature is enabled
-                // in VS.
-                try
-                {
-                    RunDispatcher(null);
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-            return null;
-        }
 
         /// <SecurityNote>
         ///     Critical: This code starts dispatcher run

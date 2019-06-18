@@ -59,26 +59,17 @@ namespace System.Windows
 
         private string[] GetCmdLineArgs()
         {
-            string[] retValue = null;
+            string[] args = Environment.GetCommandLineArgs();
+            Invariant.Assert(args.Length >= 1);
 
-            if (!BrowserInteropHelper.IsBrowserHosted )
-            {
-                string[] args = Environment.GetCommandLineArgs();
-                Invariant.Assert(args.Length >= 1);
+            int newLength = args.Length - 1;
+            newLength = (newLength >= 0 ? newLength : 0);
 
-                int newLength = args.Length - 1;
-                newLength = (newLength >=0 ? newLength : 0);
-                
-                retValue = new string[newLength];
-                
-                for (int i = 1; i < args.Length; i++)
-                {
-                    retValue[i-1] = args[i];
-                }
-            }
-            else
+            string[] retValue = new string[newLength];
+
+            for (int i = 1; i < args.Length; i++)
             {
-                retValue = new string[0];
+                retValue[i - 1] = args[i];
             }
 
             return retValue;

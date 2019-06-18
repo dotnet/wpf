@@ -419,13 +419,8 @@ namespace System.Windows.Interop
                             // by the CLR. Therefore we also check for the IsCOMObject property. It also seems
                             // COM interop special-cases DateTime as it's not revealed to be visible by any
                             // of the first two checks below.
-                            if (
-#if NETFX
-                                !Marshal.IsTypeVisibleFromCom(argType) 
-#else
-                                !MarshalLocal.IsTypeVisibleFromCom(argType)
-#endif
-                                && !argType.IsCOMObject && argType != typeof(DateTime))
+                            if (!MarshalLocal.IsTypeVisibleFromCom(argType) && 
+                                !argType.IsCOMObject && argType != typeof(DateTime))
                             {
                                 throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
                             }

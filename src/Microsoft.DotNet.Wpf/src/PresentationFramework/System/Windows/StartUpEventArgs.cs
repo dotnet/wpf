@@ -75,24 +75,7 @@ namespace System.Windows
             return retValue;
         }
         
-        //
-        // Put this into a separate Method to avoid loading of this code at JIT time. 
-        // 
 
-        //
-        // Explicitly tell the compiler that we don't want to be inlined. 
-        // This will prevent loading of system.deployment unless we are a click-once app. 
-        // 
-        [MethodImplAttribute (MethodImplOptions.NoInlining )]
-        private bool IsOnNetworkShareForDeployedApps()
-        {
-#if NETFX
-            return System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed ; 
-#else
-            return false;
-#endif
-        }
-        
         private String[]    _args;
         private bool        _performDefaultAction;
     }

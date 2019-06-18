@@ -8,7 +8,7 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview7.19316.2</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview7.19318.9</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview7-27818-02</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview7-27818-05</MicrosoftNETCoreAppVersion>
     <MicrosoftNETCorePlatformsVersion>3.0.0-preview7.19318.1</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview7.19318.1</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview7.19318.1</SystemDirectoryServicesVersion>
@@ -105,6 +105,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview7.19317.15</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview7.19318.5</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

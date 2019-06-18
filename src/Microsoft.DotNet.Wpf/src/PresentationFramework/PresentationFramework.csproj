@@ -118,7 +118,6 @@
     <Compile Include="MS\Internal\AppModel\ComGuids.cs" />
     <Compile Include="MS\Internal\AppModel\ContentFilePart.cs" />
     <!-- <Compile Include="MS\Internal\AppModel\DeploymentExceptionMapper.cs" /> -->
-    <Compile Include="MS\Internal\AppModel\IBrowserCallbackServices.cs" />
     <Compile Include="MS\Internal\AppModel\IBrowserHostServices.cs" />
     <Compile Include="MS\Internal\AppModel\IconHelper.cs" />
     <Compile Include="MS\Internal\AppModel\IContentContainer.cs" />

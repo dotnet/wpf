@@ -1582,7 +1582,6 @@ namespace System.Windows
                 switch (state)
                 {
                     case NavigationStateChange.Navigating:
-                        ChangeBrowserDownloadState(true);
                         if (playNavigatingSound)
                         {
                             PlaySound(SOUND_NAVIGATING);
@@ -1590,34 +1589,13 @@ namespace System.Windows
                         break;
                     case NavigationStateChange.Completed:
                         PlaySound(SOUND_COMPLETE_NAVIGATION);
-                        ChangeBrowserDownloadState(false);
-                        UpdateBrowserCommands();
                         break;
                     case NavigationStateChange.Stopped:
-                        ChangeBrowserDownloadState(false);
                         break;
                 }
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls IBrowserCallbackServices.UpdateCommands which is critical because it has a SUC
-        /// TreatAsSafe: Calling this method is safe because it merely asks IE to synchronize data with us.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        internal void UpdateBrowserCommands()
-        {
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsStart);
-
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // ask the browser to re-query us for toolbar button state
-                ibcs.UpdateCommands();
-            }
-
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsEnd);
-        }
 
         /// <summary>
         /// Application Startup.
@@ -1854,29 +1832,12 @@ namespace System.Windows
         [SecurityCritical]
         internal NavigationWindow GetAppWindow()
         {
-            NavigationWindow appWin = null;
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
+            NavigationWindow appWin = new NavigationWindow();
 
-            // standalone case
-            if (ibcs == null)
-            {
-                appWin = new NavigationWindow();
-
-                // We don't want to show the window before the content is ready, but for compatibility reasons
-                // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
-                // to be null when LoadCompleted has happened.
-                new WindowInteropHelper(appWin).EnsureHandle();
-            }
-#if NETFX
-            else // browser hosted case
-            {
-                IHostService ihs = (IHostService)this.GetService(typeof(IHostService));
-                Debug.Assert(ihs != null, "IHostService in RootBrowserWindow cannot be null");
-                appWin = ihs.RootBrowserWindowProxy.RootBrowserWindow;
-                Debug.Assert(appWin != null, "appWin must be non-null");
-                Debug.Assert(appWin is RootBrowserWindow, "appWin must be a RootBrowserWindow");
-            }
-#endif
+            // We don't want to show the window before the content is ready, but for compatibility reasons
+            // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
+            // to be null when LoadCompleted has happened.
+            new WindowInteropHelper(appWin).EnsureHandle();
 
             return appWin;
         }
@@ -2559,20 +2520,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls IBrowserCallbackServices.ChangeDownloadState which is critical
-        /// TreatAsSafe: Changing the download state is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        private void ChangeBrowserDownloadState(bool newState)
-        {
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // start or stop waving the flag
-                ibcs.ChangeDownloadState(newState);
-            }
-        }
 
         /// <summary>
         /// Plays a system sound using the PlaySound api.  This is a managed equivalent of the

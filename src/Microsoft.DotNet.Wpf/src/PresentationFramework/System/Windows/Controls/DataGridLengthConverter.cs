@@ -124,10 +124,6 @@ namespace System.Windows.Controls
         ///     An ArgumentException is thrown if the value is not null and is not a DataGridLength,
         ///     or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        /// <SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for DataGridLength, not an arbitrary class
-        /// </SecurityNote> 
         public override object ConvertTo(
             ITypeDescriptorContext context,
             CultureInfo culture,

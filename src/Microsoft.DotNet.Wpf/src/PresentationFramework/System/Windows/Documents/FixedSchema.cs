@@ -575,11 +575,6 @@ namespace System.Windows.Documents
                     );
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses SecurityCriticalData which is a package from PreloadedPackages
-        /// SecurityTreatAsSafe: No package instance or package related objects being handed
-        ///                     out from this method
-        /// </SecurityNote>
         public override void ValidateRelationships(SecurityCriticalData<Package> package, Uri packageUri, Uri partUri, ContentType mimeType)
         {
             PackagePart part = package.Value.GetPart(partUri);

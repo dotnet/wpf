@@ -25,10 +25,6 @@ namespace System.Windows.Interop
         ///     Instantiates a new instance of this class.
         /// </summary>
         /// <param name="hwndSource">The HWND on which to provide feedback.</param>
-        /// <SecurityNote>
-        ///     SecurityCritical: Accesses HwndSource.
-        ///     TreatAsSafe: Information is not given out.
-        /// </SecurityNote>
         public HwndPanningFeedback(HwndSource hwndSource)
         {
             if (hwndSource == null)
@@ -50,10 +46,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Returns the handle of the current window.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: Handles _hwndSource
-        ///     SecurityCritical: Handles and exposes HwndSource.Handle
-        /// </SecurityNote>
         private HandleRef Handle
         {
             get
@@ -77,10 +69,6 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="totalOverpanOffset">The total offset relative to the original location.</param>
         /// <param name="inInertia">Whether the edge was hit due to inertia or the user panning.</param>
-        /// <SecurityNote>
-        ///     SecurityCritical: Changes the on-screen position of a window.
-        ///     SecurityCritical: Accesses Handle.
-        /// </SecurityNote>
         public void UpdatePanningFeedback(Vector totalOverpanOffset, bool inInertia)
         {
             if ((_hwndSource != null) && IsSupported)
@@ -107,10 +95,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     SecurityCritical: Changes the on-screen position of a window.
-        ///     SecurityCritical: Accesses Handle.
-        /// </SecurityNote>
         private object OnUpdatePanningFeedback(object args)
         {
             HwndPanningFeedback panningFeedback = (HwndPanningFeedback)args;
@@ -129,11 +113,6 @@ namespace System.Windows.Interop
         ///     Used to provide feedback that panning has hit an edge.
         /// </summary>
         /// <param name="animateBack">Whether to animate or snap back to the original position</param>
-        /// <SecurityNote>
-        ///     SecurityCritical: Changes the on-screen position of a window.
-        ///     SecurityCritical: Accesses _handle.
-        ///     TreatAsSafe: Returns the window to its original position, which is safe.
-        /// </SecurityNote>
         public void EndPanningFeedback(bool animateBack)
         {
             if (_hwndSource != null && _isProvidingPanningFeedback)
@@ -156,9 +135,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     The HwndSource being manipulated.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: Access to the window.
-        /// </SecurityNote>
         private HwndSource _hwndSource;
     }
 }

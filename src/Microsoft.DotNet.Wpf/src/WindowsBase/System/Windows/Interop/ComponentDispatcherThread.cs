@@ -32,9 +32,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns "current" message.   More exactly the last MSG Raised.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth to avoid leaking message information
-        /// </SecurityNote>
         public MSG CurrentKeyboardMessage
         {
             get
@@ -51,9 +48,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to go modal.  Current thread wide only.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        /// </SecurityNote>
         public void PushModal()
         {
             _modalCount += 1;
@@ -67,9 +61,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to end being modal.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth to avoid tampering with input
-        /// </SecurityNote>
         public void PopModal()
         {
             _modalCount -= 1;
@@ -85,9 +76,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this when it is time to do idle processing.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        /// </SecurityNote>
         public void RaiseIdle()
         {
             if(null != _threadIdle)
@@ -97,9 +85,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this for every keyboard message.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth to prevent message leakage
-        /// </SecurityNote>
         public bool RaiseThreadMessage(ref MSG msg)
         {
             bool handled = false;
@@ -120,9 +105,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// thread idle processing.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         public event EventHandler ThreadIdle
         {
             add
@@ -134,9 +116,6 @@ namespace System.Windows.Interop
                 _threadIdle -= value;
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         private event EventHandler _threadIdle;
 
 
@@ -144,9 +123,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (first chance processing).
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         public event ThreadMessageEventHandler ThreadFilterMessage
         {
             add
@@ -158,18 +134,12 @@ namespace System.Windows.Interop
                 _threadFilterMessage -= value;
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         private event ThreadMessageEventHandler _threadFilterMessage;
 
         /// <summary>
         /// Components register delegates with this event to handle
         /// Keyboard Messages (second chance processing).
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         public event ThreadMessageEventHandler ThreadPreprocessMessage
         {
             add
@@ -186,10 +156,6 @@ namespace System.Windows.Interop
         ///     Adds the specified handler to the front of the invocation list
         ///     of the PreprocessMessage event.
         /// <summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used
-        ///     to transmit input related information
-        /// </SecurityNote>
         public void AddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             _threadPreprocessMessage = (ThreadMessageEventHandler)Delegate.Combine(handler, _threadPreprocessMessage);
@@ -199,10 +165,6 @@ namespace System.Windows.Interop
         ///     Removes the first occurance of the specified handler from the
         ///     invocation list of the PreprocessMessage event.
         /// <summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used
-        ///     to transmit input related information
-        /// </SecurityNote>
         public void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             if (_threadPreprocessMessage != null)
@@ -227,18 +189,12 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         private event ThreadMessageEventHandler _threadPreprocessMessage;
 
         /// <summary>
         /// Components register delegates with this event to handle
         /// a component on this thread has "gone modal", when previously none were.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         public event EventHandler EnterThreadModal
         {
             add
@@ -250,18 +206,12 @@ namespace System.Windows.Interop
                 _enterThreadModal -= value;
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         private event EventHandler _enterThreadModal;
 
         /// <summary>
         /// Components register delegates with this event to handle
         /// all components on this thread are done being modal.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         public event EventHandler LeaveThreadModal
         {
             add
@@ -273,16 +223,10 @@ namespace System.Windows.Interop
                 _leaveThreadModal -= value;
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth and is used to transmit input related information
-        /// </SecurityNote>
         private event EventHandler _leaveThreadModal;
 
         private int _modalCount;
                 
-        /// <SecurityNote>
-        ///     Critical: This holds the last message that was recieved
-        /// </SecurityNote>
         private MSG _currentKeyboardMSG;
     }
 }

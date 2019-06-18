@@ -27,12 +27,6 @@ namespace System.Windows.Input
     /// </summary>
     internal sealed class ManipulationDevice : InputDevice
     {
-        /// <SecurityNote>
-        ///     Critical: Accesses PresentationSource.CriticalFromVisual.
-        ///     TreatAsSafe: Stored in Critical field and exposed in Critical property.
-        ///     Critical: Attaches to InputManager event handlers and stores a reference to the InputManager.
-        ///     TreatAsSafe: Does not expose the InputManager externally.
-        /// </SecurityNote>
         /// <remarks>
         ///     Created in AddManipulationDevice.
         /// </remarks>
@@ -47,10 +41,6 @@ namespace System.Windows.Input
             _manipulationLogic = new ManipulationLogic(this);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Detaches from InputManager event handlers.
-        ///     TreatAsSafe: Does not expose the InputManager externally.
-        /// </SecurityNote>
         private void DetachManipulationDevice()
         {
             _inputManager.PostProcessInput -= new ProcessInputEventHandler(PostProcessInput);
@@ -67,10 +57,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource of Target.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: Exposes a PresentationSource.
-        ///     PublicOK: There is a demand.
-        /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
             get
@@ -213,30 +199,18 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - OK to pass this information
-        /// </SecurityNote>
         internal ManipulationModes ManipulationMode
         {
             get { return _manipulationLogic.ManipulationMode; }
             set { _manipulationLogic.ManipulationMode = value; }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - OK to pass this information
-        /// </SecurityNote>
         internal ManipulationPivot ManipulationPivot
         {
             get { return _manipulationLogic.ManipulationPivot; }
             set { _manipulationLogic.ManipulationPivot = value; }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - OK to pass this information
-        /// </SecurityNote>
         internal IInputElement ManipulationContainer
         {
             get { return _manipulationLogic.ManipulationContainer; }
@@ -345,10 +319,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - Prods the logic object to do its work. Does not expose the object.
-        /// </SecurityNote>
         private void ReportFrame()
         {
             if (!_manipulationEnded)
@@ -359,10 +329,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - OK to report if manipulation is enabled.
-        /// </SecurityNote>
         internal bool IsManipulationActive
         {
             get
@@ -371,9 +337,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method can be used for input spoofing.
-        /// </SecurityNote>
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             InputEventArgs inputEventArgs = e.StagingItem.Input;
@@ -486,10 +449,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls IManipulator.ManipulationEnded which can
-        ///               potentially do mouse promotions.
-        /// </SecurityNote>
         private void OnManipulationCancel()
         {
             _manipulationEnded = true;
@@ -514,10 +473,6 @@ namespace System.Windows.Input
             RemoveManipulationDevice();
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls IManipulator.ManipulationEnded which can
-        ///               potentially do mouse promotions.
-        /// </SecurityNote>
         private void OnManipulationComplete()
         {
             _manipulationEnded = true;
@@ -533,10 +488,6 @@ namespace System.Windows.Input
             RemoveManipulationDevice();
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - Does not expose the object.
-        /// </SecurityNote>
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
             _manipulationLogic.SetManipulationParameters(parameter);
@@ -545,10 +496,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Completes the pending manipulation or inertia.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Accesses _manipulationLogic.
-        ///     TreatAsSafe - Does not expose the object.
-        /// </SecurityNote>
         internal void CompleteManipulation(bool withInertia)
         {
             if (_manipulationLogic != null)
@@ -558,9 +505,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        /// </SecurityNote>
         internal void ProcessManipulationInput(InputEventArgs e)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, EventTrace.Event.ManipulationEventRaised, 0);
@@ -568,19 +512,10 @@ namespace System.Windows.Input
             _inputManager.ProcessInput(e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This data is not safe to expose as it holds refrence to PresentationSource.
-        /// </SecurityNote>
         private InputManager _inputManager;
 
-        /// <SecurityNote>
-        ///     Critical: Holds the the current manipulation state. Trusted to give manipulation events (and not spoofed input).
-        /// </SecurityNote>
         private ManipulationLogic _manipulationLogic;
 
-        /// <SecurityNote>
-        ///     PresentationSource is protected data.
-        /// </SecurityNote>
         private PresentationSource _activeSource;
 
         private UIElement _target;

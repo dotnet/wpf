@@ -203,10 +203,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="stylusInputReport">A new input report.</param>
         /// <returns>A SystemGesture that was detected, null otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical: The generated system gesture is posted back to the input system.
-        ///         SystemGesture events need to be protected.
-        /// </SecurityNote>
         internal SystemGesture? GenerateStaticGesture(RawStylusInputReport stylusInputReport)
         {
             return _multiTouchSystemGestureLogic?.GenerateStaticGesture(stylusInputReport);

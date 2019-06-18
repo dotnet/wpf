@@ -301,10 +301,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - eventually accesss critical resources
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();

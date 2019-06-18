@@ -1883,11 +1883,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Send to channel command sequence to create slave resource.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This code acceses an unsafe code block
-        ///   TreatAsSafe: This does not expose any data and the unsafe code blocks
-        ///    needs to be verified for correctness
-        /// </SecurityNote>
         private void CreateOnChannel(DUCE.Channel channel)
         {
             Debug.Assert(_glyphTypeface != null);

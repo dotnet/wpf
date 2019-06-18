@@ -59,10 +59,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Opens an asynchronous channel.
             /// </summary>
-            /// <securitynote>
-            /// Critical - Creates a channel, calls a Channel method, calls methods performing elevations.
-            /// TreatAsSafe - It is safe for the media context to create and use a channel.
-            /// </securitynote>
             internal void CreateChannels()
             {
                 Invariant.Assert(_asyncChannel == null);
@@ -89,10 +85,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Closes all opened channels.
             /// </summary>
-            /// <securitynote>
-            /// Critical - Closes channels.
-            /// TreatAsSafe - It is safe for the media context to sync channels channel.
-            /// </securitynote>
             internal void RemoveSyncChannels()
             {
                 //
@@ -119,10 +111,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Closes all opened channels.
             /// </summary>
-            /// <securitynote>
-            /// Critical - Closes channels.
-            /// TreatAsSafe - It is safe for the media context to close a channel.
-            /// </securitynote>
             internal void RemoveChannels()
             {
                 if (_asyncChannel != null)
@@ -149,12 +137,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Create a fresh or fetch one from the pool synchronous channel.
             /// </summary>
-            /// <securitynote>
-            /// Critical - Calls critical methods to create a synchronous channel and return it. 
-            /// TreatAsSafe - This function allocates the channel in a Channel class that guards channel
-            ///     access from insecure access. It is also ok for this method to allocate the native objects
-            ///     since there is nothing security critical about having the channel infrastructure initialized.
-            /// </securitynote>
             internal DUCE.Channel AllocateSyncChannel()
             {
                 DUCE.Channel syncChannel;
@@ -215,10 +197,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Returns a sync channel back to the pool.
             /// </summary>
-            /// <securitynote>
-            /// Critical - Creates and returns a synchronous channel.
-            /// TreatAsSafe - Closing a channel is safe.
-            /// </securitynote>
             internal void ReleaseSyncChannel(DUCE.Channel channel)
             {
                 Invariant.Assert(_freeSyncChannels != null);
@@ -242,10 +220,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Returns the asynchronous channel.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// TreatAsSafe - Using a channel created by the media context is safe.
-            /// </SecurityNote>
             internal DUCE.Channel Channel
             {
                 get
@@ -257,10 +231,6 @@ namespace System.Windows.Media
             /// <summary>
             /// Returns the asynchronous out-of-band channel.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// TreatAsSafe - Using a channel created by the media context is safe.
-            /// </SecurityNote>
             internal DUCE.Channel OutOfBandChannel
             {
                 get
@@ -275,9 +245,6 @@ namespace System.Windows.Media
             /// <remarks>
             /// This field will be replaced with an asynchronous channel table as per task #26681.
             /// </remarks>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// </SecurityNote>
             private DUCE.Channel _asyncChannel;
 
 
@@ -287,33 +254,21 @@ namespace System.Windows.Media
             /// <remarks>
             /// This is needed by CompositionTarget for handling WM_PAINT, etc.
             /// </remarks>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// </SecurityNote>
             private DUCE.Channel _asyncOutOfBandChannel;
 
             /// <summary>
             /// We store the free synchronous channels for later re-use in this queue.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// </SecurityNote>
             private Queue<DUCE.Channel> _freeSyncChannels;
 
             /// <summary>
             /// The service channel to the synchronous partition.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Channels are a controlled unmanaged resource.
-            /// </SecurityNote>
             private DUCE.Channel _syncServiceChannel;
 
             /// <summary>
             /// Pointer to the unmanaged connection object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Controlled unmanaged resource.
-            /// </SecurityNote>
             private IntPtr _pSyncConnection;
         }
     }

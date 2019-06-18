@@ -54,11 +54,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///     Apply attribute for the range and display attribute property.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls critical method (ConvertToTextPosition)
-        /// TreatAsSafe - all parameters are typesafe and are validated, elevated data (the string)
-        ///               is passed from one highly trusted entity to another.
-        /// </SecurityNote>
         internal override void OnRange(
             UnsafeNativeMethods.ITfProperty property,
             int ecReadOnly, 
@@ -85,9 +80,6 @@ namespace System.Windows.Documents
         ///    Calback function for TextEditSink
         ///    we track the property change here.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - commits raw input changes to the system. it elevatest to get context properties.
-        /// </SecurityNote>
         internal override void OnEndEdit(UnsafeNativeMethods.ITfContext context,
                                         int ecReadOnly, 
                                         UnsafeNativeMethods.ITfEditRecord editRecord) 
@@ -222,11 +214,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///     Access DisplayAttributeManager
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls unmanaged code (various TextServicesInterop)
-        /// TreatAsSafe - exposes safe data (display attributes), argument is 
-        ///               validates through a GUID lookup table.
-        /// </SecurityNote>
         private static TextServicesDisplayAttribute GetDisplayAttribute(Int32 guidatom)
         {
             TextServicesDisplayAttribute attr = null;
@@ -290,10 +277,6 @@ namespace System.Windows.Documents
             return attr;
         }
 
-        /// <SecurityNote>
-        /// Critical    - calls critical GetValue method.
-        /// TreatAsSafe - exposes safe data (display attributes).
-        /// </SecurityNote>
         private Int32 GetInt32Value(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
             Object obj = GetValue(ecReadOnly, property, range);

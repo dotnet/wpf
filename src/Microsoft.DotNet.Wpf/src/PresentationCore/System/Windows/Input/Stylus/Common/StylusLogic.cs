@@ -190,10 +190,6 @@ namespace System.Windows.Input
         /// True if the StylusLogic for the thread of the caller has been instantiated.
         /// False if otherwise.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses _currentStylusLogic
-        ///     Safe:       Does not expose any critical data
-        /// </SecurityNote>
         internal static bool IsInstantiated
         {
             get
@@ -218,10 +214,6 @@ namespace System.Windows.Input
         /// Determines if the WM_POINTER based stack is enabled.
         /// Pointer is only supported on >= RS2, otherwise gracefully degrade to WISP stack.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses IsPointerEnabledInRegistry
-        ///                 Accesses OsVersionHelper.IsOsWindowsRS2OrGreater
-        /// </SecurityNote>
         internal static bool IsPointerStackEnabled
         {
             get
@@ -249,11 +241,6 @@ namespace System.Windows.Input
         /// on first use by either HwndSource or SystemResources, depending on what is created
         /// first.  There is one StylusLogic per dispatcher thread.
         /// </summary>
-        /// <SecurityNote>
-        ///     Get:
-        ///         Critical accesses and returns _currentStylusLogic which can be used to
-        ///         falsify input.
-        /// </SecurityNote>
         internal static StylusLogic CurrentStylusLogic
         {
             get
@@ -272,9 +259,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <typeparam name="T">The type to cast to</typeparam>
         /// <returns>An object of T if the cast succeeds, otherwise null</returns>
-        /// <SecurityNote>
-        ///     Critical:   Accesses CurrentStylusLogic
-        /// </SecurityNote>
         internal static T GetCurrentStylusLogicAs<T>()
             where T : StylusLogic
         {
@@ -285,10 +269,6 @@ namespace System.Windows.Input
         /// Initializes a new StylusLogic based on the AppContext switches.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Accesses InputManager.UnsecureCurrent
-        ///               Accesses IsPointerStackEnabled
-        /// </SecurityNote>
         private static void Initialize()
         {
             // Initialize a new StylusLogic based on AppContext switches
@@ -311,9 +291,6 @@ namespace System.Windows.Input
         /// Detect if the registry key for enabling WM_POINTER has been set.  This key is primarily to allow for stack selection
         /// during testing without having to broadly change test code.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses Registry class and functions.
-        /// </SecurityNote>
         private static bool IsPointerEnabledInRegistry
         {
             get
@@ -362,11 +339,6 @@ namespace System.Windows.Input
         /// <summary>
         /// Grab the defualts from the registry for the double tap thresholds.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - Asserts read registry permission...
-        ///           - TreatAsSafe boundry is the constructor
-        ///           - called by constructor
-        ///</SecurityNote>
         protected void ReadSystemConfig()
         {
             object obj;
@@ -520,11 +492,6 @@ namespace System.Windows.Input
         /// </summary>
         protected class StylusLogicShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
             public StylusLogicShutDownListener(StylusLogic target, ShutDownEvents events) : base(target, events)
             {
             }
@@ -584,9 +551,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseInputReport">The raw mouse input to check</param>
         /// <returns>True if this is a promoted mouse event, false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical - Accesses RawMouseInputReport.ExtraInformation
-        /// </SecurityNote>
         internal static bool IsPromotedMouseEvent(RawMouseInputReport mouseInputReport)
         {
             int mouseExtraInfo = NativeMethods.IntPtrToInt32(mouseInputReport.ExtraInformation);
@@ -598,9 +562,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseInputReport">THe input report</param>
         /// <returns>THe cursor id if promoted, 0 if pure mouse (by definition)</returns>
-        /// <SecurityNote>
-        ///     Critical - Accesses RawMouseInputReport.ExtraInformation
-        /// </SecurityNote>
         internal static uint GetCursorIdFromMouseEvent(RawMouseInputReport mouseInputReport)
         {
             int mouseExtraInfo = NativeMethods.IntPtrToInt32(mouseInputReport.ExtraInformation);
@@ -609,11 +570,6 @@ namespace System.Windows.Input
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical: Access the security critical method - StylusLogic.CurrentStylusLogic.
-        ///                   Just calls security transparent routine ReevaluateStylusOver on StylusLogic.
-        ///                   Takes no critical data as input and doesn't return any.
-        /// </SecurityNote>
         internal static void CurrentStylusLogicReevaluateStylusOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
             StylusLogic.CurrentStylusLogic.ReevaluateStylusOver(element, oldParent, isCoreParent);
@@ -621,11 +577,6 @@ namespace System.Windows.Input
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical: Access the security critical method StylusLogic.CurrentStylusLogic.
-        ///                   Just calls security transparent routine ReevaluateCapture on StylusLogic.
-        ///                   Takes no critical data as input and doesn't return any.
-        /// </SecurityNote>
         internal static void CurrentStylusLogicReevaluateCapture(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
             StylusLogic.CurrentStylusLogic.ReevaluateCapture(element, oldParent, isCoreParent);
@@ -721,10 +672,6 @@ namespace System.Windows.Input
             return element.IsEnabled && element.IsVisible && element.IsHitTestVisible;
         }
 
-        /// <SecurityNote>
-        ///     SafeCritical: This code accesses critical data (PresentationSource)
-        ///                   Although it accesses critical data it does not modify or expose it, only compares against it.
-        /// </SecurityNote>
         protected bool ValidateVisualForCapture(DependencyObject visual, StylusDeviceBase currentStylusDevice)
         {
             if (visual == null)

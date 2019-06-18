@@ -572,10 +572,6 @@ namespace System.ComponentModel
         
         // Return the property descriptor we're wrapping.  We may have to get
         // this on demand if it wasn't passed into our constructor
-        ///<SecurityNote>
-        ///     Critical: calls TypeDescriptor.CreateProperty which LinkDemands
-        ///     TreatAsSafe: ok to create a property since we should have one anyway
-        ///</SecurityNote>
         private PropertyDescriptor Property
         {
             get

@@ -108,10 +108,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOCUSBORDERWIDTH
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the size of the dotted rectangle around a selected obj
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusBorderWidth
         {
             get
@@ -143,10 +139,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOCUSBORDERHEIGHT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the size of the dotted rectangle around a selected obj
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusBorderHeight
         {
             get
@@ -178,11 +170,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETHIGHCONTRAST -> HCF_HIGHCONTRASTON
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        ///  PublicOK - considered ok to expose since the method doesn't take user input and only
-        ///                returns a boolean value which indicates the current high contrast mode.
-        /// </SecurityNote>
         public static bool HighContrast
         {
             get
@@ -215,10 +202,6 @@ namespace System.Windows
         /// <summary>
         /// Maps to SPI_GETMOUSEVANISH.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical -- calling UnsafeNativeMethods
-        ///  PublicOK - considered ok to expose.
-        /// </SecurityNote>
         // If this becomes public, it will need a matching ResourceKey.
         internal static bool MouseVanish
         {
@@ -310,10 +293,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETDROPSHADOW
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool DropShadow
         {
             get
@@ -342,10 +321,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFLATMENU
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool FlatMenu
         {
 
@@ -375,10 +350,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETWORKAREA
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  TreatAsSafe - Okay to expose info to internet callers.
-        /// </SecurityNote>
         internal static NativeMethods.RECT WorkAreaInternal
         {
             get
@@ -486,10 +457,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETICONMETRICS
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  TreatAsSafe - Okay to expose info to internet callers.
-        ///</SecurityNote>
         internal static NativeMethods.ICONMETRICS IconMetrics
         {
             get
@@ -609,11 +576,6 @@ namespace System.Windows
         ///     Maps to SPI_GETKEYBOARDCUES
         /// </summary>
         ///
-        /// <SecurityNote>
-        /// Demanding unmanaged code permission because calling an unsafe native method.
-        ///  SecurityCritical because it calls an unsafe native method.  PublicOK because is demanding unmanaged code perm.
-        /// PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool KeyboardCues
         {
             get
@@ -642,10 +604,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDDELAY
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting keyboard repeat delay
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static int KeyboardDelay
         {
             get
@@ -674,10 +632,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDPREF
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool KeyboardPreference
         {
             get
@@ -706,10 +660,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDSPEED
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting keyboard repeat-speed
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static int KeyboardSpeed
         {
             get
@@ -738,10 +688,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSNAPTODEFBUTTON
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool SnapToDefaultButton
         {
             get
@@ -770,10 +716,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETWHEELSCROLLLINES
         /// </summary>
-        /// <SecurityNote>
-        ///     Get is PublicOK -- Determined safe: Geting the number of lines to scroll when the mouse wheel is rotated. \
-        ///     Get is Critical -- Calling unsafe native methods.
-        /// </SecurityNote>
         public static int WheelScrollLines
         {
             get
@@ -810,10 +752,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///    TreatAsSafe -- Determined safe: getting time mouse pointer has to stay in the hover rectangle for TrackMouseEvent to generate a WM_MOUSEHOVER message.
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int MouseHoverTimeMilliseconds
         {
             get
@@ -842,10 +780,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMOUSEHOVERHEIGHT.
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: gettingthe height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MouseHoverHeight
         {
             get
@@ -878,10 +812,6 @@ namespace System.Windows
         ///     Maps to SPI_GETMOUSEHOVERWIDTH.
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MouseHoverWidth
         {
             get
@@ -1066,11 +996,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUDROPALIGNMENT
         /// </summary>
-        /// <SecurityNote>
-        /// Demanding unmanaged code permission because calling an unsafe native method.
-        /// Critical - get: it calls an unsafe native method
-        /// PublicOK - get: it's safe to expose a menu drop alignment of a system.
-        /// </SecurityNote>
         public static bool MenuDropAlignment
         {
             get
@@ -1098,10 +1023,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUFADE
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - because it calls an unsafe native method
-        /// PublicOK - ok to return menu fade data
-        /// </SecurityNote>
         public static bool MenuFade
         {
             get
@@ -1130,10 +1051,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUSHOWDELAY
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls a method that perfoms an elevation.
-        ///     PublicOK - considered ok to expose in partial trust.
-        /// </SecurityNote>
         public static int MenuShowDelay
         {
 
@@ -1235,10 +1152,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCOMBOBOXANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
 
         public static bool ComboBoxAnimation
         {
@@ -1270,10 +1183,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCLIENTAREAANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool ClientAreaAnimation
         {
             get
@@ -1310,10 +1219,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCURSORSHADOW
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool CursorShadow
         {
             get
@@ -1342,10 +1247,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETGRADIENTCAPTIONS
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool GradientCaptions
         {
             get
@@ -1374,10 +1275,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETHOTTRACKING
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool HotTracking
         {
             get
@@ -1406,10 +1303,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETLISTBOXSMOOTHSCROLLING
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool ListBoxSmoothScrolling
         {
             get
@@ -1461,10 +1354,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls SystemParametersInfo
-        ///     PublicOK - net information returned is whether menu-animation is enabled. Considered safe.
-        /// </SecurityNote>
         public static bool MenuAnimation
         {
             get
@@ -1493,10 +1382,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSELECTIONFADE
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool SelectionFade
         {
             get
@@ -1525,10 +1410,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSTYLUSHOTTRACKING
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool StylusHotTracking
         {
             get
@@ -1574,10 +1455,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETTOOLTIPANIMATION
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static bool ToolTipAnimation
         {
             get
@@ -1606,10 +1483,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETTOOLTIPFADE
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static bool ToolTipFade
         {
             get
@@ -1638,10 +1511,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETUIEFFECTS
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool UIEffects
         {
             get
@@ -1918,10 +1787,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETANIMATION
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool MinimizeAnimation
         {
             get
@@ -1953,10 +1818,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETBORDER
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static int Border
         {
             get
@@ -1985,10 +1846,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCARETWIDTH
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting width of caret
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CaretWidth
         {
             get
@@ -2020,10 +1877,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETDRAGFULLWINDOWS
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool DragFullWindows
         {
             get
@@ -2052,10 +1905,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOREGROUNDFLASHCOUNT
         /// </summary>
-        /// <SecurityNote>
-        ///     Get is PublicOK -- Getting # of times taskbar button will flash when rejecting a forecground switch request.
-        ///     Get is Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
 
         public static int ForegroundFlashCount
         {
@@ -2085,10 +1934,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETNONCLIENTMETRICS
         /// </summary>
-        /// <SecurityNote>
-        ///      SecurityCritical because it calls an unsafe native method.
-        ///      SecurityTreatAsSafe as we think this would be ok to expose publically - and this is ok for consumption in partial trust.
-        /// </SecurityNote>
         internal static NativeMethods.NONCLIENTMETRICS NonClientMetrics
         {
             get
@@ -2433,10 +2278,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThinHorizontalBorderHeight
         {
             get
@@ -2458,10 +2299,6 @@ namespace System.Windows
         ///     Maps to SM_CYBORDER
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThinVerticalBorderWidth
         {
             get
@@ -2482,10 +2319,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXCURSOR
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CursorWidth
         {
             get
@@ -2506,10 +2339,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYCURSOR
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CursorHeight
         {
             get
@@ -2530,10 +2359,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXEDGE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThickHorizontalBorderHeight
         {
             get
@@ -2554,10 +2379,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYEDGE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThickVerticalBorderWidth
         {
             get
@@ -2578,10 +2399,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical - calls into native code (GetSystemMetrics)
-        ///    PublicOK - Safe data to expose
-        /// </SecurityNote>
         public static double MinimumHorizontalDragDistance
         {
             get
@@ -2602,10 +2419,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical - calls into native code (GetSystemMetrics)
-        ///    PublicOK - Safe data to expose
-        /// </SecurityNote>
         public static double MinimumVerticalDragDistance
         {
             get
@@ -2626,10 +2439,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXFIXEDFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FixedFrameHorizontalBorderHeight
         {
             get
@@ -2650,10 +2459,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYFIXEDFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FixedFrameVerticalBorderWidth
         {
             get
@@ -2674,10 +2479,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXFOCUSBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusHorizontalBorderHeight
         {
             get
@@ -2698,10 +2499,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYFOCUSBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusVerticalBorderWidth
         {
             get
@@ -2726,10 +2523,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FullPrimaryScreenWidth
         {
             get
@@ -2754,10 +2547,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FullPrimaryScreenHeight
         {
             get
@@ -2779,10 +2568,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXHSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarButtonWidth
         {
             get
@@ -2803,10 +2588,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYHSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarHeight
         {
             get
@@ -2827,10 +2608,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXHTHUMB
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarThumbWidth
         {
             get
@@ -2851,10 +2628,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconWidth
         {
             get
@@ -2875,10 +2648,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconHeight
         {
             get
@@ -2899,10 +2668,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXICONSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconGridWidth
         {
             get
@@ -2923,10 +2688,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYICONSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconGridHeight
         {
             get
@@ -2950,10 +2711,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximizedPrimaryScreenWidth
         {
             get
@@ -2978,10 +2735,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximizedPrimaryScreenHeight
         {
             get
@@ -3006,10 +2759,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximumWindowTrackWidth
         {
             get
@@ -3034,10 +2783,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximumWindowTrackHeight
         {
             get
@@ -3059,10 +2804,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMENUCHECK
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuCheckmarkWidth
         {
             get
@@ -3083,10 +2824,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMENUCHECK
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuCheckmarkHeight
         {
             get
@@ -3107,10 +2844,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMENUSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuButtonWidth
         {
             get
@@ -3131,10 +2864,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMENUSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuButtonHeight
         {
             get
@@ -3158,10 +2887,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowWidth
         {
             get
@@ -3186,10 +2911,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowHeight
         {
             get
@@ -3214,10 +2935,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK -- There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedWindowWidth
         {
             get
@@ -3242,10 +2959,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedWindowHeight
         {
             get
@@ -3267,10 +2980,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMINSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedGridWidth
         {
             get
@@ -3291,10 +3000,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMINSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedGridHeight
         {
             get
@@ -3318,10 +3023,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exist a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowTrackWidth
         {
             get
@@ -3346,10 +3047,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowTrackHeight
         {
             get
@@ -3371,10 +3068,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --  This is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double PrimaryScreenWidth
         {
             get
@@ -3395,10 +3088,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --This is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double PrimaryScreenHeight
         {
             get
@@ -3423,10 +3112,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionButtonWidth
         {
             get
@@ -3448,10 +3133,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionButtonHeight
         {
             get
@@ -3473,10 +3154,6 @@ namespace System.Windows
         ///     Maps to SM_CXSIZEFRAME
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ResizeFrameHorizontalBorderHeight
         {
             get
@@ -3497,10 +3174,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSIZEFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ResizeFrameVerticalBorderWidth
         {
             get
@@ -3521,10 +3194,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSMICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallIconWidth
         {
             get
@@ -3545,10 +3214,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSMICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallIconHeight
         {
             get
@@ -3569,10 +3234,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSMSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallWindowCaptionButtonWidth
         {
             get
@@ -3593,10 +3254,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSMSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallWindowCaptionButtonHeight
         {
             get
@@ -3620,10 +3277,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenWidth
         {
             get
@@ -3648,10 +3301,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenHeight
         {
             get
@@ -3674,10 +3323,6 @@ namespace System.Windows
         ///     Maps to SM_CXVSCROLL
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarWidth
         {
             get
@@ -3698,10 +3343,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYVSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarButtonHeight
         {
             get
@@ -3725,10 +3366,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionHeight
         {
             get
@@ -3754,10 +3391,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double KanjiWindowHeight
         {
             get
@@ -3782,10 +3415,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuBarHeight
         {
             get
@@ -3807,10 +3436,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYVTHUMB
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarThumbHeight
         {
             get
@@ -3834,10 +3459,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand in this code.
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsImmEnabled
         {
             get
@@ -3863,10 +3484,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMediaCenter
         {
             get
@@ -3888,10 +3505,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MENUDROPALIGNMENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMenuDropRightAligned
         {
             get
@@ -3915,10 +3528,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMiddleEastEnabled
         {
             get
@@ -3940,10 +3549,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MOUSEPRESENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMousePresent
         {
             get
@@ -3964,10 +3569,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MOUSEWHEELPRESENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMouseWheelPresent
         {
             get
@@ -3991,10 +3592,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Deemed as unsafe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsPenWindows
         {
             get
@@ -4019,10 +3616,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsRemotelyControlled
         {
             get
@@ -4047,10 +3640,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demand Unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsRemoteSession
         {
             get
@@ -4075,10 +3664,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demand Unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool ShowSounds
         {
             get
@@ -4103,10 +3688,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsSlowMachine
         {
             get
@@ -4131,10 +3712,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool SwapButtons
         {
             get
@@ -4159,10 +3736,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK -- Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsTabletPC
         {
             get
@@ -4187,10 +3760,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenLeft
         {
             get
@@ -4215,10 +3784,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenTop
         {
             get
@@ -5407,10 +4972,6 @@ namespace System.Windows
         /// <summary>
         ///     Indicates current Power Status
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static PowerLineStatus PowerLineStatus
         {
             get
@@ -5954,9 +5515,6 @@ namespace System.Windows
         ///     It turns out there may be some lag between someone asking this
         ///     and the window getting updated.  It's not too expensive, just always do the check
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static bool IsGlassEnabled
         {
             get
@@ -5977,9 +5535,6 @@ namespace System.Windows
         /// <summary>
         ///     The current Windows system theme's name.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeName
@@ -6015,9 +5570,6 @@ namespace System.Windows
         /// <summary>
         ///     The current Windows system theme's color.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeColor
@@ -6055,9 +5607,6 @@ namespace System.Windows
         ///     It instead is a logical size that we're approximating based on the current theme.
         ///     There aren't any known variations based on theme color.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static CornerRadius WindowCornerRadius
         {
             get
@@ -6116,9 +5665,6 @@ namespace System.Windows
         /// <summary>
         ///     Color representing the DWM glass for windows in the Aero theme.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Color WindowGlassColor
         {
             get
@@ -6145,9 +5691,6 @@ namespace System.Windows
         /// <summary>
         ///     Brush representing the DWM glass for windows in the Aero theme.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Brush WindowGlassBrush
         {
             get
@@ -6172,9 +5715,6 @@ namespace System.Windows
         /// <summary>
         ///     Standard thickness of the resize border of a window.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Thickness WindowResizeBorderThickness
         {
             get
@@ -6200,9 +5740,6 @@ namespace System.Windows
         /// <summary>
         ///     Standard thickness of the non-client frame around a window.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Thickness WindowNonClientFrameThickness
         {
             get
@@ -6234,10 +5771,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///  Critical as this accesses Native methods.
-        ///  TreatAsSafe - it would be ok to expose this information - DPI in partial trust
-        ///</SecurityNote>
         internal static int DpiX
         {
             get

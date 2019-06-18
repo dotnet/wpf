@@ -119,16 +119,9 @@ namespace System.Windows.Shell
     /// Manage the tasks and files that Shell associates with this application.
     /// This allows modification of the Jump List UI in Windows 7 that appears on the Taskbar and Start Menu.
     /// </summary>
-    /// <SecurityNote>
-    /// This class is unsafe to use in partial trust.  It modifies the information Shell presents to the user about the application.
-    /// </SecurityNote>
     [ContentProperty("JumpItems")]
     public sealed class JumpList : ISupportInitialize
     {
-        /// <SecurityNote>
-        /// Critical: Calls critical native methods.  Class-level LinkDemand doesn't apply to static ctor.
-        /// TreatAsSafe: Added explicit demand for AllWindows to the static ctor.
-        /// </SecurityNote>
         static JumpList()
         {
             // Passing NULL for the HMODULE returns the running executable path.
@@ -141,10 +134,6 @@ namespace System.Windows.Shell
         /// <remarks>
         /// This makes the item eligible for inclusion in the special Recent and Frequent categories.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Calls critical SHAddToRecentDocs.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public static void AddToRecentCategory(string itemPath)
         {
             Verify.FileExists(itemPath, "itemPath");
@@ -158,10 +147,6 @@ namespace System.Windows.Shell
         /// <remarks>
         /// This makes the item eligible for inclusion in the special Recent and Frequent categories.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Calls critical SHAddToRecentDocs.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public static void AddToRecentCategory(JumpPath jumpPath)
         {
             Verify.IsNotNull(jumpPath, "jumpPath");
@@ -174,10 +159,6 @@ namespace System.Windows.Shell
         /// <remarks>
         /// This makes the item eligible for inclusion in the special Recent and Frequent categories.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Calls critical SHAddToRecentDocs.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public static void AddToRecentCategory(JumpTask jumpTask)
         {
             Verify.IsNotNull(jumpTask, "jumpTask");
@@ -219,9 +200,6 @@ namespace System.Windows.Shell
             /// <summary>
             /// Releases all native references in a list of _ShellObjectPairs.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical: Calls critical Utilities.SafeRelease.
-            /// </SecurityNote>
             /// <param name="list">The list from which to release the resources.</param>
             public static void ReleaseShellObjects(List<_ShellObjectPair> list)
             {
@@ -243,10 +221,6 @@ namespace System.Windows.Shell
         /// <summary>
         /// Set the JumpList attached property on an Application.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accepts critical argument of type JumpList
-        /// TreatAsSafe: Demands for AllWindows
-        /// </SecurityNote>
         public static void SetJumpList(Application application, JumpList value)
         {
             Verify.IsNotNull(application, "application");
@@ -304,10 +278,6 @@ namespace System.Windows.Shell
         // The internal list of JumpItems in this JumpList
         private List<JumpItem> _jumpItems;
 
-        /// <SecurityNote>
-        /// Critical: This class cannot be used from partial trust.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public JumpList()
             : this(null, false, false)
         { 
@@ -315,10 +285,6 @@ namespace System.Windows.Shell
             _initializing = null;
         }
 
-        /// <SecurityNote>
-        /// Critical: This class cannot be used from partial trust.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public JumpList(IEnumerable<JumpItem> items, bool showFrequent, bool showRecent)
         {
             if (items != null)
@@ -345,10 +311,6 @@ namespace System.Windows.Shell
         /// Applications can request that specific items are included here by calling JumpList.AddToRecentCategory.
         /// Because of duplication, applications generally should not have both ShowRecentCategory and ShowFrequentCategory set at the same time.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: This class cannot be used from partial trust.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public bool ShowFrequentCategory {
             get;
 
@@ -362,10 +324,6 @@ namespace System.Windows.Shell
         /// Applications can request that specific items are included here by calling JumpList.AddToRecentCategory
         /// Because of duplication, applications generally should not have both ShowRecentCategory and ShowFrequentCategory set at the same time.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: This class cannot be used from partial trust.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public bool ShowRecentCategory {
             get;
 
@@ -384,9 +342,6 @@ namespace System.Windows.Shell
             get { return _jumpItems; }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical ShowRecentCategory and ShowFrequentCategory
-        /// </SecurityNote>
         private bool IsUnmodified
         {
             get
@@ -407,10 +362,6 @@ namespace System.Windows.Shell
         /// to the current application when attached and a corresponding call to EndInit is made.
         /// Nested calls to BeginInit are not allowed.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Class-level LinkDemand\SecurityCritical doesn't always apply to interface methods.
-        /// TreatAsSafe: Added explicit demand for AllWindows.
-        /// </SecurityNote>
         public void BeginInit()
         {
             if (!IsUnmodified)
@@ -427,10 +378,6 @@ namespace System.Windows.Shell
         /// <remarks>
         /// Calls to EndInit must be paired with calls to BeginInit.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Class-level LinkDemand\SecurityCritical doesn't always apply to interface methods.
-        /// TreatAsSafe: Added explicit demand for AllWindows.
-        /// </SecurityNote>
         public void EndInit()
         {
             if (_initializing != true)
@@ -462,9 +409,6 @@ namespace System.Windows.Shell
         /// It's straightforward to p/invoke to set these for the running application or
         /// the HWND.  Not so much for this object.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Calls critical GetCurrentProcessExplicitAppUserModelID.
-        /// </SecurityNote>
         private static string _RuntimeId
         {
             get
@@ -482,10 +426,6 @@ namespace System.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method ApplyList.
-        /// PublicOK: Demands UIWindow permissions.
-        /// </SecurityNote>
         public void Apply()
         {
             if (_initializing == true)
@@ -499,9 +439,6 @@ namespace System.Windows.Shell
             ApplyList();
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method ApplyList.
-        /// </SecurityNote>
         private void ApplyFromApplication()
         {
             // If we're here and the caller has modified the JumpList without using ISupportInitialize
@@ -520,9 +457,6 @@ namespace System.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Uses native methods to apply JumpItem data to the Shell's JumpList for the current application.
-        /// </SecurityNote>
         private void ApplyList()
         {
             Debug.Assert(_initializing == false);
@@ -754,9 +688,6 @@ namespace System.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This accesses methods on native interfaces IShellLink and IShellItem.
-        /// </SecurityNote>
         private static bool ListContainsShellObject(List<_ShellObjectPair> removedList, object shellObject)
         {
             Debug.Assert(removedList != null);
@@ -818,9 +749,6 @@ namespace System.Windows.Shell
         /// <remarks>
         /// This returns a native COM object that should be deterministically released by the caller, when possible.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Calls critical methods CreateItemForJumpPath and CreateLinkforJumpTask.
-        /// </SecurityNote>
         private static object GetShellObjectForJumpItem(JumpItem jumpItem)
         {
             var jumpPath = jumpItem as JumpPath;
@@ -841,9 +769,6 @@ namespace System.Windows.Shell
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates instances of native interfaces IShellItem and IShellLink.
-        /// </SecurityNote>
         private static List<_ShellObjectPair> GenerateJumpItems(IObjectArray shellObjects)
         {
             Debug.Assert(shellObjects != null);
@@ -876,17 +801,11 @@ namespace System.Windows.Shell
             return retList;
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical AddCategory.
-        /// </SecurityNote>
         private static void AddCategory(ICustomDestinationList cdl, string category, List<_ShellObjectPair> jumpItems, List<JumpItem> successList, List<_RejectedJumpItemPair> rejectionList)
         {
             AddCategory(cdl, category, jumpItems, successList, rejectionList, true);
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls methods on native interfaces ICustomDestinationList, IShellItem, and IShellLink.
-        /// </SecurityNote>
         private static void AddCategory(ICustomDestinationList cdl, string category, List<_ShellObjectPair> jumpItems, List<JumpItem> successList, List<_RejectedJumpItemPair> rejectionList, bool isHeterogenous)
         {
             Debug.Assert(jumpItems.Count != 0);
@@ -961,16 +880,10 @@ namespace System.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Assigned in an elevated context.
-        /// </SecurityNote>
         private static readonly string _FullName;
         
         #region Converter methods
 
-        /// <SecurityNote>
-        /// Critical: Creates instance of native interface IShellLinkW
-        /// </SecurityNote>
         private static IShellLinkW CreateLinkFromJumpTask(JumpTask jumpTask, bool allowSeparators)
         {
             Debug.Assert(jumpTask != null);
@@ -1084,9 +997,6 @@ namespace System.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates instance of native interface IShellItem2.
-        /// </SecurityNote>
         private static IShellItem2 CreateItemFromJumpPath(JumpPath jumpPath)
         {
             Debug.Assert(jumpPath != null);
@@ -1104,9 +1014,6 @@ namespace System.Windows.Shell
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses methods on native interfaces IShellItem and IShellLink.
-        /// </SecurityNote>
         private static JumpItem GetJumpItemForShellObject(object shellObject)
         {
             var shellItem = shellObject as IShellItem2;

@@ -45,12 +45,6 @@ namespace System.Windows.Media
         /// can be used.
         /// </summary>
         /// <seealso cref="Shutdown"/>
-        /// <securitynote>
-        /// Critical    -- gets and stores an unmanaged pointer to the current transport from milcore.
-        /// TreatAsSafe -- starting up the transport is considered a safe operation. Worst case is that
-        ///                we will create a transport object nobody is going to use. Access to the transport
-        ///                object pointer is security critical.
-        /// </securitynote>
         public static bool Startup(MediaContext mc)
         {
             //
@@ -113,10 +107,6 @@ namespace System.Windows.Media
         /// Reads a value from the registry to decide whether to disable the animation
         /// smoothing algorithm.
         /// </summary>
-        /// <securitynote>
-        /// Critical - asserts registry permissions to read from HKEY_LOCAL_MACHINE.
-        /// Treat as safe - we only read a binary value used exclusively for Avalon.
-        /// </securitynote>
         /// <remarks>
         /// The code is only present in internal builds
         /// </remarks>
@@ -152,11 +142,6 @@ namespace System.Windows.Media
         /// <summary>
         /// This deinitializes the MediaSystem and frees any resources that it maintains.
         /// </summary>
-        /// <securitynote>
-        /// Critical    -- results in the release of an unmanaged pointer to the current transport.
-        /// TreatAsSafe -- shutting down the transport is considered a safe operation. Worst case
-        ///                is that the client stops rendering Avalon content.
-        /// </securitynote>
         internal static void Shutdown(MediaContext mc)
         {
             using (CompositionEngineLock.Acquire())
@@ -183,13 +168,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Handle DWM messages that indicate that the state of the connection needs to change.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical because NotifyRedirectionEnvironmentChanged calls methods that 
-        /// control the composition engine in native code. TreatAsSafe since caller 
-        /// cannot cause any damages with it besides starting and stopping his application's
-        /// own composition engine whicih would worst cases prevent his app from rendering.
-        /// No critical data is being passed in or out since there are no arguments or return values.
-        /// </SecurityNote>		
         internal static void NotifyRedirectionEnvironmentChanged()
         {
             using (CompositionEngineLock.Acquire())
@@ -208,11 +186,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Connect the transport.
         /// </summary>
-        /// <securitynote>
-        ///   Critical - Creates a channel, calls methods performing elevations.
-        ///   TreatAsSafe - Transport initialization is considered safe. Service channel
-        ///                 creation is safe.
-        /// </securitynote>
         private static void ConnectTransport()
         {
             if (IsTransportConnected)
@@ -248,11 +221,6 @@ namespace System.Windows.Media
         /// request we want to keep the service channel around. So that media contexts that
         /// have not yet received disconnect event do not crash.
         /// </summary>
-        /// <securitynote>
-        /// Critical - Closes a channel. Shuts down the transport.
-        /// TreatAsSafe - Shutting down the transport is considered safe. 
-        ///               Closing the service channel is safe.
-        /// </securitynote>
         private static void DisconnectTransport()
         {
             if (!IsTransportConnected)
@@ -330,13 +298,6 @@ namespace System.Windows.Media
         /// <summary>
         /// This flag indicates if all rendering should be in software.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical because s_forceSoftareForGraphicsStreamMagnifier is security critical, but 
-        /// only if it can be set (since that controls if rendering is sw/hw). Because
-        /// this method does not allow setting s_forceSoftareForGraphicsStreamMagnifier, it cannot
-        /// be used to control rendering mode. Reading it is safe since this is information
-        /// we volunteer anyhow in the tiering API.
-        /// </SecurityNote>
         internal static bool ForceSoftwareRendering
         {
             get 
@@ -352,9 +313,6 @@ namespace System.Windows.Media
         /// Returns the service channel for the current media system. This channel 
         /// is used by the glyph cache infrastructure.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         internal static DUCE.Channel ServiceChannel
         {
             get { return s_serviceChannel; }
@@ -363,9 +321,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns the pointer to the unmanaged transport object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         internal static IntPtr Connection
         {
             get { return s_pConnection; }
@@ -389,9 +344,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Service channel to serve global glyph cache.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         private static DUCE.Channel s_serviceChannel;
 
         private static bool s_animationSmoothing = true;
@@ -399,18 +351,12 @@ namespace System.Windows.Media
         /// <summary>
         /// Pointer to the unmanaged transport object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         private static IntPtr s_pConnection;
 
         /// <summary>
         /// Indicates if a graphics stream client is present. If a graphics stream client is present,
         /// we drop back to sw rendering to enable the Vista magnifier. 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - controls rendering mode (hw/sw). 
-        /// </SecurityNote>
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
      }
 }

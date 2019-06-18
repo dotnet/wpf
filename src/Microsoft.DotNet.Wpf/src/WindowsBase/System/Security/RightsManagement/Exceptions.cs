@@ -144,10 +144,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
-        ///<SecurityNote>
-        ///     Critical: calls Exception.GetObjectData which LinkDemands
-        ///     PublicOK: a demand exists here
-        ///</SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

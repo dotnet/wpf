@@ -123,10 +123,6 @@ namespace System.Windows
         /// <param name="value">The Object to convert.</param>
         /// <param name="destinationType">The Type to convert the value parameter to. </param>
         /// <returns>An Object that represents the converted value</returns>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for StrokeCollection, not an arbitrary class
-        ///</SecurityNote> 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == null)

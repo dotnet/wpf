@@ -99,10 +99,6 @@ namespace System.Windows.Media
         /// <param name="context"> The ITypeDescriptorContext for this call. </param>
         /// <param name="culture"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The object to convert to an instance of ImageSource. </param>
-        /// <SecurityNote>
-        ///     Critical: Code eventually calls into unsafe code
-        ///     TreatAsASafe: Inputs are verified
-        /// </SecurityNote>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             try
@@ -239,9 +235,6 @@ namespace System.Windows.Media
 
         /// Try to get a bitmap out of a byte array.  This is an ole format that Access uses.
         /// this fails very quickly so we can try this first without a big perf hit.
-        /// <SecurityNote>
-        /// Critical - does unmanaged memory manipulation
-        /// </SecurityNote>
         private unsafe Stream GetBitmapStream(byte[] rawData)
         {
             Debug.Assert(rawData != null, "rawData is null.");

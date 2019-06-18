@@ -160,10 +160,6 @@ namespace System.Windows
         /// An ArgumentException is thrown if the object is not null and is not a GridLength,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for GridLength, not an arbitrary class
-        ///</SecurityNote> 
         public override object ConvertTo(
             ITypeDescriptorContext typeDescriptorContext, 
             CultureInfo cultureInfo,

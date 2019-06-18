@@ -15,14 +15,8 @@ namespace System.Windows.Input
     /// </summary>
     internal struct PenContextInfo
     {
-        /// <SecurityNote>
-        ///     This data is not safe to expose as it holds refrence to IPimcTablet
-        /// </SecurityNote>
         public SecurityCriticalDataClass<IPimcContext3> PimcContext;
         
-        /// <SecurityNote>
-        ///     This data is not safe to expose as it holds refrence to IPimcTablet
-        /// </SecurityNote>
         public SecurityCriticalDataClass<IntPtr> CommHandle;
         
         public int ContextId;

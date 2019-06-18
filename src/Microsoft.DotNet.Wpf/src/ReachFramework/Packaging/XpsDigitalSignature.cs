@@ -284,10 +284,6 @@ namespace System.Windows.Xps.Packaging
         /// Uses the certificate stored the signature
         /// </summary>
         /// <returns>the first error encountered when inspecting the certificate chain or NoError if the certificate is valid</returns>
-        ///<SecurityNote> 
-        ///     Critical - The VerifyCertificate(certificate) method has a 
-        ///                LinkDemand for Unrestricted.
-        ///</SecurityNote> 
         public 
         X509ChainStatusFlags 
         VerifyCertificate()
@@ -299,10 +295,6 @@ namespace System.Windows.Xps.Packaging
         /// </summary>
         /// <param name="certificate">certificate to inspect</param>
         /// <returns>the first error encountered when inspecting the certificate chain or NoError if the certificate is valid</returns>
-        ///<SecurityNote> 
-        ///     Critical - The PackageDigitalSignatureManager.VerifyCertificate method has a 
-        ///                LinkDemand for Unrestricted.
-        ///</SecurityNote> 
         public 
         static 
         X509ChainStatusFlags 

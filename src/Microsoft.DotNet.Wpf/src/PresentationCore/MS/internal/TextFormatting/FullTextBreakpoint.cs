@@ -54,10 +54,6 @@ namespace MS.Internal.TextFormatting
         /// <param name="penaltyRestriction">constraint on what breakpoint is returned based on its implied calculated penalty</param>
         /// <param name="bestFitIndex">index of the best fit breakpoint in the returned collection</param>        
         /// <returns>a list of potential breakpoints starting from firstCharIndex</returns>
-        /// <SecurityNote>
-        /// Critical - as this reads critical property callback exception.
-        /// Safe - as it reads the exception for the purpose of error reporting.
-        /// </SecurityNote>
         internal static IList<TextBreakpoint> CreateMultiple(
             TextParagraphCache          paragraphCache,
             int                         firstCharIndex,
@@ -149,10 +145,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Construct breakpoint from full text info
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls critical method TextMetrics.Compute and it accesses unsafe pointer
-        /// Safe - as it does not expose critical data
-        /// </SecurityNote>
         private FullTextBreakpoint(
             FullTextState           fullText,
             int                     firstCharIndex,
@@ -220,10 +212,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Disposing LS unmanaged memory for text line
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this sets critical data _ploline.
-        /// Safe - as it does not set the critical data thru input parameters. 
-        /// </SecurityNote>
         protected override void Dispose(bool disposing)
         {
             if(_ploline.Value != IntPtr.Zero)
@@ -244,11 +232,6 @@ namespace MS.Internal.TextFormatting
         /// value back to TextFormatter as an input argument to TextFormatter.FormatParagraphBreakpoints when 
         /// formatting the next set of breakpoints within the same paragraph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls TextMetrics.GetTextLineBreak.
-        /// Safe - as it does not take parameter that being passed to the critical method or 
-        ///        return sensitive data from the critical method.
-        /// </SecurityNote>
         public override TextLineBreak GetTextLineBreak()
         {
             if (_isDisposed)
@@ -267,9 +250,6 @@ namespace MS.Internal.TextFormatting
         /// We would make a correspondent call to notify our unmanaged wrapper to release them from duty of managing this 
         /// resource. 
         /// </remarks>
-        /// <SecurityNote>
-        ///  Critical - as this method returns unmanaged resource to the client.
-        /// </SecurityNote>
         internal override SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource()
         {
             if (_isDisposed)

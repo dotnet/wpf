@@ -67,10 +67,6 @@ namespace System.Windows.Documents
         #region Internal Methods
 
         // Called by TextEditor to disable spelling.
-        /// <SecurityNote>
-        /// Critical - this code resets the _textChunk member which is critical
-        /// TreatAsSafe - the operation is safe to expose
-        /// </SecurityNote>
         internal void Detach()
         {
             Invariant.Assert(_textEditor != null);
@@ -181,10 +177,6 @@ namespace System.Windows.Documents
         // for an error range.
         // This method actually runs the speller on the specified text,
         // re-evaluating the error from scratch.
-        /// <SecurityNote>
-        /// Critical - It calls SetContextOption() which is Critical.
-        /// TreatAsSafe - it calls them with trusted parameters.
-        /// </SecurityNote>
         internal IList GetSuggestionsForError(SpellingError error)
         {
             ITextPointer contextStart;
@@ -336,18 +328,6 @@ namespace System.Windows.Documents
         /// Loads custom Dictionary.
         /// </summary>
         /// <param name="customLexiconPath"></param>
-        /// <SecurityNote>
-        /// Critical -
-        /// 1. Works with file paths.
-        /// 2. Does file read/write operations.
-        /// Safe -
-        /// 1. Does not return file path data to user.
-        /// 2. Local file paths which this function works with are not discoverable in PartialTrust.
-        /// Trying to access a given path in PartialTrust will throw access permission related
-        /// exceptions before reaching any file APIs. For PartialTrust case we're demanding FileIOAccess
-        /// to every local file path passed to this function. For more details <see cref="SpellerInterop.AddLexicon"/>
-        /// and <see cref="SpellerInterop.LoadDictionary(string)"/>
-        /// </SecurityNote>
         internal void OnDictionaryUriAdded(Uri uri)
         {
             if (!EnsureInitialized())
@@ -381,12 +361,6 @@ namespace System.Windows.Documents
         /// Removes specified custom dictionary from the list of loaded dictionaries.
         /// </summary>
         /// <param name="uri"></param>
-        /// <SecurityNote>
-        /// Critical - works with critical member _spellerInterop.
-        /// Safe -
-        /// 1. Does not disclose paht related information to caller, except the one which was passed in by user.
-        /// 2. Unloading dictionary has no security effect.
-        /// </SecurityNote>
         internal void OnDictionaryUriRemoved(Uri uri)
         {
             if (!EnsureInitialized())
@@ -418,10 +392,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Removes all custom dictionaries.
         /// </summary>
-        /// <SecurityNote>
-        /// critical - works with critical _spellerInterop.
-        /// safe - does not expose critical member, does not return any data to the caller.
-        /// </SecurityNote>
         internal void OnDictionaryUriCollectionCleared()
         {
             if (!EnsureInitialized())
@@ -466,9 +436,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// A map between the original location specified by a user and actual path + reference to loaded custom dicitonary.
         /// </summary>
-        /// <SecurityNote>
-        /// critical - accesses security critical field which holds file paths and reference to a COM interface wrappers.
-        /// </SecurityNote>
         private Dictionary<Uri, DictionaryInfo> UriMap
         {
             get
@@ -492,10 +459,6 @@ namespace System.Windows.Documents
 
         // Initializes state for the Speller.
         // Delayed until the first text change event, or first idle callback.
-        /// <SecurityNote>
-        /// Critical - This code calls into _textchunk and other unmanaged COM api.
-        /// TreatAsSafe - critical operations are not based on untrusted input. multiple calls don't involve any risk.
-        /// </SecurityNote>
         private bool EnsureInitialized()
         {
             if (_spellerInterop != null)
@@ -729,10 +692,6 @@ namespace System.Windows.Documents
 
         // Truncates a range of text if it overlaps the word containing the
         // caret, or an IME composition.
-        /// <SecurityNote>
-        /// Critical - It calls SetContextOption(), which is Critical.
-        /// TreatAsSafe - it calls it with a well known option.
-        /// </SecurityNote>
         private void AdjustScanRangeAroundComposition(ITextPointer rawStart, ITextPointer rawEnd,
             out ITextPointer start, out ITextPointer end)
         {
@@ -819,10 +778,6 @@ namespace System.Windows.Documents
         // Analyzes a run of text.  The scan may be interrupted if we run out
         // of time along the way, in which case some subset of the contained
         // words will be left dirty.
-        /// <SecurityNote>
-        /// Critical - It calls SetContextOption(), which is Critical.
-        /// TreatAsSafe - it calls it with a well known option.
-        /// </SecurityNote>
         private ScanStatus ScanRange(ITextPointer start, ITextPointer end, long timeLimit)
         {
             ITextPointer contextStart;
@@ -1134,10 +1089,6 @@ namespace System.Windows.Documents
         // contextPosition -> position moved outward away from content
         // to a word break that includes sufficient text to handle multi-
         // word errors correctly.
-        /// <SecurityNote>
-        /// Critical - it calls SetContextOption(), which is Critical.
-        /// TreatAsSafe - it calls it with a trusted parameter, that doesn't come from untrusted sources.
-        /// </SecurityNote>
         private void ExpandToWordBreakAndContext(ITextPointer position, LogicalDirection direction, XmlLanguage language,
             out ITextPointer contentPosition, out ITextPointer contextPosition)
         {
@@ -1368,10 +1319,6 @@ namespace System.Windows.Documents
         // If stopOnError is true, the search will halt if an error run is
         // encountered along the way.  The search is also halted if text in
         // a new language is encountered.
-        /// <SecurityNote>
-        /// Critical - it calls EnumTextSegments(), which is Critical.
-        /// TreatAsSafe - it calls it passing a TextMap object constructed appropriately in this method.
-        /// </SecurityNote>
         private ITextPointer SearchForWordBreaks(ITextPointer position, LogicalDirection direction, XmlLanguage language, int minWordCount, bool stopOnError)
         {
             ITextPointer closestErrorPosition;
@@ -1515,10 +1462,6 @@ namespace System.Windows.Documents
         }
 
         // Sets the speller engine language and spelling reform options.
-        /// <SecurityNote>
-        /// Critical - It calls SetContextOption(), which is Critical.
-        /// TreatAsSafe - it calls it with a well known option.
-        /// </SecurityNote>
         private void SetCulture(CultureInfo culture)
         {
             //
@@ -1629,11 +1572,6 @@ namespace System.Windows.Documents
         /// into a temp file and loads the temp file as a dictionary.
         /// </summary>
         /// <param name="item"></param>
-        /// <SecurityNote>
-        /// critical:
-        ///    asserts EnvironmentPermission permission.
-        ///    works with critical member _spellerInterop
-        /// </SecurityNote>
         private void LoadDictionaryFromPackUri(Uri item)
         {
             string tempFolder;
@@ -1666,10 +1604,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// critical --
-        ///    asserts FileIOPermission
-        /// </SecurityNote>
         /// <param name="tempLocationUri"></param>
         private void CleanupDictionaryTempFile(Uri tempLocationUri)
         {
@@ -1704,9 +1638,6 @@ namespace System.Windows.Documents
         /// <param name="uri"></param>
         /// <returns>Returns Uri corresponding to the newly created temp file.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - Returns local file path.
-        /// </SecurityNote>
         private static Uri LoadPackFile(Uri uri)
         {
             string tmpFilePath;
@@ -2018,18 +1949,12 @@ namespace System.Windows.Documents
             /// </summary>
             /// <param name="pathUri"></param>
             /// <param name="lexicon"></param>
-            /// <SecurityNote>
-            /// critical - accesses file members holdign critical fields: file path and COM interface wrapper.
-            /// </SecurityNote>
             internal DictionaryInfo(Uri pathUri, object lexicon)
             {
                 _pathUri = pathUri;
                 _lexicon = lexicon;
             }
 
-            /// <SecurityNote>
-            /// critical - returns value of critical field whcih holds file path
-            /// </SecurityNote>
             internal Uri PathUri
             {
                 get
@@ -2038,9 +1963,6 @@ namespace System.Windows.Documents
                 }
             }
 
-            /// <SecurityNote>
-            /// critical - returns wrapper to COM interface.
-            /// </SecurityNote>
             internal object Lexicon
             {
                 get
@@ -2050,18 +1972,12 @@ namespace System.Windows.Documents
             }
 
             /// <summary>
-            /// <SecurityNote>
-            /// critical - a reference to internal wrapper to a COM interface.
-            /// </SecurityNote>
             /// </summary>
             private readonly object _lexicon;
 
             /// <summary>
             /// File location where custom dictionary is loaded from .
             /// </summary>
-            /// <SecurityNote>
-            /// critical - a file paht dicitonary file.
-            /// </SecurityNote>
             private readonly Uri _pathUri;
         }
 
@@ -2120,9 +2036,6 @@ namespace System.Windows.Documents
         // Spellers.  FE TextChunks in particular are expensive, because
         // they cache large amounts of data per instance, on the order
         // of 10k's of data.
-        /// <SecurityNote>
-        ///     Critical: This object could expose a COM object which can run code under elevation
-        /// </SecurityNote>
         private SpellerInteropBase _spellerInterop;
 
         // Current spelling reform setting.
@@ -2148,9 +2061,6 @@ namespace System.Windows.Documents
         /// Holds mapping between original Uri passed in by user and COM reference to the loaded dictionary.
         /// This dictionary MUST NOT contain any null items.
         /// </summary>
-        ///<SecurityNote>
-        /// critical - holds file paths and reference to a COM interface wrappers.
-        ///</SecurityNote>
         private Dictionary<Uri, DictionaryInfo> _uriMap;
 
         #endregion Private Fields

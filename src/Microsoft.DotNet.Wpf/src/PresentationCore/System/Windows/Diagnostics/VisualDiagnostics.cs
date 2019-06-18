@@ -37,9 +37,6 @@ namespace System.Windows.Diagnostics
         [ThreadStatic]
         private static bool s_IsVisualTreeChangedInProgress;
 
-        /// <SecurityNote>
-        ///     critical - used to store HwndSource
-        /// </SecurityNote>
         [ThreadStatic]
         private static HwndSource s_ActiveHwndSource;
 
@@ -138,11 +135,6 @@ namespace System.Windows.Diagnostics
             }
         }
 
-        /// <SecurityNote>
-        ///     critical - uses critical field s_ActiveHwndSource,
-        ///                calls critical method PresentationSource.FromDependencyObject
-        ///     safe - does not expose the value
-        /// </SecurityNode>
         private static void RaiseVisualTreeChangedEvent(
                                 EventHandler<VisualTreeChangeEventArgs> visualTreeChanged,
                                 VisualTreeChangeEventArgs args,
@@ -336,10 +328,6 @@ namespace System.Windows.Diagnostics
             // asynchronously, outside the scope of VisualTreeChanged, but they
             // already shipped with this flaw.]
             //
-            // <SecurityNote>
-            //      Critical - calls PresentationSource.FromDependencyObject
-            //      Safe - result used for comparison only, not exposed
-            // </SecurityNote>
             private static bool IsChangePermitted(DependencyObject d)
             {
                 // if the outer change was type (a), OnVisualChildChanged saved
@@ -352,10 +340,6 @@ namespace System.Windows.Diagnostics
             ///     EnableVisualTreeChanged can be called only in certain scenarios.
             ///     Here we precompute the parts of the rule that can't change at runtime.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - calls IsEnvironmentVariableSet
-            ///     Safe - not controlled by caller.  Value not directly exposed.
-            /// </SecurityNote>
             private static bool? PrecomputeIsEnableVisualTreeChangedAllowed()
             {
                 if (!IsEnabled)
@@ -370,10 +354,6 @@ namespace System.Windows.Diagnostics
             /// <summary>
             ///     read the registry to see if Win10 Dev Mode is set
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - elevates to read registry
-            ///     Safe - not controlled by caller.  Value not directly exposed to user
-            /// </SecurityNote>
             private static bool GetDevModeFromRegistry()
             {
                 new RegistryPermission(RegistryPermissionAccess.Read, c_devmodeRegKeyFullPath).Assert();

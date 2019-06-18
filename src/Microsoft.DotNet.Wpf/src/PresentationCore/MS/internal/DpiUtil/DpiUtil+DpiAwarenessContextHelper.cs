@@ -43,9 +43,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd">HWND being queried</param>
             /// <returns>DPI Awareness Context handle of <paramref name="hWnd"/></returns>
-            /// <SecurityNote>
-            ///     Calls into Critical methods
-            /// </SecurityNote>
             internal static DpiAwarenessContextHandle GetDpiAwarenessContext(IntPtr hWnd)
             {
                 if (IsGetWindowDpiAwarenessContextMethodSupported)
@@ -69,9 +66,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd">Handle to the window</param>
             /// <returns>DPI awareness context</returns>
-            /// <SecurityNote>
-            ///     Critical: Handles critical native pointer (HWND) and returns a handle
-            /// </SecurityNote>
             private static DpiAwarenessContextHandle GetProcessDpiAwarenessContext(IntPtr hWnd)
             {
                 PROCESS_DPI_AWARENESS processDpiAwareneess =

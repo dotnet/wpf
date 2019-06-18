@@ -312,10 +312,6 @@ namespace System.Windows.Documents
             glyphRunProperties.caretStops = caretStops;
         }
 
-        ///<SecurityNote>
-        /// Critical as it accesses the base Uri
-        /// TreatAsSafe as it only uses this to load glyphtypefaces, and this information is not disclosed.
-        ///</SecurityNote>
         private void ParseGlyphRunProperties()
         {
             LayoutDependentGlyphRunProperties glyphRunProperties = null;

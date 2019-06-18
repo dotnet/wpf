@@ -712,12 +712,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Raised when source is changed
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into PresentationSource.CriticalFromVisual to
-        ///     extract presentationsource.
-        ///     TreatAsSafe: The value is not exposed and the call simply checks to see
-        ///     if the value is null
-        /// </SecurityNote>
         internal static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.IsASubPropertyChange)

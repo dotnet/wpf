@@ -35,9 +35,6 @@ namespace MS.Win32.Compile
         public static extern int SHGetFolderPath(IntPtr hwndOwner, int nFolder, IntPtr hToken, int dwFlags, StringBuilder lpszPath);
 #endif
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into unmanaged code
-        /// </SecurityNote>
         [DllImport("urlmon.dll", CharSet = CharSet.Unicode)]
         internal static extern int FindMimeFromData(
                         IBindCtx pBC,                   // bind context - can be NULL

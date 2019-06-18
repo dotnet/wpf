@@ -72,12 +72,6 @@ namespace System.Windows.Media
 
         #endregion Constructors
 
-        /// <SecurityNote>
-        ///   Critical: This code acceses an unsafe code block 
-        ///   TreatAsSafe: This does not expose any data uses all local variables.
-        ///   Sending instructions to the channel is considered a safe operation.Also
-        ///   all calls to copybytes have been verified so the operation is safe
-        /// </SecurityNote>
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

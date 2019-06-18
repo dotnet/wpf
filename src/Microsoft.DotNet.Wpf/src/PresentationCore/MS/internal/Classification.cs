@@ -204,17 +204,8 @@ namespace MS.Internal
             internal CombiningMarksClassificationData CombiningMarksClassification;
         };
 
-        ///<SecurityNote>
-        /// Critical - as this code performs an elevation. 
-        ///</SecurityNote>
         [DllImport(DllImport.PresentationNative, EntryPoint="MILGetClassificationTables")]
         internal static extern void MILGetClassificationTables(out RawClassificationTables ct);
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and retrieves pointers that it stores locally
-        ///    The pointers retrieved are not validated for correctness and they are later dereferenced.
-        ///    TreatAsSafe: The constructor is safe since it simply stores these pointers. The risk here 
-        ///    in the future is not of these pointers being spoofed since they are not settable from outside.
-        /// </SecurityNote>
         static Classification()
         {
             unsafe 
@@ -233,13 +224,6 @@ namespace MS.Internal
         /// <summary>
         /// Lookup Unicode character class for a Unicode UTF16 value
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and dereferences a location in
-        ///    a prepopulated Array. The risk is you might derefence a bogus memory
-        ///    location. 
-        ///    TreatAsSafe: This code is ok since it reduces codepoint to one of 256 possible
-        ///    values and will always succeed. Also this information is ok to expose.
-        /// </SecurityNote>
         static public short GetUnicodeClassUTF16(char codepoint)
         {
             unsafe 
@@ -257,11 +241,6 @@ namespace MS.Internal
         /// <summary>
         /// Lookup Unicode character class for a Unicode scalar value
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and derefences a pointer retrieved from unmanaged code
-        ///    TreatAsSafe: There is bounds checking in place and this dereferences a valid structure which
-        ///    is guaranteed to be populated
-        /// </SecurityNote>
         static public short GetUnicodeClass(int unicodeScalar)
         {
             unsafe
@@ -311,12 +290,6 @@ namespace MS.Internal
         /// <summary>
         /// Check whether the character is combining mark
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code acceses a function call that returns a pointer (get_CharAttributeTable).
-        ///    It trusts the value passed in to derfence the table with no implicit bounds or validity checks.
-        ///    TreatAsSafe: This information is safe to expose at the same time the unicodeScalar passed in
-        ///    is validated for bounds
-        /// </SecurityNote>
         static public bool IsCombining(int unicodeScalar)
         {
             unsafe
@@ -332,12 +305,6 @@ namespace MS.Internal
         /// <summary>
         /// Check whether the character is a joiner character
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code acceses a function call that returns a pointer (get_CharAttributeTable).
-        ///    It trusts the value passed in to derfence the table with no implicit bounds or validity checks.
-        ///    TreatAsSafe: This information is safe to expose at the same time the unicodeScalar passed in
-        ///    is validated for bounds
-        /// </SecurityNote>
         static public bool IsJoiner(int unicodeScalar)
         {
             unsafe
@@ -364,14 +331,6 @@ namespace MS.Internal
         /// Scan UTF16 character string until a character with specified attributes is found
         /// </summary>
         /// <returns>character index of first character matching the attribute.</returns>
-        /// <SecurityNote>
-        ///    Critical: This code acceses a function call that returns a pointer (get_CharAttributeTable).
-        ///    It keeps accesing a buffer with no validation in terms of the variables passed in. 
-        ///    TreatAsSafe: This information is safe to expose, as in the worst case it tells you information
-        ///    of where the next UTF16 character is. Also the constructor for characterbuffer can be one of three
-        ///    a string, a char array or an unmanaged char*. The third case is critical and tightly controlled
-        ///    so the risk of bogus length is significantly mitigated.
-        /// </SecurityNote>
         static public int AdvanceUntilUTF16(
             CharacterBuffer     charBuffer,
             int                 offsetToFirstChar,
@@ -404,12 +363,6 @@ namespace MS.Internal
         /// Scan character string until a character that is not the specified ItemClass is found
         /// </summary>
         /// <returns>character index of first character that is not the specified ItemClass</returns>
-        /// <SecurityNote>
-        ///    Critical: This code acceses a function call that returns a pointer (get_CharAttributeTable). It acceses
-        ///    elements in an array with no type checking.
-        ///    TreatAsSafe: This code exposes the index of the next non UTF16 character in a run. This is ok to expose
-        ///    Also the calls to CharBuffer and CahrAttribute do the requisite bounds checking.
-        /// </SecurityNote>
         static public int AdvanceWhile(
             CharacterBufferRange unicodeString, 
             ItemClass            itemClass 
@@ -439,25 +392,15 @@ namespace MS.Internal
             return i;
         }
 
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and returns a pointer
-        /// </SecurityNote>
         private static unsafe short*** UnicodeClassTable
         {
             get { return (short***)_unicodeClassTable.Value; }
         }
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and returns a pointer
-        /// </SecurityNote>
         private static unsafe CharacterAttribute* CharAttributeTable
         {
             get { return (CharacterAttribute*)_charAttributeTable.Value; }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This accesses unsafe code and indexes into an array
-        ///    Safe    : This method does bound check on the input char class.
-        /// </SecurityNote>
         internal static CharacterAttribute CharAttributeOf(int charClass)
         {   
             unsafe 

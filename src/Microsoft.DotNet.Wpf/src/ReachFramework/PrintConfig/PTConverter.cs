@@ -334,9 +334,6 @@ namespace System.Printing.Interop
         /// <summary>
         /// Dispose this instance.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release unmanaged handle
-        ///</SecurityNote>
         private void DisposeImpl()
         {
             if (!this._disposed)

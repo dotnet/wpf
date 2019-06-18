@@ -20,9 +20,6 @@ namespace MS.Internal
 
     internal static class MILRenderTargetBitmap
     {
-        /// <SecurityNote>
-        ///     Critical: Elevates to unmanagedcode permission
-        /// </SecurityNote>
         [DllImport(DllImport.MilCore, EntryPoint="MILRenderTargetBitmapGetBitmap")]//CASRemoval:
         internal static extern int /*HRESULT*/
             GetBitmap(
@@ -39,9 +36,6 @@ namespace MS.Internal
 
     #region MILMedia
 
-    /// <SecurityNote>
-    ///     Critical: Elevates to unmanagedcode permission
-    /// </SecurityNote>
     internal static class MILMedia
     {
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaOpen")]
@@ -204,9 +198,6 @@ namespace MS.Internal
     /// </summary>
     internal static class MILUpdateSystemParametersInfo
     {
-        /// <SecurityNote>
-        ///  Critical: This code elevates to unmanaged Code permission
-        /// </SecurityNote>
         [DllImport(DllImport.MilCore, EntryPoint="MILUpdateSystemParametersInfo")]
         internal static extern int /* HRESULT */
             Update();

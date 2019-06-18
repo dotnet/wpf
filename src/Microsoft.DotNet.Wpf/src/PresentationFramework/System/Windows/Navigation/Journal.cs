@@ -57,9 +57,6 @@ namespace System.Windows.Navigation
             _Initialize();
         }
 
-        /// <SecurityNote>
-        ///   Critical : Writes security sensitive data into SerializationInfo argument
-        /// </SecurityNote>
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("_journalEntryList", _journalEntryList);

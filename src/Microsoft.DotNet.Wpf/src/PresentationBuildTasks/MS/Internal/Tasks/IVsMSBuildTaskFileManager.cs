@@ -42,9 +42,6 @@ namespace MS.Internal
         // Returns the live punkDocData object for the file if it is registered in the RDT,
         // else returns NULL.
         // </summary>
-        ///<SecurityNote> 
-        ///     Critical - call is SUC'ed
-        ///</SecurityNote> 
         [return:MarshalAs(UnmanagedType.IUnknown)]
         object GetFileDocData([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
 

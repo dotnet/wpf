@@ -1238,9 +1238,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="colorX"></param>
         /// <param name="opacity"></param>
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
-        /// <SecurityNote>
-        ///     Critical   : pixels may contain critical information
-        /// </SecurityNote>
         static public void BlendOverColor(byte[] pixels, int count, Color colorX, double opacity, bool opacityOnly)
         {
 /*          if (Configuration.ForceAlphaOpaque)
@@ -1299,9 +1296,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="colorY"></param>
         /// <param name="opacity"></param>
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
-        /// <SecurityNote>
-        ///     Critical   : pixels may contain critical information
-        /// </SecurityNote>
         static public void BlendUnderColor(byte[] pixels, int count, Color colorY, double opacity, bool opacityOnly)
         {
             Byte b  = colorY.A;
@@ -1354,9 +1348,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="opacityOnlyB"></param>
         /// <param name="count"></param>
         /// <param name="pixelsC">Output pixel array</param>
-        /// <SecurityNote>
-        ///     Critical   : pixels may contain critical information
-        /// </SecurityNote>
         static public void BlendPixels(byte[] pixelsA, bool opacityOnlyA, byte[] pixelsB, bool opacityOnlyB, int count, byte[] pixelsC)
         {
             int p = 0;
@@ -1406,9 +1397,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="clipWidth"></param>
         /// <param name="clipHeight"></param>
         /// <returns>Returns array of clipped pixels.</returns>
-        /// <SecurityNote>
-        ///     Critical   : pixels may contain critical information
-        /// </SecurityNote>
         static public byte[] ClipPixels(byte[] pixels, int width, int height, int x0, int y0, int clipWidth, int clipHeight)
         {
             Debug.Assert(
@@ -1451,9 +1439,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical: This code calls an internal PresentationCore function CriticalCopyPixels
-        /// </SecurityNote>
         internal static bool NeedPremultiplyAlpha(BitmapSource bitmapSource)
         {
             if ((bitmapSource != null) && (bitmapSource.Format ==  PixelFormats.Pbgra32))
@@ -1791,9 +1776,6 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Font
 
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalUriDiscoveryPermission
-        ///</SecurityNote>
         [FriendAccessAllowed]
         public static Uri GetFontUri(GlyphTypeface typeface)
         {

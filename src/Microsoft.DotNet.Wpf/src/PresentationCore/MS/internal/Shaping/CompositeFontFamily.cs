@@ -74,10 +74,6 @@ namespace MS.Internal.Shaping
         /// Construct a composite font family with a single target family name
         /// after the first font family in the target family is known
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _firstFontFamily which is marked critical.
-        /// Safe - as this doesn't expose it.
-        /// </SecurityNote>
         internal CompositeFontFamily(
             string          friendlyName,
             IFontFamily     firstFontFamily

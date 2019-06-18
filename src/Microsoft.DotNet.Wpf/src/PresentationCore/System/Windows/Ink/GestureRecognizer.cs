@@ -147,12 +147,6 @@ namespace System.Windows.Ink
         /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
         /// <returns></returns>
         /// <remarks>Callers must have UnmanagedCode permission to call this API.</remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical method RecognizeImpl
-        /// 
-        ///     PublicOK: We demand UnmanagedCode before proceeding and
-        ///             UnmanagedCode is the only permission we assert.
-        /// </SecurityNote>
         public ReadOnlyCollection<GestureRecognitionResult> Recognize(StrokeCollection strokes)
         {
             //
@@ -172,12 +166,6 @@ namespace System.Windows.Ink
         /// </summary>
         /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method RecognizeImpl.
-        /// 
-        ///     FriendAccess is allowed so the critical method InkCanvas.RaiseGestureOrStrokeCollected
-        ///         can use this method
-        /// </SecurityNote>
         // Built into Core, also used by Framework.
         internal ReadOnlyCollection<GestureRecognitionResult> CriticalRecognize(StrokeCollection strokes)
         {
@@ -190,9 +178,6 @@ namespace System.Windows.Ink
         /// </summary>
         /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical method NativeRecognizer.Recognize
-        /// </SecurityNote>
         private ReadOnlyCollection<GestureRecognitionResult> RecognizeImpl(StrokeCollection strokes)
         {
             if (strokes == null)

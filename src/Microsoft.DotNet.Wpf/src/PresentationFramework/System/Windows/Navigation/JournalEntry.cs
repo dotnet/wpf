@@ -124,10 +124,6 @@ namespace System.Windows.Navigation
         /// <summary>
         /// ISerializable implementation
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

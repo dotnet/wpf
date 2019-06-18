@@ -459,12 +459,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaFinite
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsFormatSubtrackFinite.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
         internal void FormatParaFinite(
             ContainerParaClient paraClient,     // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !IntPtr.Zero
@@ -634,12 +628,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaBottomless
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsFormatSubtrackBottomless.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
         internal void FormatParaBottomless(
             ContainerParaClient paraClient,     // IN:
             int iArea,                          // IN:  column-span area index
@@ -770,12 +758,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // UpdateBottomlessPara
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical functon PTS.FsUpdateBottomlessSubtrack.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
         internal void UpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             ContainerParaClient paraClient,     // IN:

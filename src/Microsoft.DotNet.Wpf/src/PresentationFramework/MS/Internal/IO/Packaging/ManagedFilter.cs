@@ -115,11 +115,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Create a ManagedPropSpec from an unmanaged one
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    - This code could be used to attempt to build a string from arbitrary data.
-        /// TreatAsSafe - There is a demand in this code. This code is not intended to be called from PT code.
-        ///   Not designed to be exposed to public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
         internal ManagedPropSpec(PROPSPEC propSpec)
         {
             SecurityHelper.DemandUnmanagedCode();

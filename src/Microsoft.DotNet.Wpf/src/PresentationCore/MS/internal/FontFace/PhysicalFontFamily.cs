@@ -98,10 +98,6 @@ namespace MS.Internal.FontFace
         /// Indexer that indexes the underlying family name table via CultureInfo
         /// </summary>
         /// <value></value>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - FamilyNames are safe to expose.
-        /// </SecurityNote>
         IDictionary<XmlLanguage,string> IFontFamily.Names
         {
             get
@@ -122,13 +118,6 @@ namespace MS.Internal.FontFace
         /// <param name="weight">font weight</param>
         /// <param name="stretch">font stretch</param>
         /// <returns>matching font face</returns>
-        /// <SecurityNote>
-        /// Critical - as this returns GlyphTypeface created from internal constructor
-        ///            which exposes windows font information.
-        /// Safe - as this doesn't allow you to create a GlyphTypeface object for a specific
-        ///        font and thus won't allow you to figure what fonts might be installed on
-        ///        the machine.
-        /// </SecurityNote>
         internal GlyphTypeface GetGlyphTypeface(
             FontStyle       style,
             FontWeight      weight,
@@ -154,13 +143,6 @@ namespace MS.Internal.FontFace
         /// <param name="advance">number of characters with valid glyph mapped</param>
         /// <param name="nextValid">offset to the character mapping to a valid glyph</param>
         /// <returns>matching typeface</returns>
-        /// <SecurityNote>
-        /// Critical - as this returns GlyphTypeface created from internal constructor
-        ///            which exposes windows font information.
-        /// Safe - as this doesn't allow you to create a GlyphTypeface object for a specific
-        ///        font and thus won't allow you to figure what fonts might be installed on
-        ///        the machine.
-        /// </SecurityNote>
         internal GlyphTypeface MapGlyphTypeface(
             FontStyle               style,
             FontWeight              weight,
@@ -238,9 +220,6 @@ namespace MS.Internal.FontFace
         /// </summary>
         private struct MatchingFace
         {
-            /// <SecurityNote>
-            /// Critical - calls into critical Text.TextInterface.Font properties
-            /// </SecurityNote>
             internal MatchingFace(Text.TextInterface.Font face)
             {
                 _face = face;
@@ -412,10 +391,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Distance from character cell top to English baseline relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - Metrics are safe to expose.
-        /// </SecurityNote>
         double IFontFamily.Baseline(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)
@@ -450,10 +425,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Recommended baseline-to-baseline distance for text in this font
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - Metrics are safe to expose.
-        /// </SecurityNote>
         double IFontFamily.LineSpacing(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)

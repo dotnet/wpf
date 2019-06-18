@@ -46,11 +46,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: calls constructor for SecurityCriticalDataForSet 
-        ///     which is Critical.
-        /// Safe: just sets it to zero which is a safe operation.
-        /// </SecurityNote>
         internal PtsHost()
         {
             _context = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
@@ -78,9 +73,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // PTS Context Id; required to call PTS APIs.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical: set value on _context.Value which is a critical operation.
-        /// </SecurityNote>
         internal IntPtr Context
         {
             get { Invariant.Assert(_context.Value != IntPtr.Zero); return _context.Value; }
@@ -191,11 +183,6 @@ namespace MS.Internal.PtsHost
 
             return fserr;
         }
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function GetFigurePolygons,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetFigurePolygons(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclientFigure,         // IN:
@@ -399,11 +386,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function GetJustificationProperties,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetJustificationProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr* rgnms,                      // IN:  array of the section names on the page
@@ -561,11 +543,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function GetSectionColumnInfo,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetSectionColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
@@ -596,9 +573,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetSegmentDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
@@ -611,9 +585,6 @@ namespace MS.Internal.PtsHost
             cAreasActual = 0;
             return PTS.fserrNotImplemented;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetHeightDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
@@ -914,9 +885,6 @@ namespace MS.Internal.PtsHost
             ccolEndnote = 0;
             return PTS.fserrNotImplemented;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetEndnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
@@ -958,9 +926,6 @@ namespace MS.Internal.PtsHost
             ccolFootnote = 0;
             return PTS.fserrNotImplemented;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetFootnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
@@ -982,9 +947,6 @@ namespace MS.Internal.PtsHost
             nmsFootnote = IntPtr.Zero;
             return PTS.fserrNotImplemented;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetFootnotePresentationAndRejectionOrder(
             IntPtr pfsclient,                           // IN:  client opaque data
             int cFootnotes,                             // IN:  size of all arrays
@@ -1134,11 +1096,6 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PtsCache.GetFloaterHandlerInfo
-        ///            and GetTableObjHandlerInfo, and passes them the pobjectinfo, that'll
-        ///            be written to, directly.
-        /// </SecurityNote>
         internal int GetObjectHandlerInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             int idobj,                          // IN:  id of the object handler
@@ -1297,9 +1254,6 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetFootnotes(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
@@ -1334,9 +1288,6 @@ namespace MS.Internal.PtsHost
             fInMargin = dur = dvr = cPolygons = cVertices = durText = 0;
             return PTS.fserrNotImplemented;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetDropCapPolygons(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc,                    // IN:  pointer to drop cap
@@ -1521,9 +1472,6 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int FormatLineVariants(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparabreakingsession,      // IN:  current session
@@ -1941,9 +1889,6 @@ namespace MS.Internal.PtsHost
             fskclear = PTS.FSKCLEAR.fskclearNone;
             return PTS.fserrNone;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int SetTextParaCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
@@ -1973,9 +1918,6 @@ namespace MS.Internal.PtsHost
             // But it is not suitable for incremental update. Hence for now it is not used.
             return PTS.fserrNone;
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetOptimalLineDcpCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             int cLines,                         // IN:  number of lines - size of pre-allocated array
@@ -2018,9 +1960,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method
-        /// </SecurityNote>
         internal unsafe int GetAttachedObjectsBeforeTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2135,11 +2074,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical functions GetFigures and GetFloaters
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetAttachedObjectsInTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsline,                     // IN:  pointer to line created by client
@@ -2300,10 +2234,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        ///<SecurityNote>
-        /// Critical - as this calls Critical function FloaterParagraph.FormatFloaterContentFinite.
-        ///            This takes the unvalidated parameter pftnrej.
-        /// </SecurityNote>
         internal int FormatFloaterContentFinite(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
@@ -2442,11 +2372,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function GetFloaterPolygons,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetFloaterPolygons(
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
@@ -2485,10 +2410,6 @@ namespace MS.Internal.PtsHost
             return fserr;
 }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsClearUpdateInfoInSubpage
-        ///            and passes it a pointer parameter directly.
-        /// </SecurityNote>
         internal int ClearUpdateInfoInFloaterContent(
             IntPtr pfsFloaterContent)           // IN:  opaque for PTS pointer to floater content
         {
@@ -2504,9 +2425,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsClearUpdateInfoInSubpage(Context, pfsFloaterContent);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsCompareSubpages.
-        /// </SecurityNote>
         internal int CompareFloaterContents(
             IntPtr pfsFloaterContentOld,        // IN:
             IntPtr pfsFloaterContentNew,        // IN:
@@ -2548,10 +2466,6 @@ namespace MS.Internal.PtsHost
         /// </summary>
         /// <param name="pfsFloaterContent"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsDestroySubpage and
-        ///            passes the pfspara parameter directly.
-        /// </SecurityNote>
         internal int DestroyFloaterContent(
             IntPtr pfsFloaterContent)           // IN:  opaque for PTS pointer to floater content
         {
@@ -2566,9 +2480,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDestroySubpage(Context, pfsFloaterContent);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDuplicateSubpageBreakRecord.
-        /// </SecurityNote>
         internal int DuplicateFloaterContentBreakRecord(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsbrkFloaterContent,        // IN:  pointer to break record
@@ -2586,9 +2497,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDuplicateSubpageBreakRecord(Context, pfsbrkFloaterContent, out pfsbrkFloaterContentDup);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDestroySubpageBreakRecord.
-        /// </SecurityNote>
         internal int DestroyFloaterContentBreakRecord(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsbrkFloaterContent)        // IN:  pointer to break record
@@ -2605,9 +2513,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDestroySubpageBreakRecord(Context, pfsbrkFloaterContent);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetSubpageColumnBalancingInfo
-        /// </SecurityNote>
         internal int GetFloaterContentColumnBalancingInfo(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             uint fswdir,                        // IN:  current direction
@@ -2640,9 +2545,6 @@ namespace MS.Internal.PtsHost
                 out fswdirSubpage, out nlines, out dvrSumHeight, out dvrMinHeight);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetNumberSubpageFootnotes
-        /// </SecurityNote>
         internal int GetFloaterContentNumberFootnotes(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             out int cftn)                       // OUT: number of footnotes
@@ -2671,9 +2573,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsTransferDisplayInfoSubpage
-        /// </SecurityNote>
         internal int TransferDisplayInfoInFloaterContent(
             IntPtr pfsFloaterContentOld,        // IN:
             IntPtr pfsFloaterContentNew)        // IN:
@@ -2783,9 +2682,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function ContainerParagraph.FormatParaFinite.
-        /// </SecurityNote>
         internal int SubtrackFormatParaFinite(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsparaclient,               // IN:
@@ -2850,9 +2746,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function ContainerParagraph.FormatParaBottomless.
-        /// </SecurityNote>
         internal int SubtrackFormatParaBottomless(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsparaclient,               // IN:
@@ -2911,10 +2804,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function ContainerParagraph.UpdateBottomlessPara
-        ///            and passes pointer parameters directly.
-        /// </SecurityNote>
         internal int SubtrackUpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
@@ -2973,9 +2862,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsSynchronizeBottomlessSubtrack.
-        /// </SecurityNote>
         internal int SubtrackSynchronizeBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
@@ -3003,9 +2889,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsCompareSubtrack.
-        /// </SecurityNote>
         internal int SubtrackComparePara(
             IntPtr pfsparaclientOld,            // IN:
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
@@ -3018,27 +2901,18 @@ namespace MS.Internal.PtsHost
             return PTS.FsCompareSubtrack(Context, pfsparaOld, pfsparaNew, fswdir, out fscmpr, out dvrShifted);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsClearUpdateInfoInSubtrack.
-        /// </SecurityNote>
         internal int SubtrackClearUpdateInfoInPara(
             IntPtr pfspara)                     // IN:  pointer to the para data
         {
             return PTS.FsClearUpdateInfoInSubtrack(Context, pfspara);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsDestroySubtrack.
-        /// </SecurityNote>
         internal int SubtrackDestroyPara(
             IntPtr pfspara)                     // IN:  pointer to the para data
         {
             return PTS.FsDestroySubtrack(Context, pfspara);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDuplicateSubtrackBreakRecord.
-        /// </SecurityNote>
         internal int SubtrackDuplicateBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsbrkrecparaOrig,           // IN:  pointer to the para break record
@@ -3047,9 +2921,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDuplicateSubtrackBreakRecord(Context, pfsbrkrecparaOrig, out pfsbrkrecparaDup);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDestroySubtrackBreakRecord.
-        /// </SecurityNote>
         internal int SubtrackDestroyBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsobjbrk)                   // IN:  pointer to the para break record
@@ -3057,9 +2928,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDestroySubtrackBreakRecord(Context, pfsobjbrk);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetSubtrackColumnBalancingInfo.
-        /// </SecurityNote>
         internal int SubtrackGetColumnBalancingInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
@@ -3071,18 +2939,12 @@ namespace MS.Internal.PtsHost
                 out nlines, out dvrSumHeight, out dvrMinHeight);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetNumberSubtrackFootnotes.
-        /// </SecurityNote>
         internal int SubtrackGetNumberFootnotes(
             IntPtr pfspara,                     // IN:  pointer to the para data
             out int nftn)                       // OUT: number of footnotes
         {
             return PTS.FsGetNumberSubtrackFootnotes(Context, pfspara, out nftn);
         }
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int SubtrackGetFootnoteInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
@@ -3106,9 +2968,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsTransferDisplayInfoSubtrack.
-        /// </SecurityNote>
         internal int SubtrackTransferDisplayInfoPara(
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
             IntPtr pfsparaNew)                  // IN:  pointer to the new para data
@@ -3138,10 +2997,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function SubpageParagraph.FormatParaFinite and passes
-        ///            it the pointer parameter pftnrej directly.
-        /// </SecurityNote>
         internal int SubpageFormatParaFinite(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsparaclient,               // IN:
@@ -3264,10 +3119,6 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function SubpageParagraph.UpdateBottomlessPara
-        ///            and passes it pfspara pointer parameter directly without validation.
-        /// </SecurityNote>
         internal int SubpageUpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
@@ -3336,9 +3187,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsCompareSubpages.
-        /// </SecurityNote>
         internal int SubpageComparePara(
             IntPtr pfsparaclientOld,            // IN:
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
@@ -3351,29 +3199,18 @@ namespace MS.Internal.PtsHost
             dvrShifted = 0;
             return PTS.FsCompareSubpages(Context, pfsparaOld, pfsparaNew, out fscmpr);
         }
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsClearUpdateInfoInSubpage
-        ///            and passes it a pointer parameter directly.
-        /// </SecurityNote>
         internal int SubpageClearUpdateInfoInPara(
             IntPtr pfspara)                     // IN:  pointer to the para data
         {
             return PTS.FsClearUpdateInfoInSubpage(Context, pfspara);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsDestroySubpage and
-        ///            passes the pfspara parameter directly.
-        /// </SecurityNote>
         internal int SubpageDestroyPara(
             IntPtr pfspara)                     // IN:  pointer to the para data
         {
             return PTS.FsDestroySubpage(Context, pfspara);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDuplicateSubpageBreakRecord.
-        /// </SecurityNote>
         internal int SubpageDuplicateBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsbrkrecparaOrig,           // IN:  pointer to the para break record
@@ -3382,9 +3219,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDuplicateSubpageBreakRecord(Context, pfsbrkrecparaOrig, out pfsbrkrecparaDup);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical functon PTS.FsDestroySubpageBreakRecord.
-        /// </SecurityNote>
         internal int SubpageDestroyBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsobjbrk)                   // IN:  pointer to the para break record
@@ -3392,9 +3226,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDestroySubpageBreakRecord(Context, pfsobjbrk);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetSubpageColumnBalancingInfo
-        /// </SecurityNote>
         internal int SubpageGetColumnBalancingInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
@@ -3406,9 +3237,6 @@ namespace MS.Internal.PtsHost
                 out nlines, out dvrSumHeight, out dvrMinHeight);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsGetNumberSubpageFootnotes.
-        /// </SecurityNote>
         internal int SubpageGetNumberFootnotes(
             IntPtr pfspara,                     // IN:  pointer to the para data
             out int nftn)                       // OUT: number of footnotes
@@ -3416,12 +3244,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsGetNumberSubpageFootnotes(Context, pfspara, out nftn);
         }
 
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsGetSubpageFootnoteInfo and passes 
-        ///        parameters without validation,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int SubpageGetFootnoteInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
@@ -3445,9 +3267,6 @@ namespace MS.Internal.PtsHost
             return PTS.fserrNone;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsTransferDisplayInfoSubpage
-        /// </SecurityNote>
         internal int SubpageTransferDisplayInfoPara(
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
             IntPtr pfsparaNew)                  // IN:  pointer to the new para data
@@ -3966,11 +3785,6 @@ namespace MS.Internal.PtsHost
             return (fserr);
         }
 
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical method GetCells,
-        ///     b) this is unsafe method.
-        /// </SecurityNote>
         internal unsafe int GetCells(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmRow,                           // IN:  
@@ -4028,11 +3842,6 @@ namespace MS.Internal.PtsHost
             return (fserr);
         }
 
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function CalcHorizontalBBoxOfRow,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
         internal unsafe int CalcHorizontalBBoxOfRow(
             IntPtr pfsclient,                       // IN:
             IntPtr nmRow,                           // IN:
@@ -4073,9 +3882,6 @@ namespace MS.Internal.PtsHost
         }
         // unless cell has vertical text or is special in some other ways,
         // this calls maps directly to a create subpage call :-)
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function TableCell.FormatCellFinite.
-        /// </SecurityNote>
         internal int FormatCellFinite(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  table's para client
@@ -4271,9 +4077,6 @@ namespace MS.Internal.PtsHost
             return (fserr);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical function PTS.FsDuplicateSubpageBreakRecord.
-        /// </SecurityNote>
         internal int DuplicateCellBreakRecord(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsbrkcell,                      // IN:  
@@ -4282,9 +4085,6 @@ namespace MS.Internal.PtsHost
             return PTS.FsDuplicateSubpageBreakRecord(Context, pfsbrkcell, out ppfsbrkcellDup);
         }
 
-        /// <SecurityNote>
-        /// Critical, because calls Critical function PTS.FsDestroySubpageBreakRecord.
-        /// </SecurityNote>
         internal int DestroyCellBreakRecord(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsbrkcell)                      // IN:  

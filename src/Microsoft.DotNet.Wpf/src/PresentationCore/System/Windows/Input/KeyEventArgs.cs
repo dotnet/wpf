@@ -31,9 +31,6 @@ namespace System.Windows.Input
         /// <param name="key">
         ///     The key referenced by the event.
         /// </param>
-        ///<SecurityNote> 
-        ///     Critical - accepts PresentationSource. 
-        ///</SecurityNote> 
         public KeyEventArgs(KeyboardDevice keyboard, PresentationSource inputSource, int timestamp, Key key) : base(keyboard, timestamp)
         {
             if (inputSource == null)
@@ -57,10 +54,6 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote> 
-        ///     Critical - hands out _inputSource via UnsafeInputSource call.
-        ///     PublicOK - there is a demand. 
-        ///</SecurityNote> 
         public PresentationSource InputSource
         {
             get 
@@ -207,9 +200,6 @@ namespace System.Windows.Input
         {
             _key = Key.DeadCharProcessed;
         }
-        ///<SecurityNote> 
-        /// Critical - hands out _inputSource. 
-        ///</SecurityNote> 
         internal PresentationSource UnsafeInputSource
         {
             get 
@@ -234,9 +224,6 @@ namespace System.Windows.Input
         private Key _realKey;
         private Key _key;
 
-        ///<SecurityNote> 
-        ///     Critical - PresentationSource required elevations to create it. 
-        ///</SecurityNote> 
         private PresentationSource _inputSource;
 
         private bool _isRepeat;

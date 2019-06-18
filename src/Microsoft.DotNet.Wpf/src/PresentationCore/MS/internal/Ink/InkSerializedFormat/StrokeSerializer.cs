@@ -38,13 +38,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="compressor">Compression module</param>
         /// <param name="stroke">Newly decoded stroke</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - calls the StrokeSerializer.DecodeISFIntoStroke critical method
-        ///
-        ///     Called directly by  StrokeCollectionSerializer.DecodeRawISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Loads a stroke from the stream based on Stroke Descriptor, StylusPointDescription, Drawing Attributes, Stroke IDs, transform and GuidList
@@ -115,15 +108,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stylusPoints"></param>
         /// <param name="extendedProperties"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - calls the ExtendedPropertySerializer.DecodeAsISF
-        ///                          StrokeSerializer.LoadPackets
-        ///                      and Compressor.DecompressPropertyData critical methods
-        ///
-        ///     Called directly by  StrokeSerializer.DecodeStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
 #else
         /// <summary>
         /// This functions loads a stroke from a memory stream based on the descriptor and GuidList. It returns
@@ -359,13 +343,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls the Compressor.DecompressPacketData critical method
-        ///
-        ///     Called directly by  StrokeSerializer.DecodeISFIntoStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
@@ -670,16 +647,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="compressionAlgorithm"></param>
         /// <param name="guidList"></param>
         /// <param name="strokeLookupEntry"></param>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical methods 
-        ///                     StrokeSerializer.SavePackets
-        ///                     ExtendedPropertySerializer.EncodeAsISF
-        ///                         
-        ///     This directly called by StrokeCollectionSerializer.StoreStrokeData
-        ///                             
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Returns an array of bytes of the saved stroke
@@ -826,14 +793,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="compressor"></param>
         /// <param name="strokeLookupEntry"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method StrokeSerializer.SavePacketPropertyData
-        ///
-        ///     This directly called by StrokeSerializer.EncodeStroke
-        ///                             
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Saves the packets into a stream of bytes
@@ -973,15 +932,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="guid"></param>
         /// <param name="algo"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls unmanaged code in Compressor.CompressPacketData to compress
-        ///         an int[] representing packet data
-        ///
-        ///     This directly called by StrokeSerializer.SavePackets
-        ///                             
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Saves the packets data corresponding to a packet property (identified by the guid) into the stream

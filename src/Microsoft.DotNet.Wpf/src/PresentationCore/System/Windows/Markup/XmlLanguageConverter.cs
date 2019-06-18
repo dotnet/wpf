@@ -108,10 +108,6 @@ namespace System.Windows.Markup
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The XmlLanguage to convert. </param>
         /// <param name="destinationType">The type to which to convert the CultureInfo. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for XmlLanguage.IetfLanguageTag, not an arbitrary class/method
-        ///</SecurityNote> 
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,
                                          object value,

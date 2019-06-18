@@ -77,9 +77,6 @@ namespace MS.Internal.Utility
         
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
-        /// <SecurityNote>
-        /// Critical: as it sets the baseUri
-        /// </SecurityNote>
         static internal Uri BaseUri
         {
             get

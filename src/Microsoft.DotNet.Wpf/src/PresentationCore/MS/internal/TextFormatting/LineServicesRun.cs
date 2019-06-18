@@ -139,10 +139,6 @@ namespace MS.Internal.TextFormatting
         /// <param name="textRunLength">text run length</param>
         /// <param name="offsetToFirstCp">character offset to the first cp</param>
         /// <param name="bidiLevel">bidi level of this run</param>
-        /// <SecurityNote>
-        ///     Critical: This has an unsafe code block
-        ///     TreatAsSafe: This code is ok to call since it does not expose the critical pointer
-        ///  </SecurityNote>
         internal LSRun(
             TextRunInfo             runInfo,
             Plsrun                  type,
@@ -916,9 +912,6 @@ namespace MS.Internal.TextFormatting
         /// TypographyProperties should be either all null or all not-null.
         /// First is used for internal purposes, also can be used by simple clients.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - deals with unsafe int array
-        /// </SecurityNote>
         internal static unsafe void CompileFeatureSet(
             LSRun[]                   lsruns,
             int*                      pcchRuns,

@@ -101,10 +101,6 @@ namespace System.Windows
         /// <param name="value">value to convert from</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>converted value</returns>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for FontStyle, not an arbitrary class
-        ///</SecurityNote> 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType != null && value is FontStyle)

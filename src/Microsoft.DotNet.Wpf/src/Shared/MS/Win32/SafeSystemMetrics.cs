@@ -40,10 +40,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CXVIRTUALSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    TreatAsSafe --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int VirtualScreenWidth
         {
             get
@@ -57,10 +53,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CYVIRTUALSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    TreatAsSafe --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int VirtualScreenHeight
         {
             get
@@ -74,10 +66,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CXDOUBLECLK
         /// </summary>
-        /// <SecurityNote>
-        ///     TreatAsSafe --This data is safe to expose
-        ///     Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int DoubleClickDeltaX
         {
             get
@@ -89,10 +77,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CYDOUBLECLK
         /// </summary>
-        /// <SecurityNote>
-        ///    TreatAsSafe --This data is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int DoubleClickDeltaY
         {
             get
@@ -105,10 +89,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CXDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///     TreatAsSafe --This data is safe to expose
-        ///     Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int DragDeltaX
         {
             get
@@ -120,10 +100,6 @@ namespace MS.Win32
         /// <summary>
         ///     Maps to SM_CYDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///    TreatAsSafe --This data is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int DragDeltaY
         {
             get
@@ -135,10 +111,6 @@ namespace MS.Win32
         ///<summary> 
         /// Is an IMM enabled ? Maps to SM_IMMENABLED
         ///</summary> 
-        ///<SecurityNote> 
-        ///Critical - calls a method that performs an elevation. 
-        /// TreatAsSafe - data is considered safe to expose. 
-        ///</SecurityNote> 
         internal static bool IsImmEnabled
         {
             get

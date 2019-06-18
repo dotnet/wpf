@@ -27,9 +27,6 @@ namespace System.Windows.Documents
     /// </summary>
     internal class NaturalLanguageHyphenator : TextLexicalService, IDisposable
     {
-        /// <SecurityNote>
-        ///     Critical: Holds a COM component instance that has unmanged code elevations
-        /// </SecurityNote>
         private IntPtr  _hyphenatorResource;
         private bool    _disposed;
 
@@ -37,10 +34,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Construct an NLG-based hyphenator
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into NlCreateHyphenator, which elevates unmanaged code permission.
-        ///     TreatAsSafe: This function call takes no input parameters
-        /// </SecurityNote>
         internal NaturalLanguageHyphenator()
         {
             try
@@ -78,10 +71,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Internal clean-up routine
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into NlDestroyHyphenator, which elevates unmanaged code permission.
-        ///     TreatAsSafe: This function call takes no input memory block
-        /// </SecurityNote>
         private void CleanupInternal(bool finalizing)
         {
             if (!_disposed && _hyphenatorResource != IntPtr.Zero)
@@ -113,11 +102,6 @@ namespace System.Windows.Documents
         /// <param name="length">number of character in the character array to analyze</param>
         /// <param name="textCulture">culture of the specified character source</param>
         /// <returns>lexical breaks of the text</returns>
-        /// <SecurityNote>
-        ///     Critical: This code calls NlHyphenate which is critical.
-        ///     TreatAsSafe: This code accepts a buffer that is length checked and returns
-        ///     data that is ok to return.
-        /// </SecurityNote>
         public override TextLexicalBreaks AnalyzeText(
             char[]          characterSource,
             int             length,
@@ -226,21 +210,12 @@ namespace System.Windows.Documents
 
         private static class UnsafeNativeMethods
         {
-            /// <SecurityNote>
-            ///     Critical: This elevates to unmanaged code permission
-            /// </SecurityNote>
             [DllImport(DllImport.PresentationNative, PreserveSig = false)]
             internal static extern IntPtr NlCreateHyphenator();
 
-            /// <SecurityNote>
-            ///     Critical: This elevates to unmanaged code permission
-            /// </SecurityNote>
             [DllImport(DllImport.PresentationNative, PreserveSig = true)]
             internal static extern void NlDestroyHyphenator(ref IntPtr hyphenator);
 
-            /// <SecurityNote>
-            ///     Critical: This elevates to unmanaged code permission
-            /// </SecurityNote>
             [DllImport(DllImport.PresentationNative, PreserveSig = false)]
             internal static extern void NlHyphenate(
                 IntPtr          hyphenator,

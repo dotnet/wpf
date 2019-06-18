@@ -37,12 +37,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="underlyingStream"></param>
         /// <param name="openAccess"></param>
-        /// <SecurityNote>
-        ///     Critical - We are creating an instance of SecurityCriticalDataForSet with the supplied stream.
-        ///                The caller of this constructor should be critical and trusted since we accept a stream
-        ///                of data from them.  The data is only critical for set since it was a stream the caller
-        ///                originally had in the first place so they could get it again if they wanted it.
-        /// </SecurityNote>
         internal ByteStream(object underlyingStream, FileAccess openAccess)
         {
             SecuritySuppressedIStream stream = underlyingStream as SecuritySuppressedIStream;
@@ -102,12 +96,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Gets the length in bytes of the stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override long Length
         {
             get
@@ -136,12 +124,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Gets or sets the position within the current stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override long Position
         {
             get
@@ -205,12 +187,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">Offset byte count</param>
         /// <param name="origin">Offset origin</param>
         /// <returns>The new position within the current stream.</returns>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposedStatus();
@@ -271,12 +247,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">Buffer start position</param>
         /// <param name="count">Number of bytes to read</param>
         /// <returns>Number of bytes actually read</returns>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposedStatus();
@@ -416,9 +386,6 @@ namespace MS.Internal.IO.Packaging
         // This class does not control the life cycle of _securitySupressedIStream
         //  thus it should not dispose it when this class gets disposed
         //  the client code of this class should be the one that dispose _securitySupressedIStream
-        /// <SecurityNote>
-        ///  Critical : Field for critical type SecuritySuppressedIStream
-        /// </SecurityNote>
         SecurityCriticalDataForSet<SecuritySuppressedIStream> _securitySuppressedIStream;
 
         FileAccess                 _access;

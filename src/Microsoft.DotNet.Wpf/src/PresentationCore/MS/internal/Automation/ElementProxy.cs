@@ -145,10 +145,6 @@ namespace MS.Internal.Automation
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical    - Calls critical HostedWindowWrapper.Handle.
-        ///     TreatAsSafe - Critical data is used internally and not explosed
-        /// </SecurityNote>
         private IRawElementProviderSimple GetHostHelper(HostedWindowWrapper hwndWrapper)
         {
             return AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle);
@@ -532,10 +528,6 @@ namespace MS.Internal.Automation
         // Returns RefrenceType.Strong if key AutomationWeakReferenceDisallow  under  
         // "HKEY_LOCAL_MACHINE\Software\Microsoft\.NETFramework\Windows  Presentation Foundation\Features"
         // is set to 1 else returns ReferenceType.Weak. The registry key will be read only once.
-        ///<SecurityNote> 
-        /// Critical: Uses the critical RegistryKeys.ReadLocalMachineBool() to access the registry.
-        /// Safe: This flag is not a secret and used internally
-        ///</SecurityNote>
         internal static ReferenceType AutomationInteropReferenceType
         {
             get

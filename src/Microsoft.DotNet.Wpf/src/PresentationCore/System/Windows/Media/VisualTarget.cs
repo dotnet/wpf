@@ -158,10 +158,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Dispose cleans up the state associated with HwndTarget.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Sets RootVisual to null
-        ///     PublicOK: This code has the same affect as removing elements in a window
-        /// </SecurityNote>
         public override void Dispose()
         {
             try

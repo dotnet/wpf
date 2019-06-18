@@ -185,10 +185,6 @@ namespace System.Windows.Media
                 type);
         }
         
-        /// <SecurityNote>
-        /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
-        /// TreatAsSafe - returning a RectangleGeometry's bounds is considered safe
-        /// </SecurityNote>
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Rect rect, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
@@ -251,10 +247,6 @@ namespace System.Windows.Media
             return boundingRect;
         }
 
-        /// <SecurityNote>
-        /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
-        /// TreatAsSafe - as this doesn't expose anything sensitive.
-        /// </SecurityNote>
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             if (IsEmpty())
@@ -464,10 +456,6 @@ namespace System.Windows.Media
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Calls critical code
-        /// TreatAsSafe - returning a RectangleGeometry's point list is considered safe
-        /// </SecurityNote>
         private Point[] GetPointList(Rect rect, double radiusX, double radiusY)
         {
             uint pointCount = GetPointCount(rect, radiusX, radiusY);
@@ -484,9 +472,6 @@ namespace System.Windows.Media
             return points;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accepts pointer arguments
-        /// </SecurityNote>
         private unsafe static void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
         {
             if (IsRounded(radiusX, radiusY))

@@ -106,10 +106,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="parameter">Parameter to pass to any command handlers.</param>
         /// <returns>true if the command can be executed, false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical: This code takes in a trusted bit which can be used to cause elevations for paste
-        ///     PublicOK: This code passes the flag in as false
-        /// </SecurityNote>
         bool ICommand.CanExecute(object parameter)
         {
             bool unused;
@@ -138,10 +134,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="parameter">Parameter to be passed to any command handlers.</param>
         /// <param name="target">Element at which to begin looking for command handlers.</param>
-        /// <SecurityNote>
-        /// Critical - calls critical function (ExecuteImpl)
-        /// PublicOk - always passes in false for userInitiated, which is safe
-        /// </SecurityNote>
         public void Execute(object parameter, IInputElement target)
         {
             // We only support UIElement, ContentElement and UIElement3D
@@ -164,10 +156,6 @@ namespace System.Windows.Input
         /// <param name="parameter">Parameter to be passed to any command handlers.</param>
         /// <param name="target">The target element on which to begin looking for command handlers.</param>
         /// <returns>true if the command can be executed, false otherwise.</returns>
-        /// <SecurityNote>
-        ///    Critical: This can be used to spoof input and cause userinitiated permission to be asserted
-        ///    PublicOK: The call sets trusted bit to false which prevents user initiated permission from being asserted
-        /// </SecurityNote>
         public bool CanExecute(object parameter, IInputElement target)
         {
             bool unused;
@@ -182,9 +170,6 @@ namespace System.Windows.Input
         /// <param name="trusted">Determines whether this call will elevate for userinitiated input or not.</param>
         /// <param name="continueRouting">Determines whether the input event (if any) that caused this command should continue its route.</param>
         /// <returns>true if the command can be executed, false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical: This code takes in a trusted bit which can be used to cause elevations for paste
-        /// </SecurityNote>
         internal bool CriticalCanExecute(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
             // We only support UIElement, ContentElement, and UIElement3D
@@ -303,10 +288,6 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses PrivateFlags.IsBlockedByRM
-        ///     PublicOk: link-demands on setter, getter is OK
-        /// </SecurityNote>
         internal bool IsBlockedByRM
         {
             get
@@ -320,10 +301,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls WritePrivateFlag
-        ///     TreatAsSafe: Setting IsBlockedByRM is a critical operation. Setting AreInputGesturesDelayLoaded isn't.
-        /// </SecurityNote>
         internal bool AreInputGesturesDelayLoaded
         {
             get
@@ -358,9 +335,6 @@ namespace System.Windows.Input
         /// <param name="trusted"></param>
         /// <param name="continueRouting"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: This code takes in a trusted bit which can be used to cause elevations for paste
-        /// </SecurityNote>
         private bool CanExecuteImpl(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
             // If blocked by rights-management fall through and return false
@@ -386,9 +360,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code takes in a trusted bit which can be used to cause elevations for paste
-        /// </SecurityNote>
         private void CriticalCanExecuteWrapper(object parameter, IInputElement target, bool trusted, CanExecuteRoutedEventArgs args)
         {
             // This cast is ok since we are already testing for UIElement, ContentElement, or UIElement3D
@@ -408,12 +379,6 @@ namespace System.Windows.Input
                 ((UIElement3D)targetAsDO).RaiseEvent(args, trusted);
             }            
         }
-        /// <SecurityNote>
-        /// Critical - Calls ExecuteImpl, which sets the user initiated bit on a command, which is used
-        ///            for security purposes later. It is important to validate
-        ///            the callers of this, and the implementation to make sure
-        ///            that we only call MarkAsUserInitiated in the correct cases.
-        /// </SecurityNote>
         internal bool ExecuteCore(object parameter, IInputElement target, bool userInitiated)
         {
             if (target == null)
@@ -424,12 +389,6 @@ namespace System.Windows.Input
             return ExecuteImpl(parameter, target, userInitiated);
         }
 
-        /// <SecurityNote>
-        /// Critical - sets the user initiated bit on a command, which is used
-        ///            for security purposes later. It is important to validate
-        ///            the callers of this, and the implementation to make sure
-        ///            that we only call MarkAsUserInitiated in the correct cases.
-        /// </SecurityNote>
         private bool ExecuteImpl(object parameter, IInputElement target, bool userInitiated)
         {
             // If blocked by rights-management fall through and return false
@@ -492,9 +451,6 @@ namespace System.Windows.Input
 
         #region PrivateMethods
 
-        /// <SecurityNote>
-        /// Critical - Accesses _flags. Setting IsBlockedByRM is a critical operation. Setting other flags should be fine.
-        /// </SecurityNote>
         private void WritePrivateFlag(PrivateFlags bit, bool value)
         {
             if (value)
@@ -518,9 +474,6 @@ namespace System.Windows.Input
 
         private string _name;
 
-        /// <SecurityNote>
-        ///     Critical : Holds the value to IsBlockedByRM which should not be settable from PartialTrust.
-        /// </SecurityNote>
         private MS.Internal.SecurityCriticalDataForSet<PrivateFlags> _flags;
 
         private enum PrivateFlags : byte

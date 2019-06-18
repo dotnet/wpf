@@ -125,10 +125,6 @@ namespace System.Windows
         ///     Initially starts with a false value before routing
         ///     has begun
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical - _flags is critical due to UserInitiated value.
-        /// PublicOK - in this function we're not setting UserInitiated - we're setting Handled.
-        ///</SecurityNote>
         public bool Handled
         {
             get
@@ -345,10 +341,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        ///     TreatAsSafe - checking user initiated bit considered safe.
-        ///</SecurityNote>
         internal bool UserInitiated
         {
             [FriendAccessAllowed] // Also used by Framework.
@@ -362,27 +354,16 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        /// </SecurityNote>
         internal void MarkAsUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = true;
         }
 
-        /// <SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        ///     TreatAsSafe - clearing user initiated bit considered safe.
-        /// </SecurityNote>
         internal void ClearUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = false ;
         }
 
-        ///<SecurityNote>
-        /// Critical - _flags is critical due to UserInitiated value.
-        /// TreatAsSafe - in this function we're not setting UserInitiated - we're setting InvokingHandler.
-        ///</SecurityNote>
         private bool InvokingHandler
         {
             get
@@ -404,9 +385,6 @@ namespace System.Windows
         private object _source;
         private object _originalSource;
 
-        ///<SecurityNote>
-        /// Critical - the UserInitiated flag value is critical.
-        ///</SecurityNote>
         private BitVector32          _flags;
 
         private const int HandledIndex                          = 1;

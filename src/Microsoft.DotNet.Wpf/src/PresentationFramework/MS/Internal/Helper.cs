@@ -510,10 +510,6 @@ namespace MS.Internal
         /// Indicates whether our content is inside an old-style container
         /// </summary>
         /// <value></value>
-        ///<SecurityNote>
-        /// Critical as it accesses the container object
-        /// TreatAsSafe as it only returns safe data
-        ///</SecurityNote>
 
         internal static bool IsContainer
         {

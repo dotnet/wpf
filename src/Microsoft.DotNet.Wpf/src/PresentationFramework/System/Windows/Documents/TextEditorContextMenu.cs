@@ -44,11 +44,6 @@ namespace System.Windows.Documents
         // Callback for FrameworkElement.ContextMenuOpeningEvent.
         // If the control is using the default ContextMenu, we initialize it
         // here.
-        /// <SecurityNote>
-        /// Critical - calls EditorContextMenu.AddMenuItems, using the UserInitiated
-        ///             bit in the event args, to add (critical) clipboard commands.
-        /// TreatAsSafe - the bit is protected by UserIniatedRoutedEvent permission
-        /// </SecurityNote>
         internal static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
@@ -264,10 +259,6 @@ namespace System.Windows.Documents
         /// Calculates x, y offsets for a ContextMenu based on an ITextPointer and
         /// the viewports of its containers.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: This code asserts to get the containing HWND.
-        ///     TreatAsSafe: The HWND is not exposed, only its RECT.
-        /// </SecurityNote>
         private static void GetClippedPositionOffsets(TextEditor This, ITextPointer position, LogicalDirection direction,
             out double horizontalOffset, out double verticalOffset)
         {
@@ -440,13 +431,6 @@ namespace System.Windows.Documents
         {
             // Initialize the context menu.
             // Creates a new instance.
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command, which is used for security purposes later.
-            ///             Although there is a demand here to prevent non userinitiated
-            ///             code paths to be blocked this function is not TreatAsSafe because
-            ///             we want to track any new callers to this call
-            /// </SecurityNote>
             internal void AddMenuItems(TextEditor textEditor, bool userInitiated)
             {
                 // create a special menu item for paste which only works for user initiated paste
@@ -560,10 +544,6 @@ namespace System.Windows.Documents
 
             // Appends Cicero reconversion related items.
             // Returns false if no items are added.
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// TreatAsSafe - does not expose the unmanaged interface. retrieve the candidate list and add menu item.
-            /// </SecurityNote>
             private bool AddReconversionItems(TextEditor textEditor)
             {
                 MenuItem menuItem;
@@ -623,13 +603,6 @@ namespace System.Windows.Documents
 
             // Appends clipboard related items.
             // Returns false if no items are added.
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command
-            ///             Although there is a demand here to prevent non userinitiated
-            ///             code paths to be blocked this function is not TreatAsSafe because
-            ///             we want to track any new callers to this call
-            /// </SecurityNote>
             private bool AddClipboardItems(TextEditor textEditor, bool userInitiated)
             {
                 MenuItem menuItem;
@@ -661,10 +634,6 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            /// <SecurityNote>
-            /// Critical - access CandidateList
-            /// TreatAsSafe - does not do anything for the unmanaged interface. It's just a null check.
-            /// </SecurityNote>
             private void DelayReleaseCandidateList()
             {
                 if (CandidateList != null)
@@ -674,10 +643,6 @@ namespace System.Windows.Documents
             }
 
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// TreatAsSafe - just release it.
-            /// </SecurityNote>
             private object ReleaseCandidateList(object o)
             {
                 if (CandidateList != null)
@@ -693,9 +658,6 @@ namespace System.Windows.Documents
 
             // ReconversionMenuItem uses this to finalzie the candidate string.
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code and return critical ITfCandidateList
-            /// </SecurityNote>
             internal UnsafeNativeMethods.ITfCandidateList CandidateList
             {
                  get
@@ -712,9 +674,6 @@ namespace System.Windows.Documents
             // The candidate list for Cicero Reconversion.
             // We need to use same ITfCandidateList object for both listing up and finalizing because
             // the index of the candidate string needs to match.
-            /// <SecurityNote>
-            ///  Critical : Field for critical type ITfCandidateList
-            /// </SecurityNote>
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
         }
 
@@ -725,10 +684,6 @@ namespace System.Windows.Documents
         {
             internal EditorMenuItem() : base() {}
 
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command, which is used for security purposes later.
-            /// </SecurityNote>
             internal override void OnClickCore(bool userInitiated)
             {
                 OnClickImpl(userInitiated);
@@ -747,9 +702,6 @@ namespace System.Windows.Documents
 
             // OnClick handler.
             // This is called when the item is selected.
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// </SecurityNote>
             internal override void OnClickCore(bool userInitiated)
             {
                 Invariant.Assert(_menu.CandidateList != null);

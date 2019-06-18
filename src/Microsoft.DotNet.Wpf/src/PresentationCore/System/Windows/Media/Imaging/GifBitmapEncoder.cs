@@ -34,10 +34,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor for GifBitmapEncoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - will eventuall create unmanaged resources
-        /// PublicOK - all inputs are verified
-        /// </SecurityNote>
         public GifBitmapEncoder() :
             base(true)
         {
@@ -56,9 +52,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Returns the container format for this encoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - uses guid to create unmanaged resources
-        /// </SecurityNote>
         internal override Guid ContainerFormat
         {
             get
@@ -92,9 +85,6 @@ namespace System.Windows.Media.Imaging
 
         #region Data Members
 
-        /// <SecurityNote>
-        /// Critical - CLSID used for creation of critical resources
-        /// </SecurityNote>
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatGif;
 
         #endregion

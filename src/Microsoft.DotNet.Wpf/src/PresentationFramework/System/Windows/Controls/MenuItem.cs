@@ -1341,29 +1341,16 @@ namespace System.Windows.Controls
         /// <summary>
         /// This virtual method in called when the MenuItem is clicked and it raises a Click event
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls OnClickImple which sets the userInitiated bit on a command, which is used
-        ///            for security purposes later.
-        /// TreatAsSafe - passes false for userInitiated
-        /// </SecurityNote>
         protected virtual void OnClick()
         {
             OnClickImpl(false);
         }
 
-        /// <SecurityNote>
-        /// Critical - accepts a parameter which may be used to set the userInitiated
-        ///             bit on a command, which is used for security purposes later.
-        /// </SecurityNote>
         internal virtual void OnClickCore(bool userInitiated)
         {
             OnClick();
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls InvokeClickAfterRender which sets the userInitiated
-        ///             bit on a command, which is used for security purposes later.
-        /// </SecurityNote>
         internal void OnClickImpl(bool userInitiated)
         {
             if (IsCheckable)
@@ -1400,10 +1387,6 @@ namespace System.Windows.Controls
             Dispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(InvokeClickAfterRender), userInitiated);
         }
 
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later.
-        /// </SecurityNote>
         private object InvokeClickAfterRender(object arg)
         {
             bool userInitiated = (bool)arg;
@@ -1417,11 +1400,6 @@ namespace System.Windows.Controls
         ///        Called when the left mouse button is pressed.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        ///     Critical: Sets an internal variable in case input was user initiated and button was pressed
-        ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
-        ///                 before setting the variable
-        /// </SecurityNote>
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1441,11 +1419,6 @@ namespace System.Windows.Controls
         ///        Called when the right mouse button is pressed.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        ///     Critical: Sets an internal variable in case input was user initiated and button was pressed
-        ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
-        ///                 before setting the variable
-        /// </SecurityNote>
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1463,10 +1436,6 @@ namespace System.Windows.Controls
         ///        Called when the left mouse button is released.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        /// Critical - sets _userInitiatedPress
-        /// TreatAsSafe - setting this to false is safe
-        /// </SecurityNote>
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1482,10 +1451,6 @@ namespace System.Windows.Controls
         ///        Called when the right mouse button is released.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        /// Critical - sets _userInitiatedPress
-        /// TreatAsSafe - setting this to false is safe
-        /// </SecurityNote>
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1520,11 +1485,6 @@ namespace System.Windows.Controls
             e.Handled = true;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// TreatAsSafe - e.UserInitiated can always be trusted
-        /// </SecurityNote>
         private void HandleMouseUp(MouseButtonEventArgs e)
         {
             // See comment above in HandleMouseDown.
@@ -1905,11 +1865,6 @@ namespace System.Windows.Controls
         ///     This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// PublicOK - e.UserInitiated can always be trusted
-        /// </SecurityNote>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -2058,11 +2013,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// The Access key for this control was invoked.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// PublicOK - e.UserInitiated can always be trusted
-        /// </SecurityNote>
         protected override void OnAccessKey(AccessKeyEventArgs e)
         {
             base.OnAccessKey(e);
@@ -2300,19 +2250,10 @@ namespace System.Windows.Controls
 
 
 
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// TreatAsSafe - passes false.
-        /// </SecurityNote>
         internal void ClickItem()
         {
             ClickItem(false);
         }
-        /// <SecurityNote>
-        /// Critical - Calls OnClickCore, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// </SecurityNote>
         private void ClickItem(bool userInitiated)
         {
             try
@@ -2760,9 +2701,6 @@ namespace System.Windows.Controls
         DispatcherTimer _openHierarchyTimer;
         DispatcherTimer _closeHierarchyTimer;
 
-        /// <SecurityNote>
-        ///     Critical: Setting this to true indicates that the mouse down was user initiated
-        /// </SecurityNote>
         private bool _userInitiatedPress;
         #endregion
 

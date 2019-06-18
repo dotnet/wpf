@@ -27,9 +27,6 @@ namespace System.Windows.Input
     [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     internal class SecureUICommand : RoutedUICommand, ISecureCommand
     {
-        /// <SecurityNote>
-        /// Critical - should only be write-once in the constructor
-        /// </SecurityNote>
         readonly PermissionSet _userInitiated;
 
         /// <summary>
@@ -39,11 +36,6 @@ namespace System.Windows.Input
         /// <param name="name">Name of the Command Property/Field for Serialization</param>
         /// <param name="ownerType">Type that is registering the property</param>
         /// <param name="commandId">Idenfier assigned by the owning type.</param>
-        /// <SecurityNote>
-        ///     Critical -    assigns to the permission set, a protected resource
-        ///     TreatAsSafe - KeyBinding (through InputBinding) will demand this permission before 
-        ///                   binding this command to any key.
-        /// </SecurityNote>
         internal SecureUICommand(PermissionSet userInitiated, string name, Type ownerType, byte commandId)
             : base(name, ownerType, commandId)
         {
@@ -57,10 +49,6 @@ namespace System.Windows.Input
         /// the command is invoked in a user interactive
         /// (trusted) fashion.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access the permission set, a protected resource
-        /// TreatAsSafe - get only access is safe
-        /// </SecurityNote>
         public PermissionSet UserInitiatedPermission
         {
             get

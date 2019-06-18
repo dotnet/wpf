@@ -111,10 +111,6 @@ namespace System.Windows.Media
         /// Returns a packed structure of non-animate pen values.  If a property is animated, it
         /// uses the instantaneous value of the property.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: has unsafe code blocks .Returning pen information is safe, the risk
-        ///     is in pointer handling
-        /// </SecurityNote>
         internal unsafe void GetBasicPenData(MIL_PEN_DATA* pData, out double[] dashArray)
         {
             dashArray = null;

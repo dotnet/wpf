@@ -67,9 +67,6 @@ namespace MS.Internal.AppModel
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:Calls base class constructor that is only present for RBW scenario
-        /// </SecurityNote>
         private RootBrowserWindow():base(true)
         {
             // Allow tabbing out to the browser - see KeyInputSite and OnKeyDown().
@@ -102,13 +99,6 @@ namespace MS.Internal.AppModel
             return new RootBrowserWindowAutomationPeer(this);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Hooks up the event handler that sets the status bar text (OnRequestSetStatusBar_Hyperlink).
-        ///     TreatAsSafe - Safe to set up the handler over here; OnRequestSetStatusBar_Hyperlink is connected to
-        ///                   RequestSetStatusBarEvent which is supposed to be raised only by Hyperlink which has the
-        ///                   anti-spoofing mitigations in place. The RequestSetStatusBarEventArgs used in the event
-        ///                   is protected as well.
-        /// </SecurityNote>
         protected override void OnInitialized(EventArgs args)
         {
             AddHandler(Hyperlink.RequestSetStatusBarEvent, new RoutedEventHandler(OnRequestSetStatusBar_Hyperlink));
@@ -146,11 +136,6 @@ namespace MS.Internal.AppModel
         {
         }
 
-        ///<SecurityNote>
-        /// Critical - calls the SUC'd IBCS.PostReadyStateChange().
-        /// TreatAsSafe - Only READYSTATE_COMPLETE is posted, once, at the end of the activation sequence,
-        ///     when the browser expects it.
-        ///</SecurityNote>
         protected override void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
@@ -196,9 +181,6 @@ namespace MS.Internal.AppModel
         ///     Creates the RBW object and sets the Style property on it
         ///     to the correct value
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls RBW class constructor
-        /// </SecurityNote>
         internal static RootBrowserWindow CreateAndInitialize()
         {
             RootBrowserWindow rbw = new RootBrowserWindow();
@@ -206,9 +188,6 @@ namespace MS.Internal.AppModel
             return rbw;
         }
 
-        /// <SecurityNote>
-        /// Critical: This code elevates to all window permission
-        /// </SecurityNote>
         internal override void CreateAllStyle()
         {
             Invariant.Assert(App != null, "RootBrowserWindow must be created in an Application");
@@ -234,9 +213,6 @@ namespace MS.Internal.AppModel
 
         }
 
-        ///<SecurityNote>
-        /// Critical: Exposes a window handle (ParentWindow). Base class implementation is also Critical.
-        ///</SecurityNote>
         internal override HwndSourceParameters CreateHwndSourceParameters()
         {
             HwndSourceParameters parameters = base.CreateHwndSourceParameters();
@@ -249,10 +225,6 @@ namespace MS.Internal.AppModel
         ///     Override for SourceWindow creation.
         ///     Virtual only so that we may assert.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls critical base-class function.
-        ///                Calls critical functions GetAncestor and GetForegroundWindow.
-        /// </SecurityNote>
         internal override void CreateSourceWindowDuringShow()
         {
             Browser.OnBeforeShowNavigationWindow();
@@ -306,9 +278,6 @@ namespace MS.Internal.AppModel
             requestedHeight = this.Height;
         }
 
-        ///<SecurityNote>
-        ///     Critical - It also calls critical method (SetRootVisual)
-        ///</SecurityNote>
         internal override void SetupInitialState(double requestedTop, double requestedLeft, double requestedWidth, double requestedHeight)
         {
             // If RBW Height/Width was set before calling show in RBW, we need
@@ -355,12 +324,6 @@ namespace MS.Internal.AppModel
         /// <param name="yDeviceUnits">New top of the RBW</param>
         /// <param name="widthDeviceUnits">New width of the RBW</param>
         /// <param name="heightDeviceUnits">New height of the RBW</param>
-        ///<SecurityNote>
-        ///     Critical as this method handles critical data.
-        ///     TreatAsSafe - as the RBW is always contained within the browser's window.
-        ///                          you can move the internal window all you want - but given that you're really
-        ///                          contained within the BrowserWindow - the worse you could do is make some of your content not visible.
-        ///</SecurityNote>
         internal void ResizeMove(int xDeviceUnits, int yDeviceUnits, int widthDeviceUnits, int heightDeviceUnits)
         {
             // _sourceWindowCreationCompleted specifies that HwndSource creation has completed.  This is used
@@ -398,13 +361,6 @@ namespace MS.Internal.AppModel
         /// <summary>
         ///     This is called when the Title dependency property changes in the Window.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - calls SUC'd IHostBrowser.SetTitle
-        /// TreatAsSafe - setting the text on the browser's window is considered safe.
-        ///                 - spoofing is not possible as the browser prepends it's own string to the string
-        ///                      e.g. Microsoft Internet Explorer
-        ///                 - it can be done in partial trust in HTML via the TITLE tag.
-        ///</SecurityNote>
         internal override void UpdateTitle(string titleStr)
         {
             IBrowserCallbackServices ibcs = Browser;
@@ -439,12 +395,6 @@ namespace MS.Internal.AppModel
         /// <remarks>
         ///     We propagate object.ToString() to the browser's status bar.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical - calls SetStatusText which is SUC'ed.
-        ///
-        ///     No longer considered TreatAsSafe in order to protect against hyperlink spoofing.
-        ///     Browsers implement access restriction to the status bar from script nowadays.
-        ///</SecurityNote>
         internal void SetStatusBarText(string statusString)
         {
             if (BrowserInteropHelper.HostBrowser != null) // could be null if shutting down
@@ -460,10 +410,6 @@ namespace MS.Internal.AppModel
         ///     1) OnHeightInvalidated from window.cs
         ///     2) SetBrowserSize in RBW
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - Can be used to change the size of the browser
-        ///     TreatAsSafe - clamps values so that window cannot be sized greater than desktop bounds.
-        ///</SecurityNote>
         internal override void UpdateHeight(double newHeightLogicalUnits)
         {
             Point sizeDeviceUnits = LogicalToDeviceUnits(new Point(0, newHeightLogicalUnits));
@@ -485,10 +431,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - Can be used to change the size of the browser
-        ///     TreatAsSafe - clamps values so that window cannot be sized greater than desktop bounds.
-        ///</SecurityNote>
         internal override void UpdateWidth(double newWidthLogicalUnits)
         {
             Point sizeDeviceUnits = LogicalToDeviceUnits(new Point(newWidthLogicalUnits, 0));
@@ -528,9 +470,6 @@ namespace MS.Internal.AppModel
 
         // For downlevel platforms, we don't have integration with the journal, so we have to
         // use our own Journal.
-        ///<SecurityNote>
-        ///     Critical - calls IBCS.GoBack
-        ///</SecurityNote>
         bool IJournalNavigationScopeHost.GoBackOverride()
         {
             if (HasTravelLogIntegration)
@@ -556,9 +495,6 @@ namespace MS.Internal.AppModel
 
         // For downlevel platforms, we don't have integration with the journal, so we have to
         // use our own Journal.
-        ///<SecurityNote>
-        ///     Critical - calls IBCS.GoForward
-        ///</SecurityNote>
         bool IJournalNavigationScopeHost.GoForwardOverride()
         {
             if (HasTravelLogIntegration)
@@ -650,10 +586,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Elevates to get access to the HwndSource and installs hooks.
-        ///     TreatAsSafe - The HwndSoure is not exposed. The message hooks installed are internal ones, and they are for the RBW specifically.
-        /// </SecurityNote>
         private void SetUpInputHooks()
         {
             IKeyboardInputSink sink;
@@ -789,11 +721,6 @@ namespace MS.Internal.AppModel
         /// Trying to hook the event will create the journal even if there was no navigation
         /// so just using an virtual override to do the work.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - as this method calls into Browser call back method for back and forward.
-        ///                This is a pinoke call.
-        ///     TreatAsSafe - as this is a safe operation.
-        ///</SecurityNote>
         private void HandleBackForwardStateChange(object sender, EventArgs args)
         {
             //Nothing to do for downlevel platform
@@ -812,11 +739,6 @@ namespace MS.Internal.AppModel
         /// Given a proposed width - and curWidth - return the MaxWidth the window can be opened to.
         /// Used to prevent sizing of window > desktop bounds in browser.
         ///</summary>
-        ///<SecurityNote>
-        /// Critical - calls back to browser to get the current left.
-        /// TreatAsSafe - this value isn't returned or stored.
-        ///               value returned is the current maximum width allowed considered safe.
-        ///</SecurityNote>
         private uint GetMaxWindowWidth()
         {
             NativeMethods.RECT desktopArea = WorkAreaBoundsForNearestMonitor;
@@ -832,11 +754,6 @@ namespace MS.Internal.AppModel
         /// Given a proposed height - and curHeight - return the MaxHeight the window can be opened to.
         /// Used to prevent sizing of window > desktop bounds in browser.
         ///</summary>
-        ///<SecurityNote>
-        /// Critical - calls back to browser to get the current top.
-        /// TreatAsSafe - this value isn't returned or stored.
-        ///               value returned is the current maximum height allowed considered safe.
-        ///</SecurityNote>
         private uint GetMaxWindowHeight()
         {
             NativeMethods.RECT desktopArea = WorkAreaBoundsForNearestMonitor;
@@ -878,9 +795,6 @@ namespace MS.Internal.AppModel
             return size;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Sets the status bar text. Can be used to do URL spoofing.
-        /// </SecurityNote>
         private void OnRequestSetStatusBar_Hyperlink(object sender, RoutedEventArgs e)
         {
             RequestSetStatusBarEventArgs statusEvent = e as RequestSetStatusBarEventArgs;
@@ -997,10 +911,6 @@ namespace MS.Internal.AppModel
         }
 
 #if !DONOTREFPRINTINGASMMETA   
-        ///<SecurityNote> 
-        /// Critical - calls out to PrintDialog to get the PrintQueue and its PrintCapabilities
-        /// TreatAsSafe - these values aren't returned or stored
-        ///</SecurityNote>
         private static Rect GetImageableRect(PrintDialog dialog)
         {
             Rect imageableRect = Rect.Empty;
@@ -1152,10 +1062,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls the SUC'd IBCS.IsDownlevelPlatform.
-        /// TreatAsSafe - this information is okay to give out.
-        ///</SecurityNote>
         private bool IsDownlevelPlatform
         {
             get
@@ -1203,36 +1109,22 @@ namespace MS.Internal.AppModel
                 _sink = sink;
             }
 
-            /// <SecurityNote>
-            /// Critical: sets critical data.
-            /// Safe: setting to null is okay.
-            /// </SecurityNote>
             void IKeyboardInputSite.Unregister()
             {
                 _sink = new SecurityCriticalData<IKeyboardInputSink>(null);
             }
 
-            /// <SecurityNote>
-            /// Critical: IKeyboardInputSink could be used to spoof input.
-            /// </SecurityNote>
             IKeyboardInputSink IKeyboardInputSite.Sink
             {
                 get { return _sink.Value; }
             }
 
-            /// <SecurityNote>
-            /// Critical: calls the SUC'd IBCS.TabOut().
-            /// Safe: tabbing out of the application is safe.
-            /// </SecurityNote>
             bool IKeyboardInputSite.OnNoMoreTabStops(TraversalRequest request)
             {
                 return Browser.TabOut(request.FocusNavigationDirection == FocusNavigationDirection.Next);
                 // i. Tabbing-in is handled by ApplicationProxyInternal.
             }
 
-            /// <SecurityNote>
-            /// Critical: The encapsulated interface could be used to spoof input.
-            /// </SecurityNote>
             SecurityCriticalData<IKeyboardInputSink> _sink;
         };
 
@@ -1260,9 +1152,6 @@ namespace MS.Internal.AppModel
         /// <summary>
         /// The event delegate has to be stored because HwndWrapper keeps only a weak reference to it.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: could be used to spoof input
-        /// </SecurityNote>
         private HwndWrapperHook _inputPostFilter;
 
         private bool _loadingCompletePosted;

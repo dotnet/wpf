@@ -460,18 +460,12 @@ namespace System.Printing
         /// <summary>
         /// Implement Dispose pattern to release print ticket handle which can't be released by GC in WOW64 due to restriction from prntvpt!PTCloseProvider
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   Releases handle to printer device
-        /// </SecurityNote>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <SecurityNote>
-        /// Critical    -   Calls critical PTProvider.Dispose
-        /// </SecurityNote>
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -496,9 +490,6 @@ namespace System.Printing
         /// <summary>
         /// Dispose this instance.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   Calls critical PTProvider.Release
-        /// </SecurityNote>
         public virtual void Release()
         {
             if (!this._disposed)

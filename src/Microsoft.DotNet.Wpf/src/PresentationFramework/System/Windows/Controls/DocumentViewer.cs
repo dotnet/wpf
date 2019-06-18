@@ -873,10 +873,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Attaches DocumentGrid to our document when it changes.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: set_DocumentLoaded is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to set_DocumentLoaded does not entail any risk.
-        /// </SecurityNote>
         protected override void OnDocumentChanged()
         {
             // Validate the new document type
@@ -1481,10 +1477,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Set up our RoutedUICommand bindings
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - creates a command binding.
-        /// TAS - registering our own internal commands is considered safe.
-        ///</SecurityNote>
         private static void CreateCommandBindings()
         {
             // Create our generic ExecutedRoutedEventHandler.
@@ -1740,11 +1732,6 @@ namespace System.Windows.Controls
 
         /// <summary>
         /// Central handler for QueryEnabled events fired by Commands directed at DocumentViewer.
-        /// <SecurityNote>
-        /// Critical - Sets the critical Handled property on the RoutedEventArgs
-        /// TreatAsSafe - We are marking the event as handled only for the Commands that
-        ///               DocumentViewer explicitly handles -- this cannot be used for spoofing.
-        /// </SecurityNote>
         /// </summary>
         /// <param name="target">The target of this Command, expected to be DocumentViewer</param>
         /// <param name="args">The event arguments for this event.</param>
@@ -2164,10 +2151,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Instantiates the Find Toolbar and adds it to our Visual tree where appropriate.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: FindToolBar..ctor is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to FindToolBar..ctor does not entail any risk.
-        /// </SecurityNote>
         private void InstantiateFindToolBar()
         {
             //First, find the correct place to insert toolbar.
@@ -2206,10 +2189,6 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="sender">The object that sent this event</param>
         /// <param name="e">The Click Events associated with this event</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
         private void OnFindInvoked(object sender, EventArgs e)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXFindBegin);
@@ -2273,10 +2252,6 @@ namespace System.Windows.Controls
         /// This is just a private convenience method for handling the Find command in a
         /// localized place.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: GoToTextBox is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to GoToTextBox does not entail any risk.
-        /// </SecurityNote>
         private void GoToFind()
         {
             if (_findToolbar != null)
@@ -2291,10 +2266,6 @@ namespace System.Windows.Controls
         /// shortcuts related to the Find Command.
         /// localized place.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
         private KeyEventArgs ProcessFindKeys(KeyEventArgs e)
         {
             if (_findToolbar == null || Document == null)

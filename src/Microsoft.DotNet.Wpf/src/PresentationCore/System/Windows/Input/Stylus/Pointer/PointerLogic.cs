@@ -109,9 +109,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         private PointerStylusDevice _currentStylusDevice;
 
-        /// <SecurityNote>
-        ///     This data is not safe to expose as it holds refrence to PresentationSource
-        /// </SecurityNote>
         private SecurityCriticalData<InputManager> _inputManager;
 
         /// <summary>
@@ -128,9 +125,6 @@ namespace System.Windows.Input.StylusPointer
         /// A list of all stylus plugin managers per PresentationSource.  Allows us to maintain
         /// the stylus plugins depending on the input from the WM_POINTER native stack.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:  Can be used to spoof input
-        /// </SecurityNote>
         internal Dictionary<PresentationSource, PointerStylusPlugInManager> PlugInManagers
         {
             get;
@@ -155,10 +149,6 @@ namespace System.Windows.Input.StylusPointer
         /// Sets up the various event handlers and operations needed for processing pointer events
         /// </summary>
         /// <param name="inputManager">The InputManager for the current thread</param>
-        /// <SecurityNote>
-        ///     Critical as accepts InputManager and stores the reference.
-        ///     Safe as it exposes no secure data.
-        /// </SecurityNote>
         internal PointerLogic(InputManager inputManager)
         {
             Statistics.FeaturesUsed |= Tracing.StylusTraceLogger.FeatureFlags.PointerStackEnabled;
@@ -190,13 +180,6 @@ namespace System.Windows.Input.StylusPointer
         /// The proper StylusDevice is also selected at this time as subsequent processing will occur during the
         /// same sequence and will always use that device.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses SecurityCriticalData e.StagingItem.Input and _inputManager.Value.
-        ///           Calls SecurityCritical methods: StylusDevice.UpdateStateForSystemGesture,
-        ///              InputEventArgs.Handled, StylusDevice.UpdateInRange, StylusDevice.UpdateState,
-        ///              RawStylusInputReport.PenContext, SelectStylusDevice, VerifyStylusPlugInCollectionTarget,
-        ///              ProcessMouseMove, GetManagerForSource, and CallPlugInsForMouse.
-        /// </SecurityNote>
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
@@ -235,10 +218,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="e"></param>
         /// <param name="input"></param>
-        /// <SecurityNote>
-        ///     Critical:   Calls IsPromotedMouseEvent, InputManager.ProcessInput
-        ///                 Accesses PreProcessInputEventArgs and InputReportEventArgs
-        /// </SecurityNote>
         private void PreProcessMouseInput(PreProcessInputEventArgs e, InputReportEventArgs input)
         {
             RawMouseInputReport rawMouseInputReport = (RawMouseInputReport)input.Report;
@@ -311,11 +290,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Handles drag/drop, manipulation concerns, and gesture processing.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical: calls a critical function - UpdateTarget.
-        ///           accesses e.StagingItem.Input and InputReport.InputSource and _inputManager.Value.
-        ///            It can also be used for Input spoofing.
-        ///</SecurityNote>
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
@@ -359,14 +333,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Raw->Preview->Main->Touch
         ///     Marking any of the events as handled will stop the promotion engine.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - calls a critical method (PromoteRawToPreview, MouseDevice.CriticalActiveSource,
-        ///                 InputReport.InputSource, PromotePreviewToMain, UpdateButtonStates,
-        ///                 PromoteMainToMouse and GenerateGesture)
-        ///              - calls critical method RefreshTablets()
-        ///              - accesses e.StagingItem.Input, _inputManager.Value and TabletDevices.
-        ///              It can also be used for Input spoofing.
-        ///</SecurityNote>
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // Watch the LostMouseCapture and GotMouseCapture events to keep stylus capture in sync.
@@ -510,9 +476,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="measurePoint">The point in measure units</param>
         /// <returns>The point in device units</returns>
-        /// <SecurityNote>
-        /// SafeCritical:   Accesses StylusDevice.ActiveSource but does not expose any critical information.
-        /// </SecurityNote>
         internal override Point DeviceUnitsFromMeasureUnits(Point measurePoint)
         {
             
@@ -530,9 +493,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="devicePoint">The point in device units</param>
         /// <returns>The point in measure units</returns>
-        /// <SecurityNote>
-        /// SafeCritical:   Accesses StylusDevice.ActiveSource but does not expose any critical information.
-        /// </SecurityNote>
         internal override Point MeasureUnitsFromDeviceUnits(Point devicePoint)
         {
             
@@ -947,10 +907,6 @@ namespace System.Windows.Input.StylusPointer
         /// <param name="msg"></param>
         /// <param name="wParam"></param>
         /// <param name="lParam"></param>
-        /// <SecurityNote>
-        ///     Critical - Calls into SecurityCritical code (OnDeviceChange, OnScreenMeasurementsChanged,
-        ///                 ReadSystemConfig, OnTabletAdded and OnTabletRemoved).
-        /// </SecurityNote>
         internal override void HandleMessage(WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             // Always refresh devices here.  On remove/change scenarios we just want all new devices anyway.
@@ -1024,9 +980,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="report">The input report to promote</param>
         /// <param name="e">The input event args</param>
-        /// <SecurityNote>
-        ///  Critical:  Calls InputManager.PushInput
-        /// </SecurityNote>
         private void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
@@ -1066,9 +1019,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a preview event to a main event if applicable.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical:  Calls InputManager.PushInput
-        /// </SecurityNote>
         private void PromotePreviewToMain(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
@@ -1130,9 +1080,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main input to a touch event if not handled
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical methods.
-        /// </SecurityNote>
         private void PromoteMainToOther(ProcessInputEventArgs e)
         {
             StylusEventArgs stylusEventArgs = e.StagingItem.Input as StylusEventArgs;
@@ -1172,9 +1119,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main input to the associated touch input
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls PromoteMainMoveToTouch, PromoteMainDownToTouch or PromoteMainUpToTouch
-        /// </SecurityNote>
         private void PromoteMainToTouch(ProcessInputEventArgs e, StylusEventArgs stylusEventArgs)
         {
             PointerStylusDevice stylusDevice = stylusEventArgs.StylusDeviceImpl.As<PointerStylusDevice>();
@@ -1196,9 +1140,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) down to a touch down
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls TouchDevice.OnDeactivate
-        /// </SecurityNote>
         private void PromoteMainDownToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1216,9 +1157,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) move to a touch move
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls PromoteMainToMouse
-        /// </SecurityNote>
         private void PromoteMainMoveToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1232,9 +1170,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) up to a touch up
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls PromoteMainToMouse
-        /// </SecurityNote>
         private void PromoteMainUpToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1300,9 +1235,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="source">The PresentationSource to use</param>
         /// <returns>The associated plugin manager or null if none found</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls PlugInManagers.TryGetValue
-        /// </SecurityNote>
         internal PointerStylusPlugInManager GetManagerForSource(PresentationSource source)
         {
             if (source == null)
@@ -1326,9 +1258,6 @@ namespace System.Windows.Input.StylusPointer
         /// We use this to determine the tap count that is sent with public events.
         /// </summary>
         /// <param name="args">The input event arguments</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls StylusLogic.CurrentStylusLogic
-        /// </SecurityNote>
         private void UpdateTapCount(NotifyInputEventArgs args)
         {
             if (args.StagingItem.Input.RoutedEvent == Stylus.PreviewStylusDownEvent)
@@ -1388,9 +1317,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="rawStylusInputReport">The raw stylus input</param>
         /// <param name="gesture">The gesture to generate</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls into security critical code. (InputManagerProcessInputEventArgs)
-        /// </SecurityNote>
         private void GenerateGesture(RawStylusInputReport rawStylusInputReport, SystemGesture gesture)
         {
             PointerStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<PointerStylusDevice>();

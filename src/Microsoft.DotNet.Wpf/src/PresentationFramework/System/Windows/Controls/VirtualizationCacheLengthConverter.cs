@@ -133,10 +133,6 @@ namespace System.Windows.Controls
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The VirtualizationCacheLength to convert. </param>
         /// <param name="destinationType">The type to which to convert the VirtualizationCacheLength instance. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for VirtualizationCacheLength, not an arbitrary class
-        ///</SecurityNote>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             if (destinationType == null)

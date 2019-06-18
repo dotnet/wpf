@@ -22,9 +22,6 @@ namespace System.Windows.Interop
 {
     internal sealed class HwndKeyboardInputProvider : DispatcherObject, IKeyboardInputProvider, IDisposable
     {
-        /// <SecurityNote>
-        ///     Accesses and store critical data. This class is also critical (_site and _source)
-        /// </SecurityNote>
         internal HwndKeyboardInputProvider(HwndSource source)
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert();
@@ -41,10 +38,6 @@ namespace System.Windows.Interop
 
 
 
-        /// <SecurityNote>
-        ///     Critical:This class accesses critical data, _site.
-        ///     TreatAsSafe: This class does not expose the critical data
-        /// </SecurityNote>
         public void Dispose()
         {
             if(_site != null)
@@ -62,11 +55,6 @@ namespace System.Windows.Interop
                 Keyboard.Focus(null); // internally we will set the focus to the root.
             }
         }
-        /// <SecurityNote>
-        ///     Critical: As this accesses critical data HwndSource
-        ///     TreatAsSafe:Information about whether a given input provider services
-        ///     a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert( null != _source );
@@ -80,12 +68,6 @@ namespace System.Windows.Interop
             _partialActive = false;
         }
 
-        /// <SecurityNote>
-        ///     SecurityCritical: This code calls a variety of critical native
-        ///     methods related to keyboard focus and window styles.  None of
-        ///     this information is returned, but focus can be changed which
-        ///     impacts the functioning of a great deal of native code.
-        /// </SecurityNote>
         bool IKeyboardInputProvider.AcquireFocus(bool checkOnly)
         {
             bool result = false;
@@ -201,14 +183,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical:
-        ///     This code is critical since it handles all keyboard messages
-        ///     and could be used to spoof input.
-        ///     For HANDLED_KEYDOWN_STILL_GENERATES_CHARS we also cause the
-        ///     Dispatcher to defer processing the queue until after any
-        ///     currently pending messages.
-        /// </SecurityNote>
         internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -454,9 +428,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it reports input to WPF.
-        /// </SecurityNote>
         private void OnSetFocus(IntPtr hwnd)
         {
             // Normally we get WM_SETFOCUS only when _active is false.
@@ -568,9 +539,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:This can be used to spoof input
-        /// </SecurityNote>
         internal void ProcessKeyAction(ref MSG msg, ref bool handled)
         {
             // Remember the last message
@@ -602,9 +570,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls a critical method _source.Value.
-        ///</SecurityNote>
         internal void ProcessTextInputAction(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             char charcode = (char)wParam;
@@ -730,10 +695,6 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Marked as FriendAccessAllowed so HwndHost in PresentationFramework can call it
         ///</remarks>
-        ///<SecurityNote>
-        ///     Critical: It calls an UnsafeNativeMethod (GetKeyState).
-        ///     TreatAsSafe: It's safe to return whether shift, control or alt keys are being pressed or not.
-        ///</SecurityNote>
         [FriendAccessAllowed]
         internal static ModifierKeys GetSystemModifierKeys()
         {
@@ -769,10 +730,6 @@ namespace System.Windows.Interop
             throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code causes this window to loose focus not ok to expose
-        ///               It also calls into a critical code path.
-        /// </SecurityNote>
         private void PossiblyDeactivate(IntPtr hwndFocus)
         {
             Debug.Assert( null != _source );
@@ -804,10 +761,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code does not store any critical data, it accesses PresentationSource
-        ///     TreatAsSafe: This information is safe to expose
-        /// </SecurityNote>
         private bool IsOurWindow(IntPtr hwnd)
         {
             bool isOurWindow = false;
@@ -848,9 +801,6 @@ namespace System.Windows.Interop
 
         // return the immediate child (if any) of hwndRoot that governs the
         // given hwnd.  If hwnd is not a descendant of hwndRoot, return 0.
-        /// <SecurityNote>
-        ///     Critical:This method calls critical methods
-        /// </SecurityNote>
         private IntPtr GetImmediateChildFor(IntPtr hwnd, IntPtr hwndRoot)
         {
             while (hwnd != IntPtr.Zero)
@@ -877,10 +827,6 @@ namespace System.Windows.Interop
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code can cause input simulation and hence is critical.
-        ///     The current code path is only hit under RootBrowserWindow scenario for now.
-        /// </SecurityNote>
         private bool ReportInput(
             IntPtr hwnd,
             InputMode mode,
@@ -944,18 +890,9 @@ namespace System.Windows.Interop
         }
 
         private int  _msgTime;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical. This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource> _source;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical.This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputProviderSite> _site;
         private IInputElement _restoreFocus;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical.This data is not ok to expose.
-        /// </SecurityNote>
         private IntPtr _restoreFocusWindow;
         private bool _active;
         private bool _partialActive;

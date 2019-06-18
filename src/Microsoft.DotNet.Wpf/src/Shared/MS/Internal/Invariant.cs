@@ -42,11 +42,6 @@ namespace MS.Internal
         /// <summary>
         /// Static ctor.  Initializes the Strict property.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - this function elevates to read from the registry. 
-        /// TreatAsSafe - Not controllable from external input. 
-        ///               The information stored indicates whether invariant behavior is "strict" or not. Considered safe. 
-        ///</SecurityNote>
         static Invariant()
         {
             _strict = _strictDefaultValue;
@@ -97,17 +92,6 @@ namespace MS.Internal
         /// If condition is false, raises an assert dialog then shuts down the
         /// process unconditionally.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
         internal static void Assert(bool condition)
         {
             if (!condition)
@@ -128,17 +112,6 @@ namespace MS.Internal
         /// <param name="invariantMessage">
         /// Message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
         internal static void Assert(bool condition, string invariantMessage)
         {
             if (!condition)
@@ -162,17 +135,6 @@ namespace MS.Internal
         /// <param name="detailMessage">
         /// Additional message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
         internal static void Assert(bool condition, string invariantMessage, string detailMessage)
         {
             if (!condition)
@@ -244,12 +206,6 @@ namespace MS.Internal
         /// <param name="detailMessage">
         ///     Additional message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process.
-        ///     TreatAsSafe: This code is safe to call.
-        ///         Note that if this code were made to be callable publicly,
-        ///         we would have a potential denial-of-service vulnerability.
-        /// </SecurityNote>
         private // DO NOT MAKE PUBLIC OR INTERNAL -- See security note
             static void FailFast(string message, string detailMessage)
         {
@@ -282,11 +238,6 @@ namespace MS.Internal
         // The dialog may be disabled by
         //   Installing a JIT debugger to the [HKEY_LOCAL_MACHINE\Software\Microsoft\.NETFramework]
         //     DbgJITDebugLaunchSetting and DbgManagedDebugger registry keys.
-        ///<SecurityNote>
-        /// Critical - this function elevates to read from the registry. 
-        /// TreatAsSafe - Not controllable from external input. 
-        ///               The information stored indicates whether dialog override is available or not. Safe to expose
-        ///</SecurityNote>
         private static bool IsDialogOverrideEnabled
         {
             get
@@ -343,10 +294,6 @@ namespace MS.Internal
 
         // Property specifying whether or not the user wants to enable expensive
         // verification diagnostics.
-        ///<SecurityNote>
-        /// Critical - this data member required elevated permissions to be set. 
-        /// TreatAsSafe - this data indicates whether "strict" invariant mode is to be used. Considered safe
-        ///</SecurityNote> 
         private static bool _strict;
 
         // Used to initialize the default value of _strict in the static ctor.

@@ -40,10 +40,6 @@ namespace System.Windows.Media.Imaging
         /// <value>
         /// The current element in the collection.
         /// </value>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         object IEnumerator.Current
         {
             get
@@ -63,10 +59,6 @@ namespace System.Windows.Media.Imaging
         /// True if the enumerator was successfully advanced to the next element;
         /// false if the enumerator has passed the end of the collection.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         public bool MoveNext()
         {
             if (_fStarted && _current == null)
@@ -121,10 +113,6 @@ namespace System.Windows.Media.Imaging
         /// Sets the enumerator to its initial position, which is before the first element
         /// in the collection.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         public void Reset()
         {
             HRESULT.Check(UnsafeNativeMethods.EnumString.Reset(_enumeratorHandle));
@@ -186,10 +174,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="metadataHandle">
         /// Handle to a metadata query reader/writer
         /// </param>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         internal BitmapMetadataEnumerator(SafeMILHandle metadataHandle)
         {
             Debug.Assert(metadataHandle != null && !metadataHandle.IsInvalid);
@@ -210,9 +194,6 @@ namespace System.Windows.Media.Imaging
 
         #region Data
 
-        /// <SecurityNote>
-        /// Critical - pointer to an unmanaged object that methods are called on.
-        /// </SecurityNote>
         private SafeMILHandle _enumeratorHandle;
 
         private String _current;

@@ -44,10 +44,6 @@ namespace MS.Internal.Drt
         /// is this visual connected to presentation source ? 
         /// i.e. is it "renderable" ?
         ///</summary> 
-        /// <SecurityNote>
-        /// Critical - extracts presentationsource
-        /// TreatAsSafe - Knowing whether you're connected to presentation source is ok. 
-        /// </SecurityNote>
         internal static bool IsConnectedToPresentationSource( Visual visual ) 
         {
             bool isConnected = false; 

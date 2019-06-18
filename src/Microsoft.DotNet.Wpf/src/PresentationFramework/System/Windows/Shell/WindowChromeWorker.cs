@@ -40,15 +40,9 @@ namespace Microsoft.Windows.Shell
         private Window _window;
 
         /// <summary>Underlying HWND for the _window.</summary>
-        /// <SecurityNote>
-        ///   Critical : Critical member
-        /// <SecurityNote>
         private IntPtr _hwnd;
 
         /// <summary>Underlying HWND for the _window.</summary>
-        /// <SecurityNote>
-        ///   Critical : Critical member provides access to HWND's window messages which are critical
-        /// <SecurityNote>
         private HwndSource _hwndSource = null;
 
         private bool _isHooked = false;
@@ -70,17 +64,10 @@ namespace Microsoft.Windows.Shell
 
         #endregion
 
-        /// <SecurityNote>
-        ///   Critical : Initializes critical members
-        /// <SecurityNote>
         static WindowChromeWorker()
         {
         }
 
-        /// <SecurityNote>
-        ///   Critical : Store critical methods in critical callback table
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         public WindowChromeWorker()
         {
             _messageTable = new List<HANDLE_MESSAGE>
@@ -108,10 +95,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         public void SetWindowChrome(WindowChrome newChrome)
         {
             VerifyAccess();
@@ -137,10 +120,6 @@ namespace Microsoft.Windows.Shell
             _ApplyNewCustomChrome();
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private void _OnChromePropertyChangedThatRequiresRepaint(object sender, EventArgs e)
         {
             _UpdateFrameState(true);
@@ -152,10 +131,6 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChromeWorker),
             new PropertyMetadata(null, _OnChromeWorkerChanged));
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private static void _OnChromeWorkerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var w = (Window)d;
@@ -169,9 +144,6 @@ namespace Microsoft.Windows.Shell
             cw._SetWindow(w);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _SetWindow(Window window)
         {
             Assert.IsNull(_window);
@@ -214,10 +186,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Store critical methods in critical callback table
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private void _WindowSourceInitialized(object sender, EventArgs e)
         {
             _hwnd = new WindowInteropHelper(_window).Handle;
@@ -231,9 +199,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : References critical methods
-        /// <SecurityNote>
         private void UnsubscribeWindowEvents()
         {
             if (_window != null)
@@ -245,10 +210,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Store critical methods in critical callback table
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private void _UnsetWindow(object sender, EventArgs e)
         {
             UnsubscribeWindowEvents();
@@ -275,10 +236,6 @@ namespace Microsoft.Windows.Shell
             window.SetValue(WindowChromeWorkerProperty, chrome);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Accesses critical _hwnd field
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private void _OnWindowPropertyChangedThatRequiresTemplateFixup(object sender, EventArgs e)
         {
             if (_chromeInfo != null && _hwnd != IntPtr.Zero)
@@ -295,9 +252,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _ApplyNewCustomChrome()
         {
             if (_hwnd == IntPtr.Zero || _hwndSource.IsDisposed)
@@ -330,10 +284,6 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         /// If visual children have been added to <see cref="_window"/>, then repost <see cref="_FixupTemplateIssues"/>
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Accesses Critical method <see cref="_FixupTemplateIssues"/>
-        ///   Safe     : Does not return or expose Critical resources to the caller
-        /// <SecurityNote>
         private void RetryFixupTemplateIssuesOnVisualChildrenAdded(object sender, EventArgs e)
         {
             if (sender == _window)
@@ -351,9 +301,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _FixupTemplateIssues()
         {
             Assert.IsNotNull(_chromeInfo);
@@ -504,10 +451,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Store critical methods in critical callback table
-        ///   Safe     : Demands full trust permissions
-        /// <SecurityNote>
         private void _FixupRestoreBounds(object sender, EventArgs e)
         {
             Assert.IsTrue(Utility.IsPresentationFrameworkVersionLessThan4);
@@ -536,9 +479,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private RECT _GetAdjustedWindowRect(RECT rcWindow)
         {
             // This should only be used to work around issues in the Framework that were fixed in 4.0
@@ -555,9 +495,6 @@ namespace Microsoft.Windows.Shell
         // don't match the current window location and it's not in a maximized or minimized state.
         // Because this isn't doced or supported, it's also not incredibly consistent.  Sometimes some things get updated in
         // different orders, so this isn't absolutely reliable.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// <SecurityNote>
         private bool _IsWindowDocked
         {
             get
@@ -583,9 +520,6 @@ namespace Microsoft.Windows.Shell
 
         #region WindowProc and Message Handlers
 
-        /// <SecurityNote>
-        ///   Critical : Accesses critical _hwnd
-        /// <SecurityNote>
         private IntPtr _WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // Only expecting messages for our cached HWND.
@@ -602,9 +536,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleSetTextOrIcon(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             bool modified = _ModifyStyle(WS.VISIBLE, 0);
@@ -623,9 +554,6 @@ namespace Microsoft.Windows.Shell
             return lRet;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleNCActivate(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // Despite MSDN's documentation of lParam not being used,
@@ -647,9 +575,6 @@ namespace Microsoft.Windows.Shell
         //
         // At least on RTM Win7 we can avoid the problem by making the client area not extactly match the non-client
         // area, so we added the NonClientFrameEdges property.
-        /// <SecurityNote>
-        ///   Critical : Calls critical Marshal.PtrToStructure
-        /// <SecurityNote>
         private IntPtr _HandleNCCalcSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // lParam is an [in, out] that can be either a RECT* (wParam == FALSE) or an NCCALCSIZE_PARAMS*.
@@ -728,9 +653,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleNCHitTest(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             DpiScale dpi = _window.GetDpi();
@@ -788,9 +710,6 @@ namespace Microsoft.Windows.Shell
             return new IntPtr((int)ht);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// <SecurityNote>
         private IntPtr _HandleNCRButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // Emulate the system behavior of clicking the right mouse button over the caption area
@@ -803,9 +722,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// <SecurityNote>
         private IntPtr _HandleSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             const int SIZE_MAXIMIZED = 2;
@@ -826,9 +742,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical Marshal.PtrToStructure
-        /// <SecurityNote>
         private IntPtr _HandleWindowPosChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // http://blogs.msdn.com/oldnewthing/archive/2008/01/15/7113860.aspx
@@ -858,9 +771,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleDwmCompositionChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             _UpdateFrameState(false);
@@ -869,9 +779,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleSettingChange(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // There are several settings that can cause fixups for the template to become invalid when changed.
@@ -884,9 +791,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private IntPtr _HandleEnterSizeMove(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // This is only intercepted to deal with bugs in Window in .Net 3.5 and below.
@@ -954,9 +858,6 @@ namespace Microsoft.Windows.Shell
         /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
         /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
         /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private bool _ModifyStyle(WS removeStyle, WS addStyle)
         {
             Assert.IsNotDefault(_hwnd);
@@ -974,9 +875,6 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         /// Get the WindowState as the native HWND knows it to be.  This isn't necessarily the same as what Window thinks.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private WindowState _GetHwndState()
         {
             var wpl = NativeMethods.GetWindowPlacement(_hwnd);
@@ -992,9 +890,6 @@ namespace Microsoft.Windows.Shell
         /// Get the bounding rectangle for the window in physical coordinates.
         /// </summary>
         /// <returns>The bounding rectangle for the window.</returns>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private Rect _GetWindowRect()
         {
             // Get the window rectangle.
@@ -1011,9 +906,6 @@ namespace Microsoft.Windows.Shell
         /// <remarks>
         /// We want to update the menu while we have some control over whether the caption will be repainted.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _UpdateSystemMenu(WindowState? assumeState)
         {
             const MF mfEnabled = MF.ENABLED | MF.BYCOMMAND;
@@ -1068,9 +960,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _UpdateFrameState(bool force)
         {
             if (IntPtr.Zero == _hwnd || _hwndSource.IsDisposed)
@@ -1099,17 +988,11 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _ClearRoundingRegion()
         {
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _SetRoundingRegion(WINDOWPOS? wp)
         {
             const int MONITOR_DEFAULTTONEAREST = 0x00000002;
@@ -1235,9 +1118,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private static IntPtr _CreateRoundRectRgn(Rect region, double radius)
         {
             // Round outwards.
@@ -1261,9 +1141,6 @@ namespace Microsoft.Windows.Shell
                 (int)Math.Ceiling(radius));
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "HRGNs")]
         private static void _CreateAndCombineRoundRectRgn(IntPtr hrgnSource, Rect region, double radius)
         {
@@ -1304,9 +1181,6 @@ namespace Microsoft.Windows.Shell
             return true;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _ExtendGlassFrame()
         {
             Assert.IsNotNull(_window);
@@ -1442,9 +1316,6 @@ namespace Microsoft.Windows.Shell
 
         #region Remove Custom Chrome Methods
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _RestoreStandardChromeState(bool isClosing)
         {
             VerifyAccess();
@@ -1461,9 +1332,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Unsubscribes event handler from critical _hwndSource
-        /// <SecurityNote>
         private void _UnhookCustomChrome()
         {
             Assert.IsNotDefault(_hwnd);
@@ -1476,9 +1344,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Unsubscribes critical event handler
-        /// <SecurityNote>
         private void _RestoreFrameworkIssueFixups()
         {
             var rootElement = (FrameworkElement)VisualTreeHelper.GetChild(_window, 0);
@@ -1496,9 +1361,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _RestoreGlassFrame()
         {
             Assert.IsNull(_chromeInfo);
@@ -1521,9 +1383,6 @@ namespace Microsoft.Windows.Shell
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private void _RestoreHrgn()
         {
             _ClearRoundingRegion();

@@ -434,9 +434,6 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Properties
 
         #region Internal Methods
-        /// <SecurityNote>
-        /// Critical   : Elevates to be able to set the print job id, which demands DefaultPrinting
-        /// </SecurityNote>
         internal
         void
         StartDocument(
@@ -981,9 +978,6 @@ namespace System.Windows.Xps.Serialization
 
         #region constructor
 
-        /// <SecurityNote>
-        /// Critical - Sets up the gdiDevice which is critical
-        /// </SecurityNote>
         public
         MXDWSerializationManager(
             PrintQueue   queue
@@ -1010,9 +1004,6 @@ namespace System.Windows.Xps.Serialization
 
         #endregion constructor
 
-        ///<SecurityNote>
-        /// Critical    - Initilaizes critial fieled _mxdwFileName
-        ///</SecurityNote>
         public
         void
         EnablePassThru(
@@ -1027,9 +1018,6 @@ namespace System.Windows.Xps.Serialization
             _mxdwFileName = GdiDevice.ExtEscGetName();
         }
 
-        ///<SecurityNote>
-        /// Critical    - Exposes user selected file path
-        ///</SecurityNote>
         public
         String
         MxdwFileName
@@ -1068,9 +1056,6 @@ namespace System.Windows.Xps.Serialization
             return printTicket;
         }
 
-        /// <SecurityNote>
-        /// Critical    - access _gdiDivice
-        /// </SecurityNote>
         private MetroToGdiConverter GdiDevice
         {
             get
@@ -1082,18 +1067,12 @@ namespace System.Windows.Xps.Serialization
         private
         PrintQueue              _printQueue;
 
-        /// <SecurityNote>
-        /// Critical    - device is used to aquire mxdw file.  Set is only valid in constructor
-        /// </SecurityNote>
         private
         MetroToGdiConverter     _gdiDevice;
 
         private
         String                  _jobName;
 
-        /// <SecurityNote>
-        /// Critical    - User selected file path recieved from mxdw driver.  Path information is critical
-        /// </SecurityNote>
         private
         String                  _mxdwFileName;
 

@@ -146,10 +146,6 @@ namespace MS.Internal.Commands
         /// <summary>
         ///     Executes the command on the given command source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls critical function (ExecuteCommandSource)
-        ///     TreatAsSafe - always passes in false for userInitiated, which is safe
-        /// </SecurityNote>
         internal static void ExecuteCommandSource(ICommandSource commandSource)
         {
             CriticalExecuteCommandSource(commandSource, false);
@@ -158,12 +154,6 @@ namespace MS.Internal.Commands
         /// <summary>
         ///     Executes the command on the given command source.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - sets the user initiated bit on a command, which is used
-        ///            for security purposes later. It is important to validate 
-        ///            the callers of this, and the implementation to make sure
-        ///            that we only call MarkAsUserInitiated in the correct cases.
-        /// </SecurityNote>
         internal static void CriticalExecuteCommandSource(ICommandSource commandSource, bool userInitiated)
         {
             ICommand command = commandSource.Command;

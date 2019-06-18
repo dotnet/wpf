@@ -526,90 +526,60 @@ namespace MS.Win32.Pointer
         /// <summary>
         /// Gets the list of pointer devices currently installed on the system.  Analagous to TabletDevice for WPF.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDevices", SetLastError = true)]
         internal static extern bool GetPointerDevices([In, Out] ref UInt32 deviceCount, [In, Out] POINTER_DEVICE_INFO[] devices);
 
         /// <summary>
         /// Gets the set of cursors (analagous to a StylusDevice for WPF) for a pointer device (TabletDevice).
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceCursors", SetLastError = true)]
         internal static extern bool GetPointerDeviceCursors([In] IntPtr device, [In, Out] ref UInt32 cursorCount, [In, Out] POINTER_DEVICE_CURSOR_INFO[] cursors);
 
         /// <summary>
         /// Gets the data for the current pointer event for the passed pointer id
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerInfo", SetLastError = true)]
         internal static extern bool GetPointerInfo([In] UInt32 pointerId, [In, Out] ref POINTER_INFO pointerInfo);
 
         /// <summary>
         /// Gets the history data for the current pointer event for the passed pointer id
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerInfoHistory", SetLastError = true)]
         internal static extern bool GetPointerInfoHistory([In] UInt32 pointerId, [In, Out] ref UInt32 entriesCount, [In, Out] POINTER_INFO[] pointerInfo);
 
         /// <summary>
         /// Gets the pointer device properties for the passed device
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceProperties", SetLastError = true)]
         internal static extern bool GetPointerDeviceProperties([In] IntPtr device, [In, Out] ref UInt32 propertyCount, [In, Out] POINTER_DEVICE_PROPERTY[] pointerProperties);
 
         /// <summary>
         /// Gets the pointer device rectangle and associated display rectangle for the particular pointer device
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceRects", SetLastError = true)]
         internal static extern bool GetPointerDeviceRects([In] IntPtr device, [In, Out] ref RECT pointerDeviceRect, [In, Out] ref RECT displayRect);
 
         /// <summary>
         /// Gets the cursor id for the particular pointer input (by pointer id)
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerCursorId", SetLastError = true)]
         internal static extern bool GetPointerCursorId([In] UInt32 pointerId, [In, Out] ref UInt32 cursorId);
 
         /// <summary>
         /// Gets the pen information for the given pen pointer
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerPenInfo", SetLastError = true)]
         internal static extern bool GetPointerPenInfo([In] UInt32 pointerId, [In, Out] ref POINTER_PEN_INFO penInfo);
 
         /// <summary>
         /// Gets the touch information for the given touch pointer
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerTouchInfo", SetLastError = true)]
         internal static extern bool GetPointerTouchInfo([In] UInt32 pointerId, [In, Out] ref POINTER_TOUCH_INFO touchInfo);
 
         /// <summary>
         /// Gets the raw data corresponding to the various properties.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(DllImport.User32, EntryPoint = "GetRawPointerDeviceData", SetLastError = true)]
         internal static extern bool GetRawPointerDeviceData([In] UInt32 pointerId, [In] UInt32 historyCount, [In] UInt32 propertiesCount, [In] POINTER_DEVICE_PROPERTY[] pProperties, [In, Out] int[] pValues);
 

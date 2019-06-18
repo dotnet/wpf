@@ -64,12 +64,6 @@ namespace System.Windows.Documents
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This method is critical only because its base class method is critical.
-        ///     PublicOK: This just changes the state of the composition string from undetermined to determined. 
-        ///               And of course, this does not expose any critical data.
-        ///               Protected by link demand to match base class.
-        /// </SecurityNote>
         public override void Complete()
         {
             _pendingComplete = true;
@@ -161,9 +155,6 @@ namespace System.Windows.Documents
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        ///     Critical: This calls critical COM interop.
-        /// </SecurityNote>
         internal static void CompleteCurrentComposition(UnsafeNativeMethods.ITfDocumentMgr documentMgr)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -184,9 +175,6 @@ namespace System.Windows.Documents
             Marshal.ReleaseComObject(context);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This calls critical COM interop.
-        /// </SecurityNote>
         internal static UnsafeNativeMethods.ITfCompositionView GetCurrentCompositionView(UnsafeNativeMethods.ITfDocumentMgr documentMgr)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -331,9 +319,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///     Get ITfContextView of the context.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.ReleaseComObject which LinkDemands
-        ///</SecurityNote>
         private static UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
         {
             UnsafeNativeMethods.ITfContextComposition contextComposition;

@@ -53,20 +53,12 @@ namespace MS.Internal.Printing.Configuration
     {
         // Called by P/Invoke when returning SafeHandle. It's private in order to prevent handle
         // creation by the constructor.
-        /// <SecurityNote>
-        ///     Critical: This code derives from SafeHandle which is link demand and inheritance demand protected
-        /// </SecurityNote>
         private SafePTProviderHandle() : base(IntPtr.Zero, true)
         {
         }
 
         // We should define other constructors if and only if we need to support user-supplied handles.
         // Do not provide a finalizer - SafeHandle's critical finalizer will call ReleaseHandle() for you.
-        /// <SecurityNote>
-        ///     Critical: This code touches Handle which is critical
-        ///     TreatAsSafe: Exposing Information as to whether a handle is valid or not is deemed as safe
-        ///     Method cannot be annotated SecurityCritical because overriden method is not annotated SecurityCritical
-        /// </SecurityNote>
         public override bool IsInvalid
         {
             get
@@ -83,9 +75,6 @@ namespace MS.Internal.Printing.Configuration
         // The boolean returned should be true for success and false if the runtime
         // should fire a SafeHandleCriticalFailure MDA (CustomerDebugProbe) if that
         // MDA is enabled.
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable Devmode  manipulation in Intranet Zone
-        ///</SecurityNote>
         protected override bool ReleaseHandle()
         {
             return PTUtility.IsSuccessCode(UnsafeNativeMethods.PTCloseProviderImpl(this.handle));
@@ -169,10 +158,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable Devmode  manipulation in Intranet Zone
-        ///               Initializes critical _providerHandle
-        ///</SecurityNote>
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -236,11 +221,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable device capabilities manipulation in Intranet Zone
-        ///             - calls a critical method to seek a COM IStream
-        ///             - Access critical _providerHandle
-        ///</SecurityNote>
         [PrintingPermission(
          SecurityAction.Demand,
         Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -313,11 +293,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable enable Print Ticket manipulation in Intranet Zone
-        ///             - calls a critical method to seek a COM IStream
-        ///             - Accesses critical _providerHandle
-        ///</SecurityNote>
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -428,11 +403,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable conversion of a devmode to a PrintTicket manipulation in Intranet Zone
-        ///             - calls a critical method to seek a COM IStream
-        ///             - Accesses critical _providerHandle
-        ///</SecurityNote>
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -500,10 +470,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable the conversion of a PrintTicket to devmode in Intranet Zone
-        ///             - Accesses critical _providerHandle
-        ///</SecurityNote>
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -569,9 +535,6 @@ namespace MS.Internal.Printing.Configuration
                                               errorMsg);
         }
 
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release critical _providerHandle
-        ///</SecurityNote>
         public override void Release()
         {
             if (_providerHandle != null)
@@ -589,9 +552,6 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Implement Dispose pattern to release print ticket handle which can't be released by GC in WOW64 due to restriction from prntvpt!PTCloseProvider
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release critical _providerHandle
-        ///</SecurityNote>
         protected override void Dispose(bool disposing)
         {
             if (_disposed)
@@ -619,9 +579,6 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Methods
 
-        ///<SecurityNote>
-        /// Critical    - Accesses critical _providerHandle
-        ///</SecurityNote>
         private void VerifyAccess()
         {
             if (_providerHandle == null)
@@ -645,10 +602,6 @@ namespace MS.Internal.Printing.Configuration
         /// </remarks>
         /// <param name="stream">the source MemoryStream</param>
         /// <returns>IStream copy of the input stream</returns>
-        ///<SecurityNote>
-        /// Critical    - the method copies content from the managed stream object to unmanaged memory
-        ///             - calls a critical method to seek a COM IStream
-        ///</SecurityNote>
         private static IStream IStreamFromMemoryStream(MemoryStream stream)
         {
             if (stream == null)
@@ -691,9 +644,6 @@ namespace MS.Internal.Printing.Configuration
         /// </remarks>
         /// <param name="umBuffer">buffer that contains native data</param>
         /// <param name="bufferSize">size of umBuffer buffer</param>
-        ///<SecurityNote>
-        /// Critical    - the method copies unmanaged memory content into a managed stream object
-        ///</SecurityNote>
         private static MemoryStream MemoryStreamFromIStream(IStream stream)
         {
 
@@ -725,9 +675,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="src">the source array</param>
         /// <param name="dst">the destination IStream</param>
         /// <param name="byteCount">the number of bytes to copy</param>
-        ///<SecurityNote>
-        /// Critical    - Asserts unmanaged code permissions to write to COM IStream
-        ///</SecurityNote>
         private static void CopyArrayToIStream(byte [] src, IStream dst, uint byteCount)
         {
             Invariant.Assert(src.Length >= byteCount);
@@ -786,9 +733,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="src">the source IStream</param>
         /// <param name="dst">the destination MemoryStream</param>
         /// <param name="byteCount">the number of bytes to copy</param>
-        ///<SecurityNote>
-        /// Critical    - Asserts unmanaged code permissions to read from COM IStream
-        ///</SecurityNote>
         private static void CopyIStreamToArray(IStream src, byte [] dst, uint byteCount)
         {
             Invariant.Assert(dst.Length >= byteCount);
@@ -837,9 +781,6 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Ensures an IStream has enough capacity to write byteCount more bytes
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - Asserts unmanaged code permissions to change COM IStream position and length
-        ///</SecurityNote>
         private static void EnsureRemainingIStreamLength(IStream stream, uint byteCount)
         {
             ulong iStreamPosition = 0;
@@ -873,9 +814,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="fDeleteOnRelease">Delete the allocated memory when the stream is released</param>
         /// <param name="ppstm">Created Stream</param>
         /// <returns>HRESULT</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Creates an IStream that can read from\write to arbitrary memory locations
-        ///</SecurityNote>
         private static IStream CreateStreamOnHGlobal()
         {
             IStream result;
@@ -889,9 +827,6 @@ namespace MS.Internal.Printing.Configuration
             return result;
         }
         
-        ///<SecurityNote>
-        /// Critical    - Calls a critical method to release COM object.
-        ///</SecurityNote>
         private static void DeleteIStream(ref IStream stream)
         {
             if (stream != null)
@@ -901,9 +836,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
         
-        ///<SecurityNote>
-        /// Critical    - Asserts unmanaged code permissions to seeek COM IStream.
-        ///</SecurityNote>
         private static void RewindIStream(IStream stream)
         {
             stream.Seek(0, 0 /*STREAM_SEEK_SET*/ , IntPtr.Zero);

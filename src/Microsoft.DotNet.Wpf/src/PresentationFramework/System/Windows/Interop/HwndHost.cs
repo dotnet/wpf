@@ -29,11 +29,6 @@ namespace System.Windows.Interop
     ///     The HwndHost class hosts an HWND inside of an Avalon tree.
     /// </summary>
     ///<remarks> Subclassing requires unmanaged code permission</remarks>
-    ///<SecurityNote>
-    ///
-    ///     Inheritance demand put in place - as to host activeX controls you should have Unmanaged code permission.
-    ///
-    ///</SecurityNote>
 
     public abstract class HwndHost : FrameworkElement, IDisposable, IWin32Window, IKeyboardInputSink
     {
@@ -47,18 +42,11 @@ namespace System.Windows.Interop
         ///     Constructs an instance of the HwndHost class.
         /// </summary>
         ///<remarks> Not available in Internet zone</remarks>
-        ///<SecurityNote>
-        ///     Critical - calls critical code, sets critical _fTrusted flag.
-        ///     PublicOk - trusted flag is set to false.
-        ///</SecurityNote>
         protected HwndHost()
         {
             Initialize( false ) ;
         }
 
-        ///<SecurityNote>
-        ///     Critical sets fTrustedBit.
-        ///</SecurityNote>
         internal HwndHost(bool fTrusted )
         {
             Initialize( fTrusted ) ;
@@ -87,10 +75,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code accesses IsWindow, returns hwndHandle.
-        ///     PublicOk: There is a demand
-        /// </SecurityNote>
         public IntPtr Handle
         {
             get
@@ -105,10 +89,6 @@ namespace System.Windows.Interop
         ///     An event that is notified of all unhandled messages received
         ///     by the hosted window.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical : Allows callers to sublcass win32 HWnds which is considered a privilaged operation
-        ///     Safe     : Demands unmanaged code permission.
-        ///</SecurityNote>
         public event HwndSourceHook MessageHook
         {
             add
@@ -156,10 +136,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// </summary>
         /// <param name="e"></param>
-        ///<SecurityNote>
-        /// Critical - Calls ComponentDispatcher.UnsecureCurrentKeyboardMessage.
-        /// TreatAsSafe - Only calls for trusted controls
-        ///</SecurityNote>
         protected override void OnKeyUp(KeyEventArgs e)
         {
             MSG msg;
@@ -194,10 +170,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// </summary>
         /// <param name="e"></param>
-        ///<SecurityNote>
-        /// Critical - Calls ComponentDispatcher.UnsecureCurrentKeyboardMessage.
-        /// TreatAsSafe - Only calls for trusted controls
-        ///</SecurityNote>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             MSG msg;
@@ -237,28 +209,16 @@ namespace System.Windows.Interop
         //     The security attributes on the virtual methods within this region mirror the corresponding
         //     IKeyboardInputSink methods; customers can override those methods, so we insert a LinkDemand
         //     to encourage them to have a LinkDemand too (via FxCop).
-        // </SecurityNote>
 
         /// <summary>
         ///     Registers a IKeyboardInputSink with the HwndSource in order
         ///     to retreive a unique IKeyboardInputSite for it.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     The security attributes on this method mirror the corresponding IKeyboardInputSink method;
-        ///     customers can override this method, so we insert a LinkDemand.
-        /// </SecurityNote>
         protected virtual IKeyboardInputSite RegisterKeyboardInputSinkCore(IKeyboardInputSink sink)
         {
             throw new InvalidOperationException(SR.Get(SRID.HwndHostDoesNotSupportChildKeyboardSinks));
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         IKeyboardInputSite IKeyboardInputSink.RegisterKeyboardInputSink(IKeyboardInputSink sink)
         {
@@ -274,22 +234,11 @@ namespace System.Windows.Interop
         ///     modify the MSG structure, it's passed by reference only as
         ///     a performance optimization.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     The security attributes on this method mirror the corresponding IKeyboardInputSink method;
-        ///     customers can override this method, so we insert a LinkDemand.
-        /// </SecurityNote>
         protected virtual bool TranslateAcceleratorCore(ref MSG msg, ModifierKeys modifiers)
         {
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOk: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateAccelerator(ref MSG msg, ModifierKeys modifiers)
         {
@@ -317,10 +266,6 @@ namespace System.Windows.Interop
         ///     any other methods are called.  It may be set multiple times,
         ///     and should be set to null before disposal.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
         IKeyboardInputSite IKeyboardInputSink.KeyboardInputSite { get;  set; }
 
         /// <summary>
@@ -331,22 +276,11 @@ namespace System.Windows.Interop
         ///     If this component contains child components, the container
         ///     OnMnemonic will need to call the child's OnMnemonic method.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     The security attributes on this method mirror the corresponding IKeyboardInputSink method;
-        ///     customers can override this method, so we insert a LinkDemand.
-        /// </SecurityNote>
         protected virtual bool OnMnemonicCore(ref MSG msg, ModifierKeys modifiers)
         {
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.OnMnemonic(ref MSG msg, ModifierKeys modifiers)
         {
@@ -361,22 +295,11 @@ namespace System.Windows.Interop
         ///     It is illegal to modify the MSG structure, it's passed by reference
         ///     only as a performance optimization.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     The security attributes on this method mirror the corresponding IKeyboardInputSink method;
-        ///     customers can override this method, so we insert a LinkDemand.
-        /// </SecurityNote>
         protected virtual bool TranslateCharCore(ref MSG msg, ModifierKeys modifiers)
         {
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateChar(ref MSG msg, ModifierKeys modifiers)
         {
@@ -386,11 +309,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     This returns true if the sink, or a child of it, has focus. And false otherwise.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: Calls a method with a SUC - GetFocus.
-        ///     TreatAsSafe: No critical information exposed.
-        ///                  It's ok to return whether hwndHost has focus within itself in PT.
-        ///</SecurityNote>
         protected virtual bool HasFocusWithinCore()
         {
             HandleRef hwndFocus = new HandleRef(this, UnsafeNativeMethods.GetFocus());
@@ -401,9 +319,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        /// <SecurityNote>
-        ///     PublicOK: It's ok to return whether hwndHost has focus within itself in PT.
-        /// </SecurityNote>
         bool IKeyboardInputSink.HasFocusWithin()
         {
             return HasFocusWithinCore();
@@ -419,11 +334,6 @@ namespace System.Windows.Interop
         ///     window, and the visibility of the window.
         /// </remarks>
         ///<remarks> Not available in Internet zone</remarks>
-        ///<SecurityNote>
-        ///     Critical: This code accesses critical code and also calls into PresentationSource
-        ///     PublicOk : Repositioning the activeX control is ok.
-        ///                Net effect is to make window location consistent with what layout calculated.
-        ///</SecurityNote>
         public void UpdateWindowPos()
         {
             // Verify the thread has access to the context.
@@ -488,11 +398,6 @@ namespace System.Windows.Interop
         // Translate the layout information assigned to us from the co-ordinate
         // space of this element, through the root visual, to the Win32 client
         // co-ordinate space
-        ///<SecurityNote>
-        ///     Critical: This code accesses critical code and also calls into PresentationSource
-        ///     TAS : Calculate the new position of the activeX control is ok.
-        ///                Net effect is to make window location consistent with what layout calculated.
-        ///</SecurityNote>
         private NativeMethods.RECT CalculateAssignedRC(PresentationSource source)
         {
             Rect rectElement = new Rect(RenderSize);
@@ -517,10 +422,6 @@ namespace System.Windows.Interop
         /// Gets the ratio of the DPI between the parent of <see cref="_hwnd"/>
         /// and <see cref="_hwnd"/>. Normally, this ratio is 1. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls native methods
-        ///     Safe: Returns only non-Critical information
-        /// </SecurityNote>
         private double DpiParentToChildRatio
         {
             get
@@ -573,10 +474,6 @@ namespace System.Windows.Interop
         ///     Note that the calling thread must be the dispatcher thread.
         ///     If a window is being hosted, that window is destroyed.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical - call to RemoveSourceChangeHandler invokes critical delegate.
-        ///     SecurityTreatAsSafe : - disposing the HwndHost is considered ok.
-        ///</SecurityNote>
         protected virtual void Dispose(bool disposing)
         {
             if (_isDisposed == true)
@@ -662,12 +559,6 @@ namespace System.Windows.Interop
         ///     hosted child window.
         /// </summary>
         ///<remarks> Not available in Internet zone</remarks>
-        ///<SecurityNote>
-        ///     Critical - accesses _hwnd Critical member.
-        ///     PublicOk - Inheritance Demand for unmanaged codepermission to buslclass.
-        ///                any caller of the protected must have Unmanaged code permission.
-        ///     DemandIfUntrusted is there as a defense in depth measure.
-        /// </SecurityNote>
         protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             DemandIfUntrusted();
@@ -746,9 +637,6 @@ namespace System.Windows.Interop
             return new HwndHostAutomationPeer(this);
         }
 
-        /// <SecurityNote>
-        ///     Critical    - Calls critical HwndHost.CriticalHandle.
-        /// </SecurityNote>
         private IntPtr OnWmGetObject(IntPtr wparam, IntPtr lparam)
         {
             IntPtr result = IntPtr.Zero;
@@ -772,11 +660,6 @@ namespace System.Windows.Interop
         /// update child window's Rect using these new coordinates.
         /// </summary>
         /// <param name="rcBoundingBox"></param>
-        ///<SecurityNote>
-        ///     Critical - calls SetWindowPos.
-        ///     PublicOk - Ok to move inner window - as it's a WS_CHILD of a hosted window.
-        ///                We explicitly in BuildWindow if the window created is not a WS_CHILD.
-        ///</SecurityNote>
         protected virtual void OnWindowPositionChanged(Rect rcBoundingBox)
         {
             if (_isDisposed)
@@ -815,13 +698,6 @@ namespace System.Windows.Interop
         ///     return value can be changed appropriately.
         /// </remarks>
         ///<remarks> Not available in Internet zone</remarks>
-        ///<SecurityNote>
-        ///     Critical - calls CriticalHandle
-        ///     TreatAsSafe - CriticalHandle used for a null check, not leaked out.
-        ///                   Ok to Override MeasureOverride and return a size in PT.
-        /// Demand put in place as a defense in depth measure.
-        ///
-        ///</SecurityNote>
         protected override Size MeasureOverride(Size constraint)
         {
             DemandIfUntrusted();
@@ -858,10 +734,6 @@ namespace System.Windows.Interop
             return new Rect(RenderSize);
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls many native methods, accesses critical data
-        ///     TreatAsSafe - Demands UIWindow permission before giving out a bitmap of this window.
-        ///</SecurityNote>
         private DrawingGroup GetDrawingHelper()
         {
             // Printing an HWND requires UIPermissionWindow.AllWindows to give out its pixels.
@@ -962,10 +834,6 @@ namespace System.Windows.Interop
             return drawingGroup;
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls a method that linkdemands.
-        ///                creates critical for set data.
-        ///</SecurityNote>
         private void Initialize( bool fTrusted )
         {
             _fTrusted = new SecurityCriticalDataForSet<bool> ( fTrusted ) ;
@@ -982,9 +850,6 @@ namespace System.Windows.Interop
         ///<summary>
         ///     Use this method as a defense-in-depth measure only.
         ///</summary>
-        ///<SecurityNote>
-        ///     Critical : Demands which is critical
-        ///</SecurityNote>
         private void DemandIfUntrusted()
         {
             if ( ! _fTrusted.Value )
@@ -993,10 +858,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls CriticalFromVisual.
-        /// TreatAsSafe - does not expose the HwndSource obtained.
-        ///</SecurityNote>
         private void OnSourceChanged(object sender, SourceChangedEventArgs e)
         {
             // Remove ourselves as an IKeyboardInputSinks child of our previous
@@ -1055,10 +916,6 @@ namespace System.Windows.Interop
             UpdateWindowPos();
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into critical method EnableWindow
-        ///     TreatAsSafe: Changing window to being enabled is safe.
-        /// </SecurityNote>
         private void OnEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (_isDisposed)
@@ -1070,11 +927,6 @@ namespace System.Windows.Interop
             UnsafeNativeMethods.EnableWindow(_hwnd, boolNewValue);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into critical method show window
-        ///     TreatAsSafe: Changing window visibility is safe.
-        ///                  Window is always a child window.
-        /// </SecurityNote>
         private void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (_isDisposed)
@@ -1100,11 +952,6 @@ namespace System.Windows.Interop
         // 1) a parent window is present, build the child window
         // 2) a parent is present, reparent the child window to it
         // 3) a parent window is not present, hide the child window by parenting it to SystemResources.Hwnd window.
-        /// <SecurityNote>
-        /// Critical - calls Critical GetParent and <see cref="SystemResources.GetDpiAwarenessCompatibleNotificationWindow(HandleRef)"/>
-        /// Safe - it doesn't disclose GetParent returned information. also
-        ///               as a defense in depth measure - we demand if not trusted. Setting trusted is critical
-        /// </SecurityNote>
         private void BuildOrReparentWindow()
         {
             DemandIfUntrusted();
@@ -1194,11 +1041,6 @@ namespace System.Windows.Interop
         }
 
 
-        /// <SecurityNote>
-        /// Critical: Calls critical methods - eg. GetWindowLong, IsParent, GetParent etc.
-        /// TreatAsSafe: We demand if the trusted bit is not set.
-        ///                      Setting the trusted bit is criical.
-        /// </SecurityNote>
         private void BuildWindow(HandleRef hwndParent)
         {
             // Demand unmanaged code to the caller. IT'S RISKY TO REMOVE THIS
@@ -1270,10 +1112,6 @@ namespace System.Windows.Interop
             InvalidateMeasure();
         }
 
-        /// <SecurityNote>
-        ///     Critical - calls CriticalHandle.
-        ///     TreatAsSafe - destroying a window previously created considered safe.
-        /// </SecurityNote>
         private void DestroyWindow()
         {
             // Destroy the window if we are hosting one.
@@ -1304,9 +1142,6 @@ namespace System.Windows.Interop
             return null;
         }
 
-        ///<SecurityNote>
-        ///     Critical - returns Handle
-        ///</SecurityNote>
         internal IntPtr CriticalHandle
         {
             get
@@ -1323,9 +1158,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - can be used to spoof messages.
-        ///</SecurityNote>
         private IntPtr SubclassWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -1353,19 +1185,10 @@ namespace System.Windows.Interop
         private DependencyPropertyChangedEventHandler _handlerVisibleChanged;
         private EventHandler _handlerLayoutUpdated;
 
-        ///<SecurityNote>
-        ///     Critical - ctor was critical. Manipulating/Handing this out to PT would be unsafe.
-        ///</SecurityNote>
         private HwndSubclass _hwndSubclass;
 
-        ///<SecurityNote>
-        ///     Critical - ctor was critical. Manipulating/Handing this out to PT would be unsafe.
-        ///</SecurityNote>
         private HwndWrapperHook _hwndSubclassHook;
 
-        ///<SecurityNote>
-        ///     Critical - ctor was critical. Manipulating/Handing this out to PT would be unsafe.
-        ///</SecurityNote>
         private HandleRef _hwnd;
 
         private ArrayList _hooks;

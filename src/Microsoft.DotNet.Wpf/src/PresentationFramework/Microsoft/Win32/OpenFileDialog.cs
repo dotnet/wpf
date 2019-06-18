@@ -45,11 +45,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Initializes a new instance of the OpenFileDialog class.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Creates a dialog that can be used to open a file.
-        ///     PublicOk: It is okay to set the options to their defaults.  The
-        ///             ctor does not show the dialog.
-        /// </SecurityNote>
         public OpenFileDialog() : base()
         {
             Initialize();
@@ -76,13 +71,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
         /// </Remarks>
-        /// <SecurityNote> 
-        ///     Critical: Creates a FileStream on a file, and asserts FileIOPermission in 
-        ///               order to do so.
-        ///     PublicOk: Demands FileDialogPermission  (FileDialogPermission.Read),
-        ///               doesn't allow user code to specify the file to be opened, 
-        ///               and opens the file with read-only FileAccess.
-        /// </SecurityNote>
         public Stream OpenFile()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -129,12 +117,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
         /// </Remarks>
-        /// <SecurityNote> 
-        ///     Critical: Creates a FileStream on a file, and asserts FileIOPermission in 
-        ///               order to do so.
-        ///     PublicOk: Demands FileDialogPermission  (FileDialogPermission.Read), and only
-        ///             opens the files for read access.
-        /// </SecurityNote>
         public Stream[] OpenFiles()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -187,10 +169,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: Sets Dialog options, which are critical for set.
-        ///     PublicOk: Demands FileIOPermission (PermissionState.Unrestricted)
-        /// </SecurityNote>
         public override void Reset()
         {
             SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -223,10 +201,6 @@ namespace Microsoft.Win32
         /// Gets or sets an option flag indicating whether the 
         /// dialog box allows multiple files to be selected.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Dialog options are critical for set. 
-        ///     PublicOk: Allowing MultiSelect is a safe operation
-        /// </SecurityNote>
         public bool Multiselect
         {
             get
@@ -249,11 +223,6 @@ namespace Microsoft.Win32
         /// Gets or sets a value indicating whether the read-only 
         /// check box is selected.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Dialog options are critical for set. (Only critical for set
-        ///             because setting options affects the behavior of the FileDialog)
-        ///     PublicOk: ReadOnlyChecked is not a security critical option
-        /// </SecurityNote>
         public bool ReadOnlyChecked
         {
             get
@@ -277,10 +246,6 @@ namespace Microsoft.Win32
         /// Gets or sets a value indicating whether the dialog 
         /// contains a read-only check box.  
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Dialog options are critical for set.
-        ///     PublicOk: ShowReadOnly is not a security critical option
-        /// </SecurityNote>
         public bool ShowReadOnly
         {
             get
@@ -316,13 +281,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Demands permissions appropriate to the dialog to be shown.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical as this asserts UIPermissions.
-        /// TreatAsSafe because the assert is only during a call to a base method
-        ///     and FileDialogOpenPermissions are demanded.
-        ///     The alternative would be to not call the base method, but it currently
-        ///     does additional validation we don't want to bypass.
-        /// </SecurityNote>
         protected override void CheckPermissionsToShowDialog()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -362,10 +320,6 @@ namespace Microsoft.Win32
         ///  structure - so all this function needs to do is
         ///  call GetOpenFileName and process the result code.
         /// </remarks>
-        /// <SecurityNote> 
-        ///     Critical:   Call to UnsafeNativeMethods.GetOpenFileName() and
-        ///                 UnsafeNativeMethods.CommDlgExtendedError()
-        /// </SecurityNote>
         internal override bool RunFileDialog(NativeMethods.OPENFILENAME_I ofn)
         {
             bool result = false;
@@ -422,10 +376,6 @@ namespace Microsoft.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical, as it calls methods on COM interface IFileDialog and IShellItem
-        ///               and returns full file paths that must not be exposed to partial trust code.
-        /// </SecurityNote>
         internal override string[] ProcessVistaFiles(IFileDialog dialog)
         {
             var openDialog = (IFileOpenDialog)dialog;
@@ -448,11 +398,6 @@ namespace Microsoft.Win32
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical, as it creates a new RCW, which requires unmanaged code permissions.
-        ///     TreatAsSafe, as it returns the managed COM interface, and not a handle.
-        ///     Calls on the interface will still be treated with security scrutiny.
-        /// </SecurityNote>
         internal override IFileDialog CreateVistaDialog()
         {
             new SecurityPermission(PermissionState.Unrestricted).Assert();
@@ -494,9 +439,6 @@ namespace Microsoft.Win32
         //  it's the calling code's responsibility to ensure that the
         //  base is initialized first.
         //
-        /// <SecurityNote> 
-        ///     Critical: Sets Dialog options, which are critical for set.
-        /// </SecurityNote>
         private void Initialize()
         {
             // OFN_FILEMUSTEXIST

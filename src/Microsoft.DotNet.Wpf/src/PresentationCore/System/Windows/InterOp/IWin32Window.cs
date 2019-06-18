@@ -22,10 +22,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Handle to the window.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This code should not be subclassed by third party code in partial trust
-        ///   PublicOK: This has an inheritance demandd
-        /// </SecurityNote>
         IntPtr Handle
         {
             get;

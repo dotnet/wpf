@@ -47,10 +47,6 @@ namespace MS.Internal.Security.RightsManagement
         /// RightsManagementException which has a COMException as an inner exception with the
         /// appropriate hr code.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into ThrowExceptionForHr which has a link demand
-        ///     TreatAsSafe: The net effect is the same as throwing an exception from your app
-        /// </SecurityNote>
         internal static void ThrowOnErrorCode(int hr)
         {
             // we can return if it is not a failure right away

@@ -33,10 +33,6 @@ namespace System.Windows.Media.Imaging
 {
     internal sealed class UnmanagedBitmapWrapper : BitmapSource
     {
-        /// <SecurityNote>
-        /// Critical - calls critical code method BitmapSource.UpdateCachedSettings
-        /// TreatAsSafe - all inputs are checked
-        /// </SecurityNote>
         public UnmanagedBitmapWrapper(BitmapSourceSafeMILHandle bitmapSource) :
             base(true)
         {            
@@ -54,10 +50,6 @@ namespace System.Windows.Media.Imaging
 
         #region Protected Methods
 
-        /// <SecurityNote>
-        /// Critical - eventually access'es critical resources (_wicSource)
-        /// TreatAsSafe - all inputs are checked
-        /// </SecurityNote>
         internal UnmanagedBitmapWrapper(bool initialize) :
             base(true)        
         {       

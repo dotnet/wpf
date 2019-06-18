@@ -8271,10 +8271,6 @@ namespace System.Windows.Controls
         /// This virtual method is called when ApplicationCommands.Copy command is executed.
         /// </summary>
         /// <param name="args"></param>
-        ///<SecurityNote>
-        /// Critical: Calls Secuirty Critical Clipboard operations in full and partial trust.
-        /// TreatAsSafe: Only puts text on the clipboard in full trust or a userinitiated command in partial trust through secured critical functions.
-        ///</SecurityNote>
         protected virtual void OnExecutedCopy(ExecutedRoutedEventArgs args)
         {
             if (ClipboardCopyMode == DataGridClipboardCopyMode.None)

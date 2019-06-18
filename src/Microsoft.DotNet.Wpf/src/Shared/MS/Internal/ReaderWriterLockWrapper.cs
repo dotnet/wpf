@@ -156,10 +156,6 @@ namespace MS.Internal
             CallWithNonPumpingWait(_exitReadAction);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into SynchronizationContext.SetSynchronizationContext which link demands
-        ///     Safe: Restores original SynchronizationContext
-        /// </SecurityNote>
         private void CallWithNonPumpingWait(Action callback)
         {
             SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
@@ -304,9 +300,6 @@ namespace MS.Internal
             /// <summary>
             ///     Wait for a set of handles.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - Calls WaitForMultipleObjectsEx which has a SUC.
-            /// </SecurityNote>
             [PrePrepareMethod]
             public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
             {

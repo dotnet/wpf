@@ -17,11 +17,6 @@ using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// This class is extensible; various members which could be used for visibility evaluation--
-    /// IsPublic, BaseType, CanAssignTo--are either virtual, or get their data from virtual methods.
-    /// For security-critical data, always check the underlying CLR type.
-    /// </SecurityNote>
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
@@ -35,9 +30,6 @@ namespace System.Xaml
         /// <summary>
         /// Lazy init: NullableReference.IsSet is null when not initialized
         /// </summary>
-        /// <SecurityNote>
-        /// We cache a visibility check based on this value, so it must be idempotent
-        /// </SecurityNote>
         private NullableReference<Type> _underlyingType;
         
         // Lazy init: null until initialized
@@ -76,10 +68,6 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
             if (underlyingType == null)
@@ -168,10 +156,6 @@ namespace System.Xaml
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Ensures idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         public Type UnderlyingType
         {
             get
@@ -187,10 +171,6 @@ namespace System.Xaml
         /// <summary>
         /// Accesses UnderlyingType without initializing it
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Doesn't modify field value. Field is value type, so caller cannot modify it.
-        /// </SecurityNote>
         internal NullableReference<Type> UnderlyingTypeInternal
         {
             get { return _underlyingType; }

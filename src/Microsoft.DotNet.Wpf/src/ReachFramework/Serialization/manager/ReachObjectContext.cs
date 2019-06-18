@@ -120,10 +120,6 @@ namespace System.Windows.Xps.Serialization
         /// <param name="serializablePropertyContext">
         /// The property from which this object was driven to serialization.
         /// </param>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a
-        /// ContextStack which is link critical
-        /// </SecurityNote>
         internal
         static
         SerializableObjectContext

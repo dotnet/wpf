@@ -427,10 +427,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Initializes critical type DynamicMethodRuntime
-        /// Safe: Initializes via safe ctor, and DMR demands at all its safe entry points
-        /// </SecurityNote>
         private void EnsureElevatedRuntime()
         {
             if (_elevatedRuntime == null)

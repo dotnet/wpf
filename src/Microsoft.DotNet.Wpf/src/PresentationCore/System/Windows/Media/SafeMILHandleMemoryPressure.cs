@@ -17,9 +17,6 @@ namespace System.Windows.Media
 {
     internal class SafeMILHandleMemoryPressure
     {
-        /// <SecurityNote>
-        ///    Critical: This code calls into AddMemoryPressure which has a link demand.
-        /// </SecurityNote>
         internal SafeMILHandleMemoryPressure(long gcPressure)
         {
             _gcPressure = gcPressure;
@@ -36,9 +33,6 @@ namespace System.Windows.Media
             Interlocked.Increment(ref _refCount);
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into RemoveMemoryPressure which has a link demand.
-        /// </SecurityNote>
         internal void Release()
         {
             if (Interlocked.Decrement(ref _refCount) == 0)

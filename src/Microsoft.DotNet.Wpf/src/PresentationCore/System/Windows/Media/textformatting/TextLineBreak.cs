@@ -83,10 +83,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Clone a new instance of TextLineBreak
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls unmanaged API LoCloneBreakRecord.
-        /// PublicOK - as it takes no parameter and retain no additional unmanaged resource. 
-        /// </SecurityNote>
         public TextLineBreak Clone()
         {
             IntPtr pbreakrec = IntPtr.Zero;
@@ -110,12 +106,6 @@ namespace System.Windows.Media.TextFormatting
         /// managed object. The parameter flag indicates whether the call is 
         /// from finalizer thread or the main UI thread.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls the setter of _breakRecord.Value which is type SecurityCriticalDataForSet.
-        ///            _breakRecord is the value received from call to LoCreateBreaks and being passed back in
-        ///            when building the next break. No code should have access to set it otherwise. 
-        /// Safe - as this does not take any parameter that it passes directly to the critical function. 
-        /// </SecurityNote>
         private void DisposeInternal(bool finalizing)
         {
             if (_breakRecord.Value != IntPtr.Zero)

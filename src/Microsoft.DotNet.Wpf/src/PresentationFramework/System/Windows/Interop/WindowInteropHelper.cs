@@ -60,10 +60,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        ///   PublicOK: There is a demand , this API not available in internet zone
-        /// </SecurityNote>
         public IntPtr Handle
         {
             get
@@ -73,9 +69,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        /// </SecurityNote>
         internal IntPtr CriticalHandle
         {
             get
@@ -91,10 +84,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        ///   PublicOK: There is a demand , this API not available in internet zone
-        /// </SecurityNote>
         public IntPtr Owner
         {
             get
@@ -124,10 +113,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Create the hwnd of the Window if the hwnd is not created yet.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: Create and exposes the window handle.
-        ///   PublicOK: We demand UIPermission.
-        /// </SecurityNote>
         public IntPtr EnsureHandle()
         {
             SecurityHelper.DemandUIWindowPermission();

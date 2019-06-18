@@ -75,10 +75,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="fRenderForBitmapEffect">True if we are rendering the visual
         /// to apply an effect to it</param>
         /// 
-        /// <SecurityNote>
-        /// Critical - Deals with bitmap handles
-        /// TreatAsSafe - validates all parameters, uses safe wrappers
-        /// </SecurityNote>
         internal void Render(Visual visual, Matrix worldTransform, Rect windowClip)
         {
             if (visual == null)

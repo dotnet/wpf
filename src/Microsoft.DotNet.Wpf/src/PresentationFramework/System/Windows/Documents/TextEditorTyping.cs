@@ -474,15 +474,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// ToggleInsert command handler
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code toggles the state of the insert key and in doing so touches Cicero code which is critical 
-        ///               (StartTrasitoryExtension and StopTransitoryExtension). It also calls 
-        ///               PresentationSource.[Add/Remove]SourceChangedHandler which are critical.
-        ///    TreatAsSafe: This code can do no harm and any state change can be reversed by hitting toggle again. 
-        ///               This code merely registers an internal handler to the PresentationSource.SourceChanged event. 
-        ///               The operation performed on the handler isnt something that external code cant already do today 
-        ///               by firing the EditingCommands.ToggleInsert command and is safe.
-        /// </SecurityNote>
         private static void OnToggleInsert(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -1626,10 +1617,6 @@ namespace System.Windows.Documents
         // win32 message queue for processing.
         // Avalon doesn't keep a separate queue for input events.  Instead
         // it interleaves work items with the win32 input queue.
-        /// <SecurityNote>
-        ///     Critical - Calls PeekMessage, and accesses the root window
-        ///     TreatAsSafe - The information it returns is safe to return.
-        /// </SecurityNote>
         private static bool IsMouseInputPending(TextEditor This)
         {
             bool mouseInputPending = false;

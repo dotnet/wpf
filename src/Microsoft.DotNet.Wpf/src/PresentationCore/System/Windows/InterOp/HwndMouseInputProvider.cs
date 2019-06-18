@@ -22,9 +22,6 @@ namespace System.Windows.Interop
 {
     internal sealed class HwndMouseInputProvider : DispatcherObject, IMouseInputProvider, IDisposable
     {
-        /// <SecurityNote>
-        ///     Accesses and store critical data. This class is also critical (_site,_source)
-        /// </SecurityNote>
         internal HwndMouseInputProvider(HwndSource source)
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert();
@@ -45,10 +42,6 @@ namespace System.Windows.Interop
             _queryCursorOperation = null;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This class accesses critical data, _site.
-        ///     TreatAsSafe: This class does not expose the critical data
-        /// </SecurityNote>
         public void Dispose()
         {
             if(_site != null)
@@ -90,11 +83,6 @@ namespace System.Windows.Interop
             _source = null;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource.
-        ///     TreatAsSafe:Information about whether a given input provider services
-        ///     a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert(null != _source && null != _source.Value);
@@ -102,11 +90,6 @@ namespace System.Windows.Interop
             return _source.Value.RootVisual == v;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource.
-        ///     TreatAsSafe: The method has no return value, and deactivating the mouse, while
-        ///     perhaps a nuisance, is not a security risk.
-        /// </SecurityNote>
         void IInputProvider.NotifyDeactivate()
         {
             if(_active)
@@ -118,10 +101,6 @@ namespace System.Windows.Interop
         }
 
         // Set the real cursor
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource and calls unmanaged code
-        ///     TreatAsSafe: This is a safe operation to expose.
-        /// </SecurityNote>
         bool IMouseInputProvider.SetCursor(Cursor cursor)
         {
             bool success = false;
@@ -147,10 +126,6 @@ namespace System.Windows.Interop
             return success;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource also causes elevation via call to GetCursorPos
-        ///     TreatAsSafe: This data about who has mouse capture is ok to give out
-        /// </SecurityNote>
         bool IMouseInputProvider.CaptureMouse()
         {
             if(_isDwmProcess)
@@ -219,10 +194,6 @@ namespace System.Windows.Interop
             return success;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource
-        ///     TreatAsSafe: This data about who has mouse capture is ok to give out
-        /// </SecurityNote>
         void IMouseInputProvider.ReleaseMouseCapture()
         {
             // MITIGATION_SETCURSOR
@@ -249,10 +220,6 @@ namespace System.Windows.Interop
         /// <param name="relativeTo">points will be returned relative to this element</param>
         /// <param name="points">relative points prior to the current mouse point (including the current one)</param>
         /// <returns>Count of points if succeeded , -1 if error</returns>
-        /// <SecurityNote>
-        /// SecurityCritical: This code calls into unsafe native methods
-        /// SecurityTreatAsSafe: We are adding the demand
-        /// </SecurityNote>
         int IMouseInputProvider.GetIntermediatePoints(IInputElement relativeTo, Point[] points)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -367,9 +334,6 @@ namespace System.Windows.Interop
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it handles all mouse messages and could be used to spoof input
-        /// </SecurityNote>
         internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -937,11 +901,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code cause an elevation to unmanaged code, it also can be
-        ///         used to cause focus changes. It calls into ReportInput which is critical
-        ///         Also, it calls WindowFromPoint which is a SecurityCritical function
-        /// </SecurityNote>
         private void PossiblyDeactivate(IntPtr hwndCapture, bool stillActiveIfOverSelf)
         {
             // we may have been disposed by a re-entrant call
@@ -1056,9 +1015,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _tme field
-        /// </SecurityNote>
         private void StartTracking(IntPtr hwnd)
         {
             if(!_tracking && !_isDwmProcess)
@@ -1077,9 +1033,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _tme field
-        /// </SecurityNote>
         private void StopTracking(IntPtr hwnd)
         {
             if(_tracking && !_isDwmProcess)
@@ -1103,11 +1056,6 @@ namespace System.Windows.Interop
                return ((IntPtr)((high << 16) | (low & 0xffff)));
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses code that could expose Hwndsource
-        ///     TreatAsSafe: This code uses the parameter locally and does not expose any private
-        ///                  information.
-        /// </SecurityNote>
         private bool IsOurWindow(IntPtr hwnd)
         {
             bool isOurWindow = false;
@@ -1148,13 +1096,6 @@ namespace System.Windows.Interop
             return isOurWindow;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code can cause input simulation and hence is critical.
-        ///     The current code path is only hit under RootBrowserWindow scenario for
-        ///     now. But the critical tag exists to prevent additional hookups since this
-        ///     code can be used for spoofing.
-        ///     Also, it calls WindowFromPoint which is a SecurityCritical function
-        /// </SecurityNote>
         private bool ReportInput(
             IntPtr hwnd,
             InputMode mode,
@@ -1374,11 +1315,6 @@ namespace System.Windows.Interop
         // last two MouseMove events, so that it can extract points from the
         // system buffer between these two.  This method is called at each
         // MouseMove event to record the required information.
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical field _source
-        ///     TreatAsSafe: This code uses the field locally and does not expose any private
-        ///                  information.
-        /// </SecurityNote>
         private void RecordMouseMove(int x, int y, int timestamp)
         {
             // (x,y) is in client coordinates, but the system buffer uses screen
@@ -1395,15 +1331,7 @@ namespace System.Windows.Interop
         }
 
 
-        /// <SecurityNote>
-        /// Critical:This is got under an elevation and is hence critical
-        /// This class also holds methods that can be used to spoof input
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource> _source;
-        /// <SecurityNote>
-        /// Critical:This is got under an elevation and is hence critical
-        /// This class also holds methods that can be used to spoof input
-        /// </SecurityNote>
         private  SecurityCriticalDataClass<InputProviderSite> _site;
         private int _msgTime;
         private NativeMethods.MOUSEMOVEPOINT _latestMovePoint;      // screen coordinates
@@ -1421,9 +1349,6 @@ namespace System.Windows.Interop
 
         private bool _isDwmProcess; // If we are the DWM, we need to always be _active, don't track focus.
 
-        /// <SecurityNote>
-        ///     Do not expose _tme to partial trust, it contains an HWND
-        /// </SecurityNote>
         private NativeMethods.TRACKMOUSEEVENT _tme = new NativeMethods.TRACKMOUSEEVENT();
 
         // MITIGATION_SETCURSOR

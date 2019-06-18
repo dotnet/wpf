@@ -453,14 +453,8 @@ namespace Standard
         uint GetCount();
         PKEY GetAt(uint iProp);
         
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
         
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
         
         void Commit();
@@ -655,9 +649,6 @@ namespace Standard
         // Ensures any cached information in this item is up to date, or returns __HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) if the item does not exist.
         void Update(IBindCtx pbc);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         PROPVARIANT GetProperty(IntPtr key);
 
         Guid GetCLSID(IntPtr key);

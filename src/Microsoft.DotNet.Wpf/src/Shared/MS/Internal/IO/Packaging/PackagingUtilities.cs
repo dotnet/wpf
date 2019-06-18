@@ -538,11 +538,6 @@ namespace MS.Internal.IO.Packaging
         /// Determine if current user has a User Profile so we can determine the appropriate
         /// scope to use for IsolatedStorage functionality.
         ///</summary>
-        ///<SecurityNote>
-        /// Critical - Asserts read registry permission...
-        ///          - Asserts ControlPrincipal to access current user identity
-        /// TAS - only returns a bool
-        ///</SecurityNote>
         private static bool UserHasProfile()
         {
             // Acquire permissions to read the one key we care about from the registry
@@ -861,9 +856,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// ProfileListKeyName
         /// </summary>
-        ///<SecurityNote>
-        /// _profileListKeyName must remain readonly for security reasons
-        ///</SecurityNote>
         private const string _profileListKeyName = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList";
         private const string _fullProfileListKeyName = @"HKEY_LOCAL_MACHINE\" + _profileListKeyName;
     }

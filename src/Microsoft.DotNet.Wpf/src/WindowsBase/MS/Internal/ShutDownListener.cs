@@ -51,19 +51,11 @@ namespace MS.Internal
     [FriendAccessAllowed]   // defined in Base, also used in Framework
     internal abstract class ShutDownListener : WeakReference
     {
-        /// <SecurityNote>
-        /// Critical - accesses AppDomain.DomainUnload event.
-        /// not SecurityTreatAsSafe.
-        /// </SecurityNote>
         internal ShutDownListener(object target)
             : this(target, ShutDownEvents.All)
         {
         }
 
-        /// <SecurityNote>
-        /// Critical - accesses AppDomain.DomainUnload and AppDomain.ProcessExit events (which have link demands).
-        /// not SecurityTreatAsSafe.
-        /// </SecurityNote>
         internal ShutDownListener(object target, ShutDownEvents events)
             : base(target)
         {
@@ -98,11 +90,6 @@ namespace MS.Internal
         abstract internal void OnShutDown(object target, object sender, EventArgs e);
 
         // stop listening for shutdown events
-        /// <SecurityNote>
-        ///     Critical: accesses AppDomain.DomainUnload event
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///                  It simply unattaches private callbacks.
-        /// </SecurityNote>
         internal void StopListening()
         {
             if ((_flags & PrivateFlags.Listening) == 0)

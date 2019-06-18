@@ -416,12 +416,6 @@ namespace MS.Internal.PtsHost
         //  hasTextContent -  True if any column in the page has text
         //                    content, i.e. does not contain only figures/floaters
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this call Critical functions FsQueryPageDetails, FsQueryTrackDetails,
-        ///            FsQuerySectionDetails and some PtsHelper functions.
-        /// Safe - as this can't be be used to pass arbitrary parameters.  All parameters passed
-        ///        in are either Critical for set or are generated within the function.
-        /// </SecurityNote>
         internal ReadOnlyCollection<ColumnResult> GetColumnResults(out bool hasTextContent)
         {
             Invariant.Assert(!IsDisposed);
@@ -541,10 +535,6 @@ namespace MS.Internal.PtsHost
         //
         // Returns: text range for contents of the column represented by 'pfstrack'
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsQueryTrackDetails and
-        ///            passes an IntPtr directly.
-        /// </SecurityNote>
         internal TextContentRange GetTextContentRangeFromColumn(IntPtr pfstrack)
         {
             Invariant.Assert(!IsDisposed);
@@ -580,10 +570,6 @@ namespace MS.Internal.PtsHost
         //
         // Returns: collection of ParagraphResults for the column's paragraphs
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsQueryTrackDetails and
-        ///            passes an IntPtr directly.
-        /// </SecurityNote>
         internal ReadOnlyCollection<ParagraphResult> GetParagraphResultsFromColumn(IntPtr pfstrack, Vector parentOffset, out bool hasTextContent)
         {
             Invariant.Assert(!IsDisposed);

@@ -92,9 +92,6 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        /// <SecurityNote>
-        ///     Critical - Calls critical AutomationPeer.Hwnd setter.
-        /// </SecurityNote>
         internal static AutomationPeer GetRootAutomationPeer(Visual rootVisual, IntPtr hwnd)
         {
             AutomationPeer root = null;
@@ -195,11 +192,6 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
         override protected Rect GetBoundingRectangleCore()
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
@@ -223,11 +215,6 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
         internal override Rect GetVisibleBoundingRectCore()
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
@@ -505,11 +492,6 @@ namespace System.Windows.Automation.Peers
         //
 
         ///
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
         override protected Point GetClickablePointCore()
         {
             Point pt = new Point(double.NaN, double.NaN);

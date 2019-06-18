@@ -26,10 +26,6 @@ namespace System.Windows
         /// Retrieves the data associated with the specified data format.
         /// </summary>
         /// <param name="format">The format of the data to retrieve.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         object GetData(string format);
 
         /// <summary>
@@ -38,10 +34,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="format">A Type representing the format of the data to 
         /// retrieve.</param> 
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         object GetData(Type format);
 
         /// <summary>
@@ -52,10 +44,6 @@ namespace System.Windows
         /// <param name="format">The format of the data to retrieve.</param>
         /// <param name="autoConvert">true to convert the data to the specified format; 
         /// otherwise, false.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         object GetData(string format, bool autoConvert);
 
         /// <summary>
@@ -63,10 +51,6 @@ namespace System.Windows
         /// or can be converted to, the specified format.
         /// </summary>
         /// <param name="format">The format for which to check.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         bool GetDataPresent(string format);
 
         /// <summary>
@@ -74,10 +58,6 @@ namespace System.Windows
         /// or can be converted to, the specified format.
         /// </summary>
         /// <param name="format">A Type representing the format for which to check.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         bool GetDataPresent(Type format);
 
         /// <summary>
@@ -88,20 +68,12 @@ namespace System.Windows
         /// <param name="format">The format for which to check.</param>
         /// <param name="autoConvert">true to determine whether data stored in this instance 
         /// can be converted.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         bool GetDataPresent(string format, bool autoConvert);
 
         /// <summary>
         /// Gets a list of all formats that data stored in this instance is associated
         /// with or can be converted to.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         string[] GetFormats();
 
         /// <summary>
@@ -113,10 +85,6 @@ namespace System.Windows
         /// <param name="autoConvert">true to retrieve all formats that data stored in this instance is
         /// associated with or can be converted to;
         /// false to retrieve only native data formats.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         string[] GetFormats(bool autoConvert);
 
         /// <summary>
@@ -124,10 +92,6 @@ namespace System.Windows
         /// data for the format.
         /// </summary>
         /// <param name="data">The data to store.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         void SetData(object data);
 
         /// <summary>
@@ -136,10 +100,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="format">The format associated with the data.</param>
         /// <param name="data">The data to store.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         void SetData(string format, object data);
 
          /// <summary>
@@ -148,10 +108,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="format">A Type representing the format associated with the data.</param>
         /// <param name="data">The data to store.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         void SetData(Type format, object data);
 
         /// <summary>
@@ -163,10 +119,6 @@ namespace System.Windows
         /// <param name="data">The data to store.</param>
         /// <param name="autoConvert">true to allow the data to be converted to another format;
         /// Otherwise, false.</param>
-        /// <SecurityNote>
-        ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
-        ///     this API in partial trust
-        /// </SecurityNote>
         void SetData(string format, object data, bool autoConvert);
      }
 

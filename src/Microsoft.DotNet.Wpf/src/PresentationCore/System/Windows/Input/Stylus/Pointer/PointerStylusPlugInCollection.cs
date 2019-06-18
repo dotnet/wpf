@@ -34,12 +34,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Gets if the collection is hooked to a PointerStylusPluginManager
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCritical data _manager.
-        /// TreatAsSafe - Just returns if _manager is null.  No data goes in or out.  Knowing
-        ///               the fact that you can recieve real time input is something that is safe
-        ///               to know and we want to expose.
-        /// </SecurityNote>
         internal override bool IsActiveForInput
         {
             get
@@ -66,12 +60,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Hooks/Unhooks the plugin collection as needed.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Presentation source access
-        ///            Calls SecurityCritical routines PresentationSource.CriticalFromVisual
-        /// TreatAsSafe: 
-        ///          - no data handed out or accepted
-        /// </SecurityNote>
         internal override void UpdateState(UIElement element)
         {
             bool unhook = true;
@@ -119,10 +107,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Unhooks the plugin collection from the manager
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical:  Accesses _manager
-        ///                    Does not receive or expose any secure information
-        /// </SecurityNote>
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
@@ -148,9 +132,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The manager for stylus plugins
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
         private PointerStylusPlugInManager _manager;
 
         #endregion

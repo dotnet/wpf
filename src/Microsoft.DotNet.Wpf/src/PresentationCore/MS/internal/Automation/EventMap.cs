@@ -264,10 +264,6 @@ namespace MS.Internal.Automation
         //
         // The following methods implement (b).   See <see cref="HwndSource.RootVisual"/> for (a).
 
-        /// <SecurityNote>
-        ///    Critical: Calls critical member PresentationSource.CriticalCurrentSources
-        ///    Safe: Does not expose anything to the user
-        /// </SecurityNote>
         private static void NotifySources()
         {
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
@@ -281,10 +277,6 @@ namespace MS.Internal.Automation
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: Calls critical member PresentationSource.RootVisual
-        ///    Safe: Does not expose anything to the user
-        /// </SecurityNote>
         private static object NotifySource(Object args)
         {
             object[] argsArray = (object[])args;

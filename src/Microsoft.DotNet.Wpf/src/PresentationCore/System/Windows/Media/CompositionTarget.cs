@@ -33,9 +33,6 @@ namespace System.Windows.Media
     /// <summary>
     ///
     /// </summary>
-    /// <SecurityNote>
-    /// CompositionTarget subclassing is not allowed in Partial Trust - Demands UIPermissionWindow.AllWindows for inheritance
-    /// </SecurityNote>
     public abstract class CompositionTarget : DispatcherObject, IDisposable, ICompositionTarget
     {
         //
@@ -174,11 +171,6 @@ namespace System.Windows.Media
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code sets a rootvisual which is risky to do because
-        ///     it can destabilize assumptions made in popup code
-        ///     PublicOK: The getter is safe and the setter has a link demand and is critical
-        /// </SecurityNote>
         public virtual Visual RootVisual
         {
             get
@@ -422,10 +414,6 @@ namespace System.Windows.Media
         /// <summary>
         /// The compile method transforms the Visual Scene Graph into the Composition Scene Graph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access critical resources (handles)
-        /// TreatAsSafe - safe to compile the visual at anytime
-        /// </SecurityNote>
         private void Compile(DUCE.Channel channel)
         {
             MediaContext mctx = MediaContext.From(Dispatcher);
@@ -483,10 +471,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="visual">Root visual, can be null, but can not be a child of another
         /// Visual.</param>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access critical resources
-        /// TreatAsSafe - safe to reparent a visual
-        /// </SecurityNote>
         private void SetRootVisual(Visual visual)
         {
             // We need to make this function robust by leaving the

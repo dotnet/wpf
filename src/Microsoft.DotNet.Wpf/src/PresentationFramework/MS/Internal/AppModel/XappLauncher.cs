@@ -30,10 +30,6 @@ namespace MS.Internal.AppModel
 {
     internal class XappLauncherApp : Application
     {
-        /// <SecurityNote>
-        /// Critical : Accepts critical argument INativeProgressPage
-        ///            Sets critical member _nativeProgressPage
-        /// </SecurityNote>
         internal XappLauncherApp(Uri deploymentManifest, string applicationId,
             IBrowserCallbackServices browser, DocObjHost.ApplicationRunnerCallback applicationRunner,
             INativeProgressPage nativeProgressPage,
@@ -96,10 +92,6 @@ namespace MS.Internal.AppModel
         }
 
 
-        ///<SecurityNote>
-        ///    Critical: This code calls into critical code GetAppWindow
-        ///    TreatAsSafe: There exists a demand here
-        ///</SecurityNote>
         void XappLauncherApp_Navigated(object sender, NavigationEventArgs e)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_XappLauncherAppNavigated);
@@ -167,12 +159,6 @@ namespace MS.Internal.AppModel
 
         // This function gets called when the browser refresh button in clicked.
         // This'll cause the browser to navigate the address bar
-        ///<SecurityNote>
-        ///  Critical: Accesses BrowserCallbackServices to navigate
-        ///  TreatAsSafe: only navigates to a safe, already validated _deploymentManifest.
-        ///  Potentially, this could be a DOS attack FOR THE APP ONLY if refresh was called constantly, but that is
-        ///  below the bar for critical code progagation, as the user can recover and the system is not destabilized.
-        ///</SecurityNote>
         internal void HandleRefresh()
         {
             lock (_lockObject) // we do this in case the refresh button is getting clicked rapidly, before the navigation happens
@@ -185,10 +171,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls IBrowserCallbackServices.ChangeDownloadState which is critical
-        /// TreatAsSafe: Changing the download state is safe
-        /// </SecurityNote>
         private void ChangeBrowserDownloadState(bool newState)
         {
             // start or stop waving the flag
@@ -249,10 +231,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical: calls ApplicationTrustCollection.Item which LinkDemands
-        ///     TreatAsSafe: Caller can't hand in an arbitrary item string
-        ///</SecurityNote>
         private object DoDirectActivation(object unused)
         {
             if (IsCanceledOrShuttingDown)
@@ -294,10 +272,6 @@ namespace MS.Internal.AppModel
             return null;
         }
         
-        ///<SecurityNote>
-        ///    Critical: This code calls into critical code which has link demand (Activator.CreateInstance)
-        ///    TreatAsSafe: There exists a demand here
-        ///</SecurityNote>
         private bool ExecuteDirectApplication()
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -357,10 +331,6 @@ namespace MS.Internal.AppModel
             throw new ApplicationException(SR.Get(SRID.AppActivationException));
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls the critical SetStatusText().
-        /// TreatAsSafe: The status message is fixed, coming from a string table.
-        /// </SecurityNote>
         private void DoGetManifestAsync()
         {
             if (IsCanceledOrShuttingDown)
@@ -500,19 +470,11 @@ namespace MS.Internal.AppModel
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls the critical SetStatusText().
-        /// TreatAsSafe: The status message is fixed, coming from a string table.
-        /// </SecurityNote>
         void ShowDownloadingStatusMessage()
         {
             SetStatusText(SR.Get(SRID.HostingStatusDownloadApp));
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls the critical SetStatusText().
-        /// TreatAsSafe: The status message is fixed, coming from a string table.
-        /// </SecurityNote>
         object AssertApplicationRequirementsAsync(object unused)
         {
             if (IsCanceledOrShuttingDown)
@@ -603,10 +565,6 @@ namespace MS.Internal.AppModel
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical - calls TenFeetInstallationProgressPage, which lives in a non-APTCA assembly.
-        /// TreatAsSafe - demands UI Window permissions.
-        /// </SecurityNote>
         /// <remarks> Nested message pumping should not be allowed within this method. See the synchronization
         /// issue with deployment manifest downloading explained in GetManifestCompleted().
         /// </remarks>
@@ -653,14 +611,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// The demand below was put here because although PresentationFramework has
-        /// APTCA set, the assembly where _progressPage lives (PresentationUI) does not.
-        /// Critical: 1) Because it is calling into non-aptca DLL
-        ///     2) Calls the critical SetStatusText().
-        /// TAS: 1) We demand permission
-        ///     2) The status message is fixed, coming from a string table. ((1) is sufficient for TAS.)
-        /// </SecurityNote>
         private void HandleError(Exception exception, string logFilePath, Uri supportUri, string requiredWpfVersion)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -761,12 +711,6 @@ namespace MS.Internal.AppModel
             BrowserWindow.Navigate(errorpage);
         }
 
-        /// <SecurityNote>
-        /// Critical - calls InstallationErrorPage, which lives in a non-APTCA assembly.
-        ///     _progressPage lives in a non-APTCA assembly.
-        ///     Also calls the critical SetStatusText().
-        /// TreatAsSafe - demands appropriate permissions.
-        /// </SecurityNote>
         private void HandleCancel()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -832,12 +776,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical : Updates trusted UI
-        /// Safe     : Demands UI Window permsission
-        /// The demand below was put here because although PresentationFramework has
-        /// APTCA set, the assembly where _progressPage lives (PresentationUI) does not.
-        /// </SecurityNote>
         private object DoDownloadProgressChanged(object unused)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_DownloadProgressUpdate, _bytesDownloaded, _bytesTotal);
@@ -877,10 +815,6 @@ namespace MS.Internal.AppModel
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(DoDownloadApplicationCompleted), e);
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls the critical SetStatusText().
-        /// TreatAsSafe: The status message is fixed, coming from a string table.
-        /// </SecurityNote>
         private object DoDownloadApplicationCompleted(object e)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WpfHost_DownloadApplicationEnd);
@@ -1011,10 +945,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into RootBrowserWindow which is critical
-        ///     TreatAsSafe: There is a demand
-        /// </SecurityNote>
     #if DEBUG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     #endif
@@ -1061,9 +991,6 @@ namespace MS.Internal.AppModel
         /// decision, so that next time we will be forced to go down the offical ClickOnce
         /// deployment pathway.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls ApplicationTrustCollection.Remove which LinkDemands
-        ///</SecurityNote>
         private void DeleteCachedApplicationTrust(ApplicationIdentity identity)
         {
             if (identity != null)
@@ -1079,16 +1006,6 @@ namespace MS.Internal.AppModel
         /// to WinFXSetup.exe.  Its called from the "Install WinFX" button on the error page
         /// shown when an app requests a different version of WinFX than the one installed.
         ///</summary>
-        /// <SecurityNote>
-        /// Critical - Gets access to critical resource (uri and browsercallback services), calls critical
-        ///             code (launch browser).
-        /// TreatAsSafe - There exists a demand here.
-        /// Critical - Launches launch a process from a partial trust context.
-        /// TreatAsSafe - The process 
-        ///             is a known trusted OS process (OCSetup.exe)
-        ///             is launched with a known safe argument (NetFx3)
-        ///             is launched by providing a full path                        
-        /// </SecurityNote>
         private object GetWinFX(object unused)
         {
             bool frameworkActivated = false;
@@ -1169,11 +1086,6 @@ namespace MS.Internal.AppModel
             return clrVersion;
         }
         
-        ///<SecurityNote>
-        /// Critical - calls SetStatusText which is SUC'ed.
-        ///   There is a trend in newer browsers to restrict setting the status bar from partial-trust code
-        ///   to prevent URL spoofing.
-        ///</SecurityNote>
         private void SetStatusText(string newStatusText)
         {
             IProgressPage2 pp2 = _progressPage as IProgressPage2;
@@ -1285,9 +1197,6 @@ namespace MS.Internal.AppModel
         DocObjHost.ApplicationRunnerCallback _applicationRunnerCallback;
         DocObjHost.ApplicationRunner _applicationRunner;
         
-        /// <SecurityNote>
-        /// Critical : Field for critical type INativeProgressPage
-        /// </SecurityNote>
         INativeProgressPage _nativeProgressPage;
         IProgressPage _progressPage;
         bool _runApplication;

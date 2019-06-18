@@ -21,9 +21,6 @@ namespace System.Windows.Input
     /// </summary>
     internal class InputProviderSite : IDisposable
     {
-        /// <SecurityNote>
-        ///     Critical: This code creates critical data in the form of InputManager and InputProvider
-        /// </SecurityNote>
         internal InputProviderSite(InputManager inputManager, IInputProvider inputProvider)
         {
             _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -33,10 +30,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the input manager that this site is attached to.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: We do not want to expose the Input manager in the SEE
-        ///     TreatAsSafe: This code has a demand in it
-        /// </SecurityNote>
         public InputManager InputManager
         {
             get
@@ -49,9 +42,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the input manager that this site is attached to.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: We do not want to expose the Input manager in the SEE
-        /// </SecurityNote>
         internal InputManager CriticalInputManager
         {
             get
@@ -63,10 +53,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Unregisters this input provider.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (InputManager and InputProvider).
-        ///     TreatAsSafe: The critical data is not exposed outside this call
-        /// </SecurityNote>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -105,10 +91,6 @@ namespace System.Windows.Input
         ///  Do we really need this?  Make the "providers" call InputManager.ProcessInput themselves.
         ///  we currently need to map back to providers for other reasons.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:This code is critical and can be used in event spoofing. It also accesses
-        ///     InputManager and calls into ProcessInput which is critical.
-        /// </SecurityNote>
         public bool ReportInput(InputReport inputReport)
         {
             if(IsDisposed)
@@ -130,15 +112,7 @@ namespace System.Windows.Input
         }
 
         private bool _isDisposed;
-        /// <SecurityNote>
-        ///     Critical: This object should not be exposed in the SEE as it can be
-        ///     used for input spoofing
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputManager> _inputManager;
-        /// <SecurityNote>
-        ///     Critical: This object should not be exposed in the SEE as it can be
-        ///     used for input spoofing
-        /// </SecurityNote>
         private SecurityCriticalDataClass<IInputProvider> _inputProvider;
     }
 }

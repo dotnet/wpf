@@ -36,18 +36,11 @@ namespace MS.Internal
     [FriendAccessAllowed]
     internal class SecurityCriticalDataClass<T>
     {
-        /// <SecurityNote>
-        /// Critical - as this accesses _value which is Critical.
-        /// Safe - as the caller already got the critical value.
-        /// </SecurityNote>
         internal SecurityCriticalDataClass(T value) 
         { 
             _value = value;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended only to store critical data. 
-        // </SecurityNote>
         internal T Value 
         { 
             get 
@@ -57,9 +50,6 @@ namespace MS.Internal
         }
 
 
-        /// <SecurityNote>
-        /// Critical - by definition as this is a wrapper for Critical data.
-        /// </SecurityNote>
         private T _value;
     }
 }

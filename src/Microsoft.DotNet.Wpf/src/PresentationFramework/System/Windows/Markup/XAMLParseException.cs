@@ -250,9 +250,6 @@ namespace System.Windows.Markup
         /// The destination for this serialization.
         /// </param>
         ///
-        ///<SecurityNote>
-        ///     Critical: calls Exception.GetObjectData which LinkDemands
-        ///</SecurityNote>
 
 #if ! PBTCOMPILER
 #else

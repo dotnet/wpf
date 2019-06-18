@@ -47,29 +47,15 @@ namespace MS.Internal.FontCache
     /// The purpose of the class is to protect the memory block from overruns.
     /// ArgumentOutOfRangeException is thrown when an overrun is detected.
     /// </summary>
-    /// <SecurityNote>
-    /// This class could potentially contain critical information for the case
-    /// where the data pointed to by "pointer" parameter is obtained under an
-    /// elevation.  We consder CheckedPointer class itself to be security Agnostic.
-    /// When someone creates this instance from critical data, they'll need to
-    /// mark the instance as SecurityCritical and track usage.
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal struct CheckedPointer
     {
-        /// <SecurityNote>
-        ///   Critical: This code yields unverifiable demand
-        /// </SecurityNote>
         internal unsafe CheckedPointer(void * pointer, int size)
         {
             _pointer = pointer;
             _size = size;
         }
 
-        /// <SecurityNote>
-        ///    Critical: This calls into PositionPointer which is link demand protected
-        ///    also it constructs data for a checked pointer.
-        /// </SecurityNote>
         internal CheckedPointer(UnmanagedMemoryStream stream)
         {
             Debug.Assert(stream.Position == 0);
@@ -80,10 +66,6 @@ namespace MS.Internal.FontCache
             _size = (int)length;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Call into unsafe code block
-        ///     TreatAsSafe: This is ok to call
-        /// </SecurityNote>
         internal bool IsNull    
         {
             get
@@ -95,10 +77,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: _size is marked as critical.
-        ///     TreatAsSafe: _size is critical only for set.
-        /// </SecurityNote>
         internal int Size
         {
             get
@@ -107,9 +85,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code yields unverifiable demand. This code can be used to expose contents of arbitrary pointers
-        /// </SecurityNote>
         internal byte[] ToArray()
         {
             byte[] b = new byte[_size];
@@ -123,9 +98,6 @@ namespace MS.Internal.FontCache
             return b;
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code exposes contents of arbitrary pointers.
-        /// </SecurityNote>
         internal void CopyTo(CheckedPointer dest)
         {
             unsafe
@@ -146,9 +118,6 @@ namespace MS.Internal.FontCache
         // with a bounds check.  The returned offset may be equal to the size,
         // but not greater. Throws ArgumentOutOfRangeException if pointer
         // is not within the bounds of the mapping.
-        /// <SecurityNote>
-        ///   Critical: The method takes a pointer and performs pointer arithmetic.
-        /// </SecurityNote>
         internal unsafe int OffsetOf(void * pointer)
         {
             long offset = (byte*)pointer - (byte*)_pointer;
@@ -161,9 +130,6 @@ namespace MS.Internal.FontCache
         // with a bounds check.  The returned offset may be equal to the size,
         // but not greater. Throws ArgumentOutOfRangeException if pointer
         // is not within the bounds of the mapping.
-        /// <SecurityNote>
-        ///   Critical: The method contains unsafe code and calls the critical OffsetOf(void*) method.
-        /// </SecurityNote>
         internal int OffsetOf(CheckedPointer pointer)
         {
             unsafe
@@ -172,11 +138,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code yields unverifiable demand
-        ///   TreatAsSafe: This code simply overloads the + operator to increment pointer.
-        ///   It is safe because it is bounds checked to ensure it does not corrupt memory
-        /// </SecurityNote>
         public static CheckedPointer operator+(CheckedPointer rhs, int offset)
         {
             // In future I'll just use checked context. That'll require modifying callers to expect integer overflow exceptions.
@@ -190,10 +151,6 @@ namespace MS.Internal.FontCache
             return rhs;
         }
 
-        /// <SecurityNote>
-        ///  Critical: This code yields unverifiable demand and returns a pointer
-        ///  Although it is bounds checked the fact that it returns a pointer makes it risky.
-        /// </SecurityNote>
         internal unsafe void * Probe(int offset, int length)
         {
             if (_pointer == null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
@@ -207,10 +164,6 @@ namespace MS.Internal.FontCache
         /// <param name="offset"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///       Critical: This calls into unsafe code and also calls into checkedpointer which has a link demand
-        ///       TreatAsSafe: This code returns a checkedpointer and accessing the content is critical. Accessing is tracked in Probe
-        /// </SecurityNote>
         internal CheckedPointer CheckedProbe(int offset, int length)
         {
             unsafe
@@ -224,19 +177,11 @@ namespace MS.Internal.FontCache
 
         ///<summary>Changes the buffer size of this CheckedPointer object.  Used when memory block is resizable,
         ///like in a file mapping.</summary>
-        ///<SecurityNote>
-        /// Critical: Passing an invalid size can calls future calls to Probe() to succeed even if the bounds of the buffer
-        /// is being violated.  This can cause the program to write to random memory.
-        ///</SecurityNote>
         internal void SetSize(int newSize)
         {
             _size = newSize;
         }
 
-        /// <SecurityNote>
-        ///       Critical: Contains unsafe code, which accesses _pointer field.
-        ///       TreatAsSafe: Only compares; does not expose pointer or do unsafe pointer operations.
-        /// </SecurityNote>
         internal bool PointerEquals(CheckedPointer pointer)
         {
             unsafe
@@ -245,10 +190,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///       Critical: Contains unsafe code.
-        ///       TreatAsSafe: Calls Probe and writes only the amount of data it probed for.
-        /// </SecurityNote>
         internal void WriteBool(bool value)
         {
             unsafe
@@ -257,10 +198,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///       Critical: Contains unsafe code.
-        ///       TreatAsSafe: Calls Probe and reads only the amount of data it probed for.
-        /// </SecurityNote>
         internal bool ReadBool()
         {
             unsafe
@@ -269,19 +206,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: Holds reference to an unsafe pointer
-        /// </SecurityNote>
         private unsafe void *   _pointer;
 
-        /// <SecurityNote>
-        ///    Critical: Having an invalid size can cause future calls to Probe() to succeed
-        /// even if the bounds of the buffer is being violated.
-        /// This can cause the program to write to random memory.
-        /// This variable should really be SecurityCriticalDataForSet of int,
-        /// but SecurityCriticalDataForSet is a generic defined in another assembly,
-        /// and using it with a value type will cause JITting to happen.
-        /// </SecurityNote>
         private int _size;
     }
 
@@ -331,10 +257,6 @@ namespace MS.Internal.FontCache
         /// <param name="numBytes">Size of the memory block in bytes</param>
         /// <param name="hash">Previous hash code to combine with</param>
         /// <returns>Hash code</returns>
-        /// <SecurityNote>
-        /// Critical - as this accesses unsafe code blocks and has the potential to
-        /// corrupt memory.
-        /// </SecurityNote>
         internal unsafe static int HashMemory(void * pv, int numBytes, int hash)
         {
             byte * pb = (byte*)pv;
@@ -398,11 +320,6 @@ namespace MS.Internal.FontCache
         private static int    _dpi;
         private static bool   _dpiInitialized = false;
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to get access to environment variable windir
-        /// and exposes the local Windows fonts directory location.
-        ///     TreatAsSafe: This code uses critical fields to store critical data.
-        /// </SecurityNote>
         static Util()
         {
             string s;
@@ -431,14 +348,8 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Windows fonts Uri string in an unescaped form optimized for Uri manipulations.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         private static readonly string _windowsFontsLocalPath;
 
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         internal static string WindowsFontsLocalPath
         {
             get
@@ -459,10 +370,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        ///<SecurityNote>
-        ///  Critical as this accesses Native methods.
-        ///  TreatAsSafe - it would be ok to expose this information - DPI in partial trust
-        ///</SecurityNote>
         internal static int Dpi
         {
             get
@@ -503,14 +410,8 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Windows fonts Uri object.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         private static readonly Uri _windowsFontsUriObject;
 
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         internal static Uri WindowsFontsUriObject
         {
             get
@@ -522,14 +423,8 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Windows fonts Uri string in an unescaped form.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         private static readonly string _windowsFontsUriString;
 
-        /// <SecurityNote>
-        ///     Critical: Exposes the local Windows fonts directory location.
-        /// </SecurityNote>
         internal static string WindowsFontsUriString
         {
             get
@@ -554,11 +449,6 @@ namespace MS.Internal.FontCache
         /// could be fooled into skipping a demand when loading data from a ttf file outside the 
         /// Windows Fonts folder.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical    - This method parse file paths.
-        /// TreatAsSafe - Does not expose critical information.
-        ///               Does not have side effects.
-        /// </SecurityNote>
         internal static bool IsReferenceToWindowsFonts(string s)
         {
             // Empty location always refers to Windows Fonts.
@@ -894,10 +784,6 @@ namespace MS.Internal.FontCache
         /// </summary>
         /// <param name="errorCode">Win32 error code.</param>
         /// <param name="fileName">File name string.</param>
-        /// <SecurityNote>
-        ///     Critical - As this function throws exception containing full file name, which can result in Information Disclosure.
-        ///     TreatAsSafe - As the function performs permission demand.
-        /// </SecurityNote>
         internal static void ThrowWin32Exception(int errorCode, string fileName)
         {
             ValidateFileNamePermissions(ref fileName);
@@ -921,10 +807,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - As this function accesses font Uri that contains absolute font path.
-        /// Safe - As we use ValidateFileNamePermissions to strip off the local path part for file Uris.
-        /// </SecurityNote>
         internal static Exception ConvertInPageException(FontSource fontSource, SEHException e)
         {
             string fileName;
@@ -945,15 +827,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// A class that wraps operations with Win32 memory sections and file mappings
     /// </summary>
-    /// <SecurityNote>
-    /// This class could potentially contain critical information for the case
-    /// where the data pointed to by the Mapping is obtained under an elevation.
-    /// We consder FileMapping class itself to be security agnostic.  When
-    /// someone creates this instance from critical data, they'll need to mark
-    /// the instance as SecurityCritical and track usage.  For example if a call to
-    /// OpenFile is made on an instance of FileMapping, that instance will be
-    /// SecurityCritical.
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal class FileMapping : UnmanagedMemoryStream
     {
@@ -962,10 +835,6 @@ namespace MS.Internal.FontCache
             Dispose(false);
         }
 
-        /// <SecurityNote>
-        ///    Critical: This method acceses critical elements _viewHandle and _mappingHandle
-        ///    TreatAsSafe: This data is not exposed and calling dispose is ok
-        /// </SecurityNote>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -985,13 +854,6 @@ namespace MS.Internal.FontCache
             _disposed = true;
         }
 
-        /// <SecurityNote>
-        /// Critical - As this function calls functions CreateFileMapping,
-        ///            MapViewOfFileEx and Initialize under elevation.
-        ///            Any instance of FileMapping
-        ///            object on which this function is called becomes a critical
-        ///            instance and its usage will need to be tracked for audit.
-        /// </SecurityNote>
         internal void OpenFile(string fileName)
         {
             NativeMethods.SECURITY_ATTRIBUTES sa = new NativeMethods.SECURITY_ATTRIBUTES();
@@ -1069,13 +931,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This element holds reference to an object retrieved under an elevation
-        /// </SecurityNote>
         private UnsafeNativeMethods.SafeViewOfFileHandle _viewHandle;
-        /// <SecurityNote>
-        ///     Critical: This element holds reference to an object retrieved under an elevation
-        /// </SecurityNote>
         private UnsafeNativeMethods.SafeFileMappingHandle _mappingHandle;
 
         private bool _disposed = false;

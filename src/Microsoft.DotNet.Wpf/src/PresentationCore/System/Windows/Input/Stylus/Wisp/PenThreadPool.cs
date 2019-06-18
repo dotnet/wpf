@@ -30,14 +30,6 @@ namespace System.Windows.Input
         /// </summary>
         private const int MAX_PENTHREAD_RETRIES = 10;
 
-        /// <SecurityNote>
-        /// Critical -  Constructor for singleton of our PenThreadPool.
-        ///             marking this critical to prevent inadvertant access by transparent code
-        ///
-        ///         Called by critical methods:
-        ///             Instance (above)
-        ///
-        /// </SecurityNote>
         static PenThreadPool()
         {
         }
@@ -46,27 +38,12 @@ namespace System.Windows.Input
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  marking this critical to prevent inadvertant 
-        ///             access by transparent code             
-        ///
-        /// </SecurityNote>
         [ThreadStatic]
         private static PenThreadPool _penThreadPool;
 
         /////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  Returns a PenThread (creates as needed).
-        ///             marking this critical to prevent inadvertant access by transparent code
-        ///
-        ///         Called by critical methods:
-        ///             PenContext.Dispose
-        ///             PenContext.Enable
-        ///             PenContext.Disable
-        ///
-        /// </SecurityNote>
         internal static PenThread GetPenThreadForPenContext(PenContext penContext)
         {
             // Create the threadstatic DynamicRendererThreadManager as needed for calling thread.
@@ -82,21 +59,12 @@ namespace System.Windows.Input
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  marking this critical to prevent inadvertant 
-        ///             access by transparent code             
-        ///
-        /// </SecurityNote>
         private List<WeakReference<PenThread>> _penThreadWeakRefList;
 
         /////////////////////////////////////////////////////////////////////
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  Initializes critical data: m_PenThreads  
-        ///
-        /// </SecurityNote>
         internal PenThreadPool()
         {
             _penThreadWeakRefList = new List<WeakReference<PenThread>>();
@@ -118,12 +86,6 @@ namespace System.Windows.Input
         /// from that case by retrying thread selection for any failed AddPenContext calls, ignoring the
         /// specific thread that failed.  After MAX_PENTHREAD_RETRIES, we exit and log an error.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (PenThread constructor).
-        ///             Called by BeginService.
-        ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
-        ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        /// </SecurityNote>
         private PenThread GetPenThreadForPenContextHelper(PenContext penContext)
         {
             // A list of full PenThreads that we should ignore when attempting to select a thread

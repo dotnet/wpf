@@ -40,11 +40,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// Returns a reference to a new BitmapEncoder.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - 1)   Asserts to access the registry.  May return path information which
-        ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
-        ///             
-        /// </SecurityNote>
         public
         BitmapEncoder
         GetEncoder(
@@ -120,11 +115,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// Returns true if the bitmapSource is of supported mimetype
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - 1)   Asserts to access the registry.  May return path information which
-        ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
-        ///             
-        /// </SecurityNote>
         public
         bool
         IsSupportedMimeType(

@@ -29,10 +29,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="inputManager">
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code creates critical data(_tsfManager,_textcompositionManager) and stores critical data (inputManager)
-        ///     TreatAsSafe: Although it creates critical data there are demand on the critical data and the constructor is safe
-        /// </SecurityNote>
         internal Win32KeyboardDevice(InputManager inputManager)
             : base(inputManager)
         {
@@ -47,13 +43,6 @@ namespace System.Windows.Input
         /// <returns>                           
         ///     The state of the specified key
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical: Makes calls to UnsafeNativeMethods (GetKeyState)
-        ///     TreatAsSafe: We will not expose the state of keys in
-        ///                  partially trusted AppDomains unless a WPF
-        ///                  window in this AppDomain has focus.  An
-        ///                  exception is made for modifier keys.
-        /// </SecurityNote>
         protected override KeyStates GetKeyStatesFromSystem(Key key)
         {
             KeyStates keyStates = KeyStates.None;

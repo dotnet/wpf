@@ -23,14 +23,8 @@ namespace System.Xaml.Schema
         private NullableReference<XamlValueConverter<XamlDeferringLoader>> _deferringLoader;
         private NullableReference<object> _defaultValue;
 
-        /// <SecurityNote>
-        /// Critical: We cache visibility check based on this member, so it must be idempotent
-        /// </SecurityNote>
         private NullableReference<MethodInfo> _getter;
 
-        /// <SecurityNote>
-        /// Critical: We cache visibility check based on this member, so it must be idempotent
-        /// </SecurityNote>
         private NullableReference<MethodInfo> _setter;
 
         private NullableReference<XamlValueConverter<TypeConverter>> _typeConverter;
@@ -57,10 +51,6 @@ namespace System.Xaml.Schema
             _memberBits |= GetValidMask((int)BoolMemberBits.Event);
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: Constructor is single-threaded, so idempotence is preserved
-        /// </SecurityNote>
         internal MemberReflector(MethodInfo getter, MethodInfo setter, bool isEvent)
             : this(isEvent)
         {
@@ -69,10 +59,6 @@ namespace System.Xaml.Schema
         }
 
         ///<summary>Ctor used by directives</summary>
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: Constructor is single-threaded, so idempotence is preserved
-        /// </SecurityNote>
         internal MemberReflector(XamlType type, XamlValueConverter<TypeConverter> typeConverter)
         {
             Type = type;
@@ -87,10 +73,6 @@ namespace System.Xaml.Schema
             _valueSerializer.Value = null;
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: We set to constant value of null, so idempotence is preserved
-        /// </SecurityNote>
         internal static MemberReflector UnknownReflector
         {
             get
@@ -173,20 +155,12 @@ namespace System.Xaml.Schema
             get { return _designerSerializationVisibility != VisibilityInvalid; }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _getter
-        /// Safe: Maintains idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         internal MethodInfo Getter
         {
             get { return _getter.Value; }
             set { _getter.SetIfNull(value); }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _getter
-        /// Safe: Doesn't modify field
-        /// </SecurityNote>
         internal bool GetterIsSet
         {
             get { return _getter.IsSet; }
@@ -197,20 +171,12 @@ namespace System.Xaml.Schema
         // No need to check valid flag, this is set at creation
         internal bool IsUnknown { get { return (_memberBits & (int)BoolMemberBits.Unknown) != 0; } }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _setter
-        /// Safe: Maintains idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         internal MethodInfo Setter
         {
             get { return _setter.Value; }
             set { _setter.SetIfNull(value); }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _setter
-        /// Safe: Doesn't modify field
-        /// </SecurityNote>
         internal bool SetterIsSet
         {
             get { return _setter.IsSet; }

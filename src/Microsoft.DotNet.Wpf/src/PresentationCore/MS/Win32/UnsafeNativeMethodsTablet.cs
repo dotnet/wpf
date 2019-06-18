@@ -20,87 +20,45 @@ namespace MS.Win32.Recognizer
     //
     internal static class UnsafeNativeMethods
     {
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int CreateRecognizer([In] ref Guid clsid, [Out] out RecognizerSafeHandle hRec);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int DestroyRecognizer([In] IntPtr hRec);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int CreateContext([In] RecognizerSafeHandle hRec, [Out] out ContextSafeHandle hRecContext);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int DestroyContext([In] IntPtr hRecContext);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int AddStroke([In] ContextSafeHandle hRecContext, [In] ref PACKET_DESCRIPTION packetDesc, [In] uint cbPackets, [In] IntPtr pByte, [In, MarshalAs(UnmanagedType.LPStruct)] NativeMethods.XFORM xForm);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int SetEnabledUnicodeRanges([In] ContextSafeHandle hRecContext, [In] uint cRangs, [In] CHARACTER_RANGE[] charRanges);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int EndInkInput([In] ContextSafeHandle hRecContext);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int Process([In] ContextSafeHandle hRecContext, [Out] out bool partialProcessing);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int GetAlternateList([In] ContextSafeHandle hRecContext, [In, Out] ref RECO_RANGE recoRange, [In, Out] ref uint cAlts, [In, Out] IntPtr[] recAtls, [In] ALT_BREAKS breaks);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int DestroyAlternate([In] IntPtr hRecAtls);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
         internal static extern int GetString([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [In, Out]ref uint size, [In, Out] StringBuilder recoString);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int GetConfidenceLevel([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [Out] out RecognitionConfidence confidenceLevel);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int ResetContext([In] ContextSafeHandle hRecContext);
 
-        /// <SecurityNote>
-        ///     Critical: as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int GetLatticePtr([In] ContextSafeHandle hRecContext, [In] ref IntPtr pRecoLattice);
     }
@@ -110,23 +68,14 @@ namespace MS.Win32.Recognizer
     /// <summary>
     /// RecognizerSafeHandle
     /// </summary>
-    /// <SecurityNote>
-    ///      Critical: Marked critical to prevent inadvertant spread to transparent code.
-    /// </SecurityNote>
     internal class RecognizerSafeHandle : SafeHandle
     {
         // Called by P/Invoke when returning SafeHandles
-        /// <SecurityNote>
-        ///     Critical: This code calls into a base class which is protected by link demand and by inheritance demand
-        /// </SecurityNote>
         private RecognizerSafeHandle()
             : this(true)
         {
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into a base class which is protected by link demand and by inheritance demand
-        /// </SecurityNote>
         private RecognizerSafeHandle(bool ownHandle)
             : base(IntPtr.Zero, ownHandle)
         {
@@ -135,10 +84,6 @@ namespace MS.Win32.Recognizer
 
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for you.
-        /// <SecurityNote>
-        ///     Critical: This code calls into a base class which is protected by link demand an by inheritance demand.
-        ///               Also the code accessed the SecurityCritical member - handle.
-        /// </SecurityNote>
         public override bool IsInvalid
         {
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -148,10 +93,6 @@ namespace MS.Win32.Recognizer
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method 
-        ///                 NativeRecognizer.UnsafeNativeMethods.DestroyRecognizer
-        /// </SecurityNote>
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         override protected bool ReleaseHandle()
         {
@@ -163,24 +104,15 @@ namespace MS.Win32.Recognizer
     /// <summary>
     /// ContextSafeHandle
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical: Marked critical to prevent inadvertant spread to transparent code.
-    /// </SecurityNote>
     internal class ContextSafeHandle : SafeHandle
     {
         // Called by P/Invoke when returning SafeHandles
 
-        /// <SecurityNote>
-        ///     Critical:This code calls into a base class which is protected by link demand an by inheritance demand
-        /// </SecurityNote>
         private ContextSafeHandle()
             : this(true)
         {
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code calls into a base class which is protected by link demand an by inheritance demand
-        /// </SecurityNote>
         private ContextSafeHandle(bool ownHandle)
             : base(IntPtr.Zero, ownHandle)
         {
@@ -189,10 +121,6 @@ namespace MS.Win32.Recognizer
 
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for you.
-        /// <SecurityNote>
-        ///     Critical: This code calls into a base class which is protected by link demand an by inheritance demand.
-        ///               Also the code accessed the SecurityCritical member - handle.
-        /// </SecurityNote>
         public override bool IsInvalid
         {
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
@@ -203,10 +131,6 @@ namespace MS.Win32.Recognizer
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method 
-        ///                 NativeRecognizer.UnsafeNativeMethods.DestroyContext
-        /// </SecurityNote>
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         override protected bool ReleaseHandle()
         {
@@ -225,18 +149,12 @@ namespace MS.Win32.Recognizer
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: Accesses the SecurityCritical member _recognizerHandle
-        /// </SecurityNote>
         internal void AddReferenceOnRecognizer(RecognizerSafeHandle handle)
         {
             System.Diagnostics.Debug.Assert(_recognizerHandle == null);
             _recognizerHandle = handle;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This is a handle to our recognizer, we consider it plutonium
-        /// </SecurityNote>
         private RecognizerSafeHandle _recognizerHandle;
     }
     

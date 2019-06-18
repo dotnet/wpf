@@ -927,10 +927,6 @@ namespace System.Windows.Xps.Packaging
         /// This is a pass thru to allow system printing access to method of the
         /// same name in WindowsBase
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) Calls critical method AttachmentService::SaveWithUI
-        /// </SecurityNote>
         internal static void SaveWithUI(IntPtr parent, Uri source, Uri target)
         {
             AttachmentService.SaveWithUI(parent, source, target );

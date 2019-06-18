@@ -375,13 +375,6 @@ namespace System.Windows
         /// Requires UnmanagedCode permission.  
         /// If caller does not have this permission, the dragdrop will not occur.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleDoDragDrop), but this is OK since we won't
-        ///            allow the initiate DragDrop operation without the unmanaged code permission.
-        ///            Demand the unmanaged code permission to block initiating DragDrop both 
-        ///            intranet and internet zone.
-        /// PublicOK - It's disabled in partial trust.
-        /// </SecurityNote>
         public static DragDropEffects DoDragDrop(DependencyObject dragSource, object data, DragDropEffects allowedEffects)
         {
             DataObject dataObject;
@@ -469,13 +462,6 @@ namespace System.Windows
         /// <param name="windowHandle">
         /// The window handle to be drop target .
         /// </param>
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleRegisterDragDrop), and potentially deals with unmanged code..
-        ///
-        /// TreatAsSafe - RegisterDropTarget check the unmanged code permission. 
-        ///               Demmand the unmanaged code permission to block the register drop target
-        ///               both intranet and internet zone.
-        /// </SecurityNote>
         internal static void RegisterDropTarget(IntPtr windowHandle)
         {
             if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
@@ -497,12 +483,6 @@ namespace System.Windows
         /// <param name="windowHandle">
         /// The window handle that can accept drop.
         /// </param>        
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleRevokeDragDrop).We do not want this called excessively
-        /// TreatAsSafe - RevokeDropTarget check the unmanged code permission.
-        ///               Demmand the unmanaged code permission to block the revoke drop target
-        ///               both intranet and internet zone.
-        /// </SecurityNote>
         internal static void RevokeDropTarget(IntPtr windowHandle)
         {
             if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)

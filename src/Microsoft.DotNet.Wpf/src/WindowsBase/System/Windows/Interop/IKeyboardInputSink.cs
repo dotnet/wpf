@@ -29,10 +29,6 @@ namespace System.Windows.Interop
         ///     demand since those don't work declaratively on interface methods.  The implementors
         ///     of this interface method all do a full demand since that's really the protection we want.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This method can be used to intercept and potentially tamper with raw input.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         IKeyboardInputSite RegisterKeyboardInputSink(IKeyboardInputSink sink);
 
         /// <summary>
@@ -47,10 +43,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         bool TranslateAccelerator(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -69,10 +61,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     The setter for this property requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         IKeyboardInputSite KeyboardInputSite 
         {
             get;
@@ -91,10 +79,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         bool OnMnemonic(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -108,10 +92,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         bool TranslateChar(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>

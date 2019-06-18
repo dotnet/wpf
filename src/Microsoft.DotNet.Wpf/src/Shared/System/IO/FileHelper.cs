@@ -90,9 +90,6 @@ namespace System.IO
         /// <param name="fileOptions">desired options for the temp file (defaults to None)</param>
         /// <param name="extension">desired extension, or null (defaults to null)</param>
         /// <param name="subFolder">desired subfolder of temp folder, or null (defaults to "WPF")</param>
-        /// <SecurityNote>
-        ///     Critical - Calls into filesystem functions, returns local file path.
-        /// </SecurityNote>
         static internal FileStream CreateAndOpenTemporaryFile(
                     out string filePath,
                     FileAccess fileAccess=FileAccess.Write,
@@ -174,9 +171,6 @@ namespace System.IO
         /// Delete a temporary file robustly.
         ///</summary>
         /// <param name="filePath">Path to the temp file.</param>
-        /// <SecurityNote>
-        ///     Critical - Calls into filesystem functions, asserts permission.
-        /// </SecurityNote>
         static internal void DeleteTemporaryFile(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))

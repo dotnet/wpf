@@ -100,14 +100,6 @@ namespace System.Windows.Input.StylusPointer
         /// it locally.
         /// </summary>
         /// <param name="pointerId">The id of the pointer message</param>
-        /// <SecurityNote>
-        ///     SafeCritical:  Calls GetPointerInfo/History
-        ///                    Calls GetPointerTouchInfo
-        ///                    Calls GetPointerPenInfo
-        ///                    Data here is exposed eventually through properties but 
-        ///                    this data is read only.  This cannot be used to spoof
-        ///                    input as an invalid ID would create invalid data.
-        /// </SecurityNote>
         internal PointerData(uint pointerId)
         {
             if (IsValid = GetPointerInfo(pointerId, ref _info))

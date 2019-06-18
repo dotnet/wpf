@@ -54,10 +54,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="eventHandle">event to signal when new data is available in tempStream</param>
         /// <param name="requestedUri">uri we should make requests to</param>
         /// <param name="tempFileName">temp file to write to</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
         internal ByteRangeDownloader(Uri requestedUri, string tempFileName, SafeWaitHandle eventHandle)
             : this(requestedUri, eventHandle)
         {
@@ -81,10 +77,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="fileMutex">mutex to synchronize access to tempStream</param>
         /// <param name="requestedUri">uri we should make requests to</param>
         /// <param name="tempStream">stream to write data to</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
         internal ByteRangeDownloader(Uri requestedUri, Stream tempStream, SafeWaitHandle eventHandle, Mutex fileMutex)
             : this(requestedUri, eventHandle)
         {
@@ -110,14 +102,6 @@ namespace MS.Internal.IO.Packaging
             GC.SuppressFinalize(this);  // not strictly necessary, but if we ever have a subclass with a finalizer, this will be more efficient
         }
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _readEventHandle
-        ///  2) modifies Critical data _proxy
-        /// Safe
-        ///  1) _eventHandle is Critical for set but we are just nulling it out for dispose
-        ///  2) _proxy is Critical for set but safe to null for dispose
-        /// </SecurityNote>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -198,13 +182,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="byteRanges">byte ranges to be downloaded; byteRanges is two dimensional
         /// array consisting pairs of offset and length</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Sets the callback function (ResponseCallback) which is critical
-        /// Safe
-        ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
-        ///     the callback function
-        /// </SecurityNote>
         internal void RequestByteRanges(int[,] byteRanges)
         {
             // The worker thread will never call dispose nor this method; no need to lock
@@ -322,10 +299,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Proxy for all requests to ByteRangeDownloader
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical member _proxy
-        /// </SecurityNote>
         internal IWebProxy Proxy
         {
             set
@@ -437,10 +410,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Constructor for ByteRangeDownloader
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
         private ByteRangeDownloader(Uri requestedUri, SafeWaitHandle eventHandle)
         {
             if (requestedUri == null)
@@ -485,15 +454,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Download the requested bytes
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) local assert of WebPermission to access get_Proxy property
-        ///  2) accesses Critical member _proxy
-        /// Safe
-        ///  1) WebPermission assert is local and needed only to synchronize two WebRequest properties
-        ///  2) Safe use of Critical member _proxy - used only to ensure that multiple WebRequests
-        ///     share the same proxy settings.  Proxy member is known safe.
-        /// </SecurityNote>
         private HttpWebRequest CreateHttpWebRequest(int[,] byteRanges)
         {
             HttpWebRequest request;
@@ -539,11 +499,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="throwExceptionOnError">indicates if an exception to be thrown on fail to set event</param>
         /// <remarks></remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) This method calls into SetEvent which is critical marked SUC
-        ///  2) It accesses Critical data _eventHandle
-        /// </SecurityNote>
         private void RaiseEvent(bool throwExceptionOnError)
         {
             if (_eventHandle != null && !_eventHandle.IsInvalid && !_eventHandle.IsClosed)
@@ -563,10 +518,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="ar">async result</param>
         /// <remarks>static method not necessary</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) It calls RaiseEvent which is critical
-        /// </SecurityNote>
         private void ResponseCallback(IAsyncResult ar)
         {
             HttpWebResponse webResponse = null;
@@ -741,13 +692,6 @@ namespace MS.Internal.IO.Packaging
         /// Process the requests that are in the wait queue
         /// </summary>
         /// <remarks>This is only called from ResponseCallback which synchronize the call</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Sets the callback function (ResponseCallback) which is critical
-        /// Safe
-        ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
-        ///     the callback function
-        /// </SecurityNote>
         private void ProcessWaitQueue()
         {
             // There is other requests waiting in the queue; Process those
@@ -934,10 +878,6 @@ namespace MS.Internal.IO.Packaging
         private Uri _requestedUri;            // url to be downloaded
         private RequestCachePolicy _cachePolicy;
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) _proxy is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
         private IWebProxy _proxy;
         private ICredentials _credentials;
         private CookieContainer _cookieContainer = new CookieContainer(1);

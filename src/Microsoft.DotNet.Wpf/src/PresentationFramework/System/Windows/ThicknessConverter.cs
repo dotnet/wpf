@@ -128,10 +128,6 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The Thickness to convert. </param>
         /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for Thickness, not an arbitrary class
-        ///</SecurityNote> 
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             if (null == value)

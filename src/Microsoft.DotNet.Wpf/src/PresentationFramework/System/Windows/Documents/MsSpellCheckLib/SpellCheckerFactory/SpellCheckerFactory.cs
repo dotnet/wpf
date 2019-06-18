@@ -117,10 +117,6 @@ namespace System.Windows.Documents
             /// <param name="suppressCOMExceptions"></param>
             /// <param name="suppressOtherExceptions"></param>
             /// <returns>True if successful, False otherwise</returns>
-            /// <SecurityNote>
-            ///     Critical - Calls into COM
-            ///     Safe - Does not return unmanaged handles to the caller.
-            /// </SecurityNote>
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             private static bool CreateLockFree(bool suppressCOMExceptions = true, bool suppressOtherExceptions = true)
             {
@@ -186,10 +182,6 @@ namespace System.Windows.Documents
 
             #region SupportedLanguages
             
-            /// <SecurityNote>
-            ///     Critical - Calls into COM
-            ///     Safe - Does not expose any unmanaged resources to the caller
-            /// </SecurityNote>
             private List<string> SupportedLanguagesImpl()
             {
                 var languages = ComFactory?.SupportedLanguages;
@@ -243,10 +235,6 @@ namespace System.Windows.Documents
             /// </summary>
             /// <param name="languageTag"></param>
             /// <returns></returns>
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller.
-            /// </SecurityNote>
             private bool IsSupportedImpl(string languageTag)
             {
                 return ((ComFactory != null) && (ComFactory.IsSupported(languageTag) != 0));
@@ -287,17 +275,11 @@ namespace System.Windows.Documents
 
             #region CreateSpellChecker 
 
-            /// <SecurityNote>
-            ///     Critical: Calls into Critical method SpellCheckerCreationHelper.CreateSpellChecker
-            /// </SecurityNote>
             private ISpellChecker CreateSpellCheckerImpl(string languageTag)
             {
                 return SpellCheckerCreationHelper.Helper(languageTag).CreateSpellChecker();
             }
 
-            /// <SecurityNote>
-            ///     Critical: Calls into CreateSpellCheckerImpl which is critical
-            /// </SecurityNote>
             private ISpellChecker CreateSpellCheckerImplWithRetries(string languageTag, bool suppressCOMExceptions = true)
             {
                 ISpellChecker spellChecker = null;
@@ -313,9 +295,6 @@ namespace System.Windows.Documents
                 return callSucceeded ? spellChecker : null;
             }
 
-            /// <securitynote>
-            ///     Critical: Calls into CreateSpellCheckerImplWithRetries, which is Critical
-            /// </securitynote>
             private ISpellChecker CreateSpellCheckerPrivate(string languageTag, bool suppressCOMExceptions = true)
             {
                 ISpellChecker spellChecker = null;
@@ -325,9 +304,6 @@ namespace System.Windows.Documents
                 return lockedExecutionSucceeded ? spellChecker : null; 
             }
 
-            /// <securitynote>
-            ///     Critical: Calls into CreateSpellCheckerPrivate, which is Critical
-            /// </securitynote>
             internal static ISpellChecker CreateSpellChecker(string languageTag, bool suppressCOMExceptions = true)
             {
                 return Singleton?.CreateSpellCheckerPrivate(languageTag, suppressCOMExceptions);
@@ -339,10 +315,6 @@ namespace System.Windows.Documents
 
             #region IUserDictionaryRegistrar services
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resoureces to the caller
-            /// </SecurityNote>
             private void RegisterUserDicionaryImpl(string dictionaryPath, string languageTag)
             {
                 var registrar = (IUserDictionariesRegistrar)ComFactory;
@@ -374,10 +346,6 @@ namespace System.Windows.Documents
                 Singleton?.RegisterUserDictionaryPrivate(dictionaryPath, languageTag, suppressCOMExceptions);
             }
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resoureces to the caller
-            /// </SecurityNote>
             private void UnregisterUserDictionaryImpl(string dictionaryPath, string languageTag)
             {
                 var registrar = (IUserDictionariesRegistrar)ComFactory;

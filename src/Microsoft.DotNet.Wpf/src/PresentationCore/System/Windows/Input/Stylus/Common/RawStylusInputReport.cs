@@ -55,9 +55,6 @@ namespace System.Windows.Input
         /// <summary>
         /// The raw data for this input report
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
         int[] _data;
 
         /// <summary>
@@ -85,9 +82,6 @@ namespace System.Windows.Input
 
         #region Properties
 
-        /// <SecurityNote>
-        ///     Critical - Setting property can be used to spoof input.
-        /// </SecurityNote>
         internal RawStylusInput RawStylusInput
         {
             get { return _rawStylusInput.Value; }
@@ -114,9 +108,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to stylus context id that reported the data.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: provides access to critical member _penContext
-        /// </SecurityNote>        
         internal PenContext PenContext
         {
             get;
@@ -126,10 +117,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to stylus context id that reported the data.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This handles critical data _penContext
-        ///     TreatAsSafe: We're returning safe data
-        /// </SecurityNote>
         internal StylusPointDescription StylusPointDescription
         {
             get { return _stylusPointDescGenerator(); }
@@ -190,10 +177,6 @@ namespace System.Windows.Input
         /// <param name="data">
         ///     Raw stylus data.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This handles critical data in the form of PresentationSource.
-        ///     TreatAsSafe:There are demands on the critical data(PresentationSource)
-        /// </SecurityNote>
         internal RawStylusInputReport(
             InputMode mode,
             int timestamp,
@@ -250,10 +233,6 @@ namespace System.Windows.Input
         /// <param name="data">
         ///     Raw stylus data.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This handles critical data in the form of PresentationSource.
-        ///     TreatAsSafe:There are demands on the critical data(PresentationSource)
-        /// </SecurityNote>
         internal RawStylusInputReport(
             InputMode mode,
             int timestamp,
@@ -290,10 +269,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the raw data that was reported.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Access the critical field - _data
-        ///     TreatAsSafe: No input is taken. It's safe to a clone.
-        /// </SecurityNote>
         internal int[] GetRawPacketData()
         {
             if (_data == null)
@@ -301,10 +276,6 @@ namespace System.Windows.Input
             return (int[])_data.Clone();
         }
 
-        /// <SecurityNote>
-        ///     Critical: Access the critical field - _data
-        ///     TreatAsSafe: No input is taken. It's safe to return the last tablet point.
-        /// </SecurityNote>
         internal Point GetLastTabletPoint()
         {
             int packetLength = StylusPointDescription.GetInputArrayLengthPerPoint();
@@ -312,9 +283,6 @@ namespace System.Windows.Input
             return new Point(_data[lastXIndex], _data[lastXIndex + 1]);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Hands out ref to internal data that can be used to spoof input.
-        /// </SecurityNote>
         internal int[] Data
         {
             get { return _data; }

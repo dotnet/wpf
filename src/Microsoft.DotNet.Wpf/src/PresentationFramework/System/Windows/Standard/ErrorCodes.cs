@@ -121,9 +121,6 @@ namespace Standard
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
         /// <returns>A Win32Error instance with the result of the native GetLastError</returns>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static Win32Error GetLastError()
         {
@@ -511,10 +508,6 @@ namespace Standard
             Assert.Fail();
         }
         
-        /// <SecurityNote>
-        ///  Critical : Calls ctor on Win32Exception which LinkDemands on the type
-        ///  Safe     : Calls safe overload of Win32Exception ctor that explicitly set the error code and message
-        /// </SecurityNote>
         private static Exception CreateWin32Exception(int code, string message)
         {
             return new Win32Exception(code, message);

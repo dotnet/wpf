@@ -78,10 +78,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry is empty
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this has an unsafe block.
-        /// PublicOK - This method reads from a buffer.
-        ///</SecurityNote>
         public override bool IsEmpty()
         {
             ReadPreamble();
@@ -107,10 +103,6 @@ namespace System.Windows.Media
         /// AreBoundsValid Property - returns true if the bounds are valid, false otherwise.
         /// If true, the bounds are stored in the bounds param.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         private bool AreBoundsValid(ref MilRectD bounds)
         {
             if (IsEmpty())
@@ -140,10 +132,6 @@ namespace System.Windows.Media
         /// <summary>
         /// CacheBounds - store the calculated bounds in the data stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         private void CacheBounds(ref MilRectD bounds)
         {
             unsafe
@@ -162,10 +150,6 @@ namespace System.Windows.Media
         /// <summary>
         /// SetDirty - indicate that the cached bounds on this Geometry are not valid.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         internal void SetDirty()
         {
             if (!IsEmpty())
@@ -222,10 +206,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     PublicOK: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         public override bool MayHaveCurves()
         {
             // IsEmpty() calls ReadPreamble()
@@ -250,10 +230,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         internal bool HasHollows()
         {
             // IsEmpty() calls ReadPreamble()
@@ -276,10 +252,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
         internal bool HasGaps()
         {
             // IsEmpty() calls ReadPreamble()
@@ -411,20 +383,12 @@ namespace System.Windows.Media
 
         #region DUCE
 
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        /// </SecurityNote>
         private unsafe int GetFigureSize(byte* pbPathData)
         {
             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
             return pPathGeometryData == null ? 0 : (int)pPathGeometryData->Size;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

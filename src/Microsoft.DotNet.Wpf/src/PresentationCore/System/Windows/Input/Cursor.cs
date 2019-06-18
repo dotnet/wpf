@@ -103,11 +103,6 @@ namespace System.Windows.Input
         ///     Cursor from a SafeHandle to an HCURSOR
         /// </summary>
         /// <param name="cursorHandle"></param>
-        /// <SecurityNote>
-        ///    Critical: Sets _cursorHandle, which is of a SecurityCritical type. (V4 transparency enforcement)
-        ///    TreatAsSafe: This code is safe to expose because in the worst case you change cursor for your app
-        /// See SecurityNote on _cursorHandle.
-        /// </SecurityNote>
         [FriendAccessAllowed] //used by ColumnHeader.GetCursor in PresentationFramework
         internal Cursor(SafeHandle cursorHandle )
         {
@@ -135,10 +130,6 @@ namespace System.Windows.Input
             GC.SuppressFinalize(this);
         }
 
-        /// <SecurityNote>
-        ///    Critical: SafeHandle code link demands on dispose.
-        ///    TreatAsSafe: Safe to dispose a cursor.
-        /// </SecurityNote>
         void Dispose(bool disposing)
         {
             if ( _cursorHandle != null )
@@ -166,10 +157,6 @@ namespace System.Windows.Input
         /// Handle - HCURSOR Interop
         /// </summary>
         /// <value></value>
-        /// <SecurityNote>
-        /// Critical: Returns a SafeHandle, which is a SecurityCritical type in v4.
-        /// See SecurityNote on _cursorHandle.
-        /// </SecurityNote>
         internal SafeHandle Handle
         {
             get
@@ -191,13 +178,6 @@ namespace System.Windows.Input
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical: 1) Access to a file. Calls Win32Exception ctor, which LinkDemands.
-        ///         Method success/failure could be used to do local file path probing.
-        ///         2) Sets _cursorHandle, which is of a SecurityCritical type.
-        ///     TreatAsSafe: 1) We demand FileIOPermission. Then it's okay to throw an exception about any failure.
-        ///         2) Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
-        ///</SecurityNote>
         private void LoadFromFile(string fileName)
         {
             SecurityHelper.DemandFileIOReadPermission(fileName);
@@ -243,10 +223,6 @@ namespace System.Windows.Input
         //**** DEAD CODE - retained only for compat, if user sets quirk flag  ****
         private const int BUFFERSIZE = 4096; // the maximum size of the buffer used for loading from stream
 
-        /// <SecurityNote>
-        /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
-        /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
-        /// </SecurityNote>
         private void LegacyLoadFromStream(Stream cursorStream)
         {
             //Generate a temporal file based on the memory stream.
@@ -311,10 +287,6 @@ namespace System.Windows.Input
         }
         //**** end of DEAD CODE ****//
 
-        /// <SecurityNote>
-        /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
-        /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
-        /// </SecurityNote>
         private void LoadFromStream(Stream cursorStream)
         {
             if (MS.Internal.CoreAppContextSwitches.AllowExternalProcessToBlockAccessToTemporaryFiles)
@@ -352,10 +324,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
-        /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
-        /// </SecurityNote>
         private void LoadCursorHelper(CursorType cursorType)
         {
             if (cursorType != CursorType.None)
@@ -392,13 +360,6 @@ namespace System.Windows.Input
         private CursorType  _cursorType   = CursorType.None;
         private bool        _scaleWithDpi = false;
 
-        /// <SecurityNote>
-        /// In v4, SafeHandle is marked as SecurityCritical. According to the new transparency enforcement model,
-        /// any access to this field must be done from a SecurityCritical method (even though our assemblies still
-        /// use the v2 model). However, we don't consider setting/replacing the cursor a critical operation.
-        /// (Effect is only within the application's UI.) That's why TreatAsSafe methods are allowed to set this
-        /// field. Individual methods on SafeHandle still guard access to the OS handle.
-        /// </SecurityNote>
         private SafeHandle  _cursorHandle;
 
         private static readonly int[] CursorTypes = {

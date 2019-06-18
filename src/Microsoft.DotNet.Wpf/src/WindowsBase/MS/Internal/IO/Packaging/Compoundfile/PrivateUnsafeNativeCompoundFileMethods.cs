@@ -35,11 +35,6 @@ using CultureInfo = System.Globalization.CultureInfo;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
-    // <SecurityNote>
-    //     Critical:  These interfaces and APIs have suppress unamanged code attribute set. 
-    //     It is up to the wrapper class (SafeNativeCompoundFileMethods) to ensure that the only
-    //     calls that can go through must be either done in Full Trust or with CompoundFileIOPermission.
-    // </SecurityNote>
     internal static class UnsafeNativeCompoundFileMethods
     {
         /////////////////////////////////////////////////////

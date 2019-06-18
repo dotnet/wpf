@@ -35,9 +35,6 @@ namespace System.Windows.Interop
         private const int MultiTouchEnabledFlag         = 0x01000000;
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Accesses and stores critical data (_site, _source, _stylusLogic).
-        /// </SecurityNote>
         internal HwndStylusInputProvider(HwndSource source)
         {
             InputManager inputManager = InputManager.Current;
@@ -68,10 +65,6 @@ namespace System.Windows.Interop
         /////////////////////////////////////////////////////////////////////
 
 
-        /// <SecurityNote>
-        ///     Critical:This class accesses critical data, _site
-        ///     TreatAsSafe: This class does not expose the critical data.
-        /// </SecurityNote>
         public void Dispose()
         {
             if(_site != null)
@@ -86,11 +79,6 @@ namespace System.Windows.Interop
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource
-        ///     TreatAsSafe:Information about whether a given input provider services
-        ///     a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert( null != _source );
@@ -99,9 +87,6 @@ namespace System.Windows.Interop
 
         void IInputProvider.NotifyDeactivate() {}
 
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it handles all stylus messages and could be used to spoof input
-        /// </SecurityNote>
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -197,13 +182,7 @@ namespace System.Windows.Interop
         /////////////////////////////////////////////////////////////////////
 
         private SecurityCriticalDataClass<WispLogic>         _stylusLogic;
-        /// <SecurityNote>
-        ///     Critical: This is the HwndSurce object , not ok to expose
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource>        _source;
-        /// <SecurityNote>
-        ///     This data is critical and should never be exposed
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputProviderSite> _site;
     }
 }

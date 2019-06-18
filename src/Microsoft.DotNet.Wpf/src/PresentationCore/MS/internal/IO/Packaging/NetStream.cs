@@ -72,13 +72,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="fullStreamLength">actual length of responseStream (which does not support Length call)</param>
         /// <param name="originalRequest"> the original request that was used to get the responseStream </param>
         /// <param name="originalResponse"> the original response that was used to get the responseStream </param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        ///  2) accepts originalRequest which is Critical (not Safe)
-        /// Safe
-        ///  1) _readEventHandles is Critical for set but this class is creating the new ones here
-        /// </SecurityNote>
         internal NetStream(
             Stream responseStream,
             long fullStreamLength,
@@ -381,12 +374,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="disposing"></param>
         /// <remarks>PreSharp 6519 dictates that we not throw exceptions from Dispose() methods.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set but we are disposing the ones this class created
-        /// </SecurityNote>
         protected override void Dispose(bool disposing)
         {
             // always call base.Dispose(bool) regardless of our state
@@ -521,12 +508,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="ar">async read result containing our NetLockBytes reference</param>
         /// <remarks>This method is called back when an async read is complete</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        /// </SecurityNote>
         private void ReadCallBack(IAsyncResult ar)
         {
             // prevent simultaneous BeginRead/EndRead
@@ -611,19 +592,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Ensure ByteRangeDownloader is created and available
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        ///  2) local assert of WebPermission to access get_Proxy property
-        ///  3) accesses Critical member _originalRequest
-        ///  4) assigns Critical property ByteRangeDownloader.Proxy
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        ///  2) WebPermission assert is local and needed only to synchronize two WebRequest properties
-        ///  3) _originalRequest.get_Proxy is safe because Proxy is known safe
-        ///     (and Proxy is only Critical member of _originalRequest)
-        ///  4) ByteRangeDownloader.Proxy set is safe because the _originalRequest.Proxy is safe
-        /// </SecurityNote>
         private void EnsureDownloader()
         {
             if (_byteRangeDownloader == null)
@@ -1081,12 +1049,6 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Attempts to obtain the data from the temp file.  Spawns a ByteRange
         /// request if enabled and appropriate.  Returns when any data is available or
         /// the request exceeded the actual stream length and the entire stream is available.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        /// </SecurityNote>
         private int GetData(Block block)
         {
             TrimBlockToStreamLength(block);
@@ -1209,10 +1171,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Release resources only needed for fulldownload
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// </SecurityNote>
         private void ReleaseFullDownloadResources()
         {
             Debug.Assert(_fullDownloadComplete, "Do not call this unless full download is complete.");
@@ -1256,10 +1214,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Free ByteRangeDownloader if it is allocated
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// </SecurityNote>
         private void FreeByteRangeDownloader()
         {
             if (_byteRangeDownloader != null)
@@ -1333,10 +1287,6 @@ namespace MS.Internal.IO.Packaging
 
         Uri                     _uri;               // uri we are resolving
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Proxy member is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
         WebRequest              _originalRequest;   // Proxy member is Critical
         Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
         long                    _position;          // our "logical stream position"

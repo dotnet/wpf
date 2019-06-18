@@ -80,9 +80,6 @@ namespace System.Windows.Media
         ///   byte* pointing to at least cbRecordSize bytes which will be copied to the stream.
         /// </param>
         /// <param name="cbRecordSize"> int - the size, in bytes, of pbRecord. Must be >= 0. </param>
-        /// <SecurityNote>
-        ///     Critical: This code has unsafe code and dereferences a pointer
-        /// </SecurityNote>
         public unsafe void WriteDataRecord(MILCMD id,
                                            byte* pbRecord,
                                            int cbRecordSize)

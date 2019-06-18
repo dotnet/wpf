@@ -40,9 +40,6 @@ namespace MS.Internal.Controls
             this.loc = loc;
         }
 
-        ///<SecurityNote>
-        ///     Critical: Takes arbitrary pointers, writes to memory
-        ///</SecurityNote> 
         unsafe int UnsafeNativeMethods.IEnumUnknown.Next(int celt, IntPtr rgelt, IntPtr pceltFetched)
         {
             if (pceltFetched != IntPtr.Zero)
@@ -81,9 +78,6 @@ namespace MS.Internal.Controls
             return NativeMethods.S_OK;
         }
 
-        ///<SecurityNote>
-        ///     Critical: Implements critical interface method
-        ///</SecurityNote> 
         int UnsafeNativeMethods.IEnumUnknown.Skip(int celt)
         {
             this.loc += celt;
@@ -94,17 +88,11 @@ namespace MS.Internal.Controls
             return NativeMethods.S_OK;
         }
 
-        ///<SecurityNote>
-        ///     Critical: Implements critical interface method
-        ///</SecurityNote> 
         void UnsafeNativeMethods.IEnumUnknown.Reset()
         {
             this.loc = 0;
         }
 
-        ///<SecurityNote>
-        ///     Critical: Implements critical interface method
-        ///</SecurityNote> 
         void UnsafeNativeMethods.IEnumUnknown.Clone(out UnsafeNativeMethods.IEnumUnknown ppenum)
         {
             ppenum = new EnumUnknown(this.arr, this.loc);

@@ -25,11 +25,6 @@ namespace System.Windows
         /// <param name="newSource">
         ///     The new source that this handler is being notified about.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This handles critical in the form of PresentationSource but there are demands on the
-        ///     data
-        ///     PublicOK: As this code does not expose the data.
-        /// </SecurityNote>
         public SourceChangedEventArgs(PresentationSource oldSource,
                                       PresentationSource newSource)
         :this(oldSource, newSource, null, null)
@@ -52,11 +47,6 @@ namespace System.Windows
         ///     The old parent of the element whose parent changed causing the
         ///     source to change.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This handles critical data in the form of PresentationSource but there are demands on the
-        ///     critical data.
-        ///     PublicOK:As this code does not expose any critical data.
-        /// </SecurityNote>
         public SourceChangedEventArgs(PresentationSource oldSource,
                                       PresentationSource newSource,
                                       IInputElement element,
@@ -74,11 +64,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This handles critical data in the form of PresentationSource but there are demands on the
-        ///     critical data
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
         public PresentationSource OldSource
         {
             get 
@@ -94,11 +79,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This handles critical data in the form of PresentationSource but there are demands on the
-        ///     critical data
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
         public PresentationSource NewSource
         {
             get 
@@ -140,14 +120,8 @@ namespace System.Windows
             SourceChangedEventHandler handler = (SourceChangedEventHandler) genericHandler;
             handler(genericTarget, this);
         }
-        /// <SecurityNote>
-        ///     Critical: This holds reference to a presentation source not safe to give out
-        /// </SecurityNote>
         private SecurityCriticalData<PresentationSource> _oldSource;
 
-        /// <SecurityNote>
-        ///     Critical: This holds reference to a presentation source not safe to give out
-        /// </SecurityNote>
         private SecurityCriticalData<PresentationSource> _newSource;
         private IInputElement _element;
         private IInputElement _oldParent;

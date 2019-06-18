@@ -88,10 +88,6 @@ namespace System.Windows.Input
         /// <param name="buttonState">
         ///     Button state info data.
         /// </param>
-        /// <SecurityNote>
-        ///     SafeCritical: This handles critical data in the form of PresentationSource 
-        ///                   There are demands on the critical data(PresentationSource)
-        /// </SecurityNote>
         internal RawStylusSystemGestureInputReport(
             InputMode mode,
             int timestamp,
@@ -145,10 +141,6 @@ namespace System.Windows.Input
         /// <param name="buttonState">
         ///     Button state info data.
         /// </param>
-        /// <SecurityNote>
-        ///     SafeCritical: This handles critical data in the form of PresentationSource 
-        ///                   There are demands on the critical data(PresentationSource)
-        /// </SecurityNote>
         internal RawStylusSystemGestureInputReport(
             InputMode mode,
             int timestamp,

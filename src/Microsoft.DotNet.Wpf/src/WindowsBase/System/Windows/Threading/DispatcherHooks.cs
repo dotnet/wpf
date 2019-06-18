@@ -23,10 +23,6 @@ namespace System.Windows.Threading
         ///     invoked, because that is when we determine that the queue is empty.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _dispatcherInactive
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event EventHandler DispatcherInactive
         {
             add
@@ -58,10 +54,6 @@ namespace System.Windows.Threading
         ///     raised by any thread.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _operationPosted
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherHookEventHandler OperationPosted
         {
             add
@@ -93,10 +85,6 @@ namespace System.Windows.Threading
         ///     raised by any thread.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _operationPosted
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherHookEventHandler OperationStarted
         {
             add
@@ -128,10 +116,6 @@ namespace System.Windows.Threading
         ///     the operation has completed.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _operationCompleted
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherHookEventHandler OperationCompleted
         {
             add
@@ -158,10 +142,6 @@ namespace System.Windows.Threading
         ///     so this event can be raised by any thread.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _operationPriorityChanged
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherHookEventHandler OperationPriorityChanged
         {
             add
@@ -188,10 +168,6 @@ namespace System.Windows.Threading
         ///     can be raised by any thread.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: accesses _operationAborted
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherHookEventHandler OperationAborted
         {
             add
@@ -215,10 +191,6 @@ namespace System.Windows.Threading
         {
         }
         
-        /// <SecurityNote>
-        ///     Critical: accesses _operationAborted
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseDispatcherInactive(Dispatcher dispatcher)
         {
             EventHandler dispatcherInactive = _dispatcherInactive;
@@ -228,10 +200,6 @@ namespace System.Windows.Threading
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _operationPosted
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseOperationPosted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPosted = _operationPosted;
@@ -242,10 +210,6 @@ namespace System.Windows.Threading
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _operationStarted
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseOperationStarted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationStarted = _operationStarted;
@@ -256,10 +220,6 @@ namespace System.Windows.Threading
             }
         }
         
-        /// <SecurityNote>
-        ///     Critical: accesses _operationCompleted
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseOperationCompleted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationCompleted = _operationCompleted;
@@ -270,10 +230,6 @@ namespace System.Windows.Threading
             }
         }
         
-        /// <SecurityNote>
-        ///     Critical: accesses _operationPriorityChanged
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseOperationPriorityChanged(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPriorityChanged = _operationPriorityChanged;
@@ -284,10 +240,6 @@ namespace System.Windows.Threading
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _operationAborted
-        ///     TreatAsSafe: no exposure
-        /// </SecurityNote>
         internal void RaiseOperationAborted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationAborted = _operationAborted;
@@ -300,34 +252,16 @@ namespace System.Windows.Threading
 
         private object _instanceLock = new object();
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private EventHandler _dispatcherInactive;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherHookEventHandler _operationPosted;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherHookEventHandler _operationStarted;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherHookEventHandler _operationCompleted;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherHookEventHandler _operationPriorityChanged;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherHookEventHandler _operationAborted;
     }
 }

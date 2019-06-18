@@ -47,11 +47,6 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// <see cref="AutomationPeer.GetBoundingRectangleCore"/>
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
         protected override Rect GetBoundingRectangleCore()
         {
             TextElement textElement = (TextElement)Owner;
@@ -97,11 +92,6 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// <see cref="AutomationPeer.GetClickablePointCore"/>
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
         protected override Point GetClickablePointCore()
         {
             Point pt = new Point();

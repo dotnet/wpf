@@ -561,25 +561,16 @@ namespace MS.Internal.Automation
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaHasServerSideProvider", CharSet = CharSet.Unicode)]
         internal static extern bool UiaHasServerSideProvider(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        /// </SecurityNote>
         internal static bool UiaNodeRelease(IntPtr hnode)
         {
             return RawUiaNodeRelease( hnode );
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        /// </SecurityNote>
         internal static bool UiaPatternRelease(IntPtr hobj)
         {
             return RawUiaPatternRelease( hobj );
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        /// </SecurityNote>
         internal static bool UiaTextRangeRelease(IntPtr hobj)
         {
             return RawUiaTextRangeRelease( hobj );

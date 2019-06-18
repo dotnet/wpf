@@ -37,15 +37,6 @@ namespace MS.Internal.Controls
     /// Provides a default WebBrowserSite implementation for use in the CreateWebBrowserSite
     /// method in the WebBrowser class. 
     /// </summary> 
-    /// <SecurityNote>
-    /// WebOCHostedInBrowserProcess - defense in depth: 
-    ///   These interface implementations are exposed across a security boundary. We must not allow a 
-    ///   compromised low-integrity-level browser process to gain elevation of privilege via our process or
-    ///   tamper with its state. (Attacking the WebOC via this interface is not interesting, because the WebOC
-    ///   is directly accessible in the browser process.) Each interface implementation method must be 
-    ///   carefully reviewed to ensure that it cannot be abused by disclosing protected resources or by passing
-    ///   malicious data to it.
-    /// </SecurityNote>
     /// <remarks>
     /// THREADING ISSUE: When WebBrowser.IsWebOCHostedInBrowserProcess, calls on the interfaces implemented here
     ///   (and on ActiveXSite) arrive on RPC worker threads. This is because CLR objects don't like to stick to 
@@ -67,9 +58,6 @@ namespace MS.Internal.Controls
         ///     WebBrowser implementation of ActiveXSite. Used to override GetHostInfo. 
         ///     and "turn on" our redirect notifications. 
         /// </summary> 
-        /// <SecurityNote> 
-        ///     Critical - calls base class ctor which is critical. 
-        /// </SecurityNote> 
         internal WebBrowserSite(WebBrowser host) : base(host)
         {
         }
@@ -87,13 +75,6 @@ namespace MS.Internal.Controls
             return NativeMethods.S_FALSE;
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls critical code. 
-        ///                If you change this method - you could affect mitigations. 
-        ///                 **Needs to be critical.**
-        ///     TreatAsSafe - information returned from this method is innocous.
-        ///                   lists the set of browser features/options we've enabled. 
-        ///</SecurityNote> 
         int UnsafeNativeMethods.IDocHostUIHandler.GetHostInfo(NativeMethods.DOCHOSTUIINFO info)
         {
             WebBrowser wb = (WebBrowser)Host;
@@ -125,10 +106,6 @@ namespace MS.Internal.Controls
         }
 
 
-        /// <SecurityNote>
-        /// Critical : Accepts critical IOleInPlaceActiveObject, IOleCommandTarget, IOleInPlaceFrame, IOleInPlaceUIWindow as argument
-        /// Safe     : Performs no actions on critical argument, exposes no critical data to caller
-        /// </SecurityNote>
         int UnsafeNativeMethods.IDocHostUIHandler.ShowUI(int dwID, UnsafeNativeMethods.IOleInPlaceActiveObject activeObject,
                 NativeMethods.IOleCommandTarget commandTarget, UnsafeNativeMethods.IOleInPlaceFrame frame,
                 UnsafeNativeMethods.IOleInPlaceUIWindow doc)
@@ -155,10 +132,6 @@ namespace MS.Internal.Controls
             return NativeMethods.E_NOTIMPL;
         }
 
-        /// <SecurityNote>
-        /// Critical : Accepts critical IOleInPlaceUIWindow as argument
-        /// Safe     : Performs no actions on critical argument, exposes no critical data to caller
-        /// </SecurityNote>
         int UnsafeNativeMethods.IDocHostUIHandler.ResizeBorder(NativeMethods.COMRECT rect, UnsafeNativeMethods.IOleInPlaceUIWindow doc, bool fFrameWindow)
         {
             return NativeMethods.E_NOTIMPL;
@@ -169,9 +142,6 @@ namespace MS.Internal.Controls
             return NativeMethods.E_NOTIMPL;
         }
 
-        /// <SecurityNote>
-        /// Critical : Accepts critical IOleDropTarget as argument
-        /// </SecurityNote>
         int UnsafeNativeMethods.IDocHostUIHandler.GetDropTarget(UnsafeNativeMethods.IOleDropTarget pDropTarget, out UnsafeNativeMethods.IOleDropTarget ppDropTarget)
         {
             //
@@ -240,12 +210,6 @@ namespace MS.Internal.Controls
         #endregion
 
         /// <remarks> See overview of keyboard input handling in WebBrowser.cs. </remarks>
-        /// <SecurityNote>
-        /// Critical: Access the critical Host property.
-        /// TAS: Host is not exposed.
-        /// WebOCHostedInBrowserProcess: Potential for input spoofing. Currently we handle only the Tab key, 
-        ///     which is safe.
-        /// </SecurityNote>
         int UnsafeNativeMethods.IOleControlSite.TranslateAccelerator(ref MSG msg, int grfModifiers)
         {
             // Handle tabbing out of the WebOC
@@ -262,10 +226,6 @@ namespace MS.Internal.Controls
             return NativeMethods.S_FALSE;
         }
 
-        /// <SecurityNote>
-        /// Critical: Access the critical Host property.
-        /// TAS: Host is not exposed.
-        /// </SecurityNote>
         private void MoveFocusCallback(object direction)
         {
             Host.MoveFocus(new TraversalRequest((FocusNavigationDirection)direction));

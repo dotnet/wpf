@@ -94,10 +94,6 @@ namespace MS.Internal.FontFace
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - Count is safe to expose
-        /// </SecurityNote>
         public int Count
         {
             get
@@ -169,10 +165,6 @@ namespace MS.Internal.FontFace
 
             #region IEnumerator<Typeface> Members
 
-            /// <SecurityNote>
-            /// Critical - calls into critical Text.TextInterface.Font properties
-            /// TreatAsSafe - data used to initialize the new Typeface is safe to expose
-            /// </SecurityNote>
             public Typeface Current
             {
                 get

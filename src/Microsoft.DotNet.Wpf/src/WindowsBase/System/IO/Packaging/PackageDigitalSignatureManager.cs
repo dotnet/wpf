@@ -457,10 +457,6 @@ namespace System.IO.Packaging
         /// tag must be provided with a Uri that targets the Object tag using local fragment 
         /// syntax.  If the object had an ID of "myObject" the Uri on the Reference would
         /// be "#myObject".  For unsigned objects, no reference is required.</remarks>
-        ///<SecurityNote>
-        ///     Critical: calls X509Certificate.Handle which LinkDemands
-        ///     PublicOK: we don't store or return the handle
-        ///</SecurityNote> 
         public PackageDigitalSignature Sign(
             IEnumerable<Uri> parts, 
             X509Certificate certificate,
@@ -826,10 +822,6 @@ namespace System.IO.Packaging
         /// <param name="certificate">certificate to inspect</param>
         /// <exception cref="System.Security.Cryptography.CryptographicException">certificate is invalid but the error code is not recognized</exception>
         /// <returns>the first error encountered when inspecting the certificate chain or NoError if the certificate is valid</returns>
-        ///<SecurityNote> 
-        ///     Critical - The X509Chain.Build method has a LinkDemand for Unrestricted. 
-        ///     PublicOK - VerifyCertificate has LinkDemand.
-        ///</SecurityNote> 
         public static X509ChainStatusFlags VerifyCertificate(X509Certificate certificate)
         {
             if (certificate == null)
@@ -882,10 +874,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="hwndParent"></param>
         /// <returns>null if user cancels or no certificate could be located</returns>
-        ///<SecurityNote>
-        ///     Critical: calls X509Certificate2UI.SelectFromCollection which LinkDemands
-        ///     TreatAsSafe: UI can only display existing certificates, no spoofing
-        ///</SecurityNote> 
         static internal X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
         {
             X509Certificate2 X509cert = null;

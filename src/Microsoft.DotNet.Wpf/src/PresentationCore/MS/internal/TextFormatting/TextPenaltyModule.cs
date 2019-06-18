@@ -42,10 +42,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// This constructor is called by PInvoke when returning the critical handle
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls the setter of _ploPenaltyModule.
-        /// Safe - as it does not set the value arbitrarily from the value it receives from caller. 
-        /// </SecurityNote>
         internal TextPenaltyModule(SecurityCriticalDataForSet<IntPtr> ploc)
         {
             IntPtr ploPenaltyModule;
@@ -78,10 +74,6 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as this calls method to dispose unmanaged penalty module.
-        /// Safe - as it does not arbitrarily set critical data.
-        /// </SecurityNote>
         private void Dispose(bool disposing)
         {
             if (_ploPenaltyModule.Value != IntPtr.Zero)
@@ -99,9 +91,6 @@ namespace MS.Internal.TextFormatting
         /// unsafe LS penalty module for exclusive use of PTS during optimal paragraph 
         /// penalty calculation.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this returns pointer to unmanaged memory owned by LS.
-        /// </SecurityNote>
         internal IntPtr DangerousGetHandle()
         {
             if (_isDisposed)

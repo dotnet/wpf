@@ -15,9 +15,6 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     ///     Represents a printer handle used in spooler API's like OpenPrinter
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical: base class SafeHandle is critical
-    /// </SecurityNote>
     internal sealed class SafeWinSpoolPrinterHandle : SafeHandle
     {
         private SafeWinSpoolPrinterHandle()
@@ -37,9 +34,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls native method to close printer handle
-        /// </SecurityNote>
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethods.ClosePrinter(base.handle);

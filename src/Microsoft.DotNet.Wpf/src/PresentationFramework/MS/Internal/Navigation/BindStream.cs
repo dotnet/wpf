@@ -225,9 +225,6 @@ namespace MS.Internal.Navigation
         /// </summary>
         /// <param name="requestedType"></param>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalByRefObject.CreateObjRef which LinkDemands
-        ///</SecurityNote> 
         public override ObjRef CreateObjRef(
             Type requestedType
             )
@@ -312,9 +309,6 @@ namespace MS.Internal.Navigation
         /// Overridden InitializeLifetimeService method
         /// </summary>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalByRefObject.InitializeLifetimeService which LinkDemands
-        ///</SecurityNote> 
         public override object InitializeLifetimeService()
         {
             return _stream.InitializeLifetimeService();

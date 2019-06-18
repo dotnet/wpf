@@ -23,12 +23,6 @@ namespace MS.Internal
         {
         }
 
-        ///<SecurityNote> 
-        ///     Critical calls unsecure handle. 
-        ///     This function should only be called by Urlmon. 
-        ///
-        ///     Which is un-managed code - ergo also critical. 
-        ///</SecurityNote> 
         public void GetWindow( /* [out] */ ref IntPtr phwnd)
         {
             phwnd = IntPtr.Zero;

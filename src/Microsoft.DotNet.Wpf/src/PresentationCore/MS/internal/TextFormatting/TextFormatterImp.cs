@@ -811,10 +811,6 @@ namespace MS.Internal.TextFormatting
         /// Return the TextAnalyzer associated with this TextFormatterImp object.
         /// TextAnalyzer is used in shaping process.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Uses security critical DWriteFactory.Instance.
-        /// Safe     - Does not expose the Factory instance.
-        /// </SecurityNote>
         internal TextAnalyzer TextAnalyzer
         {
             get

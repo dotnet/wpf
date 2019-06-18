@@ -160,9 +160,6 @@ namespace System.Windows.Media
     [Serializable]
     public struct PixelFormat : IEquatable<PixelFormat>
     {
-        /// <SecurityNote>
-        /// Critical - Accesses closely controlled format guid
-        /// </SecurityNote>
         internal PixelFormat(Guid guidPixelFormat)
         {
             unsafe
@@ -204,10 +201,6 @@ namespace System.Windows.Media
             _guidFormat = new SecurityCriticalDataForSet<Guid> (guidPixelFormat);
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses closely controlled format guid
-        /// TreatAsSafe - The input (enum) is validated in setting the format guid
-        /// </SecurityNote>
         internal PixelFormat(PixelFormatEnum format)
         {
             _format = format;
@@ -223,10 +216,6 @@ namespace System.Windows.Media
         /// The preferred way to construct a PixelFormat is with the PixelFormats class.
         /// </summary>
         /// <param name="pixelFormatString"></param>
-        /// <SecurityNote>
-        /// Critical - Accesses closely controlled format guid
-        /// TreatAsSafe - The input (string) is validated in setting the format guid
-        /// </SecurityNote>
         internal PixelFormat(string pixelFormatString)
         {
             PixelFormatEnum format = PixelFormatEnum.Default;
@@ -522,12 +511,6 @@ namespace System.Windows.Media
         /// <summary>
         /// The pixel format mask information for each channel.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code
-        /// PublicOK - the pixel format info (an exsternal input) comes from a critical function which creates it based on the pixel format GUID
-        ///   and has a TAS boundary tracking all setting of it.
-        /// LinkDemand - blocks information disclosure in partial trust scenario
-        /// </SecurityNote>
         public IList<PixelFormatChannelMask> Masks
         {
             get
@@ -585,9 +568,6 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code
-        /// </SecurityNote>
         internal IntPtr CreatePixelFormatInfo()
         {
             IntPtr componentInfo = IntPtr.Zero;
@@ -628,10 +608,6 @@ namespace System.Windows.Media
             return pixelFormatInfo;
         }
 
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code
-        /// TreatAsSafe - BitsPerPixel information is safe to share
-        /// </SecurityNote>
         internal int InternalBitsPerPixel
         {
             get
@@ -708,9 +684,6 @@ namespace System.Windows.Media
             return _format.ToString();
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, accepts unmanaged handles as arguments
-        /// </SecurityNote>
         internal static PixelFormat GetPixelFormat (
             SafeMILHandle /* IWICBitmapSource */ bitmapSource
             )

@@ -31,10 +31,6 @@ namespace System.Windows.Controls
     {
         #region Creation
 
-        ///<SecurityNote>
-        ///     Critical - this function elevates by accessing InputManger.Current.
-        ///     TreatAsSafe: This code simply attaches a call back which is private
-        ///</SecurityNote>
         internal PopupControlService()
         {
             InputManager.Current.PostProcessInput += new ProcessInputEventHandler(OnPostProcessInput);
@@ -46,10 +42,6 @@ namespace System.Windows.Controls
         #region Input Handling
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input. Also this code revieves an event that has
-        ///           user initiated set. Also calls PresentationSource.CriticalFromVisual.
-        ///</SecurityNote>
         private void OnPostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)
@@ -171,9 +163,6 @@ namespace System.Windows.Controls
         }
         
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: This has the ability to spoof input for paste
-        ///</SecurityNote>
         private void ProcessMouseUp(object sender, MouseButtonEventArgs e)
         {
             RaiseToolTipClosingEvent(false /* reset */);
@@ -197,9 +186,6 @@ namespace System.Windows.Controls
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: This has the ability to spoof input for paste
-        ///</SecurityNote>
         private void ProcessKeyDown(object sender, KeyEventArgs e)
         {
             if (!e.Handled)
@@ -243,9 +229,6 @@ namespace System.Windows.Controls
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: This has the ability to spoof input for paste
-        ///</SecurityNote>
         private void ProcessKeyUp(object sender, KeyEventArgs e)
         {
             if (!e.Handled)
@@ -813,9 +796,6 @@ namespace System.Windows.Controls
             EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: This has the ability to spoof input for paste since it passes user initiated bit
-        ///</SecurityNote>
         private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
         {
             IInputElement source = e.OriginalSource as IInputElement;
@@ -828,9 +808,6 @@ namespace System.Windows.Controls
             }
         }
 
-        ///<SecurityNote>
-        /// Critical: This has the ability to spoof input for paste since it passes user initiated bit
-        ///</SecurityNote>
         private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
         {
             // Fire the event
@@ -930,10 +907,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this gets PresentationSource.
-        /// Safe - as the value is not returned but is only checked for null.
-        /// </SecurityNote>
         private static bool IsPresentationSourceNull(DependencyObject uie)
         {
             return PresentationSource.CriticalFromVisual(uie) == null;

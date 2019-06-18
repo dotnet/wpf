@@ -223,28 +223,17 @@ namespace System.Windows.Automation.Peers
         /// It requires "Full Trust" level of security permissions to be executed, since this
         /// class is wrappign an HWND direct access to which is a critical asset.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _hwnd which is Critical.
-        /// Safe - as the caller already got the critical value.
-        /// In addition, we prevent creating this class by external callers who does not have UnmanagedCode permission.
-        /// </SecurityNote>
         public HostedWindowWrapper(IntPtr hwnd)
         {
             (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Demand();
             _hwnd = hwnd;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
         private HostedWindowWrapper()
         {
             _hwnd = IntPtr.Zero;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
             HostedWindowWrapper wrapper = new HostedWindowWrapper();
@@ -252,9 +241,6 @@ namespace System.Windows.Automation.Peers
             return wrapper;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
         internal IntPtr Handle
         {
             get
@@ -263,9 +249,6 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - by definition as this is a wrapper for Critical data.
-        /// </SecurityNote>
         private IntPtr _hwnd;
     }
 
@@ -464,10 +447,6 @@ namespace System.Windows.Automation.Peers
         // this method returns null.
         // ConnectedPeer parameter is some peer which is known to be connected (typically root, but if not, this method will
         // walk up from the given connectedPeer up to find a root)
-        ///<SecurityNote>
-        ///     Critical - Accessing _hwnd
-        ///     TreatAsSafe - _hwnd is used internally and not exposed.
-        ///</SecurityNote>
         internal AutomationPeer ValidateConnected(AutomationPeer connectedPeer)
         {
             if(connectedPeer == null)
@@ -513,9 +492,6 @@ namespace System.Windows.Automation.Peers
         /// 1. it's doing an action which is securitycritical
         /// 2. it can not be treated as safe as it doesn't know whether
         ///    the peer is actually this objects's parent or not and must be used by methods which has
-        /// <SecurityNote>
-        /// Critical - access _hwnd
-        /// </SecurityNote>
         /// </summary>
         /// <param name="peer"></param>
         internal bool TrySetParentInfo(AutomationPeer peer)
@@ -596,10 +572,6 @@ namespace System.Windows.Automation.Peers
         /// To obtain the IRawElementProviderSimple interface, the peer should use
         /// System.Windows.Automation.AutomationInteropProvider.HostProviderFromHandle(hwnd).
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical    - Calls critical AutomationPeer.Hwnd.
-        ///     TreatAsSafe - Critical data is used internally and not explosed
-        /// </SecurityNote>
         virtual protected HostedWindowWrapper GetHostRawElementProviderCore()
         {
             HostedWindowWrapper host = null;
@@ -1381,10 +1353,6 @@ namespace System.Windows.Automation.Peers
         }
 
         //
-        ///<SecurityNote>
-        ///     Critical - Accessing _hwnd
-        ///     TreatAsSafe - _hwnd is used internally and not exposed.
-        ///</SecurityNote>
         private void EnsureChildren()
         {
             //  if !_childrenValid or _ancestorsInvalid,  indicates that the automation tree under this peer is not up to date, so requires
@@ -2065,9 +2033,6 @@ namespace System.Windows.Automation.Peers
             }
 }
 
-        /// <SecurityNote>
-        ///     Critical - provides access to critial data.
-        /// </SecurityNote>
         internal IntPtr Hwnd
         {
             get { return _hwnd; }
@@ -2410,9 +2375,6 @@ namespace System.Windows.Automation.Peers
         private static Hashtable s_propertyInfo;
 
         private int _index = -1;
-        ///<SecurityNote>
-        ///     Critical - once stored, this hwnd will be used for subsequent automation operations.
-        ///</SecurityNote>
         private IntPtr _hwnd;
         private List<AutomationPeer> _children;
         private AutomationPeer _parent;

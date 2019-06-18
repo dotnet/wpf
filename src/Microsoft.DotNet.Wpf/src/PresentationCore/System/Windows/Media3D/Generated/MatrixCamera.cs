@@ -158,11 +158,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Methods
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

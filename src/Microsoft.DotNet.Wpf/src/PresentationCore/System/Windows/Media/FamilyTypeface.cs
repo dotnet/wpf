@@ -300,9 +300,6 @@ namespace System.Windows.Media
         }
 
 
-        /// <SecurityNote>
-        /// Critical - As it uses raw pointers.
-        /// </SecurityNote>
         unsafe void IDeviceFont.GetAdvanceWidths(
             char*   characterString,
             int     characterLength,

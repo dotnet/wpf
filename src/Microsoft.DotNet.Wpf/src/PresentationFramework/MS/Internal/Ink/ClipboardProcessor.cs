@@ -105,10 +105,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="dataObject">The IDataObject instance</param>
         /// <returns>true if there is data being copied. Otherwise return false</returns>
-        /// <SecurityNote>
-        ///     Critical: This code copies ink content to the clipboard
-        ///                 Note the TAS boundary is InkCanvas.CopyToDataObject
-        /// </SecurityNote>
         internal InkCanvasClipboardDataFormats CopySelectedData(IDataObject dataObject)
         {
             InkCanvasClipboardDataFormats copiedDataFormat = InkCanvasClipboardDataFormats.None;
@@ -325,12 +321,6 @@ namespace MS.Internal.Ink
         /// <param name="transform"></param>
         /// <param name="size"></param>
         /// <returns>True if the copy is succeeded</returns>
-        /// <SecurityNote>
-        ///     Critical:   This code calls CopyToDataObject which is critical. 
-        ///                 Note the TAS boundary is InkCanvas.CopyToDataObject
-        /// 
-        ///     TreatAsSafe: We only execute this code if the application has UnmanagedCode permission 
-        /// </SecurityNote>
         private bool CopySelectionInXAML(IDataObject dataObject, StrokeCollection strokes, List<UIElement> elements, Matrix transform, Size size)
         {
             //NOTE: after meeting with the partial trust team, we have 

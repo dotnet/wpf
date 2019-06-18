@@ -23,14 +23,6 @@ using System.Security;
     
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class UnsafeNativeMethods.
-    ///     UnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
-    ///     UnsafeNativeMethods
-    /// </SecurityNote>
     [StructLayout(LayoutKind.Sequential)]
     internal class ActivationServerInfo
     {
@@ -39,14 +31,6 @@ namespace MS.Internal.Security.RightsManagement
         [MarshalAs( UnmanagedType.LPWStr )]internal string  Url  = "";
     }
 
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class UnsafeNativeMethods.
-    ///     UnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
-    ///     UnsafeNativeMethods
-    /// </SecurityNote>
     // Declare a class to represent unmanaged SYSTEMTIME structure expected by DRM SDK 
     [ StructLayout( LayoutKind.Sequential )]
     internal class SystemTime 
@@ -115,14 +99,6 @@ namespace MS.Internal.Security.RightsManagement
        ushort Milliseconds =0; 
     }
 
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class UnsafeNativeMethods.
-    ///     UnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
-    ///     UnsafeNativeMethods
-    /// </SecurityNote>
     [StructLayout(LayoutKind.Sequential)]
     internal class BoundLicenseParams
     {

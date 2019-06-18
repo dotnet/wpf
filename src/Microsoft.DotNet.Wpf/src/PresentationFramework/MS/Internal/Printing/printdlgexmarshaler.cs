@@ -38,10 +38,6 @@ namespace MS.Internal.Printing
             /// A reference to the Win32PrintDialog that contains the necessary
             /// data to display a Win32 Print Dialog via the PrintDlgEx call.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:    - Sets critical data to default values
-            ///                  - We want creation of this class to be tracked.
-            /// </SecurityNote>
             internal
             PrintDlgExMarshaler(
                 IntPtr owner,
@@ -70,11 +66,6 @@ namespace MS.Internal.Printing
             /// Gets an IntPtr that points to unmanaged memory that represents
             /// a PRINTDLGEX structure for calling into PrintDlgEx Win32 API.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical:    - This exposes critical unmanaged memory buffer
-            ///                    and should be treated as dangerous since it
-            ///                    is being passed to managed code.
-            /// </SecurityNote>
             internal IntPtr UnmanagedPrintDlgEx
             {
                 get
@@ -93,13 +84,6 @@ namespace MS.Internal.Printing
             /// parameters.  You call this prior to a call to PrintDlgEx Win32
             /// API to configure the unmanaged memory.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical:    - Calls other critical code (ExtractPrintDataAndDevMode,
-            ///                    AcquireResultFromPrintDlgExStruct, AcquirePrintQueue,
-            ///                    and AcquirePrintTicket).
-            ///                  - Sets critical data on the Win32PrintDialog class
-            ///                    (PrintTicket and PrintQueue)
-            /// </SecurityNote>
             internal
             UInt32
             SyncFromStruct()
@@ -163,10 +147,6 @@ namespace MS.Internal.Printing
             /// unmanaged data structure.  It is used after a successful call to the
             /// PrintDlgEx Win32 API.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical:    - Calls into critical code (FreeUnmanagedPrintDlgExStruct,
-            ///                    GetDesktopWindow, and AllocateUnmanagedPrintDlgExStruct).
-            /// </SecurityNote>
             internal
             void
             SyncToStruct()
@@ -200,10 +180,6 @@ namespace MS.Internal.Printing
             /// <param name="disposing">
             /// true if managed resources should be disposed; otherwise, false.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical     - Accesses unmanaged critical pointer
-            ///     TreatAsSafe  - Its only freeing the memory and nothing leaves this method.
-            /// </SecurityNote>
             private
             void
             Dispose(
@@ -242,9 +218,6 @@ namespace MS.Internal.Printing
             /// <param name="devModeHandle">
             /// An out parameter to store the devmode handle.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:    - manipulating unmanaged buffers with critical data in them.
-            /// </SecurityNote>
             private
             void
             ExtractPrintDataAndDevMode(
@@ -336,10 +309,6 @@ namespace MS.Internal.Printing
             /// <param name="printerName">
             /// The printer name to search for.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:   - Performs an elevation to access the printing subsystem to lookup
-            ///                   the PrintQueue based on the printername.
-            /// </SecurityNote>
             private
             PrintQueue
             AcquirePrintQueue(
@@ -402,11 +371,6 @@ namespace MS.Internal.Printing
             /// <param name="printQueueName">
             /// The printer name for the PrintTicket converter.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:   - Performs an elevation to access the printing subsystem to lookup
-            ///                   the PrintQueue based on the printer in the PRINTDLG structure.
-            ///                 - Calls unmanaged code that has been suppressed.
-            /// </SecurityNote>
             private
             PrintTicket
             AcquirePrintTicket(
@@ -468,9 +432,6 @@ namespace MS.Internal.Printing
             /// is passed around as an unmanaged buffer since the 32-bit and 64-bit versions
             /// of this buffer are not the same and need to be handled uniquely.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:    - manipulating unmanaged buffers with critical data in them.
-            /// </SecurityNote>
             private
             UInt32
             AcquireResultFromPrintDlgExStruct(
@@ -510,10 +471,6 @@ namespace MS.Internal.Printing
             /// exists in the unmanaged print world where the 32-bit and 64-bit
             /// structure packing is inconsistent.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical:    - Allocates and returns unmanaged memory that will
-            ///                    eventually contain possibly sensitive data.
-            /// </SecurityNote>
             private
             IntPtr
             AllocateUnmanagedPrintDlgExStruct()
@@ -708,9 +665,6 @@ namespace MS.Internal.Printing
             /// is passed around as an unmanaged buffer since the 32-bit and 64-bit versions
             /// of this buffer are not the same and need to be handled uniquely.
             /// </param>
-            /// <SecurityNote>
-            ///     Critical:    - Frees an unmanaged buffer with potentially sensitive data.
-            /// </SecurityNote>
             private
             void
             FreeUnmanagedPrintDlgExStruct(
@@ -770,10 +724,6 @@ namespace MS.Internal.Printing
             /// Returns a boolean value representing whether the current runtime is
             /// 32-bit or 64-bit.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical:    - Marshal.SizeOf LinkDemands
-            ///     TreatAsSafe: - This method returns nothing that is unsafe.
-            /// </SecurityNote>
             private
             bool
             Is64Bit()
@@ -793,9 +743,6 @@ namespace MS.Internal.Printing
             /// Returns an IntPtr pointing to a memory address in unmanaged code where
             /// the structure has been initialized.
             /// </returns>
-            /// <SecurityNote>
-            ///     Critical:    - Allocates and manipulates unmanaged memory.
-            /// </SecurityNote>
             private
             IntPtr
             AllocateAndInitializeDevNames(
@@ -879,12 +826,6 @@ namespace MS.Internal.Printing
             /// An unmanaged pointer to an unmanaged DEVMODE structure that can be
             /// used in the PRINTDLGEX structure for a call to PrintDlgEx.
             /// </returns>
-            /// <SecurityNote>
-            ///     Critical:    - Allocates and manipulates unmanaged memory.
-            ///                  - Asserts for DefaultPrinting permissions to be
-            ///                    able to successfully convert the PrintTicket
-            ///                    object to a DEVMODE via the PrintTicketConverter.
-            /// </SecurityNote>
             private
             IntPtr
             AllocateAndInitializeDevMode(
@@ -930,17 +871,9 @@ namespace MS.Internal.Printing
             private
             Win32PrintDialog _dialog;
 
-            /// <SecurityNote>
-            ///     Critical: This is a pointer to unmanaged memory containing
-            ///               an unmanaged PRINTDLGEX structure.
-            /// </SecurityNote>
             private
             IntPtr _unmanagedPrintDlgEx;
 
-            /// <SecurityNote>
-            ///     Critical: This is a handle to a window that will be used
-            ///               as the parent for the Win32 print dialog.
-            /// </SecurityNote>
             private
             IntPtr _ownerHandle;
 

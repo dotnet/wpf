@@ -17,18 +17,12 @@ namespace MS.Internal.Controls
 {
     internal class ConnectionPointCookie
     {
-        /// <SecurityNote>
-        ///  Critical : Field for critical type UnsafeNativeMethods.IConnectionPoint
-        /// </SecurityNote>
         private UnsafeNativeMethods.IConnectionPoint connectionPoint;
         private int cookie;
 
         
         /// Creates a connection point to of the given interface type.
         /// which will call on a managed code sink that implements that interface.
-        ///<SecurityNote> 
-        ///     Critical - calls critical methods. IConnectionPointContainer.FindConnectionPoint etc. 
-        ///</SecurityNote> 
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
         {
             Exception ex = null;
@@ -108,11 +102,6 @@ namespace MS.Internal.Controls
         /// Disconnect the current connection point.  If the object is not connected,
         /// this method will do nothing.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - calls critical methods. 
-        ///     Potentially unsafe. For example, disconnecting the event sink breaks the site-locking 
-        ///     feature of the WebBrowser control.
-        ///</SecurityNote> 
         internal void Disconnect()
         {
             if (connectionPoint != null && cookie != 0)
@@ -154,10 +143,6 @@ namespace MS.Internal.Controls
 
 #pragma warning restore 6500
 
-        /// <SecurityNote>
-        /// Critical: calls the critical Disconnect().
-        /// TAS: When the object is being finalized, there isn't much left to protect.
-        /// </SecurityNote>
         ~ConnectionPointCookie()
         {
             Disconnect();

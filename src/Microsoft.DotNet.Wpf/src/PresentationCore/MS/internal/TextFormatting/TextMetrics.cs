@@ -300,9 +300,6 @@ namespace MS.Internal.TextFormatting
         /// finalizable, which therefore unnecessarily put additional pressure to GC since each
         /// finalizable object wakes finalizer thread and requires double GC collections.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this calls LoAcquireBreakRecord
-        /// </SecurityNote>
         internal TextLineBreak GetTextLineBreak(IntPtr ploline)
         {
             IntPtr pbreakrec = IntPtr.Zero;

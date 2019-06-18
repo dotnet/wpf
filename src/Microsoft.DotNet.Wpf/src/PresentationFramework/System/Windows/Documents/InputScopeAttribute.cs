@@ -55,9 +55,6 @@ namespace System.Windows.Documents
 
         // A method of ITfInputScope.
         // This returns InputScopes in the array that is allocated by CoTaskMemAlloc.
-        /// <SecurityNote>
-        /// Critical - it satisfies Marshal.* LinkDemands for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
-        /// </SecurityNote>
         public void GetInputScopes(out IntPtr ppinputscopes, out int count)
         {
             if (_inputScope != null)
@@ -89,9 +86,6 @@ namespace System.Windows.Documents
 
         // A method of ITfInputScope.
         // This returns BSTRs in the array that is allocated by CoTaskMemAlloc.
-        /// <SecurityNote>
-        /// Critical - it satisfies Marshal.AllocCoTaskMem() LinkDemand for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
-        /// </SecurityNote>
         public int GetPhrase(out IntPtr ppbstrPhrases, out int count)
         {
             count = _inputScope == null ? 0 : _inputScope.PhraseList.Count;

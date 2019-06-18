@@ -111,9 +111,6 @@ namespace MS.Internal.TextFormatting
         /// <param name="scalingFactor">scaling factor</param>
         /// <param name="advanceWidthsUnshaped">unshaped glyph advance widths</param>
         /// <remarks>The method gets glyph advances and glyph offsets in ideal values </remarks>        
-        ///  <SecurityNote>
-        ///    Critical: Receives unsafe pointers as parameters.
-        /// </SecurityNote>
         internal abstract unsafe void GetAdvanceWidthsUnshaped(
             char*         characterString,
             int           characterLength,

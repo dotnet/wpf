@@ -26,18 +26,6 @@ using CultureInfo = System.Globalization.CultureInfo;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
-    // <SecurityNote>
-    //     Critical:  This class serves as a wrapper on top of several unmanaged CompoundFile
-    //      interfaces and API calls. These interfaces and APIs has suppress unamanged
-    //      code attribute set.
-    //     It is up to this class to ensure that the only calls that can go through must
-    //     be either done in Full Trust or with CompoundFileIOPermission.
-    //     This class exposes several internal APIs and interfaces built on top of classes that
-    //     demand the CompoundFileIOPermission and then call through the matching member of
-    //      the unsafe APIs and interfaces.
-    //     SecurityTreatAsSafe:  Demands CompoundFileIOPermission before it makes any calls to
-    //      unmanaged APIs
-    // </SecurityNote>
     internal static class SafeNativeCompoundFileMethods
     {
         /// <summary>
@@ -46,9 +34,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="access">FileAccess we're translating</param>
         /// <param name="grfMode">Mode flag parameter to modify</param>
-        // <SecurityNote>
-        //     SecurityTreatAsSafe:  Makes NO call to security suppressed unmanaged code
-        // </SecurityNote>
         internal static void UpdateModeFlagFromFileAccess( FileAccess access, ref int grfMode )
         {
             // Supporting write-only scenarios container-wide gets tricky and it 
@@ -208,14 +193,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             return result;
 }
 
-        // <SecurityNote>
-        //     Critical:  This method calls security suppressed unmanaged CompoundFile code.
-        //     ComoundFileIOPermission needs to be demanded to ensure that the only calls
-        //     that can go through must be either done in Full Trust or with under assertion of
-        //     CompoundFileIOPermission.
-        //     SecurityTreatAsSafe:  Demands CompoundFileIOPermission before it makes any calls to
-        //      unmanaged APIs
-        // </SecurityNote>
         internal static int SafePropVariantClear(ref PROPVARIANT pvar)
         {
             SecurityHelper.DemandCompoundFileIOPermission();

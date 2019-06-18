@@ -150,10 +150,6 @@ namespace System.Windows.Media.Imaging
                 _metadataBlocks = new ArrayList();
             }
 
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// TreatAsSafe - inputs are verified or safe
-            /// </SecurityNote>
             internal BitmapMetadataBlockWriter(BitmapMetadataBlockWriter blockWriter, object syncObject)
             {
                 Guid guidVendor = new Guid(MILGuidData.GUID_VendorMicrosoft);
@@ -221,9 +217,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int GetReaderByIndex(
                 UInt32 index,
                 out IntPtr /* IWICMetadataReader */ pIMetadataReader
@@ -248,9 +241,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int GetEnumerator(
                 out IntPtr /* IEnumUnknown */ pIEnumMetadata
             )
@@ -270,9 +260,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int InitializeFromBlockReader(
                 IntPtr /* IWICMetadataBlockReader */ pIBlockReader
             )
@@ -357,9 +344,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int GetWriterByIndex(
                 UInt32 index,
                 out IntPtr  /* IWICMetadataWriter */ pIMetadataWriter
@@ -384,9 +368,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int AddWriter(
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
             )
@@ -414,9 +395,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int SetWriterByIndex(
                 UInt32 index,
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
@@ -535,9 +513,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int Next(
                 UInt32 celt,
                 out IntPtr /* IUnknown ** */ rgelt,
@@ -578,10 +553,6 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// TreatAsSafe - inputs are verified or safe
-            /// </SecurityNote>
             public int Skip(
                 UInt32 celt
             )
@@ -600,10 +571,6 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// TreatAsSafe - inputs are verified or safe
-            /// </SecurityNote>
             public int Reset()
             {
                 _index = 0;
@@ -614,9 +581,6 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Accesses unmanaged code
-            /// </SecurityNote>
             public int Clone(
                 ref IntPtr /* IEnumUnknown ** */ ppEnum
             )
@@ -634,10 +598,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public BitmapMetadata(String containerFormat)
         {
             if (containerFormat == null)
@@ -659,10 +619,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - constructor is safe
-        /// </SecurityNote>
         internal BitmapMetadata()
         {
             _metadataHandle = null;
@@ -674,9 +630,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses critical resource
-        /// </SecurityNote>
         internal BitmapMetadata(
             SafeMILHandle metadataHandle,
             bool readOnly,
@@ -707,10 +660,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         private void Init(Guid containerFormat, bool readOnly, bool fixedSize)
         {
             int hr = 0;
@@ -747,10 +696,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         private void InitializeFromBlockWriter(Guid containerFormat, bool readOnly, bool fixedSize)
         {
             IntPtr /* IWICMetadataBlockWriter */ blockWriter = IntPtr.Zero;
@@ -800,10 +745,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         private void InitializeFromBlockWriter(BitmapMetadataBlockWriter sourceBlockWriter, object syncObject)
         {
             IntPtr /* IWICMetadataBlockWriter */ blockWriter = IntPtr.Zero;
@@ -853,9 +794,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code and critical resource
-        /// </SecurityNote>
         private void InitializeFromMetadataWriter(SafeMILHandle metadataHandle, object syncObject)
         {
             int hr;
@@ -977,10 +915,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public String Format
         {
             get
@@ -1025,10 +959,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public String Location
         {
             get
@@ -1103,10 +1033,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public void SetQuery(String query, object value)
         {
             WritePreamble();
@@ -1182,10 +1108,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public object GetQuery(String query)
         {
             int hr;
@@ -1242,10 +1164,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public void RemoveQuery(String query)
         {
             int hr;
@@ -1281,10 +1199,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code eventually
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         IEnumerator IEnumerable.GetEnumerator()
         {
             EnsureBitmapMetadata();
@@ -1295,10 +1209,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code eventually
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         IEnumerator<String> IEnumerable<String>.GetEnumerator()
         {
             EnsureBitmapMetadata();
@@ -1309,10 +1219,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// PublicOK - inputs are verified or safe
-        /// </SecurityNote>
         public bool ContainsQuery(String query)
         {
             int hr;
@@ -1569,10 +1475,6 @@ namespace System.Windows.Media.Imaging
         /// GetCurrentValueAsFrozenCore()
         /// </summary>
         /// <param name="sourceBitmapMetadata"></param>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code eventually
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         private void CopyCommon(BitmapMetadata sourceBitmapMetadata)
         {
             BitmapMetadataBlockWriter blockWriter = sourceBitmapMetadata.BlockWriter;
@@ -1600,10 +1502,6 @@ namespace System.Windows.Media.Imaging
             _fixedSize = sourceBitmapMetadata._fixedSize;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
         internal Guid GuidFormat
         {
             get
@@ -1621,9 +1519,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses critical resource
-        /// </SecurityNote>
         internal SafeMILHandle InternalMetadataHandle
         {
             get
@@ -1648,10 +1543,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses critical resource
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
         private void EnsureBitmapMetadata()
         {
             ReadPreamble();
@@ -1676,9 +1567,6 @@ namespace System.Windows.Media.Imaging
         private const String policy_CameraModel = "System.Photo.CameraModel";
         private const String policy_Rating = "System.SimpleRating";
 
-        /// <SecurityNote>
-        /// Critical - pointer to an unmanaged object that methods are called on.
-        /// </SecurityNote>
         private SafeMILHandle _metadataHandle;
 
         private BitmapMetadataBlockWriter _blockWriter;

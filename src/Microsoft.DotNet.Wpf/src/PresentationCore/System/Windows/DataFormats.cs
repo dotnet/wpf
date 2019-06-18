@@ -53,9 +53,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///  PublicOK:So we demand unmanaged code before calling.
-        ///</SecurityNote>
         public static DataFormat GetDataFormat(string format)
         {
             if (format == null)
@@ -367,11 +364,6 @@ namespace System.Windows
         /// Allows a the new format name to be specified if the requested format is not
         /// in the list
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls UnsafeNativeMethods.GetClipboardFormatName() which is a P/Invoke method.
-        /// Safe     - The StringBuilder object is constructed internally so we are not passing 
-        ///            GetClipboardFormatName() a possibly malicious object.
-        /// </SecurityNote>
         private static DataFormat InternalGetDataFormat(int id)
         {
             // Ensures the predefined Win32 data formats into our format list.
@@ -416,12 +408,6 @@ namespace System.Windows
         /// Ensures that the Win32 predefined formats are setup in our format list.  This
         /// is called anytime we need to search the list
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Invokes UnsafeNativeMethods.RegisterClipboardFormat for the Ink Serialized Format
-        ///     TreatAsSafe: This method will be invoked by the transparent callers. The method doesn't take 
-        ///                  any user's input and won't be called from any arbitrary code externally either.
-        ///                  It only builds up an internal format table which is safe all the time.                  
-        /// </SecurityNote>
         private static void EnsurePredefined()
         {
             // Lock the data format list to obtains the mutual-exclusion.

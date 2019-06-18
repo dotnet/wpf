@@ -1407,17 +1407,6 @@ namespace System.Xaml
                 return result;
             }
 
-            /// <SecurityNote>
-            /// Critical: Accesses members on InstanceDescriptor, which has a LinkDemand
-            /// Safe: Protected with a Full Demand
-            ///
-            /// Note: there's not really anything on InstanceDescriptor itself (other than perhaps
-            /// the Invoke method, which we don't use) that needs to be protected; the sensitive
-            /// work is actually done in converters that potentially access non-public members to
-            /// return the instance data.
-            /// However, rather than relying on converters to do the right thing, this is enforced
-            /// via a LinkDemand on InstanceDescriptor. So we have no choice but to demand here.
-            /// </SecurityNote>
             void ConvertToInstanceDescriptor(SerializerContext context, object instance, TypeConverter converter,
                 out MemberInfo member, out ICollection arguments, out bool isComplete)
             {

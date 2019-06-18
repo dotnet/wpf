@@ -37,9 +37,6 @@ namespace MS.Internal
         }
 
         // return the handle from a metafile
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
         internal static IntPtr GetHandleFromMetafile(Object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
@@ -62,9 +59,6 @@ namespace MS.Internal
 
         // Get a bitmap handle from the given data (either BitmapSource or Bitmap)
         // Also return its width and height.
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
         internal static IntPtr GetHBitmap(object data, out int width, out int height)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
@@ -78,9 +72,6 @@ namespace MS.Internal
         }
 
         // Get a bitmap handle from a Bitmap
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
         internal static IntPtr GetHBitmapFromBitmap(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
@@ -88,9 +79,6 @@ namespace MS.Internal
         }
 
         // Convert a metafile to HBitmap
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
         internal static IntPtr ConvertMetafileToHBitmap(IntPtr handle)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
@@ -130,10 +118,6 @@ namespace MS.Internal
 
         //returns bitmap snapshot of selected area
         //this code takes a BitmapImage and converts it to a Bitmap so it can be put on the clipboard
-        /// <SecurityNote>
-        ///    Critical: This calls into copy pixels which is link demand protected. It initially had a demand and this
-        ///              code did not work in PT
-        /// </SecurityNote>
         internal static object GetBitmapFromBitmapSource(object source)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);

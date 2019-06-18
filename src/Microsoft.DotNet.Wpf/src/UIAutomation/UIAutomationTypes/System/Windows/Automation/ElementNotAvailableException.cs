@@ -75,9 +75,6 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="info">The SerializationInfo to populate with data.</param>
         /// <param name="context">The destination for this serialization.</param>
-        /// <SecurityNote>
-        ///     Critical : Base method is critical
-        /// <SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

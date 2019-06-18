@@ -55,10 +55,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   PrintTicketLevel type is tagged critical because it is defined in non APTCA ReachFramework.dll
-        /// Safe        -   The type is an inert enum that does not contain critical information
-        /// </SecurityNote>
         public WritingPrintTicketRequiredEventArgs(
             System.Windows.Xps.Serialization.PrintTicketLevel       printTicketLevel,
             int                                                     sequence
@@ -72,10 +68,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   PrintTicketLevel type is tagged critical because it is defined in non APTCA ReachFramework.dll
-        /// Safe        -   The type is an inert enum that does not contain critical information
-        /// </SecurityNote>
        public
         System.Windows.Xps.Serialization.PrintTicketLevel
         CurrentPrintTicketLevel
@@ -102,10 +94,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   PrintTicket type is tagged critical because it is defined in non APTCA ReachFramework.dll
-        /// Safe        -   The type is an API wrapper over an XML document does not inherently contain critical information or perform critical operations
-        /// </SecurityNote>
         public          
         PrintTicket
         CurrentPrintTicket
@@ -123,17 +111,9 @@ namespace System.Windows.Documents.Serialization
 
 
 
-        /// <SecurityNote>
-        /// Critical    -   PrintTicket type is tagged critical because it is defined in non APTCA ReachFramework.dll
-        /// Safe        -   The type is an API wrapper over an XML document does not inherently contain critical information or perform critical operations
-        /// </SecurityNote>
         private System.Windows.Xps.Serialization.PrintTicketLevel _printTicketLevel;
         private int                                                         _sequence;
 
-        /// <SecurityNote>
-        /// Critical    -   PrintTicket type is tagged critical because it is defined in non APTCA ReachFramework.dll
-        /// Safe        -   The type is an API wrapper over an XML document does not inherently contain critical information or perform critical operations
-        /// </SecurityNote>
         private PrintTicket _printTicket;
 #endif
     };

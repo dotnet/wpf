@@ -32,10 +32,6 @@ namespace System.Windows.Threading
     /// </summary>
     public sealed class Dispatcher
     {
-        /// <SecurityNote>
-        ///     Critical: This code calls into RegisterWindowMesssage which is critical
-        ///     TreatAsSafe: This is safe to call as no external parameters are taken in
-        /// </SecurityNote>
         static Dispatcher()
         {
             _msgProcessQueue = UnsafeNativeMethods.RegisterWindowMessage("DispatcherProcessQueue");
@@ -239,10 +235,6 @@ namespace System.Windows.Threading
         /// <remarks>
         ///     This API demand unrestricted UI Permission
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical - it calls critical methods (ShutdownCallback).
-        /// PublicOK - it demands unrestricted UI permission.
-        ///</SecurityNote>
         public void BeginInvokeShutdown(DispatcherPriority priority) // NOTE: should be Priority
         {
             // We didn't want to enable quitting in the SEE
@@ -257,10 +249,6 @@ namespace System.Windows.Threading
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical - it calls critical methods (ShutdownCallback).
-        /// PublicOK - it demands unrestricted UI permission
-        ///</SecurityNote>
         public void InvokeShutdown()
         {
             // We didn't want to enable quitting in the SEE
@@ -269,9 +257,6 @@ namespace System.Windows.Threading
             CriticalInvokeShutdown();
         }
 
-        ///<SecurityNote>
-        /// Critical - it calls critical methods (ShutdownCallback).
-        ///</SecurityNote>
         [FriendAccessAllowed] //used by Application.ShutdownImpl() in PresentationFramework
         internal void CriticalInvokeShutdown()
         {
@@ -317,10 +302,6 @@ namespace System.Windows.Threading
         ///     This frame will continue until the dispatcher is shut down.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///    Critical: This code is blocked off more as defense in depth
-        ///    PublicOk: From a public perspective there is a link demand here
-        ///</SecurityNote>
         public static void Run()
         {
             PushFrame(new DispatcherFrame());
@@ -335,10 +316,6 @@ namespace System.Windows.Threading
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///    Critical: This code is blocked off more as defense in depth
-        ///    PublicOk: From a public perspective there is a link demand here
-        ///</SecurityNote>
         public static void PushFrame(DispatcherFrame frame)
         {
             if(frame == null)
@@ -371,12 +348,6 @@ namespace System.Windows.Threading
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - calls a critical method - postThreadMessage.
-        ///     PublicOK - all we're doing is posting a current message to our thread.
-        ///                net effect is the dispatcher "wakes up"
-        ///                and uses the continue flag ( which may have just changed).
-        /// </SecurityNote>
         public static void ExitAllFrames()
         {
             // We didn't want to enable exiting all frames in the SEE
@@ -619,12 +590,6 @@ namespace System.Windows.Threading
         ///     Once the operation has started, it will complete before this method
         ///     returns.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public void Invoke(Action callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout)
         {
             if(callback == null)
@@ -693,12 +658,6 @@ namespace System.Windows.Threading
         /// <remarks>
         ///     Note that the default priority is DispatcherPriority.Send.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public TResult Invoke<TResult>(Func<TResult> callback)
         {
             return Invoke(callback, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromMilliseconds(-1));
@@ -719,12 +678,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public TResult Invoke<TResult>(Func<TResult> callback, DispatcherPriority priority)
         {
             return Invoke(callback, priority, CancellationToken.None, TimeSpan.FromMilliseconds(-1));
@@ -751,12 +704,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public TResult Invoke<TResult>(Func<TResult> callback, DispatcherPriority priority, CancellationToken cancellationToken)
         {
             return Invoke(callback, priority, cancellationToken, TimeSpan.FromMilliseconds(-1));
@@ -788,12 +735,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public TResult Invoke<TResult>(Func<TResult> callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout)
         {
             if(callback == null)
@@ -910,10 +851,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     An operation representing the queued delegate to be invoked.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we capture the ExecutionContext.
-        /// </SecurityNote>
         public DispatcherOperation InvokeAsync(Action callback, DispatcherPriority priority, CancellationToken cancellationToken)
         {
             if(callback == null)
@@ -987,12 +924,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     An operation representing the queued delegate to be invoked.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         public DispatcherOperation<TResult> InvokeAsync<TResult>(Func<TResult> callback, DispatcherPriority priority, CancellationToken cancellationToken)
         {
             if(callback == null)
@@ -1007,12 +938,6 @@ namespace System.Windows.Threading
             return operation;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         private DispatcherOperation LegacyBeginInvokeImpl(DispatcherPriority priority, Delegate method, object args, int numArgs)
         {
             ValidatePriority(priority, "priority");
@@ -1027,9 +952,6 @@ namespace System.Windows.Threading
             return operation;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute asynchronously, also calls critical code.
-        /// </SecurityNote>
         private void InvokeAsyncImpl(DispatcherOperation operation, CancellationToken cancellationToken)
         {
             DispatcherHooks hooks = null;
@@ -1367,12 +1289,6 @@ namespace System.Windows.Threading
             return LegacyInvokeImpl(priority, timeout, method, args, -1);
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute
-        ///         asynchronously, also calls critical code.
-        ///     Safe: Executing the delegate asynchronously is OK because we
-        ///         capture the ExecutionContext inside the DispatcherOperation.
-        /// </SecurityNote>
         internal object LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, object args, int numArgs)
         {
             ValidatePriority(priority, "priority");
@@ -1444,9 +1360,6 @@ namespace System.Windows.Threading
             return InvokeImpl(operation, CancellationToken.None, timeout);
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code causes arbitrary delegate to execute asynchronously, also calls critical code.
-        /// </SecurityNote>
         private object InvokeImpl(DispatcherOperation operation, CancellationToken cancellationToken, TimeSpan timeout)
         {
             object result = null;
@@ -1697,10 +1610,6 @@ namespace System.Windows.Threading
         /// <returns>
         ///     True if the calling thread has access to this object.
         /// </returns>
-        /// <SecurityNote>
-        ///     Critical: Accesses _hooks, which is critical.
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public DispatcherHooks Hooks
         {
@@ -1737,10 +1646,6 @@ namespace System.Windows.Threading
         ///     heavylifting if possible.
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: partially-trusted code is not allowed to access our exception filter.
-        ///     TreatAsSafe: link-demands
-        /// </SecurityNote>
         public event DispatcherUnhandledExceptionFilterEventHandler UnhandledExceptionFilter
         {
             add
@@ -1872,9 +1777,6 @@ namespace System.Windows.Threading
             set { _reservedInputMethod = value; }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Since it hands out the InputManager
-        /// </SecurityNote>
         internal object InputManager
         {
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
@@ -1884,10 +1786,6 @@ namespace System.Windows.Threading
             set { _reservedInputManager = value; }
         }
 
-        ///<SecurityNote>
-        ///  Critical: Does an elevation via an unsafeNativeMethods call
-        ///  TreatAsSafe: stores critical data in SecurityCritical wrapper
-        ///</SecurityNote>
         private Dispatcher()
         {
             _queue = new PriorityQueue<DispatcherOperation>();
@@ -1937,10 +1835,6 @@ namespace System.Windows.Threading
             _hasShutdownFinished = true;
         }
 
-        ///<SecurityNote>
-        /// Critical - it calls critical methods (ShutdownImpl). it can initiate a shutdown process, disabled
-        /// in partial trust.
-        ///</SecurityNote>
         private void StartShutdownImpl()
         {
             if(!_startingShutdown)
@@ -1990,10 +1884,6 @@ namespace System.Windows.Threading
             }
         }
 
-        //<SecurityNote>
-        //  Critical - Calls ShutdownImplInSecurityContext with the execution context that was
-        //  active when the shutdown was initiated.
-        //</SecurityNote>
         private void ShutdownImpl()
         {
             if(!_hasShutdownFinished) // Dispatcher thread - no lock needed for read
@@ -2015,9 +1905,6 @@ namespace System.Windows.Threading
             }
         }
 
-        //<SecurityNote>
-        //  Critical - as it accesses security critical data ( window handle)
-        //</SecurityNote>
         private void ShutdownImplInSecurityContext(Object state)
         {
             // Call the ShutdownFinished event before we actually mark ourselves
@@ -2245,19 +2132,11 @@ namespace System.Windows.Threading
 
         internal delegate void ShutdownCallback();
 
-        ///<SecurityNote>
-        /// Critical - it calls critical methods (StartShutdownImpl). it can initiate a shutdown process, disabled
-        /// in partial trust.
-        ///</SecurityNote>
         private void ShutdownCallbackInternal()
         {
             StartShutdownImpl();
         }
 
-        //<SecurityNote>
-        // Critical - as this calls critical methods (GetMessage, TranslateMessage, DispatchMessage).
-        // TreatAsSafe - as the critical method is not leaked out, and not controlled by external inputs.
-        //</SecurityNote>
         private void PushFrameImpl(DispatcherFrame frame)
         {
             SynchronizationContext oldSyncContext = null;
@@ -2310,9 +2189,6 @@ namespace System.Windows.Threading
         }
 
 
-        //<SecurityNote>
-        // SecurityCritical - as this does unsafe operations.
-        //</SecurityNote>
         private bool GetMessage(ref MSG msg, IntPtr hwnd, int minMessage, int maxMessage)
         {
             // If Any TextServices for Cicero is not installed GetMessagePump() returns null.
@@ -2365,9 +2241,6 @@ namespace System.Windows.Threading
         }
 
         //  Get ITfMessagePump interface from Cicero.
-        /// <SecurityNote>
-        /// Critical - calls critical code, created objects deal with raw input
-        /// </SecurityNote>
         private UnsafeNativeMethods.ITfMessagePump GetMessagePump()
         {
             UnsafeNativeMethods.ITfMessagePump messagePump = null;
@@ -2414,9 +2287,6 @@ namespace System.Windows.Threading
             }
         }
 
-        //<SecurityNote>
-        // SecurityCritical - as this does unsafe operations.
-        //</SecurityNote>
         private void TranslateAndDispatchMessage(ref MSG msg)
         {
             bool handled = false;
@@ -2430,9 +2300,6 @@ namespace System.Windows.Threading
             }
         }
 
-        //<SecurityNote>
-        //  Critical - as it accesses security critical data ( window handle)
-        //</SecurityNote>
         private IntPtr WndProcHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg;
@@ -2499,12 +2366,6 @@ namespace System.Windows.Threading
             return IntPtr.Zero ;
         }
 
-        ///<SecurityNote>
-        ///     SecurityCritical - as this code performs an elevation.
-        ///     TreatAsSafe - this method returns "I have input that can be processed".
-        ///                          equivalent to saying a 'key has been hit'.
-        ///                          Considered safe.
-        ///</SecurityNote>
         private bool IsInputPending()
         {
             int retVal = 0;
@@ -2552,19 +2413,11 @@ namespace System.Windows.Threading
         }
 
 
-        /// <SecurityNote>
-        ///   Critical: Calls CriticalRequestProcessing.
-        ///   TreatAsSafe: does not force the processing
-        /// </SecurityNote>
         private bool RequestProcessing()
         {
             return CriticalRequestProcessing(false);
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code controls the timing of when the Dispatcher
-        ///             invokes the next operation.
-        /// </SecurityNote>
         internal bool CriticalRequestProcessing(bool force)
         {
             bool succeeded = true;
@@ -2609,10 +2462,6 @@ namespace System.Windows.Threading
             return succeeded;
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code accesses window
-        ///   TreatAsSafe: This code is ok to call since it does not expose the resource
-        /// </SecurityNote>
         private bool IsWindowNull()
         {
            if(_window.Value == null)
@@ -2622,10 +2471,6 @@ namespace System.Windows.Threading
             return false;
         }
 
-        //<SecurityNote>
-        // Critical as it access critical data - for the window handle.
-        // TreatAsSafe - as this is a request to do queued work. Analogous to VB's DoEvents()
-        //</SecurityNote>
         private bool RequestForegroundProcessing()
         {
             if(_postedProcessingType < PROCESS_FOREGROUND)
@@ -2653,10 +2498,6 @@ namespace System.Windows.Threading
             return true;
         }
 
-        //<SecurityNote>
-        //  Critical - as it accesses critical data - to get the Window Handle.
-        //  TreatAsSafe - as this method would be ok to expose publically, this is just a request for Timer processing.
-        //</SecurityNote>
         private bool RequestBackgroundProcessing()
         {
             bool succeeded = true;
@@ -2898,12 +2739,6 @@ namespace System.Windows.Threading
             return null;
         }
 
-        ///<SecurityNote>
-        /// Critical - accesses critical data
-        /// TreatAsSafe - we think it's ok to expose timers in the SEE.
-        ///                      a denial-of-service attack may be possible - but these are low-pri and possible in many other ways.
-        ///                      we can never bring down the iexplore process.
-        ///</SecurityNote>
         private void SetWin32Timer(int dueTimeInTicks)
         {
             if(!IsWindowNull())
@@ -2926,10 +2761,6 @@ namespace System.Windows.Threading
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - accesses critical data _window.Value.Handle
-        /// TreatAsSafe - OK to stop a dispatcher timer.
-        ///</SecurityNote>
         private void KillWin32Timer()
         {
             if(!IsWindowNull())
@@ -2946,18 +2777,12 @@ namespace System.Windows.Threading
         }
 
         // Exception filter returns true if exception should be caught.
-        /// <SecurityNote>
-        ///     Critical: calls ExceptionFilter, which is critical
-        /// </SecurityNote>
         private static bool ExceptionFilterStatic(object source, Exception e)
         {
             Dispatcher d = (Dispatcher)source;
             return d.ExceptionFilter(e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses _unhandledExceptionFilter
-        /// </SecurityNote>
         private bool ExceptionFilter(Exception e)
         {
             // see whether this dispatcher has already seen the exception.
@@ -3112,15 +2937,9 @@ namespace System.Windows.Threading
 
         private SecurityCriticalData<MessageOnlyHwndWrapper> _window;
 
-        /// <SecurityNote>
-        /// Critical: If disclosed, would allow untrusted parties to listen to raw messages.
-        /// </SecurityNote>
         private HwndWrapperHook _hook;
 
         private int _postedProcessingType;
-        /// <SecurityNote>
-        ///     Critical: This code gets set by RegisterWindowMessage which is under an elevation.
-        /// </SecurityNote>
         private static WindowMessage _msgProcessQueue;
 
         private static ExceptionWrapper _exceptionWrapper;
@@ -3131,9 +2950,6 @@ namespace System.Windows.Threading
         // source of secondary exceptions (i.e. in Out-Of-Memory cases).
         private DispatcherUnhandledExceptionEventArgs _unhandledExceptionEventArgs;
 
-        /// <SecurityNote>
-        ///     Do not expose to partially trusted code.
-        /// </SecurityNote>
         private DispatcherUnhandledExceptionFilterEventHandler _unhandledExceptionFilter;
         private DispatcherUnhandledExceptionFilterEventArgs _exceptionFilterEventArgs;
 
@@ -3169,9 +2985,6 @@ namespace System.Windows.Threading
         // delve into _reservedPtsCache to find more about the failure(s).
         private bool _hasRequestProcessingFailed;
 
-        /// <SecurityNote>
-        ///     Do not expose hooks to partial trust.
-        /// </SecurityNote>
         private DispatcherHooks _hooks;
     }
 }

@@ -233,22 +233,12 @@ namespace System.Windows.Input
             return rootVisual;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresetationSource
-        ///     TreatAsSafe: This code does not expose the critical resource.
-        ///                  Translating points considered safe to expose.
-        /// </SecurityNote>
         internal static Point TranslatePoint(Point pt, DependencyObject from, DependencyObject to)
         {
             bool unused = false;
             return TranslatePoint(pt, from, to, out unused);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresetationSource
-        ///     TreatAsSafe: This code does not expose the critical resource.
-        ///                  Translating points considered safe to expose.
-        /// </SecurityNote>
         internal static Point TranslatePoint(Point pt, DependencyObject from, DependencyObject to, out bool translated)
         {
             translated = false;

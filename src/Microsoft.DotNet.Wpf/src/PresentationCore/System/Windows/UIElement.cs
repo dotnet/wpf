@@ -77,10 +77,6 @@ namespace System.Windows
     [UidProperty("Uid")]
     public partial class UIElement : Visual, IInputElement, IAnimatable
     {
-        /// <SecurityNote>
-        ///  Critical: This code is used to register various thunks that are used to send input to the tree
-        ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
-        /// </SecurityNote>
         static UIElement()
         {
             UIElement.RegisterEvents(typeof(UIElement));
@@ -1140,12 +1136,6 @@ namespace System.Windows
         /// <remarks>
         /// Should be called before reading _dpiScaleX and _dpiScaleY
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this calls PresentationSource.CriticalFromVisual()
-        ///            under elevation.
-        /// Safe - as this doesn't expose the information retrieved from that API,
-        ///        it only uses it for calculation of screen coordinates.
-        ///</SecurityNote>
         internal static DpiScale EnsureDpiScale()
         {
             if (_setDpi)
@@ -3228,9 +3218,6 @@ namespace System.Windows
         /// <summary>
         /// Overriding this function to release DUCE resources during Dispose and during removal of a subtree.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls other critical code (base)
-        /// </SecurityNote>
         internal override void FreeContent(DUCE.Channel channel)
         {
             Debug.Assert(_proxy.IsOnChannel(channel));
@@ -3867,10 +3854,6 @@ namespace System.Windows
         }
         internal static readonly EventPrivateKey IsVisibleChangedKey = new EventPrivateKey(); // Used by ContentElement
 
-        /// <SecurityNote>
-        /// Critical - Calls a critical method (PresentationSource.CriticalFromVisual)
-        /// TreatAsSafe - No exposure
-        /// </SecurityNote>
         internal void UpdateIsVisibleCache() // Called from PresentationSource
         {
             // IsVisible is a read-only property.  It derives its "base" value

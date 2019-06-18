@@ -33,10 +33,6 @@ namespace System.Windows.Automation.Peers
             return AutomationControlType.Pane;
         }
 
-        /// <SecurityNote>
-        ///     Critical    - Calls critical HwndHost.CriticalHandle.
-        ///     TreatAsSafe - Critical data is used internally and not explosed
-        /// </SecurityNote>
         override internal InteropAutomationProvider GetInteropChild()
         {
             if (_interopProvider == null)

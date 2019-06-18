@@ -18,10 +18,6 @@ namespace System.Windows.Interop
 {
     internal class HwndSourceKeyboardInputSite : IKeyboardInputSite
     {
-        /// <SecurityNote>
-        /// Critical: satisfies a LinkDemand for 'UIPermissionAttribute' on method 
-        /// 'System.Windows.Interop.IKeyboardInputSink.set_KeyboardInputSite(System.Windows.Interop.IKeyboardInputSite)'.
-        /// </SecurityNote>
         public HwndSourceKeyboardInputSite(HwndSource source, IKeyboardInputSink sink)
         {
             if(source == null)
@@ -52,10 +48,6 @@ namespace System.Windows.Interop
         /// <remarks> 
         ///     Requires unmanaged code permission. 
         /// </remarks> 
-        ///<SecurityNote> 
-        ///     Critical - calls CriticalUnregister. 
-        ///     TreatAsSafe: - Interface declaration demands unrestricted UI permission
-        ///</SecurityNote> 
         void IKeyboardInputSite.Unregister()
         {
             CriticalUnregister(); 
@@ -64,9 +56,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Unregisters a child KeyboardInputSink from this sink.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical - calls CriticalUnregisterKeyboardInputSink
-        /// </SecurityNote> 
         internal void CriticalUnregister()
         {
             if(_source != null && _sink != null)

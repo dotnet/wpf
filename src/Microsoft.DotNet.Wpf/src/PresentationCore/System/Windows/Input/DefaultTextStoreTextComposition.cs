@@ -39,9 +39,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     ctor
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - calls base ctor - which in turn stores the inputmanager that's critical. 
-        ///</SecurityNote> 
         internal DefaultTextStoreTextComposition(InputManager inputManager, IInputElement source, string text, TextCompositionAutoComplete autoComplete) : base(inputManager, source, text, autoComplete)
         {
         }
@@ -59,10 +56,6 @@ namespace System.Windows.Input
         ///     We finalize Cicero's composition and DefaultTextStore will automatically
         ///     generate the proper TextComposition events.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This completes the composition and in doing so calls GetTransitionaryContext which gives it ITfContext
-        ///   TreatAsSafe: The context is not exposed, neither are the other members
-        /// </SecurityNote>
         public override void Complete()
         {
 //             VerifyAccess();
@@ -90,9 +83,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Get the base ITfContext of the transitory document.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This exposes ITfContext which has unsecure methods
-        /// </SecurityNote>
         private UnsafeNativeMethods.ITfContext GetTransitoryContext()
         {
             DefaultTextStore defaultTextStore = DefaultTextStore.Current;
@@ -108,10 +98,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Get ITfContextView of the context.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.ReleaseComObject which has a LinkDemand
-        ///	TreatAsSafe: can't pass in arbitrary COM object to release
-        ///</SecurityNote> 
         private UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
         {
             UnsafeNativeMethods.ITfContextComposition contextComposition;

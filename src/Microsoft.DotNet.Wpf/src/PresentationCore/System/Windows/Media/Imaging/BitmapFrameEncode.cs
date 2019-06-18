@@ -37,10 +37,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal constructor
         /// </summary>
-        /// <SecurityNote>
-        /// SecurityCritical: Accesses unmanaged resources (_wicSource)
-        /// SecurityTreatAsSafe: Inputs are verified and _wicSource and the get is Critical
-        /// </SecurityNote>
         internal BitmapFrameEncode(
             BitmapSource source,
             BitmapSource thumbnail,
@@ -247,10 +243,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Create the unmanaged resources
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
         internal override void FinalizeCreation()
         {
             CreationCompleted = true;
@@ -260,10 +252,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internally stores the bitmap metadata
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access critical resource (_metadata)
-        /// TreatAsSafe - site of origin is verified if possible.
-        /// </SecurityNote>
         internal override BitmapMetadata InternalMetadata
         {
             get

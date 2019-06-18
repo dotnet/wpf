@@ -31,16 +31,10 @@ namespace System.Windows.Media
         internal delegate void Dispose(ref StreamDescriptor pSD);
         internal delegate int Read(ref StreamDescriptor pSD, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out]byte[] buffer, uint cb, out uint cbRead);
 
-        /// <SecurityNote>
-        /// Critical    - Recieves native pointers as parameters.
-        /// </SecurityNote>
         internal unsafe delegate int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion);
         internal delegate int Stat(ref StreamDescriptor pSD, out System.Runtime.InteropServices.ComTypes.STATSTG statstg, uint grfStatFlag);
         internal delegate int Write(ref StreamDescriptor pSD, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]byte[] buffer, uint cb, out uint cbWritten);
 
-        /// <SecurityNote>
-        /// Critical    - Recieves native pointers as parameters.
-        /// </SecurityNote>
         internal delegate int CopyTo(ref StreamDescriptor pSD, IntPtr pstm, long cb, out long cbRead, out long cbWritten);
         internal delegate int SetSize(ref StreamDescriptor pSD, long value);
         internal delegate int Revert(ref StreamDescriptor pSD);
@@ -54,17 +48,11 @@ namespace System.Windows.Media
         internal Dispose pfnDispose;
         internal Read pfnRead;
         
-        /// <SecurityNote>
-        /// Critical    - Field for Critical delegate.
-        /// </SecurityNote>
         internal Seek pfnSeek;
         
         internal Stat pfnStat;
         internal Write pfnWrite;
         
-        /// <SecurityNote>
-        /// Critical    - Field for Critical delegate.
-        /// </SecurityNote>
         internal CopyTo pfnCopyTo;
         
         internal SetSize pfnSetSize;
@@ -75,10 +63,6 @@ namespace System.Windows.Media
         internal Clone pfnClone;
         internal CanWrite pfnCanWrite;
         internal CanSeek pfnCanSeek;
-        ///<SecurityNote>
-        ///   Critical: This code calls into link demand protected GCHandle
-        ///   TreatAsSafe: This code is ok to expose especially since it does not expose the handle
-        /// </SecurityNote>
         internal static void StaticDispose(ref StreamDescriptor pSD)
         {
             Debug.Assert(((IntPtr)pSD.m_handle) != IntPtr.Zero, "If this asserts fires: why is it firing. It might be legal in future.");
@@ -96,10 +80,6 @@ namespace System.Windows.Media
     /// </summary>
     internal static class StaticPtrs
     {
-        ///<SecurityNote>
-        /// Critical - this method has an unsafe block and references StreamAsIStream.Seek
-        /// TreatAsSafe - referenced function pointer is well known
-        ///</SecurityNote>
         static StaticPtrs()
         {
             StaticPtrs.pfnDispose = new StreamDescriptor.Dispose(StreamDescriptor.StaticDispose);
@@ -125,17 +105,11 @@ namespace System.Windows.Media
         internal static StreamDescriptor.Dispose pfnDispose;
         internal static StreamDescriptor.Read pfnRead;
         
-        /// <SecurityNote>
-        /// Critical    - Field for Critical delegate.
-        /// </SecurityNote>
         internal static StreamDescriptor.Seek pfnSeek;
         
         internal static StreamDescriptor.Stat pfnStat;
         internal static StreamDescriptor.Write pfnWrite;
         
-        /// <SecurityNote>
-        /// Critical    - Field for Critical delegate.
-        /// </SecurityNote>
         internal static StreamDescriptor.CopyTo pfnCopyTo;
         
         internal static StreamDescriptor.SetSize pfnSetSize;
@@ -236,9 +210,6 @@ namespace System.Windows.Media
             return NativeMethods.S_OK;
         }
 
-        /// <SecurityNote>
-        /// Critical    - Recieves native pointers as parameters and calls P/Invoke method MILIStreamWrite.
-        /// </SecurityNote>
         public int CopyTo(IntPtr /* IStream */ pstm, long cb, out long cbRead, out long cbWritten)
         {
             int hr = NativeMethods.S_OK;
@@ -365,9 +336,6 @@ namespace System.Windows.Media
             return NativeMethods.E_NOTIMPL;
         }
 
-        ///<SecurityNote>
-        /// Critical - this method is unsafe - it cannot warrant the validity of the given pointer
-        ///</SecurityNote>
         public unsafe int Seek(long offset, uint origin, long * plibNewPostion)
         {
             #pragma warning disable 6500
@@ -603,10 +571,6 @@ namespace System.Windows.Media
         #endregion
 
         #region Delegate Implemetations
-        ///<SecurityNote>
-        ///   Critical: This code calls into link demand protected GCHandle
-        ///   TreatAsSafe: This code is ok to expose
-        /// </SecurityNote>
         internal static StreamAsIStream FromSD(ref StreamDescriptor sd)
         {
             Debug.Assert(((IntPtr)sd.m_handle) != IntPtr.Zero, "Stream is disposed.");
@@ -624,9 +588,6 @@ namespace System.Windows.Media
             return (StreamAsIStream.FromSD(ref pSD)).Commit(grfCommitFlags);
         }
 
-        /// <SecurityNote>
-        /// Critical    - Recieves native pointers as parameters.
-        /// </SecurityNote>
         internal static int CopyTo(ref StreamDescriptor pSD, IntPtr pstm, long cb, out long cbRead, out long cbWritten)
         {
             return (StreamAsIStream.FromSD(ref pSD)).CopyTo(pstm, cb, out cbRead, out cbWritten);
@@ -647,9 +608,6 @@ namespace System.Windows.Media
             return (StreamAsIStream.FromSD(ref pSD)).Revert();
         }
 
-        ///<SecurityNote>
-        /// Critical - this method is unsafe - it cannot warrant the validity of the given pointer
-        ///</SecurityNote>
         internal unsafe static int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion)
         {
             return (StreamAsIStream.FromSD(ref pSD)).Seek(offset, origin, plibNewPostion);
@@ -688,9 +646,6 @@ namespace System.Windows.Media
 
         // Takes an IStream that is potentially not seekable and returns
         // a seekable memory stream that is a copy of it.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, takes unmanaged pointer argument
-        /// </SecurityNote>
         internal static IntPtr IStreamMemoryFrom(IntPtr comStream)
         {
             IntPtr pIStream = IntPtr.Zero;
@@ -713,9 +668,6 @@ namespace System.Windows.Media
             return pIStream;
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, accepts unmanaged pointers
-        /// </SecurityNote>
         internal static IntPtr IStreamFrom(IntPtr memoryBuffer, int bufferSize)
         {
             IntPtr pIStream = IntPtr.Zero;
@@ -739,9 +691,6 @@ namespace System.Windows.Media
         }
 
         #region IStreamFrom System.IO.Stream
-        /// <SecurityNote>
-        /// Critical - calls critical code, create unmanaged structures
-        /// </SecurityNote>
         internal static IntPtr IStreamFrom(System.IO.Stream stream)
         {
             if (stream == null)

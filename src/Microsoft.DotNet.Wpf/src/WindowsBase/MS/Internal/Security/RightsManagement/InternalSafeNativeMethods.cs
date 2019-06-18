@@ -23,14 +23,6 @@ using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class UnsafeNativeMethods.
-    ///     UnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
-    ///     UnsafeNativeMethods
-    /// </SecurityNote>
     internal static partial class SafeNativeMethods
     {
         internal static int DRMCreateClientSession(

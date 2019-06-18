@@ -183,10 +183,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Fetch text run and character string associated with it
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code has unsafe code block that uses pointers.
-        ///    TreatAsSafe: This code does not expose the pointers.
-        /// </SecurityNote>
         internal CharacterBufferRange FetchTextRun(
             int             cpFetch,
             int             cpFirst,

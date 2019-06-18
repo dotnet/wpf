@@ -36,9 +36,6 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        /// Critical - directly calls unmanaged code based on guid
-        /// </SecurityNote>
         internal TextServicesCompartment(Guid guid, UnsafeNativeMethods.ITfCompartmentMgr compartmentmgr)
         {
             _guid = guid;
@@ -94,9 +91,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Advise the notify sink of the compartment update.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - wires up multiple unmanaged objects together
-        /// </SecurityNote>
         internal void AdviseNotifySink(UnsafeNativeMethods.ITfCompartmentEventSink sink)
         {
             Debug.Assert(_cookie == UnsafeNativeMethods.TF_INVALID_COOKIE, "cookie is already set.");
@@ -118,9 +112,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Unadvise the notify sink of the compartment update.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - wires up multiple unmanaged objects together
-        /// </SecurityNote>
         internal void UnadviseNotifySink()
         {
             Debug.Assert(_cookie != UnsafeNativeMethods.TF_INVALID_COOKIE, "cookie is not set.");
@@ -140,9 +131,6 @@ namespace System.Windows.Input
         /// <summary>
         ///    Retrieve ITfCompartment
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - returns critical resource
-        /// </SecurityNote>
         internal UnsafeNativeMethods.ITfCompartment GetITfCompartment()
         {
             UnsafeNativeMethods.ITfCompartment itfcompartment;
@@ -204,10 +192,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Get the compartment variant.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged code
-        /// TreatAsSafe - returns "safe" variant based value from the store
-        /// </SecurityNote>
         internal object Value
         {
             get
@@ -253,9 +237,6 @@ namespace System.Windows.Input
                 
         #region Private Fields
 
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfCompartmentMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
         private readonly SecurityCriticalData<UnsafeNativeMethods.ITfCompartmentMgr> _compartmentmgr;
 
         private Guid _guid;

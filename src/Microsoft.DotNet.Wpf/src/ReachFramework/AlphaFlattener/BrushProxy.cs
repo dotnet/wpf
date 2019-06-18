@@ -954,9 +954,6 @@ namespace Microsoft.Internal.AlphaFlattener
         static int s_seq = 0;
 #endif
 
-        /// <SecurityNote>
-        /// Critical: This code calls an inernal PresentationCore function CriticalCopyPixels
-        /// </SecurityNote>
         public Byte[] CreateBrushImage(Matrix mat, int width, int height)
         {
             BitmapSource brushImage = CreateBrushImage_ID(mat, width, height);

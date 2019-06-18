@@ -104,12 +104,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="bufCharacterCount">size of buffer in characters</param>
         /// <param name="pBuffer">buffer pointer</param>
         /// <remarks>Supported for indexing content of Package.</remarks>
-        /// <SecurityNote>
-        /// Critical    - Calling Marshal.WriteInt16, which has a LinkDemand. It takes an input 
-        ///               pointer to write to. To be safe, the caller cannot be in Partial Trust.
-        ///   This method is Internal. Not to be called from PT code.
-        ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
         void IFilter.GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
             if (_filter == null)
@@ -527,13 +521,6 @@ namespace MS.Internal.IO.Packaging
         /// MS.Internal.Interop.IStream rather than the standard
         /// managed so as to allow optimized marshaling in UnsafeIndexingFilterStream.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This method accesses a class - UnsafeIndexingFilterStream which calls into
-        ///               unmanaged code which provides a managed Stream like interface for an 
-        ///               unmanaged OLE IStream.
-        ///               This method is only called by unmanaged callers. 
-        ///               There is no elevation of privilege in this method.
-        /// </SecurityNote>
         void IPersistStream.Load(MS.Internal.Interop.IStream stream)
         {
             // Check argument.

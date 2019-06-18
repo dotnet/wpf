@@ -1053,10 +1053,6 @@ namespace System.Windows.Controls
         /// <param name="e">InkCanvasStrokeCollectedEventArgs to raise the event with</param>
         /// <param name="userInitiated">true only if 100% of the stylusPoints that makes up the stroke
         /// came from eventargs with the UserInitiated flag set to true</param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical method GestureRecognizer.CriticalRecognize.  It is important
-        ///         that this is only called if userInitiated is true.
-        /// </SecurityNote>
         internal void RaiseGestureOrStrokeCollected(InkCanvasStrokeCollectedEventArgs e, bool userInitiated)
         {
             Debug.Assert(e != null, "EventArg can not be null");
@@ -2125,9 +2121,6 @@ namespace System.Windows.Controls
         /// UserInitiatedCanPaste
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical -      Elevates the AllClipboard permission for checking the supported data in InkCanvas.
-        /// </SecurityNote>
         private bool UserInitiatedCanPaste()
         {
             ( new UIPermission(UIPermissionClipboard.AllClipboard) ).Assert();//BlessedAssert
@@ -2225,12 +2218,6 @@ namespace System.Windows.Controls
         /// Copies the InkCanvas contents to a DataObject and returns it to the caller.
         ///  Can return NULL for DataObject.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Clipboard.SetDataObject will invoke DataObject.DataStore.GetFormats.
-        ///                 The methods demands SerializationPermission. We perform the elevation before
-        ///                 calling SetDataObject.
-        ///     TreatAsSafe: There is no input here. The ISF data are safe to being put in the clipboard.
-        /// </SecurityNote>
         private InkCanvasClipboardDataFormats CopyToDataObject()
         {
              DataObject dataObj;
@@ -2566,11 +2553,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Register the commanding handlers for the clipboard operations
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Elevates to associate a protected command (paste) with keyboard
-        ///     TreatAsSafe: We don't take user input here. Shift+Insert is the correct key binding,
-        ///                  and therefore is expected by the user.
-        /// </SecurityNote>
         private static void _RegisterClipboardHandlers()
         {
             Type ownerType = typeof(InkCanvas);
@@ -2887,11 +2869,6 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// <SecurityNote>
-        ///     Critical -      Call into UserInitiatedCanPaste which is SecurityCritical.
-        ///     TreatAsSafe -   We check whether QueryCanPaste is initiated by user or not
-        ///                     before invoking the critical method.
-        /// </SecurityNote>
         private static void _OnQueryCommandEnabled(object sender, CanExecuteRoutedEventArgs args)
         {
             RoutedCommand command = (RoutedCommand)(args.Command);

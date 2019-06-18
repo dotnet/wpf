@@ -39,12 +39,6 @@ namespace MS.Internal
         /// <summary>
         /// Create a new instance of WeakEventTable.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into Link demanded methods
-        ///         (AppDomain.DomainUnload and AppDomain.ProcessExit) to attach handlers
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///     It simply attaches private call back.
-        /// </SecurityNote>
         private WeakEventTable()
         {
             WeakEventTableShutDownListener listener = new WeakEventTableShutDownListener(this);
@@ -489,11 +483,6 @@ namespace MS.Internal
 
         private sealed class WeakEventTableShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
             public WeakEventTableShutDownListener(WeakEventTable target) : base(target)
             {
             }

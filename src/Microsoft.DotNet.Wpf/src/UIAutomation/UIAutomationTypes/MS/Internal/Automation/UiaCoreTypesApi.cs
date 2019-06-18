@@ -50,19 +50,11 @@ namespace MS.Internal.Automation
         // Support methods...
         //
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: This method simply converts a Guid representing an automation type to an int, making it safe to use.
-        /// </SecurityNote>
         internal static int UiaLookupId(AutomationIdType type, ref Guid guid)
         {   
             return RawUiaLookupId( type, ref guid );
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: This method only returns a fixed known object representing an Unsupported value, making it safe to use.
-        /// </SecurityNote>
         internal static object UiaGetReservedNotSupportedValue()
         {
             object notSupportedValue;
@@ -70,10 +62,6 @@ namespace MS.Internal.Automation
             return notSupportedValue;
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: This method only returns a fixed known object representing a MixedAttribute value, making it safe to use.
-        /// </SecurityNote>
         internal static object UiaGetReservedMixedAttributeValue()
         {
             object mixedAttributeValue;
@@ -81,10 +69,6 @@ namespace MS.Internal.Automation
             return mixedAttributeValue;
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code loads the unmanaged UIAutomationCore.dll and attempts to get the proc address of a Win7 only export.
-        ///    TreatAsSafe: Does not return critical data, does not change critical state, does not consume untrusted input.
-        /// </SecurityNote>
         internal static bool SupportsWin7Identifiers()
         {
             IntPtr automationCoreHandle = LoadLibraryHelper.SecureLoadLibraryEx(DllImport.UIAutomationCore, IntPtr.Zero, UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_SYSTEM32);
@@ -109,11 +93,6 @@ namespace MS.Internal.Automation
 
         #region Private Methods
         
-        /// <SecurityNote>
-        /// Critical: This calls into Marshal.ThrowExceptionForHR which has a link demand
-        /// TreatAsSafe: Throwing an exception is deemed as a safe operation (throwing exceptions is allowed in Partial Trust). 
-        ///              We pass an IntPtr that has a value of -1 so that ThrowExceptionForHR ignores IErrorInfo of the current thread.
-        /// </SecurityNote>
         /// Check hresult for error...
         private static void CheckError(int hr)
         {

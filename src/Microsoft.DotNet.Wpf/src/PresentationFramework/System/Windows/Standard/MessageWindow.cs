@@ -15,41 +15,22 @@ namespace Standard
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
-    /// <SecurityNote> 
-    ///   Critical : Should not be created by partially trusted callers because it's finalizer is critical
-    ///              and does not allow partial trust callers.
-    /// </SecurityNote>
     internal sealed class MessageWindow : CriticalFinalizerObject
     {
-        /// <SecurityNote>
-        ///   Critical : Initializes critical static members
-        /// <SecurityNote>
         static MessageWindow()
         {
         }
         
         // Alias this to a static so the wrapper doesn't get GC'd
-        /// <SecurityNote>
-        ///   Critical : Delegate passed critical data (Win32 messages and parameters) used to control Win32 window behavior
-        /// <SecurityNote>
         private static readonly WndProc s_WndProc = new WndProc(_WndProc);
         
-        /// <SecurityNote> 
-        ///   Critical : Provides access to instances of critical MessageWindow type
-        /// </SecurityNote>
         private static readonly Dictionary<IntPtr, MessageWindow> s_windowLookup = new Dictionary<IntPtr, MessageWindow>();
 
-        /// <SecurityNote>
-        ///   Critical : Delegate passed critical data (Win32 messages and parameters) used to control Win32 window behavior
-        /// <SecurityNote>
         private WndProc _wndProcCallback;
         private string _className;
         private bool _isDisposed;
         Dispatcher _dispatcher;
 
-        /// <SecurityNote>
-        ///  Critical : Accesses critical Win32 window handle
-        /// </SecurityNote>
         public IntPtr Handle 
         { 
             get; 
@@ -57,9 +38,6 @@ namespace Standard
             private set; 
         }
 
-        /// <SecurityNote>
-        ///  Critical : P-Invokes to register window class and create win32 window
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
@@ -108,17 +86,11 @@ namespace Standard
             _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         ~MessageWindow()
         {
             _Dispose(false, false);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         public void Release()
         {
             _Dispose(true, false);
@@ -127,9 +99,6 @@ namespace Standard
 
         // This isn't right if the Dispatcher has already started shutting down.
         // It will wind up leaking the class ATOM...
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "disposing")]
         private void _Dispose(bool disposing, bool isHwndBeingDestroyed)
         {
@@ -166,9 +135,6 @@ namespace Standard
             Handle = IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private object _DestroyWindowCallback(object arg)
         {
             object [] args = (object[])arg;
@@ -176,9 +142,6 @@ namespace Standard
             return null;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         [SuppressMessage("Microsoft.Usage", "CA1816:CallGCSuppressFinalizeCorrectly")]
         private static IntPtr _WndProc(IntPtr hwnd, WM msg, IntPtr wParam, IntPtr lParam)
         {
@@ -220,9 +183,6 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
         private static void _DestroyWindow(IntPtr hwnd, string className)
         {
             Utility.SafeDestroyWindow(ref hwnd);

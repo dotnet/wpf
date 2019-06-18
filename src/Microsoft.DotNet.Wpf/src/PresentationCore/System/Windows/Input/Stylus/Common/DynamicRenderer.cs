@@ -207,10 +207,6 @@ namespace System.Windows.Input.StylusPlugIns
                 _strokeInfoList.Remove(si);
             }
             
-            /// <SecurityNote>
-            /// Critical - Calls SecurityCritical method with LinkDemand (CompositionTarget.RootVisual).
-            /// TreatAsSafe: You can't set the RootVisual to an arbitrary value.
-            /// </SecurityNote>
             internal VisualTarget VisualTarget
             {
                 get 

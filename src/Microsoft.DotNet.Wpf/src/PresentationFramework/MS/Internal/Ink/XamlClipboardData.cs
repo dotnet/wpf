@@ -82,14 +82,6 @@ namespace MS.Internal.Ink
         /// 
         /// </summary>
         /// <param name="dataObject"></param>
-        ///<SecurityNote>
-        ///  Critical: Calls critical method 
-        ///     SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin
-        /// 
-        ///     We call this to ensure that the appdomain permission set is on the clipboard.
-        ///     The Clipboard methods use this information to ensure that apps can not paste data
-        ///     that was copied in low trust to application to a high trust application
-        ///</SecurityNote>
         protected override void DoCopy(IDataObject dataObject)
         {
             // Serialize the selected elements and add it to the data object.

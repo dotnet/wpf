@@ -298,11 +298,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///  attached to this StrokeCollectionSerializer.
         /// </summary>
         /// <param name="inkdata">a byte[] of the raw isf to decode</param>
-        /// <SecurityNote>
-        ///     Critical - Calls critical methods in Compressor
-        ///     TreatAsSafe - inkdata is a disconnected copy from the one passed in
-        ///         underlying unmanaged code has been security reviewed and fuzzed
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Takes an ISF Stream and populates the StrokeCollection
@@ -825,9 +820,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// list passed
     /// </summary>
     /// <returns></returns>
-    /// <SecurityNote>
-    ///     Critical - Calls the DrawingAttributeSerializer.DecodeAsISF critical method
-    /// </SecurityNote>
 #else
     /// <summary>
     /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
@@ -1690,21 +1682,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// This functions Saves the Ink as Ink Serialized Format based on the Compression code
         /// </summary>
         /// <returns>A byte[] with the encoded ISF</returns>
-        /// <SecurityNote>
-        ///     Critical - Calls critical methods:
-        ///             StrokeCollectionSerializer.SaveStrokeIds
-        ///             ExtendedPropertySerializer.EncodeAsISF
-        ///             StrokeCollectionSerializer.StoreStrokeData
-        ///
-        ///
-        ///     TreatAsSafe - We're saving a StrokeCollection and we control and verify
-        ///             all of the data the StrokeCollection directly and indirectly contains
-        ///
-        ///             This codepath calls into unmanaged code in Compressor.CompressPacketData
-        ///             and Compressor.CompressPropertyData.  The underlying unmanaged code has been
-        ///              security reviewed and fuzzed
-        ///
-        /// </SecurityNote>
 #else
         /// <summary>
         /// This functions Saves the Ink as Ink Serialized Format based on the Compression code
@@ -1901,14 +1878,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <Summary>
         /// Encodes all of the strokes in a strokecollection to ISF
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method StrokeSerializer.EncodeStroke
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
 #else
         /// <Summary>
         /// Encodes all of the strokes in a strokecollection to ISF
@@ -2031,14 +2000,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="strm"></param>
         /// <param name="forceSave">save ids even if they are contiguous</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method Compressor.CompressPacketData
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
 #else
         /// <summary>
         /// Saves the stroke Ids in the stream.
@@ -2506,15 +2467,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stream"></param>
         /// <param name="guidList"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method
-        ///         DrawingAttributeSerializer.EncodeAsISF
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
 #else
         /// <summary>
         /// This function serializes Drawing Attributes Table in the stream. For information on how they are serialized, please refer to the spec.

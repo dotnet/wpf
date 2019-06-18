@@ -46,9 +46,6 @@ namespace MS.Internal.IO.Packaging
         /// void Read([Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)] byte[] pv, int cb, IntPtr pcbRead);
         /// This means marshaling code will have found the size of the array buffer in the parameter bufferSize.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.WriteInt32 which LinkDemands, takes pointers as input
-        ///</SecurityNote>
         void IStream.Read(Byte[] buffer, Int32 bufferSize, IntPtr bytesReadPtr)
         {
             Int32 bytesRead = _ioStream.Read(buffer, 0, (int) bufferSize);
@@ -67,9 +64,6 @@ namespace MS.Internal.IO.Packaging
         /// newPositionPtr is not an out parameter because the method is required
         /// to accept NULL pointers.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.WriteInt64 which LinkDemands, takes pointers as input
-        ///</SecurityNote>
         void IStream.Seek(Int64 offset, Int32 origin, IntPtr newPositionPtr)
         {
             SeekOrigin  seekOrigin;
@@ -152,9 +146,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Write at most bufferSize bytes from buffer.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.WriteInt32 which LinkDemands, takes pointers as input
-        ///</SecurityNote>
         void IStream.Write(Byte[] buffer, Int32 bufferSize, IntPtr bytesWrittenPtr)
         {
             _ioStream.Write(buffer, 0, bufferSize);

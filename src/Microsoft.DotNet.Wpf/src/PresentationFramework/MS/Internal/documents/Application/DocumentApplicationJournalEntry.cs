@@ -63,10 +63,6 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         /// <param name="navigationService">NavigationService currently running</param>
         /// <param name="mode">Navigation direction</param>
-        /// <SecurityNote>
-        /// Critical: set_StoredDocumentApplicationState is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to set_StoredDocumentApplicationState does not entail any risk.
-        /// </SecurityNote>
         public override void Replay(NavigationService navigationService, NavigationMode mode)
         {
             ContentControl navigator = (ContentControl)navigationService.INavigatorHost;

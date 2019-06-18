@@ -364,10 +364,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     The primary keyboard device.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accesses the InputManager which causes an elevation
-        ///     PublicOK: It is ok to return the primary device
-        /// </SecurityNote>
         public static KeyboardDevice PrimaryDevice
         {
             get
@@ -383,10 +379,6 @@ namespace System.Windows.Input
             return ((int)key >= (int)Key.None && (int)key <= (int)Key.OemClear);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data(_activeSource)
-        ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
-        /// </SecurityNote>
         internal static bool IsFocusable(DependencyObject element)
         {
             // This should really be its own property, but it is hard to do efficiently.

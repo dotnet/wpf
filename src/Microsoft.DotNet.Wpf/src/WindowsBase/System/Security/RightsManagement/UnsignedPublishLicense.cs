@@ -33,17 +33,6 @@ namespace System.Security.RightsManagement
     /// UnsignedPublishLicense class is used to represent publish license information before it was signed. 
     /// It can be used to build and sign Publish License, and it also can be used to build and serialize Publish License Template.   
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attribute is automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
     public class UnsignedPublishLicense
     {
         /// <summary>

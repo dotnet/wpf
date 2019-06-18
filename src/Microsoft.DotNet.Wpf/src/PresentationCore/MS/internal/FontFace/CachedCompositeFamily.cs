@@ -50,9 +50,6 @@ namespace MS.Internal.FontFace
 
         #region Constructors
 
-        /// <SecurityNote>
-        /// Critical - takes in canonical name and unsafe struct of CachedFontFamily
-        /// </SecurityNote>
         internal unsafe CachedCompositeFamily(CachedFontFamily cachedFamily)
         {
             Debug.Assert(!cachedFamily.IsNull);
@@ -73,11 +70,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Get typeface metrics of the specified style
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This accesses a pointer uses unsafe code. The risk here is in derefrencing pointers.
-        ///    TreatAsSafe: This information is ok to return also the call to the pointers to get CompositeFace has
-        ///    checking to ensure that you are not dereferencing a null pointer
-        /// </SecurityNote>
         ITypefaceMetrics IFontFamily.GetTypefaceMetrics(
             FontStyle       style,
             FontWeight      weight,
@@ -112,10 +104,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Look up device font for the typeface.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as it contains unsafe code
-        /// TreatAsSafe - because it only returns an IDeviceFont which is safe
-        /// </SecurityNote>
         IDeviceFont IFontFamily.GetDeviceFont(FontStyle style, FontWeight weight, FontStretch stretch)
         {
             CachedFontFace bestFace = FindExactTypeface(style, weight, stretch);
@@ -208,10 +196,6 @@ namespace MS.Internal.FontFace
         /// It is a font face family.
         ///
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code calls into GetCachedFamilyMap which returns a pointer
-        ///     TreatAsSafe: It does not expose the pointer and this information is ok to expose
-        /// </SecurityNote>
         unsafe bool IFontFamily.GetMapTargetFamilyNameAndScale(
             CharacterBufferRange    unicodeString,
             CultureInfo             culture,
@@ -249,12 +233,6 @@ namespace MS.Internal.FontFace
             return true;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls utilizes unsafe code blocks to extract the CachedFamilyMap.
-        ///     The pointer checking for the unicode string is done in the UnicodeScalar. At the same time
-        ///     GetFamilyMapRange takes _cachedFamily which cannot be instantiated with a null value.And its value
-        ///     cannot be set outside of the constructor. It is critical because it exposes a pointer
-        /// </SecurityNote>
         private unsafe FamilyCollection.CachedFamilyMap *GetCachedFamilyMap(
             CharacterBufferRange    unicodeString,
             CultureInfo             culture,
@@ -414,10 +392,6 @@ namespace MS.Internal.FontFace
             return _firstFontFamily;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into CompositeFamily which returns a pointer
-        ///     TreatAsSafe: This returns a string with the target family name
-        /// </SecurityNote>
         private string GetFirstTargetFamilyName()
         {
             unsafe
@@ -434,9 +408,6 @@ namespace MS.Internal.FontFace
 
         private class DeviceFont : IDeviceFont
         {
-            /// <SecurityNote>
-            /// Critical - as we assume the caller is giving us a valid pointer
-            /// </SecurityNote>
             internal DeviceFont(CachedFontFamily cachedFamily, CheckedPointer deviceFont)
             {
                 unsafe
@@ -457,10 +428,6 @@ namespace MS.Internal.FontFace
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - as it calls a critical method that returns a pointer
-            /// TreatAsSafe - because it does not expose the pointer
-            /// </SecurityNote>
             bool IDeviceFont.ContainsCharacter(int unicodeScalar)
             {
                 unsafe
@@ -469,9 +436,6 @@ namespace MS.Internal.FontFace
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - As it uses raw pointers.
-            /// </SecurityNote>
             unsafe void IDeviceFont.GetAdvanceWidths(
                 char*   characterString,
                 int     characterLength,
@@ -497,9 +461,6 @@ namespace MS.Internal.FontFace
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - as it accesses a critical field, performs pointer arithmetic, and returns a pointer.
-            /// </SecurityNote>
             private unsafe FamilyCollection.CachedCharacterMetrics* LookupMetrics(int unicodeScalar)
             {
                 if (unicodeScalar >= 0 && unicodeScalar <= FontFamilyMap.LastUnicodeScalar)
@@ -532,11 +493,6 @@ namespace MS.Internal.FontFace
                 return null;
             }
 
-            /// <SecurityNote>
-            /// Critical - constructs a CheckedPointer which is a critical operation
-            /// TreatAsSafe - the pointer and size fields used to construct the CheckedPointer are tracked and
-            ///               the CheckedPointer itself is safe to use
-            /// </SecurityNote>
             private CheckedPointer CheckedPointer
             {
                 get
@@ -550,9 +506,6 @@ namespace MS.Internal.FontFace
 
             private CachedFontFamily _cachedFamily;
 
-            /// <SecurityNote>
-            /// Critical - as this field is a pointer and therefore unsafe.
-            /// </SecurityNote>
             private unsafe FamilyCollection.CachedDeviceFont* _deviceFont;
 
             /// <summary>

@@ -33,9 +33,6 @@ namespace System.Windows
     ///     We currently have one implementation - HwndSource - that
     ///     presents content in a Win32 HWND.
     /// </remarks>
-    /// <SecurityNote>
-    ///     Keep this from being derived from in partial-trust code.
-    /// </SecurityNote>
     public abstract class PresentationSource : DispatcherObject
     {
         //------------------------------------------------------
@@ -55,11 +52,6 @@ namespace System.Windows
         {
         }
 
-        /// <SecurityNote>
-        ///     This constructor exists since the code gen for managed code generates a static constructor
-        ///     and in that code it initializes a critical field which causes an fxcop violation for the codegen
-        ///     constructor.
-        /// </SecurityNote>
         static PresentationSource()
         {
         }
@@ -76,10 +68,6 @@ namespace System.Windows
         /// <summary>
         ///     InputProvider given the Device type.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Sub classing this can let you provide fake input providers which
-        ///     can compromise the input system
-        /// </SecurityNote>
         internal virtual IInputProvider GetInputProvider(Type inputDevice) 
         { 
             return null; 
@@ -102,10 +90,6 @@ namespace System.Windows
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks> 
-        /// <SecurityNote> 
-        ///     Critical - calls CriticalFromVisual. and returns the PresentationSource
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
         public static PresentationSource FromVisual(Visual visual)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -121,10 +105,6 @@ namespace System.Windows
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks> 
-        /// <SecurityNote> 
-        ///     Critical - calls CriticalFromVisual. and returns the PresentationSource
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -145,11 +125,6 @@ namespace System.Windows
         ///     3) The handlers will receive the SourceChanged event even if it was handled.
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code lets you get access to a presentationSource object. Here the link demand
-        ///     is defense in depth since , the object by itself has all public properties blocked off. Also this
-        ///     is part of startup code.
-        /// </SecurityNote>
         public static void AddSourceChangedHandler(IInputElement element, SourceChangedEventHandler handler)
         {
             if (element == null)
@@ -293,11 +268,6 @@ namespace System.Windows
         /// <param name="ce">
         ///     The element whose ancestory may have changed.
         /// </param>
-        /// <SecurityNote>
-        ///     This API is not available in the internet zone.It was protected 
-        ///     as defense in depth since we did not want the PresentationSource 
-        ///     surface to be exposed.
-        /// </SecurityNote>
         [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void OnAncestorChanged(ContentElement ce)
         {
@@ -325,10 +295,6 @@ namespace System.Windows
         /// <summary>
         ///     The visual target for the visuals being presented in the source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls GetCompositionTargetCore() and returns a CompositionTarget object, which is considered critical.
-        ///     PublicOk: Protected by a LinkDemand
-        /// </SecurityNote>
         public CompositionTarget CompositionTarget
         {
             get
@@ -343,12 +309,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code is not safe to expose publicly since it lets you 
-        ///     change rootvisual which puts popup code at risk
-        ///     PublicOK: Inheritance demand prevents random subclassing in partial trust 
-        ///     and Linkdemand prevents unauthorized public callers
-        /// </SecurityNote>
         public abstract Visual RootVisual
         {
             get;
@@ -425,10 +385,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code exposes the sources which are deemed as critical. This is defense in depth.
-        ///     PublicOK: There exists a demand in this code
-        /// </SecurityNote>
         public static IEnumerable CurrentSources
         {
             get
@@ -477,16 +433,6 @@ namespace System.Windows
         /// </remarks>
         /// <param name="oldRoot">The old root visual.</param>
         /// <param name="newRoot">The new root visual.</param>
-        ///<SecurityNote> 
-        ///     Critical - Uses RootSourceProperty
-        ///     TreatAsSafe -net effect is changing the root of the hwnd's visual tree.
-        ///                         equivalent to changing what's displayed. Considered safe. 
-        ///
-        ///                         The critical data "the RootSource" is stored on the new tree. 
-        ///                         However this is still considered safe - as : 
-        ///                                 to access this data you need to use RootSourceProperty - which is critical ( so we'll catch all access to this). 
-        ///                                 the public methods to get to PresentationSource ( FromSource) do a demand. 
-        ///</SecurityNote> 
         protected void RootChanged(Visual oldRoot, Visual newRoot)
         {
             PresentationSource oldSource = null;
@@ -604,11 +550,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="uie">The UIElement whose ancestory may have changed.</param>
         /// <param name="e">  Event Args.</param>
-        /// <SecurityNote>
-        ///     Critical: This code calls into a critical code path UpdateSourceOfElement.
-        ///     TreatAsSafe: This code does not access any critical data itself and does not expose
-        ///     anything
-        /// </SecurityNote>
         internal static void OnVisualAncestorChanged(DependencyObject uie, AncestorChangedEventArgs e)
         {
             Debug.Assert(InputElement.IsUIElement3D(uie) || InputElement.IsUIElement(uie));
@@ -619,18 +560,12 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote> 
-        ///     Critical - Returns the PresentationSource
-        /// </SecurityNote>
         [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
         }
 
-        /// <SecurityNote> 
-        ///     Critical - uses RootSourceProperty. and returns the PresentationSource
-        /// </SecurityNote>
         /// <param name="v">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
@@ -723,10 +658,6 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code exposes the sources which are deemed as critical. This is internal access point.
-        ///     Public consumers should use CurrentSources
-        /// </SecurityNote>
         internal static IEnumerable CriticalCurrentSources
         {
             get
@@ -735,9 +666,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Returns a presentationsource given a canister
-        /// </SecurityNote>
         private static PresentationSource CriticalGetPresentationSourceFromElement(DependencyObject dObject,DependencyProperty dp)
         {
             PresentationSource testSource;
@@ -755,9 +683,6 @@ namespace System.Windows
             return testSource;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code acceses PresentationSource and stores it.
-        /// </SecurityNote>
         private static void AddElementToWatchList(DependencyObject element)
         {
             if(_watchers.Add(element))
@@ -769,10 +694,6 @@ namespace System.Windows
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code acceses PresentationSource 
-        ///     TreatAsSafe: This code is safe to expose.
-        /// </SecurityNote>
         private static void RemoveElementFromWatchList(DependencyObject element)
         {
             if(_watchers.Remove(element))
@@ -782,17 +703,11 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote> 
-        ///     Critical - Returns a PresentationSource.
-        ///</SecurityNote> 
         private static PresentationSource FindSource(DependencyObject o)
         {
             return FindSource(o, true /* enable2DTo3DTransition */);
         }
 
-        ///<SecurityNote> 
-        ///     Critical - uses RootSourceProperty and returns the PresentationSource 
-        ///</SecurityNote> 
         /// <param name="o">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
@@ -814,10 +729,6 @@ namespace System.Windows
             return source;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource which is a critical resource. It then
-        ///     packages it into an event args and fires it into the tree.
-        /// </SecurityNote>
         private static bool UpdateSourceOfElement(DependencyObject doTarget,
                                                   DependencyObject doAncestor,
                                                   DependencyObject doOldParent)
@@ -864,9 +775,6 @@ namespace System.Windows
         // We use a private DP for the RootSource (the connection from the root
         // element in a tree to the source it is displayed in).  Use the public
         // API FromVisual to get the source that a visual is displayed in.
-        ///<SecurityNote>
-        ///     Critical - used to store PresentationSource
-        ///</SecurityNote>        
         private static readonly DependencyProperty RootSourceProperty   
             = DependencyProperty.RegisterAttached("RootSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
                                           new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));
@@ -875,9 +783,6 @@ namespace System.Windows
         // that we are watching, so that we can send a change notification).
         // Use the public API FromVisual to get the source that a visual is
         // displayed in.
-        ///<SecurityNote>
-        ///     Critical - used to store PresentationSource
-        ///</SecurityNote>        
         private static readonly DependencyProperty CachedSourceProperty
             = DependencyProperty.RegisterAttached("CachedSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
                                           new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));

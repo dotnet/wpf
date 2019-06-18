@@ -37,9 +37,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: calls SecurityCritical method stylusDevice.Dispose.
-        /// </SecurityNote>
         internal void Dispose()
         {
             foreach (StylusDevice stylusDevice in this.Items)

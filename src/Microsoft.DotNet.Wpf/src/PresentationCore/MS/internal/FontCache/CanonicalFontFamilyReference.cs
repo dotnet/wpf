@@ -27,11 +27,6 @@ namespace MS.Internal.FontCache
         /// <param name="normalizedString">Font family reference string, in the normalized form returned 
         /// by Util.GetNormalizedFontFamilyReference.</param>
         /// <returns>Returns a new CanonicalFontFamilyReference or CanonicalFontFamilyReference.Unresolved.</returns>
-        /// <SecurityNote>
-        /// Critical - Calls critical CanonicalFontFamilyReference ctor. 
-        ///          - Makes an implicit security decision (clients may demand on a Uri based on LocationUri and EscapedFileName).
-        /// Safe     - Uses critical Util.IsReferenceToWindowsFonts to skip critical ctor call for unsafe inputs
-        /// </SecurityNote>
         public static CanonicalFontFamilyReference Create(Uri baseUri, string normalizedString)
         {
             string locationString;
@@ -103,9 +98,6 @@ namespace MS.Internal.FontCache
         /// the default Windows Fonts folder and the LocationUri property is null. In all other cases,
         /// this property is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Sets critical member that can be used to control the path fonts are loaded from. 
-        /// </SecurityNote>
         public string EscapedFileName
         {
             get;
@@ -155,9 +147,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Sets critical member that can be used to control the path fonts are loaded from. 
-        /// </SecurityNote>
         private CanonicalFontFamilyReference(string escapedFileName, string familyName)
         {
             EscapedFileName = escapedFileName;

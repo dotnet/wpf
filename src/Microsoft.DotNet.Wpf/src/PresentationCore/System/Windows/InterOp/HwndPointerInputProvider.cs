@@ -71,11 +71,6 @@ namespace System.Windows.Interop
         /// Creates a new input provider for a particular source that handles WM_POINTER messages
         /// </summary>
         /// <param name="source">The source to handle messages for</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls InputManager.Current.RegisterInputProvider
-        ///                 Calls StylusLogic.GetCurrentStylusLogicAs<T>
-        ///                 Calls MS.Win32.UnsafeNativeMethods.GetWindowLong
-        /// </SecurityNote>
         internal HwndPointerInputProvider(HwndSource source)
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert();
@@ -99,9 +94,6 @@ namespace System.Windows.Interop
             IsWindowEnabled = (style & MS.Win32.NativeMethods.WS_DISABLED) == 0;
         }
 
-        /// <SecurityNote>
-        ///     Critical:   Calls Dispose(bool)
-        /// </SecurityNote>
         ~HwndPointerInputProvider()
         {
             Dispose(false);
@@ -110,9 +102,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Clean up any held resources
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   InputProviderSite.Dispose
-        /// </SecurityNote>
         private void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -132,9 +121,6 @@ namespace System.Windows.Interop
             _disposed = true;
         }
 
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls Dispose(bool)
-        /// </SecurityNote>
         public void Dispose()
         {
             Dispose(true);
@@ -161,10 +147,6 @@ namespace System.Windows.Interop
         /// <param name="pointerData">The current pointer info</param>
         /// <param name="tabletDevice">The current TabletDevice</param>
         /// <returns>An array of raw pointer data</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls UnsafeNativeMethods.GetRawPointerDeviceData
-        ///                 Returns raw pointer data
-        /// </SecurityNote>
         private int[] GenerateRawStylusData(PointerData pointerData, PointerTabletDevice tabletDevice)
         {
             // Since we are copying raw pointer data, we want to use every property supported by this pointer.
@@ -239,14 +221,6 @@ namespace System.Windows.Interop
         /// <param name="action">The stylus action being done</param>
         /// <param name="timestamp">The time (in ticks) the message arrived</param>
         /// <returns>True if successfully processed (handled), false otherwise</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls UnsafeNativeMethods.GetPointerCursorId
-        ///                 Calls PointerData.PointerData
-        ///                 Calls PointerStylusPlugInManager.InvokeStylusPluginCollection
-        ///                 Calls InputManager.UnsecureCurrent.ProcessInput
-        ///                 Calls PointerStylusDevice.ProcessInteractions
-        ///                 Can be used to spoof input
-        /// </SecurityNote>
         private bool ProcessMessage(uint pointerId, RawStylusActions action, int timestamp)
         {
             bool handled = false;
@@ -358,11 +332,6 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="originOffsetX">The X offset in logical coordinates</param>
         /// <param name="originOffsetY">The Y offset in logical coordiantes</param>
-        /// <SecurityNote>
-        ///     SafeCritical:   Accesses critical member _source.Value
-        ///                     Does not expose any secure data
-        ///     UIPermission for calling PointToScreen
-        /// </SecurityNote>
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
             Point originScreenCoord = _source.Value.RootVisual.PointToScreen(new Point(0, 0));

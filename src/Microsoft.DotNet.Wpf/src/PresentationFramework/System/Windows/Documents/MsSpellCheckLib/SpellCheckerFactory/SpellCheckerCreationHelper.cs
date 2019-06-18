@@ -56,9 +56,6 @@ namespace System.Windows.Documents
                 /// </summary>
                 public static RCW.ISpellCheckerFactory ComFactory
                 {
-                    ///<SecurityNote>
-                    /// Critical: Returns a COM handle
-                    ///</SecurityNote>
                     get
                     {
                         return SpellCheckerFactory.Singleton.ComFactory;

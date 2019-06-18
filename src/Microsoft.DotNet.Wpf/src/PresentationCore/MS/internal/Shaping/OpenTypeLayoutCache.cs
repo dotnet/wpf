@@ -71,10 +71,6 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal static class OpenTypeLayoutCache
     {
-        /// <SecurityNote>
-        ///     Critical: Calls critical code and has unsafe code blocks
-        ///     TreatAsSafe: Pointers accessed are checked by probe.
-        /// </SecurityNote>
         public static void InitCache(
                                 IOpenTypeFont   font,
                                 OpenTypeTags    tableTag,
@@ -102,9 +98,6 @@ namespace MS.Internal.Shaping
             }
         }
         
-        /// <SecurityNote>
-        ///     Critical: Calls critical code
-        /// </SecurityNote>
         public static void OnGlyphsChanged(
                                             OpenTypeLayoutWorkspace workspace,
                                             GlyphInfoList           glyphInfo,
@@ -130,9 +123,6 @@ namespace MS.Internal.Shaping
         /// </summary>
         /// <param name="workspace">In: Storage for buffers we need</param>
         /// <returns>Number of lookups in cache</returns>
-        /// <SecurityNote>
-        ///     Critical:  Accesses font cache pointers
-        /// </SecurityNote>
         private static unsafe ushort GetCacheLookupCount(OpenTypeLayoutWorkspace workspace)
         {
             // If there is no chache, just exit
@@ -158,9 +148,6 @@ namespace MS.Internal.Shaping
         /// <param name="lookupIndex">Out: Lookup index found</param>
         /// <param name="firstGlyph">Out: First applicable glyph for this lookup</param>
         /// <returns>True if any lookup found, false otherwise</returns>
-        /// <SecurityNote>
-        ///     Critical:  Accesses font cache pointers
-        /// </SecurityNote>
         public static unsafe void FindNextLookup(
                                     OpenTypeLayoutWorkspace workspace,
                                     GlyphInfoList glyphInfo,
@@ -216,9 +203,6 @@ namespace MS.Internal.Shaping
         /// <param name="firstGlyph">first glyph of search range</param>
         /// <param name="afterLastGlyph">position after last glyph</param>
         /// <returns>True if any glyph found, false otherwise</returns>
-        /// <SecurityNote>
-        ///     Critical: unsafe pointer operations
-        /// </SecurityNote>
         public static unsafe bool FindNextGlyphInLookup(
                                     OpenTypeLayoutWorkspace workspace,
                                     ushort          lookupIndex,
@@ -262,9 +246,6 @@ namespace MS.Internal.Shaping
             } 
         }
 
-        /// <SecurityNote>
-        ///     Critical: unsafe pointer operations
-        /// </SecurityNote>
         private static unsafe void RenewPointers(
                                             GlyphInfoList glyphInfo, 
                                             OpenTypeLayoutWorkspace workspace, 
@@ -324,9 +305,6 @@ namespace MS.Internal.Shaping
         
 #region Cache filling
 
-        /// <SecurityNote>
-        ///     Critical: Calls critical code
-        /// </SecurityNote>
         internal static void CreateCache(IOpenTypeFont font, int maxCacheSize)
         {
             if (maxCacheSize > ushort.MaxValue)
@@ -347,9 +325,6 @@ namespace MS.Internal.Shaping
             Debug.Assert(totalSize <= maxCacheSize);
         }
         
-        /// <SecurityNote>
-        ///     Critical: calling FillTableCache to change cache content in unmanaged memory
-        /// </SecurityNote>
         private static void CreateTableCache(IOpenTypeFont font, OpenTypeTags tableTag, int maxCacheSize, out int tableCacheSize)
         {
             // Initialize all computed values
@@ -393,9 +368,6 @@ namespace MS.Internal.Shaping
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: Accessing raw font table
-        /// </SecurityNote>
         private static void ComputeTableCache(
             IOpenTypeFont           font, 
             OpenTypeTags            tableTag, 
@@ -602,9 +574,6 @@ namespace MS.Internal.Shaping
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: unsafe pointer operations
-        /// </SecurityNote>
         private static int FillTableCache(
             IOpenTypeFont       font, 
             OpenTypeTags        tableTag, 
@@ -862,9 +831,6 @@ namespace MS.Internal.Shaping
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls critical code
-        /// </SecurityNote>
         private static CoverageTable GetSubtablePrincipalCoverage(
                                                     FontTable    table, 
                                                     OpenTypeTags tableTag, 
@@ -1007,9 +973,6 @@ namespace MS.Internal.Shaping
         /// <param name="recordCount">Real number of records in record array</param>
         /// <param name="maxLookupGlyph">Highest glyph index that we saw in this lookup</param>
         /// <returns>Returns false if we are out of list space</returns>
-        /// <SecurityNote>
-        ///     Critical: Calls critical code
-        /// </SecurityNote>
         private static bool AppendCoverageGlyphRecords(
                                                     FontTable           table,
                                                     ushort              lookupIndex,

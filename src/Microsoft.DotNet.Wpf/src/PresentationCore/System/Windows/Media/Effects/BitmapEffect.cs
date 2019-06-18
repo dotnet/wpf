@@ -32,20 +32,12 @@ namespace System.Windows.Media.Effects
     /// <summary>
     /// BitmapEffect
     /// </summary>
-    /// <SecurityNote>
-    /// We have the Inheritance demand, because we don't want
-    /// third parties to be able to subclass BitmapEffect in the partial trust scenario
-    /// </SecurityNote>
     public abstract partial class BitmapEffect
     {
         #region Constructors
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical : Not allowed in partial trust
-        ///     Safe     : Demands UIWindow permission
-        /// </SecurityNote>
         protected BitmapEffect()
         {
             // Even though BitmapEffects are obsolete, to preserve compat they are 
@@ -73,9 +65,6 @@ namespace System.Windows.Media.Effects
         /// It gives a chance for the managed effect to update the properties
         /// of the unmanaged object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - receives a security critical type SafeHandle.        
-        /// </SecurityNote>
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         abstract protected void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect);
 
@@ -83,9 +72,6 @@ namespace System.Windows.Media.Effects
         /// <summary>
         /// Returns a safe handle to an unmanaged effect clone
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - returns a security critical type SafeHandle.        
-        /// </SecurityNote>
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe abstract protected SafeHandle CreateUnmanagedEffect();
 
@@ -96,10 +82,6 @@ namespace System.Windows.Media.Effects
         /// <param name="propertyName">Name of the unmanaged property to be set</param>
         /// <param name="value">Object value to set unmanaged property to</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - calls native code
-        /// TreatAsSafe - as there is a demand
-        /// </SecurityNote>
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected void SetValue(SafeHandle effect, string propertyName, object value)
         {
@@ -110,10 +92,6 @@ namespace System.Windows.Media.Effects
         /// Creates an IMILBitmapEffect object
         /// </summary>
         /// <returns>IMILBitmapEffect object</returns>
-        /// <SecurityNote>
-        /// Critical - calls native code
-        /// TreatAsSafe - as there is a demand
-        /// </SecurityNote>             
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected SafeHandle /* IMILBitmapEffect */ CreateBitmapEffectOuter()
         {
@@ -126,10 +104,6 @@ namespace System.Windows.Media.Effects
         /// </summary>
         /// <param name="outerObject">The IMILBitmapEffect object</param>
         /// <param name="innerObject">The IMILBitmapEffectPrimitive object</param>
-        /// <SecurityNote>
-        /// Critical - calls native code
-        /// TreatAsSafe - as there is a demand
-        /// </SecurityNote>        
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected void InitializeBitmapEffect(SafeHandle /*IMILBitmapEffect */ outerObject,
                  SafeHandle/* IMILBitmapEffectPrimitive */ innerObject)

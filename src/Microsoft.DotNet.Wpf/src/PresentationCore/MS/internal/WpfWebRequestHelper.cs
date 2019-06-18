@@ -51,11 +51,6 @@ namespace MS.Internal
 /// </summary>
 static class WpfWebRequestHelper
 {
-    /// <SecurityNote>
-    /// Critical: Elevates to set WebRequest.UseDefaultCredentials.
-    /// Safe: Activates the CustomCredentialPolicy, which makes sure the user's system credentials are not
-    ///     sent across the Internet.
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal static WebRequest CreateRequest(Uri uri)
     {
@@ -157,11 +152,6 @@ static class WpfWebRequestHelper
     private static HttpRequestCachePolicy _httpRequestCachePolicy;
     private static HttpRequestCachePolicy _httpRequestCachePolicyRefresh;
 
-    /// <SecurityNote>
-    /// Critical (getter): Calls the native ObtainUserAgentString().
-    /// Safe: User-agent string is safe to expose. An XBAP could get it by asking the server what the browser
-    ///     sent it initially.
-    /// </SecurityNote>
     internal static string DefaultUserAgent
     {
         get
@@ -179,13 +169,6 @@ static class WpfWebRequestHelper
     }
     private static string _defaultUserAgent;
 
-    /// <SecurityNote>
-    /// Critical: Calls the critical CookieHandler.HandleWebResponse(). 
-    ///     We need a secure path for passing authentic, unaltered HttpWebRespones.
-    /// CAUTION: Presently, callers of this method are not required to make any security guarantee about
-    ///     non-HTTP web responses. They will all need to be revised if secure handling of other types of
-    ///     requests/responses becomes necessary.
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
@@ -212,16 +195,6 @@ static class WpfWebRequestHelper
         return GetResponse(request);
     }
 
-    /// <SecurityNote>
-    /// Critical: Calls the critical HandleWebResponse(), which expects unaltered, authentic HttpWebResponses.
-    /// Safe: The response is obtained right here and is passed directly to HandleWebResponse().
-    ///     Even if the given request object is bogus, it cannot produce an HttpWebResponse, because the class 
-    ///     has no public or protected constructor. However, a bogus request could attach to itself an
-    ///     HttpWebResponse from a real request and alter it. This possibility is prevented by a type check.
-    ///     A critical assumption is that HttpWebRequest cannot be derived from and therefore its behavior 
-    ///     cannot be altered (beyond what its public APIs allow, but the security-sensitive ones demand
-    ///     appropriate permission).
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
@@ -243,9 +216,6 @@ static class WpfWebRequestHelper
         HandleWebResponse(response);
         return response;
     }
-    /// <SecurityNote>
-    /// [See GetResponse()]
-    /// </SecurityNote>
     [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {

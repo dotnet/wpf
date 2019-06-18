@@ -62,10 +62,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual Guid ContainerFormat
         {
             get
@@ -91,10 +87,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string Author
         {
             get
@@ -142,10 +134,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual System.Version Version
         {
             get
@@ -193,10 +181,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual Version SpecificationVersion
         {
             get
@@ -244,10 +228,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string FriendlyName
         {
             get
@@ -295,10 +275,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string DeviceManufacturer
         {
             get
@@ -346,10 +322,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string DeviceModels
         {
             get
@@ -397,10 +369,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string MimeTypes
         {
             get
@@ -448,10 +416,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string FileExtensions
         {
             get
@@ -499,10 +463,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsAnimation
         {
             get
@@ -528,10 +488,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsLossless
         {
             get
@@ -557,10 +513,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsMultipleFrames
         {
             get

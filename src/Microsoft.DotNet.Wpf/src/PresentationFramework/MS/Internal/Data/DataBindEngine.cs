@@ -121,11 +121,6 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into Link demanded methods to attach handlers
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///     It simply attaches private call back.
-        /// </SecurityNote>
         private DataBindEngine()
         {
             // Set up the final cleanup
@@ -723,11 +718,6 @@ namespace MS.Internal.Data
 
         private sealed class DataBindEngineShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
             public DataBindEngineShutDownListener(DataBindEngine target) : base(target)
             {
             }

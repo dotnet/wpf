@@ -155,12 +155,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Disposing LS unmanaged memory for text line
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls LoFinalizeLine, LoDestroyLine and _ploline.Value which
-            ///            are all critical functions.
-            /// Safe - as this does not take any pointer parameters that it passes directly to
-            ///        the Critical functions.  _ploline.Value is critical for set.
-            /// </SecurityNote>
             private void DisposeInternal(bool finalizing)
             {
                 if (_ploline.Value != System.IntPtr.Zero)
@@ -176,10 +170,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Empty private constructor
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls the constructor for  SecurityCriticalDataForSet.
-            /// Safe - as this just initializes it with the default value.
-            /// </SecurityNote>
             private FullTextLine(TextFormattingMode textFormattingMode, bool justify, double pixelsPerDip) : base(pixelsPerDip)
             {
                 _textFormattingMode = textFormattingMode;
@@ -204,13 +194,6 @@ namespace MS.Internal.TextFormatting
             /// <param name="paragraphWidth">paragraph width</param>
             /// <param name="lineFlags">line formatting control flags</param>
             /// <param name="collapsingSymbol">line end collapsing symbol</param>
-            /// <SecurityNote>
-            /// Critical - as this calls the setter for _ploline.Value which is type SecurityCriticalDataForSet.
-            ///            _ploc is critical for set as it's required to properly match the LS context used to
-            ///            format the line during display time.
-            /// Safe - as this doesn't get set to a random parameter passed in but rather to a value returned
-            ///        by a safe function TextFormatterContext.CreateLine().
-            /// </SecurityNote>
             private void FormatLine(
                 FullTextState           fullText,
                 int                     cpFirst,
@@ -605,11 +588,6 @@ namespace MS.Internal.TextFormatting
             /// <param name="drawingContext">drawing surface</param>
             /// <param name="origin">offset to the line origin</param>
             /// <param name="antiInversion">anti-inversion transform applied on the surface</param>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoDisplayLine.
-            /// Safe - as this doesn't take any pointer parameters that are passed to
-            ///        LoDisplayLine directly for writing.
-            /// </SecurityNote>
             private void DrawTextLine(
                 DrawingContext      drawingContext,
                 Point               origin,
@@ -2149,11 +2127,6 @@ namespace MS.Internal.TextFormatting
             /// in the line. Through IndexedGlyphRun client can obtain glyph information of
             /// a text source character.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls the Critical function UnsafeNativeMethods.LoEnumLine.
-            /// Safe - as the IntPtr passed in is of type SecurityCriticalDataForSet which means
-            ///        it is tracked to make sure it can't be set to a random value.
-            /// </SecurityNote>
             public override IEnumerable<IndexedGlyphRun> GetIndexedGlyphRuns()
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -2218,11 +2191,6 @@ namespace MS.Internal.TextFormatting
             /// value back to TextFormatter as an input argument to TextFormatter.FormatLine when
             /// formatting the next line within the same paragraph.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls TextMetrics.GetTextLineBreak.
-            /// Safe - as it does not take parameter that being passed to the critical method or
-            ///        return sensitive data from the critical method.
-            /// </SecurityNote>
             public override TextLineBreak GetTextLineBreak()
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -2484,11 +2452,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Wrapper to LoQueryLinePointPcp
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoQueryLinePointPcp.
-            /// Safe - as this doesn't take any parameters that are passed to
-            ///        LoQueryLineCpPpoint directly for writing.
-            /// </SecurityNote>
             private void QueryLinePointPcp(
                 Point               ptQuery,
                 LsQSubInfo[]        subLineInfo,
@@ -2542,11 +2505,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Wrapper to LoQueryLineCpPpoint
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoQueryLineCpPpoint.
-            /// Safe - as this doesn't take any parameters that are passed to
-            ///        LoQueryLineCpPpoint directly for writing.
-            /// </SecurityNote>
             private void QueryLineCpPpoint(
                 int                 lscpQuery,
                 LsQSubInfo[]        subLineInfo,

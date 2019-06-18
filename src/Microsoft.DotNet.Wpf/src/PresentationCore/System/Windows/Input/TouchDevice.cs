@@ -29,11 +29,6 @@ namespace System.Windows.Input
     /// <summary>
     ///     Represents a touch device (i.e. a finger).
     /// </summary>
-    /// <SecurityNote>
-    ///     InheritanceDemand - Prevents subclassing TouchDevice from partial trust code.
-    ///     This is for defense in depth since there is no scenario where partial trust code
-    ///     needs to inherit from this class.
-    /// </SecurityNote>
     public abstract class TouchDevice : InputDevice, IManipulator
     {
         /// <summary>
@@ -44,10 +39,6 @@ namespace System.Windows.Input
         ///     For a particular subclass of TouchDevice, ID should be unique.
         ///     Note: This is not validated to be unique.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: Retrieves an InputManager instance.
-        ///     PublicOK: Does not expose the InputManager.
-        /// </SecurityNote>
         protected TouchDevice(int deviceId)
             : base()
         {
@@ -65,20 +56,12 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Attaches to InputManager event handlers.
-        ///     TreatAsSafe: Does not expose the InputManager.
-        /// </SecurityNote>
         private void AttachTouchDevice()
         {
             _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
             _inputManager.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Detaches from InputManager event handlers.
-        ///     TreatAsSafe: Does not expose the InputManager.
-        /// </SecurityNote>
         private void DetachTouchDevice()
         {
             _inputManager.PostProcessInput -= new ProcessInputEventHandler(PostProcessInput);
@@ -137,10 +120,6 @@ namespace System.Windows.Input
         ///     
         ///     Subclasses should use SetActiveSource to set this property.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical - Accesses critical data (_activeSource)
-        ///     PublicOK - There is a demand.
-        ///</SecurityNote>
         public sealed override PresentationSource ActiveSource
         {
             get
@@ -150,10 +129,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - PresentationSource is critical data.
-        ///     PublicOK - This method has a link demand.
-        /// </SecurityNote>
         protected void SetActiveSource(PresentationSource activeSource)
         {
             _activeSource = activeSource;
@@ -185,10 +160,6 @@ namespace System.Windows.Input
         /// <returns>A list of points in the coordinate space of relativeTo.</returns>
         public abstract TouchPointCollection GetIntermediateTouchPoints(IInputElement relativeTo);
 
-        /// <SecurityNote>
-        ///     Critical - Access _activeSource.
-        ///     TreatAsSafe - Does not expose _activeSource.
-        /// </SecurityNote>
         private IInputElement CriticalHitTest(Point point, bool isSynchronize)
         {
             IInputElement over = null;
@@ -604,10 +575,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (_activeSource)
-        ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
-        /// </SecurityNote>
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
             if (visual == null)
@@ -643,10 +610,6 @@ namespace System.Windows.Input
             uiElement3D = ((uiElement == null) && (contentElement == null)) ? element as UIElement3D : null;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private void RaiseLostCapture(IInputElement oldCapture)
         {
             Debug.Assert(oldCapture != null, "oldCapture should be non-null.");
@@ -656,10 +619,6 @@ namespace System.Windows.Input
             _inputManager.ProcessInput(e);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private void RaiseGotCapture(IInputElement captured)
         {
             Debug.Assert(captured != null, "captured should be non-null.");
@@ -791,10 +750,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Forces the TouchDevice to resynchronize.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Accesses _activeSource
-        ///     PublicOK: Does not expose _activeSource.
-        /// </SecurityNote>
         public void Synchronize()
         {
             if (_activeSource != null &&
@@ -809,14 +764,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calling this method would do mouse promotions.
-        ///     PublicOK: This method has a demand on it.
-        ///     Demand:   Technically the demand is not needed because the 
-        ///               user can already do this indirectly by canceling the
-        ///               manipulation. But the decision is to limit the scope
-        ///               of this raw method to full trust.
-        /// </SecurityNote>
         protected virtual void OnManipulationEnded(bool cancel)
         {
             UIElement manipulatableElement = GetManipulatableElement();
@@ -991,10 +938,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private void RaiseTouchEnterOrLeave(DependencyObject element, bool isLeave)
         {
             Debug.Assert(element != null);
@@ -1011,10 +954,6 @@ namespace System.Windows.Input
             return touchEventArgs;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private bool RaiseTouchDown()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchDownEvent);
@@ -1027,10 +966,6 @@ namespace System.Windows.Input
             return _lastDownHandled;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private bool RaiseTouchMove()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchMoveEvent);
@@ -1043,10 +978,6 @@ namespace System.Windows.Input
             return _lastMoveHandled;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Accesses _inputManager.
-        ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
-        /// </SecurityNote>
         private bool RaiseTouchUp()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchUpEvent);
@@ -1063,9 +994,6 @@ namespace System.Windows.Input
 
         #region Input Processing and Promotion
 
-        /// <SecurityNote>
-        ///     Critical: This method can be used for input spoofing
-        /// </SecurityNote>
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             InputEventArgs inputEventArgs = e.StagingItem.Input;
@@ -1362,14 +1290,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calling this method would do mouse promotions.
-        ///     PublicOK: This method has a demand on it.
-        ///     Demand:   Technically the demand is not needed because the 
-        ///               user can already do this indirectly by canceling the
-        ///               manipulation. But the decision is to limit the scope
-        ///               of this raw method to full trust.
-        /// </SecurityNote>
         void IManipulator.ManipulationEnded(bool cancel)
         {
             this.OnManipulationEnded(cancel);
@@ -1400,14 +1320,8 @@ namespace System.Windows.Input
         private bool _lastUpHandled;
         private bool _lastMoveHandled;
 
-        /// <SecurityNote>
-        ///     Critical - PresentationSource must be protected.
-        /// </SecurityNote>
         private PresentationSource _activeSource;
 
-        /// <SecurityNote>
-        ///     Critical - InputManager must be protected.
-        /// </SecurityNote>
         private InputManager _inputManager;
 
         private WeakReference _manipulatingElement;

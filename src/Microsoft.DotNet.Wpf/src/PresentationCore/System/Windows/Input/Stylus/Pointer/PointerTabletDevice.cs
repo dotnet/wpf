@@ -50,10 +50,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The max distance (in himetric, .1 mm units) between double (multi) taps
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical: Calls StylusLogic.CurrentStylusLogic
-        ///                   Takes no data and returns the delta, which is safe to expose
-        /// </SecurityNote>
         internal int DoubleTapDelta
         {
             get
@@ -66,10 +62,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The max time (in milliseconds) between double (multi) taps
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical:  Calls StylusLogic.CurrentStylusLogic
-        ///                    Takes no data and returns the delta, which is safe to expose
-        /// </SecurityNote>
         internal int DoubleTapDeltaTime
         {
             get
@@ -87,9 +79,6 @@ namespace System.Windows.Input.StylusPointer
         /// Creates the tablet and initializes its devices
         /// </summary>
         /// <param name="deviceInfo">Device information about this tablet</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls StylusLogic.CurrentStylusLogic
-        /// </SecurityNote>
         internal PointerTabletDevice(PointerTabletDeviceInfo deviceInfo)
             : base(deviceInfo)
         {
@@ -104,10 +93,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Creates all stylus devices for this specific tablet based on the tracked cursors in WM_POINTER.
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceCursors
-        ///                     Does not accept/expose any information 
-        /// </SecurityNote>
         private void BuildStylusDevices()
         {
             UInt32 cursorCount = 0;
@@ -138,10 +123,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="description"></param>
         /// <param name="stylusLogic"></param>
-        /// <SecurityNote>
-        ///      Critical:  Uses DoubleTapDelta
-        ///      Safe:      Does not expose critical data
-        /// </SecurityNote>
         internal void UpdateSizeDeltas()
         {
             // Query default settings for mouse drag and double tap (with minimum of 1x1 size).
@@ -215,9 +196,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The currently active PresentationSource for this tablet
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  Accesses StylusDevice.ActiveSource
-        /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
             get

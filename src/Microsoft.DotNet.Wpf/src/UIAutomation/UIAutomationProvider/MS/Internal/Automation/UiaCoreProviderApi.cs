@@ -30,21 +30,11 @@ namespace MS.Internal.Automation
 
         private const int UIA_E_ELEMENTNOTAVAILABLE = unchecked((int)0x80040201);
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: This method is used to return an IRawElementProviderSimple associated with an HWND to UIAutomation in response to a WM_GETOBJECT
-        ///                 The returned value is simply an LRESULT, so is harmless, and the input values are verfied on the unmanaged side, so it is not abusable.
-        /// </SecurityNote>
         internal static IntPtr UiaReturnRawElementProvider(IntPtr hwnd, IntPtr wParam, IntPtr lParam, IRawElementProviderSimple el)
         {
             return RawUiaReturnRawElementProvider( hwnd, wParam, lParam, el );
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: This converts an hwnd to a MiniHwndProxy, which while technically implementing IRawElementProviderSimple, has none of the functionality
-        ///                 and is therefore simply a harmless hwnd container.
-        /// </SecurityNote>
         internal static IRawElementProviderSimple UiaHostProviderFromHwnd(IntPtr hwnd)
         {
             IRawElementProviderSimple provider;
@@ -58,47 +48,26 @@ namespace MS.Internal.Automation
         //
         #region Event methods
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: Causes an AutomationEvent to fire, requires a functional IRawElementProvider, so cannot even be used to spoof events from other AutomationElements.
-        /// </SecurityNote>
         internal static void UiaRaiseAutomationPropertyChangedEvent(IRawElementProviderSimple provider, int propertyId, object oldValue, object newValue)
         {
             CheckError(RawUiaRaiseAutomationPropertyChangedEvent(provider, propertyId, oldValue, newValue));
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: Causes an AutomationEvent to fire, requires a functional IRawElementProvider, so cannot even be used to spoof events from other AutomationElements.
-        /// </SecurityNote>
         internal static void UiaRaiseAutomationEvent(IRawElementProviderSimple provider, int eventId)
         {
             CheckError(RawUiaRaiseAutomationEvent(provider, eventId));
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: Causes an AutomationEvent to fire, requires a functional IRawElementProvider, so cannot even be used to spoof events from other AutomationElements.
-        /// </SecurityNote>
         internal static void UiaRaiseStructureChangedEvent(IRawElementProviderSimple provider, StructureChangeType structureChangeType, int[] runtimeId)
         {
             CheckError(RawUiaRaiseStructureChangedEvent(provider, structureChangeType, runtimeId, runtimeId == null ? 0 : runtimeId.Length));
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: Causes an AutomationEvent to fire, requires a functional IRawElementProvider, so cannot even be used to spoof events from other AutomationElements.
-        /// </SecurityNote>
         internal static void UiaRaiseAsyncContentLoadedEvent(IRawElementProviderSimple provider, AsyncContentLoadedState asyncContentLoadedState, double PercentComplete)
         {
             CheckError(RawUiaRaiseAsyncContentLoadedEvent(provider, asyncContentLoadedState, PercentComplete));
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
-        ///    TreatAsSafe: Simply checks whether clients are listening in order to know whether to fire AutomationEvents. This is information we WANT available to
-        ///                 Partial Trust users, so is not an information disclosure risk.
-        /// </SecurityNote>
         internal static bool UiaClientsAreListening()
         {
             return RawUiaClientsAreListening();
@@ -116,11 +85,6 @@ namespace MS.Internal.Automation
 
         #region Private Methods
 
-        /// <SecurityNote>
-        /// Critical: This calls into Marshal.ThrowExceptionForHR which has a link demand
-        /// TreatAsSafe: Throwing an exception is deemed as a safe operation (throwing exceptions is allowed in Partial Trust). 
-        ///              We pass an IntPtr that has a value of -1 so that ThrowExceptionForHR ignores IErrorInfo of the current thread.
-        /// </SecurityNote>
         /// Check hresult for error...
         private static void CheckError(int hr)
         {

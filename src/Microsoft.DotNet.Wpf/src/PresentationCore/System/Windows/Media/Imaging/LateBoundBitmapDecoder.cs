@@ -48,9 +48,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into BitmapDownload.BeginDownload which is critical
-        /// </SecurityNote>
         internal LateBoundBitmapDecoder(
             Uri baseUri,
             Uri uri,
@@ -98,10 +95,6 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null.
         /// If the LateBoundDecoder is still downloading, the returned Palette is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting palette data is OK
-        /// </SecurityNote>
         public override BitmapPalette Palette
         {
             get
@@ -122,10 +115,6 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null.
         /// If the LateBoundDecoder is still downloading, the returned ColorContext is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting colorcontext data is OK
-        /// </SecurityNote>
         public override ReadOnlyCollection<ColorContext> ColorContexts
         {
             get
@@ -146,10 +135,6 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null. The returned source is frozen.
         /// If the LateBoundDecoder is still downloading, the returned Thumbnail is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting thumbnail data is OK
-        /// </SecurityNote>
         public override BitmapSource Thumbnail
         {
             get
@@ -173,10 +158,6 @@ namespace System.Windows.Media.Imaging
         /// <Remarks>
         ///     The getter demands RegistryPermission(PermissionState.Unrestricted)
         /// </Remarks>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Demands RegistryPermission(PermissionState.Unrestricted)
-        /// </SecurityNote>
         public override BitmapCodecInfo CodecInfo
         {
             get
@@ -242,10 +223,6 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null. The returned source is frozen.
         /// If the LateBoundDecoder is still downloading, the returned Preview is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting preview data is OK
-        /// </SecurityNote>
         public override BitmapSource Preview
         {
             get

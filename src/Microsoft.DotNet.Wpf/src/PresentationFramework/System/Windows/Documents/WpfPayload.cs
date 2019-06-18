@@ -243,9 +243,6 @@ namespace System.Windows.Documents
 
         // Creates a WPF container in new MemoryStream and places an image into it
         // with the simplest xaml part referring to it (wrapped into InlineUIContainer).
-        /// <SecurityNote>
-        /// Critical - calls Critical CreateImagePart with parameters coming from untrusted sources.
-        /// </SecurityNote>
         internal static MemoryStream SaveImage(BitmapSource bitmapSource, string imageContentType)
         {
             MemoryStream stream = new MemoryStream();
@@ -448,10 +445,6 @@ namespace System.Windows.Documents
         // Creates relationships from the given part to all images currently stored in _images array.
         // This method is supposed to be called at the end of each sourcePart processing
         // when _images array still contains a list of all images referenced from this part.
-        /// <SecurityNote>
-        /// Critical - calls Critical CreateImagePart, which is Critical.
-        /// TreatAsSafe - images passed to CreateImagePart are part of the payload.
-        /// </SecurityNote>
         private void CreateComponentParts(PackagePart sourcePart)
         {
             if (_images != null)
@@ -472,9 +465,6 @@ namespace System.Windows.Documents
         }
 
         // Creates a part containing an image with a relationship to it from a sourcePart
-        /// <SecurityNote>
-        /// Critical - calls BitmapEncoder.Save, which LinkDemand's.
-        /// </SecurityNote>
         private void CreateImagePart(PackagePart sourcePart, BitmapSource imageSource, string imageContentType, int imageIndex)
         {
             // Generate a new unique image part name
@@ -652,10 +642,6 @@ namespace System.Windows.Documents
         }
 
         // Returns true if image bitmap data in memory aree the same instance for the both images
-        /// <SecurityNote>
-        /// Critical - calls BitsPerPixel, which LinkDemand's and returns info that's not supposed to be disclosed in partial trust scenarios.
-        /// TreatAsSafe - BitsPerPixel's returned information is not disclosed, just used for comparing images. 
-        /// </SecurityNote>
         private static bool ImagesAreIdentical(BitmapSource imageSource1, BitmapSource imageSource2)
         {
             // First compare images as objects - the luckiest case is when it's the same object

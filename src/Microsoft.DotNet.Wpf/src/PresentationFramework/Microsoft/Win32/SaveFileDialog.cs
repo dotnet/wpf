@@ -45,11 +45,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Initializes a new instance of the SaveFileDialog class.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Creates a dialog that can be used to open a file.
-        ///     PublicOk: It is okay to set the options to their defaults.  The
-        ///             ctor does not show the dialog.
-        /// </SecurityNote>
         public SaveFileDialog()
             : base()
         {
@@ -76,10 +71,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        /// <SecurityNote> 
-        ///     Critical: Opens files on the users machine.
-        ///     PublicOk: Demands UIPermission.AllWindows 
-        /// </SecurityNote>
         public Stream OpenFile()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -114,10 +105,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls base.Reset() and Initialize(), both of which are SecurityCritical
-        ///     PublicOk: Demands UIPermission.AllWindows
-        /// </SecurityNote>
         public override void Reset()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -155,11 +142,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: We do not want a Partially trusted application to have the ability
-        ///                 to disable this prompt.
-        ///     PublicOk: Demands UIPermission.AllWindows
-        /// </SecurityNote>
         public bool CreatePrompt
         {
             get
@@ -185,11 +167,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: We do not want a Partially trusted application to have the ability
-        ///                 to disable this prompt.
-        ///     PublicOk: Demands UIPermission.AllWindows
-        /// </SecurityNote>
         public bool OverwritePrompt
         {
             get
@@ -245,10 +222,6 @@ namespace Microsoft.Win32
         ///   flags are set, we check to see if it is appropriate to show the dialog(s) in this
         ///   method.  If so, we then call PromptFileOverwrite or PromptFileCreate, respectively.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: due to call to PromptFileNotFound, which
-        ///             displays a message box with focus restore.
-        /// </SecurityNote>
         internal override bool PromptUserIfAppropriate(string fileName)
         {
             // First, call the FileDialog implementation of PromptUserIfAppropriate
@@ -318,9 +291,6 @@ namespace Microsoft.Win32
         /// a subclass failure occurs or if the buffer length
         /// allocated to store the filenames occurs.
         /// </exception>
-        /// <SecurityNote>
-        ///     Critical: Makes a call to UnsafeNativeMethods.GetSaveFileName()
-        /// </SecurityNote>
         internal override bool RunFileDialog(NativeMethods.OPENFILENAME_I ofn)
         {
             bool result = false;
@@ -377,22 +347,12 @@ namespace Microsoft.Win32
             return result;
         }
 
-        // <SecurityNote>
-        //     Critical, as it calls methods on COM interface IFileDialog.
-        // </SecurityNote>
         internal override string[] ProcessVistaFiles(IFileDialog dialog)
         {
             IShellItem item = dialog.GetResult();
             return new[] { item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING) };
         }
 
-        // <SecurityNote>
-        //     Critical, as it creates a new RCW.
-        //     This requires unmanaged code permissions, but they are asserted if the caller has UI permissions
-        //     (e.g. local intranet XBAP).
-        //     TreatAsSafe, as it returns the managed COM interface, and not a handle.
-        //     Calls on the interface will still be treated with security scrutiny.
-        // </SecurityNote>
         internal override IFileDialog CreateVistaDialog()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -435,9 +395,6 @@ namespace Microsoft.Win32
         //  We only perform SaveFileDialog() specific reset tasks here;
         //  it's the calling code's responsibility to ensure that the
         //  base is initialized first.
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical member (SetOption)
-        /// </SecurityNote>
         private void Initialize()
         {
             // OFN_OVERWRITEPROMPT
@@ -453,9 +410,6 @@ namespace Microsoft.Win32
         /// invoked when the CreatePrompt property is true and the specified file
         ///  does not exist. A return value of false prevents the dialog from closing.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical MessageBoxWithFocusRestore.
-        /// </SecurityNote>
         private bool PromptFileCreate(string fileName)
         {
             return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogCreatePrompt, fileName),
@@ -468,9 +422,6 @@ namespace Microsoft.Win32
         /// file already exists. A return value of false prevents the dialog from
         /// closing.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical MessageBoxWithFocusRestore.
-        /// </SecurityNote>
         private bool PromptFileOverwrite(string fileName)
         {
             return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogOverwritePrompt, fileName),

@@ -35,10 +35,6 @@ namespace Microsoft.Win32
     /// <Remarks>
     ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
     /// </Remarks>
-    /// <SecurityNote> 
-    ///     We Don't want arbitrary Partially trusted code deriving from CommonDialog.
-    ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
-    /// </SecurityNote>
     public abstract class CommonDialog
     {
         //---------------------------------------------------
@@ -60,11 +56,6 @@ namespace Microsoft.Win32
         ///  When overridden in a derived class, resets the properties 
         ///  of a common dialog to their default values.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Changes Dialog options
-        ///     PublicOk: This method is abstract, and there is an InheritanceDemand for 
-        ///             UIPermission (UIPermissionWindow.AllWindows) to derive from CommonDialog.
-        /// </SecurityNote>
         public abstract void Reset();
 
         /// <summary>
@@ -76,11 +67,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </Remarks>
-        /// <SecurityNote> 
-        ///     Critical: Calls RunDialog, and accesses parking window hwnd from Application.
-        ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
-        ///     PublicOk: Demands Permission appropriate to the dialog (defaults to UIPermissionWindow.AllWindows)
-        /// </SecurityNote>
         public virtual Nullable<bool> ShowDialog()
         {
             CheckPermissionsToShowDialog();
@@ -150,11 +136,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls RunDialog and accesses owner handle and parking window hwnd from Application.
-        ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
-        ///     PublicOk: Demands UIPermission (UIPermissionWindow.AllWindows)
-        /// </SecurityNote>
         public Nullable<bool> ShowDialog(Window owner)
         {
             CheckPermissionsToShowDialog();
@@ -246,9 +227,6 @@ namespace Microsoft.Win32
         ///  Defines the common dialog box hook procedure that is overridden to 
         ///  add specific functionality to a common dialog box.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical:  Calls UnsafeNativeMethods.SetFocus() and UnsafeNativeMethods.PostMessage()
-        /// </SecurityNote>
         protected virtual IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
         {
             // WM_INITDIALOG
@@ -305,9 +283,6 @@ namespace Microsoft.Win32
         ///  private because we need to call it from our derived classes like
         ///  FileDialog.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Calls UnsafeNativeMethods.SetWindowPos()
-        /// </SecurityNote>
         internal void MoveToScreenCenter(HandleRef hWnd)
         {
             // Create an IntPtr to store a handle to the monitor.
@@ -415,9 +390,6 @@ namespace Microsoft.Win32
         ///  member so that the dialog can be properly centered onscreen.
         ///  It is exposed through the OwnerWindowHandle property.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: hWnds are critical data.
-        /// </SecurityNote>
         private IntPtr _hwndOwnerWindow;
 
         #endregion Private Fields

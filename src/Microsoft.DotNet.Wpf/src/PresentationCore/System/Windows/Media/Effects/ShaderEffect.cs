@@ -568,10 +568,6 @@ namespace System.Windows.Media.Effects
             _samplerData[position] = newSampler;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses unsafe code blocks
-        ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
-        /// </SecurityNote>
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel
@@ -750,10 +746,6 @@ namespace System.Windows.Media.Effects
         }
 
         // write the non-null values of the list of nullables to the command data.
-        /// <SecurityNote>
-        ///     Critical: This code accesses unsafe code blocks
-        ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
-        /// </SecurityNote>
         private void AppendRegisters<T>(DUCE.Channel channel, List<T?> list) where T : struct
         {
             if (list != null)

@@ -542,14 +542,6 @@ namespace System.Windows.Navigation
         /// case when the top-level navigation is to something other than XAML. GetObjectFromResponse()
         /// handles this case.
         /// </remarks>
-        /// <SecurityNote>
-        /// There is no check for same site-of-origin here. A call to SecurityHelper.CallerHasWebPermission(
-        /// resolvedUri) could be added, but that would create an additional, redundant code path in
-        /// navigation. Here's what happens when the new URI is outside the site-of-origin:
-        ///     - For `http://, CreateWebRequest() gets a SecurityException and delegates to the browser.
-        ///     - For file://, HandleGetResponse() gets a SecurityException from
-        ///         (File)WebRequest.EndGetResponse() and similarly delegates to the browser.
-        /// </SecurityNote>
         private bool ShouldDelegateXamlViewerNavigationToBrowser(NavigateInfo navigateInfo, Uri resolvedUri)
         {
             bool shouldDelegate = false;
@@ -566,15 +558,6 @@ namespace System.Windows.Navigation
         }
         
 
-        /// <SecurityNote>
-        /// Critical: Calls IBCS.UpdateAddressBar(), which can be used for URL spoofing.
-        /// Safe: The browser's address bar is updated only when XamlViewer navigates to another loose XAML
-        ///     file, with the URL of that file. (Also when doing fragment navigation within a document.)
-        ///     To prevent spoofing of _currentSource with a URL outside the site of origin, a web permission
-        ///     Demand is made. (It's okay for a site to show one page while the address bar is pointing to
-        ///     another from the same site. This is equivalent to using a frame that occupies the entire
-        ///     content area...)
-        /// </SecurityNote>
         void UpdateAddressBarForLooseXaml()
         {
             if (BrowserInteropHelper.IsViewer && !BrowserInteropHelper.IsInitialViewerNavigation &&
@@ -1218,10 +1201,6 @@ namespace System.Windows.Navigation
 
 #if NETFX
         // Allow new navigations from browser to re-enter with this call.
-        ///<SecurityNote>
-        /// Critical - calls back to browser to get the browser top.
-        /// TreatAsSafe - this value isn't returned or stored.
-        ///</SecurityNote>
         private void DispatchPendingCallFromBrowser()
         {
             BrowserInteropHelper.HostBrowser.GetTop();
@@ -2426,14 +2405,6 @@ namespace System.Windows.Navigation
             }
         }
 
-        /// <SecurityNote>
-        /// Critical because it sets BrowserInterop.IsInitialViewerNavigation
-        /// Safe because IsInitialViewerNavigation is set to false and this method completes a navigation.
-        ///     Any further navigation will not be considered "initial".
-        ///
-        /// Consider: Do we really need IsInitialViewerNavigation to be Critical? No security decision is done
-        /// based on that.
-        /// </SecurityNote>
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
@@ -3330,10 +3301,6 @@ namespace System.Windows.Navigation
         /// <exception cref="System.InvalidOperationException">
         /// Can't journal by URI without a URI.
         /// </exception>
-        /// <SecurityNote>
-        /// Critical:  accesses the browsercallback services (via Journal)
-        /// TreatAsSafe:  only uses bcs to update the journal with already valid content.
-        /// </SecurityNote>
         /// <remarks> _bp is still the previous content (before the new navigation). It can be null.
         /// destinationJournalEntry can be null.
         /// No journal entry is created for certain types of Content or when there is no
@@ -3634,14 +3601,6 @@ namespace System.Windows.Navigation
             FireNavigating(null, null, null, null); // sets _customContentStateToSave
         }
 
-        /// <SecurityNote>
-        /// Critical - elevates permissions to call UpdateTravellog by calling a SUC'ed PInvoke
-        /// TreatAsSafe - we're callling to update the travellog.
-        ///                      information passed back is whether we're a top-level container, and whether to add a new entry.
-        ///
-        ///                      Net effect is creation of a new journal entry. Considered safe as the information stored in the journal is derived from what's been navigated to.
-        ///                      We could have the same effect via programmatically allowing a navigate OR calling NavigationWindow.GoBack().
-        /// </SecurityNote>
         internal void CallUpdateTravelLog(bool addNewEntry)
         {
 #if NETFX
@@ -3745,10 +3704,6 @@ namespace System.Windows.Navigation
         }
 
 #if NETFX
-        /// <SecurityNote>
-        /// Critical: Uses ApplicationProxyInternal.Current, which is Critical.
-        /// Safe: Only ApplicationProxyInternal.HasTravelLogIntegration is accessed, which is okay to give out.
-        /// </SecurityNote>
         private bool HasTravelLogIntegration
         {
             get

@@ -45,11 +45,6 @@ namespace MS.Internal
         /// <summary>
         /// Initializes a new instance of the  class, containing the specified data.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This acts as a cannister to store a dataobject that will contain XAML and ApplicationTrust format.
-        ///     The intent is to prevent that from being exposed. We mark this critical to ensure that this is called an created
-        ///     only from known locations. Also some of the interface methods that it implements have inheritance demand.
-        /// </SecurityNote>
         internal ConstrainedDataObject(System.Windows.IDataObject data)
         {
             // This check guarantees us that we can never create a Constrained data Object with a null dataobject
@@ -72,10 +67,6 @@ namespace MS.Internal
         /// format, using an automated conversion parameter to determine whether to convert
         /// the data to the format.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This accesses the _innerDataObject. 
-        ///     TreatAsSafe: It filters for the risky information and fails in the case where consumer queries for Xaml or ApplicationTrust
-        /// </SecurityNote>
         public object GetData(string format, bool autoConvert)
         {
             if (format == null)
@@ -134,10 +125,6 @@ namespace MS.Internal
         /// associated with the specified format, using an automatic conversion
         /// parameter to determine whether to convert the data to the format.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This accesses the _innerDataObject. 
-        ///     TreatAsSafe: It filters for the risky information and fails in the case where consumer queries for Xaml or ApplicationTrust
-        /// </SecurityNote>
         public bool GetDataPresent(string format, bool autoConvert)
         {
             bool dataPresent =  false;
@@ -174,10 +161,6 @@ namespace MS.Internal
         /// determine whether to retrieve all formats that the data can be converted to or
         /// only native data formats.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code touches _innerData which can expose information about formats we do not want to publicly expose
-        ///     for the partial trust to full trust paste scenario.
-        /// </SecurityNote>
         public string[] GetFormats(bool autoConvert)
         {
             string[] formats = _innerData.GetFormats(autoConvert);
@@ -201,11 +184,6 @@ namespace MS.Internal
         /// Stores the specified data in
         /// this instance, using the class of the data for the format.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code touches _innerData
-        ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
-        ///     to block illegitimate conditions
-        /// </SecurityNote>
         public void SetData(object data)
         {
             _innerData.SetData(data);
@@ -215,11 +193,6 @@ namespace MS.Internal
         /// Stores the specified data and its associated format in this
         /// instance.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code touches _innerData
-        ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
-        ///     to block illegitimate conditions
-        /// </SecurityNote>
         public void SetData(string format, object data)
         {
             _innerData.SetData(format, data);
@@ -229,11 +202,6 @@ namespace MS.Internal
         /// Stores the specified data and 
         /// its associated class type in this instance.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code touches _innerData
-        ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
-        ///     to block illegitimate conditions
-        /// </SecurityNote>
         public void SetData(Type format, object data)
         {
             _innerData.SetData(format, data);
@@ -245,11 +213,6 @@ namespace MS.Internal
         /// to specify whether the
         /// data can be converted to another format.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code touches _innerData
-        ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
-        ///     to block illegitimate conditions
-        /// </SecurityNote>
         public void SetData(string format, Object data, bool autoConvert)
         {
             _innerData.SetData(format, data, autoConvert);
@@ -294,10 +257,6 @@ namespace MS.Internal
             return resultList.ToArray();
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code is used to determine whether information returned is secure or not
-        ///     TreatAsSafe: This function is critical only for tracking purposes
-        /// </SecurityNote>
         /// <param name="format"></param>
         private bool IsCriticalFormat(string format)
         {
@@ -314,11 +273,6 @@ namespace MS.Internal
 
         #region Private Fields
         // Inner data object of IDataObject.
-        /// <SecurityNote>
-        ///     This member holds a reference to a dataobject which if exposed allows client code in an app to get to the XAML
-        ///     content on the clipboard. This is deisabled for the scenario where target application has more permissions than source of 
-        ///     data object and that is the only scenario where we create an instance of this class.
-        /// </SecurityNote>
         private System.Windows.IDataObject _innerData;
         #endregion Private Fields
 

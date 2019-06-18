@@ -31,19 +31,6 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    // <SecurityNote>
-    //     Critical:  This class serves as a depository of all well-known pre-populated
-    //          packages. This class is marked as SecurityCritical to ensure that
-    //          1. only trusted code can add/get/remove trusted packages into the depository
-    //          2. a whole package will never be given out to the platform client
-    //              Note: it is OK to give out a part stream from a package instance but
-    //                      the package related objects such as Package, PackagePart,
-    //                      PackageRelationship should NEVER be given out to a client.
-    //      List of the trusted packages allowed:
-    //          1. ResourceContainer
-    //          2. SiteOfOriginContainer
-    //          3. ZipPackage that is only instantiated by XPS Viewer
-    // </SecurityNote>
     [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {

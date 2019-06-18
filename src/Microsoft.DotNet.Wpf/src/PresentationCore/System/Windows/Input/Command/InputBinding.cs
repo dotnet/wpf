@@ -38,11 +38,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="command">Command</param>
         /// <param name="gesture">Input Gesture</param>
-        /// <SecurityNote>
-        /// Critical - may associate a secure command with a gesture, in 
-        ///            these cases we need to demand the appropriate permission.
-        /// TreatAsSafe - Calls CheckSecureCommand which does the appropriate demand.
-        /// </SecurityNote>
         public InputBinding(ICommand command, InputGesture gesture) 
         {   
             if (command == null)
@@ -75,11 +70,6 @@ namespace System.Windows.Input
         /// <summary>
         /// Command Object associated
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - may associate a secure command with a gesture, in 
-        ///            these cases we need to demand the appropriate permission.
-        /// PublicOk - Calls CheckSecureCommand which does the appropriate demand.
-        /// </SecurityNote>
         [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
         public ICommand Command
@@ -97,11 +87,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Property changed callback for Command property
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - may associate a secure command with a gesture, in 
-        ///            these cases we need to demand the appropriate permission.
-        /// TreatAsSafe - Calls CheckSecureCommand which does the appropriate demand.
-        /// </SecurityNote>
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             InputBinding inputBinding = (InputBinding)d;
@@ -153,11 +138,6 @@ namespace System.Windows.Input
         /// <summary>
         /// InputGesture associated with the Command
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - may associate a secure command with a gesture, in 
-        ///            these cases we need to demand the appropriate permission.
-        /// PublicOk - Calls CheckSecureCommand which does the appropriate demand.
-        /// </SecurityNote>
         public virtual InputGesture Gesture
         {
             // We would like to make this getter non-virtual but that's not legal
@@ -192,12 +172,6 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        /// Critical - determines if a command will later make an
-        ///            assert. This is critical to be right, because
-        ///            later we assume that the binding was protected.
-        /// TreatAsSafe - Demand() is not an unsafe operation
-        /// </SecurityNote>
         void CheckSecureCommand(ICommand command, InputGesture gesture)
         {
             // In v3.5, only ApplicationCommands.Paste was treated as ISecureCommand,

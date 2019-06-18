@@ -956,14 +956,6 @@ namespace System.Windows.Documents
         // Create Win32 caret to sync up Avalon caret with Win32 application and show Win32 caret
         // which is the empty bitmap. This call will generate the accessiblity event for caret so that
         // Win32 application have the compatibility to handle the caret event which is Magnifier or Tablet Tip.
-        /// <SecurityNote>
-        /// Critical - as this calls PresentationSource.FromVisual() and PresentationSource.Handle
-        ///            under elevation.
-        /// Safe - as this doesn't expose the information. The call to CreateCaret here
-        ///        will destroy the caret only for the current window and create new empty bitmap
-        ///        and show it for Win32 caret to handle the accesibility event well without
-        ///        exposing the information.
-        /// </SecurityNote>
         private void Win32CreateCaret()
         {
             if (!_isSelectionActive)
@@ -1031,10 +1023,6 @@ namespace System.Windows.Documents
         }
 
         // Destroy Win32 caret if we create it with checking Win32 error.
-        /// <SecurityNote>
-        ///     Critical: This code calls into Marshal.GetLastError which has a link demand
-        ///     TreatAsSafe: Extracting the last error is safe
-        /// </SecurityNote>
         private void Win32DestroyCaret()
         {
             if (!_isSelectionActive)
@@ -1065,11 +1053,6 @@ namespace System.Windows.Documents
         }
 
         // Set Win32 caret position with checking Win32 error.
-        /// <SecurityNote>
-        /// Critical - as this calls PresentationSource.CriticalFromVisual()
-        /// Safe - as doesn't expose the data obtained and it uses the data to render the
-        ///        caret.  This is safe as the caller can't render it on a random location.
-        /// </SecurityNote>
         private void Win32SetCaretPos()
         {
             if (!_isSelectionActive)

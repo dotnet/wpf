@@ -30,17 +30,6 @@ namespace System.Security.RightsManagement
     ///  This class represents a User for purposes of granting rights to that user, initializing secure environment for the user, 
     /// or enumerating rights granted to various users. 
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
     public class ContentUser
     {
         /// <summary>
@@ -242,10 +231,6 @@ namespace System.Security.RightsManagement
         /// Generic test for equality. This method allows any types based on ContentUser
         /// to be comparable.
         /// </summary>
-        /// <SecurityNote>
-        ///     TreatAsSafe: This method may be called indirectly from a Partial Trust environment. 
-        ///         It only performs a safe string comparison.
-        /// </SecurityNote>
         internal bool GenericEquals(ContentUser userObj)
         {
             // this checks for null argument
@@ -267,11 +252,6 @@ namespace System.Security.RightsManagement
         /// This interface allows any types based on ContentUser to be
         /// comparable.
         /// </summary>
-        /// <SecurityNote>
-        ///     TreatAsSafe: The methods of this class may be called indirectly from 
-        ///                  a Partial Trust environment. 
-        ///         Both methods only validate their parameters, then call other safe methods.
-        /// </SecurityNote>
         internal sealed class ContentUserComparer : IEqualityComparer<ContentUser>
         {
             bool IEqualityComparer<ContentUser>.Equals(ContentUser user1, ContentUser user2)
@@ -291,10 +271,6 @@ namespace System.Security.RightsManagement
         /// A comparer that can be passed to a Dictionary to allow
         /// generic match for different types based on ContentUser.
         /// </summary>
-        /// <SecurityNote>
-        ///     TreatAsSafe: This field will be accessed by SecurityTransparent code. It's static, readonly.
-        ///             It's safe to allow access from SecurityTransparent code.
-        /// </SecurityNote>
         internal static readonly ContentUserComparer _contentUserComparer = new ContentUserComparer();
 
         internal static bool CompareToAnyone(string name)

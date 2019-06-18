@@ -43,31 +43,19 @@ namespace MS.Win32
 
         #region public Methods
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
         [DllImport("msctf.dll")]
         internal static extern int TF_CreateThreadMgr(out ITfThreadMgr threadManager);
 
         /// <summary></summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
         [DllImport("msctf.dll")]
         public static extern int TF_CreateInputProcessorProfiles(out ITfInputProcessorProfiles profiles);
 
         /// <summary></summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
 
         [DllImport("msctf.dll")]
         public static extern int TF_CreateDisplayAttributeMgr(out ITfDisplayAttributeMgr dam);
 
         /// <summary></summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
         [DllImport("msctf.dll")]
         public static extern int TF_CreateCategoryMgr(out ITfCategoryMgr catmgr);
 
@@ -921,9 +909,6 @@ namespace MS.Win32
         public struct TF_RENDERINGMARKUP
         {
             /// <summary></summary>
-            ///<SecurityNote>
-            /// Critical:  Field to critical type ITfRange
-            ///</SecurityNote>
             public ITfRange range;
             /// <summary></summary>
             public TF_DISPLAYATTRIBUTE tfDisplayAttr;
@@ -952,9 +937,6 @@ namespace MS.Win32
 
         #region Interfaces
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("8f1b8ad8-0b6b-4874-90c5-bd76011e8f7c")]
@@ -967,9 +949,6 @@ namespace MS.Win32
             //                     [in] UINT wRemoveMsg,
             //                     [out] BOOL *pfResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///    Critical - calls unmanaged code
-            /// </SecurityNote>
             void PeekMessageA(ref System.Windows.Interop.MSG msg,
                 IntPtr hwnd,
                 int msgFilterMin,
@@ -983,9 +962,6 @@ namespace MS.Win32
             //                    [in] UINT wMsgFilterMax,
             //                    [out] BOOL *pfResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///    Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetMessageA(ref System.Windows.Interop.MSG msg,
                 IntPtr hwnd,
                 int msgFilterMin,
@@ -999,9 +975,6 @@ namespace MS.Win32
             //                     [in] UINT wRemoveMsg,
             //                     [out] BOOL *pfResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///    Critical - calls unmanaged code
-            /// </SecurityNote>
             void PeekMessageW(ref System.Windows.Interop.MSG msg,
                 IntPtr hwnd,
                 int msgFilterMin,
@@ -1015,9 +988,6 @@ namespace MS.Win32
             //                    [in] UINT wMsgFilterMax,
             //                    [out] BOOL *pfResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///    Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetMessageW(ref System.Windows.Interop.MSG msg,
                 IntPtr hwnd,
                 int msgFilterMin,
@@ -1026,10 +996,6 @@ namespace MS.Win32
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unmanaged COM function which is not
-        ///     safe since it elevates
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("e2449660-9542-11d2-bf46-00105a2799b5")]
@@ -1082,9 +1048,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e")]
@@ -1141,10 +1104,6 @@ namespace MS.Win32
             //HRESULT GetStart([in] TfEditCookie ec,
             //                [out] ITfRange **ppStart);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetStart(int ec, out ITfRange range);
 
             /// <summary></summary>
@@ -1176,9 +1135,6 @@ namespace MS.Win32
 
             //HRESULT GetProperty([in] REFGUID guidProp,
             //                    [out] ITfProperty **ppProp);
-            /// <SecurityNote>
-            ///     Critical: COM interop call
-            /// </SecurityNote>
             void GetProperty(ref Guid guid, out ITfProperty property);
 
             /// <summary></summary>
@@ -1210,9 +1166,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e7f4-2021-11d2-93e0-0060b067b86e")]
@@ -1224,26 +1177,14 @@ namespace MS.Win32
             //                      [in, unique] IUnknown *punk,
             //                      [out] ITfContext **ppic,
             //                      [out] TfEditCookie *pecTextStore);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void CreateContext(int clientId, CreateContextFlags flags, [MarshalAs(UnmanagedType.Interface)] object obj, out ITfContext context, out int editCookie);
 
             // <summary></summary>
             //HRESULT Push([in] ITfContext *pic);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void Push(ITfContext context);
 
             // <summary></summary>
             //HRESULT Pop([in] DWORD dwFlags);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void Pop(PopFlags flags);
 
             /// <summary></summary>
@@ -1252,10 +1193,6 @@ namespace MS.Win32
 
             //HRESULT GetBase([out] ITfContext **ppic);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetBase(out ITfContext context);
 
             /// <summary></summary>
@@ -1264,9 +1201,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e808-2021-11d2-93e0-0060b067b86e")]
@@ -1275,9 +1209,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("101d6610-0990-11d3-8df0-00105a2799b5")]
@@ -1295,18 +1226,11 @@ namespace MS.Win32
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int GetFunction(ref Guid guid, ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out object obj);
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("db593490-098f-11d3-8df0-00105a2799b5")]
@@ -1318,9 +1242,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("581f317e-fd9d-443f-b972-ed00467c5d40")]
@@ -1328,10 +1249,6 @@ namespace MS.Win32
         {
             // HRESULT GetString([out] BSTR *pbstr);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetString([MarshalAs(UnmanagedType.BStr)] out string funcName );
 
             /// <summary></summary>
@@ -1340,9 +1257,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("a3ad50fb-9bdb-49e3-a843-6c76520fbf5d")]
@@ -1355,36 +1269,21 @@ namespace MS.Win32
             // HRESULT GetCandidate([in] ULONG nIndex,
             //                      [out] ITfCandidateString **ppCand);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetCandidate(int nIndex, out ITfCandidateString candstring);
 
             // HRESULT GetCandidateNum([out] ULONG *pnCnt);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetCandidateNum(out int nCount);
 
 
             // HRESULT SetResult([in] ULONG nIndex,
             //                   [in] TfCandidateResult imcr);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void SetResult(int nIndex, TfCandidateResult result);
         }
 
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("4cea93c0-0a58-11d3-8df0-00105a2799b5")]
@@ -1398,10 +1297,6 @@ namespace MS.Win32
             //                    [in, out, unique] ITfRange **ppNewRange,
             //                    [out] BOOL *pfConvertable);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int QueryRange(ITfRange range, 
                            out ITfRange newRange, 
@@ -1410,27 +1305,16 @@ namespace MS.Win32
             // HRESULT GetReconversion([in] ITfRange *pRange,
             //                         [out] ITfCandidateList **ppCandList);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int GetReconversion(ITfRange range, out ITfCandidateList candList);
 
             /// <summary></summary>
             /// HRESULT Reconvert([in] ITfRange *pRange);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int Reconvert(ITfRange range);
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("88f567c6-1757-49f8-a1b2-89234c1eeff9")]
@@ -1449,9 +1333,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("bb95808a-6d8f-4bca-8400-5390b586aedf")]
@@ -1481,9 +1362,6 @@ namespace MS.Win32
         //
         // Speech command provider and related interfaces
         //
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("8c5dac4f-083c-4b85-a4c9-71746048adca")]
@@ -1511,9 +1389,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("38e09d4c-586d-435a-b592-c8a86691dec6")]
@@ -1531,9 +1406,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("fca6c349-a12f-43a3-8dd6-5a5a4282577b")]
@@ -1553,9 +1425,6 @@ namespace MS.Win32
         #endregion SpeechCommands
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("e4b24db0-0990-11d3-8df0-00105a2799b5")]
@@ -1564,9 +1433,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("bb08f7a9-607a-4384-8623-056892b64371")]
@@ -1575,25 +1441,14 @@ namespace MS.Win32
             // <summary></summary>
             //HRESULT SetValue([in] TfClientId tid,
             //                 [in] const VARIANT *pvarValue);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int SetValue(int tid, ref object varValue);
         
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetValue(out object varValue);
         }
         
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("743abd5f-f26d-48df-8cc5-238492419b64")]
@@ -1605,9 +1460,6 @@ namespace MS.Win32
         }
         
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("7dcf57ac-18ad-438b-824d-979bffb74b7c")]
@@ -1616,10 +1468,6 @@ namespace MS.Win32
             // <summary></summary>
             //HRESULT GetCompartment([in] REFGUID rguid,
             //                       [out] ITfCompartment **ppcomp);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetCompartment(ref Guid guid, out ITfCompartment comp);
 
             /// <summary></summary>
@@ -1632,9 +1480,6 @@ namespace MS.Win32
             void EnumCompartments(out object /*IEnumGUID*/ enumGuid);
         }
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e801-2021-11d2-93e0-0060b067b86e")]
@@ -1642,26 +1487,14 @@ namespace MS.Win32
         {
             // <summary></summary>
             //HRESULT Activate([out] TfClientId *ptid);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void Activate(out int clientId);
 
             // <summary></summary>
             //HRESULT Deactivate();
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void Deactivate();
 
             // <summary></summary>
             //HRESULT CreateDocumentMgr([out] ITfDocumentMgr **ppdim);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void CreateDocumentMgr(out ITfDocumentMgr docMgr);
 
             /// <summary></summary>
@@ -1674,10 +1507,6 @@ namespace MS.Win32
 
             // <summary></summary>
             //HRESULT SetFocus([in] ITfDocumentMgr *pdimFocus);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void SetFocus(ITfDocumentMgr docMgr);
 
             /// <summary></summary>
@@ -1693,10 +1522,6 @@ namespace MS.Win32
             //HRESULT GetFunctionProvider([in] REFCLSID clsid,
             //                            [out] ITfFunctionProvider **ppFuncProv);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int GetFunctionProvider(ref Guid classId, out ITfFunctionProvider funcProvider);
 
@@ -1706,18 +1531,11 @@ namespace MS.Win32
 
             //HRESULT GetGlobalCompartment([out] ITfCompartmentMgr **ppCompMgr);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void GetGlobalCompartment(out ITfCompartmentMgr compartmentMgr);
         }
 
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("28888fe3-c2a0-483a-a3ea-8cb1ce51ff3d")]
@@ -1920,47 +1738,29 @@ namespace MS.Win32
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("22d44c94-a419-4542-a272-ae26093ececf")]
         public interface ITextStoreACPSink
         {
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnTextChange([in] DWORD dwFlags,
             //                     [in] const TS_TEXTCHANGE *pChange);
             void OnTextChange(OnTextChangeFlags flags, ref TS_TEXTCHANGE change);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnSelectionChange();
             void OnSelectionChange();
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnLayoutChange([in] TsLayoutCode lcode, [in] TsViewCookie vcView);
             void OnLayoutChange(TsLayoutCode lcode, int viewCookie);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnStatusChange([in] DWORD dwFlags);
             void OnStatusChange(DynamicStatusFlags flags);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnAttrsChange([in] LONG acpStart,
             //                      [in] LONG acpEnd,
             //                      [in] ULONG cAttrs,
@@ -1968,32 +1768,20 @@ namespace MS.Win32
             void OnAttrsChange(int start, int end, int count, Guid[] attributes);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnLockGranted([in] DWORD dwLockFlags);
             [PreserveSig]
             int OnLockGranted(LockFlags flags);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnStartEditTransaction();
             void OnStartEditTransaction();
 
             /// <summary></summary>
-            /// <SecurityNote>
-            /// Critical - as this has SUC on it.
-            /// </SecurityNote>
             //HRESULT OnEndEditTransaction();
             void OnEndEditTransaction();
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("c0f1db0c-3a20-405c-a303-96b6010a885f")]
@@ -2009,9 +1797,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("4ea48a35-60ae-446f-8fd6-e6a8d82459f7")]
@@ -2021,25 +1806,14 @@ namespace MS.Win32
             //HRESULT AdviseSink([in] REFIID riid,
             //                   [in, iid_is(riid)] IUnknown *punk,
             //                   [out] DWORD *pdwCookie);
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void AdviseSink(ref Guid riid, [MarshalAs(UnmanagedType.Interface)] object obj, out int cookie);
 
             //HRESULT UnadviseSink([in] DWORD dwCookie);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void UnadviseSink(int cookie);
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e7f0-2021-11d2-93e0-0060b067b86e")]
@@ -2064,10 +1838,6 @@ namespace MS.Win32
             //                    [in] LPARAM lParam,
             //                    [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void TestKeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
@@ -2075,10 +1845,6 @@ namespace MS.Win32
             //                  [in] LPARAM lParam,
             //                  [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void TestKeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
@@ -2086,10 +1852,6 @@ namespace MS.Win32
             //                [in] LPARAM lParam,
             //                [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void KeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
@@ -2097,10 +1859,6 @@ namespace MS.Win32
             //              [in] LPARAM lParam,
             //              [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             void KeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             /// <summary></summary>
@@ -2149,9 +1907,6 @@ namespace MS.Win32
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e7ff-2021-11d2-93e0-0060b067b86e")]
@@ -2176,9 +1931,6 @@ namespace MS.Win32
             //                [in] ULONG cchMax,
             //                [out] ULONG *pcch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetText(int ec, /*GetTextFlags*/int flags,
                         [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                         int countMax, out int count);
@@ -2188,9 +1940,6 @@ namespace MS.Win32
             //                [in, size_is(cch), unique] const WCHAR *pchText,
             //                [in] LONG cch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void SetText(int ec, /*SetTextFlags*/ int flags,
                         [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                         int count);
@@ -2198,9 +1947,6 @@ namespace MS.Win32
             //HRESULT GetFormattedText([in] TfEditCookie ec,
             //                         [out] IDataObject **ppDataObject);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetFormattedText(int ec, [MarshalAs(UnmanagedType.Interface)] out object data);
 
             //HRESULT GetEmbedded([in] TfEditCookie ec,
@@ -2208,18 +1954,12 @@ namespace MS.Win32
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object obj);
 
             //HRESULT InsertEmbedded([in] TfEditCookie ec,
             //                       [in] DWORD dwFlags,
             //                       [in] IDataObject *pDataObject);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void InsertEmbedded(int ec, int flags, [MarshalAs(UnmanagedType.Interface)] object data);
 
             //HRESULT ShiftStart([in] TfEditCookie ec,
@@ -2227,9 +1967,6 @@ namespace MS.Win32
             //                   [out] LONG *pcch,
             //                   [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
@@ -2237,61 +1974,40 @@ namespace MS.Win32
             //                 [out] LONG *pcch,
             //                 [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,
             //                          [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStartToRange(int ec, ITfRange range, TfAnchor position);
 
             //HRESULT ShiftEndToRange([in] TfEditCookie ec,
             //                        [in] ITfRange *pRange,
             //                        [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEndToRange(int ec, ITfRange range, TfAnchor position);
 
             //HRESULT ShiftStartRegion([in] TfEditCookie ec,
             //                         [in] TfShiftDir dir,
             //                         [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStartRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT ShiftEndRegion([in] TfEditCookie ec,
             //                       [in] TfShiftDir dir,
             //                       [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEndRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT IsEmpty([in] TfEditCookie ec,
             //                [out] BOOL *pfEmpty);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEmpty(int ec, [MarshalAs(UnmanagedType.Bool)] out bool empty);
 
             //HRESULT Collapse([in] TfEditCookie ec,
             //                 [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Collapse(int ec, TfAnchor position);
 
             //HRESULT IsEqualStart([in] TfEditCookie ec,
@@ -2299,9 +2015,6 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] BOOL *pfEqual);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEqualStart(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT IsEqualEnd([in] TfEditCookie ec,
@@ -2309,9 +2022,6 @@ namespace MS.Win32
             //                   [in] TfAnchor aPos,
             //                   [out] BOOL *pfEqual);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT CompareStart([in] TfEditCookie ec,
@@ -2319,9 +2029,6 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] LONG *plResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void CompareStart(int ec, ITfRange with, TfAnchor position, out int result);
 
             //HRESULT CompareEnd([in] TfEditCookie ec,
@@ -2329,56 +2036,35 @@ namespace MS.Win32
             //                   [in] TfAnchor aPos,
             //                   [out] LONG *plResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void CompareEnd(int ec, ITfRange with, TfAnchor position, out int result);
 
             //HRESULT AdjustForInsert([in] TfEditCookie ec,
             //                        [in] ULONG cchInsert,
             //                        [out] BOOL *pfInsertOk);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void AdjustForInsert(int ec, int count, [MarshalAs(UnmanagedType.Bool)] out bool insertOk);
 
             //HRESULT GetGravity([out] TfGravity *pgStart,
             //                   [out] TfGravity *pgEnd);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetGravity(out TfGravity start, out TfGravity end);
 
             //HRESULT SetGravity([in] TfEditCookie ec,
             //                   [in] TfGravity gStart,
             //                   [in] TfGravity gEnd);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void SetGravity(int ec, TfGravity start, TfGravity end);
 
             //HRESULT Clone([out] ITfRange **ppClone);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Clone(out ITfRange clone);
 
             //HRESULT GetContext([out] ITfContext **ppContext);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetContext(out ITfContext context);
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("057a6296-029b-4154-b79a-0d461d4ea94c")]
@@ -2390,9 +2076,6 @@ namespace MS.Win32
             //                [in] ULONG cchMax,
             //                [out] ULONG *pcch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetText(int ec, /*GetTextFlags*/int flags,
                 [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                 int countMax, out int count);
@@ -2402,9 +2085,6 @@ namespace MS.Win32
             //                [in, size_is(cch), unique] const WCHAR *pchText,
             //                [in] LONG cch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void SetText(int ec, /*SetTextFlags*/ int flags,
                 [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                 int count);
@@ -2412,9 +2092,6 @@ namespace MS.Win32
             //HRESULT GetFormattedText([in] TfEditCookie ec,
             //                         [out] IDataObject **ppDataObject);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetFormattedText(int ec, [MarshalAs(UnmanagedType.Interface)] out object data);
 
             //HRESULT GetEmbedded([in] TfEditCookie ec,
@@ -2422,18 +2099,12 @@ namespace MS.Win32
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object obj);
 
             //HRESULT InsertEmbedded([in] TfEditCookie ec,
             //                       [in] DWORD dwFlags,
             //                       [in] IDataObject *pDataObject);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void InsertEmbedded(int ec, int flags, [MarshalAs(UnmanagedType.Interface)] object data);
 
             //HRESULT ShiftStart([in] TfEditCookie ec,
@@ -2441,9 +2112,6 @@ namespace MS.Win32
             //                   [out] LONG *pcch,
             //                   [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
@@ -2451,61 +2119,40 @@ namespace MS.Win32
             //                 [out] LONG *pcch,
             //                 [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,
             //                          [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStartToRange(int ec, ITfRange range, TfAnchor position);
 
             //HRESULT ShiftEndToRange([in] TfEditCookie ec,
             //                        [in] ITfRange *pRange,
             //                        [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEndToRange(int ec, ITfRange range, TfAnchor position);
 
             //HRESULT ShiftStartRegion([in] TfEditCookie ec,
             //                         [in] TfShiftDir dir,
             //                         [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftStartRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT ShiftEndRegion([in] TfEditCookie ec,
             //                       [in] TfShiftDir dir,
             //                       [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ShiftEndRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT IsEmpty([in] TfEditCookie ec,
             //                [out] BOOL *pfEmpty);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEmpty(int ec, [MarshalAs(UnmanagedType.Bool)] out bool empty);
 
             //HRESULT Collapse([in] TfEditCookie ec,
             //                 [in] TfAnchor aPos);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Collapse(int ec, TfAnchor position);
 
             //HRESULT IsEqualStart([in] TfEditCookie ec,
@@ -2513,9 +2160,6 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] BOOL *pfEqual);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEqualStart(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT IsEqualEnd([in] TfEditCookie ec,
@@ -2523,9 +2167,6 @@ namespace MS.Win32
             //                   [in] TfAnchor aPos,
             //                   [out] BOOL *pfEqual);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT CompareStart([in] TfEditCookie ec,
@@ -2533,9 +2174,6 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] LONG *plResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void CompareStart(int ec, ITfRange with, TfAnchor position, out int result);
 
             //HRESULT CompareEnd([in] TfEditCookie ec,
@@ -2543,72 +2181,45 @@ namespace MS.Win32
             //                   [in] TfAnchor aPos,
             //                   [out] LONG *plResult);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void CompareEnd(int ec, ITfRange with, TfAnchor position, out int result);
 
             //HRESULT AdjustForInsert([in] TfEditCookie ec,
             //                        [in] ULONG cchInsert,
             //                        [out] BOOL *pfInsertOk);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void AdjustForInsert(int ec, int count, [MarshalAs(UnmanagedType.Bool)] out bool insertOk);
 
             //HRESULT GetGravity([out] TfGravity *pgStart,
             //                   [out] TfGravity *pgEnd);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetGravity(out TfGravity start, out TfGravity end);
 
             //HRESULT SetGravity([in] TfEditCookie ec,
             //                   [in] TfGravity gStart,
             //                   [in] TfGravity gEnd);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void SetGravity(int ec, TfGravity start, TfGravity end);
 
             //HRESULT Clone([out] ITfRange **ppClone);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Clone(out ITfRange clone);
 
             //HRESULT GetContext([out] ITfContext **ppContext);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetContext(out ITfContext context);
 
             //HRESULT GetExtent([out] LONG *pacpAnchor,
             //                  [out] LONG *pcch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetExtent(out int start, out int count);
 
             //HRESULT SetExtent([in] LONG acpAnchor,
             //                  [in] LONG cch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void SetExtent(int start, int count);
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("D7540241-F9A1-4364-BEFC-DBCD2C4395B7")]
@@ -2616,23 +2227,14 @@ namespace MS.Win32
         {
             //HRESULT GetOwnerClsid([out] CLSID *pclsid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetOwnerClsid(out Guid clsid);
 
             //HRESULT GetRange([out] ITfRange **ppRange);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetRange(out ITfRange range);
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("5F20AA40-B57A-4F34-96AB-3576F377CC79")]
@@ -2654,9 +2256,6 @@ namespace MS.Win32
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("D40C8AAE-AC92-4FC7-9A11-0EE0E23AA39B")]
@@ -2670,10 +2269,6 @@ namespace MS.Win32
             void StartComposition(int ecWrite, ITfRange range, [MarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */sink, [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition */composition);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             //HRESULT EnumCompositions([out] IEnumITfCompositionView **ppEnum);
             void EnumCompositions([MarshalAs(UnmanagedType.Interface)] out IEnumITfCompositionView enumView);
 
@@ -2693,9 +2288,6 @@ namespace MS.Win32
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("86462810-593B-4916-9764-19C08E9CE110")]
@@ -2727,19 +2319,12 @@ namespace MS.Win32
                             [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition*/ composition);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             //HRESULT TerminateComposition([in] ITfCompositionView *pComposition);
             [PreserveSig]
             int TerminateComposition(ITfCompositionView view);
         };
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("5EFD22BA-7838-46CB-88E2-CADB14124F8F")]
@@ -2750,10 +2335,6 @@ namespace MS.Win32
             void Clone(out IEnumTfRanges ranges);
 
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             //HRESULT Next([in] ULONG ulCount,
             //            [out, size_is(ulCount), length_is(*pcFetched)] ITfRange **ppRange,
             //            [out] ULONG *pcFetched);
@@ -2772,9 +2353,6 @@ namespace MS.Win32
 
         /// <summary></summary>
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("f99d3f40-8e32-11d2-bf46-00105a2799b5")]
@@ -2782,41 +2360,26 @@ namespace MS.Win32
         {
             //HRESULT Clone([out] IEnumTfRanges **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Clone(out IEnumTfRanges ranges);
 
             //HRESULT Next([in] ULONG ulCount,
             //            [out, size_is(ulCount), length_is(*pcFetched)] ITfRange **ppRange,
             //            [out] ULONG *pcFetched);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             unsafe int Next(int count, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] ITfRange []ranges, out int fetched);
 
             //HRESULT Reset();
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void Reset();
 
             //HRESULT Skip(ULONG ulCount);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             int Skip(int count);
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("42d4d099-7c1a-4a89-b836-6c6f22160df0")]
@@ -2845,9 +2408,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("8127d409-ccd3-4683-967a-b43d5b482bf7")]
@@ -2859,9 +2419,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("8c03d21b-95a7-4ba0-ae1b-7fce12a72930")]
@@ -2889,9 +2446,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("a305b1c0-c776-4523-bda0-7c5a2e0fef10")]
@@ -2918,9 +2472,6 @@ namespace MS.Win32
 
         /// <summary></summary>
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("1F02B6C5-7842-4EE6-8A0B-9A24183A95CA")]
@@ -2928,16 +2479,10 @@ namespace MS.Win32
         {
             // HRESULT Register([in] REFCLSID rclsid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_Register();
 
             // HRESULT Unregister([in] REFCLSID rclsid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_Unregister();
 
             // HRESULT AddLanguageProfile([in] REFCLSID rclsid,
@@ -2949,25 +2494,16 @@ namespace MS.Win32
             //                            [in] ULONG cchFile,
             //                            [in] ULONG uIconIndex);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_AddLanguageProfile();
 
             // HRESULT RemoveLanguageProfile([in] REFCLSID rclsid,
             //                               [in] LANGID langid,
             //                               [in] REFGUID guidProfile);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_RemoveLanguageProfile();
 
             // HRESULT EnumInputProcessorInfo([out] IEnumGUID **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnumInputProcessorInfo();
 
             // HRESULT GetDefaultLanguageProfile([in] LANGID langid,
@@ -2975,36 +2511,24 @@ namespace MS.Win32
             //                                  [out] CLSID *pclsid,
             //                                  [out] GUID *pguidProfile);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetDefaultLanguageProfile();
 
             // HRESULT SetDefaultLanguageProfile([in] LANGID langid,
             //                                   [in] REFCLSID rclsid,
             //                                   [in] REFGUID guidProfiles);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_SetDefaultLanguageProfile();
 
             // HRESULT ActivateLanguageProfile([in] REFCLSID rclsid,
             //                                 [in] LANGID langid,
             //                                 [in] REFGUID guidProfiles);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void ActivateLanguageProfile(ref Guid clsid, short langid, ref Guid guidProfile);
 
             // HRESULT GetActiveLanguageProfile([in] REFCLSID rclsid,
             //                                  [out] LANGID *plangid,
             //                                  [out] GUID *pguidProfile);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             int GetActiveLanguageProfile(ref Guid clsid, out short langid, out Guid profile);
     
@@ -3013,32 +2537,20 @@ namespace MS.Win32
             //                                       [in] REFGUID guidProfile,
             //                                       [out] BSTR *pbstrProfile);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetLanguageProfileDescription();
 
             // HRESULT GetCurrentLanguage([out] LANGID *plangid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetCurrentLanguage(out short langid);
 
             // HRESULT ChangeCurrentLanguage([in] LANGID langid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             int ChangeCurrentLanguage(short langid);
     
             // HRESULT GetLanguageList([out] LANGID **ppLangId,
             //                         [out] ULONG *pulCount);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             int GetLanguageList(out IntPtr langids, out int count);
 
@@ -3046,9 +2558,6 @@ namespace MS.Win32
             // HRESULT EnumLanguageProfiles([in] LANGID langid,
             //                              [out] IEnumTfLanguageProfiles **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void EnumLanguageProfiles(short langid, out IEnumTfLanguageProfiles enumIPP);
 
 
@@ -3057,9 +2566,6 @@ namespace MS.Win32
             //                               [in] REFGUID guidProfile,
             //                               [in] BOOL fEnable);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnableLanguageProfile();
 
             // HRESULT IsEnabledLanguageProfile([in] REFCLSID rclsid,
@@ -3067,9 +2573,6 @@ namespace MS.Win32
             //                                  [in] REFGUID guidProfile,
             //                                  [out] BOOL *pfEnable);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_IsEnabledLanguageProfile();
 
             // HRESULT EnableLanguageProfileByDefault([in] REFCLSID rclsid,
@@ -3077,9 +2580,6 @@ namespace MS.Win32
             //                                        [in] REFGUID guidProfile,
             //                                        [in] BOOL fEnable);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnableLanguageProfileByDefault();
 
             // HRESULT SubstituteKeyboardLayout([in] REFCLSID rclsid,
@@ -3087,16 +2587,10 @@ namespace MS.Win32
             //                                  [in] REFGUID guidProfile,
             //                                  [in] HKL hKL);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_SubstituteKeyboardLayout();
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("3d61bf11-ac5f-42c8-a4cb-931bcc28c744")]
@@ -3123,9 +2617,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("43c9fe15-f494-4c17-9de2-b8a4ac350aa8")]
@@ -3142,9 +2633,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("8ded7393-5db1-475c-9e71-a39111b0ff67")]
@@ -3153,32 +2641,20 @@ namespace MS.Win32
             // HRESULT OnUpdateInfo();
             //
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void OnUpdateInfo();
 
             // HRESULT EnumDisplayAttributeInfo([out] IEnumTfDisplayAttributeInfo **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnumDisplayAttributeInfo();
 
             // HRESULT GetDisplayAttributeInfo([in] REFGUID guid,
             //                         [out] ITfDisplayAttributeInfo **ppInfo,
             //                         [out] CLSID *pclsidOwner);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetDisplayAttributeInfo(ref Guid guid, out ITfDisplayAttributeInfo info, out Guid clsid);
 }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("70528852-2f26-4aea-8c96-215150578932")]
@@ -3186,44 +2662,26 @@ namespace MS.Win32
         {
             // HRESULT GetGUID([out] GUID *pguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetGUID();
 
             // HRESULT GetDescription([out] BSTR *pbstrDesc);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetDescription();
 
             // HRESULT GetAttributeInfo([out] TF_DISPLAYATTRIBUTE *pda);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void GetAttributeInfo(out TF_DISPLAYATTRIBUTE attr);
 
             // HRESULT SetAttributeInfo([in] const TF_DISPLAYATTRIBUTE *pda);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_SetAttributeInfo();
 
             // HRESULT Reset();
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_Reset();
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("c3acefb5-f69d-4905-938f-fcadcf4be830")]
@@ -3233,34 +2691,22 @@ namespace MS.Win32
             //                          [in] REFGUID rcatid,
             //                          [in] REFGUID rguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_RegisterCategory();
 
             // HRESULT UnregisterCategory([in] REFCLSID rclsid,
             //                            [in] REFGUID rcatid,
             //                            [in] REFGUID rguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_UnregisterCategory();
 
             // HRESULT EnumCategoriesInItem([in] REFGUID rguid,
             //                              [out] IEnumGUID **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnumCategoriesInItem();
 
             // HRESULT EnumItemsInCategory([in] REFGUID rcatid,
             //                             [out] IEnumGUID **ppEnum);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_EnumItemsInCategory();
 
             // HRESULT FindClosestCategory([in] REFGUID rguid,
@@ -3268,9 +2714,6 @@ namespace MS.Win32
             //                             [in, size_is(ulCount)] const GUID **ppcatidList,
             //                             [in] ULONG ulCount);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_FindClosestCategory();
 
             // HRESULT RegisterGUIDDescription([in] REFCLSID rclsid,
@@ -3278,66 +2721,42 @@ namespace MS.Win32
             //                                 [in, size_is(cch)] const WCHAR *pchDesc,
             //                                 [in] ULONG cch);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_RegisterGUIDDescription();
 
             // HRESULT UnregisterGUIDDescription([in] REFCLSID rclsid,
             //                                   [in] REFGUID rguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_UnregisterGUIDDescription();
 
             // HRESULT GetGUIDDescription([in] REFGUID rguid,
             //                            [out] BSTR *pbstrDesc);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetGUIDDescription();
 
             // HRESULT RegisterGUIDDWORD([in] REFCLSID rclsid,
             //                           [in] REFGUID rguid,
             //                           [in] DWORD dw);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_RegisterGUIDDWORD();
 
             // HRESULT UnregisterGUIDDWORD([in] REFCLSID rclsid,
             //                             [in] REFGUID rguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_UnregisterGUIDDWORD();
 
             // HRESULT GetGUIDDWORD([in] REFGUID rguid,
             //                      [out] DWORD *pdw);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_GetGUIDDWORD();
 
             // HRESULT RegisterGUID([in] REFGUID rguid,
             //                      [out] TfGuidAtom *pguidatom);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_RegisterGUID();
 
             // HRESULT GetGUID([in] TfGuidAtom guidatom,
             //                 [out] GUID *pguid);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             [PreserveSig]
             int GetGUID(Int32 guidatom, out Guid guid);
 
@@ -3345,16 +2764,10 @@ namespace MS.Win32
             //                           [in] REFGUID rguid,
             //                           [out] BOOL *pfEqual);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical - calls unmanaged code
-            /// </SecurityNote>
             void stub_IsEqualTfGuidAtom();
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("aa80e80c-2021-11d2-93e0-0060b067b86e")]
@@ -3392,9 +2805,6 @@ namespace MS.Win32
 
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("b23eb630-3e1c-11d3-a745-0050040ab407")]
@@ -3438,9 +2848,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("a615096f-1c57-4813-8a15-55ee6e5a839c")]
@@ -3456,9 +2863,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("fde1eaee-6924-4cdf-91e7-da38cff5559d")]
@@ -3493,9 +2897,6 @@ namespace MS.Win32
 
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("3bdd78e2-c16e-47fd-b883-ce6facc1a208")]
@@ -3515,9 +2916,6 @@ namespace MS.Win32
         }
 
         /// <summary></summary>
-        /// <SecurityNote>
-        ///     Critical - calls unmanaged code
-        /// </SecurityNote>
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("a1adaaa2-3a24-449d-ac96-5183e7f5c217")]
@@ -3528,10 +2926,6 @@ namespace MS.Win32
             //                      [in] DWORD dwBtnStatus,
             //                      [out] BOOL *pfEaten);
             /// <summary></summary>
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unmanaged COM function which is not
-            ///     safe since it elevates
-            /// </SecurityNote>
             [PreserveSig]
             int OnMouseEvent(int edge, int quadrant, int btnStatus, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
         }

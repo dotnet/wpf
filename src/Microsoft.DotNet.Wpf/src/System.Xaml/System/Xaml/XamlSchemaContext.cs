@@ -18,23 +18,6 @@ using System.Collections.Concurrent;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// SchemaContexts can potentially be shared between multiple callers in an AppDomain, including
-    /// both full and partial trust callers. To be safe for sharing, the default implementation should
-    /// be idempotent and order-independent--i.e. functionally immutable.
-    ///
-    /// Technically, we don't guarantee these properties (they're not enforced by the runtime), but
-    /// we should never knowingly break them.
-    ///
-    /// This means two things:
-    /// 1. No public mutability.
-    ///    Derived classes can potentially be mutable, but the base implementation should not be.
-    /// 2. No externally observable side effects from lookups.
-    ///    This means that all cached data should be generally applicable; it can't depend on any
-    ///    input other than the ctor arguments and AppDomain state.
-    ///    (For a subtle example of this, see the security note in Initialize().)
-    /// These principles apply to all classes in the schema hierarchy (XamlType, XamlMember, etc).
-    /// </SecurityNote>
     /// <remarks>
     /// This class, and the closure of its references (i.e. XamlType, XamlMember, etc) are all
     /// thread-safe in their base implementations. Derived implementations can choose whether or not
@@ -1399,11 +1382,6 @@ namespace System.Xaml
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical: Accesses Critical event AppDomain.AssemblyLoad.
-            /// Safe: We only use the event to track what assemblies are loaded in to the AppDomain.
-            ///       This is not privileged info, as it is available via AppDomain.GetAssemblies().
-            /// </SecurityNote>
 #if TARGETTING35SP1
 #else
 #endif
@@ -1412,10 +1390,6 @@ namespace System.Xaml
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
             }
 
-            /// <SecurityNote>
-            /// Critical: Accesses Critical event AppDomain.AssemblyLoad.
-            /// Safe: We just remove a handler that we ourselves added.
-            /// </SecurityNote>
 #if TARGETTING35SP1
 #else
 #endif

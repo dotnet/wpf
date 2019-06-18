@@ -48,10 +48,6 @@ namespace System.Windows.Media.Effects
         /// 3. Wraps the list with the aggregate effect
         /// </summary>
         /// <param name="unmanagedEffect">Unmanaged handle for aggregate effect</param>
-        /// <SecurityNote>
-        /// Critical - recieves a security critical type SafeHandle.
-        /// Safe     - The method does nothing.
-        /// </SecurityNote>
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
@@ -61,10 +57,6 @@ namespace System.Windows.Media.Effects
         /// Create an unmanaged handle for the group effect
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - returns a security critical type SafeHandle.
-        /// Safe     - Always returns null.
-        /// </SecurityNote>
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override unsafe SafeHandle CreateUnmanagedEffect()
         {

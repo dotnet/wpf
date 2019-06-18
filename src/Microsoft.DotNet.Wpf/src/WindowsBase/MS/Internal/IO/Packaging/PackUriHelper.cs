@@ -183,13 +183,6 @@ namespace MS.Internal.IO.Packaging
 
         #region Private Constructor
         
-        // <SecurityNote>
-        //   Critical    - as this code does an elevation
-        //   TreatAsSafe - the net effect of this is to enable registration of Pack: Uri scheme. 
-        //   This enables fetching of resources via this scheme. Considered safe - as currently 
-        //   the pack: scheme has no elevations in it ( and any necessary elevations for container 
-        //   access will be reviewed as needed). 
-        // </SecurityNote>         
         static PackUriHelper()
         {
             // indicate that we want "basic" parsing

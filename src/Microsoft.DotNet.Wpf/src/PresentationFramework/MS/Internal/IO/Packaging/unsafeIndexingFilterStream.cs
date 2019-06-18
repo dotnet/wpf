@@ -41,17 +41,6 @@ namespace MS.Internal.IO.Packaging
     /// The definition of IStream that is used is MS.Internal.Interop.IStream rather than the standard one
     /// so as to allow efficient marshaling of arrays with specified offsets in Read.
     /// </remarks>
-    /// <SecurityNote>
-    ///     Critical: Marking this as Security Critical as this stream serves a very specific functionality
-    ///               required for indexing content using unmanaged Indexing Services. We do not want managed 
-    ///               code to start using this Stream implementation. 
-    ///               This code is meant to be accessed only from unmanaged code. Currently there is one 
-    ///               unmanaged caller.
-    ///               This stream- 1. Calls into unmanaged code. 
-    ///                            2. Implements a seekable read-only stream on an OLE IStream component.
-    ///                            3. Behaves more like an unmanaged IStream as opposed to managed Stream.   
-    ///                            4. This class does not do any elevation of privilege. 
-    /// </SecurityNote>
     internal class UnsafeIndexingFilterStream : Stream
     {
         //------------------------------------------------------

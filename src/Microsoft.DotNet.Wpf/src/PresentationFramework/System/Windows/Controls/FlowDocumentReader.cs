@@ -798,10 +798,6 @@ namespace System.Windows.Controls
         /// This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Handled) { return; }

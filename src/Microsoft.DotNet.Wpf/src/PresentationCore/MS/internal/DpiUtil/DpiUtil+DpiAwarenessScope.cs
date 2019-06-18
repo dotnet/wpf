@@ -86,11 +86,6 @@ namespace MS.Internal
             /// <param name="updateIfThreadInMixedHostingMode">When true, the current thread is switched to the new mode iff the current thread is already in mixed hosting mode</param>
             /// <param name="updateIfWindowIsSystemAwareOrUnaware">When true, the current thread is switched to the new mode iff <paramref name="hWnd"/> is in System Aware or Unaware DPI mode</param>
             /// <param name="hWnd">Window which is tested in conjunction with <paramref name="updateIfWindowIsSystemAwareOrUnaware"/></param>
-            /// <SecurityNote>
-            ///     Critical:   Calls into native methods
-            ///     Safe:       Does not return Critical resources back to the caller.
-            ///                 The handle saved in this instance is a pseudo-handle which is really just an integer.
-            /// </SecurityNote>
             private DpiAwarenessScope(
                 DpiAwarenessContextValue dpiAwarenessContextValue,
                 bool updateIfThreadInMixedHostingMode,
@@ -136,10 +131,6 @@ namespace MS.Internal
             /// <summary>
             /// Gets a value indicating whether the current thread is in DPI_HOSTING_BEHAVIOR_MIXED
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: Calls into native methods
-            ///     Safe: returns only non-Critical and safe information to the caller
-            /// </SecurityNote>
             private bool IsThreadInMixedHostingBehavior
             {
                 get
@@ -157,10 +148,6 @@ namespace MS.Internal
             /// <summary>
             /// Restores the current thread to its previous DPI_AWARENESS_CONTEXT value
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: Calls into native methods
-            ///     Safe: Does not return any information to the caller
-            /// </SecurityNote>
             public void Dispose()
             {
                 if (this.OldDpiAwarenessContext != null)
@@ -174,10 +161,6 @@ namespace MS.Internal
             /// Tests whether <paramref name="hWnd"/> is in System Aware or Unaware DPI context
             /// </summary>
             /// <param name="hWnd">Handle to the window</param>
-            /// <SecurityNote>
-            ///     Critical: Calls into native methods
-            ///     Safe: returns only non-Critical and safe information to the caller
-            /// </SecurityNote>
             /// <returns>True if the Window is Unaware or System Aware, otherwise False</returns>
             private bool IsWindowUnawareOrSystemAware(IntPtr hWnd)
             {

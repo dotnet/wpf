@@ -36,10 +36,6 @@ namespace System.Windows.Media
         internal Dispose pfnDispose;
         internal RaiseEvent pfnRaiseEvent;
 
-        ///<SecurityNote>
-        ///     Critical: calls GCHandle.get_Target which LinkDemands
-        ///     TreatAsSafe: can't pass in an arbitrary class, only EventProxyDescriptor.  Also, it's OK to dispose this.
-        ///</SecurityNote> 
         internal static void StaticDispose(ref EventProxyDescriptor pEPD)
         {
             Debug.Assert(((IntPtr)pEPD.m_handle) != IntPtr.Zero, "If this asserts fires: Why is it firing? It might be legal in future.");
@@ -99,10 +95,6 @@ namespace System.Windows.Media
 
         #region Public methods
 
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.GetHRForException which LinkDemands
-        ///     TreatAsSafe: ok to return an hresult in partial trust
-        ///</SecurityNote>
         public int RaiseEvent(byte[] buffer, uint cb)
         {
 #pragma warning disable 6500
@@ -133,10 +125,6 @@ namespace System.Windows.Media
         #endregion
 
         #region Delegate Implemetations
-        /// <SecurityNote>
-        ///     Critical: This code calls into handle to get Target which has a link demand
-        ///     TreatAsSafe: EventProxyWrapper is safe to expose
-        /// </SecurityNote>
         internal static EventProxyWrapper FromEPD(ref EventProxyDescriptor epd)
         {
             Debug.Assert(((IntPtr)epd.m_handle) != IntPtr.Zero, "Stream is disposed.");
@@ -161,10 +149,6 @@ namespace System.Windows.Media
 
         #region Static Create Method(s)
 
-        /// <SecurityNote>
-        ///     Critical: This code hooks up event sinks for unmanaged events
-        ///               It also calls into a native method via MILCreateEventProxy
-        /// </SecurityNote>
         internal static SafeMILHandle CreateEventProxyWrapper(IInvokable invokable)
         {
             if (invokable == null)
@@ -189,9 +173,6 @@ namespace System.Windows.Media
 
         #endregion
 
-        /// <SecurityNote>
-        ///     Critical: Elevates to unmanaged code permission
-        /// </SecurityNote>
         [DllImport(DllImport.MilCore)]
         private extern static int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
     }

@@ -111,14 +111,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <returns>PackWebResponse</returns>
         /// <remarks>Caller must eventually call Close() to avoid leaking resources.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        ///  2) calling Critical PackWebResponse constructor
-        /// Safe
-        ///  1) PublicOK
-        ///  2) PublicOK
-        /// </SecurityNote>
         public override WebResponse GetResponse()
         {
             bool cachedPackageAvailable = IsCachedPackage;
@@ -366,12 +358,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <value>network proxy to use to access this Internet resource</value>
         /// <remarks>This value is shared with the InnerRequest.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) gets/sets Critical member _webRequest.Proxy()
-        /// Safe
-        ///  2) PublicOK
-        /// </SecurityNote>
         public override IWebProxy Proxy
         {
             get
@@ -488,12 +474,6 @@ namespace System.IO.Packaging
         /// <param name="allowPseudoRequest">if this is false, caller will not accept a PseudoWebRequest</param>
         /// <returns>Actual WebRequest or PseudoWebRequest</returns>
         /// <exception cref="NotSupportedException">protocol does not have a registered handler</exception>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        /// Safe
-        ///  1) Not modifying Proxy member which is what is really Critical
-        /// </SecurityNote>
         private WebRequest GetRequest(bool allowPseudoRequest)
         {
             if (_webRequest == null)

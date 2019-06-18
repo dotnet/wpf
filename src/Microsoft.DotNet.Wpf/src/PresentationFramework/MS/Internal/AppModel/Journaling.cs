@@ -279,10 +279,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -518,10 +514,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -631,10 +623,6 @@ namespace MS.Internal.AppModel
 
         #region Ctors
 
-        /// <SecurityNote>
-        /// Critical: Sets the crtical _typeName.
-        /// Safe: The type is a subtype of PageFunctionBase, and the application has access to it.
-        /// </SecurityNote>
         internal JournalEntryPageFunctionType(JournalEntryGroupState jeGroupState, PageFunctionBase pageFunction)
             : base(jeGroupState, pageFunction)
         {
@@ -647,9 +635,6 @@ namespace MS.Internal.AppModel
         /// Serialization constructor. Marked Protected so derived classes can be deserialized correctly
         /// The base implementation needs to be called if this class is overridden
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Sets the critical _typeName.
-        /// </SecurityNote>
         protected JournalEntryPageFunctionType(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -659,10 +644,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -688,11 +669,6 @@ namespace MS.Internal.AppModel
         //
         // The PageFunction should be implemented in pure code file without xaml file involved.
         //
-        /// <SecurityNote>
-        /// Critical: Asserts ReflectionPermission to create an instance of the page function type.
-        /// Safe: The object created is of the same type that the application originally navigated to.
-        ///     It is necessarily derived from PageFunctionBase.
-        /// </SecurityNote>
         internal override PageFunctionBase ResumePageFunction()
         {
             PageFunctionBase pageFunction;
@@ -757,10 +733,6 @@ namespace MS.Internal.AppModel
         #region Private fields
 
         /// AssemblyQualifiedName of the PageFunction Type
-        /// <SecurityNote>
-        /// Critical: The type name is used to create an instance under elevation. We have to make
-        ///     sure that it is the same page function type that the application originally navigated to.
-        /// </SecurityNote>
         private SecurityCriticalDataForSet<string> _typeName;
 
         #endregion
@@ -795,10 +767,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

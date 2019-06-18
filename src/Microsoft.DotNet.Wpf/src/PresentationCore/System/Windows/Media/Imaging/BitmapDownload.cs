@@ -67,10 +67,6 @@ namespace System.Windows.Media.Imaging
     ///
     internal static class BitmapDownload
     {           
-        /// <SecurityNote>
-        ///     Critical: This code initializes critical member queue
-        ///     TreatAsSafe: This code does not expose the critical data
-        /// </SecurityNote>
         static BitmapDownload()
         {
             _waitEvent = new AutoResetEvent(false);
@@ -92,11 +88,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Begin a download
         ///
-        /// <SecurityNote>
-        ///     Critical: This code elevates to create a file and initiate download.
-        ///               UnmanagedCode permission is asserted to allow the creation
-        ///               of a FileStream from a handle obtained by CreateFile.
-        /// </SecurityNote>
         internal static void BeginDownload(
             BitmapDecoder decoder, 
             Uri uri, 
@@ -258,10 +249,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Thread Proc
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue, extracts entries and reads content
-        ///     TreatAsSafe: This code does not expose the queue and the read from the stream are sent to a callback.
-        /// </SecurityNote>
         internal static void DownloadThreadProc()
         {
             Queue workQueue = _workQueue;
@@ -307,9 +294,6 @@ namespace System.Windows.Media.Imaging
 
         ///
         /// Response callback
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue and also calls into WebRequest methods
-        /// </SecurityNote>
         private static void ResponseCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -340,9 +324,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Read callback
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue
-        /// </SecurityNote>
         private static void ReadCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -516,9 +497,6 @@ namespace System.Windows.Media.Imaging
         internal static AutoResetEvent _waitEvent = new AutoResetEvent(false);
 
         /// Work Queue
-        /// <SecurityNote>
-        ///     Critical: This element holds data that is obtained under an elevation
-        /// </SecurityNote>
         internal static Queue _workQueue;
 
         /// Uri hash table

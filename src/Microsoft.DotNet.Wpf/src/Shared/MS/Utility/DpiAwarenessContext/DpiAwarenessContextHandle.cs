@@ -50,10 +50,6 @@ namespace MS.Utility
         /// <summary>
         /// Initializes a new instance of the <see cref="DpiAwarenessContextHandle"/> class.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Calls Critical <see cref="SafeHandle.SafeHandle(IntPtr, bool)"/>
-        ///     Safe:       This is a pseudo-handle being set and no true native resources are returned to the caller.
-        /// </SecurityNote>
         internal DpiAwarenessContextHandle()
             : base(IntPtr.Zero, false)
         {
@@ -63,10 +59,6 @@ namespace MS.Utility
         /// Initializes a new instance of the <see cref="DpiAwarenessContextHandle"/> class.
         /// </summary>
         /// <param name="dpiAwarenessContextValue">Enumeration value equivalent to DPI_AWARENESS_CONTEXT handle value</param>
-        /// <SecurityNote>
-        ///     Critical:       Calls Critical <see cref="SafeHandle.SafeHandle(IntPtr, bool)"/>
-        ///     Safe:           This is a pseudo-handle being set and not true native resources are returned to the caller
-        /// </SecurityNote>
         internal DpiAwarenessContextHandle(DpiAwarenessContextValue dpiAwarenessContextValue)
             : base(WellKnownContextValues[dpiAwarenessContextValue], false)
         {
@@ -76,10 +68,6 @@ namespace MS.Utility
         /// Initializes a new instance of the <see cref="DpiAwarenessContextHandle"/> class.
         /// </summary>
         /// <param name="dpiContext">Handle to DPI Awareness context</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls Critical <see cref="SafeHandle.SafeHandle(IntPtr, bool)"/>
-        ///     Safe:       This is a pseudo-handle being set and no true native resources are returned to the caller
-        /// </SecurityNote>
         internal DpiAwarenessContextHandle(IntPtr dpiContext)
             : base(dpiContext, false)
         {
@@ -96,13 +84,6 @@ namespace MS.Utility
         ///     never be attempted to be released, which is just what we need since
         ///     this is a pseudo-handle.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: 
-        ///         - Per documentation, requires full-trust for the immediate caller
-        ///         - Calls Critical method <see cref="SafeHandle.SafeHandle(IntPtr, bool)"/>
-        ///     Safe:
-        ///         The handle held in this class is not Critical
-        /// </SecurityNote>
         protected DpiAwarenessContextHandle(IntPtr invalidHandleValue, bool ownsHandle)
             : base(invalidHandleValue, false)
         {
@@ -170,10 +151,6 @@ namespace MS.Utility
         /// </summary>
         /// <param name="dpiContextHandle">DPI context being compared against</param>
         /// <returns>True if equivalent to the other DPI context, otherwise False</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls Critical method <see cref="SafeHandle.DangerousGetHandle"/>
-        ///     Safe:       Returns no Critical information back to the caller
-        /// </SecurityNote>
         public bool Equals(DpiAwarenessContextHandle dpiContextHandle)
         {
             return SafeNativeMethods.AreDpiAwarenessContextsEqual(this.DangerousGetHandle(), dpiContextHandle.DangerousGetHandle());
@@ -184,10 +161,6 @@ namespace MS.Utility
         /// </summary>
         /// <param name="dpiContext">DPI Context being compared against</param>
         /// <returns>True if equivalent to the other DPI context, otherwise False</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls Critical method <see cref="SafeHandle.DangerousGetHandle"/>
-        ///     Safe:       Returns no Critical information back to the caller
-        /// </SecurityNote>
         public bool Equals(IntPtr dpiContext)
         {
             return DpiUtil.AreDpiAwarenessContextsEqual(this.DangerousGetHandle(), dpiContext);

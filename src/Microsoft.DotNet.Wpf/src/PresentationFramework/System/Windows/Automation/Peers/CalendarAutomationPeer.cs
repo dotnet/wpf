@@ -220,11 +220,6 @@ namespace System.Windows.Automation.Peers
             return GetOrCreateDateTimeAutomationPeer(date, buttonMode, /*addParentInfo*/ true);
         }
         
-        ///<SecurityNote>
-        /// Security Critical - Calls a Security Critical operation AddParentInfo which adds parent peer and provides 
-        ///                     security critical Hwnd value for this peer created asynchronously.
-        /// SecurityTreatAsSafe - It's being called from this object which is real parent for the item peer.
-        /// </SecurityNote>
         private DateTimeAutomationPeer GetOrCreateDateTimeAutomationPeer(DateTime date, CalendarMode buttonMode, bool addParentInfo)
         {
             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client

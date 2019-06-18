@@ -437,7 +437,7 @@ namespace MS.Internal.AppModel
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellLinkDataList),
     ]
-    internal interface IShellLinkDataListW
+    internal interface IShellLinkDataList
     {
         [PreserveSig]
         Int32 AddDataBlock(IntPtr pDataBlock);

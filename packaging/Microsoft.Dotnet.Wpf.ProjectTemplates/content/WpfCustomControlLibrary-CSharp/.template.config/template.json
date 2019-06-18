@@ -5,10 +5,10 @@
   "name": "WPF Custom Control Library",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a custom control library for .NET Core WPF Applications",
-  "groupIdentity": "Microsoft.Common.WPFCustomControl",
+  "groupIdentity": "Microsoft.Common.WPF.CustomControl",
   "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.WPFCustomControl.CSharp.3.0",
-  "shortName": "customcontrollib",
+  "identity": "Microsoft.Common.WPF.CustomControl.CSharp.3.0",
+  "shortName": "wpfcustomcontrollib",
   "tags": {
     "language": "C#",
     "type": "project"

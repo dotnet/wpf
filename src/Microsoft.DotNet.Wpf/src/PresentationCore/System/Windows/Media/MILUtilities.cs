@@ -37,7 +37,6 @@ namespace System.Windows.Media
         ///             constant Matrix value and the second points to a
         ///             D3DMATRIX value.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void ConvertToD3DMATRIX(
             /* in */ Matrix* matrix,
             /* out */ D3DMATRIX* d3dMatrix
@@ -78,7 +77,6 @@ namespace System.Windows.Media
         ///             constant D3DMATRIX value and the second points to a
         ///             Matrix value.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void ConvertFromD3DMATRIX(
             /* in */ D3DMATRIX* d3dMatrix,
             /* out */ Matrix* matrix
@@ -169,16 +167,12 @@ namespace System.Windows.Media
         ///
         /// It's safe because it's just doing matrix math.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         private extern static /*HRESULT*/ int MIL3DCalcProjected2DBounds(
             ref D3DMATRIX pFullTransform3D,
             ref MILRect3D pboxBounds,
             out MilRectF prcDestRect); 
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore, EntryPoint = "MilUtility_CopyPixelBuffer", PreserveSig = false)]
         internal extern static unsafe void MILCopyPixelBuffer(
             byte *  pOutputBuffer,
@@ -197,7 +191,6 @@ namespace System.Windows.Media
         ///     Critical - Calls a critical function -- MilCalcProjectedBounds
         ///     TreatAsSafe - It only does math on the given matrices.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect ProjectBounds(
             ref Matrix3D viewProjMatrix, 
             ref Rect3D originalBox)

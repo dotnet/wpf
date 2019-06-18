@@ -60,8 +60,6 @@ namespace System.Windows.Navigation
         /// <SecurityNote>
         ///   Critical : Writes security sensitive data into SerializationInfo argument
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("_journalEntryList", _journalEntryList);

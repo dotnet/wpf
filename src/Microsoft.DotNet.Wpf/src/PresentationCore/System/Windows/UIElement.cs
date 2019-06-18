@@ -81,7 +81,6 @@ namespace System.Windows
         ///  Critical: This code is used to register various thunks that are used to send input to the tree
         ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static UIElement()
         {
             UIElement.RegisterEvents(typeof(UIElement));
@@ -1147,7 +1146,6 @@ namespace System.Windows
         /// Safe - as this doesn't expose the information retrieved from that API,
         ///        it only uses it for calculation of screen coordinates.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static DpiScale EnsureDpiScale()
         {
             if (_setDpi)
@@ -3233,7 +3231,6 @@ namespace System.Windows
         /// <SecurityNote>
         /// Critical - calls other critical code (base)
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void FreeContent(DUCE.Channel channel)
         {
             Debug.Assert(_proxy.IsOnChannel(channel));
@@ -3874,7 +3871,6 @@ namespace System.Windows
         /// Critical - Calls a critical method (PresentationSource.CriticalFromVisual)
         /// TreatAsSafe - No exposure
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void UpdateIsVisibleCache() // Called from PresentationSource
         {
             // IsVisible is a read-only property.  It derives its "base" value

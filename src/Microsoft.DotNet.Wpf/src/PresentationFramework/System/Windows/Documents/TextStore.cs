@@ -84,7 +84,6 @@ namespace System.Windows.Documents
         ///     Critical: calls Marshal.ReleaseComObject which LinkDemands
         ///     TreatAsSafe: Can only release an existing sink, and only if a vaild new one is passed in
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void AdviseSink(ref Guid riid, object obj, UnsafeNativeMethods.AdviseFlags flags)
         {
             UnsafeNativeMethods.ITextStoreACPSink sink;
@@ -119,7 +118,6 @@ namespace System.Windows.Documents
         /// Critical - as this satisfies the LinkDemand from Marshal.ReleaseComObject().
         /// TreatAsSafe - as the worst that would happen is NullReference exception when _sink is accessed.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void UnadviseSink(object obj)
         {
             if (obj != _sink)
@@ -792,7 +790,6 @@ namespace System.Windows.Documents
         ///     SecurityCritical: This code causes an elevation by calling into ScreentoClient
         ///     TreatAsSafe: Demand for unmanaged code permission
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void GetACPFromPoint(int viewCookie, ref UnsafeNativeMethods.POINT tsfPoint, UnsafeNativeMethods.GetPositionFromPointFlags flags, out int positionCP)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -870,7 +867,6 @@ namespace System.Windows.Documents
         /// Critical - elevates to query visual information
         /// TreatAsSafe - only exposes coordinates, which are safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         void UnsafeNativeMethods.ITextStoreACP.GetTextExt(int viewCookie, int startIndex, int endIndex, out UnsafeNativeMethods.RECT rect, out bool clipped)
         {
             PresentationSource source;
@@ -986,7 +982,6 @@ namespace System.Windows.Documents
         ///     Critical: This code accceses PresentationSource to retrieve CompositionTarget
         ///     TreatAsSafe: Both of the types are not exposed and the rect is ok to give out
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void GetScreenExt(int viewCookie, out UnsafeNativeMethods.RECT rect)
         {
             PresentationSource source;
@@ -1028,7 +1023,6 @@ namespace System.Windows.Documents
         /// Critical - elevates and access protected information (hwnd and
         ///            source), then hands it out (hwnd)!
         /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITextStoreACP.GetWnd(int viewCookie, out IntPtr hwnd)
         {
             hwnd = IntPtr.Zero;
@@ -1049,7 +1043,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - manipulates focus
         /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITfThreadFocusSink.OnSetThreadFocus()
         {
             if (!IsTextEditorValid)
@@ -1088,7 +1081,6 @@ namespace System.Windows.Documents
         /// The location where the input manager is stored is critical and its
         /// usage is tracked
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void OnStartComposition(UnsafeNativeMethods.ITfCompositionView view, out bool ok)
         {
             // Disallow multiple compositions.
@@ -1181,7 +1173,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code (GetRange)
         /// </SecurityNote>
-        [SecurityCritical]
         public void OnUpdateComposition(UnsafeNativeMethods.ITfCompositionView view, UnsafeNativeMethods.ITfRange rangeNew)
         {
             // If UiScope has a ToolTip and it is open, any keyboard/mouse activity should close the tooltip.
@@ -1247,7 +1238,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code (GetRange)
         /// </SecurityNote>
-        [SecurityCritical]
         public void OnEndComposition(UnsafeNativeMethods.ITfCompositionView view)
         {
             Invariant.Assert(_isComposing);
@@ -1303,7 +1293,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code, exposes raw input
         /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITfTextEditSink.OnEndEdit(UnsafeNativeMethods.ITfContext context, int ecReadOnly, UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             // Call text service's property OnEndEdit.
@@ -1330,7 +1319,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - all parameters are typesafe and are validated, elevated data (the string)
         ///               is passed from one highly trusted entity to another.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void OnTransitoryExtensionUpdated(UnsafeNativeMethods.ITfContext context, int ecReadOnly, UnsafeNativeMethods.ITfRange rangeResult, UnsafeNativeMethods.ITfRange rangeComposition, out bool fDeleteResultRange)
         {
             fDeleteResultRange = true;
@@ -1396,7 +1384,6 @@ namespace System.Windows.Documents
         ///   Critical : Accepts critical arguments of type ITfRangeACP and ITfMouseSink
         ///   Safe     : Performs no operations on critical types
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public int AdviceMouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, out int dwCookie)
         {
             if (_mouseSinks == null)
@@ -1486,7 +1473,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical code (RegisterTextStore)
         /// TreatAsSafe - adds this textstore to the list of textstores, a safe operation
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnAttach()
         {
             _netCharCount = this.TextContainer.IMECharCount;
@@ -1506,7 +1492,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical code (UnregisterTextStore)
         /// TreatAsSafe - removes this textstore from the list of textstores, a safe operation
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnDetach(bool finalizer)
         {
             // TextEditor could be GCed before.
@@ -1525,7 +1510,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code calls into SetFocus which is critical since it elevates
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OnGotFocus()
         {
             //Re-enable this assert once known conditions are clearer.
@@ -1559,7 +1543,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code
         /// TreatAsSafe - notifies IME that the layout changed, this is a safe notification
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnLayoutUpdated()
         {
             if (HasSink)
@@ -1587,7 +1570,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code (_sink)
         /// TreatAsSafe - notifies of selection change, no potential data leak, this is safe
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnSelectionChanged()
         {
             if (_compositionEventState == CompositionEventState.RaisingEvents)
@@ -1616,7 +1598,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code
         /// TreatAsSafe - all input comes from trusted sources (DocumentManager)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool QueryRangeOrReconvertSelection(bool fDoReconvert)
         {
             // If there is a composition that covers the current selection,
@@ -1668,7 +1649,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code and return critical ITfCandidateList
         /// </SecurityNote>
-        [SecurityCritical]
         internal UnsafeNativeMethods.ITfCandidateList GetReconversionCandidateList()
         {
             bool fReconvertable = false;
@@ -1695,7 +1675,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code and return ITfFnReconversion
         /// </SecurityNote>
-        [SecurityCritical]
         private bool GetFnReconv(ITextPointer textStart, ITextPointer textEnd, out UnsafeNativeMethods.ITfFnReconversion funcReconv, out UnsafeNativeMethods.ITfRange rangeNew)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -1764,7 +1743,6 @@ namespace System.Windows.Documents
         ///     Critical:Calls CompleteCurrentComposition which has a link demand
         ///     TreatAsSafe: Exposes no data, calls trusted code.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CompleteComposition()
         {
             if (_isComposing)
@@ -1906,7 +1884,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - It doesn't return critical information, all parameters are typesafe.
         /// The location where the input manager is stored is critical and the usage is tracked.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static FrameworkTextComposition CreateComposition(TextEditor editor, object owner)
         {
             FrameworkTextComposition composition;
@@ -1971,7 +1948,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
         {
-            [SecurityCritical]
             get
             {
                 if (_documentmanager == null)
@@ -1982,7 +1958,6 @@ namespace System.Windows.Documents
                 return _documentmanager.Value;
             }
 
-            [SecurityCritical]
             set { _documentmanager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr>(value); }
         }
 
@@ -2037,7 +2012,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         internal IntPtr CriticalSourceWnd
         {
-            [SecurityCritical]
             get
             {
                 bool callerIsTrusted = true;
@@ -2064,7 +2038,6 @@ namespace System.Windows.Documents
         ///               attack here would be to get the IME to update more UI than
         ///               needed
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnTextContainerChange(object sender, TextContainerChangeEventArgs args)
         {
             if (args.IMECharCount > 0 && (args.TextChange == TextChangeType.ContentAdded || args.TextChange == TextChangeType.ContentRemoved))
@@ -2164,7 +2137,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         private bool HasSink
         {
-            [SecuritySafeCritical]
             get { return _sink != null; }
         }
 
@@ -2276,7 +2248,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code
         /// TreatAsSafe - notifies the sink of a lock grant, no other data is transfered.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private int GrantLock()
         {
             int hr;
@@ -2458,7 +2429,6 @@ namespace System.Windows.Documents
         ///     Critical: This code calls into PresentationSource.FromVisual to retrieve Source
         ///               The source is also handed out to the callers
         /// </SecurityNote>
-        [SecurityCritical]
         private void GetVisualInfo(out PresentationSource source, out IWin32Window win32Window, out ITextView view)
         {
             source = PresentationSource.CriticalFromVisual(RenderScope);
@@ -2477,7 +2447,6 @@ namespace System.Windows.Documents
         ///     Critical - calls UnsafeNativeMethods.ClientToScreen and asserts to get HWND
         ///     TreatAsSafe - safe to expose screen coordinates
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static UnsafeNativeMethods.RECT TransformRootRectToScreenCoordinates(Point milPointTopLeft, Point milPointBottomRight, IWin32Window win32Window, PresentationSource source)
         {
             UnsafeNativeMethods.RECT rect;
@@ -2519,7 +2488,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code to access the OLE data object
         /// TreatAsSafe - has demand for unmanaged code
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InsertEmbeddedAtPosition(TextPointer position, IComDataObject data, out UnsafeNativeMethods.TS_TEXTCHANGE change)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -2639,7 +2607,6 @@ namespace System.Windows.Documents
         /// Critical - accesses presentationsource query visual information
         /// TreatAsSafe - only exposes transformation information, which is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void PrepareAttributes(InputScope inputScope, double fontSize, FontFamily fontFamily, XmlLanguage language, Visual visual, int count, Guid[] filterAttributes)
         {
             if (_preparedattributes == null)
@@ -2773,7 +2740,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         private void TextPositionsFromITfRange(UnsafeNativeMethods.ITfRange range, out ITextPointer start, out ITextPointer end)
         {
             UnsafeNativeMethods.ITfRangeACP rangeACP;
@@ -2798,7 +2764,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical methods.
         /// TreatAsSafe - takes no input and reveals no sensitive information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void GetCompositionPositions(out ITextPointer start, out ITextPointer end)
         {
             start = null;
@@ -2818,7 +2783,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         private void GetCompositionPositions(UnsafeNativeMethods.ITfCompositionView view, out ITextPointer start, out ITextPointer end)
         {
             UnsafeNativeMethods.ITfRange range;
@@ -2834,7 +2798,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code (GetExtent)
         /// </SecurityNote>
-        [SecurityCritical]
         private static string StringFromITfRange(UnsafeNativeMethods.ITfRange range, int ecReadOnly)
         {
             // Transitory Document uses ther TextStore, which is ACP base.
@@ -2872,7 +2835,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - only sends mouse event to IME listeners, only uses current state of
         ///               text as input. Can't use this to spoof messages to non-IME contexts.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool InternalMouseEventHandler()
         {
             int btnState = 0;
@@ -3198,7 +3160,6 @@ namespace System.Windows.Documents
         /// Critical - if called from a trusted method (callerIsTrusted == true), calls CriticalFromVisual, which is Critical,
         /// and then returns the information returned by that call.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr GetSourceWnd(bool callerIsTrusted)
         {
             IntPtr hwnd = IntPtr.Zero;
@@ -3514,7 +3475,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical (TextCompositionManager) code.
         /// TreatAsSafe - doesn't accept or return critical information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseCompositionEvents(out int appSelectionAnchorOffset, out int appSelectionMovingOffset)
         {
             appSelectionAnchorOffset = -1;
@@ -4058,7 +4018,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///  Critical : Accepts critical arguments and sets critical fields
             /// </SecurityNote>
-            [SecurityCritical]
             internal MouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, int cookie)
             {
                 _range = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP>(range);
@@ -4070,7 +4029,6 @@ namespace System.Windows.Documents
             ///     Critical:      UnsafeNativeMethods.ITfRangeACP has methods with SuppressUnmanagedCodeSecurity.
             ///     TreatAsSafe:   Only disposing objects.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public void Dispose()
             {
                 Invariant.Assert(!_locked);
@@ -4132,7 +4090,6 @@ namespace System.Windows.Documents
             /// </SecurityNote>
             internal UnsafeNativeMethods.ITfRangeACP Range
             {
-                [SecurityCritical]
                 get {return _range.Value;}
             }
 
@@ -4141,7 +4098,6 @@ namespace System.Windows.Documents
             /// </SecurityNote>
             internal UnsafeNativeMethods.ITfMouseSink Sink
             {
-                [SecurityCritical]
                 get {return _sink.Value;}
             }
 
@@ -4150,13 +4106,11 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: UnsafeNativeMethods.ITfRangeACP has methods with SuppressUnmanagedCodeSecurity.
             /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP> _range;
 
             /// <SecurityNote>
             ///     Critical: UnsafeNativeMethods.ITfMouseSink has methods with SuppressUnmanagedCodeSecurity.
             /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink> _sink;
 
             private int _cookie;
@@ -4353,7 +4307,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///  Critical : Field for critical type ITextStoreACPSink
         /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ITextStoreACPSink _sink;
 
         // true if TSF has a pending lock upgrade request.
@@ -4402,7 +4355,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: UnsafeNativeMethods.ITfDocumentMgr has methods with SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _documentmanager;
 
         // The ITfThreadFocusSink cookie.

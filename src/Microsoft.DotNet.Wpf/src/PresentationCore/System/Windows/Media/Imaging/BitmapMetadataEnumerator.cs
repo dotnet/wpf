@@ -46,7 +46,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         object IEnumerator.Current
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return Current;
@@ -68,7 +67,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Accesses unmanaged code
         /// TreatAsSafe - inputs are verified or safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public bool MoveNext()
         {
             if (_fStarted && _current == null)
@@ -127,7 +125,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Accesses unmanaged code
         /// TreatAsSafe - inputs are verified or safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Reset()
         {
             HRESULT.Check(UnsafeNativeMethods.EnumString.Reset(_enumeratorHandle));
@@ -193,7 +190,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Accesses unmanaged code
         /// TreatAsSafe - inputs are verified or safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal BitmapMetadataEnumerator(SafeMILHandle metadataHandle)
         {
             Debug.Assert(metadataHandle != null && !metadataHandle.IsInvalid);
@@ -217,7 +213,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - pointer to an unmanaged object that methods are called on.
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _enumeratorHandle;
 
         private String _current;

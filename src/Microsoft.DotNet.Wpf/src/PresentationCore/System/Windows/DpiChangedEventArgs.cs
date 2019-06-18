@@ -46,7 +46,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical: This code accesses critical function *PtrToStructure*
         /// </SecurityNote>
-        [SecurityCritical]
         [Obsolete]
         internal HwndDpiChangedEventArgs(double oldDpiX, double oldDpiY, double newDpiX, double newDpiY, IntPtr lParam) : base(false)
         {

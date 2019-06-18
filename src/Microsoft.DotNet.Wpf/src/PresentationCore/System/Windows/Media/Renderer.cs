@@ -31,7 +31,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - unmanaged pointer arguments, access critical resources, calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         static public void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,
@@ -52,7 +51,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - unmanaged pointer arguments, access critical resources, calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         static internal void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,

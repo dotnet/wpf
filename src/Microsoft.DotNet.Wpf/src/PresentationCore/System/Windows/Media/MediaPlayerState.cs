@@ -109,7 +109,6 @@ namespace System.Windows.Media
         ///               resources
         ///     TreatAsSafe: This doesn't actually call ProcessExitHandler, just detaches it
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~MediaPlayerState()
         {
             if (_helper != null)
@@ -131,7 +130,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool IsBuffering
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -151,7 +149,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool CanPause
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -171,7 +168,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal double DownloadProgress
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -191,7 +187,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal double BufferingProgress
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -211,7 +206,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal Int32 NaturalVideoHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -233,7 +227,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal Int32 NaturalVideoWidth
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -255,7 +248,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool HasAudio
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -277,7 +269,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool HasVideo
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -313,14 +304,12 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal double Volume
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
 
                 return _volume;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
@@ -369,14 +358,12 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal double Balance
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
 
                 return _balance;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
@@ -417,13 +404,11 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool ScrubbingEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
                 return _scrubbingEnabled;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
@@ -486,7 +471,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal Duration NaturalDuration
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -819,7 +803,6 @@ namespace System.Windows.Media
         ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
         ///     TreatAsSafe: Intrinsically safe to close media.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         void
         Close()
@@ -847,7 +830,6 @@ namespace System.Windows.Media
         ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
         ///     TreatAsSafe: Media Command merely binds resource to native player.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         void
         SendCommandMedia(
@@ -881,7 +863,6 @@ namespace System.Windows.Media
         ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
         ///     TreatAsSafe: Asking for a frame update is inherently safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         NeedUIFrameUpdate()
@@ -902,7 +883,6 @@ namespace System.Windows.Media
         /// Critical - calls unmanaged code, access pointer parameters. It instantiates
         ///            windows media player
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CreateMedia(MediaPlayer mediaPlayer)
         {
             CheckMediaDisabledFlags();
@@ -946,7 +926,6 @@ namespace System.Windows.Media
         /// fileio for absolute paths and web permissions for files on a server. It only lets you access
         /// files in current directory and does not expose the location of current directory
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void OpenMedia(Uri source)
         {
             string toOpen = null;
@@ -1024,7 +1003,6 @@ namespace System.Windows.Media
         ///     Critical: This code elevates to read registry
         ///     TreatAsSafe: Detecting whether media is disabled is a safe operation
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void CheckMediaDisabledFlags()
         {
             if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaAudioOrVideoDisable))
@@ -1042,7 +1020,6 @@ namespace System.Windows.Media
         ///     Critical: This code returns the base directory of the app as a URI
         ///     IT constructs a Uri based on relative and absolute URI
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Uri ResolveUri(Uri uri, Uri appBase)
         {
             if (uri.IsAbsoluteUri)
@@ -1062,7 +1039,6 @@ namespace System.Windows.Media
         ///     to restrict access to loose file passed as relative path in the application
         ///     base direcory
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private string DemandPermissions(Uri absoluteUri)
         {
             Debug.Assert(absoluteUri.IsAbsoluteUri);
@@ -1132,7 +1108,6 @@ namespace System.Windows.Media
         /// Critical - access critical resource (_nativeMedia)
         /// TreatAsSafe - critical resource isn't modified or handed out
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetPosition(TimeSpan value)
         {
             VerifyAPI();
@@ -1147,7 +1122,6 @@ namespace System.Windows.Media
         /// Critical - access critical resource (_nativeMedia)
         /// TreatAsSafe - critical resource isn't modified or handed out
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private TimeSpan GetPosition()
         {
             VerifyAPI();
@@ -1163,7 +1137,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         private double PrivateSpeedRatio
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
@@ -1225,7 +1198,6 @@ namespace System.Windows.Media
         /// Critical - access critical resource (_nativeMedia)
         /// TreatAsSafe - critical resource isn't modified or handed out
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void VerifyAPI()
         {
             //
@@ -1266,7 +1238,6 @@ namespace System.Windows.Media
         /// Critical - access critical resource (_nativeMedia)
         /// TreatAsSafe - critical resource is treated like any other image.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         SendMediaPlayerCommand(
@@ -1367,7 +1338,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - this is a pointer to an unmanaged object that methods are called directly on
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMediaHandle _nativeMedia;
 
         private MediaEventsHelper _mediaEventsHelper;
@@ -1411,13 +1381,11 @@ namespace System.Windows.Media
             /// Critical - this is a weak reference to a pointer to an unmanaged object
             /// on which methods are called directly
             /// </SecurityNote>
-            [SecurityCritical]
             private WeakReference _nativeMedia;
 
             /// <SecurityNote>
             /// Accesses weak reference to pointer
             /// </SecurityNote>
-            [SecurityCritical]
             internal
             Helper(
                 SafeMediaHandle nativeMedia
@@ -1429,7 +1397,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Accesses weak reference to pointer, calls unmanaged code
             /// </SecurityNote>
-            [SecurityCritical]
             internal
             void
             ProcessExitHandler(

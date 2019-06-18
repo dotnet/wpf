@@ -136,7 +136,6 @@ namespace System.Windows.Media.Effects
         /// SecurityCritical - because this method sets the critical shader byte code data.
         /// TreatAsSafe - Demands UI window permission which enforces that the caller is trusted.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadPixelShaderFromStreamIntoMemory(Stream source) 
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -199,7 +198,6 @@ namespace System.Windows.Media.Effects
         ///     Critical: This code accesses unsafe code blocks
         ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel
@@ -295,7 +293,6 @@ namespace System.Windows.Media.Effects
         /// code is trusted (verified or provided by a trusted caller). There is also no way to modify the byte code during
         /// the copy.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CopyCommon(PixelShader shader)
         {
             byte[] sourceBytecode = shader._shaderBytecode.Value;

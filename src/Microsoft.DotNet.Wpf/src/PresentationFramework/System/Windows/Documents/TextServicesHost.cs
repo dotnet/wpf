@@ -67,7 +67,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code accesses DocumentMgr,Source (inside of _RegisterTextStore)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterTextStore(TextStore textstore)
         {
             // VerifyAccess();
@@ -84,7 +83,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code invokes OnUnregisterTextStore which is a Critical method.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UnregisterTextStore(TextStore textstore, bool finalizer)
         {
             if (!finalizer)
@@ -105,7 +103,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///    Critical: This code calls into native code.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterWinEventSink(TextStore textstore)
         {
             // Start WinEvent hook to listen windows move/size event.
@@ -122,7 +119,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///    Critical: This code calls into native code.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UnregisterWinEventSink(TextStore textstore)
         {
             _winEvent.UnregisterTextStore(textstore);
@@ -140,7 +136,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///    Critical: This code calls into ITfCompartmentMgr and ItfCompartment both of which are critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void StartTransitoryExtension(TextStore textstore)
         {
             Guid guid;
@@ -176,7 +171,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///    Critical: This code calls into ITfCompartmentMgr and ItfCompartment both of which are critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void StopTransitoryExtension(TextStore textstore)
         {
             Guid guid;
@@ -237,7 +231,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         internal UnsafeNativeMethods.ITfThreadMgr ThreadManager
         {
-            [SecurityCritical]
             get
             {
                 if (_threadManager == null)
@@ -262,7 +255,6 @@ namespace System.Windows.Documents
         /// Critical - As this calls methods on ITfContext, ItfSource and ITfDocumentMgr
         ///            under elevation to unregister the text source.
         /// </SecurityNote>
-        [SecurityCritical]
         private object OnUnregisterTextStore(object arg)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -329,7 +321,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code diactivate thread manager.
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnDispatcherShutdownFinished(object sender, EventArgs args)
         {
             Debug.Assert(CheckAccess(), "OnDispatcherShutdownFinished called on bad thread!");
@@ -354,7 +345,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code accesses DocumentMgr,Source
         /// </SecurityNote>
-        [SecurityCritical]
         private void _RegisterTextStore(TextStore textstore)
         {
             UnsafeNativeMethods.ITfDocumentMgr doc;
@@ -435,7 +425,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code deactivate ThreadManager by accessing ITfThreadMgr
         /// </SecurityNote>
-        [SecurityCritical]
         private void DeactivateThreadManager()
         {
             if (_threadManager != null) 
@@ -489,7 +478,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: UnsafeNativeMethods.ITfThreadMgr has methods with SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr> _threadManager;
 
         // This is true if Dispatcher is finished.

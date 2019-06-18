@@ -543,7 +543,6 @@ namespace MS.Internal.IO.Packaging
         ///          - Asserts ControlPrincipal to access current user identity
         /// TAS - only returns a bool
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool UserHasProfile()
         {
             // Acquire permissions to read the one key we care about from the registry

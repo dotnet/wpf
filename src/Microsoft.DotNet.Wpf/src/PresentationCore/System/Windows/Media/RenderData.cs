@@ -83,7 +83,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: This code has unsafe code and dereferences a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         public unsafe void WriteDataRecord(MILCMD id,
                                            byte* pbRecord,
                                            int cbRecordSize)

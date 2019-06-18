@@ -38,7 +38,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     This data is not safe to expose as it holds refrence to IPimcTablet
         /// </SecurityNote>
-        [SecurityCritical]
         public SecurityCriticalDataClass<IPimcTablet3> PimcTablet;
         public int Id;
         public string Name;
@@ -56,7 +55,7 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical:   This data can be used to manipulate COM objects in the GIT.
         /// </SecurityNote>
-        public UInt32 WispTabletKey { [SecurityCritical] get; [SecurityCritical] set; }
+        public UInt32 WispTabletKey {  get;  set; }
     }    
 }
 

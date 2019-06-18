@@ -28,7 +28,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         IntPtr Handle
         {
-            [UIPermission(SecurityAction.InheritanceDemand,Window = UIPermissionWindow.AllWindows)]
             get;
         }
     }

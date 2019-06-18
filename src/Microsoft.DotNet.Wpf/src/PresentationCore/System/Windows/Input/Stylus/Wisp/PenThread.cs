@@ -34,7 +34,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenThread()
         {
             _penThreadWorker = new PenThreadWorker();
@@ -63,7 +62,6 @@ namespace System.Windows.Input
         ///               on an object that is going to be also marked as disposed and
         ///               start failing all calls after return.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         void DisposeHelper()
         {
             // NOTE: PenThreadWorker deals with already being disposed logic.
@@ -82,7 +80,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool AddPenContext(PenContext penContext)
         {
             return _penThreadWorker.WorkerAddPenContext(penContext);
@@ -94,7 +91,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is PenContext.Dispose, Stylus.ProcessDisplayChange
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool RemovePenContext(PenContext penContext)
         {
             return _penThreadWorker.WorkerRemovePenContext(penContext);
@@ -107,7 +103,6 @@ namespace System.Windows.Input
         /// Critical - Calls SecurityCritical code PenThreadWorker.WorkerGetTabletsInfo.
         ///             Called by PenThreadPool.WorkerGetTabletsInfo.
         /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceInfo[] WorkerGetTabletsInfo()
         {
             return _penThreadWorker.WorkerGetTabletsInfo();
@@ -120,7 +115,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore and HwndWrapperHook class 
         ///             (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenContextInfo WorkerCreateContext(IntPtr hwnd, IPimcTablet3 pimcTablet)
         {
             return _penThreadWorker.WorkerCreateContext(hwnd, pimcTablet);
@@ -134,7 +128,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical - Calls PenThreadWorker.WorkerAcquireTabletLocks.
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerAcquireTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
         {
             return _penThreadWorker.WorkerAcquireTabletLocks(tablet, wispTabletKey);
@@ -148,7 +141,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical - Calls PenThreadWorker.WorkerReleaseTabletLocks.
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerReleaseTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
         {
             return _penThreadWorker.WorkerReleaseTabletLocks(tablet, wispTabletKey);
@@ -158,7 +150,6 @@ namespace System.Windows.Input
         /// Critical - Calls SecurityCritical code PenThreadWorker.WorkerRefreshCursorInfo.
         ///             Called by PenThreadPool.WorkerRefreshCursorInfo.
         /// </SecurityNote>
-        [SecurityCritical]
         internal StylusDeviceInfo[] WorkerRefreshCursorInfo(IPimcTablet3 pimcTablet)
         {
             return _penThreadWorker.WorkerRefreshCursorInfo(pimcTablet);
@@ -168,7 +159,6 @@ namespace System.Windows.Input
         /// Critical - Calls SecurityCritical code PenThreadWorker.WorkerGetTabletInfo.
         ///             Called by PenThreadPool.WorkerGetTabletInfo.
         /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceInfo WorkerGetTabletInfo(uint index)
         {
             return _penThreadWorker.WorkerGetTabletInfo(index);
@@ -178,7 +168,6 @@ namespace System.Windows.Input
         /// Critical - Calls SecurityCritical code PenThreadWorker.WorkerGetUpdatedSizes.
         ///             Called by PenThreadPool.WorkerGetUpdatedTabletRect.
         /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceSizeInfo WorkerGetUpdatedSizes(IPimcTablet3 pimcTablet)
         {
             return _penThreadWorker.WorkerGetUpdatedSizes(pimcTablet);

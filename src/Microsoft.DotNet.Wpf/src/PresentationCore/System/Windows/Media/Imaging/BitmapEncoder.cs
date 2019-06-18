@@ -40,7 +40,6 @@ namespace System.Windows.Media.Imaging
         internal ushort cfType;
         internal IntPtr dwHint;
 
-        [SecurityCritical]
         internal IntPtr pstrName; //this is string array
 
         internal Guid clsid;
@@ -49,7 +48,6 @@ namespace System.Windows.Media.Imaging
         /// Critical -Initializes a pointer to unmanaged memory to hold onto a string
         /// TreatAsSafe - there are no inputs
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(String name)
         {
             pstrName = Marshal.StringToCoTaskMemUni(name);
@@ -59,7 +57,6 @@ namespace System.Windows.Media.Imaging
         /// Critical -Releases an unmanaged pointer into unmanaged memory.
         /// TreatAsSafe - there are no inputs
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Clear()
         {
             Marshal.FreeCoTaskMem(pstrName);
@@ -103,7 +100,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - guid used for creation of critical resources
         /// </SecurityNote>
-        [SecurityCritical]
         public static BitmapEncoder Create(Guid containerFormat)
         {
             if (containerFormat == Guid.Empty)
@@ -283,7 +279,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical ]
             get
             {
                 VerifyAccess();
@@ -373,9 +368,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - calls unmanaged code
         /// </SecurityNote>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityCritical]
         public virtual void Save(System.IO.Stream stream)
         {
             VerifyAccess();
@@ -576,7 +568,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Accesses unmanaged code
         /// TreatAsSafe - inputs are verified or safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureMetadata(bool createBitmapMetadata)
         {
             if (!_supportsGlobalMetadata)
@@ -617,7 +608,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - calls unmanaged code, codecs, creates codec based on GUID
         /// </SecurityNote>
-        [SecurityCritical]
         private void EnsureUnmanagedEncoder()
         {
             if (_encoderHandle == null)
@@ -647,7 +637,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         private void SaveFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions, BitmapFrame frame)
         {
             SetupFrame(frameEncodeHandle, encoderOptions);

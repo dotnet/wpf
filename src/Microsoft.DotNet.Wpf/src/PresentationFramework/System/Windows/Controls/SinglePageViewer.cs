@@ -379,7 +379,6 @@ namespace System.Windows.Controls
         /// Critical: get_SearchUp is defined in a non-APTCA assembly.
         /// TreatAsSafe: call to get_SearchUp does not entail any risk.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             // Esc -- Close FindToolBar

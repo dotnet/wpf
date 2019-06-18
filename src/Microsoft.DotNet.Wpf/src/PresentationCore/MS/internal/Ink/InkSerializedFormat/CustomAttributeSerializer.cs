@@ -325,7 +325,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Encodes a custom attribute to the ISF stream
@@ -425,7 +424,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads a single ExtendedProperty from the stream and add that to the list. Tag may be passed as in
@@ -752,7 +750,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves all elements in this list in the stream passed with the tags being generated based on the GuidList

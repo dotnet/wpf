@@ -125,7 +125,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///   Critical: This code is unsafe and stores a byte ptr
         /// </SecurityNote>
-        [SecurityCritical]
         public FontTable(byte[] data)
         {
             m_data = data;
@@ -148,7 +147,6 @@ namespace MS.Internal.Shaping
         /// </SecurityNote>
         public bool IsPresent
         {
-              [SecurityCritical,SecurityTreatAsSafe]
               get
            {
                  return (m_data!=null);
@@ -158,7 +156,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///   Critical: This code acceses font table data.
         /// </SecurityNote>
-        [SecurityCritical]
         public ushort GetUShort(int offset)
         {
             Invariant.Assert(m_data!= null);
@@ -169,7 +166,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///   Critical: This code acceses font table data.
         /// </SecurityNote>
-        [SecurityCritical]
         public short GetShort(int offset)
         {
             Invariant.Assert(m_data != null);
@@ -180,7 +176,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///   Critical: This code acceses font table data.
         /// </SecurityNote>
-        [SecurityCritical]
         public uint GetUInt(int offset)
         {
             Invariant.Assert(m_data != null);
@@ -191,7 +186,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///   Critical: This code acceses font table data.
         /// </SecurityNote>
-        [SecurityCritical]
         public ushort GetOffset(int offset)
         {
             Invariant.Assert(m_data != null);
@@ -205,7 +199,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///     Critical:This code is used to validate length and dereference pointers.
         /// </SecurityNote>
-        [SecurityCritical]
         private uint  m_length;
     }
 
@@ -221,7 +214,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - as this accesses FontFaceLayoutInfo.Gdef which exposes font info.
         /// </SecurityNote>
-        [SecurityCritical]
         FontTable GetFontTable(OpenTypeTags TableTag);
 
         /// <summary>
@@ -337,7 +329,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - Access protected font information (raw bytes)
         /// </SecurityNote>
-        [SecurityCritical]
         internal static TagInfoFlags FindScript(
             IOpenTypeFont       Font,     // In: Font access interface
             uint                ScriptTag // In
@@ -392,7 +383,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - access protected font resource (FontTable)
         /// </SecurityNote>
-        [SecurityCritical]
         internal static TagInfoFlags FindLangSys(
             IOpenTypeFont       Font,
             uint                ScriptTag,
@@ -916,7 +906,6 @@ namespace MS.Internal.Shaping
         ///            parameters are passed directly to other code, which could result
         ///            in buffer reads outside of fonttable.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static OpenTypeLayoutResult SubstituteGlyphs(
             IOpenTypeFont           Font,           // In: Font access interface
             OpenTypeLayoutWorkspace workspace,      // In: Workspace for layout engine
@@ -996,7 +985,6 @@ namespace MS.Internal.Shaping
         ///            parameters are passed directly to other code, which could result
         ///            in buffer reads outside of fonttable.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static OpenTypeLayoutResult PositionGlyphs(
             IOpenTypeFont           Font,
             OpenTypeLayoutWorkspace workspace,
@@ -1066,7 +1054,6 @@ namespace MS.Internal.Shaping
         ///            parameters are passed directly to other code, which could result
         ///            in buffer reads outside of fonttable.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static OpenTypeLayoutResult CreateLayoutCache (
             IOpenTypeFont       font,           // In: Font access interface
             int                 maxCacheSize    // In: Maximum cache size allowed
@@ -1086,7 +1073,6 @@ namespace MS.Internal.Shaping
         ///            parameters are passed directly to other code, which could result
         ///            in buffer reads outside of fonttable.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static OpenTypeLayoutResult GetComplexLanguageList (
             IOpenTypeFont       Font,           //In: Font access interface
             uint[]              featureList,     //In: Feature to look in
@@ -1238,7 +1224,6 @@ namespace MS.Internal.Shaping
         /// Critical:  Calls unsafe code
         /// Safe:      Does not actually access data through the pointers
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal unsafe OpenTypeLayoutWorkspace()
         {
             _bytesPerLookup     = 0;
@@ -1363,7 +1348,6 @@ namespace MS.Internal.Shaping
         /// Critical:  Calls unsafe code
         /// Safe:      Does not actually access data through the pointers
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public unsafe void AllocateCachePointers(int glyphRunLength)
         {
             if (_cachePointers != null && _cachePointers.Length >= glyphRunLength) return;
@@ -1385,7 +1369,6 @@ namespace MS.Internal.Shaping
         /// Critical:  Calls unsafe code
         /// Safe:      Does not actually access data through the pointers
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public unsafe void UpdateCachePointers(
                                         int     oldLength,
                                         int     newLength,
@@ -1418,7 +1401,6 @@ namespace MS.Internal.Shaping
         /// </SecurityNote>
         public unsafe ushort[] CachePointers
         {
-            [SecurityCritical]
             get { return _cachePointers; }
         }
         
@@ -1427,9 +1409,7 @@ namespace MS.Internal.Shaping
         /// </SecurityNote>
         public byte[] TableCacheData
         {
-            [SecurityCritical]
             get { return _tableCache; }
-            [SecurityCritical]
             set { _tableCache = value; }
         }
 
@@ -1437,14 +1417,12 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///     Critical: This holds font cache raw pointers
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe ushort[]  _cachePointers;
         
         // Pointer to the table cache
         /// <SecurityNote>
         ///     Critical: This holds font cache raw pointers
         /// </SecurityNote>
-        [SecurityCritical]
         private byte[]      _tableCache;
 
 #endregion Layout cache pointers

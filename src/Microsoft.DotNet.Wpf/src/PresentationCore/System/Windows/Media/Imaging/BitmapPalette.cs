@@ -86,7 +86,6 @@ namespace System.Windows.Media.Imaging
         /// SecurityCritical: Accesses unmanaged resources (_wicSource)
         /// PublicOk: Inputs are verified and _wicSource and the get is Critical
         /// </SecurityNote>
-        [SecurityCritical]
         public BitmapPalette(BitmapSource bitmapSource, int maxColorCount)
         {
             // Note: we will never return a palette from BitmapPalettes.
@@ -128,7 +127,6 @@ namespace System.Windows.Media.Imaging
         /// Safe        - we sanitize the input and only call into WIC with 
         ///               acceptable palette types.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal BitmapPalette(WICPaletteType paletteType,
                 bool addtransparentColor)
         {
@@ -183,7 +181,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access unmanaged code
         /// TreatAsSafe - Creating a palette from a Source is OK
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static internal BitmapPalette CreateFromBitmapSource(BitmapSource source)
         {
             Debug.Assert(source != null);
@@ -253,7 +250,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         internal SafeMILHandle InternalPalette
         {
-            [SecurityCritical]
             get
             {
                 if (_palette == null || _palette.IsInvalid)
@@ -290,7 +286,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - calls unmanaged code
         /// TreatAsSafe - only thing you can do with this is allocate some memory
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static internal SafeMILHandle CreateInternalPalette()
         {
             SafeMILHandle palette = null;
@@ -312,7 +307,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - is an unsafe method, calls into native code
         /// TreatAsSafe - No inputs are provided, no information is exposed.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         unsafe private void UpdateUnmanaged()
         {
             Debug.Assert(_palette != null && !_palette.IsInvalid);
@@ -346,7 +340,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access unmanaged code
         /// TreatAsSafe - No inputs are provided and only gets the color count and colors from a palette
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateManaged()
         {
             Debug.Assert(_palette != null && !_palette.IsInvalid);

@@ -569,7 +569,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public InputMethodState ImeState
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -603,7 +602,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical ]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -661,7 +659,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public InputMethodState MicrophoneState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -674,7 +671,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -703,7 +699,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public InputMethodState HandwritingState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -716,7 +711,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -749,7 +743,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public SpeechMode SpeechMode
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -767,7 +760,6 @@ namespace System.Windows.Input
                 return SpeechMode.Indeterminate;
             }
 
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -815,7 +807,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public ImeConversionModeValues ImeConversionMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -898,7 +889,6 @@ namespace System.Windows.Input
                 return ImeConversionModeValues.Alphanumeric;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidConversionMode(value))
@@ -1084,7 +1074,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public ImeSentenceModeValues ImeSentenceMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -1155,7 +1144,6 @@ namespace System.Windows.Input
                 return ImeSentenceModeValues.None;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidSentenceMode(value))
@@ -1411,7 +1399,6 @@ namespace System.Windows.Input
         ///     an elevation of privilige. 
         ///     TreatAsSafe: This method is safe to expose.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void EnableOrDisableInputMethod(bool bEnabled)
         {
             // InputMethod enable/disabled status was changed on the current focus Element.
@@ -1512,7 +1499,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - calls unmanaged Windowing and IME APIs.
         /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ConversionModeFlags Imm32ConversionModeToTSFConversionMode(IntPtr hwnd)
         {
             UnsafeNativeMethods.ConversionModeFlags convMode = 0;
@@ -1555,7 +1541,6 @@ namespace System.Windows.Input
         /// Critical - accesses message pump/input manager directly
         /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1584,7 +1569,6 @@ namespace System.Windows.Input
         /// Critical - accesses message pump/input manager directly
         /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UninitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1611,7 +1595,6 @@ namespace System.Windows.Input
         ///                  It should be shown only with unrestricted UI permission.
         ///     TreatAsSafe: There is Demand.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowConfigureUI(UIElement element, bool fShow)
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -1673,7 +1656,6 @@ namespace System.Windows.Input
         ///                  It should be shown only with unrestricted UI permission.
         ///     TreatAsSafe: There is Demand.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowRegisterWordUI(UIElement element, bool fShow, string strRegister)
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -1732,7 +1714,6 @@ namespace System.Windows.Input
 	/// <SecurityNote>
 	///   Critical: This code calls into CriticalFromVisual and also elevates.It exposes the handle.
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr HwndFromInputElement(IInputElement element)
         {
             IntPtr hwnd = (IntPtr)0;
@@ -1777,7 +1758,6 @@ namespace System.Windows.Input
         ///     Critical: This code calls into COM interop pointers (ITfFunctionProvider)
         ///     TreatAsSafe: This code has a demand for unmanaged code
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -1809,7 +1789,6 @@ namespace System.Windows.Input
         /// Critical - calls unmanaged code to get the keyboard information
         /// TreatAsSafe - discovery of the input language is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private UnsafeNativeMethods.TF_LANGUAGEPROFILE GetCurrentKeybordTipProfile()
         {
             UnsafeNativeMethods.ITfInputProcessorProfiles ipp = InputProcessorProfilesLoader.Load();
@@ -1904,7 +1883,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         private IntPtr DefaultImc
         {
-            [SecurityCritical]
             get
             {
                 if (_defaultImc==null)

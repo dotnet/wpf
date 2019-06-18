@@ -45,7 +45,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads a stroke from the stream based on Stroke Descriptor, StylusPointDescription, Drawing Attributes, Stroke IDs, transform and GuidList
@@ -125,7 +124,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-       [SecurityCritical]
 #else
         /// <summary>
         /// This functions loads a stroke from a memory stream based on the descriptor and GuidList. It returns
@@ -368,7 +366,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
@@ -683,7 +680,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Returns an array of bytes of the saved stroke
@@ -838,7 +834,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves the packets into a stream of bytes
@@ -987,7 +982,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves the packets data corresponding to a packet property (identified by the guid) into the stream

@@ -79,7 +79,6 @@ namespace MS.Internal.IO.Packaging
         /// Safe
         ///  1) _readEventHandles is Critical for set but this class is creating the new ones here
         /// </SecurityNote>
-        [SecurityCritical]
         internal NetStream(
             Stream responseStream,
             long fullStreamLength,
@@ -388,7 +387,6 @@ namespace MS.Internal.IO.Packaging
         /// Safe
         ///  1) _readEventHandles is Critical for set but we are disposing the ones this class created
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void Dispose(bool disposing)
         {
             // always call base.Dispose(bool) regardless of our state
@@ -529,7 +527,6 @@ namespace MS.Internal.IO.Packaging
         /// Safe
         ///  1) _readEventHandles is Critical for set
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ReadCallBack(IAsyncResult ar)
         {
             // prevent simultaneous BeginRead/EndRead
@@ -627,7 +624,6 @@ namespace MS.Internal.IO.Packaging
         ///     (and Proxy is only Critical member of _originalRequest)
         ///  4) ByteRangeDownloader.Proxy set is safe because the _originalRequest.Proxy is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureDownloader()
         {
             if (_byteRangeDownloader == null)
@@ -1091,7 +1087,6 @@ namespace MS.Internal.IO.Packaging
         /// Safe
         ///  1) _readEventHandles is Critical for set
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private int GetData(Block block)
         {
             TrimBlockToStreamLength(block);
@@ -1218,7 +1213,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) modifies Critical collection _readEventHandles
         /// </SecurityNote>
-        [SecurityCritical]
         private void ReleaseFullDownloadResources()
         {
             Debug.Assert(_fullDownloadComplete, "Do not call this unless full download is complete.");
@@ -1266,7 +1260,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) modifies Critical collection _readEventHandles
         /// </SecurityNote>
-        [SecurityCritical]
         private void FreeByteRangeDownloader()
         {
             if (_byteRangeDownloader != null)
@@ -1344,7 +1337,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) Proxy member is Critical because we use it under Unrestricted assert
         /// </SecurityNote>
-        [SecurityCritical]
         WebRequest              _originalRequest;   // Proxy member is Critical
         Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
         long                    _position;          // our "logical stream position"
@@ -1379,7 +1371,6 @@ namespace MS.Internal.IO.Packaging
                                                         // access to this value must be synchronized using lock()
 
         // OS synchronization event used to signal that new data is available
-        [SecurityCritical]
         private EventWaitHandle[]   _readEventHandles = new EventWaitHandle[(int)ReadEvent.MaxReadEventEnum];
 
         // protects the _tempFileStream object and allows both our thread and the ByteRangeDownloader thread to safely access the temp stream

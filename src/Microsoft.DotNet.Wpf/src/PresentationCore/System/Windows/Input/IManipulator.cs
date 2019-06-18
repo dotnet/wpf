@@ -59,7 +59,6 @@ namespace System.Windows.Input
         ///               manipulation. But the decision is to limit the scope
         ///               of this raw method to full trust.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         void ManipulationEnded(bool cancel);
     }
 }

@@ -95,7 +95,6 @@ namespace MS.Internal.PtsHost
         ///     a) calls Critical function GetFloaterHandlerInfoCore,
         ///     b) passes 'pobjectinfo' to Critical function that'll modify it.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void GetFloaterHandlerInfo(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
@@ -113,7 +112,6 @@ namespace MS.Internal.PtsHost
         ///     a) calls Critical function GetTableObjHandlerInfoCore,
         ///     b) passes 'pobjectinfo' to Critical function that'll modify it.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void GetTableObjHandlerInfo(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
@@ -157,7 +155,6 @@ namespace MS.Internal.PtsHost
         /// Critical, because sets the Critical variable _contextPool and accesses AppDomain events.
         /// Safe, because .ctor just creates the container for the critical data and does not reveal any informaiton.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private PtsCache(Dispatcher dispatcher)
         {
             // Initially allocate just one entry. The constructor gets called
@@ -204,7 +201,6 @@ namespace MS.Internal.PtsHost
         ///     PtsHost.Context gives only read-only access to Critical data, so it is
         ///     safe to expose it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private PtsHost AcquireContextCore(PtsContext ptsContext, TextFormattingMode textFormattingMode)
         {
             int index;
@@ -281,7 +277,6 @@ namespace MS.Internal.PtsHost
         ///        PTS.GetFloaterHandlerInfo
         ///     c) accesses _contextPool.
         /// </SecurityNote>
-        [SecurityCritical]
         private void GetFloaterHandlerInfoCore(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             int index;
@@ -308,7 +303,6 @@ namespace MS.Internal.PtsHost
         ///        PTS.GetTableObjHandlerInfo
         ///     c) accesses _contextPool.
         /// </SecurityNote>
-        [SecurityCritical]
         private void GetTableObjHandlerInfoCore(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             int index;
@@ -356,7 +350,6 @@ namespace MS.Internal.PtsHost
         ///     c) accesses _contextPool
         /// Safe, because no parameters are directly passed to the Critical functions.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DestroyPTSContexts()
         {
             // Destroy all unused PTS Contexts.
@@ -422,7 +415,6 @@ namespace MS.Internal.PtsHost
         ///     which is used as an index into the array of context pools. No
         ///     parameters that are directly passed to the Critical functions.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnPtsContextReleased(bool cleanContextPool)
         {
             int index;
@@ -494,7 +486,6 @@ namespace MS.Internal.PtsHost
         ///     data structures including delegates pointing to Critical methods
         ///     and pointers that'll be passed to PTS code.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr CreatePTSContext(int index, TextFormattingMode textFormattingMode)
         {
             PtsHost ptsHost;
@@ -557,7 +548,6 @@ namespace MS.Internal.PtsHost
         ///        has lot of Critical fields,
         ///     c) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void InitGenericInfo(PtsHost ptsHost, IntPtr clientData, IntPtr installedObjects, int installedObjectsCount, ref PTS.FSCONTEXTINFO contextInfo)
         {
             // Validation
@@ -691,7 +681,6 @@ namespace MS.Internal.PtsHost
         ///        invocations are tracked,
         ///     c) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void InitInstalledObjectsInfo(PtsHost ptsHost, ref PTS.FSIMETHODS subtrackParaInfo, ref PTS.FSIMETHODS subpageParaInfo, out IntPtr installedObjects, out int installedObjectsCount)
         {
             // Initialize subtrack para info
@@ -747,7 +736,6 @@ namespace MS.Internal.PtsHost
         ///        Critical so direct invocations are tracked.
         ///     b) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void InitFloaterObjInfo(PtsHost ptsHost, ref PTS.FSFLOATERINIT floaterInit)
         {
             floaterInit.fsfloatercbk.pfnGetFloaterProperties = new PTS.GetFloaterProperties(ptsHost.GetFloaterProperties);
@@ -780,7 +768,6 @@ namespace MS.Internal.PtsHost
         ///        Critical so direct invocations are tracked,
         ///     b) is it unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void InitTableObjInfo(PtsHost ptsHost, ref PTS.FSTABLEOBJINIT tableobjInit)
         {
             // FSTABLEOBJCBK
@@ -866,7 +853,6 @@ namespace MS.Internal.PtsHost
         ///     by partial trust code and partial trust code cant' invoke
         ///     the delegates directly.
         /// </SecurityNote>
-        [SecurityCritical]
         private List<ContextDesc> _contextPool;
 
         /// <summary>
@@ -925,7 +911,6 @@ namespace MS.Internal.PtsHost
             ///     TreatAsSafe: This code does not take any parameter or return state.
             ///                  It simply attaches private callbacks.
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public PtsCacheShutDownListener(PtsCache target) : base(target)
             {
             }

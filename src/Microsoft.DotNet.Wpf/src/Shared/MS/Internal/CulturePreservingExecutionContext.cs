@@ -86,7 +86,6 @@ namespace MS.Internal
         ///         Calls <see cref="CulturePreservingExecutionContext.CulturePreservingExecutionContext"/> 
         ///         which requires full trust for the immediate caller.
         /// </securitynote>
-        [SecurityCritical]
         public static CulturePreservingExecutionContext Capture()
         {
             // ExecutionContext.SuppressFlow had been called - we expect
@@ -158,7 +157,6 @@ namespace MS.Internal
         ///   </runtime>
         /// />
         /// </remarks>
-        [SecurityCritical]
         public static void Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, object state)
         {
             if (executionContext == null)
@@ -214,7 +212,6 @@ namespace MS.Internal
         ///         This is a logical exetnsion of <see cref="Run(CulturePreservingExecutionContext, ContextCallback, object)"/>
         ///         method, and has the same security attributes as that method. 
         /// </securitynote>
-        [SecurityCritical]
         private static void CallbackWrapper(object obj)
         {
             var cultureAndContext = obj as CultureAndContextManager;
@@ -242,7 +239,6 @@ namespace MS.Internal
         ///     Critical:
         ///         Calls into <see cref="CallbackWrapper(object)"/> which is critical.
         /// </securitynote>
-        [SecurityCritical]
         static CulturePreservingExecutionContext()
         {
             CallbackWrapperDelegate = new ContextCallback(CulturePreservingExecutionContext.CallbackWrapper);
@@ -280,7 +276,6 @@ namespace MS.Internal
         ///     Critical:
         ///         This method calls Dispose(bool) which is marked SecurityCritical
         /// </securitynote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -344,8 +339,6 @@ namespace MS.Internal
             ///         Sets Thread.CurrentCulture and Thread.CurrentUICulture which require SecurityPermission Assert 
             ///         for SecurityPermissionFlag.ControlThread
             /// </securitynote>
-            [SecurityCritical]
-            [SecurityPermission(SecurityAction.Assert, ControlThread = true)]
             public void WriteCultureInfosToCurrentThread()
             {
                 Thread.CurrentThread.CurrentCulture = _culture;

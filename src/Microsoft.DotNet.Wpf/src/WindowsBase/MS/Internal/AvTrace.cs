@@ -221,7 +221,6 @@ namespace MS.Internal
        ///     1, tracing (from System.Diagnostics) can be enabled/configured using a .config file.
        ///</SecurityNote>
 
-       [SecurityCritical, SecurityTreatAsSafe]
        [FriendAccessAllowed]
        static internal bool IsWpfTracingEnabledInRegistry()
        {

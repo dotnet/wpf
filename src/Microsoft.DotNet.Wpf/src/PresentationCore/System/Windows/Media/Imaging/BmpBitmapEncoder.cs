@@ -37,7 +37,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - will eventually create unmanaged resources
         /// PublicOK - all inputs are verified
         /// </SecurityNote>
-        [SecurityCritical ]
         public BmpBitmapEncoder() :
             base(true)
         {
@@ -61,7 +60,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -74,7 +72,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - calls Critical Initialize()
         /// </SecurityNote>
-       [SecurityCritical]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.Initialize(
@@ -100,7 +97,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - CLSID used for creation of critical resources
         /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatBmp;
 
         #endregion

@@ -44,7 +44,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: Setting critical data
         /// </SecurityNote>
-        [SecurityCritical]
         [FriendAccessAllowed] // Built into Base, used by Core or Framework.
         internal MSG(IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, int time, int pt_x, int pt_y)
         {
@@ -73,12 +72,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr hwnd
         {
-            [SecurityCritical]
             get
             {
                 return _hwnd;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -95,12 +92,10 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public int message
         {
-            [SecurityCritical]
             get
             {
                 return _message;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -120,12 +115,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr wParam
         {
-            [SecurityCritical]
             get
             {
                 return _wParam;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -145,12 +138,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr lParam
         {
-            [SecurityCritical]
             get
             {
                 return _lParam;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -167,12 +158,10 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public int time
         {
-            [SecurityCritical]
             get
             {
                 return _time;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -192,12 +181,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
         public int pt_x
         {
-            [SecurityCritical]
             get
             {
                 return _pt_x;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -216,12 +203,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
         public int pt_y
         {
-            [SecurityCritical]
             get
             {
                 return _pt_y;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -240,7 +225,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwnd;
 
         /// <summary>
@@ -249,7 +233,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private int _message;
 
         /// <summary>
@@ -258,7 +241,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _wParam;
 
         /// <summary>
@@ -267,7 +249,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _lParam;
 
         /// <summary>
@@ -276,7 +257,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private int _time;
 
         /// <summary>
@@ -285,7 +265,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private int _pt_x;
 
         /// <summary>
@@ -294,7 +273,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
         /// </SecurityNote>
-        [SecurityCritical]
         private int _pt_y;
 }
 }

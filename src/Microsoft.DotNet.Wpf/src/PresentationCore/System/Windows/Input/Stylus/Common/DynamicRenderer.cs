@@ -213,7 +213,6 @@ namespace System.Windows.Input.StylusPlugIns
             /// </SecurityNote>
             internal VisualTarget VisualTarget
             {
-                [SecuritySafeCritical]
                 get 
                 { 
                     if (_visualTarget == null)

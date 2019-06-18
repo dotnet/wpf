@@ -168,7 +168,6 @@ namespace MS.Internal.Automation
         ///     TreatAsSafe - returning an element is considered safe. 
         ///                 - the hwndSource is not exposed.
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static Visual GetElementFromPoint( IntPtr hwnd, Visual root, Point pointScreen )
         {
             HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);

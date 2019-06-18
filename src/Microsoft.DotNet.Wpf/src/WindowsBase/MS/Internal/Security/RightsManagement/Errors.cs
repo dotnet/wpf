@@ -51,7 +51,6 @@ namespace MS.Internal.Security.RightsManagement
         ///     Critical: This code calls into ThrowExceptionForHr which has a link demand
         ///     TreatAsSafe: The net effect is the same as throwing an exception from your app
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ThrowOnErrorCode(int hr)
         {
             // we can return if it is not a failure right away

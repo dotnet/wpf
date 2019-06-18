@@ -17,7 +17,6 @@ namespace MS.Internal.Ink
         ///     Critical: Critical as this code invokes Marshal.SizeOf which uses LinkDemand for UnmanagedCode permission.
         ///     TreatAsSafe: The method doesn't take any user inputs. It only pre-computes the size of our internal types.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static Native()
         {
             // NOTICE-2005/10/14-WAYNEZEN,

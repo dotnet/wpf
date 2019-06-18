@@ -141,7 +141,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses PresentationSource.CriticalFromVisual which is critical
         ///     TreatAsSafe: This code does not expose it and simply uses it for determining if the FocusedElement is valid
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IInputElement GetFocusedElement(DependencyObject element, bool validate)
         {
             if (element == null)

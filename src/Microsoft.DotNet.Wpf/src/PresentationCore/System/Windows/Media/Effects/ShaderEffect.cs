@@ -572,7 +572,6 @@ namespace System.Windows.Media.Effects
         ///     Critical: This code accesses unsafe code blocks
         ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel
@@ -755,7 +754,6 @@ namespace System.Windows.Media.Effects
         ///     Critical: This code accesses unsafe code blocks
         ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void AppendRegisters<T>(DUCE.Channel channel, List<T?> list) where T : struct
         {
             if (list != null)

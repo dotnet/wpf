@@ -36,7 +36,6 @@ namespace System.Windows.Media.Effects
         /// Critical - returns a security critical type SafeHandle.
         /// Safe     - Always returns null.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe protected override SafeHandle CreateUnmanagedEffect()
         {
@@ -53,7 +52,6 @@ namespace System.Windows.Media.Effects
         /// SecurityCritical - because SetValue has a link demand
         /// SecutiryTreatAsSafe - because it demans UIWindow permission
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {

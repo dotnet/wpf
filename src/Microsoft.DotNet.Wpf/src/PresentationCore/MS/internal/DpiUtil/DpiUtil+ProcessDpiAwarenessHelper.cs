@@ -48,7 +48,6 @@ namespace MS.Internal
             ///     Critical: Calls into native methods
             ///     Safe: Returns only non-critical information to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static PROCESS_DPI_AWARENESS GetLegacyProcessDpiAwareness()
             {
                 return
@@ -72,7 +71,6 @@ namespace MS.Internal
             ///     Critical: Takes a native handle as a parameter
             ///     Safe: Only returns non-critical information to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static PROCESS_DPI_AWARENESS GetProcessDpiAwareness(IntPtr hWnd)
             {
                 if (IsGetProcessDpiAwarenessFunctionSupported)
@@ -102,7 +100,6 @@ namespace MS.Internal
             ///     Critical: calls into Critical native methods
             ///     Safe: Returns only non-critical information to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static PROCESS_DPI_AWARENESS GetProcessDpiAwarenessFromWindow(IntPtr hWnd)
             {
                 int windowThreadProcessId = 0;

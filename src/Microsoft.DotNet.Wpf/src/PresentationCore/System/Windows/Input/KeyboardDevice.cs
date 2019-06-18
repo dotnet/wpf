@@ -31,7 +31,6 @@ namespace System.Windows.Input
         ///     Critical: This code creates critical data(_tsfManager,_textcompositionManager) and stores critical data (inputManager)
         ///     TreatAsSafe: Although it creates critical data there are demand on the critical data and the constructor is safe
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected KeyboardDevice(InputManager inputManager)
         {
             _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -104,7 +103,6 @@ namespace System.Windows.Input
 
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical  ]
             get
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -155,7 +153,6 @@ namespace System.Windows.Input
         ///     PublicOK: Moving focus within an app is safe and this does not expose
         ///               the critical data.
         /// </SecurityNote>
-        [SecurityCritical]
         public IInputElement Focus(IInputElement element)
         {
             DependencyObject oFocus = null;
@@ -190,7 +187,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
         ///     the critical data.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void Focus(DependencyObject focus, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             // Make sure that the element is valid for receiving focus.
@@ -316,7 +312,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal TextServicesManager TextServicesManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
                SecurityHelper.DemandUnrestrictedUIPermission();
@@ -330,7 +325,6 @@ namespace System.Windows.Input
        /// </SecurityNote>
        internal TextCompositionManager TextCompositionManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
                SecurityHelper.DemandUnrestrictedUIPermission();
@@ -343,7 +337,6 @@ namespace System.Windows.Input
         ///               causes a change of focus.
         ///     TreatAsSafe:This code is safe to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void TryChangeFocus(DependencyObject newFocus, IKeyboardInputProvider keyboardInputProvider, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             bool changeFocus = true;
@@ -453,7 +446,6 @@ namespace System.Windows.Input
         ///               is not OK to expose
         ///     TreatAsSafe: This changes focus within an app
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ChangeFocus(DependencyObject focus, int timestamp)
         {
             DependencyObject o = null;
@@ -652,7 +644,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
         ///                  the critical data.
         ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private object ReevaluateFocusCallback(object arg)
         {
             _reevaluateFocusOperation = null;
@@ -745,7 +736,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -761,7 +751,6 @@ namespace System.Windows.Input
         ///               It also stores critical data InputSource
         ///               accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -890,7 +879,6 @@ namespace System.Windows.Input
         ///                and KeyEventArgs ctor.
         ///                accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // PreviewKeyDown --> KeyDown
@@ -1069,7 +1057,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: accesses the StagingInput
         /// </SecurityNote>
-        [SecurityCritical]
         private RawKeyboardInputReport ExtractRawKeyboardInputReport(NotifyInputEventArgs e, RoutedEvent Event)
         {
             RawKeyboardInputReport keyboardInput = null;
@@ -1129,7 +1116,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal bool IsActive
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _activeSource != null && _activeSource.Value != null;

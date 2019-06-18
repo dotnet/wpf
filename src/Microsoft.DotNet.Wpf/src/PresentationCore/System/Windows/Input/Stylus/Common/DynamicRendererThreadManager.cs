@@ -58,7 +58,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <SecurityNote>
         ///   Critical: Called only by SecurityCritical code DynamicRendererThreadManager::ctor
         /// </SecurityNote>
-        [SecurityCritical]
         public static void AddListener(Dispatcher source, IWeakEventListener listener)
         {
             if (source == null)
@@ -112,7 +111,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// </SecurityNote>
         private static DispatcherShutdownStartedEventManager CurrentManager
         {
-            [SecurityCritical]
             get
             {
                 Type managerType = typeof(DispatcherShutdownStartedEventManager);
@@ -180,7 +178,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///   TreatAsSafe: Calling this over and over can only create one shared thread with its own dispatcher which is at
         ///   the most a nuisance.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private DynamicRendererThreadManager()
         {
             // Create the thread
@@ -264,7 +261,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///          Called by Dispose() and Finalizer.
         /// TreatAsSafe -  No critical data returned or accepted as input.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         void Dispose(bool disposing)
         {
             if(!_disposed)
@@ -327,7 +323,6 @@ namespace System.Windows.Input.StylusPlugIns
             ///             Called by DynamicRendererThreadManager constructor.
             ///   the most a nuisance.
             /// </SecurityNote>
-            [SecurityCritical]
             internal Dispatcher StartUpAndReturnDispatcher()
             {
                 _startupCompleted = new AutoResetEvent(false);
@@ -346,7 +341,6 @@ namespace System.Windows.Input.StylusPlugIns
             /// <SecurityNote>
             ///   Critical: This code calls into Dispatcher.Run on a given thread
             /// </SecurityNote>
-            [SecurityCritical]
             public void InkingThreadProc()
             {
                 Thread.CurrentThread.Name = "DynamicRenderer";

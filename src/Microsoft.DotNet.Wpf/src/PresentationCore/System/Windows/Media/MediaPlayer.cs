@@ -535,7 +535,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - calls critical code
         /// </SecurityNote>
-        [SecurityCritical]
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
             EnsureState();
@@ -553,7 +552,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - accesses unmanaged objects, and critical resources
         /// </SecurityNote>
-        [SecurityCritical]
         internal DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
             //

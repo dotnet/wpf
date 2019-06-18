@@ -35,14 +35,12 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical: Window handle
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr ElevationPromptOwnerWindow;
 
         /// <SecurityNote>
         /// Critical - HostSecurityManager..ctor LinkDemand's. This class should not be called directly by PT'ed callers, since it can interfere with
         /// the privileges an AppDomain gets.
         /// </SecurityNote>
-        [SecurityCritical]
         internal PresentationHostSecurityManager()
         {
         }
@@ -58,7 +56,6 @@ namespace System.Windows.Interop
         ///        has to be.
         ///     2) The additional permission added is to the "fake" site-of-origin used for debugging.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override ApplicationTrust DetermineApplicationTrust(Evidence applicationEvidence, Evidence activatorEvidence, TrustManagerContext context)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_DetermineApplicationTrustStart);
@@ -165,7 +162,6 @@ namespace System.Windows.Interop
             return trust;
         }
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.PresentationHostDll)]
         static extern void SetFakeActiveWindow(IntPtr hwnd);
 
@@ -174,7 +170,6 @@ namespace System.Windows.Interop
         ///     CAUTION: If srcUri denotes a directory path, it must end with '/'. Otherwise permission will
         ///         be granted to the parent directory.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static PermissionSet AddPermissionForUri(PermissionSet originalPermSet, Uri srcUri)
         {
             PermissionSet newPermSet = originalPermSet;
@@ -199,7 +194,6 @@ namespace System.Windows.Interop
         ///     Critical - because this accesses critical data AppDomain.CurrentDomain.SetupInformation.ActivationArguments.
         ///     Safe - because this does not expose that string.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool GetBoolFromActivationData(int index)
         {
             bool flag = false; // default
@@ -220,7 +214,6 @@ namespace System.Windows.Interop
         ///     Critical - because this accesses critical data AppDomain.CurrentDomain.SetupInformation.ActivationArguments.
         ///     Safe - because this does not expose that string.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Uri GetUriFromActivationData(int index)
         {
             Uri uri = null;
@@ -249,7 +242,6 @@ namespace System.Windows.Interop
         ///     Critical - because this does an elevation to get the ID string.
         ///     Safe - because this does not expose that string.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override ObjectHandle CreateInstance(ActivationContext actCtx)
         {
             if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose))
@@ -314,7 +306,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///    Critical: Initializes Critical data
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static PresentationAppDomainManager()
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_AppDomainManagerCctor);
@@ -323,7 +314,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///    Critical: Base class has link demnd and inheritance demand
         /// </SecurityNote>
-        [SecurityCritical]
         public PresentationAppDomainManager()
         {
         }
@@ -341,7 +331,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This hooks up the assembly filter which we want to prevent arbitrary code from doing.
         /// </SecurityNote>
-        [SecurityCritical]
         public override void InitializeNewDomain(AppDomainSetup appDomainInfo)
         {
             //Hookup the assembly load event
@@ -354,7 +343,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public override HostSecurityManager HostSecurityManager
         {
-            [SecurityCritical]
             get
             {
                 if (_hostsecuritymanager == null)
@@ -371,7 +359,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical: This calls the critical ApplicationProxyInternal ctor
         /// </SecurityNote>
-        [SecurityCritical]
         internal ApplicationProxyInternal CreateApplicationProxyInternal()
         {
             return new ApplicationProxyInternal();
@@ -419,7 +406,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// It holds a HostSecurityManager object, which is critical and can interfere with the permissions that are assigned to an AppDomain.
         /// </SecurityNote>
-        [SecurityCritical]
         private HostSecurityManager _hostsecuritymanager = null;
 
         private static AppDomain _newAppDomain;
@@ -430,7 +416,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         ///    Critical: This should not be exposed since it can be used to bring down process
         ///</SecurityNote>
-        [SecurityCritical]
         private AssemblyFilter _assemblyFilter;
     }
 }

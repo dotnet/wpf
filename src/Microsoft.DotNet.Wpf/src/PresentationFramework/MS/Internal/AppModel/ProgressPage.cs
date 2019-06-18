@@ -21,13 +21,11 @@ namespace MS.Internal.AppModel
 {
     /// <SecurityNote>
     /// Critical due to SUC. 
-    /// Even if a partilar method is considered safe, applying [SecurityTreatAsSafe] to it here won't help 
     /// much, because the transparency model still requires SUC-d methods to be called only from 
     /// SecurityCritical ones.
     /// </SecurityNote>
     [ComImport, Guid("1f681651-1024-4798-af36-119bbe5e5665")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface INativeProgressPage
     {
         [PreserveSig]
@@ -59,7 +57,6 @@ namespace MS.Internal.AppModel
         /// Critical : Accepts critical argument INativeProgressPage
         ///            Sets critical member _npp
         /// </SecurityNote>
-        [SecurityCritical]
         internal NativeProgressPageProxy(INativeProgressPage npp)
         {
             _npp = npp;
@@ -70,7 +67,6 @@ namespace MS.Internal.AppModel
         /// TreatAsSafe: No concern about "spoofing" progress messages. A web site could just render an HTML 
         ///     page that looks like our progress page.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void ShowProgressMessage(string message)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -112,7 +108,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         public string ApplicationName
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -131,7 +126,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         public string PublisherName
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -145,7 +139,6 @@ namespace MS.Internal.AppModel
         /// Critical: Calls a SUC'd COM interface method.
         /// TreatAsSafe: Sending even arbitrary progress updates not considered harmful.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void UpdateProgress(long bytesDownloaded, long bytesTotal)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -155,7 +148,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical : Field for critical type INativeProgressPage
         /// </SecurityNote>
-        [SecurityCritical]
         INativeProgressPage _npp;
     };
 }

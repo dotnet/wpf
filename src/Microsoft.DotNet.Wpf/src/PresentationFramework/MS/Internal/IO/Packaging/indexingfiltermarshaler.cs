@@ -103,7 +103,6 @@ namespace MS.Internal.IO.Packaging
         ///   This code is not intended to be used from PT code.
         ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void MarshalStringToPtr(string s, ref uint bufCharacterCount, IntPtr p)
         {
             // bufCharacterCount is never supposed to be zero at this level.
@@ -132,7 +131,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls Marshal.StringToCoTaskMemUni which LinkDemands, and writes string into unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static void MarshalPropSpec(ManagedPropSpec propSpec, ref PROPSPEC native)
         {
             native.propType = (uint)propSpec.PropType;
@@ -160,7 +158,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls MarshalPropSpec which is Critical.  Returns a pointer to unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static void MarshalFullPropSpec(ManagedFullPropSpec fullPropSpec, ref FULLPROPSPEC native)
         {
             native.guid = fullPropSpec.Guid;
@@ -174,7 +171,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls MarshalFullPropSpec which is Critical.  Returns a pointer to unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static STAT_CHUNK MarshalChunk(ManagedChunk chunk)
         {
             STAT_CHUNK native = new STAT_CHUNK();
@@ -204,7 +200,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls Marshal.StringToCoTaskMemAnsi which LinkDemands, and writes string into unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static IntPtr MarshalPropVariant(Object obj)
         {
             IntPtr pszVal = IntPtr.Zero;
@@ -288,7 +283,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls MarshalChunk which is Critical.  Returns a pointer to unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         public STAT_CHUNK GetChunk()
         {
             // Get the managed chunk
@@ -326,7 +320,6 @@ namespace MS.Internal.IO.Packaging
         ///   This code is not intended to be called from PT code.
         ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
         /// </SecurityNote>
-        [SecurityCritical]
         public void GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
             // NOTE: bufCharacterCount and pBuffer are already validated by XpsFilter.
@@ -345,7 +338,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls MarshalPropVariant which is Critical.  Returns a pointer to unmanaged memory.
         ///</SecurityNote> 
-        [SecurityCritical]
         public IntPtr GetValue()
         {
             return MarshalPropVariant(_implementation.GetValue());

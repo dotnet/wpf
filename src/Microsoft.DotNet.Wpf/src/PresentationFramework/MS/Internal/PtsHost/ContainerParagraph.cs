@@ -465,7 +465,6 @@ namespace MS.Internal.PtsHost
         ///     b) calls Critical function PTS.FsTransformRectangle
         ///     c) calls Critical function PTS.FsTransformBbox
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatParaFinite(
             ContainerParaClient paraClient,     // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !IntPtr.Zero
@@ -641,7 +640,6 @@ namespace MS.Internal.PtsHost
         ///     b) calls Critical function PTS.FsTransformRectangle
         ///     c) calls Critical function PTS.FsTransformBbox
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatParaBottomless(
             ContainerParaClient paraClient,     // IN:
             int iArea,                          // IN:  column-span area index
@@ -778,7 +776,6 @@ namespace MS.Internal.PtsHost
         ///     b) calls Critical function PTS.FsTransformRectangle
         ///     c) calls Critical function PTS.FsTransformBbox
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             ContainerParaClient paraClient,     // IN:

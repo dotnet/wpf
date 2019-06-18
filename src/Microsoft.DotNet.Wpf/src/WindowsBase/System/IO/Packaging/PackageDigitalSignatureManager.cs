@@ -461,7 +461,6 @@ namespace System.IO.Packaging
         ///     Critical: calls X509Certificate.Handle which LinkDemands
         ///     PublicOK: we don't store or return the handle
         ///</SecurityNote> 
-        [SecurityCritical]
         public PackageDigitalSignature Sign(
             IEnumerable<Uri> parts, 
             X509Certificate certificate,
@@ -831,8 +830,6 @@ namespace System.IO.Packaging
         ///     Critical - The X509Chain.Build method has a LinkDemand for Unrestricted. 
         ///     PublicOK - VerifyCertificate has LinkDemand.
         ///</SecurityNote> 
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public static X509ChainStatusFlags VerifyCertificate(X509Certificate certificate)
         {
             if (certificate == null)
@@ -889,7 +886,6 @@ namespace System.IO.Packaging
         ///     Critical: calls X509Certificate2UI.SelectFromCollection which LinkDemands
         ///     TreatAsSafe: UI can only display existing certificates, no spoofing
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         static internal X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
         {
             X509Certificate2 X509cert = null;

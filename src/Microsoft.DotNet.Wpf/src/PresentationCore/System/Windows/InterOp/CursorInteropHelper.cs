@@ -45,7 +45,6 @@ namespace System.Windows.Interop
         ///    Critical: This causes the cursor to change and accesses the SetHandleInternalMethod
         ///    PublicOK: There is a demand.
         /// </SecurityNote>
-        [SecurityCritical ]
         public static Cursor Create(SafeHandle cursorHandle)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -71,7 +70,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///    Critical: This causes the cursor to change and accesses the SetHandleInternalMethod
         /// </SecurityNote>
-        [SecurityCritical]
         internal static Cursor CriticalCreate(SafeHandle cursorHandle)
         {
             return new Cursor(cursorHandle);

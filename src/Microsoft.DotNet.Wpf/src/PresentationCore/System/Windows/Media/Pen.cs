@@ -115,7 +115,6 @@ namespace System.Windows.Media
         ///     Critical: has unsafe code blocks .Returning pen information is safe, the risk
         ///     is in pointer handling
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetBasicPenData(MIL_PEN_DATA* pData, out double[] dashArray)
         {
             dashArray = null;

@@ -160,7 +160,6 @@ namespace MS.Internal
         ///     Critical: This code calls into SynchronizationContext.SetSynchronizationContext which link demands
         ///     Safe: Restores original SynchronizationContext
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void CallWithNonPumpingWait(Action callback)
         {
             SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
@@ -308,8 +307,6 @@ namespace MS.Internal
             /// <SecurityNote>
             ///     Critical - Calls WaitForMultipleObjectsEx which has a SUC.
             /// </SecurityNote>
-            [SecurityCritical]
-            [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.ControlPolicy|SecurityPermissionFlag.ControlEvidence)]
             [PrePrepareMethod]
             public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
             {

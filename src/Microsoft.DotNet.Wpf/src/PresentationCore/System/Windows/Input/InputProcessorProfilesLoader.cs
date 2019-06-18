@@ -63,7 +63,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - calls unmanaged code to load the input profiles, returns unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal static UnsafeNativeMethods.ITfInputProcessorProfiles Load()
         {
             UnsafeNativeMethods.ITfInputProcessorProfiles obj;

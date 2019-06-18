@@ -110,7 +110,6 @@ namespace MS.Internal.IO.Packaging
         ///   This method is Internal. Not to be called from PT code.
         ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
         /// </SecurityNote>
-        [SecurityCritical]
         void IFilter.GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
             if (_filter == null)
@@ -535,7 +534,6 @@ namespace MS.Internal.IO.Packaging
         ///               This method is only called by unmanaged callers. 
         ///               There is no elevation of privilege in this method.
         /// </SecurityNote>
-        [SecurityCritical]
         void IPersistStream.Load(MS.Internal.Interop.IStream stream)
         {
             // Check argument.

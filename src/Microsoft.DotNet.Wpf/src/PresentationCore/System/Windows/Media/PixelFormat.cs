@@ -163,7 +163,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Accesses closely controlled format guid
         /// </SecurityNote>
-        [SecurityCritical]
         internal PixelFormat(Guid guidPixelFormat)
         {
             unsafe
@@ -209,7 +208,6 @@ namespace System.Windows.Media
         /// Critical - Accesses closely controlled format guid
         /// TreatAsSafe - The input (enum) is validated in setting the format guid
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal PixelFormat(PixelFormatEnum format)
         {
             _format = format;
@@ -229,7 +227,6 @@ namespace System.Windows.Media
         /// Critical - Accesses closely controlled format guid
         /// TreatAsSafe - The input (string) is validated in setting the format guid
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal PixelFormat(string pixelFormatString)
         {
             PixelFormatEnum format = PixelFormatEnum.Default;
@@ -533,8 +530,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         public IList<PixelFormatChannelMask> Masks
         {
-            [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-            [SecurityCritical]
             get
             {
                 IntPtr pixelFormatInfo = CreatePixelFormatInfo();
@@ -593,7 +588,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Access unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr CreatePixelFormatInfo()
         {
             IntPtr componentInfo = IntPtr.Zero;
@@ -640,7 +634,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal int InternalBitsPerPixel
         {
-			[SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_bitsPerPixel == 0)
@@ -718,7 +711,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - calls unmanaged code, accepts unmanaged handles as arguments
         /// </SecurityNote>
-        [SecurityCritical]
         internal static PixelFormat GetPixelFormat (
             SafeMILHandle /* IWICBitmapSource */ bitmapSource
             )

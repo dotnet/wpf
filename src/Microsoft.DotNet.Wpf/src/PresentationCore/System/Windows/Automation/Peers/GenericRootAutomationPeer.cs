@@ -45,7 +45,6 @@ namespace System.Windows.Automation.Peers
         ///     Critical: As this accesses Handle
         ///     TreatAsSafe: Returning the Window Title is considered safe - discussed on Automation TA review
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         override protected string GetNameCore()
         {
             string name = base.GetNameCore();
@@ -83,7 +82,6 @@ namespace System.Windows.Automation.Peers
         ///     Critical as this method accesses critical data.
         ///     TreatAsSafe - window bounds by themselves is considered safe.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         override protected Rect GetBoundingRectangleCore()
         {
             Rect bounds = new Rect(0,0,0,0);

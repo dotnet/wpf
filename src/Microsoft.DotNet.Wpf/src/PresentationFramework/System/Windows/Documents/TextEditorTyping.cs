@@ -483,7 +483,6 @@ namespace System.Windows.Documents
         ///               The operation performed on the handler isnt something that external code cant already do today 
         ///               by firing the EditingCommands.ToggleInsert command and is safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnToggleInsert(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -1631,7 +1630,6 @@ namespace System.Windows.Documents
         ///     Critical - Calls PeekMessage, and accesses the root window
         ///     TreatAsSafe - The information it returns is safe to return.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static bool IsMouseInputPending(TextEditor This)
         {
             bool mouseInputPending = false;

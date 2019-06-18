@@ -452,7 +452,6 @@ namespace System.Windows.Media
         /// Critical - Exposes windows font information.
         /// Safe     - as this doesn't expose sensitive font directly
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static FamilyCollection PreCreateDefaultFamilyCollection()
         {
             FamilyCollection familyCollection = FamilyCollection.FromWindowsFonts(Util.WindowsFontsUriObject);
@@ -506,7 +505,6 @@ namespace System.Windows.Media
         ///            and looks up from the font cache which is a critical operation. 
         /// Safe     - This method returns a IFontFamily which is safe to passed around. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IFontFamily LookupFontFamilyAndFace(
             CanonicalFontFamilyReference canonicalFamilyReference,
             ref FontStyle                style,

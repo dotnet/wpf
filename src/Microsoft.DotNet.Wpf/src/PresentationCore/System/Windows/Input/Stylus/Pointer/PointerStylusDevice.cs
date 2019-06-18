@@ -51,7 +51,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// A reference to the main logic for the pointer stack
         /// </summary>
-        [SecurityCritical]
         private PointerLogic _pointerLogic;
 
         /// <summary>
@@ -117,7 +116,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Critical:   Accesses StylusLogic.GetCurrentStylusLogicAs
         ///                          PointerInteractionEngine constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal PointerStylusDevice(PointerTabletDevice tabletDevice, UnsafeNativeMethods.POINTER_DEVICE_CURSOR_INFO cursorInfo)
         {
             _cursorInfo = cursorInfo;
@@ -163,7 +161,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         /// Critical:  Calls PointerInteractionEngine.Dispose()
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -204,7 +201,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 return _inputSource.Value;
@@ -219,7 +215,6 @@ namespace System.Windows.Input.StylusPointer
 
         internal HwndPointerInputProvider CurrentPointerProvider
         {
-            [SecurityCritical]
             get;
             private set;
         }
@@ -363,7 +358,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal override PresentationSource CriticalActiveSource
         {
-            [SecurityCritical]
             get
             {
                 if (_inputSource != null)
@@ -536,7 +530,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal override int DoubleTapDeltaTime
         {
-            [SecurityTreatAsSafe]
             get
             {
                 return PointerTabletDevice.DoubleTapDeltaTime;
@@ -659,7 +652,6 @@ namespace System.Windows.Input.StylusPointer
         ///                StylusLogic.GetStylusPenContextForHwnd and 
         ///                StylusLogic.InputManagerProcessInputEventsArgs (which can be used to spoof input).
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void Synchronize()
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
@@ -762,7 +754,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Critical - accesses critical data _inputSource.Value
         ///     Safe - Does not expose critical data
         ///</SecurityNote>
-        [SecuritySafeCritical]
         internal override Point GetPosition(IInputElement relativeTo)
         {
             VerifyAccess();
@@ -836,7 +827,6 @@ namespace System.Windows.Input.StylusPointer
         ///                Called by MouseDevice for StylusDevice promoted mouse events to query
         ///                the mouse button state that should be reported.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override MouseButtonState GetMouseButtonState(MouseButton mouseButton, MouseDevice mouseDevice)
         {
             return mouseDevice.GetButtonStateFromSystem(mouseButton);
@@ -853,7 +843,6 @@ namespace System.Windows.Input.StylusPointer
         /// <param name="inputSource">The PresentationSource where this message originated</param>
         /// <param name="pointerData">The aggregated pointer data retrieved from the WM_POINTER stack</param>
         /// <param name="rsir">The raw stylus input generated from the pointer data</param>
-        [SecurityCritical]
         internal void Update(HwndPointerInputProvider provider, PresentationSource inputSource,
             PointerData pointerData, RawStylusInputReport rsir)
         {
@@ -898,7 +887,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical:   Calls PointerInteractionEngine.Update
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateInteractions(RawStylusInputReport rsir)
         {
             _interactionEngine.Update(rsir);
@@ -909,7 +897,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="clientData">Unused</param>
         /// <param name="originalReport">The gesture report generate by the engine</param>
-        [SecurityCritical]
         private void HandleInteraction(object clientData, RawStylusSystemGestureInputReport originalReport)
         {
             RawStylusSystemGestureInputReport report = new RawStylusSystemGestureInputReport(
@@ -976,7 +963,6 @@ namespace System.Windows.Input.StylusPointer
         ///                - TreatAsSafe boundry at ChangeStylusCapture
         ///                - called by ChangeStylusCapture
         /// </SecurityNote>
-        [SecurityCritical]
         internal IInputElement FindTarget(PresentationSource inputSource, Point position)
         {
             IInputElement stylusOver = null;
@@ -1066,7 +1052,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical - Accesses SecurityCriticalData _stylusLogic.
         ///     TreatAsSafe: This code does not expose the PresentationSource and simply changes the stylus over element
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void ChangeStylusOver(IInputElement stylusOver)
         {
             // We are not syncing the OverSourceChanged event
@@ -1101,7 +1086,6 @@ namespace System.Windows.Input.StylusPointer
         ///     TreatAsSafe: This operation is ok to expose since stylus capture is ok. Even if you get the
         ///               source changed events you cannot get to the sources themselves
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void ChangeStylusCapture(IInputElement stylusCapture, CaptureMode captureMode, int timestamp)
         {
             // if the capture changed...
@@ -1203,7 +1187,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical:   Operates on raw input data
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride)
         {
             if (report.RawStylusInput != null && report.RawStylusInput.StylusPointsModified)
@@ -1234,7 +1217,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Critical:   Accesses critical member _inputSource
         ///     Safe:       Transorm data is not critical
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal GeneralTransform GetTabletToElementTransform(IInputElement relativeTo)
         {
             GeneralTransformGroup group = new GeneralTransformGroup();

@@ -58,7 +58,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) modifies Critical data _eventHandle
         /// </SecurityNote>
-        [SecurityCritical]
         internal ByteRangeDownloader(Uri requestedUri, string tempFileName, SafeWaitHandle eventHandle)
             : this(requestedUri, eventHandle)
         {
@@ -86,7 +85,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) modifies Critical data _eventHandle
         /// </SecurityNote>
-        [SecurityCritical]
         internal ByteRangeDownloader(Uri requestedUri, Stream tempStream, SafeWaitHandle eventHandle, Mutex fileMutex)
             : this(requestedUri, eventHandle)
         {
@@ -120,7 +118,6 @@ namespace MS.Internal.IO.Packaging
         ///  1) _eventHandle is Critical for set but we are just nulling it out for dispose
         ///  2) _proxy is Critical for set but safe to null for dispose
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -208,7 +205,6 @@ namespace MS.Internal.IO.Packaging
         ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
         ///     the callback function
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RequestByteRanges(int[,] byteRanges)
         {
             // The worker thread will never call dispose nor this method; no need to lock
@@ -332,7 +328,6 @@ namespace MS.Internal.IO.Packaging
         /// </SecurityNote>
         internal IWebProxy Proxy
         {
-            [SecurityCritical]
             set
             {
                 CheckDisposed();
@@ -446,7 +441,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) modifies Critical data _eventHandle
         /// </SecurityNote>
-        [SecurityCritical]
         private ByteRangeDownloader(Uri requestedUri, SafeWaitHandle eventHandle)
         {
             if (requestedUri == null)
@@ -500,7 +494,6 @@ namespace MS.Internal.IO.Packaging
         ///  2) Safe use of Critical member _proxy - used only to ensure that multiple WebRequests
         ///     share the same proxy settings.  Proxy member is known safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private HttpWebRequest CreateHttpWebRequest(int[,] byteRanges)
         {
             HttpWebRequest request;
@@ -551,7 +544,6 @@ namespace MS.Internal.IO.Packaging
         ///  1) This method calls into SetEvent which is critical marked SUC
         ///  2) It accesses Critical data _eventHandle
         /// </SecurityNote>
-        [SecurityCritical]
         private void RaiseEvent(bool throwExceptionOnError)
         {
             if (_eventHandle != null && !_eventHandle.IsInvalid && !_eventHandle.IsClosed)
@@ -575,7 +567,6 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) It calls RaiseEvent which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         private void ResponseCallback(IAsyncResult ar)
         {
             HttpWebResponse webResponse = null;
@@ -757,7 +748,6 @@ namespace MS.Internal.IO.Packaging
         ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
         ///     the callback function
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ProcessWaitQueue()
         {
             // There is other requests waiting in the queue; Process those
@@ -948,12 +938,10 @@ namespace MS.Internal.IO.Packaging
         /// Critical
         ///  1) _proxy is Critical because we use it under Unrestricted assert
         /// </SecurityNote>
-        [SecurityCritical]
         private IWebProxy _proxy;
         private ICredentials _credentials;
         private CookieContainer _cookieContainer = new CookieContainer(1);
 
-        [SecurityCritical]
         private SafeWaitHandle _eventHandle;    // event handle which needs to be raised to inform the caller that
                                          //  the requested bytes are available
         private Mutex _fileMutex;       // object controlling synchronization on the temp file - if this is null, we own the stream

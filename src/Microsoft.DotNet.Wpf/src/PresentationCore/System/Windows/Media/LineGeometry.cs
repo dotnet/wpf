@@ -108,7 +108,6 @@ namespace System.Windows.Media
         /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
         /// TreatAsSafe - returning a LineGeometry's bounds is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
@@ -149,7 +148,6 @@ namespace System.Windows.Media
         /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
         /// TreatAsSafe - as this doesn't expose anything sensitive.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             unsafe

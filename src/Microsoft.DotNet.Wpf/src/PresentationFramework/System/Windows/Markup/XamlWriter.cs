@@ -56,7 +56,6 @@ namespace System.Windows.Markup
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static string Save(object obj)
         {
             // Must be in full trust
@@ -103,7 +102,6 @@ namespace System.Windows.Markup
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, TextWriter writer)
         {
             // Must be in full trust
@@ -143,7 +141,6 @@ namespace System.Windows.Markup
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, Stream stream)
         {
             // Must be in full trust
@@ -185,7 +182,6 @@ namespace System.Windows.Markup
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, XmlWriter xmlWriter)
         {
             // Must be in full trust
@@ -230,7 +226,6 @@ namespace System.Windows.Markup
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, XamlDesignerSerializationManager manager)
         {
             // Must be in full trust

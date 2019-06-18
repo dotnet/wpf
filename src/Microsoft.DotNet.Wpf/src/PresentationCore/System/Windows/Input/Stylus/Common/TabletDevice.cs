@@ -73,8 +73,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical]
-            [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
             get
             {
                 VerifyAccess();

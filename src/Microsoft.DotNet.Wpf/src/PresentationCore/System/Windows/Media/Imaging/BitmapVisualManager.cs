@@ -79,7 +79,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Deals with bitmap handles
         /// TreatAsSafe - validates all parameters, uses safe wrappers
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void Render(Visual visual, Matrix worldTransform, Rect windowClip)
         {
             if (visual == null)

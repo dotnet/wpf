@@ -148,8 +148,6 @@ namespace System.Security.RightsManagement
         ///     Critical: calls Exception.GetObjectData which LinkDemands
         ///     PublicOK: a demand exists here
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

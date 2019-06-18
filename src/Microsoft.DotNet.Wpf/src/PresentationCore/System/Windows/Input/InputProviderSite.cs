@@ -24,7 +24,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: This code creates critical data in the form of InputManager and InputProvider
         /// </SecurityNote>
-        [SecurityCritical]
         internal InputProviderSite(InputManager inputManager, IInputProvider inputProvider)
         {
             _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -40,7 +39,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public InputManager InputManager
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -56,7 +54,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal InputManager CriticalInputManager
         {
-            [SecurityCritical]
             get
             {
                 return _inputManager.Value;
@@ -70,7 +67,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses critical data (InputManager and InputProvider).
         ///     TreatAsSafe: The critical data is not exposed outside this call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -113,8 +109,6 @@ namespace System.Windows.Input
         ///     Critical:This code is critical and can be used in event spoofing. It also accesses
         ///     InputManager and calls into ProcessInput which is critical.
         /// </SecurityNote>
-        [SecurityCritical ]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted = true)]
         public bool ReportInput(InputReport inputReport)
         {
             if(IsDisposed)

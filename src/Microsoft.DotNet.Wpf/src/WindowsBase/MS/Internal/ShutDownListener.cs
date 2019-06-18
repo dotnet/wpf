@@ -29,7 +29,7 @@
 //          any one of the desired events, it stops listening to all events.
 
 using System;
-using System.Security;              // [SecurityCritical]
+using System.Security;              // 
 using System.Threading;             // Interlocked
 using System.Windows.Threading;     // Dispatcher
 using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
@@ -55,7 +55,6 @@ namespace MS.Internal
         /// Critical - accesses AppDomain.DomainUnload event.
         /// not SecurityTreatAsSafe.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ShutDownListener(object target)
             : this(target, ShutDownEvents.All)
         {
@@ -65,7 +64,6 @@ namespace MS.Internal
         /// Critical - accesses AppDomain.DomainUnload and AppDomain.ProcessExit events (which have link demands).
         /// not SecurityTreatAsSafe.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ShutDownListener(object target, ShutDownEvents events)
             : base(target)
         {
@@ -105,7 +103,6 @@ namespace MS.Internal
         ///     TreatAsSafe: This code does not take any parameter or return state.
         ///                  It simply unattaches private callbacks.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void StopListening()
         {
             if ((_flags & PrivateFlags.Listening) == 0)

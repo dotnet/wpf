@@ -25,7 +25,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Sets critical members
         ///</SecurityNote>
-        [SecurityCritical]
         public WinSpoolPrinterCapabilities(string deviceName, string driverName, string portName, DevMode devMode)
         {
             this._deviceName = deviceName;
@@ -47,7 +46,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Calls Critical code to dispose native printer resource. 
         ///             - Sets critical members.
         ///</SecurityNote>
-        [SecurityCritical]
         public void Release()
         {
             if (this._devMode != null)
@@ -73,7 +71,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to obtain printer information in Intranet Zone
         ///             - uses Critical members
         ///</SecurityNote>
-        [SecurityCritical]
         public bool TryGetDeviceCapabilities(
             out int logicalPixelsX, out int logicalPixelsY,
             out int physicalWidth, out int physicalHeight,
@@ -124,7 +121,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Calls critical GetIntCapability
         ///</SecurityNote>
-        [SecurityCritical]
         public void GetMinExtent(out int minPageWidth, out int minPageHeight)
         {
             uint minExtent = GetIntCapability(DeviceCapability.DC_MINEXTENT);
@@ -140,7 +136,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Calls critical GetIntCapability
         ///</SecurityNote>
-        [SecurityCritical]
         public void GetMaxExtent(out int maxPaperWidth, out int maxPaperHeight)
         {
             uint maxExtent = GetIntCapability(DeviceCapability.DC_MAXEXTENT);
@@ -156,7 +151,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool CanCollate
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DeviceCapability.DC_COLLATE); }
         }
 
@@ -168,7 +162,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool HasColor
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DeviceCapability.DC_COLORDEVICE); }
         }
 
@@ -188,7 +181,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public int MaxCopies
         {
-            [SecurityCritical]
             get { return (int)GetIntCapability(DeviceCapability.DC_COPIES); }
         }
 
@@ -200,7 +192,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool CanDuplex
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DeviceCapability.DC_DUPLEX); }
         }
 
@@ -212,7 +203,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool HasICMIntent
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DevModeFields.DM_ICMINTENT); }
         }
 
@@ -224,7 +214,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool HasICMMethod
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DevModeFields.DM_ICMMETHOD); }
         }
 
@@ -236,7 +225,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<short> Bins
         {
-            [SecurityCritical]
             get { return GetArrayCapability<short>(DeviceCapability.DC_BINS, ReadWORDArray); }
         }
 
@@ -248,7 +236,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<string> BinNames
         {
-            [SecurityCritical]            
             get 
             {
                 // 24 chars, 2 bytes per char
@@ -261,7 +248,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<uint> NUp
         {
-            [SecurityCritical]
             get { return GetArrayCapability<uint>(DeviceCapability.DC_NUP, ReadDWORDArray); }
         }
 
@@ -273,7 +259,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<short> Papers
         {
-            [SecurityCritical]
             get { return GetArrayCapability<short>(DeviceCapability.DC_PAPERS, ReadWORDArray); }
         }
 
@@ -285,7 +270,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<string> PaperNames
         {
-            [SecurityCritical]
             get
             {
                 // 64 chars, 2 bytes per char
@@ -301,7 +285,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<DC_PAPER_SIZE> PaperSizes
         {
-            [SecurityCritical]
             get { return GetArrayCapability<DC_PAPER_SIZE>(DeviceCapability.DC_PAPERSIZE, ReadDC_PAPER_SIZEArray); }
         }
 
@@ -313,7 +296,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<uint> MediaTypes
         {
-            [SecurityCritical]
             get { return GetArrayCapability<uint>(DeviceCapability.DC_MEDIATYPES, ReadDWORDArray); }
         }
 
@@ -325,7 +307,6 @@ namespace MS.Internal.Printing.Configuration
         /// </SecurityNote>
         public IList<string> MediaTypeNames
         {
-            [SecurityCritical]
             get 
             {
                 // 64 chars, 2 bytes per char
@@ -341,7 +322,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public int LandscapeOrientation
         {
-            [SecurityCritical]
             get { return (int)GetIntCapability(DeviceCapability.DC_ORIENTATION); }
         }
 
@@ -353,7 +333,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public IList<DC_RESOLUTION> Resolutions
         {
-            [SecurityCritical]
             get { return GetArrayCapability<DC_RESOLUTION>(DeviceCapability.DC_ENUMRESOLUTIONS, ReadDC_RESOLUTIONArray); }
         }
 
@@ -365,7 +344,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool CanScale
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DevModeFields.DM_SCALE); }
         }
 
@@ -377,7 +355,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public bool TrueType
         {
-            [SecurityCritical]
             get { return GetBoolCapability(DeviceCapability.DC_TRUETYPE); }
         }
 
@@ -387,7 +364,6 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public DevModeFields Fields
         {
-            [SecurityCritical]
             get
             {
                 return (DevModeFields)GetIntCapability(DeviceCapability.DC_FIELDS);
@@ -461,7 +437,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Calls critical GetIntCapability
         ///</SecurityNote>
-        [SecurityCritical]
         private bool GetBoolCapability(DeviceCapability capability)
         {
             return 0 != GetIntCapability(capability);
@@ -471,7 +446,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Calls critical GetIntCapability
         ///             - Sets a critical memeber
         ///</SecurityNote>
-        [SecurityCritical]
         private bool GetBoolCapability(DevModeFields capability)
         {
             // Several capabilities are packed into the DC_FIELDS capability
@@ -494,7 +468,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to obtain printer information in Intranet Zone
         ///             - Uses Critical members
         ///</SecurityNote>
-        [SecurityCritical]
         private uint GetIntCapability(DeviceCapability capability)
         {
             return UnsafeNativeMethods.DeviceCapabilitiesW(this._deviceName, this._portName, capability, SafeMemoryHandle.Null, this._devMode);
@@ -510,7 +483,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Calls critical GetArrayCapability
         ///</SecurityNote>
-        [SecurityCritical]
         private T[] GetArrayCapability<T>(DeviceCapability capability, ReadArray<T> readItem) where T : struct
         {
             return GetArrayCapability<T>(capability, readItem, Marshal.SizeOf(typeof(T)));
@@ -536,7 +508,6 @@ namespace MS.Internal.Printing.Configuration
         ///             - Uses critical members
         ///             - Calls critical HGlobalBuffer ctor, Handle and Release
         ///</SecurityNote>
-        [SecurityCritical]
         private T[] GetArrayCapability<T>(DeviceCapability capability, ReadArray<T> readArray, int itemByteSize)
         {
             uint numOutputs = UnsafeNativeMethods.DeviceCapabilitiesW(this._deviceName, this._portName, capability, SafeMemoryHandle.Null, this._devMode);
@@ -567,7 +538,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Reads arbitrary native memory 
         ///             - Uses critical HGlobalBuffer.Handle
         ///</SecurityNote>
-        [SecurityCritical]
         private uint[] ReadDWORDArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;            
@@ -598,7 +568,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Reads arbitrary native memory 
         ///             - Uses critical HGlobalBuffer.Handle
         ///</SecurityNote>
-        [SecurityCritical]
         private short[] ReadWORDArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;
@@ -629,7 +598,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Reads arbitrary native memory 
         ///             - Uses critical HGlobalBuffer.Handle
         ///</SecurityNote>
-        [SecurityCritical]
         private static DC_RESOLUTION[] ReadDC_RESOLUTIONArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;
@@ -662,7 +630,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Reads arbitrary native memory 
         ///             - Uses critical HGlobalBuffer.Handle
         ///</SecurityNote>
-        [SecurityCritical]
         private static DC_PAPER_SIZE[] ReadDC_PAPER_SIZEArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;
@@ -695,7 +662,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Reads arbitrary native memory 
         ///             - Uses critical HGlobalBuffer.Handle
         ///</SecurityNote>
-        [SecurityCritical]
         private static string [] ReadUnicodeStringArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;
@@ -742,35 +708,30 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Contains information used to access\control a printer device.
         ///             - Must demand DefaultPrinting to use this member
         ///</SecurityNote>
-        [SecurityCritical]
         private string _deviceName;
 
         ///<SecurityNote>
         /// Critical    - Contains information used to access\control a printer device.
         ///             - Must demand DefaultPrinting to use this member
         ///</SecurityNote>
-        [SecurityCritical]
         private string _driverName;
 
         ///<SecurityNote>
         /// Critical    - Contains information used to access\control a printer device.
         ///             - Must demand DefaultPrinting to use this member
         ///</SecurityNote>
-        [SecurityCritical]
         private string _portName;
 
         ///<SecurityNote>
         /// Critical    - Contains information used to access\control a printer device.
         ///             - Must demand DefaultPrinting to use this member
         ///</SecurityNote>
-        [SecurityCritical]
         private DevModeFields _dmFields;
 
         ///<SecurityNote>
         /// Critical    - Contains information obtained from a printer device.
         ///             - Must demand DefaultPrinting to use this member
         ///</SecurityNote>
-        [SecurityCritical]
         SafeMemoryHandle _devMode;
 
         #endregion

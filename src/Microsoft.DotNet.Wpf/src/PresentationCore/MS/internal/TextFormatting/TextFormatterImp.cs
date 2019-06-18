@@ -548,7 +548,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - this sets the owner of the context
         /// Safe     - this doesn't expose critical info
         /// </SecurityNotes>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextFormatterContext AcquireContext(
             object      owner,
             IntPtr      ploc
@@ -818,7 +817,6 @@ namespace MS.Internal.TextFormatting
         /// </SecurityNote>
         internal TextAnalyzer TextAnalyzer
         {
-            [SecuritySafeCritical]
             get
             {
                 if (_textAnalyzer == null)

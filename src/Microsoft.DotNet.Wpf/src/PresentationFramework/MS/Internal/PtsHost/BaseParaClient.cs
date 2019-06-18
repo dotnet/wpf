@@ -46,7 +46,6 @@ namespace MS.Internal.PtsHost
         /// Critical - as this invokes the constructor for SecurityCriticalDataForSet.
         /// Safe - as this just initializes to zero.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected BaseParaClient(BaseParagraph paragraph) : base(paragraph.PtsContext)
         {
             _paraHandle = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
@@ -77,7 +76,6 @@ namespace MS.Internal.PtsHost
         ///     a) calls the setter _paraHandle.Value and passes the parameter it 
         ///        gets directly.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void Arrange(IntPtr pfspara, PTS.FSRECT rcPara, int dvrTopSpace, uint fswdirParent)
         {
             // Make sure that paragraph handle (PFSPARA) is set. It is required to query paragraph content.

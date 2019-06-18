@@ -33,7 +33,6 @@ namespace System.Windows.Interop
         ///     Critical: This method can be used to intercept and potentially tamper with raw input.
         ///     PublicOK: This method has a demand on it.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         IKeyboardInputSite RegisterKeyboardInputSink(IKeyboardInputSink sink);
 
         /// <summary>
@@ -52,7 +51,6 @@ namespace System.Windows.Interop
         ///     Critical: This API can be used for input spoofing.
         ///     PublicOK: This method has a demand on it.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateAccelerator(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -79,7 +77,6 @@ namespace System.Windows.Interop
         {
             get;
             
-            [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
             set;
         }
 
@@ -98,7 +95,6 @@ namespace System.Windows.Interop
         ///     Critical: This API can be used for input spoofing.
         ///     PublicOK: This method has a demand on it.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool OnMnemonic(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -116,7 +112,6 @@ namespace System.Windows.Interop
         ///     Critical: This API can be used for input spoofing.
         ///     PublicOK: This method has a demand on it.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateChar(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>

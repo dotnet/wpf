@@ -71,7 +71,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     SafeCritical:  Accesses CompositionTarget but does not expose it
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private Matrix GetTabletToViewTransform(TabletDevice tablet)
         {
             Matrix matrix = (_inputSource.Value as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
@@ -155,7 +154,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical - Accesses RawStylusInputReport.InputSource
         /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection TargetPlugInCollection(RawStylusInputReport inputReport)
         {
             StylusPlugInCollection pic = null;
@@ -251,7 +249,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical:  Accesses StylusLogic
         /// </SecurityNote>
-        [SecurityCritical]
         internal void VerifyStylusPlugInCollectionTarget(RawStylusInputReport rawStylusInputReport)
         {
             switch (rawStylusInputReport.Actions)
@@ -385,7 +382,6 @@ namespace System.Windows.Input.StylusPointer
         ///             Called by StylusLogic.CallPluginsForMouse.
         ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
         /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection InvokeStylusPluginCollectionForMouse(RawStylusInputReport inputReport, IInputElement directlyOver, StylusPlugInCollection currentPlugInCollection)
         {
             StylusPlugInCollection newPlugInCollection = null;
@@ -451,7 +447,6 @@ namespace System.Windows.Input.StylusPointer
         ///             Called by StylusLogic.InvokeStylusPluginCollection.
         ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
         /// </SecurityNote>
-        [SecurityCritical]
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             // Find PenContexts object for this inputReport.
@@ -527,7 +522,6 @@ namespace System.Windows.Input.StylusPointer
         ///               - Calls StylusLogic.GetManagerForSource
         ///               - called by PreProcessInput
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void InvokePlugInsForMouse(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)

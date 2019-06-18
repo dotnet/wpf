@@ -32,7 +32,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenContext(IPimcContext3 pimcContext, IntPtr hwnd, 
                                 PenContexts contexts, bool supportInRange, bool isIntegrated,
                                 int id, IntPtr commHandle, int tabletDeviceId, UInt32 wispContextKey)
@@ -60,7 +59,6 @@ namespace System.Windows.Input
         /// TreatAsSafe -  Handles critical data but does not expose it.
         ///             -  No critical data returned or accepted as input.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         ~PenContext()
         {
             TryRemove(shutdownWorkerThread:false); // Make sure we remove the context from the active list.
@@ -78,7 +76,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal PenContexts Contexts
         {
-            [SecurityCritical]
             get
             {
                 return _contexts;
@@ -92,7 +89,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal IntPtr CommHandle
         {
-            [SecurityCritical]
             get
             {
                 return _commHandle.Value;
@@ -144,7 +140,6 @@ namespace System.Windows.Input
         /// TreatAsSafe - Takes no input and returns StylusPointDescription that is handed out publically
         ///                on StylusEvents.  Nothing inside StylusPointDescription is security critical.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void InitStylusPointDescription()
         {
             int cProps;
@@ -224,7 +219,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal void Enable()
         {
             if (_pimcContext != null && _pimcContext.Value != null)
@@ -237,7 +231,6 @@ namespace System.Windows.Input
         /// Critical - Calls SecurityCritical code TryRemove.
         ///             Called by PenContexts.RemoveContext and PenContexts.Disable.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void Disable(bool shutdownWorkerThread)
         {
             if (TryRemove(shutdownWorkerThread))
@@ -258,7 +251,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - Calls SecurityCritical code (PenThread.RemovePenContext).
         /// </SecurityNote>
-        [SecurityCritical]
         private bool TryRemove(bool shutdownWorkerThread)
         {
             
@@ -313,7 +305,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FirePenDown (int stylusPointerId, int[] data, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
@@ -335,7 +326,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FirePenUp (int stylusPointerId, int[] data, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
@@ -357,7 +347,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FirePackets(int stylusPointerId, int[] data, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
@@ -393,7 +382,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FirePenInRange(int stylusPointerId, int[] data, int timestamp)
         {
             // make sure this gets initialized on the penthread!!
@@ -436,7 +424,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FirePenOutOfRange(int stylusPointerId, int timestamp)
         {
             // We only do work here if we truly had a stylus in range.
@@ -489,7 +476,6 @@ namespace System.Windows.Input
         ///             Called by PenThread.FireEvent.
         ///             TreatAsSafe boundary is PenThread.ThreadProc.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FireSystemGesture(int stylusPointerId, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
@@ -618,31 +604,26 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     SecurityCritical - This is got under an elevation and is hence critical.
         /// </SecurityNote>
-        [SecurityCritical]
         internal SecurityCriticalDataClass<IPimcContext3> _pimcContext;
         
         /// <SecurityNote>
         ///     SecurityCritical - This is got under an elevation and is hence critical.
         /// </SecurityNote>
-        [SecurityCritical]
         SecurityCriticalData<IntPtr> _hwnd;
         
         /// <SecurityNote>
         ///     SecurityCritical - This is got under an elevation and is hence critical.
         /// </SecurityNote>
-        [SecurityCritical]
         SecurityCriticalData<IntPtr> _commHandle;
         
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         PenContexts             _contexts;
         
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         PenThread               _penThreadPenContext;
         int                     _id;
         int                     _tabletDeviceId;

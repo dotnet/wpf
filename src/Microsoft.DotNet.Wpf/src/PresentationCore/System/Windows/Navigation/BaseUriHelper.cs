@@ -59,7 +59,6 @@ namespace System.Windows.Navigation
         ///         to PreloadedPackages. Also, the package is not going to be handed out
         ///         from this API surface and as such will be protected
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static BaseUriHelper()
         {
             _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
@@ -98,7 +97,6 @@ namespace System.Windows.Navigation
         /// PublicOK: calls GetBaseUriCore that does a demand
         /// Not available from the Internet zone
         /// </SecurityNote>
-        [SecurityCritical]
         public static Uri GetBaseUri(DependencyObject element)
         {
             Uri baseUri = GetBaseUriCore(element);
@@ -438,7 +436,6 @@ namespace System.Windows.Navigation
                 return _baseUri.Value;
             }
             [FriendAccessAllowed]
-            [SecurityCritical]
             set
             {
                 // This setter should only be called from Framework through
@@ -568,7 +565,6 @@ namespace System.Windows.Navigation
         /// Critical: as it access the BaseUri, which is critcal
         /// TreatAsSafe: since it demands File read write and path dicovery  permission.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Uri GetBaseUriCore(DependencyObject element)
         {
             Uri baseUri = null;

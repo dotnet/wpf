@@ -184,7 +184,6 @@ namespace MS.Internal.TextFormatting
         /// Safe - as the buffers are all created in the same function and the count
         ///        passed in the same as used for creating the buffer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetTabs(TextFormatterContext context)
         {
             unsafe
@@ -244,7 +243,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - This method writes into unmanaged array. 
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void CreateLsTbds(
             ParaProp        pap,
             LsTbd*          plsTbds,

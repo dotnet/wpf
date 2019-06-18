@@ -32,7 +32,6 @@ namespace MS.Internal.FontCache
         ///          - Makes an implicit security decision (clients may demand on a Uri based on LocationUri and EscapedFileName).
         /// Safe     - Uses critical Util.IsReferenceToWindowsFonts to skip critical ctor call for unsafe inputs
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static CanonicalFontFamilyReference Create(Uri baseUri, string normalizedString)
         {
             string locationString;
@@ -111,7 +110,6 @@ namespace MS.Internal.FontCache
         {
             get;
 
-            [SecurityCritical]
             private set;
         }
 
@@ -160,7 +158,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - Sets critical member that can be used to control the path fonts are loaded from. 
         /// </SecurityNote>
-        [SecurityCritical]
         private CanonicalFontFamilyReference(string escapedFileName, string familyName)
         {
             EscapedFileName = escapedFileName;

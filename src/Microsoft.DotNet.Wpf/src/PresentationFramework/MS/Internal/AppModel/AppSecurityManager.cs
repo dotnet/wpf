@@ -58,7 +58,6 @@ namespace MS.Internal.AppModel
         ///                     we consider navigates to mailto as safe. 
         ///                     for all other cases - we demand Unmanaged Code Permission 
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void SafeLaunchBrowserDemandWhenUnsafe(Uri originatingUri, Uri destinationUri, bool fIsTopLevel)
         {
             LaunchResult launched = LaunchResult.NotLaunched;
@@ -100,7 +99,6 @@ namespace MS.Internal.AppModel
         ///                     for all other cases - we don't launch the browser - and return a result
         ///                     indicating that we didn't launch. 
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static LaunchResult SafeLaunchBrowserOnlyIfPossible(Uri originatingUri, Uri destinationUri, string targetName, bool fIsTopLevel)
         {
             LaunchResult launched = LaunchResult.NotLaunched;
@@ -170,7 +168,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - gets access to critical resource (uri and browsercallback services), calls critical code (launch browser)
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void UnsafeLaunchBrowser(Uri uri, string targetFrame = null)
         {
 #if NETFX
@@ -198,7 +195,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - calls critical code (ShellExecuteEx)
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void ShellExecuteDefaultBrowser(Uri uri)
         {
             UnsafeNativeMethods.ShellExecuteInfo sei = new UnsafeNativeMethods.ShellExecuteInfo();
@@ -258,7 +254,6 @@ namespace MS.Internal.AppModel
         ///                   considered ok to give out. you will be able to get this anyway by trapping exceptions
         ///                   or seeing whether a navigation succeeded/failed. 
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static LaunchResult CanNavigateToUrlWithZoneCheck(Uri originatingUri, Uri destinationUri)
         {
             LaunchResult launchResult = LaunchResult.NotLaunched; // fail securely - assume this is the default. 
@@ -402,7 +397,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote> 
         ///     Critical - calls a function that has a SUC on it. ( CoIntenrnetIsFeatureZoneElevationEnabled)
         ///</SecurityNote> 
-        [SecurityCritical]
         private static LaunchResult CheckBlockNavigation(Uri originatingUri, Uri destinationUri, bool fEnabled)
         {
             if (fEnabled)
@@ -439,7 +433,6 @@ namespace MS.Internal.AppModel
         ///     TreatAsSafe - information return indicates whether we will prompt for the current zone. 
         ///                   considered ok to expose. 
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool IsZoneElevationSettingPrompt(Uri target)
         {
             Invariant.Assert(_secMgr != null);
@@ -478,7 +471,6 @@ namespace MS.Internal.AppModel
         /// Safe: The Security Manager is used only within this class (not exposed). Just creating it has 
         ///     no observable side effects.
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSecurityManager()
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
@@ -517,7 +509,6 @@ namespace MS.Internal.AppModel
         ///               worse that can happen is any urlmon prompts will be non-modal. 
         ///</SecurityNote> 
 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ClearSecurityManager()
         {
             if (_secMgr != null)
@@ -547,7 +538,6 @@ namespace MS.Internal.AppModel
         ///     can be inferred by just parsing the URL, but it's still information obtained under elevation,
         ///     and thus we shouldn't leak it without a good reason.
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static int MapUrlToZone(Uri url)
         {
             EnsureSecurityManager();
@@ -578,7 +568,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote> 
         ///     Critical - requires an elevation to create. 
         ///</SecurityNote> 
-        [SecurityCritical]
         private static UnsafeNativeMethods.IInternetSecurityManager _secMgr;
 
         private static SecurityMgrSite _secMgrSite;

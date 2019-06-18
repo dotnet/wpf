@@ -42,7 +42,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public static TabletDeviceCollection TabletDevices
         { 
-            [SecurityCritical]
             get 
             {
                 // If there is no stylus logic (the stacks are disabled) return an empty collection.

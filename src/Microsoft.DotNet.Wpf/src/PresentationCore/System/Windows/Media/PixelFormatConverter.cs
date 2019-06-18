@@ -103,7 +103,6 @@ namespace System.Windows.Media
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for PixelFormat, not an arbitrary class
         ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (null == destinationType)

@@ -118,7 +118,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads drawing attributes from a memory buffer.
@@ -469,7 +468,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///      
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes a DrawingAttriubtesin the ISF stream.
@@ -587,7 +585,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///      
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes the ExtendedProperties in the ISF stream.
@@ -633,7 +630,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///      
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes the StylusTip in the ISF stream.

@@ -138,7 +138,6 @@ namespace System.Windows.Media
         ///     Critical - calls code that performs an elevation.
         ///     TreatAsSafe - This method reads from a pinned byte array.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ParsePathGeometryData(PathGeometryData pathData, CapacityStreamGeometryContext ctx)
         {
             if (pathData.IsEmpty())
@@ -473,7 +472,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             ///    Critical: This code is critical because it is an unsafe code block
             ///  </SecurityNote>
-            [SecurityCritical]
             internal unsafe void AddFigureToList(bool isFilled, bool isClosed, MilPoint2F* pPoints, UInt32 pointCount, byte* pSegTypes, UInt32 segmentCount)
             {
                 if (pointCount >=1 && segmentCount >= 1)
@@ -595,7 +593,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical    - Recieves native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe delegate void AddFigureToListDelegate(bool isFilled, bool isClosed, MilPoint2F *pPoints, UInt32 pointCount, byte *pTypes, UInt32 typeCount);
 
         #region GetPointAtFractionLength
@@ -606,7 +603,6 @@ namespace System.Windows.Media
         ///     PublicOK - This computes the location of the point x% along the way of a path (and its direction). 
         ///                Progress is normalized between 0 and 1.  This math is considered safe.
         ///</SecurityNote>
-        [SecurityCritical]
         public void GetPointAtFractionLength(
             double progress,
             out Point point,
@@ -658,7 +654,6 @@ namespace System.Windows.Media
         ///                          Although we call code within an unsafe block - managed objects are used to construct the unmanaged data.
         ///                          unsafe code will have to be reviewed
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static PathGeometry InternalCombine(
             Geometry geometry1,
             Geometry geometry2,
@@ -813,7 +808,6 @@ namespace System.Windows.Media
         ///     TreatAsSafe - the net effect of this function is to return a rect for the Path's bounds. Considered safe.
         ///                          although we call code within an unsafe block - managed objects are used to construct the unmanaged data.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static MilRectD GetPathBoundsAsRB(
             PathGeometryData pathData,
             Pen pen, 
@@ -888,7 +882,6 @@ namespace System.Windows.Media
         /// Critical as this calls a method that elevates (MilUtility_PathGeometryHitTestPathGeometry)
         /// TreatAsSafe - net effect of this is to checking the relationship between two geometries. So it's considered safe.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IntersectionDetail HitTestWithPathGeometry(
             Geometry geometry1,
             Geometry geometry2,
@@ -1058,7 +1051,6 @@ namespace System.Windows.Media
         ///     Critical: This code accesses unsafe code blocks
         ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

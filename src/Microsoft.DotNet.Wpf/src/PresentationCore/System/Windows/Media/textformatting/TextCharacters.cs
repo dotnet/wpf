@@ -98,7 +98,6 @@ namespace System.Windows.Media.TextFormatting
         /// Critical: This manipulates unsafe pointers and calls into the critical CharacterBufferReference ctor.
         /// PublicOK: The caller needs unmanaged code permission in order to pass unsafe pointers to us.
         /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public unsafe TextCharacters(
             char*                       unsafeCharacterString,

@@ -400,7 +400,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - Access only granted if SiteOfOrigin demanded.
         /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapMetadata _metadata;
 
         /// ColorContexts collection

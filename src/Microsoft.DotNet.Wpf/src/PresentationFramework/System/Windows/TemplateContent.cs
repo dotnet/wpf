@@ -197,7 +197,6 @@ namespace System.Windows
         /// Safe: Demands the requested permission before setting the fields. Sets both fields together
         ///       so they stay in sync.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TemplateContent(System.Xaml.XamlReader xamlReader, IXamlObjectWriterFactory factory,
             IServiceProvider context)
         {
@@ -308,7 +307,6 @@ namespace System.Windows
         /// Safe: _xamlNodeList integrity is guarded by SecurityCritical.
         ///       Doesn't leak _xamlNodeList.Writer, just provides a reader.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal System.Xaml.XamlReader PlayXaml()
         {
             return _xamlNodeList.GetReader();
@@ -321,9 +319,7 @@ namespace System.Windows
         /// </SecurityNote>
         internal XamlLoadPermission LoadPermission
         {
-            [SecurityCritical]
             get;
-            [SecurityCritical]
             set;
         }
 
@@ -333,7 +329,6 @@ namespace System.Windows
         /// Safe: It is ok to cause this object to be GCable, to preserve memory, as the data
         ///       from Reader has been transferred to the critical _xamlNodeList.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void ResetTemplateLoadData()
         {
             TemplateLoadData = null;
@@ -389,7 +384,6 @@ namespace System.Windows
         ///       comes from _reader, and we demanded LoadPermission when that was passed in
         ///       (in the constructor).
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ParseTree(
             StackOfFrames stack,
             List<PropertyValue> sharedProperties,
@@ -418,7 +412,6 @@ namespace System.Windows
         /// Safe: The node stream that we copy into critical _xamlNodeList comes from the critical Reader.
         ///       At this point, it is ok to null out the reader, to release the memory.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ParseNodes(
             StackOfFrames stack,
             List<PropertyValue> sharedProperties,
@@ -1461,7 +1454,6 @@ namespace System.Windows
         /// </SecurityNote>
         //_xamlNodeList is the postProcessed list, not the original template nodes.  TemplateContentConverter
         // and TemplateContent do that processing.
-        [SecurityCritical]
         internal XamlNodeList _xamlNodeList = null;
 
         private static SharedDp _sharedDpInstance = new SharedDp(null, null, null);
@@ -1485,7 +1477,6 @@ namespace System.Windows
         internal TemplateLoadData TemplateLoadData
         {
             get;
-            [SecurityCritical]
             set;
         }
 
@@ -1628,7 +1619,6 @@ namespace System.Windows
         internal System.Xaml.XamlReader Reader
         {
             get;
-            [SecurityCritical]
             set;
         }
 

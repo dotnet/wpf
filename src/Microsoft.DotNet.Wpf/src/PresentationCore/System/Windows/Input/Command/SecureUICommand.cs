@@ -30,7 +30,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - should only be write-once in the constructor
         /// </SecurityNote>
-        [SecurityCritical]
         readonly PermissionSet _userInitiated;
 
         /// <summary>
@@ -45,7 +44,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe - KeyBinding (through InputBinding) will demand this permission before 
         ///                   binding this command to any key.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal SecureUICommand(PermissionSet userInitiated, string name, Type ownerType, byte commandId)
             : base(name, ownerType, commandId)
         {
@@ -65,7 +63,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public PermissionSet UserInitiatedPermission
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _userInitiated;

@@ -191,7 +191,6 @@ namespace Standard
         ///   Critical : Calls critical methods to obtain desktop bits per pixel 
         ///   Safe     : BPP is considered safe information in partial trust
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static int _GetBitDepth()
         {
             if (s_bitDepth == 0)
@@ -208,7 +207,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SafeDeleteObject(ref IntPtr gdiObject)
         {
@@ -223,7 +221,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SafeDestroyWindow(ref IntPtr hwnd)
         {
@@ -239,7 +236,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static void SafeRelease<T>(ref T comObject) where T : class

@@ -44,7 +44,6 @@ namespace MS.Internal.IO.Packaging
     //          2. SiteOfOriginContainer
     //          3. ZipPackage that is only instantiated by XPS Viewer
     // </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {

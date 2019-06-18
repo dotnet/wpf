@@ -51,7 +51,6 @@ namespace System.Windows.Documents
         ///     Takes no input, does not give the caller access to any
         ///     Critical resources directly.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal WinRTSpellerInterop()
         {
             // When the CLR consumes an unmanaged COM object, it invokes
@@ -233,7 +232,6 @@ namespace System.Windows.Documents
         /// Safe -
         ///     Does not expose any Critical resources to the caller.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void UnloadDictionary(object token)
         {
             if (_isDisposed) return;
@@ -282,7 +280,6 @@ namespace System.Windows.Documents
         ///     The return value from LoadDictionaryImpl is Safe (it is
         ///     a managed Tuple[T1, T2]
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override object LoadDictionary(Uri item, string trustedFolder)
         {
             if (_isDisposed)
@@ -486,7 +483,6 @@ namespace System.Windows.Documents
         /// Safe -
         ///     Does not expose any Critical resources to the caller.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private Tuple<string, string> LoadDictionaryImpl(string lexiconFilePath)
         {
             if (_isDisposed)
@@ -588,7 +584,6 @@ namespace System.Windows.Documents
         ///     Does not expose any Critical resources to the caller
         /// </SecurityNote>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        [SecuritySafeCritical]
         private void ClearDictionaries(bool disposing = false)
         {
             if (_isDisposed)
@@ -695,7 +690,6 @@ namespace System.Windows.Documents
         /// Critical -
         ///     Demands FileIOPermission permissions
         /// </SecurityNote>
-        [SecurityCritical]
         private static void CopyToUnicodeFile(string sourcePath, FileStream targetStream)
         {
             new FileIOPermission(FileIOPermissionAccess.Read, sourcePath).Demand();
@@ -744,7 +738,6 @@ namespace System.Windows.Documents
         ///     Called by transparent methods, and does not expose any
         ///     critical resources (COM objects) to callers.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void ProcessUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var disposing = false;

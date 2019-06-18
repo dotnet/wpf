@@ -38,7 +38,6 @@ namespace MS.Internal.Documents
         ///     Critical: This code hooks up a call back to context menu opening event which has the ability to spoof copy 
         ///     TreatAsSafe: This code does not expose the callback and does not drive any input into it
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RegisterClassHandler()
         {
             EventManager.RegisterClassHandler(typeof(DocumentGrid), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpening));
@@ -62,7 +61,6 @@ namespace MS.Internal.Documents
         /// <SecurityNote>
         /// Critical - forwards user-initiated information to OnContextMenuOpening, which is also SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDocumentViewerContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             if (e.CursorLeft == KeyboardInvokedSentinel)
@@ -82,7 +80,6 @@ namespace MS.Internal.Documents
         /// Critical - accepts a parameter which may be used to set the userInitiated 
         ///             bit on a command, which is used for security purposes later. 
         /// </SecurityNote>
-        [SecurityCritical]
         private static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             DocumentGrid documentGrid = sender as DocumentGrid;
@@ -168,7 +165,6 @@ namespace MS.Internal.Documents
             ///             code paths to be blocked this function is not TreatAsSafe because
             ///             we want to track any new callers to this call
             /// </SecurityNote>
-            [SecurityCritical]
             internal void AddMenuItems(DocumentGrid dg, bool userInitiated)
             {
                 // create a special menu item for paste which only works for user initiated copy
@@ -265,7 +261,6 @@ namespace MS.Internal.Documents
             /// Critical - accepts a parameter which may be used to set the userInitiated 
             ///             bit on a command, which is used for security purposes later. 
             /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 OnClickImpl(userInitiated);

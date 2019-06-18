@@ -96,7 +96,6 @@ namespace System.Windows.Input
         ///     Critical: This code peeks Into InputManager.Current
         ///     PublicOK: It does not expose the InputManager and keyboard device is safe to expose
         /// </SecurityNote>
-        [SecurityCritical]
         public TextComposition(InputManager inputManager, IInputElement source, string resultText, TextCompositionAutoComplete autoComplete) : this(inputManager, source, resultText, autoComplete, InputManager.Current.PrimaryKeyboardDevice)
         {
             // We should avoid using Enum.IsDefined for performance and correct versioning. 
@@ -116,7 +115,6 @@ namespace System.Windows.Input
         ///     Critical - stores critical data ( _inputManager). 
         ///     TreatAsSafe - inputmanager is stored in a non-public critical member. Usage of InputManager is tracked.         
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe ]        
         internal TextComposition(InputManager inputManager, IInputElement source, string resultText, TextCompositionAutoComplete autoComplete, InputDevice inputDevice)
         {
             _inputManager = inputManager;
@@ -160,8 +158,6 @@ namespace System.Windows.Input
         ///    Critical: Calls into CompleteComposition
         ///    PublicOk: This operation is blocked from external consumers via a link demand
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]
         public virtual void Complete()
         {
 //             VerifyAccess();
@@ -388,7 +384,6 @@ namespace System.Windows.Input
 
         internal InputManager _InputManager
         {
-            [SecurityCritical]        
             get 
             {
                 return _inputManager;
@@ -430,7 +425,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical data. InputManager ctor is critical. 
         ///</SecurityNote> 
-        [SecurityCritical] 
         private readonly InputManager _inputManager;
 
         // InputDevice for this TextComposition.

@@ -114,7 +114,6 @@ namespace MS.Internal.TextFormatting
         ///  <SecurityNote>
         ///    Critical: Receives unsafe pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract unsafe void GetAdvanceWidthsUnshaped(
             char*         characterString,
             int           characterLength,

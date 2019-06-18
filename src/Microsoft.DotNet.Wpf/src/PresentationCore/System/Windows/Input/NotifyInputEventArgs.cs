@@ -29,7 +29,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical - InputManager passed in is critical data. 
         ///</SecurityNote> 
-        [SecurityCritical] 
         internal virtual void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _input = input;
@@ -54,7 +53,6 @@ namespace System.Windows.Input
         ///</SecurityNote> 
         public InputManager InputManager 
         {
-            [SecurityCritical ] 
             get 
             {
                 SecurityHelper.DemandUnrestrictedUIPermission(); 
@@ -71,7 +69,6 @@ namespace System.Windows.Input
         ///</SecurityNote> 
         internal InputManager UnsecureInputManager 
         {
-            [SecurityCritical] 
             get 
             {
                 return _inputManager;
@@ -83,7 +80,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical data as InputManager ctor is critical. 
         ///</SecurityNote> 
-        [SecurityCritical] 
         private InputManager _inputManager;
 }
 

@@ -97,7 +97,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -118,7 +117,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -138,7 +136,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -157,7 +154,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -175,7 +171,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(string messageBoxText, string caption) 
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -190,7 +185,6 @@ namespace System.Windows
         ///     Critical: This code calls ShowCore which is critical
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(string messageBoxText) 
         {
             return ShowCore(IntPtr.Zero, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -210,7 +204,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
             MessageBoxResult defaultResult, MessageBoxOptions options) 
         {
@@ -228,7 +221,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
             MessageBoxResult defaultResult) 
         {
@@ -246,7 +238,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon) 
         {
             return ShowCore(owner, messageBoxText, caption, button, icon, 0, 0);
@@ -263,7 +254,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button) 
         {
             return ShowCore(owner, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
@@ -280,7 +270,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption) 
         {
             return ShowCore(owner, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -297,7 +286,6 @@ namespace System.Windows
         ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
         ///               since we do not let you create a new window in PT
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText) 
         {
             return ShowCore(owner, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -314,7 +302,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -335,7 +322,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -356,7 +342,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -376,7 +361,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -395,7 +379,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(Window owner, string messageBoxText, string caption) 
         {
             return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -410,7 +393,6 @@ namespace System.Windows
         ///     Critical: This code accesses critical handle
         ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
         /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(Window owner, string messageBoxText) 
         {
             return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -443,7 +425,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical: This code calls into UnsafeNativeMethods.MessageBox and takes an IntPtr
         /// </SecurityNote>
-        [SecurityCritical]
         internal static MessageBoxResult ShowCore(
             IntPtr owner, 
             string messageBoxText, 

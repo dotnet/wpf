@@ -337,8 +337,6 @@ namespace System.Printing.Interop
         ///<SecurityNote>
         /// Critical    - calls into SafeHandle Dispose() method to release unmanaged handle
         ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         private void DisposeImpl()
         {
             if (!this._disposed)

@@ -119,7 +119,6 @@ namespace System.IO.Packaging
         ///  1) PublicOK
         ///  2) PublicOK
         /// </SecurityNote>
-        [SecurityCritical]
         public override WebResponse GetResponse()
         {
             bool cachedPackageAvailable = IsCachedPackage;
@@ -375,12 +374,10 @@ namespace System.IO.Packaging
         /// </SecurityNote>
         public override IWebProxy Proxy
         {
-            [SecurityCritical]
             get
             {
                 return GetRequest().Proxy;
             }
-            [SecurityCritical]
             set
             {
                 GetRequest().Proxy = value;
@@ -497,7 +494,6 @@ namespace System.IO.Packaging
         /// Safe
         ///  1) Not modifying Proxy member which is what is really Critical
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private WebRequest GetRequest(bool allowPseudoRequest)
         {
             if (_webRequest == null)
@@ -590,7 +586,6 @@ namespace System.IO.Packaging
         private Uri                 _uri;                   // pack uri
         private Uri                 _innerUri;              // inner uri extracted from the pack uri
         private Uri                 _partName;              // name of PackagePart (if any) - null for full-container references
-        [SecurityCritical]                                  // only WebRequest.Proxy member is Critical
         private WebRequest          _webRequest;            // our "real" webrequest counterpart - may be a PseudoWebRequest
         private Package             _cacheEntry;            // non-null if we found this in a cache
         private bool                _respectCachePolicy;    // do we throw if cache policy conflicts?

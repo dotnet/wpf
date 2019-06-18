@@ -51,7 +51,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///     Critical: This code calls into BitmapDownload.BeginDownload which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal LateBoundBitmapDecoder(
             Uri baseUri,
             Uri uri,
@@ -105,7 +104,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public override BitmapPalette Palette
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -130,7 +128,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public override ReadOnlyCollection<ColorContext> ColorContexts
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -155,7 +152,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public override BitmapSource Thumbnail
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -183,7 +179,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public override BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -253,7 +248,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public override BitmapSource Preview
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();

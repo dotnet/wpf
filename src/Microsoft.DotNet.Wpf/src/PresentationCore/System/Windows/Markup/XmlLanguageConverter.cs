@@ -112,7 +112,6 @@ namespace System.Windows.Markup
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for XmlLanguage.IetfLanguageTag, not an arbitrary class/method
         ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,
                                          object value,

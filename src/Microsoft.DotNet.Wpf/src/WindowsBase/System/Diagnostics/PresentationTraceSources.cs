@@ -122,7 +122,6 @@ namespace System.Diagnostics
         ///     unlimited access to the process.  Also the only inputs
         ///     to the assert are simply a label for the name.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static TraceSource CreateTraceSource(string sourceName)
         {
             // Create the trace source.  Whether or not it will actually

@@ -60,7 +60,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical: Data is from CriticalCopyPixels
         /// </SecurityNote>
-        [SecurityCritical]
         protected Byte[]       _pixels;
 
         public ImageProxy(BitmapSource image)
@@ -86,7 +85,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </SecurityNote>
         public Byte[] Buffer
         {
-            [SecurityCritical]
             get
             {
                 return _pixels;
@@ -117,7 +115,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : This code touches _pixels
         /// </SecurityNote>
-        [SecurityCritical]
         public void Scale(double scaleX, double scaleY)
         {
             _image = new TransformedBitmap(
@@ -133,7 +130,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : This code calls an internal PresentationCore function CriticalCopyPixels
         /// </SecurityNote>
-        [SecurityCritical]
         private void Decode()
         {
             if (_pixels == null)
@@ -150,7 +146,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         /// <param name="bounds">Bounds of subimage to decode</param>
         /// <returns>Returns critical pixels</returns>
-        [SecurityCritical]
         private byte[] GetDecodedPixels(Int32Rect bounds)
         {
             Debug.Assert(
@@ -182,7 +177,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="opacityMask"></param>
         /// <param name="rect">Image destination rectangle</param>
         /// <param name="trans">Transformation from image to final destination</param>
-        [SecurityCritical]
         public void PushOpacity(double opacity, BrushProxy opacityMask, Rect rect, Matrix trans)
         {
             if (opacityMask != null)
@@ -268,7 +262,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : It touches critical data in _pixels
         /// </SecurityNote>
-        [SecurityCritical]
         public void BlendUnderColor(Color color, double opacity, bool opacityOnly)
         {
             Decode();
@@ -278,7 +271,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : It touches critical data in _pixels
         /// </SecurityNote>
-        [SecurityCritical]
         public void BlendOverColor(Color color, double opacity, bool opacityOnly)
         {
             if (opacityOnly || !Utility.IsOpaque(opacity) || !IsOpaque())
@@ -299,7 +291,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical: It calls into SecurityCritical function RasterizeBrush
         /// </SecurityNote>
-        [SecurityCritical] 
         public void BlendUnderBrush(bool opacityOnly, BrushProxy brush, Matrix trans)
         {
             if (brush.Brush is SolidColorBrush)
@@ -327,7 +318,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical: CreateBrushImage is SecurityCritical because it calls internal PresentationCore function CriticalCopyPixels
         /// </SecurityNote>
-        [SecurityCritical]
         private Byte[] RasterizeBrush(BrushProxy brush, Matrix trans)
         {
             return brush.CreateBrushImage(trans, _pixelWidth, _pixelHeight);
@@ -342,7 +332,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical: It calls into SecurityCritical function RasterizeBrush
         /// </SecurityNote>
-        [SecurityCritical] 
         public void BlendOverBrush(bool opacityOnly, BrushProxy brush, Matrix trans)
         {
             if (IsOpaque())
@@ -402,7 +391,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : It touches critical data in _pixels
         /// </SecurityNote>
-        [SecurityCritical]
         public bool IsOpaque()
         {
             if (_image == null)
@@ -447,7 +435,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : It touches critical data in _pixels
         /// </SecurityNote>
-        [SecurityCritical]
         public bool IsTransparent()
         {
             if (_image == null)
@@ -475,7 +462,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical   : Critical information in _pixels is exposed
         /// </SecurityNote>
-        [SecurityCritical]
         public BitmapSource GetImage()
         {
             if (_pixels == null)
@@ -508,7 +494,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// 
         /// Clipping is not always performed; see MaximumClipRatio.
         /// </remarks>
-        [SecurityCritical]
         public BitmapSource GetClippedImage(Rect bounds, out Rect clipBounds)
         {
             BitmapSource result = null; // default to entire image clipped away

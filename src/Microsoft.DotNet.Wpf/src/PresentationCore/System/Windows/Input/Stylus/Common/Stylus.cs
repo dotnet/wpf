@@ -829,7 +829,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public static StylusDevice CurrentStylusDevice
         {
-            [SecurityCritical]
             get
             {
                 return StylusLogic.CurrentStylusLogic?.CurrentStylusDevice?.StylusDevice;

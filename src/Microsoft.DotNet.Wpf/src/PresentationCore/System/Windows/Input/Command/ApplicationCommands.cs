@@ -241,7 +241,6 @@ namespace System.Windows.Input
         /// TreatAsSafe - callers don't need to worry, but we need to review
         ///               any changes to this.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static PermissionSet GetRequiredPermissions(CommandId commandId)
         {
             PermissionSet permissions;

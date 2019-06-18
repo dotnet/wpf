@@ -2510,8 +2510,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
         [ComVisible(true), ComImport(), Guid("B722BCCB-4E68-101B-A2BC-00AA00404770"),
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), CLSCompliantAttribute(false)]
         public interface IOleCommandTarget
@@ -2884,8 +2882,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("0FF510A3-5FA5-49F1-8CCC-190D71083F3E"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IVsPerPropertyBrowsing {
             // hides the property at the given dispid from the properties window
@@ -2945,8 +2941,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("7494683C-37A0-11d2-A273-00C04F8EF4FF"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IManagedPerPropertyBrowsing {
 
@@ -2961,8 +2955,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("33C0C1D8-33CF-11d3-BFF2-00C04F990235"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IProvidePropertyBuilder {
 
@@ -3295,7 +3287,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(TPMPARAMS));
@@ -3583,7 +3574,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(tagFONTDESC));
@@ -3626,7 +3616,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(CHOOSECOLOR));
@@ -3802,7 +3791,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(NOTIFYICONDATA));
@@ -3829,7 +3817,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(MENUITEMINFO_T));
@@ -3860,7 +3847,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(MENUITEMINFO_T_RW));
@@ -3929,7 +3915,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(OPENFILENAME_I));
@@ -3983,7 +3968,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(CHOOSEFONT));
@@ -4210,7 +4194,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(MSOCRINFOSTRUCT));
@@ -4410,8 +4393,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("376BD3AA-3845-101B-84ED-08002B2EC713"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IPerPropertyBrowsing {
              [PreserveSig]
@@ -4446,8 +4427,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("4D07FC10-F931-11CE-B001-00AA006884E5"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface ICategorizeProperties {
 
@@ -4515,7 +4494,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(tagCONTROLINFO));
@@ -4561,7 +4539,6 @@ namespace MS.Win32 {
             ///     Critical: This calls into Marshal.Release which is link demand protected
             ///     TreatAsSafe: This is instance based and the internal pointer it is releasing is critical for set
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public void Clear() {
                 if ((this.vt == (int)tagVT.VT_UNKNOWN || this.vt == (int)tagVT.VT_DISPATCH) && this.data1.Value != IntPtr.Zero) {
                     Marshal.Release(this.data1.Value);
@@ -4685,7 +4662,6 @@ namespace MS.Win32 {
             /// <SecurityNote>
             ///     Critical: Sets the pointer to an arbitrary long
             /// </SecurityNote>
-            [SecurityCritical]
             public void SetLong(long lVal) {
                 data1.Value = (IntPtr)(lVal & 0xFFFFFFFF);
                 data2.Value = (IntPtr)((lVal >> 32) & 0xFFFFFFFF);
@@ -4695,7 +4671,6 @@ namespace MS.Win32 {
             ///     Critical: Calls Marshal.AllocCoTaskMem, .WriteInt16 and .WriteInt32 which have LinkDemands.
             ///               Writes to unmanaged memory and returns a pointer to it.
             /// </SecurityNote>
-            [SecurityCritical]
             public IntPtr ToCoTaskMemPtr() {
                 IntPtr mem = Marshal.AllocCoTaskMem(16);
                 Marshal.WriteInt16(mem, vt);
@@ -4710,7 +4685,6 @@ namespace MS.Win32 {
             /// <SecurityNote>
             ///     Critical: Converts an intptr to an object , it acceses PtrToStruct which is critical
             /// </SecurityNote>
-            [SecurityCritical]
             public object ToObject() {
                 IntPtr val = data1.Value;
                 long longVal;
@@ -4861,7 +4835,6 @@ namespace MS.Win32 {
             /// <SecurityNote>
             ///     Critical: Reads an arbitrary IntPtr
             /// </SecurityNote>
-            [SecurityCritical]
             private static IntPtr GetRefInt(IntPtr value) {
                 return Marshal.ReadIntPtr(value);
             }
@@ -4881,7 +4854,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(tagLICINFO));
@@ -5094,7 +5066,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(TOOLINFO_T));
@@ -5118,7 +5089,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(TOOLINFO_TOOLTIP));
@@ -5399,7 +5369,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(HELPINFO));
@@ -5624,7 +5593,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(MCHITTESTINFO));
@@ -5819,7 +5787,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(LVGROUP));
@@ -5837,7 +5804,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(LVINSERTMARK));
@@ -5857,7 +5823,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(LVTILEVIEWINFO));
@@ -5992,7 +5957,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(CHARFORMATW));
@@ -6017,7 +5981,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(CHARFORMATA));
@@ -6052,7 +6015,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(CHARFORMAT2A));
@@ -6100,7 +6062,6 @@ namespace MS.Win32 {
             ///  Critical : Calls critical Marshal.SizeOf
             ///  Safe     : Calls method with trusted input (well known safe type)
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(PARAFORMAT));
@@ -6137,7 +6098,6 @@ namespace MS.Win32 {
             ///     Critical: Extensive use of Marshal to allocate and manipulate
             ///             Character buffers.
             /// </SecurityNote>
-            [SecurityCritical]
             internal static CharBuffer CreateBuffer(int size)
             {
                 if (Marshal.SystemDefaultCharSize == 1)
@@ -6159,7 +6119,6 @@ namespace MS.Win32 {
         ///     Critical: Extensive use of Marshal to allocate and manipulate
         ///             Character buffers.
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
         internal class AnsiCharBuffer : CharBuffer
         {
             internal byte[] buffer;
@@ -6222,7 +6181,6 @@ namespace MS.Win32 {
         ///     Critical: Extensive use of Marshal to allocate and manipulate
         ///             Character buffers.
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
         internal class UnicodeCharBuffer : CharBuffer
         {
             internal char[] buffer;
@@ -6645,8 +6603,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("A7ABA9C1-8983-11cf-8F20-00805F2CD064"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IProvideMultipleClassInfo {
              // since the inheritance doesn't seem to work...
@@ -6683,8 +6639,6 @@ namespace MS.Win32 {
         /// <SecurityNote>
         /// Critical : Elevates to UnmanagedCode permissions
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
 		[ComImport(), Guid("B196B283-BAB4-101A-B69C-00AA00341D07"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         public interface IProvideClassInfo {
             [return: MarshalAs(UnmanagedType.Interface)]

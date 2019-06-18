@@ -47,7 +47,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical: Reads an arbitrary registry key.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool ReadLocalMachineBool(string key, string valueName)
         {
             string keyPath = "HKEY_LOCAL_MACHINE\\" + key;

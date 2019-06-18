@@ -14,7 +14,7 @@ using System.Collections;           // Hashtable
 using System.Collections.Generic;   // List<T>
 using System.Collections.Specialized; // HybridDictionary
 using System.Runtime.CompilerServices;  // RuntimeHelpers
-using System.Security;              // [SecurityCritical,SecurityTreatAsSafe]
+using System.Security;              // 
 using System.Threading;             // [ThreadStatic]
 using System.Windows;               // WeakEventManager
 using System.Windows.Threading;     // DispatcherObject
@@ -45,7 +45,6 @@ namespace MS.Internal
         ///     TreatAsSafe: This code does not take any parameter or return state.
         ///     It simply attaches private call back.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private WeakEventTable()
         {
             WeakEventTableShutDownListener listener = new WeakEventTableShutDownListener(this);
@@ -495,7 +494,6 @@ namespace MS.Internal
             ///     TreatAsSafe: This code does not take any parameter or return state.
             ///                  It simply attaches private callbacks.
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public WeakEventTableShutDownListener(WeakEventTable target) : base(target)
             {
             }

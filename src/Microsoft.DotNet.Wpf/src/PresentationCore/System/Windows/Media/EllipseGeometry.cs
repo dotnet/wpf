@@ -160,7 +160,6 @@ namespace System.Windows.Media
         /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
         /// TreatAsSafe - returning an EllipseGeometry's bounds is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point center, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
@@ -216,7 +215,6 @@ namespace System.Windows.Media
         /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
         /// TreatAsSafe - as this doesn't expose anything sensitive.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             unsafe
@@ -361,7 +359,6 @@ namespace System.Windows.Media
         /// Critical - Calls critical code
         /// TreatAsSafe - returning a EllipseGeometry's point list is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Point[] GetPointList()
         {
             Point[] points = new Point[GetPointCount()];
@@ -380,7 +377,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Accepts pointer arguments
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe static void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
         {
             Invariant.Assert(pointsCount >= c_pointCount);

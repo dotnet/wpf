@@ -99,7 +99,6 @@ namespace System.Windows.Media
         ///             caller is safe if the pointer points to a D3DMATRIX
         ///             value.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe virtual void ConvertToD3DMATRIX(/* out */ D3DMATRIX* milMatrix)
         {
             Matrix matrix = Value;

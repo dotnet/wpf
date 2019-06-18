@@ -15,14 +15,11 @@ using MS.Win32;
 
 namespace MS.Internal.Controls
 {
-    //[System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Name = "FullTrust")]
-    //[System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Name = "FullTrust")]
     internal class ConnectionPointCookie
     {
         /// <SecurityNote>
         ///  Critical : Field for critical type UnsafeNativeMethods.IConnectionPoint
         /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IConnectionPoint connectionPoint;
         private int cookie;
 
@@ -32,7 +29,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical methods. IConnectionPointContainer.FindConnectionPoint etc. 
         ///</SecurityNote> 
-        [ SecurityCritical ] 
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
         {
             Exception ex = null;
@@ -117,7 +113,6 @@ namespace MS.Internal.Controls
         ///     Potentially unsafe. For example, disconnecting the event sink breaks the site-locking 
         ///     feature of the WebBrowser control.
         ///</SecurityNote> 
-        [SecurityCritical]         
         internal void Disconnect()
         {
             if (connectionPoint != null && cookie != 0)
@@ -163,7 +158,6 @@ namespace MS.Internal.Controls
         /// Critical: calls the critical Disconnect().
         /// TAS: When the object is being finalized, there isn't much left to protect.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~ConnectionPointCookie()
         {
             Disconnect();

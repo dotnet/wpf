@@ -70,8 +70,6 @@ namespace System.Windows.Documents
         ///               And of course, this does not expose any critical data.
         ///               Protected by link demand to match base class.
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]
         public override void Complete()
         {
             _pendingComplete = true;
@@ -166,7 +164,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This calls critical COM interop.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CompleteCurrentComposition(UnsafeNativeMethods.ITfDocumentMgr documentMgr)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -190,7 +187,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This calls critical COM interop.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static UnsafeNativeMethods.ITfCompositionView GetCurrentCompositionView(UnsafeNativeMethods.ITfDocumentMgr documentMgr)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -338,7 +334,6 @@ namespace System.Windows.Documents
         ///<SecurityNote>
         ///     Critical: calls Marshal.ReleaseComObject which LinkDemands
         ///</SecurityNote>
-        [SecurityCritical]
         private static UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
         {
             UnsafeNativeMethods.ITfContextComposition contextComposition;

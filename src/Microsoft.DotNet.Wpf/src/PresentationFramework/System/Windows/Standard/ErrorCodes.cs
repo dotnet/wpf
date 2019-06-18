@@ -124,7 +124,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static Win32Error GetLastError()
         {
@@ -505,7 +504,6 @@ namespace Standard
         /// <summary>
         /// Convert the result of Win32 GetLastError() into a raised exception.
         /// </summary>
-        [SecurityCritical]
         public static void ThrowLastError()
         {
             ((HRESULT)Win32Error.GetLastError()).ThrowIfFailed();
@@ -517,7 +515,6 @@ namespace Standard
         ///  Critical : Calls ctor on Win32Exception which LinkDemands on the type
         ///  Safe     : Calls safe overload of Win32Exception ctor that explicitly set the error code and message
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static Exception CreateWin32Exception(int code, string message)
         {
             return new Win32Exception(code, message);

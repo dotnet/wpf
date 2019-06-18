@@ -63,7 +63,6 @@ internal abstract class InternalDispatchObject<IDispInterface> : IReflect
     /// <SecurityNote>
     /// Critical - to help ensure whoever creates an instance of this class doesn't expose it.
     /// </SecurityNote>
-    [SecurityCritical]
     protected InternalDispatchObject()
     {
         // Populate _dispId2MethodMap with the MethodInfos for the interface, keyed by DISPID.

@@ -14,7 +14,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Windows.Threading;
-using System.Security;              // [SecurityCritical,SecurityTreatAsSafe]
+using System.Security;              // 
 using System.Threading;
 
 using System.Windows;
@@ -126,7 +126,6 @@ namespace MS.Internal.Data
         ///     TreatAsSafe: This code does not take any parameter or return state.
         ///     It simply attaches private call back.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private DataBindEngine()
         {
             // Set up the final cleanup
@@ -729,7 +728,6 @@ namespace MS.Internal.Data
             ///     TreatAsSafe: This code does not take any parameter or return state.
             ///                  It simply attaches private callbacks.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public DataBindEngineShutDownListener(DataBindEngine target) : base(target)
             {
             }

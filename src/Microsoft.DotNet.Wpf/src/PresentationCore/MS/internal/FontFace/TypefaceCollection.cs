@@ -100,7 +100,6 @@ namespace MS.Internal.FontFace
         /// </SecurityNote>
         public int Count
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 Debug.Assert((_family != null && _familyTypefaceCollection == null)|| (_familyTypefaceCollection != null && _family == null));
@@ -176,7 +175,6 @@ namespace MS.Internal.FontFace
             /// </SecurityNote>
             public Typeface Current
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (_typefaceCollection._family != null)

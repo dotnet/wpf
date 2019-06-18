@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,6 @@ namespace System.Xaml
         /// <SecurityNote>
         /// Critical: Ensuring idempotence for consistency with UnderlyingGetter/Setter
         /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MemberInfo> _underlyingMember;
 
         public XamlMember(string name, XamlType declaringType, bool isAttachable)
@@ -64,7 +63,6 @@ namespace System.Xaml
         /// Critical: Accesses critical field _underlyingMember
         /// Safe: Constructor is single-threaded, so idempotence is assured
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(PropertyInfo propertyInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
             if (propertyInfo == null)
@@ -98,7 +96,6 @@ namespace System.Xaml
         /// Critical: Accesses critical field _underlyingMember
         /// Safe: Constructor is single-threaded, so idempotence is assured
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(EventInfo eventInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
             if (eventInfo == null)
@@ -134,7 +131,6 @@ namespace System.Xaml
         /// Critical: Accesses critical field _underlyingMember
         /// Safe: Constructor is single-threaded, so idempotence is assured
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
@@ -175,7 +171,6 @@ namespace System.Xaml
         /// Critical: Accesses critical field _underlyingMember
         /// Safe: Constructor is single-threaded, so idempotence is assured
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker, MemberReflector reflector)
         {
@@ -346,7 +341,6 @@ namespace System.Xaml
         /// </SecurityNote>
         public MemberInfo UnderlyingMember
         {
-            [SecuritySafeCritical]
             get
             {
                 if (!_underlyingMember.IsSet)
@@ -364,7 +358,6 @@ namespace System.Xaml
         /// </SecurityNote>
         internal NullableReference<MemberInfo> UnderlyingMemberInternal
         {
-            [SecuritySafeCritical]
             get { return _underlyingMember; }
         }
 

@@ -28,7 +28,6 @@ namespace System.Windows.Input
         /// TreatAsSafe: This constructor handles critical data but does not expose it
         ///             It stores instance but there are demands on the instances.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal CommandDevice( InputManager inputManager )
         {
             _inputManager = new SecurityCriticalData<InputManager>(inputManager);
@@ -58,7 +57,6 @@ namespace System.Windows.Input
         ///</SecurityNote> 
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {  
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -70,7 +68,6 @@ namespace System.Windows.Input
         ///<SecurityNote>
         /// Critical: accesses e.StagingItem.Input
         ///</SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput( object sender, PreProcessInputEventArgs e )
         {
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
@@ -102,7 +99,6 @@ namespace System.Windows.Input
         /// Critical: Calls a critical function (PushInput)
         ///           Accesses e.StagingItem.Input
         ///</SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput( object sender, ProcessInputEventArgs e )
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)

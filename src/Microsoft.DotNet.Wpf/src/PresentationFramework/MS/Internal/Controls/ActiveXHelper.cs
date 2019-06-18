@@ -87,7 +87,6 @@ namespace MS.Internal.Controls
         ///</SecurityNote>                 
         public static int LogPixelsX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (logPixelsX == -1)
@@ -115,7 +114,6 @@ namespace MS.Internal.Controls
         ///</SecurityNote>                 
         public static int LogPixelsY
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (logPixelsY == -1)
@@ -157,7 +155,6 @@ namespace MS.Internal.Controls
         /// Since wrapping a managed object in a native one that trivially delegates IDispatch calls is safe,
         /// a caller of this method can generally be marked SecurityTreatAsSafe.
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [DllImport(ExternDll.PresentationHostDll, PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.IDispatch)]
         internal static extern object CreateIDispatchSTAForwarder([MarshalAs(UnmanagedType.IDispatch)] object pDispatchDelegate);

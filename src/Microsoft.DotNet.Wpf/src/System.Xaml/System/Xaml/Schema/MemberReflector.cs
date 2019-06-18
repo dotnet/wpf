@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,13 +26,11 @@ namespace System.Xaml.Schema
         /// <SecurityNote>
         /// Critical: We cache visibility check based on this member, so it must be idempotent
         /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MethodInfo> _getter;
 
         /// <SecurityNote>
         /// Critical: We cache visibility check based on this member, so it must be idempotent
         /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MethodInfo> _setter;
 
         private NullableReference<XamlValueConverter<TypeConverter>> _typeConverter;
@@ -63,7 +61,6 @@ namespace System.Xaml.Schema
         /// Critical: Accesses critical fields _getter and _setter
         /// Safe: Constructor is single-threaded, so idempotence is preserved
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MemberReflector(MethodInfo getter, MethodInfo setter, bool isEvent)
             : this(isEvent)
         {
@@ -76,7 +73,6 @@ namespace System.Xaml.Schema
         /// Critical: Accesses critical fields _getter and _setter
         /// Safe: Constructor is single-threaded, so idempotence is preserved
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MemberReflector(XamlType type, XamlValueConverter<TypeConverter> typeConverter)
         {
             Type = type;
@@ -97,7 +93,6 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         internal static MemberReflector UnknownReflector
         {
-            [SecuritySafeCritical]
             get
             {
                 if (s_UnknownReflector == null)
@@ -184,9 +179,7 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         internal MethodInfo Getter
         {
-            [SecuritySafeCritical]
             get { return _getter.Value; }
-            [SecuritySafeCritical]
             set { _getter.SetIfNull(value); }
         }
 
@@ -196,7 +189,6 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         internal bool GetterIsSet
         {
-            [SecuritySafeCritical]
             get { return _getter.IsSet; }
         }
 
@@ -211,9 +203,7 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         internal MethodInfo Setter
         {
-            [SecuritySafeCritical]
             get { return _setter.Value; }
-            [SecuritySafeCritical]
             set { _setter.SetIfNull(value); }
         }
 
@@ -223,7 +213,6 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         internal bool SetterIsSet
         {
-            [SecuritySafeCritical]
             get { return _setter.IsSet; }
         }
 

@@ -43,7 +43,6 @@ namespace System.Security.RightsManagement
     ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave
     ///     some status/data behind which eventually might cross the unamanaged boundary.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     public class UseLicense
     {
         /// <summary>

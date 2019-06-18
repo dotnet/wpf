@@ -16,7 +16,6 @@ namespace MS.Win32
         /// <SecurityNote>
 	    ///    Critical: This code calls into base class which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         public MessageOnlyHwndWrapper() : base(0, 0, 0, 0, 0, 0, 0, "", NativeMethods.HWND_MESSAGE, null)
         {
         }

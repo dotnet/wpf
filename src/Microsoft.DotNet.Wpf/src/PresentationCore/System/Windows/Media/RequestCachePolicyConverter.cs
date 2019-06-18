@@ -113,7 +113,6 @@ namespace System.Windows.Media
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for RequestCachePolicy/HttpRequestCachePolicy, not an arbitrary class
         ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,

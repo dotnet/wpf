@@ -38,7 +38,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Accesses and stores critical data (_site, _source, _stylusLogic).
         /// </SecurityNote>
-        [SecurityCritical]
         internal HwndStylusInputProvider(HwndSource source)
         {
             InputManager inputManager = InputManager.Current;
@@ -73,7 +72,6 @@ namespace System.Windows.Interop
         ///     Critical:This class accesses critical data, _site
         ///     TreatAsSafe: This class does not expose the critical data.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Dispose()
         {
             if(_site != null)
@@ -93,7 +91,6 @@ namespace System.Windows.Interop
         ///     TreatAsSafe:Information about whether a given input provider services
         ///     a visual is safe to expose. This method does not expose the critical data either.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert( null != _source );
@@ -105,7 +102,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This code is critical since it handles all stylus messages and could be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;

@@ -62,7 +62,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         ///                  stream itself (see ReadBlockHeader) but we are careful to throw on malicious 
         ///                  input.  Any size > 1MB is considered malicious and rejected.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Decompress(Stream source, Stream sink)
         {
             if (source == null)
@@ -196,7 +195,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         ///                  stream itself (see ReadBlockHeader) but we are careful to throw on malicious 
         ///                  input.  Any size > 1MB is considered malicious and rejected.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Compress(Stream source, Stream sink)
         {
             if (source == null)
@@ -344,7 +342,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <SecurityNote>
         ///     Critical - allocates pinned memory based on arguments
         /// </SecurityNote>
-        [SecurityCritical]
         private static void AllocOrRealloc(int size, ref byte[] buffer, ref GCHandle gcHandle)
         {
             Invariant.Assert(size >= 0, "Cannot allocate negative number of bytes");

@@ -62,7 +62,6 @@ namespace MS.Internal.PtsHost
         ///        which ensures that partial trust code won't be able to set it to a random value.
         ///        The textdetails parameter passed to other methods is generated securely in this function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnArrange()
         {
             base.OnArrange();

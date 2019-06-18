@@ -43,7 +43,6 @@ namespace MS.Internal.IO.Packaging
         ///                of data from them.  The data is only critical for set since it was a stream the caller
         ///                originally had in the first place so they could get it again if they wanted it.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ByteStream(object underlyingStream, FileAccess openAccess)
         {
             SecuritySuppressedIStream stream = underlyingStream as SecuritySuppressedIStream;
@@ -111,7 +110,6 @@ namespace MS.Internal.IO.Packaging
         /// </SecurityNote>
         public override long Length
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckDisposedStatus();
@@ -146,7 +144,6 @@ namespace MS.Internal.IO.Packaging
         /// </SecurityNote>
         public override long Position
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckDisposedStatus();
@@ -160,7 +157,6 @@ namespace MS.Internal.IO.Packaging
                 return seekPos;
             }
 
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 CheckDisposedStatus();
@@ -215,7 +211,6 @@ namespace MS.Internal.IO.Packaging
         ///                   have created this class the caller would have had to have had
         ///                   permission to create the unmanaged code stream already.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposedStatus();
@@ -282,7 +277,6 @@ namespace MS.Internal.IO.Packaging
         ///                   have created this class the caller would have had to have had
         ///                   permission to create the unmanaged code stream already.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposedStatus();
@@ -425,7 +419,6 @@ namespace MS.Internal.IO.Packaging
         /// <SecurityNote>
         ///  Critical : Field for critical type SecuritySuppressedIStream
         /// </SecurityNote>
-        [SecurityCritical]
         SecurityCriticalDataForSet<SecuritySuppressedIStream> _securitySuppressedIStream;
 
         FileAccess                 _access;
@@ -451,8 +444,6 @@ namespace MS.Internal.IO.Packaging
         [Guid("0000000c-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [SecurityCritical(SecurityCriticalScope.Everything)]
         public interface SecuritySuppressedIStream
         {
             // ISequentialStream portion

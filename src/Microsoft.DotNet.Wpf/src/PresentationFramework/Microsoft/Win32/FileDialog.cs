@@ -69,7 +69,6 @@ namespace Microsoft.Win32
         ///     TreatAsSafe: It is okay to set the options to their defaults.  The
         ///             ctor does not show the dialog.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected FileDialog()
         {
             // Call Initialize to set defaults for fields
@@ -102,7 +101,6 @@ namespace Microsoft.Win32
         ///     Critical: Sets Dialog options, which are critical for set.
         ///     PublicOk: Demands FileIOPermission (PermissionState.Unrestricted)
         /// </SecurityNote>
-        [SecurityCritical]
         public override void Reset()
         {
             SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -163,7 +161,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(OPTION_ADDEXTENSION);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -198,7 +195,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_FILEMUSTEXIST);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -227,7 +223,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_PATHMUSTEXIST);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -293,7 +288,6 @@ namespace Microsoft.Win32
             {
                 return !GetOption(NativeMethods.OFN_NODEREFERENCELINKS);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -315,7 +309,6 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         public string SafeFileName
         {
-            [SecurityCritical]
             get
             {
                 // Use the FileName property to avoid directly accessing
@@ -346,7 +339,6 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         public string[] SafeFileNames
         {
-            [SecurityCritical]
             get
             {
                 // Retrieve the existing filenames into an array, then make
@@ -387,13 +379,11 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         public string FileName
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
                 return CriticalFileName;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -428,7 +418,6 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         public string[] FileNames
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -545,7 +534,6 @@ namespace Microsoft.Win32
                 // Avoid returning a null string - return String.Empty instead.
                 return _initialDirectory.Value == null ? String.Empty : _initialDirectory.Value;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -574,7 +562,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_NOCHANGEDIR);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -602,7 +589,6 @@ namespace Microsoft.Win32
                 // Avoid returning a null string - return String.Empty instead.
                 return _title.Value == null ? String.Empty : _title.Value;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -633,7 +619,6 @@ namespace Microsoft.Win32
             {
                 return !GetOption(NativeMethods.OFN_NOVALIDATE);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -675,7 +660,6 @@ namespace Microsoft.Win32
         ///  Critical: due to calls to GetParent and PtrToStructure in UnsafeNativeMethods 
         ///  as well as a call to DoFileOk, which is SecurityCritical.
         /// </SecurityNote>
-        [SecurityCritical]
         protected override IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
         {
             // Assume we are successful unless we encounter a problem.
@@ -945,7 +929,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical: Calls Critical RunLegacyDialog and RunVistaDialog.
         /// </SecurityNote>
-        [SecurityCritical]
         protected override bool RunDialog(IntPtr hwndOwner)
         {
             // Verify thread access here.  Generally we'd want to enforce thread affinity
@@ -968,7 +951,6 @@ namespace Microsoft.Win32
         ///     Critical: Calls UnsafeNativeMethods.SetWindowPos() accesses SecurityCritical data
         ///             _charBuffer.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool RunLegacyDialog(IntPtr hwndOwner)
         {
             // Once we run the dialog, all of our communication with it is handled
@@ -1132,7 +1114,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///    Critical: Setting a SecurityCriticalDataForSet member (_dialogOptions).
         /// </SecurityNote>
-        [SecurityCritical]
         internal void SetOption(int option, bool value)
         {
             if (value)
@@ -1168,7 +1149,6 @@ namespace Microsoft.Win32
         ///    Critical: We call GetFocus() and SetFocus() in
         ///    UnsafeNativeMethods, which are marked SupressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool MessageBoxWithFocusRestore(string message,
                          MessageBoxButton buttons,
                          MessageBoxImage image)
@@ -1218,7 +1198,6 @@ namespace Microsoft.Win32
         ///     Critical: due to call to PromptFileNotFound, which displays a message box with focus restore.
         ///             Asserts FileIOPermission in order to determine whether the file exists.
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual bool PromptUserIfAppropriate(string fileName)
         {
             bool fileExists = true;
@@ -1282,7 +1261,6 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         internal string[] FileNamesInternal
         {
-            [SecurityCritical]
             get
             {
                 if (_fileNames == null)
@@ -1326,7 +1304,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical due to call access to _charBuffer, _fileNames and _dialogOptions.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool DoFileOk(IntPtr lpOFN)
         {
             NativeMethods.OPENFILENAME_I ofn = (NativeMethods.OPENFILENAME_I)UnsafeNativeMethods.PtrToStructure(lpOFN, typeof(NativeMethods.OPENFILENAME_I));
@@ -1488,7 +1465,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Sets Dialog options, which are critical for set.
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize()
         {
             // 
@@ -1599,7 +1575,6 @@ namespace Microsoft.Win32
         /// TreatAsSafe: This method does not take external input for the call for 
         ///             PromptUserIfAppropriate.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool ProcessFileNames()
         {
             // Only process the filenames if OFN_NOVALIDATE is not set.
@@ -1687,7 +1662,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         /// Security Critical due to a call to MessageBoxWithFocusRestore.
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromptFileNotFound(string fileName)
         {
             MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogFileNotFound, fileName),
@@ -1713,7 +1687,6 @@ namespace Microsoft.Win32
         /// </SecurityNote>
         private string CriticalFileName
         {
-            [SecurityCritical]
             get
             {
                 if (_fileNames == null)        // No filename stored internally...
@@ -1752,7 +1725,6 @@ namespace Microsoft.Win32
         //   It is designed to only be called by MessageBoxWithFocusRestore.
         private string DialogCaption
         {
-            [SecurityCritical]
             get
             {
                 if (!UnsafeNativeMethods.IsWindow(new HandleRef(this, _hwndFileDialog)))
@@ -1890,26 +1862,22 @@ namespace Microsoft.Win32
         /// </remarks>
         private sealed class VistaDialogEvents : IFileDialogEvents, IDisposable
         {
-            [SecurityCritical(SecurityCriticalScope.Everything)]
             public delegate bool OnOkCallback(IFileDialog dialog);
 
             /// <SecurityNote>
             ///     Critical: COM pointer that's obtained in a critical context.
             /// </SecurityNote>
-            [SecurityCritical]
             private IFileDialog _dialog;
 
             /// <SecurityNote>
             ///     Critical: Callback method that's obtained in a critical context.
             /// </SecurityNote>
-            [SecurityCritical]
             private OnOkCallback _okCallback;
             uint _eventCookie;
 
             /// <SecurityNote>
             ///     Critical: Accesses methods on the critical interface IFileDialog.
             /// </SecurityNote>
-            [SecurityCritical]
             public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
             {
                 _dialog = dialog;
@@ -1920,7 +1888,6 @@ namespace Microsoft.Win32
             /// <SecurityNote>
             ///     Critical: This gets raised as a callback made in a critical context.
             /// </SecurityNote>
-            [SecurityCritical]
             HRESULT IFileDialogEvents.OnFileOk(IFileDialog pfd)
             {
                 return _okCallback(pfd) ? HRESULT.S_OK : HRESULT.S_FALSE;
@@ -1931,7 +1898,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnFolderChanging(IFileDialog pfd, IShellItem psiFolder)
             {
                 return HRESULT.E_NOTIMPL;
@@ -1942,7 +1908,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnFolderChange(IFileDialog pfd)
             {
                 return HRESULT.S_OK;
@@ -1953,7 +1918,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnSelectionChange(IFileDialog pfd)
             {
                 return HRESULT.S_OK;
@@ -1964,7 +1928,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnShareViolation(IFileDialog pfd, IShellItem psi, out FDESVR pResponse)
             {
                 pResponse = FDESVR.DEFAULT;
@@ -1976,7 +1939,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnTypeChange(IFileDialog pfd)
             {
                 return HRESULT.S_OK;
@@ -1987,7 +1949,6 @@ namespace Microsoft.Win32
             ///     TreatAsSafe: This object was created in a critical context.
             ///                  This doesn't return any critical information, just immediately returns an appropriate HRESULT.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             HRESULT IFileDialogEvents.OnOverwrite(IFileDialog pfd, IShellItem psi, out FDEOR pResponse)
             {
                 pResponse = FDEOR.DEFAULT;
@@ -1997,7 +1958,6 @@ namespace Microsoft.Win32
             /// <SecurityNote>
             ///     Critical: Accesses methods on the critical interface IFileDialog.
             /// </SecurityNote>
-            [SecurityCritical]
             void IDisposable.Dispose()
             {
                 _dialog.Unadvise(_eventCookie);
@@ -2013,14 +1973,12 @@ namespace Microsoft.Win32
         ///     Derived callers have similar attributes.  See their declarations for a fuller explanation.
         ///     TreatAsSafe as this returns a COM interface, not a handle, which has Security attributes on it as well.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal abstract IFileDialog CreateVistaDialog();
 
         /// <SecurityNote>
         ///     Derived callers have similar attributes.
         ///     Critical: This returns a collection of file paths on the user's machine.
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract string[] ProcessVistaFiles(IFileDialog dialog);
 
         #endregion
@@ -2033,7 +1991,6 @@ namespace Microsoft.Win32
         ///               that the caller doesn't necessarily have access to.
         ///               Asserts FileIOPermissions.
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void PrepareVistaDialog(IFileDialog dialog)
         {
             dialog.SetDefaultExtension(DefaultExt);
@@ -2099,7 +2056,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical: Calls Critical PrepareVistaDialog.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool RunVistaDialog(IntPtr hwndOwner)
         {
             IFileDialog dialog = CreateVistaDialog();
@@ -2121,7 +2077,6 @@ namespace Microsoft.Win32
         ///          Specifically it modifies _fileNames by way of ProcessVistaFiles.
         ///          This field is not exposed to PT.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool HandleVistaFileOk(IFileDialog dialog)
         {
             // When this callback occurs, the HWND is visible and we need to
@@ -2196,7 +2151,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Resolves an opaque interface into a path on the user's machine.
         /// </SecurityNote>
-        [SecurityCritical]
         private static IShellItem ResolveCustomPlace(FileDialogCustomPlace customPlace)
         {
             // Use the KnownFolder Guid if it exists.  Otherwise use the Path.
@@ -2246,7 +2200,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: This is a buffer that is operated on by unmanaged
         /// </SecurityNote>
-        [SecurityCritical]
         private CharBuffer _charBuffer;
 
         // We store the handle of the file dialog inside our class 
@@ -2255,7 +2208,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: The hWnd of the dialog is critical data.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwndFileDialog;
 
         // This is the array that stores the filename(s) the user selected in the
@@ -2264,7 +2216,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: The full file paths are critical data.
         /// </SecurityNote>
-        [SecurityCritical]
         private string[] _fileNames;
 
         // Constant to control the initial size of the character buffer;

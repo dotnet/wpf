@@ -38,7 +38,6 @@ namespace System.Windows.Input
         ///             Instance (above)
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         static PenThreadPool()
         {
         }
@@ -52,7 +51,6 @@ namespace System.Windows.Input
         ///             access by transparent code             
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         [ThreadStatic]
         private static PenThreadPool _penThreadPool;
 
@@ -69,7 +67,6 @@ namespace System.Windows.Input
         ///             PenContext.Disable
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         internal static PenThread GetPenThreadForPenContext(PenContext penContext)
         {
             // Create the threadstatic DynamicRendererThreadManager as needed for calling thread.
@@ -90,7 +87,6 @@ namespace System.Windows.Input
         ///             access by transparent code             
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         private List<WeakReference<PenThread>> _penThreadWeakRefList;
 
         /////////////////////////////////////////////////////////////////////
@@ -101,7 +97,6 @@ namespace System.Windows.Input
         /// Critical -  Initializes critical data: m_PenThreads  
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenThreadPool()
         {
             _penThreadWeakRefList = new List<WeakReference<PenThread>>();
@@ -129,7 +124,6 @@ namespace System.Windows.Input
         ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
         ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         private PenThread GetPenThreadForPenContextHelper(PenContext penContext)
         {
             // A list of full PenThreads that we should ignore when attempting to select a thread

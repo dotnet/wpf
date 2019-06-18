@@ -62,7 +62,6 @@ namespace System.Windows.Documents
         /// SecurityTreatAsSafe: No package instance or package related objects are handed out from this
         ///             method except as SecurityCriticalData (to XpsSchema.ValidateRelationships)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object Load(Stream stream, Uri parentUri, ParserContext pc, ContentType mimeType, string rootElement)
         {
             object obj = null;

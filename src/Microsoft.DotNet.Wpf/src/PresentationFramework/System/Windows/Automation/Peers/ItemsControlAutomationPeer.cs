@@ -387,7 +387,6 @@ namespace System.Windows.Automation.Peers
         /// </SecurityNote>
         /// <param name="item"></param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];

@@ -57,7 +57,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: Elevates by calling an UnsafeNativeMethod
         ///</SecurityNote>
-        [SecurityCritical]
         static HwndSubclass()
         {
             DetachMessage = UnsafeNativeMethods.RegisterWindowMessage("HwndSubclass.DetachMessage");
@@ -84,7 +83,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: This code creates an object that is not allowed in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
         internal HwndSubclass(HwndWrapperHook hook)
         {
             if(hook == null)
@@ -114,7 +112,6 @@ namespace MS.Win32
         // /// <SecurityNote>
         // ///  Critical - It calls the critical DisposeImpl.
         // /// </SecurityNote>
-        // [SecurityCritical]
         // ~HwndSubclass()
         // {
         //     // In Shutdown, the finalizer is called on LIVE OBJECTS.
@@ -129,7 +126,6 @@ namespace MS.Win32
         ///  Critical - It calls the critical DisposeImpl.
         ///  PublicOK - Demands for AllWindows permission.
         /// </SecurityNote>
-        [SecurityCritical]
         public virtual void Dispose()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -140,7 +136,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical - Calls the critical UnhookWindowProc.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool DisposeImpl(bool forceUnhook)
         {
             _hook = null;
@@ -164,7 +159,6 @@ namespace MS.Win32
         ///  Critical - It calls CriticalAttach.
         ///  TreatAsSafe - Demands for AllWindows permission.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal IntPtr Attach(IntPtr hwnd)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -197,7 +191,6 @@ namespace MS.Win32
         ///  TreatAsSafe:  Demands for all windows
         ///  Critical: Elevates by calling an UnsafeNativeMethod
         ///</SecurityNote>
-        [SecurityCritical]
         internal bool Detach(bool force)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -208,7 +201,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: Elevates by calling an UnsafeNativeMethod
         ///</SecurityNote>
-        [SecurityCritical]
         internal bool CriticalDetach(bool force)
         {
             bool detached;
@@ -251,7 +243,6 @@ namespace MS.Win32
         ///  Critical - Probes _hwndAttached for value.
         ///  TreatAsSafe - The RequestDetach overload we're calling is public and safe (demands UIWindowPermission).
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RequestDetach(bool force)
         {
             // Let the static version do the work.
@@ -289,7 +280,6 @@ namespace MS.Win32
         ///             In general we restrict access to window handles.
         ///  TreatAsSafe - Demands UIWindowPermission.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RequestDetach(IntPtr hwnd, IntPtr subclass, bool force)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -333,7 +323,6 @@ namespace MS.Win32
         ///<SecurityNote>
         ///  Critical: this function elevates via unsafe native method calls
         ///</SecurityNote>
-        [SecurityCritical]
         internal IntPtr SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
         {
             IntPtr retval = IntPtr.Zero;
@@ -440,7 +429,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: DispatcherOperationCallbackParameter contains hwnd, which is critical
         ///</SecurityNote>
-        [SecurityCritical]
         [ThreadStatic]
         private static DispatcherOperationCallbackParameter _paramDispatcherCallbackOperation;
 
@@ -457,7 +445,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: it calls GetWindowLongPtr(), which is Critical
         ///</SecurityNote>
-        [ SecurityCritical ]
         internal IntPtr CriticalAttach( IntPtr hwnd )
         {
             if(hwnd == IntPtr.Zero)
@@ -482,7 +469,6 @@ namespace MS.Win32
         ///      because under enforcements anonymous delagates throw a demand since
         ///      it becomes a transparent calling critical for this particular call
         /// </SecurityNote>
-        [SecurityCritical]
         private object DispatcherCallbackOperation(object o)
         {
             DispatcherOperationCallbackParameter param = (DispatcherOperationCallbackParameter)o;
@@ -527,7 +513,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: Elevates by calling an UnsafeNativeMethod
         ///</SecurityNote>
-        [SecurityCritical]
         IntPtr CallOldWindowProc(IntPtr oldWndProc, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             return UnsafeNativeMethods.CallWindowProc(oldWndProc, hwnd, (int)msg, wParam, lParam);
@@ -536,7 +521,6 @@ namespace MS.Win32
         ///<SecurityNote>
         /// Critical - it calls CriticalSetWindowLong()
         ///</SecurityNote>
-        [SecurityCritical]
         private void HookWindowProc(IntPtr hwnd, NativeMethods.WndProc newWndProc, IntPtr oldWndProc)
         {
             _hwndAttached = hwnd;
@@ -580,7 +564,6 @@ namespace MS.Win32
         ///             This touches the underlying windowing infrastructure; we may want to intercept windows-messages for security-related purposes in the future.
         ///             In general we restrict access to window handles.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool UnhookWindowProc(bool force)
         {
             // if we're not in the WndProc chain, there's nothing to do
@@ -670,7 +653,6 @@ namespace MS.Win32
         /// <SecurityNote>
         ///  Critical: Elevates by calling an UnsafeNativeMethod
         ///</SecurityNote>
-        [SecurityCritical]
         private static IntPtr DefWndProcWrapper(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
         {
             return UnsafeNativeMethods.CallWindowProc(DefWndProc, hwnd, msg, wParam, lParam);
@@ -705,41 +687,34 @@ namespace MS.Win32
         /// <SecurityNote>
         ///     Critical: This will expose DefWndProc
         /// </SecurityNote>
-        [SecurityCritical]
         private static NativeMethods.WndProc DefWndProcStub = new NativeMethods.WndProc(DefWndProcWrapper);
 
         /// <SecurityNote>
         ///     Critical: This will expose wndproc
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr DefWndProc;
 
         /// <SecurityNote>
         ///     Critical: This will expose the intptr of the window
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwndAttached;
         /// <SecurityNote>
         ///     Critical: This will expose window handle
         /// </SecurityNote>
-        [SecurityCritical]
         private HandleRef _hwndHandleRef;
         /// <SecurityNote>
         ///     Critical: This will expose wndproc
         /// </SecurityNote>
-        [SecurityCritical]
         private NativeMethods.WndProc _attachedWndProc;
         /// <SecurityNote>
         ///     Critical: This will expose wndproc
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr                _oldWndProc;
         private Bond                  _bond;
         private GCHandle              _gcHandle;
         /// <SecurityNote>
         ///     Critical: This will expose hook
         /// </SecurityNote>
-        [SecurityCritical]
         private WeakReference _hook;
     };
 }

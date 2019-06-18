@@ -48,7 +48,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This code sets a critical data member, calls critical code
         /// </SecurityNote>
-        [SecurityCritical]
         private ColorContext(SafeMILHandle colorContextHandle)
         {
             _colorContextHandle = colorContextHandle;
@@ -184,7 +183,6 @@ namespace System.Windows.Media
         /// PublicOK: doesn't reveal any sensitive information
         /// </SecurityNote>
         /// <param name="profileUri">Specifies the URI of a color profile used by the newly created ColorContext.</param>
-        [SecurityCritical]
         public ColorContext(Uri profileUri)
         {
             Initialize(profileUri, /* isStandardProfileUriNotFromUser = */ false);
@@ -197,7 +195,6 @@ namespace System.Windows.Media
         /// SecurityCritical: Calls the SecurityCritical method GetStandardColorSpaceProfile()
         /// PublicOK: doesn't reveal any sensitive information
         /// </SecurityNote>
-        [SecurityCritical]
         public ColorContext(PixelFormat pixelFormat)
         {
             switch (pixelFormat.Format)
@@ -250,7 +247,6 @@ namespace System.Windows.Media
         ///           inspected by WCS which is hardened against malicious data
         ///           makes this OK.
         /// </SecurityNote>
-        [SecurityCritical]
         public Stream OpenProfileStream()
         {
             //
@@ -287,7 +283,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         public Uri ProfileUri
         {
-            [SecurityCritical]
             get
             {
                 Uri uri = _profileUri.Value;
@@ -320,7 +315,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal SafeProfileHandle ProfileHandle
         {
-            [SecurityCritical]
             get
             {
                 return _colorContextHelper.ProfileHandle;
@@ -335,7 +329,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal SafeMILHandle ColorContextHandle
         {
-            [SecurityCritical]
             get
             {
                 return _colorContextHandle;
@@ -353,7 +346,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal int NumChannels
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_colorContextHelper.IsInvalid) // sRGB or scRGB
@@ -384,7 +376,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal StandardColorSpace ColorSpaceFamily
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_colorContextHelper.IsInvalid) // sRGB or scRGB
@@ -408,7 +399,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool IsValid
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return !_colorContextHelper.IsInvalid;
@@ -423,7 +413,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: Calls unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IList<ColorContext> GetColorContextsHelper(GetColorContextsDelegate getColorContexts)
         {
             uint numContexts = 0;
@@ -444,7 +433,8 @@ namespace System.Windows.Media
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
                     for (uint i = 0; i < numContexts; ++i)
-                    {                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out colorContextHandles[i]));
+                    {
+                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out colorContextHandles[i]));
                     }
                 }
 
@@ -498,7 +488,6 @@ namespace System.Windows.Media
         /// SecurityCritical: Touches critical _profileHeader
         /// PublicOK: The date the profile was authored is not considered sensitive
         /// </SecurityNote>
-        [SecurityCritical]
         override public int GetHashCode()
         {
             // phDateTime_2 contains the minute and second that the profile was created. Obviously this 
@@ -515,7 +504,6 @@ namespace System.Windows.Media
         /// SecurityCritical: Touches critical _profileHeader
         /// PublicOK: No information is revealed to the user
         /// </SecurityNote>
-        [SecurityCritical]
         public static bool operator==(ColorContext context1, ColorContext context2)
         {
             object obj1 = context1;
@@ -578,7 +566,6 @@ namespace System.Windows.Media
         /// SecurityCritical: method calls SecurityCritical code, profileUri could contain 
         /// sensitive path information
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(Uri profileUri, bool isStandardProfileUriNotFromUser)
         {
             bool tryProfileFromResource = false;
@@ -647,7 +634,6 @@ namespace System.Windows.Media
         /// path information that can be set by an outside party and/or may include
         /// sensitive paths like %WINDIR%
         /// </SecurityNote>
-        [SecurityCritical]
         private static Uri GetStandardColorSpaceProfile()
         {
             const int SIZE = NativeMethods.MAX_PATH;
@@ -685,7 +671,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This code calls critical unmanaged code to create resources
         /// </SecurityNote>
-        [SecurityCritical]
         private void FromStream(Stream stm, string filename)
         {
             Debug.Assert(stm != null);
@@ -736,7 +721,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This code calls critical code (unmanaged), contains unsafe code block
         /// </SecurityNote>
-        [SecurityCritical]
         private void FromRawBytes(byte[] data, int dataLength, bool dontThrowException) 
         {
             Invariant.Assert(dataLength <= data.Length);
@@ -899,7 +883,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This comes out of an elevation needs to be critical and tracked.
         /// </SecurityNote>
-        [SecurityCritical]
         private ColorContextHelper _colorContextHelper;
 
         private StandardColorSpace _colorSpaceFamily;
@@ -920,13 +903,11 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: Retrieved from unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
         private AbbreviatedPROFILEHEADER _profileHeader;
 
         /// <SecurityNote>
         /// SecurityCritical: Unmanaged IWICColorContext handle
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _colorContextHandle;
 
         private const int _bufferSizeIncrement = 1024 * 1024;  // 1 Mb

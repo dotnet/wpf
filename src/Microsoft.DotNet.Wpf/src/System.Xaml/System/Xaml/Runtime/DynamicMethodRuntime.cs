@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,6 @@ namespace MS.Internal.Xaml.Runtime
     /// <SecurityNote>
     /// Critical: Creates and stores delegates with the ability to access non-public members
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class DynamicMethodRuntime : ClrObjectRuntime
     {
         const BindingFlags BF_AllInstanceMembers = 
@@ -147,7 +146,6 @@ namespace MS.Internal.Xaml.Runtime
         /// <SecurityNote>
         /// Critical: Sets critical fields _xamlLoadPermission, _localAssembly, _localType
         /// </SecurityNote>
-        [SecurityCritical]
         internal DynamicMethodRuntime(XamlRuntimeSettings settings, XamlSchemaContext schemaContext,
             XamlAccessLevel accessLevel)
             : base(settings, true /*isWriter*/)
@@ -167,7 +165,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> ts)
         {
             DemandXamlLoadPermission();
@@ -190,7 +187,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: part of a critical class
         /// Safe: does not access any critical member
         /// </SecurityNote>
-        [SecuritySafeCritical]
         //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
@@ -216,7 +212,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
             DemandXamlLoadPermission();
@@ -235,7 +230,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object CreateInstanceWithCtor(XamlType xamlType, object[] args)
         {
             DemandXamlLoadPermission();
@@ -272,7 +266,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
             DemandXamlLoadPermission();
@@ -291,7 +284,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object GetValue(XamlMember member, object obj)
         {
             DemandXamlLoadPermission();
@@ -315,7 +307,6 @@ namespace MS.Internal.Xaml.Runtime
         /// Critical: Creates/accesses non-public accessors
         /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override void SetValue(XamlMember member, object obj, object value)
         {
             DemandXamlLoadPermission();

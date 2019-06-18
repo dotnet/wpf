@@ -394,7 +394,6 @@ namespace System.Windows
         ///     inappropriately it can be used to change the tree
         ///     TreatAsSafe: This does not let you get at the presentationsource which is what we do not want to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
             internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
         {
             // Cache the IsSelfInheritanceParent flag

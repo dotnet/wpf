@@ -188,7 +188,6 @@ namespace System.Windows.Media.Effects
         ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
         ///     Channels are safe to call into and do not go cross domain and cross process
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             ManualUpdateResource(channel, skipOnChannelCheck);

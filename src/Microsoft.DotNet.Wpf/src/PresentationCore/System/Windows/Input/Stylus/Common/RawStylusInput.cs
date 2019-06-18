@@ -87,7 +87,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///                                 RawStylusInput.GetStylusPoints
         ///                                 StylusDevice.UpdateEventStylusPoints(RawStylusInputReport, Boolean)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal StylusPointCollection GetStylusPoints(GeneralTransform transform)
         {
             if (_stylusPoints == null)
@@ -119,7 +118,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///     Critical : Callers must have Unmanaged code permission to call this API.
         ///     Safe     : Demands unmanaged code permission
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public void SetStylusPoints(StylusPointCollection stylusPoints)
         {
             // To modify the points we require Unmanaged code permission.

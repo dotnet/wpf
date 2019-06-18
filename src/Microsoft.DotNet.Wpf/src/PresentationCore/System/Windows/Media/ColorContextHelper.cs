@@ -36,7 +36,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///    Critical: The ctor of the base class requires SecurityPermission
         /// </SecurityNote>
-        [SecurityCritical]
         internal SafeProfileHandle()
             : base(true)
         {
@@ -49,7 +48,6 @@ namespace System.Windows.Media
         ///    Critical: The ctor of the base class requires SecurityPermission
         ///              This code calls SetHandle
         /// </SecurityNote>
-        [SecurityCritical]
         internal SafeProfileHandle(IntPtr profile)
             : base(true)
         {
@@ -60,7 +58,6 @@ namespace System.Windows.Media
         /// Critical - calls unmanaged code, not treat as safe because you must
         ///            validate that handle is a valid color context handle.
         /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethodsMilCoreApi.Mscms.CloseColorProfile(handle);
@@ -83,7 +80,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: Calls unmanaged code, accepts InPtr/unverified data.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OpenColorProfile(ref UnsafeNativeMethods.PROFILE profile)
         {
             // No need to get rid of the old handle as it will get GC'ed
@@ -103,7 +99,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: Calls unmanaged code, accepts InPtr/unverified data.
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool GetColorProfileHeader(out UnsafeNativeMethods.PROFILEHEADER header)
         {
             if (IsInvalid)
@@ -118,7 +113,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: Calls unmanaged code, accepts InPtr/unverified data.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void GetColorProfileFromHandle(byte[] buffer, ref uint bufferSize)
         {
             Invariant.Assert(buffer == null || bufferSize <= buffer.Length);
@@ -142,7 +136,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal bool IsInvalid
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _profileHandle == null || _profileHandle.IsInvalid;
@@ -157,7 +150,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal SafeProfileHandle ProfileHandle
         {
-            [SecurityCritical]
             get
             {
                 return _profileHandle;
@@ -169,7 +161,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This comes out of an elevation needs to be critical and tracked.
         /// </SecurityNote>
-        [SecurityCritical]
         SafeProfileHandle _profileHandle;
 
         #endregion

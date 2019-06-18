@@ -16,8 +16,6 @@ namespace MS.Internal.Printing
         /// <SecurityNote>
         ///     Critical: Because of suppression
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("comdlg32.dll", CharSet = CharSet.Auto)]
         internal
         static
@@ -30,8 +28,6 @@ namespace MS.Internal.Printing
         /// <SecurityNote>
         ///     Critical: Because of suppression
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static
@@ -44,8 +40,6 @@ namespace MS.Internal.Printing
         /// <SecurityNote>
         ///     Critical: Because of suppression
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static
@@ -58,8 +52,6 @@ namespace MS.Internal.Printing
         /// <SecurityNote>
         ///     Critical: Because of suppression
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static

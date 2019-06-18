@@ -48,7 +48,6 @@ namespace System.Windows.Media
         ///                      in a variable whose access is tracked to prevent any malicious tampering.
         ///                      And that constructing this object is inherently a safe operation.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ColorTransform(ColorContext srcContext, ColorContext dstContext)
         {
             InitializeICM();
@@ -76,7 +75,6 @@ namespace System.Windows.Media
         ///                      in a variable whose access is tracked to prevent any malicious tampering.
         ///                      And that constructing this object is inherently a safe operation.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ColorTransform(SafeMILHandle bitmapSource, ColorContext srcContext, ColorContext dstContext, System.Windows.Media.PixelFormat pixelFormat)
         {
             InitializeICM();
@@ -130,7 +128,6 @@ namespace System.Windows.Media
         ///                      in a variable whose access is tracked to prevent any malicious tampering.
         ///                      And that constructing this object is inherently a safe operation.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Translate(float[] srcValue, float[] dstValue)
         {
             // 3. create Win32 unmanaged profile handle from memory source profile using OpenColorProfileW
@@ -193,7 +190,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This code calls critical code (unmanaged)
         /// </SecurityNote>
-        [SecurityCritical]
         private void InitializeICM()
         {
             _colorTransformHelper = new ColorTransformHelper();
@@ -274,7 +270,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// SecurityCritical: This comes out of an elevation needs to be critical and tracked.
         /// </SecurityNote>
-        [SecurityCritical]
         private ColorTransformHelper _colorTransformHelper;
 
         private UInt32 _inputColorType;

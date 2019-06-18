@@ -33,7 +33,6 @@ namespace System.Windows.Markup
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     TreatAsSafe: can only make an InstanceDescriptor for StaticExtension, not an arbitrary class
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor))

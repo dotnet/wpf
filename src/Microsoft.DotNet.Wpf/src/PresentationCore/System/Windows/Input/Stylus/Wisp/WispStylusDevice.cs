@@ -29,7 +29,6 @@ namespace System.Windows.Input.StylusWisp
         ///             happens to hold the callback to filter stylus messages
         /// TreatAsSafe: This constructor handles critical data but does not expose it
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal WispStylusDevice(WispTabletDevice tabletDevice, string sName, int id, bool fInverted, StylusButtonCollection stylusButtonCollection)
             : base()
         {
@@ -80,7 +79,6 @@ namespace System.Windows.Input.StylusWisp
         /// This could be TreatAsSafe, but it is only called by a critical method
         /// so we're leaving it as critical for now.
         ///</SecurityNote>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -154,7 +152,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 if (_inputSource != null)
@@ -173,7 +170,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override PresentationSource CriticalActiveSource
         {
-            [SecurityCritical]
             get
             {
                 if (_inputSource != null)
@@ -193,7 +189,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal PenContext ActivePenContext
         {
-            [SecurityCritical]
             get
             {
                 if (_activePenContext != null)
@@ -380,7 +375,6 @@ namespace System.Windows.Input.StylusWisp
         ///                StylusLogic.GetStylusPenContextForHwnd and 
         ///                StylusLogic.InputManagerProcessInputEventsArgs (which can be used to spoof input).
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void Synchronize()
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
@@ -624,7 +618,6 @@ namespace System.Windows.Input.StylusWisp
         ///     TreatAsSafe: This operation is ok to expose since stylus capture is ok. Even if you get the
         ///               source changed events you cannot get to the sources themselves
         /// </SecurityNote>
-        [SecuritySafeCritical]
 #if MULTICAPTURE
         private void ChangeStylusCapture(IInputElement stylusCapture, CaptureMode captureMode, int timestamp)
 #else
@@ -972,7 +965,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: This code accesses critical data (PresentationSource) 
         ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
             if (visual == null)
@@ -1000,7 +992,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Accesses SecurityCriticalData _stylusLogic.
         ///     TreatAsSafe: This code does not expose the PresentationSource and simply changes the stylus over element
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void ChangeStylusOver(IInputElement stylusOver)
         {
             // We are not syncing the OverSourceChanged event
@@ -1043,7 +1034,6 @@ namespace System.Windows.Input.StylusWisp
         ///                - TreatAsSafe boundry at ChangeStylusCapture
         ///                - called by ChangeStylusCapture
         /// </SecurityNote>
-        [SecurityCritical]
         internal IInputElement FindTarget(PresentationSource inputSource, Point position)
         {
             IInputElement stylusOver = null;
@@ -1240,7 +1230,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical - accesses critical data _inputSource.Value
         ///     Safe - Does not expose critical data
         ///</SecurityNote>
-        [SecuritySafeCritical]
         internal override Point GetPosition(IInputElement relativeTo)
         {
             VerifyAccess();
@@ -1328,7 +1317,6 @@ namespace System.Windows.Input.StylusWisp
         ///                Called by MouseDevice for StylusDevice promoted mouse events to query
         ///                the mouse button state that should be reported.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override MouseButtonState GetMouseButtonState(MouseButton mouseButton, MouseDevice mouseDevice)
         {
             if (mouseButton == MouseButton.Left)
@@ -1381,7 +1369,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Returns the transform for converting from tablet to element
         ///     relative coordinates.
         /// </summary>
-        [SecurityCritical]
         private GeneralTransform GetTabletToElementTransform(IInputElement relativeTo)
         {
             GeneralTransformGroup group = new GeneralTransformGroup();
@@ -1436,7 +1423,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical - Can be used to spoof input.
         ///      At the top called from StylusLogic::PostProcessInput event which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride)
         {
             if (report.RawStylusInput != null && report.RawStylusInput.StylusPointsModified)
@@ -1498,7 +1484,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override int DoubleTapDeltaTime
         {
-            [SecuritySafeCritical]
             get { return _stylusLogic.DoubleTapDeltaTime; }
         }
 
@@ -1507,7 +1492,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: creates SecurityCriticalData (_inputSource)
         ///                - Called from the StylusLogic::PreProcessInput event handler
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateState(RawStylusInputReport report)
         {
             Debug.Assert(report.TabletDeviceId == _tabletDevice.Id);
@@ -1616,7 +1600,6 @@ namespace System.Windows.Input.StylusWisp
         ///                 PresentationSource.CriticalFromVisual, UnsafeNativeMethods.WindowFromPoint,
         ///                 HwndSource.CriticalFromHwnd).
         /// </SecurityNote>
-        [SecurityCritical]
         private PresentationSource DetermineValidSource(PresentationSource inputSource, StylusPointCollection stylusPoints, PenContexts penContextsOfPoints)
         {
             HwndSource hwndSource = (HwndSource)inputSource;
@@ -1683,7 +1666,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: Accesses security critical data _stylusLogic.
         ///                - Called from the StylusLogic::PreNotifyInput event handler
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateInRange(bool inRange, PenContext penContext)
         {
             _fInRange = inRange;
@@ -1703,7 +1685,6 @@ namespace System.Windows.Input.StylusWisp
         ///               SecurityCriticalData _stylusLogic.
         ///                - Called from the StylusLogic::PreNotifyInput event handler
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateStateForSystemGesture(RawStylusSystemGestureInputReport report)
         {
             UpdateStateForSystemGesture(report.SystemGesture, report);
@@ -1714,7 +1695,6 @@ namespace System.Windows.Input.StylusWisp
         ///               SecurityCriticalData _stylusLogic.
         ///                - Called from the StylusLogic::PreNotifyInput event handler
         /// </SecurityNote>
-        [SecurityCritical]
         private void UpdateStateForSystemGesture(SystemGesture gesture, RawStylusSystemGestureInputReport report)
         {
             switch (gesture)
@@ -1796,7 +1776,6 @@ namespace System.Windows.Input.StylusWisp
         ///                and accesses SecurityCriticalData _stylusLogic.
         ///      At the top called from StylusLogic::PostProcessInput event which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal void PlayBackCachedDownInputReport(int timestamp)
         {
             if (_needToSendMouseDown)
@@ -1851,7 +1830,6 @@ namespace System.Windows.Input.StylusWisp
         ///               - Calls SecurityCritical code PresentationSource.CriticalFromVisual.
         ///      At the top called from StylusLogic::PostProcessInput event which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal PresentationSource GetMousePresentationSource()
         {
             // See if we need to adjust the mouse point to a different
@@ -1888,7 +1866,6 @@ namespace System.Windows.Input.StylusWisp
         ///
         ///      At the top called from StylusLogic::PostProcessInput event which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal RawMouseActions GetMouseActionsFromStylusEventAndPlaybackCachedDown(RoutedEvent stylusEvent, StylusEventArgs stylusArgs)
         {
             if (stylusEvent == Stylus.StylusSystemGestureEvent)
@@ -2062,7 +2039,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical - Accesses CriticalActiveSource.
         ///     TreatAsSafe - Updates a TouchDevice that it owns.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void UpdateTouchActiveSource()
         {
             if (_touchDevice != null)
@@ -2174,7 +2150,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         private WispLogic _stylusLogic;
 
         private WispStylusTouchDevice _touchDevice;

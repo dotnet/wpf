@@ -113,7 +113,6 @@ namespace MS.Internal.Ink
         ///     also inherit from this class, the stylusPoints are not critical.  This is because only
         ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
         /// </SecurityNote>
-        [SecurityCritical]
         void IStylusEditing.AddStylusPoints(StylusPointCollection stylusPoints, bool userInitiated)
         {
             EditingCoordinator.DebugCheckActiveBehavior(this);
@@ -203,7 +202,6 @@ namespace MS.Internal.Ink
         ///     also inherit from this class, the stylusPoints are not critical.  This is because only
         ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
         /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void StylusInputBegin(StylusPointCollection stylusPoints, bool userInitiated)
         {
             //defer to derived classes
@@ -223,7 +221,6 @@ namespace MS.Internal.Ink
         ///     also inherit from this class, the stylusPoints are not critical.  This is because only
         ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
         /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void StylusInputContinue(StylusPointCollection stylusPoints, bool userInitiated)
         {
             //defer to derived classes

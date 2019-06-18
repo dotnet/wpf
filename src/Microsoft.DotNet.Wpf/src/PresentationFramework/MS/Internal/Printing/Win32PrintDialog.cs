@@ -34,7 +34,6 @@ namespace MS.Internal.Printing
         ///     Critical:    - Sets critical data.
         ///     TreatAsSafe: - Sets the critical data to null for initialization.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public
         Win32PrintDialog()
         {
@@ -71,7 +70,6 @@ namespace MS.Internal.Printing
         ///                    care if these are exposed since the data means nothing except to
         ///                    the code that is doing the printing.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         UInt32
         ShowDialog()
@@ -171,12 +169,10 @@ namespace MS.Internal.Printing
         /// </SecurityNote>
         internal PrintTicket PrintTicket
         {
-            [SecurityCritical]
             get
             {
                 return _printTicket;
             }
-            [SecurityCritical]
             set
             {
                 _printTicket = value;
@@ -188,12 +184,10 @@ namespace MS.Internal.Printing
         /// </SecurityNote>
         internal PrintQueue PrintQueue
         {
-            [SecurityCritical]
             get
             {
                 return _printQueue;
             }
-            [SecurityCritical]
             set
             {
                 _printQueue = value;
@@ -316,7 +310,6 @@ namespace MS.Internal.Printing
         /// <SecurityNote>
         /// Critical - Asserts DefaultPrinting permission in order to probe to see if a printer is available
         /// </SecurityNote>
-        [SecurityCritical]
         private void ProbeForPrintingSupport()
         {
             // Without a print queue object we have to make up a name for the printer.
@@ -354,7 +347,6 @@ namespace MS.Internal.Printing
         ///               the current job.  It is critical because it
         ///               could contains some user sensitive data
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintTicket _printTicket;
 
@@ -364,7 +356,6 @@ namespace MS.Internal.Printing
         ///               potential to print jobs to this printer so it is
         ///               a critical system resource.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintQueue _printQueue;
 

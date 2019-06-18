@@ -529,7 +529,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDevices", SetLastError = true)]
         internal static extern bool GetPointerDevices([In, Out] ref UInt32 deviceCount, [In, Out] POINTER_DEVICE_INFO[] devices);
 
@@ -539,7 +538,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceCursors", SetLastError = true)]
         internal static extern bool GetPointerDeviceCursors([In] IntPtr device, [In, Out] ref UInt32 cursorCount, [In, Out] POINTER_DEVICE_CURSOR_INFO[] cursors);
 
@@ -549,7 +547,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerInfo", SetLastError = true)]
         internal static extern bool GetPointerInfo([In] UInt32 pointerId, [In, Out] ref POINTER_INFO pointerInfo);
 
@@ -559,7 +556,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerInfoHistory", SetLastError = true)]
         internal static extern bool GetPointerInfoHistory([In] UInt32 pointerId, [In, Out] ref UInt32 entriesCount, [In, Out] POINTER_INFO[] pointerInfo);
 
@@ -569,7 +565,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceProperties", SetLastError = true)]
         internal static extern bool GetPointerDeviceProperties([In] IntPtr device, [In, Out] ref UInt32 propertyCount, [In, Out] POINTER_DEVICE_PROPERTY[] pointerProperties);
 
@@ -579,7 +574,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceRects", SetLastError = true)]
         internal static extern bool GetPointerDeviceRects([In] IntPtr device, [In, Out] ref RECT pointerDeviceRect, [In, Out] ref RECT displayRect);
 
@@ -589,7 +583,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerCursorId", SetLastError = true)]
         internal static extern bool GetPointerCursorId([In] UInt32 pointerId, [In, Out] ref UInt32 cursorId);
 
@@ -599,7 +592,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerPenInfo", SetLastError = true)]
         internal static extern bool GetPointerPenInfo([In] UInt32 pointerId, [In, Out] ref POINTER_PEN_INFO penInfo);
 
@@ -609,7 +601,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetPointerTouchInfo", SetLastError = true)]
         internal static extern bool GetPointerTouchInfo([In] UInt32 pointerId, [In, Out] ref POINTER_TOUCH_INFO touchInfo);
 
@@ -619,7 +610,6 @@ namespace MS.Win32.Pointer
         /// <SecurityNote>
         ///     Critical: as suppressing UnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.User32, EntryPoint = "GetRawPointerDeviceData", SetLastError = true)]
         internal static extern bool GetRawPointerDeviceData([In] UInt32 pointerId, [In] UInt32 historyCount, [In] UInt32 propertiesCount, [In] POINTER_DEVICE_PROPERTY[] pProperties, [In, Out] int[] pValues);
 
@@ -638,7 +628,6 @@ namespace MS.Win32.Pointer
         /// Creates the interaction context
         /// </summary>
         /// <param name="interactionContext"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "CreateInteractionContext", SetLastError = true)]
         internal static extern void CreateInteractionContext([Out] out IntPtr interactionContext);
 
@@ -646,7 +635,6 @@ namespace MS.Win32.Pointer
         /// Destroys the interaction context
         /// </summary>
         /// <param name="interactionContext"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "DestroyInteractionContext", SetLastError = true)]
         internal static extern void DestroyInteractionContext([In] IntPtr interactionContext);
 
@@ -656,7 +644,6 @@ namespace MS.Win32.Pointer
         /// <param name="interactionContext"></param>
         /// <param name="configurationCount"></param>
         /// <param name="configuration"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "SetInteractionConfigurationInteractionContext", SetLastError = true)]
         internal static extern void SetInteractionConfigurationInteractionContext([In] IntPtr interactionContext, [In] UInt32 configurationCount, [In] INTERACTION_CONTEXT_CONFIGURATION[] configuration);
 
@@ -666,7 +653,6 @@ namespace MS.Win32.Pointer
         /// <param name="interactionContext"></param>
         /// <param name="outputCallback"></param>
         /// <param name="clientData"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "RegisterOutputCallbackInteractionContext", SetLastError = true, PreserveSig = false)]
         internal static extern void RegisterOutputCallbackInteractionContext([In] IntPtr interactionContext, [In] INTERACTION_CONTEXT_OUTPUT_CALLBACK outputCallback, [In, Optional] IntPtr clientData);
 
@@ -676,7 +662,6 @@ namespace MS.Win32.Pointer
         /// <param name="interactionContext"></param>
         /// <param name="contextProperty"></param>
         /// <param name="value"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "SetPropertyInteractionContext", SetLastError = true)]
         internal static extern void SetPropertyInteractionContext([In] IntPtr interactionContext, [In] INTERACTION_CONTEXT_PROPERTY contextProperty, [In] UInt32 value);
 
@@ -686,7 +671,6 @@ namespace MS.Win32.Pointer
         /// <param name="interactionContext"></param>
         /// <param name="entriesCount"></param>
         /// <param name="pointerInfo"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "BufferPointerPacketsInteractionContext", SetLastError = true, PreserveSig = false)]
         internal static extern void BufferPointerPacketsInteractionContext([In] IntPtr interactionContext, [In] UInt32 entriesCount, [In] POINTER_INFO[] pointerInfo);
 
@@ -694,7 +678,6 @@ namespace MS.Win32.Pointer
         /// Forces processing of the buffered WM_POINTER messages.
         /// </summary>
         /// <param name="interactionContext"></param>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.NInput, EntryPoint = "ProcessBufferedPacketsInteractionContext", SetLastError = true, PreserveSig = false)]
         internal static extern void ProcessBufferedPacketsInteractionContext([In] IntPtr interactionContext);
 

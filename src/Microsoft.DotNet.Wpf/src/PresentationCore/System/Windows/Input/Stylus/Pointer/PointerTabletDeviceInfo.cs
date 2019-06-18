@@ -172,7 +172,6 @@ namespace System.Windows.Input.StylusPointer
         ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceProperties
         ///                     Does not accept/expose secure data
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryInitializeSupportedStylusPointProperties()
         {
             bool success = false;
@@ -296,7 +295,6 @@ namespace System.Windows.Input.StylusPointer
         ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceRects
         ///                     Does not accept/expose secure data
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryInitializeDeviceRects()
         {
             bool success = false;

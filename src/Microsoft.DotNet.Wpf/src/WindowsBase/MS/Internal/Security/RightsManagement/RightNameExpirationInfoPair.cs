@@ -24,7 +24,6 @@ namespace MS.Internal.Security.RightsManagement
     ///             2. affects state/data that will eventually cross over unmanaged code boundary
     ///             3. Return some RM related information which is considered private 
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal class RightNameExpirationInfoPair
     {
         internal RightNameExpirationInfoPair (string rightName, DateTime validFrom, DateTime validUntil)

@@ -78,7 +78,6 @@ namespace System.Windows.Media.TextFormatting
         /// Critical: this stores a pointer to an unmanaged string of characters
         /// PublicOK: The caller needs unmanaged code permission in order to pass unsafe pointers to us.
         /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public unsafe CharacterBufferRange(
             char*       unsafeCharacterString,

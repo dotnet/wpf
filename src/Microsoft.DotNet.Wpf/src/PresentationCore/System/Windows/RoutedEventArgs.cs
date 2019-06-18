@@ -131,13 +131,11 @@ namespace System.Windows
         ///</SecurityNote>
         public bool Handled
         {
-            [SecurityCritical ]
             get
             {
                 return _flags[ HandledIndex ] ;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (_routedEvent == null)
@@ -353,7 +351,6 @@ namespace System.Windows
         ///</SecurityNote>
         internal bool UserInitiated
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             [FriendAccessAllowed] // Also used by Framework.
             get
             {
@@ -368,7 +365,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical - access critical information, if this is a user initiated command
         /// </SecurityNote>
-        [SecurityCritical]
         internal void MarkAsUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = true;
@@ -378,7 +374,6 @@ namespace System.Windows
         ///     Critical - access critical information, if this is a user initiated command
         ///     TreatAsSafe - clearing user initiated bit considered safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal void ClearUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = false ;
@@ -390,12 +385,10 @@ namespace System.Windows
         ///</SecurityNote>
         private bool InvokingHandler
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 return _flags[InvokingHandlerIndex];
             }
-            [SecurityCritical, SecurityTreatAsSafe ]
             set
             {
                 _flags[InvokingHandlerIndex] = value;
@@ -414,7 +407,6 @@ namespace System.Windows
         ///<SecurityNote>
         /// Critical - the UserInitiated flag value is critical.
         ///</SecurityNote>
-        [SecurityCritical]
         private BitVector32          _flags;
 
         private const int HandledIndex                          = 1;

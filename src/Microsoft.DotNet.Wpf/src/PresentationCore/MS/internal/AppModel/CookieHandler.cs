@@ -70,7 +70,6 @@ static class CookieHandler
     ///     application cannot be trusted. And the application should have been able to make the web request in 
     ///     the first place. Otherwise there is danger of overwriting someone else's cookies.
     /// </SecurityNote>
-    [SecurityCritical]
     internal static void HandleWebResponse(WebResponse response)
     {
         HttpWebResponse httpResponse = response as HttpWebResponse;
@@ -115,7 +114,6 @@ static class CookieHandler
     /// Critical: Calls the native InternetGetCookieEx(). There is potential for information disclosure.
     /// Safe: A WebPermission demand is made for the given URI.
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed] // called by PF.Application.GetCookie()
     [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", 
         Justification="It's okay now. Be careful on change.")]
@@ -147,7 +145,6 @@ static class CookieHandler
     /// Critical: Calls SetCookieUnsafe().
     /// Safe: A WebPermission is demanded for the cookie URI, and no P3P header is passed.
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed] // called by PF.Application.SetCookie()
     internal static bool SetCookie(Uri uri, string cookieData)
     {
@@ -161,7 +158,6 @@ static class CookieHandler
     ///     URI. This creates danger of overwriting someone else's cookies. 
     ///     The P3P header has to be from an authentic web response in order to be trusted at all.
     /// </SecurityNote>
-    [SecurityCritical]
     private static bool SetCookieUnsafe(Uri uri, string cookieData, string p3pHeader)
     {
         string uriString = BindUriHelper.UriToString(uri);

@@ -228,7 +228,6 @@ namespace MS.Internal.Navigation
         ///<SecurityNote>
         ///     Critical: calls MarshalByRefObject.CreateObjRef which LinkDemands
         ///</SecurityNote> 
-        [SecurityCritical]
         public override ObjRef CreateObjRef(
             Type requestedType
             )
@@ -316,7 +315,6 @@ namespace MS.Internal.Navigation
         ///<SecurityNote>
         ///     Critical: calls MarshalByRefObject.InitializeLifetimeService which LinkDemands
         ///</SecurityNote> 
-        [SecurityCritical]
         public override object InitializeLifetimeService()
         {
             return _stream.InitializeLifetimeService();

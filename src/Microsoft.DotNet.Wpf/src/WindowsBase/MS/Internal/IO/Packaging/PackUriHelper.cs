@@ -190,7 +190,6 @@ namespace MS.Internal.IO.Packaging
         //   the pack: scheme has no elevations in it ( and any necessary elevations for container 
         //   access will be reviewed as needed). 
         // </SecurityNote>         
-        [SecurityTreatAsSafe, SecurityCritical]
         static PackUriHelper()
         {
             // indicate that we want "basic" parsing

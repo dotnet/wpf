@@ -43,7 +43,6 @@ namespace System.Windows
         ///     can be used to spoof input
         ///     TreatAsSafe: Since it does not expose the thunks
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static ContentElement()
         {
             UIElement.RegisterEvents(typeof(ContentElement));

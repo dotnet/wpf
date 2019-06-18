@@ -78,7 +78,6 @@ namespace MS.Internal.Automation
         /// </SecurityNote>
         IRawElementProviderSimple IRawElementProviderSimple.HostRawElementProvider
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return AutomationInteropProvider.HostProviderFromHandle(_wrapper.Handle);

@@ -18,13 +18,11 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     This data is not safe to expose as it holds refrence to IPimcTablet
         /// </SecurityNote>
-        [SecurityCritical]
         public SecurityCriticalDataClass<IPimcContext3> PimcContext;
         
         /// <SecurityNote>
         ///     This data is not safe to expose as it holds refrence to IPimcTablet
         /// </SecurityNote>
-        [SecurityCritical]
         public SecurityCriticalDataClass<IntPtr> CommHandle;
         
         public int ContextId;

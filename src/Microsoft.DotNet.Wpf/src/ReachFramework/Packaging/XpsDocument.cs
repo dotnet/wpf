@@ -931,7 +931,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical:
         ///  1) Calls critical method AttachmentService::SaveWithUI
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void SaveWithUI(IntPtr parent, Uri source, Uri target)
         {
             AttachmentService.SaveWithUI(parent, source, target );

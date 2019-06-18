@@ -69,7 +69,6 @@ namespace System.Windows.Documents.Serialization
         ///  Full trust is required, so that partial trust applications do not load or use potentially
         ///  unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static SerializerDescriptor CreateFromFactoryInstance(
             ISerializerFactory  factoryInstance
             )
@@ -131,7 +130,6 @@ namespace System.Windows.Documents.Serialization
         ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
         ///  unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Security", "CA2001:AvoidCallingProblematicMethods")]
         internal ISerializerFactory CreateSerializerFactory()
         {
@@ -180,7 +178,6 @@ namespace System.Windows.Documents.Serialization
         ///  Full trust is required, so that partial trust applications do not load or use potentially
         ///  unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         internal static SerializerDescriptor CreateFromRegistry(RegistryKey plugIns, string keyName)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();

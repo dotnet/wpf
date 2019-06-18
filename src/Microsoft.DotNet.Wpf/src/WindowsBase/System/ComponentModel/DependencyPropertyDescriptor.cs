@@ -578,7 +578,6 @@ namespace System.ComponentModel
         ///</SecurityNote>
         private PropertyDescriptor Property
         {
-            [SecurityCritical, SecurityTreatAsSafe] 
             get
             {
                 if (_property == null) 

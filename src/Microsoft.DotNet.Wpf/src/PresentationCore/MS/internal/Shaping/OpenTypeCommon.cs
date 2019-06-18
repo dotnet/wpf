@@ -48,7 +48,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - calls critical code, accepts pointer parameters, unsafe code
         /// </SecurityNote>
-        [SecurityCritical]
         public static void ApplyFeatures(
             IOpenTypeFont           Font,
             OpenTypeLayoutWorkspace workspace,
@@ -220,7 +219,6 @@ namespace MS.Internal.Shaping
         /// Critical - calls critical code (GetNextGlyphInLookup),
         ///            accepts pointer parameters, unsafe code
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool ApplyLookup(
             IOpenTypeFont           Font,           // Font access interface
             OpenTypeTags            TableTag,       // Layout table tag (GSUB or GPOS)
@@ -622,7 +620,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - The method reads into raw font table bits.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void CompileFeatureSet(
             Feature[]               FeatureSet,     // In: List of features to apply
             int                     featureCount,   // In: Actual number of features in FeatureSet
@@ -682,7 +679,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNotes>
         /// Critical - This method reads into unsafe cluster map. 
         /// </SecurityNotes>
-        [SecurityCritical]
         private static void GetNextEnabledGlyphRange(
             Feature[]               FeatureSet,     // In: List of features to apply
             int                     featureCount,   // In: Actual nubmer of features in FeatureSet
@@ -791,7 +787,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - access protected font information (FontTable)
         /// </SecurityNote>
-        [SecurityCritical]
         private static void UpdateGlyphFlags(
                                                 IOpenTypeFont   Font,
                                                 GlyphInfoList   GlyphInfo,
@@ -867,7 +862,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - Access protected font information (FontTable).
         /// </SecurityNote>
-        [SecurityCritical]
         internal static int GetNextGlyphInLookup(
             IOpenTypeFont   Font,           //
             GlyphInfoList   GlyphInfo,      // Glyph run
@@ -937,7 +931,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - The method reads into raw font table bits
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void GetComplexLanguageList(
                                                 OpenTypeTags            tableTag,
                                                 FontTable               table,
@@ -1279,7 +1272,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - The method reads into raw font table bits.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void AppendLangSys(
                             uint                scriptTag,
                             uint                langSysTag,
@@ -1359,7 +1351,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct GSUBHeader
     {
         private const int offsetScriptList = 4;
@@ -1393,7 +1384,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct GPOSHeader
     {
         private const int offsetScriptList = 4;
@@ -1427,7 +1417,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct GDEFHeader
     {
         private const int offsetGlyphClassDef = 4;
@@ -1482,7 +1471,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ScriptList
     {
         private const int offsetScriptCount = 0;
@@ -1531,7 +1519,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ScriptTable
     {
         private const int offsetDefaultLangSys = 0;
@@ -1608,7 +1595,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct LangSysTable
     {
         private const int offsetRequiredFeature = 2;
@@ -1662,7 +1648,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct FeatureList
     {
         private const int offsetFeatureCount = 0;
@@ -1699,7 +1684,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct FeatureTable
     {
         private const int offsetLookupCount = 2;
@@ -1726,7 +1710,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct LookupList
     {
         private const int offsetLookupCount = 0;
@@ -1752,7 +1735,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct LookupTable
     {
         private const int offsetLookupType = 0;
@@ -1802,7 +1784,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct CoverageTable
     {
         private const int offsetFormat = 0;
@@ -2010,7 +1991,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ClassDefTable
     {
         private const int offsetFormat = 0;
@@ -2137,7 +2117,6 @@ namespace MS.Internal.Shaping
     /// Critical - Everything in this struct is considered critical 
     ///            because they either operate on raw font table bits or unsafe pointers. 
     /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ExtensionLookupTable
     {
         private const int offsetFormat          = 0;

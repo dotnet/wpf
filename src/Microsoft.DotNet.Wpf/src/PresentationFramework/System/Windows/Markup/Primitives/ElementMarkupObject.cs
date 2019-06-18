@@ -364,7 +364,6 @@ namespace System.Windows.Markup.Primitives
         ///  Critical : References InstanceDescriptor and ConstructorInfo types which are not accessible in partial trust (protected by by class level full trust link demand)
         ///  Safe     : Access to ConstructorInfo is protected by a full demand for Unmanaged code which we consider to be an equivalent privilage level.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryGetConstructorInfoArguments(object instance, out ParameterInfo[] parameters, out ICollection arguments)
         {        
             // InstanceDescriptor and ConstructorInfo are protected from use in partial trust by a link demand

@@ -36,7 +36,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - will eventually create unmanaged resources based on guid
         /// </SecurityNote>
-        [SecurityCritical]
         public UnknownBitmapEncoder(Guid containerFormat) :
             base(true)
         {
@@ -63,7 +62,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -77,7 +75,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - Accesses unmanaged code
         /// TreatAsSafe - All parameters passed in are safe (null, 0 and safehandle)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.Initialize(
@@ -103,7 +100,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - CLSID used for creation of critical resources
         /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat;
 
         #endregion

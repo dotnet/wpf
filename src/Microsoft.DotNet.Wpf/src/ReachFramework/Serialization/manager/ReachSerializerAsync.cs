@@ -143,7 +143,6 @@ namespace System.Windows.Xps.Serialization
         /// Critical -  Access the SerializationManager GraphContextStack which is a 
         /// ContextStack which is link critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -196,7 +195,6 @@ namespace System.Windows.Xps.Serialization
         /// Critical -  Access the SerializationManager GraphContextStack which is a 
         /// ContextStack which is link critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -243,7 +241,6 @@ namespace System.Windows.Xps.Serialization
         /// Critical -  Access the SerializationManager GraphContextStack which is a 
         /// ContextStack which is link critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -371,7 +368,6 @@ namespace System.Windows.Xps.Serialization
         /// Critical -  Access the SerializationManager GraphContextStack which is a 
         /// ContextStack which is link critical
         /// </SecurityNote>
-        [SecurityCritical]
         private
         SerializableObjectContext
         DiscoverObjectData(

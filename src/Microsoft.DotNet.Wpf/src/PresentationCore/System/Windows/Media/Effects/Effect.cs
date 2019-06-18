@@ -21,7 +21,6 @@ namespace System.Windows.Media.Effects
     /// We have the Inheritance demand, because we don't want
     /// third parties to be able to subclass Effect in the partial trust scenario
     /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
     public abstract partial class Effect
     {
         static Effect()
@@ -59,7 +58,6 @@ namespace System.Windows.Media.Effects
         ///     Critical : Not allowed in partial trust
         ///     Safe     : Demands UIWindow permission
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected Effect()
         {
             // Effects are never allowed in partial trust scenarios.  So demand

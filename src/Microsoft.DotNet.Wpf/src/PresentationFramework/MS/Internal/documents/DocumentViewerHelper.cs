@@ -43,7 +43,6 @@ namespace MS.Internal.Documents
         /// Critical: FindToolBar..ctor is defined in a non-APTCA assembly.
         /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ToggleFindToolBar(Decorator findToolBarHost, EventHandler handlerFindClicked, bool enable)
         {
             if (enable)
@@ -84,7 +83,6 @@ namespace MS.Internal.Documents
         /// Critical: get_SearchUp is defined in a non-APTCA assembly.
         /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static ITextRange Find(FindToolBar findToolBar, TextEditor textEditor, ITextView textView, ITextView masterPageTextView)
         {
             string searchText;
@@ -286,7 +284,6 @@ namespace MS.Internal.Documents
         /// Critical: get_SearchUp is defined in a non-APTCA assembly.
         /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ShowFindUnsuccessfulMessage(FindToolBar findToolBar)
         {
             string messageString;

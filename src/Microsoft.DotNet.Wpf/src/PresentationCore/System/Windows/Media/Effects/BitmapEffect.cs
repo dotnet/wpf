@@ -36,7 +36,6 @@ namespace System.Windows.Media.Effects
     /// We have the Inheritance demand, because we don't want
     /// third parties to be able to subclass BitmapEffect in the partial trust scenario
     /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
     public abstract partial class BitmapEffect
     {
         #region Constructors
@@ -47,7 +46,6 @@ namespace System.Windows.Media.Effects
         ///     Critical : Not allowed in partial trust
         ///     Safe     : Demands UIWindow permission
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected BitmapEffect()
         {
             // Even though BitmapEffects are obsolete, to preserve compat they are 
@@ -78,7 +76,6 @@ namespace System.Windows.Media.Effects
         /// <SecurityNote>
         /// Critical - receives a security critical type SafeHandle.        
         /// </SecurityNote>
-        [SecurityCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         abstract protected void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect);
 
@@ -89,7 +86,6 @@ namespace System.Windows.Media.Effects
         /// <SecurityNote>
         /// Critical - returns a security critical type SafeHandle.        
         /// </SecurityNote>
-        [SecurityCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe abstract protected SafeHandle CreateUnmanagedEffect();
 
@@ -104,7 +100,6 @@ namespace System.Windows.Media.Effects
         /// Critical - calls native code
         /// TreatAsSafe - as there is a demand
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected void SetValue(SafeHandle effect, string propertyName, object value)
         {
@@ -119,7 +114,6 @@ namespace System.Windows.Media.Effects
         /// Critical - calls native code
         /// TreatAsSafe - as there is a demand
         /// </SecurityNote>             
-        [SecurityCritical, SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected SafeHandle /* IMILBitmapEffect */ CreateBitmapEffectOuter()
         {
@@ -136,7 +130,6 @@ namespace System.Windows.Media.Effects
         /// Critical - calls native code
         /// TreatAsSafe - as there is a demand
         /// </SecurityNote>        
-        [SecurityCritical, SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe static protected void InitializeBitmapEffect(SafeHandle /*IMILBitmapEffect */ outerObject,
                  SafeHandle/* IMILBitmapEffectPrimitive */ innerObject)

@@ -56,7 +56,6 @@ namespace MS.Internal.PtsHost
         /// <SecurityNote>
         /// Critical - as this calls Critical function CellParaClient.FormatCellFinite.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatCellFinite(
             TableParaClient tableParaClient,        // IN:  
             IntPtr pfsbrkcellIn,                    // IN:  not NULL if cell broken from previous page/column

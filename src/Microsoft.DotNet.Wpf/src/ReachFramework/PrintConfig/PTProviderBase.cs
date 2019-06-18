@@ -115,7 +115,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Releases handle to printer device
         ///</SecurityNote>
-        [SecurityCritical]
         public abstract void Release();
 
         #endregion
@@ -127,7 +126,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Releases handle to printer device
         ///</SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -137,7 +135,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Releases handle to printer device
         ///</SecurityNote>
-        [SecurityCritical]
         protected abstract void Dispose(bool disposing);
 
         #endregion

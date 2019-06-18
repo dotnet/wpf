@@ -437,7 +437,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical   : Elevates to be able to set the print job id, which demands DefaultPrinting
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         void
         StartDocument(
@@ -985,7 +984,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical - Sets up the gdiDevice which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         public
         MXDWSerializationManager(
             PrintQueue   queue
@@ -1015,7 +1013,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - Initilaizes critial fieled _mxdwFileName
         ///</SecurityNote>
-        [SecurityCritical]
         public
         void
         EnablePassThru(
@@ -1037,7 +1034,6 @@ namespace System.Windows.Xps.Serialization
         String
         MxdwFileName
         {
-            [SecurityCritical]
             get
             {
                 return _mxdwFileName;
@@ -1077,7 +1073,6 @@ namespace System.Windows.Xps.Serialization
         /// </SecurityNote>
         private MetroToGdiConverter GdiDevice
         {
-            [SecurityCritical]
             get
             {
                 return _gdiDevice;
@@ -1090,7 +1085,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical    - device is used to aquire mxdw file.  Set is only valid in constructor
         /// </SecurityNote>
-        [SecurityCritical]
         private
         MetroToGdiConverter     _gdiDevice;
 
@@ -1100,7 +1094,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical    - User selected file path recieved from mxdw driver.  Path information is critical
         /// </SecurityNote>
-        [SecurityCritical]
         private
         String                  _mxdwFileName;
 

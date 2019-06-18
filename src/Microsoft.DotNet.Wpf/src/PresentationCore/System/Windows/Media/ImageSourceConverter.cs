@@ -103,7 +103,6 @@ namespace System.Windows.Media
         ///     Critical: Code eventually calls into unsafe code
         ///     TreatAsASafe: Inputs are verified
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             try
@@ -243,7 +242,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - does unmanaged memory manipulation
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe Stream GetBitmapStream(byte[] rawData)
         {
             Debug.Assert(rawData != null, "rawData is null.");

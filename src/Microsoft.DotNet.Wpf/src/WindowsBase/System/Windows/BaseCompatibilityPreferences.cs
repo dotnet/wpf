@@ -265,8 +265,6 @@ namespace System.Windows
         ///     Critical:    Asserts RegistryPermission
         ///     Safe:        Does not expose critical data
         /// </SecurityNote>
-        [SecuritySafeCritical]
-        [RegistryPermission(SecurityAction.Assert, Read = WpfPackagingKey, Unrestricted = true)]
         private static void SetMatchPackageSignatureMethodToPackagePartDigestMethodFromRegistry()
         {
             try

@@ -114,7 +114,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FocusBorderWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -150,7 +149,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FocusBorderHeight
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -187,7 +185,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool HighContrast
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -225,7 +222,6 @@ namespace System.Windows
         // If this becomes public, it will need a matching ResourceKey.
         internal static bool MouseVanish
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -320,7 +316,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool DropShadow
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -354,7 +349,6 @@ namespace System.Windows
         public static bool FlatMenu
         {
 
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -387,7 +381,6 @@ namespace System.Windows
         /// </SecurityNote>
         internal static NativeMethods.RECT WorkAreaInternal
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -499,7 +492,6 @@ namespace System.Windows
         ///</SecurityNote>
         internal static NativeMethods.ICONMETRICS IconMetrics
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -624,7 +616,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool KeyboardCues
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -657,7 +648,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static int KeyboardDelay
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -690,7 +680,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool KeyboardPreference
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -723,7 +712,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static int KeyboardSpeed
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -756,7 +744,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool SnapToDefaultButton
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -789,7 +776,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static int WheelScrollLines
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -830,7 +816,6 @@ namespace System.Windows
         /// </SecurityNote>
         internal static int MouseHoverTimeMilliseconds
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -863,7 +848,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MouseHoverHeight
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -900,7 +884,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MouseHoverWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1090,7 +1073,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool MenuDropAlignment
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1122,7 +1104,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool MenuFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1156,7 +1137,6 @@ namespace System.Windows
         public static int MenuShowDelay
         {
 
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1263,7 +1243,6 @@ namespace System.Windows
         public static bool ComboBoxAnimation
         {
 
-            [SecurityCritical ]
             get
             {
 
@@ -1297,7 +1276,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool ClientAreaAnimation
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -1338,7 +1316,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool CursorShadow
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1371,7 +1348,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool GradientCaptions
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1404,7 +1380,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool HotTracking
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1437,7 +1412,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool ListBoxSmoothScrolling
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1493,7 +1467,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool MenuAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1526,7 +1499,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool SelectionFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1559,7 +1531,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool StylusHotTracking
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1609,7 +1580,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool ToolTipAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1642,7 +1612,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool ToolTipFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1675,7 +1644,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool UIEffects
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1956,7 +1924,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static bool MinimizeAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1992,7 +1959,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static int Border
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2025,7 +1991,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double CaretWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2061,7 +2026,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool DragFullWindows
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2095,7 +2059,6 @@ namespace System.Windows
 
         public static int ForegroundFlashCount
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2128,7 +2091,6 @@ namespace System.Windows
         /// </SecurityNote>
         internal static NativeMethods.NONCLIENTMETRICS NonClientMetrics
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -2477,7 +2439,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ThinHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2503,7 +2464,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ThinVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2528,7 +2488,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double CursorWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2553,7 +2512,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double CursorHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2578,7 +2536,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ThickHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2603,7 +2560,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ThickVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2628,7 +2584,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumHorizontalDragDistance
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2653,7 +2608,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumVerticalDragDistance
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2678,7 +2632,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FixedFrameHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2703,7 +2656,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FixedFrameVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2728,7 +2680,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FocusHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2753,7 +2704,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FocusVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2782,7 +2732,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FullPrimaryScreenWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -2811,7 +2760,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double FullPrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -2837,7 +2785,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double HorizontalScrollBarButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2862,7 +2809,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double HorizontalScrollBarHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2887,7 +2833,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double HorizontalScrollBarThumbWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2912,7 +2857,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double IconWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2937,7 +2881,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double IconHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2962,7 +2905,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double IconGridWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2987,7 +2929,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double IconGridHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3015,7 +2956,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MaximizedPrimaryScreenWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3044,7 +2984,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MaximizedPrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3073,7 +3012,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MaximumWindowTrackWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3102,7 +3040,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MaximumWindowTrackHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3128,7 +3065,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MenuCheckmarkWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3153,7 +3089,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MenuCheckmarkHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3178,7 +3113,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MenuButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3203,7 +3137,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MenuButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3231,7 +3164,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumWindowWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3260,7 +3192,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumWindowHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3289,7 +3220,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimizedWindowWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3318,7 +3248,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimizedWindowHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3344,7 +3273,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimizedGridWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3369,7 +3297,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimizedGridHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3397,7 +3324,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumWindowTrackWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3426,7 +3352,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MinimumWindowTrackHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3452,7 +3377,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double PrimaryScreenWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -3477,7 +3401,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double PrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
 
@@ -3506,7 +3429,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double WindowCaptionButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3532,7 +3454,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double WindowCaptionButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3558,7 +3479,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ResizeFrameHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3583,7 +3503,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double ResizeFrameVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3608,7 +3527,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double SmallIconWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3633,7 +3551,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double SmallIconHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3658,7 +3575,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double SmallWindowCaptionButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3683,7 +3599,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double SmallWindowCaptionButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3711,7 +3626,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VirtualScreenWidth
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3740,7 +3654,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VirtualScreenHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3767,7 +3680,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VerticalScrollBarWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3792,7 +3704,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VerticalScrollBarButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3820,7 +3731,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double WindowCaptionHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3850,7 +3760,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double KanjiWindowHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3879,7 +3788,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double MenuBarHeight
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3905,7 +3813,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VerticalScrollBarThumbHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3933,7 +3840,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsImmEnabled
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3963,7 +3869,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsMediaCenter
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -3989,7 +3894,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsMenuDropRightAligned
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4017,7 +3921,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsMiddleEastEnabled
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4043,7 +3946,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsMousePresent
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4068,7 +3970,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsMouseWheelPresent
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4096,7 +3997,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsPenWindows
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4125,7 +4025,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsRemotelyControlled
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4154,7 +4053,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsRemoteSession
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4183,7 +4081,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool ShowSounds
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4212,7 +4109,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsSlowMachine
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4241,7 +4137,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool SwapButtons
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4270,7 +4165,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsTabletPC
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4299,7 +4193,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VirtualScreenLeft
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -4328,7 +4221,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static double VirtualScreenTop
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -5521,7 +5413,6 @@ namespace System.Windows
         ///</SecurityNote>
         public static PowerLineStatus PowerLineStatus
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6068,7 +5959,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static bool IsGlassEnabled
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6094,7 +5984,6 @@ namespace System.Windows
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeName
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6133,7 +6022,6 @@ namespace System.Windows
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeColor
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6172,7 +6060,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static CornerRadius WindowCornerRadius
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6234,7 +6121,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static Color WindowGlassColor
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6264,7 +6150,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static Brush WindowGlassBrush
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6292,7 +6177,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static Thickness WindowResizeBorderThickness
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6321,7 +6205,6 @@ namespace System.Windows
         /// </SecurityNote>
         public static Thickness WindowNonClientFrameThickness
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6357,7 +6240,6 @@ namespace System.Windows
         ///</SecurityNote>
         internal static int DpiX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_setDpiX)

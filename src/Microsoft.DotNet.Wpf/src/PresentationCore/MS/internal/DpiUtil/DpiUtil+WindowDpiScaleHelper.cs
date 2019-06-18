@@ -93,7 +93,6 @@ namespace MS.Internal
             ///     Critical: Calls into native methods
             ///     Safe: Returns only non-critical data back to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static DpiScale2 GetDpiForWindowFromNearestMonitor(IntPtr hWnd)
             {
                 IntPtr hMon =

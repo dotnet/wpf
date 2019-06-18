@@ -1888,7 +1888,6 @@ namespace System.Windows.Media
         ///   TreatAsSafe: This does not expose any data and the unsafe code blocks
         ///    needs to be verified for correctness
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void CreateOnChannel(DUCE.Channel channel)
         {
             Debug.Assert(_glyphTypeface != null);

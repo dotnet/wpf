@@ -19,13 +19,11 @@ namespace Standard
     ///   Critical : Should not be created by partially trusted callers because it's finalizer is critical
     ///              and does not allow partial trust callers.
     /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class MessageWindow : CriticalFinalizerObject
     {
         /// <SecurityNote>
         ///   Critical : Initializes critical static members
         /// <SecurityNote>
-        [SecurityCritical]
         static MessageWindow()
         {
         }
@@ -34,19 +32,16 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Delegate passed critical data (Win32 messages and parameters) used to control Win32 window behavior
         /// <SecurityNote>
-        [SecurityCritical]
         private static readonly WndProc s_WndProc = new WndProc(_WndProc);
         
         /// <SecurityNote> 
         ///   Critical : Provides access to instances of critical MessageWindow type
         /// </SecurityNote>
-        [SecurityCritical]
         private static readonly Dictionary<IntPtr, MessageWindow> s_windowLookup = new Dictionary<IntPtr, MessageWindow>();
 
         /// <SecurityNote>
         ///   Critical : Delegate passed critical data (Win32 messages and parameters) used to control Win32 window behavior
         /// <SecurityNote>
-        [SecurityCritical]
         private WndProc _wndProcCallback;
         private string _className;
         private bool _isDisposed;
@@ -57,17 +52,14 @@ namespace Standard
         /// </SecurityNote>
         public IntPtr Handle 
         { 
-            [SecurityCritical]
             get; 
             
-            [SecurityCritical]
             private set; 
         }
 
         /// <SecurityNote>
         ///  Critical : P-Invokes to register window class and create win32 window
         /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
@@ -119,7 +111,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         ~MessageWindow()
         {
             _Dispose(false, false);
@@ -128,7 +119,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         public void Release()
         {
             _Dispose(true, false);
@@ -140,7 +130,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "disposing")]
         private void _Dispose(bool disposing, bool isHwndBeingDestroyed)
         {
@@ -180,7 +169,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         private object _DestroyWindowCallback(object arg)
         {
             object [] args = (object[])arg;
@@ -191,7 +179,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Usage", "CA1816:CallGCSuppressFinalizeCorrectly")]
         private static IntPtr _WndProc(IntPtr hwnd, WM msg, IntPtr wParam, IntPtr lParam)
         {
@@ -236,7 +223,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         private static void _DestroyWindow(IntPtr hwnd, string className)
         {
             Utility.SafeDestroyWindow(ref hwnd);

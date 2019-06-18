@@ -41,7 +41,6 @@ namespace System.Security.RightsManagement
     ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
     ///     some status/data behind which eventually might cross the unamanaged boundary. 
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     public class ContentUser
     {
         /// <summary>
@@ -247,7 +246,6 @@ namespace System.Security.RightsManagement
         ///     TreatAsSafe: This method may be called indirectly from a Partial Trust environment. 
         ///         It only performs a safe string comparison.
         /// </SecurityNote>
-        [SecurityTreatAsSafe]
         internal bool GenericEquals(ContentUser userObj)
         {
             // this checks for null argument
@@ -274,7 +272,6 @@ namespace System.Security.RightsManagement
         ///                  a Partial Trust environment. 
         ///         Both methods only validate their parameters, then call other safe methods.
         /// </SecurityNote>
-        [SecurityTreatAsSafe]
         internal sealed class ContentUserComparer : IEqualityComparer<ContentUser>
         {
             bool IEqualityComparer<ContentUser>.Equals(ContentUser user1, ContentUser user2)
@@ -298,7 +295,6 @@ namespace System.Security.RightsManagement
         ///     TreatAsSafe: This field will be accessed by SecurityTransparent code. It's static, readonly.
         ///             It's safe to allow access from SecurityTransparent code.
         /// </SecurityNote>
-        [SecurityTreatAsSafe]
         internal static readonly ContentUserComparer _contentUserComparer = new ContentUserComparer();
 
         internal static bool CompareToAnyone(string name)

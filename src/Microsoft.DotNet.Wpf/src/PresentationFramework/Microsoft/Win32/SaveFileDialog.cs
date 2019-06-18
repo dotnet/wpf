@@ -50,7 +50,6 @@ namespace Microsoft.Win32
         ///     PublicOk: It is okay to set the options to their defaults.  The
         ///             ctor does not show the dialog.
         /// </SecurityNote>
-        [SecurityCritical]
         public SaveFileDialog()
             : base()
         {
@@ -81,7 +80,6 @@ namespace Microsoft.Win32
         ///     Critical: Opens files on the users machine.
         ///     PublicOk: Demands UIPermission.AllWindows 
         /// </SecurityNote>
-        [SecurityCritical]
         public Stream OpenFile()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -120,7 +118,6 @@ namespace Microsoft.Win32
         ///     Critical: Calls base.Reset() and Initialize(), both of which are SecurityCritical
         ///     PublicOk: Demands UIPermission.AllWindows
         /// </SecurityNote>
-        [SecurityCritical]
         public override void Reset()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -169,7 +166,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_CREATEPROMPT);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -200,7 +196,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_OVERWRITEPROMPT);
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -254,7 +249,6 @@ namespace Microsoft.Win32
         ///     Critical: due to call to PromptFileNotFound, which
         ///             displays a message box with focus restore.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override bool PromptUserIfAppropriate(string fileName)
         {
             // First, call the FileDialog implementation of PromptUserIfAppropriate
@@ -327,7 +321,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Makes a call to UnsafeNativeMethods.GetSaveFileName()
         /// </SecurityNote>
-        [SecurityCritical]
         internal override bool RunFileDialog(NativeMethods.OPENFILENAME_I ofn)
         {
             bool result = false;
@@ -387,7 +380,6 @@ namespace Microsoft.Win32
         // <SecurityNote>
         //     Critical, as it calls methods on COM interface IFileDialog.
         // </SecurityNote>
-        [SecurityCritical]
         internal override string[] ProcessVistaFiles(IFileDialog dialog)
         {
             IShellItem item = dialog.GetResult();
@@ -401,7 +393,6 @@ namespace Microsoft.Win32
         //     TreatAsSafe, as it returns the managed COM interface, and not a handle.
         //     Calls on the interface will still be treated with security scrutiny.
         // </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override IFileDialog CreateVistaDialog()
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -447,7 +438,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Calls SecurityCritical member (SetOption)
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize()
         {
             // OFN_OVERWRITEPROMPT
@@ -466,7 +456,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Calls SecurityCritical MessageBoxWithFocusRestore.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool PromptFileCreate(string fileName)
         {
             return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogCreatePrompt, fileName),
@@ -482,7 +471,6 @@ namespace Microsoft.Win32
         /// <SecurityNote>
         ///     Critical: Calls SecurityCritical MessageBoxWithFocusRestore.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool PromptFileOverwrite(string fileName)
         {
             return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogOverwritePrompt, fileName),

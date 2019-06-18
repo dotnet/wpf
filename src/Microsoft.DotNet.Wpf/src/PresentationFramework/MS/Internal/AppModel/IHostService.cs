@@ -50,8 +50,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         IntPtr HostWindowHandle
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.InheritanceDemand, Unrestricted = true)]
             get;
         }
     }

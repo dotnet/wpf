@@ -1684,7 +1684,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code to get the current available keyboard list.
         /// TreatAsSafe - data exposed (user using bidi) is safe to release
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool IsBidiInputLanguageInstalled()
         {
             bool bidiInputLanguageInstalled;
@@ -2494,7 +2493,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code to check the font signature
         /// TreatAsSafe - data exposed (user using bidi) is safe to release
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool IsBidiInputLanguage(CultureInfo cultureInfo)
         {
             bool bidiInput;

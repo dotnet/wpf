@@ -488,7 +488,6 @@ namespace System.Windows.Automation.Peers
         /// <param name="column"></param>
         /// <param name="addParentInfo">only required when creating peers for virtualized cells</param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         private DataGridCellItemAutomationPeer GetOrCreateCellItemPeer(DataGridColumn column, bool addParentInfo)
         {
             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client

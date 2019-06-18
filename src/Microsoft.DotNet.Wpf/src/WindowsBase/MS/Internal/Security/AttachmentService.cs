@@ -44,7 +44,6 @@ internal sealed class AttachmentService : IDisposable
     ///  2) Setting the identity of the client once is a safe use of the
     ///     interface.
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     private AttachmentService()
     {
         _native = (ISecuritySuppressedIAttachmentExecute)new AttachmentServices();
@@ -73,7 +72,6 @@ internal sealed class AttachmentService : IDisposable
     ///  2) Only the caller can atest to the veracity of the values being used
     ///     for security decisions
     /// </SecurityNote>
-    [SecurityCritical]
     internal static void SaveWithUI(IntPtr parent, Uri source, Uri target)
     {
         using (AttachmentService service = new AttachmentService())
@@ -120,7 +118,6 @@ internal sealed class AttachmentService : IDisposable
     ///  1) Does not leak _native and set's it to null (safe)
     ///  2) Target of Marshal.ReleaseComObject is an object we created
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     private void Dispose(bool disposing)
     {
         if (disposing)
@@ -161,7 +158,6 @@ internal sealed class AttachmentService : IDisposable
     ///     value is used to set the InternetZone of a locally saved file
     ///  3) It represents a security suppressed interface (which is critical)
     /// </SecurityNote>
-    [SecurityCritical]
     private ISecuritySuppressedIAttachmentExecute _native;
 
     private readonly Guid _clientId = new Guid("{D5734190-005C-4d76-B0DD-2FA89BE0B622}");
@@ -205,8 +201,6 @@ internal sealed class AttachmentService : IDisposable
         /// Critical:
         ///  1) SUC'd
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetClientGuid(ref Guid guid);
 
         //  EVIDENCE properties
@@ -219,8 +213,6 @@ internal sealed class AttachmentService : IDisposable
         /// Critical:
         ///  1) SUC'd
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetLocalPath(string pszLocalPath);
 
         //  FileName - (optional) proposed name (not path) to be used to construct LocalPath
@@ -236,8 +228,6 @@ internal sealed class AttachmentService : IDisposable
         /// Critical:
         ///  1) SUC'd
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetSource(string pszSource);
 
         //  Referrer - (optional) Zone determinant for container or link types
@@ -291,8 +281,6 @@ internal sealed class AttachmentService : IDisposable
         /// Critical:
         ///  1) SUC'd
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SaveWithUI(IntPtr hwnd);
 
         //  ClearClientState() - removes any state that is stored based on the ClientGuid

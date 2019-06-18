@@ -42,7 +42,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal override bool IsActiveForInput
         {
-            [SecuritySafeCritical]
             get
             {
                 return _manager != null;
@@ -73,7 +72,6 @@ namespace System.Windows.Input.StylusPointer
         /// TreatAsSafe: 
         ///          - no data handed out or accepted
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void UpdateState(UIElement element)
         {
             bool unhook = true;
@@ -125,7 +123,6 @@ namespace System.Windows.Input.StylusPointer
         ///     SafeCritical:  Accesses _manager
         ///                    Does not receive or expose any secure information
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
@@ -154,7 +151,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         private PointerStylusPlugInManager _manager;
 
         #endregion

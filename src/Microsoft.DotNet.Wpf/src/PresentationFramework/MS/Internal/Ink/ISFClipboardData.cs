@@ -66,7 +66,6 @@ namespace MS.Internal.Ink
         /// <SecurityNote>
         ///    Critical: This code asserts to set data on a data object
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void DoCopy(IDataObject dataObject)
         {
             // samgeo - Presharp issue

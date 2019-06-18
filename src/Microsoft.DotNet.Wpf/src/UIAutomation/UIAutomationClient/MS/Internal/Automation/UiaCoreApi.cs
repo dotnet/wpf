@@ -20,7 +20,6 @@ using Microsoft.Internal;
 
 namespace MS.Internal.Automation
 {
-    // [SuppressUnmanagedCodeSecurity] is not used here, since currently
     // this is a client-only DLL. After we split into client vs provider,
     // the provider assembly will need that attribute on its own APIs.
     internal static class UiaCoreApi
@@ -565,7 +564,6 @@ namespace MS.Internal.Automation
         /// <SecurityNote>
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool UiaNodeRelease(IntPtr hnode)
         {
             return RawUiaNodeRelease( hnode );
@@ -574,7 +572,6 @@ namespace MS.Internal.Automation
         /// <SecurityNote>
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool UiaPatternRelease(IntPtr hobj)
         {
             return RawUiaPatternRelease( hobj );
@@ -583,7 +580,6 @@ namespace MS.Internal.Automation
         /// <SecurityNote>
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool UiaTextRangeRelease(IntPtr hobj)
         {
             return RawUiaTextRangeRelease( hobj );
@@ -1262,18 +1258,12 @@ namespace MS.Internal.Automation
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaHTextRangeFromVariant", CharSet = CharSet.Unicode)]
         private static extern int RawUiaHTextRangeFromVariant([MarshalAs(UnmanagedType.Struct)] ref object var, out SafeTextRangeHandle hnode);
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaNodeRelease", CharSet = CharSet.Unicode)]
         private static extern bool RawUiaNodeRelease(IntPtr hnode);
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaPatternRelease", CharSet = CharSet.Unicode)]
         private static extern bool RawUiaPatternRelease(IntPtr hobj);
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaTextRangeRelease", CharSet = CharSet.Unicode)]
         private static extern bool RawUiaTextRangeRelease(IntPtr hobj);
         // Event APIs...

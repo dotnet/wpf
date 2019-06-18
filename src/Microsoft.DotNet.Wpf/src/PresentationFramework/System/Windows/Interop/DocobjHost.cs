@@ -64,7 +64,6 @@ namespace System.Windows.Interop
         ///     Critical - as we have a treat as safe
         ///     PublicOK - as we have a demand.
         ///</SecurityNote>
-        [ SecurityCritical  ]
         public DocObjHost()
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WpfHost_DocObjHostCreated);
@@ -108,7 +107,6 @@ namespace System.Windows.Interop
         ///    Critical: Elevates via assert to set the InitialLeaseTime
         ///    PublicOk: Always initializes to a constant value (TimeSpan.Zero)
         /// </SecurityNote>
-        [SecurityCritical]
         public override object InitializeLifetimeService()
         {
             ILease lease = (ILease)base.InitializeLifetimeService();
@@ -179,7 +177,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         IntPtr IHostService.HostWindowHandle
         {
-            [SecurityCritical]
             get { return _parent; }
         }
         #endregion IHostService
@@ -219,7 +216,6 @@ namespace System.Windows.Interop
         ///                information should be considered safe (if it was not safe the container
         ///                should fail to load, which would make this data moot).
         ///</SecurityNote>
-        [SecurityCritical]
         int IBrowserHostServices.Run(
             String path,
             String fragment,
@@ -471,7 +467,6 @@ namespace System.Windows.Interop
         /// Critical as this code calls a critical method.
         /// Setting _initData.Value = null is also critical, but it's safe.
         ///</SecurityNote>
-        [SecurityCritical]
         internal void RunApplication(ApplicationRunner runner)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_DocObjHostRunApplicationStart);
@@ -522,7 +517,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical: The callback object needs to be trusted.
         /// </SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.SetBrowserCallback(object browserCallbackServices)
         {
             Invariant.Assert(browserCallbackServices != null, "Browser interop interface passed in should not be null");
@@ -538,7 +532,6 @@ namespace System.Windows.Interop
         /// This is called via COM interop from the unmanaged side.
         /// </SecurityNote>
         /// <param name="hParent"></param>
-        [SecurityCritical]
         void IBrowserHostServices.SetParent(IntPtr hParent)
         {
             _parent = hParent;
@@ -610,7 +603,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical as this calls a critical method.
         ///</SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.SaveHistory(object comIStream,
                                               bool persistEntireJournal,
                                               out int entryIndex,
@@ -637,7 +629,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         ///      Critical as this method calls critical methods.
         ///</SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.LoadHistory(object ucomIStream)
         {
             if (_appProxyInternal != null)
@@ -660,7 +651,6 @@ namespace System.Windows.Interop
         /// on startup, while _appProxyInternal is not set up yet, this method is marked as [PreserveSig]
         /// and directly returns an error HRESULT.
         /// </remarks>
-        [SecurityCritical]
         int IBrowserHostServices.QueryStatus(Guid guidCmdGroup, uint command, out uint flags)
         {
             flags = 0;
@@ -689,7 +679,6 @@ namespace System.Windows.Interop
         /// on startup, while _appProxyInternal is not set up yet, this method is marked as [PreserveSig]
         /// and directly returns an error HRESULT.
         /// </remarks>
-        [SecurityCritical]
         int IBrowserHostServices.ExecCommand(Guid guidCommandGroup, uint command, object arg)
         {
             // When the native progress page is active, there is no RootBrowserWindow to handle the Refresh
@@ -732,7 +721,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical as this method calls a critical method.
         ///</SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.Move(int x, int y, int width, int height)
         {
             Rect windowRect = new Rect(x, y, width, height);
@@ -756,7 +744,6 @@ namespace System.Windows.Interop
         /// This code call into critical code which in turn elevates to
         /// UI Permissions. This method is not available in the SEE.
         ///</SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.PostShutdown()
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting, EventTrace.Event.WpfHost_PostShutdown);
@@ -778,7 +765,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         ///Critical as this calls a critical method.
         ///</SecurityNote>
-        [SecurityCritical]
         void IBrowserHostServices.Activate(bool fActivate)
         {
             if (_appProxyInternal != null)
@@ -815,7 +801,6 @@ namespace System.Windows.Interop
         /// Critical
         ///  1) creates ByteRangeDownloader which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         void IByteRangeDownloaderService.InitializeByteRangeDownloader(
             String url,
             String tempFile,
@@ -937,7 +922,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///    Critical: Creates a partial-trust AppDomain; sets up permissions.
         /// </SecurityNote>
-        [SecurityCritical]
         private ApplicationProxyInternal CreateAppDomainForXpsDocument()
         {
             // Create the app domain using a restricted set of permissions, which are a subset of the
@@ -964,7 +948,6 @@ namespace System.Windows.Interop
         ///    Critical: Creates a partial-trust AppDomain; sets up permissions.
         ///         Calls native functions to discover the location of PresentationHostDll.
         /// </SecurityNote>
-        [SecurityCritical]
         private ApplicationProxyInternal CreateAppDomainForLooseXaml(Uri uri)
         {
             /*
@@ -1003,7 +986,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///    Critical: Creates a partial-trust AppDomain; sets up permissions.
         /// </SecurityNote>
-        [SecurityCritical]
         private ApplicationProxyInternal CreateAppDomainAndAppProxy(string domainName, string appBasePath, PermissionSet grantSet)
         {
             AppDomainSetup domainSetup = new AppDomainSetup();
@@ -1019,7 +1001,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         ///     Critical: calls Marshal.ReleaseComObject which LinkDemands
         ///</SecurityNote>
-        [SecurityCritical]
         private void Cleanup(int exitCode)
         {
             //No error => don't cleanup
@@ -1050,7 +1031,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical as this calls a critical method SecuritySuppressedIStream.Write().
         ///</SecurityNote>
-        [SecurityCritical]
         private void SaveHistoryHelper(object comIStream,
                                        bool persistEntireJournal,
                                        out int entryIndex,
@@ -1093,7 +1073,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         ///      Critical as this method accesses other members that are critical.
         ///</SecurityNote>
-        [SecurityCritical]
         private void LoadHistoryHelper(object comIStream, bool firstLoadFromHistory)
         {
             if (_appProxyInternal == null)
@@ -1107,7 +1086,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical as this calls a critical method SecuritySuppressedIStream.Read().
         ///</SecurityNote>
-        [SecurityCritical]
         internal static MemoryStream ExtractComStream(object comIStream)
         {
             SecuritySuppressedIStream historyStream = comIStream as SecuritySuppressedIStream;
@@ -1157,7 +1135,6 @@ namespace System.Windows.Interop
         /// Critical - Registers for critical AppDomain..UnhandledExceptioncalls event
         /// TreatAsSafe - Handler is known and trusted 
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void EnableErrorPage()
         {
             if (!IsXbapErrorPageDisabled())
@@ -1179,7 +1156,6 @@ namespace System.Windows.Interop
         /// TreatAsSafe - Showing the error page is not a privileged operation. An XBAP can always do that
         ///     by throwing some exception.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.Synchronized)]
         private void ProcessUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
@@ -1305,13 +1281,11 @@ namespace System.Windows.Interop
             /// <SecurityNote>
             /// Critical - Causes an elevation to read from the unmanaged stream
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void Read([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1), Out] Byte[] pv, int cb, out int pcbRead);
 
             /// <SecurityNote>
             /// Critical - Causes an elevation to write to the unmanaged stream
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void Write([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] Byte[] pv, int cb, out int pcbWritten);
 
             // IStream portion
@@ -1337,7 +1311,6 @@ namespace System.Windows.Interop
         /// Critical
         ///    Because it sets critical data _debugSecurityZoneURL
         ///</SecurityNote>
-        [SecurityCritical]
         public ApplicationLauncherXappDebug(string path, string debugSecurityZoneURL)
         {
             _deploymentManifestPath = path; // assumed to be .xapp
@@ -1354,7 +1327,6 @@ namespace System.Windows.Interop
         /// This creates and manipulates protected resources, so it must be critical.
         /// It has a demand, so it is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public ApplicationProxyInternal Initialize()
         {
             SecurityHelper.DemandUIWindowPermission();

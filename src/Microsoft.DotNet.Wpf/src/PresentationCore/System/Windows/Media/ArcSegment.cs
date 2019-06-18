@@ -71,7 +71,6 @@ namespace System.Windows.Media
         ///     Critical: This code calls into MilUtility_ArcToBezier which has an unmanaged code elevation
         ///     TreatAsSafe: Adding a figure is considered safe in partial trust.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void AddToFigure(
             Matrix matrix,          // The transformation matrid
             PathFigure figure,      // The figure to add to

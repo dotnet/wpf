@@ -46,7 +46,6 @@ namespace MS.Internal.FontCache
         ///            isWindowsFonts = true. Thus it is safe to construct a FontSourceCollection 
         ///            from a user string because the user string is treated as untrusted.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public IFontSourceCollection Create(string uriString)
         {
             return new FontSourceCollection(new Uri(uriString), false);
@@ -61,7 +60,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - Calls into security critical Initialize() method.
         /// </SecurityNote>
-        [SecurityCritical]
         public FontSourceCollection(Uri folderUri, bool isWindowsFonts)
         {
             Initialize(folderUri, isWindowsFonts, false);
@@ -70,7 +68,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - Calls into security critical Initialize() method.
         /// </SecurityNote>
-        [SecurityCritical]
         public FontSourceCollection(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
         {
             Initialize(folderUri, isWindowsFonts, tryGetCompositeFontsOnly);
@@ -85,7 +82,6 @@ namespace MS.Internal.FontCache
         ///            security decision (i.e., whether to assert read access); it is assigned to 
         ///            the _isWindowsFonts field which is declared critical.
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
         {
             _uri = folderUri;
@@ -113,7 +109,6 @@ namespace MS.Internal.FontCache
         ///     Critical: accesses critical _uri and WindowsFontsUriObject
         ///     TreatAsSafe: only does comparisons to determine if _uri is the system dir
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InitializeDirectoryProperties()
         {
             _isFileSystemFolder = false;
@@ -151,7 +146,6 @@ namespace MS.Internal.FontCache
         ///            and relevant data is already protected via FontSource methods.       
         ///            
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetFontSources()
         {
             if (_fontSources != null)
@@ -324,14 +318,12 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - fontUri can contain information about local file system.
         /// </SecurityNote>
-        [SecurityCritical]
         private Uri                         _uri;
 
         /// <SecurityNote>
         /// Critical - this value is used to make security decisions (i.e., whether to do an Assert)
         ///            so it can only be set by critical code.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool                        _isWindowsFonts;
 
         // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.

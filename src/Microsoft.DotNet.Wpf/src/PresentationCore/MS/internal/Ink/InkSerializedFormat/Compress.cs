@@ -33,7 +33,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     Critical - This is plutonium, marked critical to 
         ///         prevent it from being used from transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         private MS.Win32.Penimc.CompressorSafeHandle _compressorHandle;
 
         /// <summary>
@@ -52,7 +51,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///             
         ///             This ctor is called by StrokeCollectionSerializer.EncodeRawISF, which is marked TreatAsSafe
         /// </SecurityNote>
-        [SecurityCritical]
         internal Compressor(byte[] data, ref uint size)
         {
             if (data == null || data.Length != size)
@@ -90,7 +88,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     This is called by StrokeSerializer.LoadPackets directly.  The TreatAsSafe boundary of this call
         ///     is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// DecompressPacketData - take a byte[] or a subset of a byte[] and decompresses it into 
@@ -182,7 +179,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     The TreatAsSafe boundary of this call
         ///     is StrokeCollectionSerializer.DecodeRawISF
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// DecompressPropertyData - decompresses a byte[] representing property data (such as DrawingAttributes.Color)
@@ -262,7 +258,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]      
         internal static void CompressPropertyData(byte[] data, ref byte algorithm, ref uint outputSize, byte[] output)
         {
             //
@@ -332,7 +327,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// CompressPropertyData - compresses property data using the compression defined by 'compressor'
@@ -434,7 +428,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     The TreatAsSafe boundary of this call is StrokeCollectionSerializer.DecodeRawISF
         ///     
         /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             if (_disposed)

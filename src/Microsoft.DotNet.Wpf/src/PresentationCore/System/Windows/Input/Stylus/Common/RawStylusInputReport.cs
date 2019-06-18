@@ -58,7 +58,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         int[] _data;
 
         /// <summary>
@@ -93,7 +92,6 @@ namespace System.Windows.Input
         {
             get { return _rawStylusInput.Value; }
 
-            [SecurityCritical]
             set { _rawStylusInput.Value = value; }
         }
 
@@ -121,7 +119,6 @@ namespace System.Windows.Input
         /// </SecurityNote>        
         internal PenContext PenContext
         {
-            [SecurityCritical]
             get;
             private set;
         }
@@ -135,7 +132,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal StylusPointDescription StylusPointDescription
         {
-            [SecuritySafeCritical]
             get { return _stylusPointDescGenerator(); }
         }
 
@@ -198,7 +194,6 @@ namespace System.Windows.Input
         ///     Critical: This handles critical data in the form of PresentationSource.
         ///     TreatAsSafe:There are demands on the critical data(PresentationSource)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal RawStylusInputReport(
             InputMode mode,
             int timestamp,
@@ -259,7 +254,6 @@ namespace System.Windows.Input
         ///     Critical: This handles critical data in the form of PresentationSource.
         ///     TreatAsSafe:There are demands on the critical data(PresentationSource)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal RawStylusInputReport(
             InputMode mode,
             int timestamp,
@@ -300,7 +294,6 @@ namespace System.Windows.Input
         ///     Critical: Access the critical field - _data
         ///     TreatAsSafe: No input is taken. It's safe to a clone.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal int[] GetRawPacketData()
         {
             if (_data == null)
@@ -312,7 +305,6 @@ namespace System.Windows.Input
         ///     Critical: Access the critical field - _data
         ///     TreatAsSafe: No input is taken. It's safe to return the last tablet point.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal Point GetLastTabletPoint()
         {
             int packetLength = StylusPointDescription.GetInputArrayLengthPerPoint();
@@ -325,7 +317,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal int[] Data
         {
-            [SecurityCritical]
             get { return _data; }
         }
 

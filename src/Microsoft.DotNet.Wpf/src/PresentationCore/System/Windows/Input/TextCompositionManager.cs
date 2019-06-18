@@ -272,7 +272,6 @@ namespace System.Windows.Input
         /// Critical - Calls a critical method - PreProcessInput
         /// TreatAsSafe - Ok for us to register an event handler. Handler itself is critical. 
         ///</SecurityNote>         
-        [SecurityCritical, SecurityTreatAsSafe ] 
         internal TextCompositionManager(InputManager inputManager)
         {
             _inputManager = inputManager;
@@ -298,8 +297,6 @@ namespace System.Windows.Input
         ///     Critical calls UnsafeStartComposition. 
         ///     PublicOk: Linkdemand blocks external callers
         ///</SecurityNote> 
-        [SecurityCritical]        
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]
         public static bool StartComposition(TextComposition composition)
         {
             return UnsafeStartComposition(composition);
@@ -315,8 +312,6 @@ namespace System.Windows.Input
         ///     Critical calls UnsafeUpdataComposition. 
         ///     PublicOk: Linkdemand blocks external callers
         ///</SecurityNote> 
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public static bool UpdateComposition(TextComposition composition)
         {
             return UnsafeUpdateComposition(composition);
@@ -332,8 +327,6 @@ namespace System.Windows.Input
         ///     Critical calls UnsafeCompleteComposition. 
         ///     PublicOk: Linkdemand blocks external callers
         ///</SecurityNote> 
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public static bool CompleteComposition(TextComposition composition)
         {
             return UnsafeCompleteComposition(composition);
@@ -385,7 +378,6 @@ namespace System.Windows.Input
         /// Critical - as this refers to _InputManager and calls Critical function
         ///            InputManager.ProcessInput.  This can be used to spoof text input.
         /// </SecurityNote>
-        [SecurityCritical]
         private static bool UnsafeStartComposition(TextComposition composition)
         {
             if (composition == null)
@@ -414,7 +406,6 @@ namespace System.Windows.Input
         /// Critical - as this refers to _InputManager and calls Critical function
         ///            InputManager.ProcessInput.  This can be used to spoof text input.
         /// </SecurityNote>
-        [SecurityCritical]
         private static bool UnsafeUpdateComposition(TextComposition composition)
         {
             if (composition == null)
@@ -446,7 +437,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - as this accesses InputManager and calls Critical method ProcessInput.
         /// </SecurityNote>
-        [SecurityCritical]
         private static bool UnsafeCompleteComposition(TextComposition composition)
         {
             if (composition == null)
@@ -480,7 +470,6 @@ namespace System.Windows.Input
         /// Critical    - calls unmanaged code.
         /// TreatAsSafe - This calls GetOWMCP() but it does not expose the return value (current oem cp).
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static string GetCurrentOEMCPEncoding(int code)
         {
             SecurityPermission sp = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
@@ -503,7 +492,6 @@ namespace System.Windows.Input
         /// TreatAsSafe - The code calls into functions that convert an int to a byte array and also the encoding length
         ///               is a contant.
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static string CharacterEncoding(int cp, int code)
         {
             Byte[] bytes = ConvertCodeToByteArray(code);
@@ -532,7 +520,6 @@ namespace System.Windows.Input
         ///            Critical methods UnsafeStartComposition, UnsafeUpdateComposition
         ///            and UnsafeCompleteComposition.
         ///</SecurityNote> 
-        [SecurityCritical] 
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             // KeyDown --> Alt Numpad
@@ -602,7 +589,6 @@ namespace System.Windows.Input
         ///Critical- calls critical functions pushInput, UnsafeStartComposition and
         ///          UnsafeUpdateComposition.
         ///</SecurityNote> 
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // KeyUp
@@ -807,7 +793,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: causes input events to be raised.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void CompleteDeadCharComposition()
         {
             CompleteDeadCharComposition(String.Empty, false, false);
@@ -816,7 +801,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: causes input events to be raised.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool CompleteDeadCharComposition(string inputText,
                                                               bool isSystemCharacter,
                                                               bool isControlCharacter)
@@ -983,7 +967,6 @@ namespace System.Windows.Input
         /// TreatAsSafe - The code calls is safe in terms of what it does the reason it is critical is because
         ///               if there was logic error here in the future it could be used to exploit the elevated call.
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static Byte[] ConvertCodeToByteArray(int codeEntry)
         {
             Byte[] bytes;
@@ -1037,7 +1020,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         private static bool IsHexNumpadEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get 
             {
                 if (!_isHexNumpadRegistryChecked)
@@ -1088,7 +1070,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - InputManager is critical.
         /// </SecurityNote>
-        [SecurityCritical] 
         private readonly InputManager _inputManager;
 
         // The current dead char composition.
@@ -1117,7 +1098,6 @@ namespace System.Windows.Input
         ///    Critical    - Is used to determine length in a call to unmanaged code which happens under an elevation.
         ///    Safe        - It is a constant.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private const int EncodingBufferLen  =  4;
 
         // ScanCode of Numpad keys.

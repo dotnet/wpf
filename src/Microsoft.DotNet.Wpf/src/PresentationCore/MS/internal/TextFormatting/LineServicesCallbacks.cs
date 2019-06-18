@@ -91,7 +91,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code returns a pointer and may fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr FetchRunRedefined(
             IntPtr              pols,               // Line Layout context
             int                 lscpFetch,          // position to fetch
@@ -267,7 +266,6 @@ namespace MS.Internal.TextFormatting
         /// Critical: accesses FullText property, which is critical
         /// Safe: uses it only to obtain TextDecorations for the paragraph, which is safe to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void SetChpFormat(
             TextRunProperties   runProp,
             ref LsChp           lschp
@@ -308,7 +306,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr FetchPap(
             IntPtr      pols,           // Line Layout context
             int         lscpFetch,      // position to fetch
@@ -400,7 +397,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr FetchLineProps(
             IntPtr              pols,               // Line Layout context
             int                 lscpFetch,          // character position to fetch
@@ -449,7 +445,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetRunTextMetrics(
             System.IntPtr       pols,           // Line Layout context
             Plsrun              plsrun,         // plsrun
@@ -501,7 +496,6 @@ namespace MS.Internal.TextFormatting
         ///   Critical: This code calls into unsafe code blocks  and manipulates a pointer
         ///             It may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetRunCharWidths(
             IntPtr          pols,               // Line Layout context
             Plsrun          plsrun,             // plsrun
@@ -597,7 +591,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetDurMaxExpandRagged(
             IntPtr      pols,               // Line Layout context
             Plsrun      plsrun,             // plsrun
@@ -633,7 +626,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code may fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetAutoNumberInfo(
             IntPtr          pols,               // Line Layout context
             ref LsKAlign    alignment,          // [out] Marker alignment
@@ -712,7 +704,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetRunUnderlineInfo(
             IntPtr          pols,           // Line Layout context
             Plsrun          plsrun,         // plsrun
@@ -780,7 +771,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetRunStrikethroughInfo(
             IntPtr          pols,           // Line Layout context
             Plsrun          plsrun,         // plsrun
@@ -858,7 +848,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr Hyphenate(
             IntPtr          pols,                   // Line Layout context
             int             fLastHyphenFound,       // whether last hyphen found?
@@ -902,7 +891,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetNextHyphenOpp(
             IntPtr              pols,                   // Line Layout context
             int                 lscpStartSearch,        // LSCP to start search for hyphen opportunity
@@ -943,7 +931,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr GetPrevHyphenOpp(
             IntPtr              pols,                   // Line Layout context
             int                 lscpStartSearch,        // LSCP to start search for hyphen opportunity
@@ -990,7 +977,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - this method calls the critical DrawTextDecorations method, accesses the critical _owner property, 
         ///            and sets the critical _exception field.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr DrawStrikethrough(
             IntPtr          pols,           // Line Layout context
             Plsrun          plsrun,         // plsrun
@@ -1060,7 +1046,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - this method calls the critical DrawTextDecorations method, accesses the critical _owner property, 
         ///            and sets the critical _exception field.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr DrawUnderline(
             IntPtr pols,                // Line Layout context
             Plsrun      plsrun,         // plsrun
@@ -1117,7 +1102,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - calls the critical DrawTextDecorationCollection method and accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         private void DrawTextDecorations(
             LSRun    lsrun,
             uint     locationMask,
@@ -1178,7 +1162,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this method calls critical DrawTextDecoration method
         /// </SecurityNote>
-        [SecurityCritical]
         private void DrawTextDecorationCollection(
             LSRun                     lsrun,
             uint                      locationMask,
@@ -1269,7 +1252,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this access the critical _owner member through Draw property
         /// </SecurityNote>
-        [SecurityCritical]
         private Rect DrawTextDecoration(
             LSRun           lsrun,           // lsrun
             Brush           foregroundBrush, // default brush if text decoration has no pen
@@ -1515,7 +1497,6 @@ namespace MS.Internal.TextFormatting
         ///   Critical: This code calls into unsafe code blocks  and manipulates pointers.It can be used to 
         ///             draw text. It may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr DrawTextRun(
             IntPtr          pols,               // Line Layout context
             Plsrun          plsrun,             // plsrun
@@ -1591,7 +1572,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr FInterruptShaping(
             IntPtr          pols,               // Line Layout context
             LsTFlow         textFlow,           // text flow
@@ -1690,7 +1670,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code calls into unsafe code blocks. It also returns pointers. It may fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetGlyphsRedefined(
             IntPtr                      pols,                   // Line Layout context
             IntPtr*                     plsplsruns,             // array of plsruns
@@ -1785,7 +1764,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical: This code calls into unsafe code blocks. It also fills pointers. It may fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetGlyphPositions(
             IntPtr                      pols,               // Line Layout context
             IntPtr*                     plsplsruns,         // array of plsruns
@@ -1874,7 +1852,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - it reads into an unmanaged array of IntPtr
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe LSRun[] RemapLSRuns(
             IntPtr*         plsplsruns,
             int             plsrunCount
@@ -1897,7 +1874,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - The method accesses unsafe pointers and may fill in the critical _exception member.
         ///            It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr DrawGlyphs(
             IntPtr                      pols,                       // Line Layout context
             Plsrun                      plsrun,                     // plsrun
@@ -1991,7 +1967,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this method calls unsafe code block and fills in raw memory buffers.
         ///            It may also fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetCharCompressionInfoFullMixed(
             IntPtr              pols,                   // Line Layout context
             LsDevice            device,                 // kind of device
@@ -2046,7 +2021,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this method calls unsafe code block and fills in raw memory buffers.
         ///            It may also fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetCharExpansionInfoFullMixed(
             IntPtr              pols,                   // Line Layout context
             LsDevice            device,                 // kind of device
@@ -2098,7 +2072,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this method calls unsafe code block and fills in raw memory buffers
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe LsErr AdjustChars(
             LsCharRunInfo       *plscharrunInfo,
             bool                expanding,
@@ -2159,7 +2132,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this method calls unsafe code block and fills in raw memory buffers.
         ///            It may also fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetGlyphCompressionInfoFullMixed(
             IntPtr              pols,                   // Line Layout context
             LsDevice            device,                 // kind of device
@@ -2213,7 +2185,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this method has unsafe code block and fills in raw memory buffers.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe LsErr CompressGlyphs(
             LsGlyphRunInfo      *plsglyphrunInfo,
             int                 interWordCompressTo,
@@ -2293,7 +2264,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this method calls unsafe code block and fills in raw memory buffers.
         ///            It may also fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetGlyphExpansionInfoFullMixed(
             IntPtr              pols,                   // Line Layout context
             LsDevice            device,                 // kind of device
@@ -2353,7 +2323,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this method accesses the owner of line services callback thru FullText property which is critical.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe LsErr ExpandGlyphs(
             LsGlyphRunInfo      *plsglyphrunInfo,
             int                 interWordExpandTo,
@@ -2449,7 +2418,6 @@ namespace MS.Internal.TextFormatting
         ///            but this can't cause that to set to arbitrary values.
         ///            It may fill in the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr GetObjectHandlerInfo(
             System.IntPtr   pols,               // Line Layout context
             uint            objectId,           // installed object id
@@ -2502,7 +2470,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr InlineFormat(
             System.IntPtr           pols,               // Line Layout context
             Plsrun                  plsrun,             // plsrun
@@ -2598,7 +2565,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - this method may set the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal LsErr InlineDraw(
             System.IntPtr   pols,           // Line Layout context
             Plsrun          plsrun,         // plsrun
@@ -2758,7 +2724,6 @@ namespace MS.Internal.TextFormatting
         ///    Critical:This code calls into usafe code blocks and dereferences pointers without validation
         ///             It may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr EnumText(        
             IntPtr                      pols,                           // ls context
             Plsrun                      plsrun,                         // plsrun
@@ -2881,7 +2846,6 @@ namespace MS.Internal.TextFormatting
         ///    Critical:This code calls into unsafe code blocks and dereferences pointers without validation
         ///             It may fill in the critical _exception member. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe LsErr EnumTab(
             IntPtr              pols,               // pointer to context
             Plsrun              plsrun,             // plsrun
@@ -3031,7 +2995,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - The method access pointers.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void AdjustMetricsForDisplayModeJustifiedText(
             char              *pwchText,
             int               *piGlyphAdvances,
@@ -3178,7 +3141,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - The method access pointers. It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe GlyphRun ComputeShapedGlyphRun(
             LSRun                   lsrun,                      // ls run
             TextFormatterImp        textFormatterImp,           // The TextFormatter Implementation
@@ -3335,7 +3297,6 @@ namespace MS.Internal.TextFormatting
         ///    Critical:This code calls into usafe code blocks and dereferences pointers without validation
         ///             It also accesses the critical _owner property.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe GlyphRun ComputeUnshapedGlyphRun(
             LSRun               lsrun,              // LSrun used to shape the GlyphRun            
             LsTFlow             textFlow,           // flow direction
@@ -3468,7 +3429,6 @@ namespace MS.Internal.TextFormatting
         /// Safe - as this doesn't set them to arbitrary functions and the _pfn*
         ///        variables that are set are all marked Critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal unsafe LineServicesCallbacks()
         {
             _pfnFetchRunRedefined                   = new FetchRunRedefined(this.FetchRunRedefined);
@@ -3503,7 +3463,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this refers to and sets the Critical members of LsContextInfo
         ///            class.  Some of these methods may be Critical.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void PopulateContextInfo(ref LsContextInfo contextInfo, ref LscbkRedefined lscbkRedef)
         {
             lscbkRedef.pfnFetchRunRedefined                 = _pfnFetchRunRedefined;
@@ -3541,71 +3500,43 @@ namespace MS.Internal.TextFormatting
         /// 
         /// Not repeating on every member since its the same comment.
         /// </SecurityNote>
-        [SecurityCritical]
         private FetchRunRedefined                   _pfnFetchRunRedefined;
-        [SecurityCritical]
         private FetchLineProps                      _pfnFetchLineProps;
-        [SecurityCritical]
         private FetchPap                            _pfnFetchPap;
-        [SecurityCritical]
         private GetRunTextMetrics                   _pfnGetRunTextMetrics;
-        [SecurityCritical]
         private GetRunCharWidths                    _pfnGetRunCharWidths;
-        [SecurityCritical]
         private GetDurMaxExpandRagged               _pfnGetDurMaxExpandRagged;
-        [SecurityCritical]
         private GetAutoNumberInfo                   _pfnGetAutoNumberInfo;
-        [SecurityCritical]
         private DrawTextRun                         _pfnDrawTextRun;
-        [SecurityCritical]
         private GetGlyphsRedefined                  _pfnGetGlyphsRedefined;
-        [SecurityCritical]
         private GetGlyphPositions                   _pfnGetGlyphPositions;
-        [SecurityCritical]
         private DrawGlyphs                          _pfnDrawGlyphs;
-        [SecurityCritical]
         private GetObjectHandlerInfo                _pfnGetObjectHandlerInfo;
-        [SecurityCritical]
         private GetRunUnderlineInfo                 _pfnGetRunUnderlineInfo;
-        [SecurityCritical]
         private GetRunStrikethroughInfo             _pfnGetRunStrikethroughInfo;
-        [SecurityCritical]
         private Hyphenate                           _pfnHyphenate;
-        [SecurityCritical]
         private GetNextHyphenOpp                    _pfnGetNextHyphenOpp;
-        [SecurityCritical]
         private GetPrevHyphenOpp                    _pfnGetPrevHyphenOpp;
-        [SecurityCritical]
         private DrawUnderline                       _pfnDrawUnderline;
-        [SecurityCritical]
         private DrawStrikethrough                   _pfnDrawStrikethrough;
-        [SecurityCritical]
         private FInterruptShaping                   _pfnFInterruptShaping;
-        [SecurityCritical]
         private GetCharCompressionInfoFullMixed     _pfnGetCharCompressionInfoFullMixed;
-        [SecurityCritical]
         private GetCharExpansionInfoFullMixed       _pfnGetCharExpansionInfoFullMixed;
-        [SecurityCritical]
         private GetGlyphCompressionInfoFullMixed    _pfnGetGlyphCompressionInfoFullMixed;
-        [SecurityCritical]
         private GetGlyphExpansionInfoFullMixed      _pfnGetGlyphExpansionInfoFullMixed;
-        [SecurityCritical]
         private EnumText                            _pfnEnumText;
-        [SecurityCritical]
         private EnumTab                             _pfnEnumTab;
 
 
         /////   Delegates used by custom object handler
         //
 
-        [SecurityCritical]
         private InlineFormat _pfnInlineFormat;
         /// <SecurityNote>
         /// Critical - as sets the Critical delegate member _pfnInlineFormat.
         /// </SecurityNote>
         internal InlineFormat InlineFormatDelegate
         {
-            [SecurityCritical]
             get
             {
                 unsafe
@@ -3620,14 +3551,12 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this gets set on Critical member InlineInit.pfnDraw.
         /// </SecurityNote>
-        [SecurityCritical]
         private InlineDraw _pfnInlineDraw;
         /// <SecurityNote>
         /// Critical - as sets the Critical delegate member _pfnInlineFormat.
         /// </SecurityNote>
         internal InlineDraw InlineDrawDelegate
         {
-            [SecurityCritical]
             get
             {
                 if (_pfnInlineDraw == null)
@@ -3643,7 +3572,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - This method sets the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         private void SaveException(Exception e, Plsrun plsrun, LSRun lsrun)
         {
             e.Data[ExceptionContext.Key] = new ExceptionContext(e.Data[ExceptionContext.Key], e.StackTrace, plsrun, lsrun);
@@ -3653,7 +3581,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - This method sets the critical _exception member.
         /// </SecurityNote>
-        [SecurityCritical]
         private void SaveNonCLSException(string methodName, Plsrun plsrun, LSRun lsrun)
         {
             Exception e = new System.Exception(SR.Get(SRID.NonCLSException));
@@ -3691,14 +3618,11 @@ namespace MS.Internal.TextFormatting
         /// Critical - It is critical not to disclose exception message to untrusted user.
         ///            Only lineservices callbacks are supposed to set this method.
         /// </SecurityNote>
-        [SecurityCritical]
         private Exception _exception;
 
         internal Exception Exception
         {
-            [SecurityCritical]
             get { return _exception; }
-            [SecurityCritical]
             set { _exception = value; }
         }
 
@@ -3711,7 +3635,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - It is critical not to disclose owner of the lineservices callbacks
         /// </SecurityNote>        
-        [SecurityCritical]
         private object _owner;
 
         /// <SecurityNote>
@@ -3719,9 +3642,7 @@ namespace MS.Internal.TextFormatting
         /// </SecurityNote>
         internal object Owner
         {
-            [SecurityCritical]
             get { return _owner; }
-            [SecurityCritical]
             set { _owner = value; }
         }
 
@@ -3730,7 +3651,6 @@ namespace MS.Internal.TextFormatting
         /// </SecurityNote>
         private FullTextState FullText
         {
-            [SecurityCritical]
             get { return _owner as FullTextState; }
         }
 
@@ -3739,7 +3659,6 @@ namespace MS.Internal.TextFormatting
         /// </SecurityNote>
         private DrawingState Draw
         {
-            [SecurityCritical]
             get { return _owner as DrawingState; }
         }
 

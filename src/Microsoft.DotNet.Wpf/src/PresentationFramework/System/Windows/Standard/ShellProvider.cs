@@ -456,13 +456,11 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Accepts critical PROPVARIANT argument
         /// <SecurityNote>
-        [SecurityCritical]
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
         
         /// <SecurityNote>
         ///   Critical : Accepts critical PROPVARIANT argument
         /// <SecurityNote>
-        [SecurityCritical]
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
         
         void Commit();
@@ -660,7 +658,6 @@ namespace Standard
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         PROPVARIANT GetProperty(IntPtr key);
 
         Guid GetCLSID(IntPtr key);

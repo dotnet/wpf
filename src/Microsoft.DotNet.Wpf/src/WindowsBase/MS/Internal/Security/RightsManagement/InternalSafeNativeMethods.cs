@@ -31,7 +31,6 @@ namespace MS.Internal.Security.RightsManagement
     ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
     ///     UnsafeNativeMethods
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static partial class SafeNativeMethods
     {
         internal static int DRMCreateClientSession(

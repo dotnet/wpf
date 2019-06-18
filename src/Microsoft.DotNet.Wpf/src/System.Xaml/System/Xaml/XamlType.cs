@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,6 @@ namespace System.Xaml
         /// <SecurityNote>
         /// We cache a visibility check based on this value, so it must be idempotent
         /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<Type> _underlyingType;
         
         // Lazy init: null until initialized
@@ -81,7 +80,6 @@ namespace System.Xaml
         /// Critical: Accesses critical field _underlyingType
         /// Safe: Constructor is single-threaded, so idempotence is assured
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
             if (underlyingType == null)
@@ -176,7 +174,6 @@ namespace System.Xaml
         /// </SecurityNote>
         public Type UnderlyingType
         {
-            [SecuritySafeCritical]
             get
             {
                 if (!_underlyingType.IsSet)
@@ -196,7 +193,6 @@ namespace System.Xaml
         /// </SecurityNote>
         internal NullableReference<Type> UnderlyingTypeInternal
         {
-            [SecuritySafeCritical]
             get { return _underlyingType; }
         }
 

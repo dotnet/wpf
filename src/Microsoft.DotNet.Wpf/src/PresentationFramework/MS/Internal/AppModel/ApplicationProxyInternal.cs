@@ -75,7 +75,6 @@ namespace MS.Internal.AppModel
             /// <SecurityNote>
             /// Critical : Field for critical type IHostBrowser
             /// </SecurityNote>
-            [SecurityCritical]
             internal IHostBrowser HostBrowser;
             internal SecurityCriticalDataForSet<MimeType> MimeType;
             internal SecurityCriticalDataForSet<Uri> ActivationUri;
@@ -104,7 +103,6 @@ namespace MS.Internal.AppModel
         ///        make calls between AppDomains (it's MarshalByRefObject).
         ///     2) It sets BrowserInteropHelper.IsBrowserHosted, which is critical for set.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ApplicationProxyInternal()
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_AppProxyCtor);
@@ -149,7 +147,6 @@ namespace MS.Internal.AppModel
         ///                       Dangerous behaviors ( e.g. ShowInTaskbar = false) don't work when in browser hosted.
         ///
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal void CreateRootBrowserWindow()
         {
             if (_rbw.Value == null)
@@ -182,7 +179,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///  Critical as this code calls the critical RootBrowserWindow.CreateAndInitialize()
         ///</SecurityNote>
-        [SecurityCritical]
         private object _CreateRootBrowserWindowCallback(object unused)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WpfHost_RootBrowserWindowSetupStart);
@@ -201,7 +197,6 @@ namespace MS.Internal.AppModel
         ///            several critical data values (_path, _container, _storageRoot).
         ///          - also sets Uri and _mimeType, which are critical.
         ///</SecurityNote>
-        [SecurityCritical]
         internal int Run(InitData initData)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_AppProxyRunStart);
@@ -278,7 +273,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///     Critical as this calls a critical function ( LoadHistoryStream).
         ///</SecurityNote>
-        [SecurityCritical]
         private object _RunDelegate( object args )
         {
             InitData initData = (InitData)args;
@@ -365,7 +359,6 @@ namespace MS.Internal.AppModel
         ///     the previously focused window.
         /// Safe: The handle is not disclosed, and focusing the application's own window (RBW) is okay.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object _FocusDelegate(object unused)
         {
             if (_rbw.Value != null)
@@ -425,7 +418,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///  Critical: Calls Application.CriticalShutdown().
         ///</SecurityNote>
-        [SecurityCritical]
         internal void PostShutdown()
         {
             Cleanup();
@@ -524,7 +516,6 @@ namespace MS.Internal.AppModel
         ///     Critical as this method accesses critical data.
         ///              and we elevate for serialization permission.
         ///</SecurityNote>
-        [SecurityCritical]
         private object _GetSaveHistoryBytesDelegate(object arg)
         {
             bool entireJournal = (bool)arg;
@@ -666,12 +657,10 @@ namespace MS.Internal.AppModel
             return info ;
         }
 
-        //CASRemoval:[SecurityPermission(SecurityAction.Assert, SerializationFormatter = true)]
 
         ///<SecurityNote>
         ///     Critical as the delegate that this method invokes accesses critical data.
         ///</SecurityNote>
-        [SecurityCritical]
         internal byte[] GetSaveHistoryBytes(bool persistEntireJournal, out int journalEntryId, out string uriString, out string titleString)
         {
             SaveHistoryReturnInfo info = null ;
@@ -703,7 +692,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///     Critical as the delegate that this method invokes accesses critical data.
         ///</SecurityNote>
-        [SecurityCritical]
         internal void LoadHistoryStream(MemoryStream loadStream, bool firstLoadFromHistory)
         {
             if (Application.Current == null)
@@ -730,7 +718,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///     Critical as this method accesses critical data.
         ///</SecurityNote>
-        [SecurityCritical]
         private object _LoadHistoryStreamDelegate( object arg )
         {
             Journal             journal     = null;
@@ -825,7 +812,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - Makes a trust decision about whether to perform a BinaryFormatter.Deserialize (a privilaged operation) on untrusted data.
         /// </SecurityNote>
-        [SecurityCritical]
         private object DeserializeJournaledObject(MemoryStream inputStream)
         {
             object deserialized = null;
@@ -887,7 +873,6 @@ namespace MS.Internal.AppModel
         ///  1) Doesn't disclose _storageRoot, _container, _packageStream,
         ///     _unmanagedStream
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Cleanup()
         {
             if (Application.Current != null)
@@ -957,7 +942,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Calls Marshal.ReleaseComObject(), which has a LinkDemand for unmanaged code.
         /// </SecurityNote>
-        [SecurityCritical]
         private object ReleaseBrowserCallback(object browserCallback)
         {
             Marshal.ReleaseComObject(browserCallback);
@@ -996,7 +980,6 @@ namespace MS.Internal.AppModel
             {
                 return _rbw.Value;
             }
-            [SecurityCritical]
             private set
             {
                 _rbw.Value = value;
@@ -1058,7 +1041,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         internal static ApplicationProxyInternal Current
         {
-            [SecurityCritical]
             get { return _proxyInstance; }
         }
 
@@ -1072,7 +1054,6 @@ namespace MS.Internal.AppModel
             {
                 return _criticalUri.Value;
             }
-            [SecurityCritical]
             private set
             {
                 _criticalUri.Value = value;
@@ -1092,7 +1073,6 @@ namespace MS.Internal.AppModel
         /// Critical:
         ///  - sets SiteOfOriginContainer.DebugSeurityZoneURL which is critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal void SetDebugSecurityZoneURL(Uri debugSecurityZoneURL)
         {
             SiteOfOriginContainer.BrowserSource = debugSecurityZoneURL;
@@ -1104,7 +1084,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         internal object StreamContainer
         {
-            [SecurityCritical]
             set
             {
                 _unmanagedStream = new SecurityCriticalData<object>(Marshal.GetObjectForIUnknown((IntPtr)value));
@@ -1133,7 +1112,6 @@ namespace MS.Internal.AppModel
         ///     Critical as this accesses critical data.
         ///     TreatAsSafe - as clearing the RBW is eliminating critical data - and considered safe.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ClearRootBrowserWindow()
         {
             RootBrowserWindow = null;
@@ -1223,7 +1201,6 @@ namespace MS.Internal.AppModel
         /// Critical: ApplicationProxyInternal can be used cross-AppDomain and implements
         ///     critical functionality.
         /// </SecurityNote>
-        [SecurityCritical]
         private static ApplicationProxyInternal _proxyInstance;
 
         private const string FRAGMENT_MARKER = "#";

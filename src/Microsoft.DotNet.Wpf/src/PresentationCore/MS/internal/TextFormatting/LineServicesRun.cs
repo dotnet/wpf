@@ -143,7 +143,6 @@ namespace MS.Internal.TextFormatting
         ///     Critical: This has an unsafe code block
         ///     TreatAsSafe: This code is ok to call since it does not expose the critical pointer
         ///  </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal LSRun(
             TextRunInfo             runInfo,
             Plsrun                  type,
@@ -920,7 +919,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - deals with unsafe int array
         /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void CompileFeatureSet(
             LSRun[]                   lsruns,
             int*                      pcchRuns,

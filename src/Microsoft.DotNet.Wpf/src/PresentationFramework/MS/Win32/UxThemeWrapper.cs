@@ -263,7 +263,6 @@ namespace MS.Win32
         ///                      all the info stored is the currrent theme name and current color - e.g. "Luna", "NormalColor"
         ///                      Does not contain a path - considered safe.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void GetThemeNameAndColor(out string themeName, out string themeColor)
         {
             StringBuilder themeNameSB = new StringBuilder(Win32.NativeMethods.MAX_PATH);

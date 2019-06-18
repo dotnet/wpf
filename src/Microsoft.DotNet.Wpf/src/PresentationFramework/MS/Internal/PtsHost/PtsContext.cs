@@ -48,7 +48,6 @@ namespace MS.Internal.PtsHost
         /// Critical, because allocates Critical collections: _pages, and _pageBreakRecords.
         /// Safe, because creating empty collections is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal PtsContext(bool isOptimalParagraphEnabled, TextFormattingMode textFormattingMode)
         {
             _pages = new ArrayList(1);
@@ -82,7 +81,6 @@ namespace MS.Internal.PtsHost
         ///     and PTS.FsDestroyPage are Critical for set, so cannot have 
         ///     randomly assigned value.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             int index;
@@ -300,7 +298,6 @@ namespace MS.Internal.PtsHost
         /// Safe, because ptsPage parameter is Critical for set, so cannot have 
         ///     randomly assigned value.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnPageCreated(SecurityCriticalDataForSet<IntPtr> ptsPage)
         {
             Invariant.Assert(ptsPage.Value != IntPtr.Zero, "Invalid page object.");
@@ -346,7 +343,6 @@ namespace MS.Internal.PtsHost
         /// Critical, because adds new entry to Critical collection _pageBreakRecords.
         /// Safe, because br parameter is Critical for set, so cannot have randomly assigned value.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnPageBreakRecordCreated(SecurityCriticalDataForSet<IntPtr> br)
         {
             Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
@@ -505,7 +501,6 @@ namespace MS.Internal.PtsHost
         ///        for set, so cannot have randomly assigned value.
         ///     b) removing from Critical collection is safe operation.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnDestroyPage(SecurityCriticalDataForSet<IntPtr> ptsPage, bool enterContext)
         {
             Invariant.Assert(ptsPage.Value != IntPtr.Zero, "Invalid page object.");
@@ -551,7 +546,6 @@ namespace MS.Internal.PtsHost
         ///        for set, so cannot have randomly assigned value.
         ///     b) removing from Critical collection is safe operation.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object OnDestroyBreakRecord(object args)
         {
             SecurityCriticalDataForSet<IntPtr> br = (SecurityCriticalDataForSet<IntPtr>)args;
@@ -620,7 +614,6 @@ namespace MS.Internal.PtsHost
         /// Members of this list are pointers that are passed to Critical functions
         /// that'll write to the memory directly in unmanaged code.
         /// </SecurityNote>
-        [SecurityCritical]
         private ArrayList _pages;
 
         /// <summary>
@@ -638,7 +631,6 @@ namespace MS.Internal.PtsHost
         /// Members of this list are pointers that are passed to Critical functions
         /// that'll write to the memory directly in unmanaged code.
         /// </SecurityNote>
-        [SecurityCritical]
         private ArrayList _pageBreakRecords;
 
         /// <summary>

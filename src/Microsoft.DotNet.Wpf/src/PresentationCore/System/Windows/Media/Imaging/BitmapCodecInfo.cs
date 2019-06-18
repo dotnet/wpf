@@ -68,7 +68,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -98,7 +97,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string Author
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -150,7 +148,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual System.Version Version
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -202,7 +199,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual Version SpecificationVersion
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -254,7 +250,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string FriendlyName
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -306,7 +301,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string DeviceManufacturer
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -358,7 +352,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string DeviceModels
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -410,7 +403,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string MimeTypes
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -462,7 +454,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual string FileExtensions
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -514,7 +505,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual bool SupportsAnimation
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -544,7 +534,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual bool SupportsLossless
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();
@@ -574,7 +563,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public virtual bool SupportsMultipleFrames
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandRegistryPermission();

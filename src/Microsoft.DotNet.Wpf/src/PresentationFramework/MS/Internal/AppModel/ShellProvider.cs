@@ -86,7 +86,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -107,7 +106,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -123,7 +121,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -146,7 +143,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -160,13 +156,11 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Accepts critical PROPVARIANT argument
         /// </SecurityNote>
-        [SecurityCritical]
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
 
         /// <SecurityNote>
         /// Critical: Accepts critical PROPVARIANT argument
         /// </SecurityNote>
-        [SecurityCritical]
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
 
         void Commit();
@@ -175,7 +169,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -273,7 +266,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -300,7 +292,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -347,7 +338,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Accepts critical PROPVARIANT argument
         /// </SecurityNote>
-        [SecurityCritical]
         void GetProperty(IntPtr key, [In, Out] PROPVARIANT pv);
 
         Guid GetCLSID(IntPtr key);
@@ -370,7 +360,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -400,7 +389,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown),
@@ -431,7 +419,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -464,7 +451,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -479,7 +465,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -543,7 +528,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -593,7 +577,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -651,7 +634,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -677,7 +659,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -708,7 +689,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -744,7 +724,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -763,7 +742,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -779,7 +757,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -820,7 +797,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -860,7 +836,6 @@ namespace MS.Internal.AppModel
     /// to the desktop window, but if explorer is not running or currently busy then we get back
     /// error codes that must be handled by the caller.
     /// </remarks>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -923,7 +898,6 @@ namespace MS.Internal.AppModel
     /// <SecurityNote>
     /// Critical: Suppresses unmanaged code security.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -976,7 +950,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: Resolves an opaque interface into a path on the user's machine.
         /// </SecurityNote>
-        [SecurityCritical]
         public static string GetPathFromShellItem(IShellItem item)
         {
             return item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING);
@@ -985,7 +958,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: Resolves an opaque Guid into a path on the user's machine.  Calls critical SHGetFolderPathEx
         /// </SecurityNote>
-        [SecurityCritical]
         public static string GetPathForKnownFolder(Guid knownFolder)
         {
             if (knownFolder == default(Guid))
@@ -1004,7 +976,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: Calls SHCreateItemFromParsingName
         /// </SecurityNote>
-        [SecurityCritical]
         public static IShellItem2 GetShellItemForPath(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -1037,7 +1008,6 @@ namespace MS.Internal.AppModel
         ///     Critical - elevates via a SUC.
         ///</SecurityNote>
         [DllImport(ExternDll.Shell32, EntryPoint = "SHAddToRecentDocs")]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         private static extern void SHAddToRecentDocsString(SHARD uFlags, [MarshalAs(UnmanagedType.LPWStr)] string pv);
 
         // This overload is required.  There's a cast in the Shell code that causes the wrong vtbl to be used
@@ -1046,13 +1016,11 @@ namespace MS.Internal.AppModel
         ///     Critical - elevates via a SUC.
         ///</SecurityNote>
         [DllImport(ExternDll.Shell32, EntryPoint = "SHAddToRecentDocs")]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         private static extern void SHAddToRecentDocs_ShellLink(SHARD uFlags, IShellLinkW pv);
 
         ///<SecurityNote>
         ///     Critical - calls critical SHAddToRecentDocsString.
         ///</SecurityNote>
-        [SecurityCritical]
         internal static void SHAddToRecentDocs(string path)
         {
             SHAddToRecentDocsString(SHARD.PATHW, path);
@@ -1062,7 +1030,6 @@ namespace MS.Internal.AppModel
         ///<SecurityNote>
         ///     Critical - calls critical SHAddToRecentDocsObj
         ///</SecurityNote>
-        [SecurityCritical]
         internal static void SHAddToRecentDocs(IShellLinkW shellLink)
         {
             SHAddToRecentDocs_ShellLink(SHARD.LINK, shellLink);
@@ -1073,7 +1040,6 @@ namespace MS.Internal.AppModel
         ///     Critical - elevates via a SUC.
         ///</SecurityNote>
         [DllImport(ExternDll.Shell32)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         internal static extern HRESULT SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IBindCtx pbc, [In] ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out object ppv);
 
         // Vista only.  Also inconsistently doced on MSDN.  It was available in some versions of the SDK, and it mentioned on several pages, but isn't specifically doced.
@@ -1081,7 +1047,6 @@ namespace MS.Internal.AppModel
         ///     Critical - elevates via a SUC.
         ///</SecurityNote>
         [DllImport(ExternDll.Shell32)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         internal static extern HRESULT SHGetFolderPathEx([In] ref Guid rfid, KF_FLAG dwFlags, [In, Optional] IntPtr hToken, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszPath, uint cchPath);
 
         /// <summary>

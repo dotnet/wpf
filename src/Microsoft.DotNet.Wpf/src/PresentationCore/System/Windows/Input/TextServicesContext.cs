@@ -53,7 +53,6 @@ namespace System.Windows.Input
         /// Critical - accesses AppDomain.DomainUnload event.
         /// SecurityTreatAsSafe - does not accept or reveal any information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private TextServicesContext()
         {
             Debug.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "SetDispatcherThreaad on MTA thread");
@@ -86,7 +85,6 @@ namespace System.Windows.Input
         /// Critical - access thread manager directly
         /// TreatAsSafe - uninitializing would only result in input being dead for the app
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Uninitialize(bool appDomainShutdown)
         {
             // Unregister DefaultTextStore.
@@ -171,7 +169,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - directly access thread manager, and pushes keystrokes into the input pipeline
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool Keystroke(int wParam, int lParam, KeyOp op)
         {
             bool fConsume;
@@ -214,7 +211,6 @@ namespace System.Windows.Input
         ///     to extract ThreadManager, clientID and DocumentManager all of which are not safe to
         ///     expose.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterTextStore(DefaultTextStore defaultTextStore)
         {
             // We must cache the DefaultTextStore because we'll need it from
@@ -264,7 +260,6 @@ namespace System.Windows.Input
         ///     Critical    - access DocumentManager of the current DefaultTextStore.
         ///     TreatAsSafe - This is a safe since it does not expose ITfDocumentMgr.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void SetFocusOnDefaultTextStore()
         {
             SetFocusOnDim(DefaultTextStore.Current.DocumentManager);
@@ -275,7 +270,6 @@ namespace System.Windows.Input
         ///     Critical    - access ITfDocumentMgr for empty dim.
         ///     TreatAsSafe - This is a safe since it does not expose ITfDocumentMgr.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void SetFocusOnEmptyDim()
         {
             SetFocusOnDim(EmptyDocumentManager);
@@ -316,7 +310,6 @@ namespace System.Windows.Input
         internal UnsafeNativeMethods.ITfThreadMgr ThreadManager
         {
             // The ITfThreadMgr for this thread.
-            [SecurityCritical]
             get
             {
                 if (_threadManager == null)
@@ -382,7 +375,6 @@ namespace System.Windows.Input
         ///     Critical: This code calls into critical code threadmgr.SetFocus
         ///     TreatAsSafe: This does not expose any critical data and SetFocus is safe to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void SetFocusOnDim(UnsafeNativeMethods.ITfDocumentMgr dim)
         {
             UnsafeNativeMethods.ITfThreadMgr threadmgr = ThreadManager;
@@ -397,7 +389,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: Accesses unmanaged pointers (DocumentManager, CompartmentMgr,Compartment, Source)
         /// </SecurityNote>
-        [SecurityCritical]
         private void StartTransitoryExtension()
         {
             Guid guid;
@@ -436,7 +427,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: This does not expose any critical data.
         ///                  Stopping the transitory extenstion is a safe operation.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void StopTransitoryExtension()
         {
             // Unadvice the transitory extension sink.
@@ -486,7 +476,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         private UnsafeNativeMethods.ITfDocumentMgr EmptyDocumentManager
         {
-            [SecurityCritical]
             get
             {
                 if (_dimEmpty == null)
@@ -527,21 +516,18 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: UnsafeNativeMethods.ITfThreadMgr has methods with SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr> _threadManager;
 
         // TSF ClientId from Activate call.
         /// <SecurityNote>
         ///     Critical: _clientId is an identifier for Cicero.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalData<int> _clientId;
 
         // The empty dim for this thread. Created on demand.
         /// <SecurityNote>
         ///     Critical: UnsafeNativeMethods.ITfDocumentMgr has methods with SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _dimEmpty;
 
         #endregion Private Fields
@@ -555,7 +541,6 @@ namespace System.Windows.Input
             ///     TreatAsSafe: This code does not take any parameter or return state.
             ///                  It simply attaches private callbacks.
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public TextServicesContextShutDownListener(TextServicesContext target, ShutDownEvents events) : base(target, events)
             {
             }

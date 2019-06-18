@@ -228,7 +228,6 @@ namespace System.Windows.Navigation
         ///     The only scenarios where we're currently going to enable creation of Windows is with RootBrowserWindow.
         ///	    Do not call it outside the scope of the RBW scenario
         /// </SecurityNote>
-        [SecurityCritical]
         internal NavigationWindow(bool inRbw): base(inRbw)
         {
             this.Initialize();
@@ -439,7 +438,6 @@ namespace System.Windows.Navigation
         ///     In the RBW case if WCP_SYSTEM_THEMES_ENABLED is true this call is a NO OP
         ///     else it will demand
         /// </SecurityNote>
-        [SecurityCritical]
         public override void OnApplyTemplate()
         {
             VerifyContextAndObjectState( );

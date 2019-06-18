@@ -288,8 +288,6 @@ namespace System.Windows.Xps.Packaging
         ///     Critical - The VerifyCertificate(certificate) method has a 
         ///                LinkDemand for Unrestricted.
         ///</SecurityNote> 
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand, Unrestricted = true)]
         public 
         X509ChainStatusFlags 
         VerifyCertificate()
@@ -305,8 +303,6 @@ namespace System.Windows.Xps.Packaging
         ///     Critical - The PackageDigitalSignatureManager.VerifyCertificate method has a 
         ///                LinkDemand for Unrestricted.
         ///</SecurityNote> 
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand, Unrestricted = true)]
         public 
         static 
         X509ChainStatusFlags 

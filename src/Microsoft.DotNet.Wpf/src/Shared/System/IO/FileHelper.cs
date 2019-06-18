@@ -93,7 +93,6 @@ namespace System.IO
         /// <SecurityNote>
         ///     Critical - Calls into filesystem functions, returns local file path.
         /// </SecurityNote>
-        [SecurityCritical]
         static internal FileStream CreateAndOpenTemporaryFile(
                     out string filePath,
                     FileAccess fileAccess=FileAccess.Write,
@@ -178,7 +177,6 @@ namespace System.IO
         /// <SecurityNote>
         ///     Critical - Calls into filesystem functions, asserts permission.
         /// </SecurityNote>
-        [SecurityCritical]
         static internal void DeleteTemporaryFile(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))

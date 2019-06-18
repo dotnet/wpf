@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,6 @@ namespace System.Xaml.Schema
         /// <SecurityNote>
         ///     Critical:  calls critical method CreateDynamicAssembly
         /// </SecurityNote
-        [SecurityCritical]
         private static bool UseDynamicAssembly()
         {
             // Use the dynamic assembly technique as soon as any call occurs in partial-trust
@@ -101,7 +100,6 @@ namespace System.Xaml.Schema
         /// <PerfNote>
         ///     NoInline|NoOpt : don't request Reflection.Emit code from mscorlib until we really need it
         /// </PerfNote>
-        [SecurityCritical]
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining |
                                                     System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
         private static void CreateDynamicAssembly()
@@ -194,7 +192,6 @@ namespace System.Xaml.Schema
         /// <SecurityNote>
         /// Demanded to allow instantiation of System.Xaml internals
         /// </SecurityNote>
-        [SecurityCritical]
         private static ReflectionPermission s_reflectionMemberAccess;
 
         static readonly Assembly SystemXaml = typeof(SafeReflectionInvoker).Assembly;
@@ -203,7 +200,6 @@ namespace System.Xaml.Schema
         /// Critical: Used to detect luring attack described in class-level comments.
         /// Safe: Gets the information from reflection.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         public static bool IsInSystemXaml(Type type)
         {
@@ -229,7 +225,6 @@ namespace System.Xaml.Schema
         /// Critical: See class-level comment
         /// Safe: See class-level comment
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static Delegate CreateDelegate(Type delegateType, Type targetType, string methodName)
         {
 #if PARTIALTRUST
@@ -257,7 +252,6 @@ namespace System.Xaml.Schema
         /// Critical: See class-level comment
         /// Safe: See class-level comment
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
 #if PARTIALTRUST
@@ -286,7 +280,6 @@ namespace System.Xaml.Schema
         /// Safe: See class-level comment. Note that this checks the UnderlyingSystemType,
         ///       which is what is actually created by Activator.CreateInstance.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static object CreateInstance(Type type, object[] arguments)
         {
 #if PARTIALTRUST
@@ -318,7 +311,6 @@ namespace System.Xaml.Schema
         /// Critical: Sets critical field s_reflectionMemberAccess
         /// Safe: Sets the field to a known good value
         /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         internal static void DemandMemberAccessPermission()
         {
@@ -334,7 +326,6 @@ namespace System.Xaml.Schema
         /// Critical: See class-level comment
         /// Safe: See class-level comment
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static object InvokeMethod(MethodInfo method, object instance, object[] args)
         {
 #if PARTIALTRUST
@@ -367,10 +358,8 @@ namespace System.Xaml.Schema
         /// Safe: Gets the information from reflection.
         ///       The MethodInfo (and MemberInfo) have an InheritanceDemand so derived class
         ///       spoofing in PT is not an issue.
-        /// Note: The [SecurityCritical] attribute isn't functionally necessary but flags the
         ///       method as security critical and changes should be reviewed.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         internal static bool IsSystemXamlNonPublic(MethodInfo method)
         {

@@ -150,7 +150,6 @@ namespace MS.Internal.Commands
         ///     Critical - calls critical function (ExecuteCommandSource)
         ///     TreatAsSafe - always passes in false for userInitiated, which is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ExecuteCommandSource(ICommandSource commandSource)
         {
             CriticalExecuteCommandSource(commandSource, false);
@@ -165,7 +164,6 @@ namespace MS.Internal.Commands
         ///            the callers of this, and the implementation to make sure
         ///            that we only call MarkAsUserInitiated in the correct cases.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalExecuteCommandSource(ICommandSource commandSource, bool userInitiated)
         {
             ICommand command = commandSource.Command;

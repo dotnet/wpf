@@ -1940,7 +1940,6 @@ namespace System.Windows.Controls
         /// </SecurityNote>
         private bool IsItemsHostVisible
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Panel itemsHost = ItemsHost;

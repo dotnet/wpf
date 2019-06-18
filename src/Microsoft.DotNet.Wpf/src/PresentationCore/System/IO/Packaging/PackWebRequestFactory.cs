@@ -34,7 +34,6 @@ namespace System.IO.Packaging
         /// TreatAsSafe as this is just a diag switch, Debug-only, no input data is used,
         ///   and the usage is considered safe (tracing).
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static PackWebRequestFactory()
         {
 #if DEBUG
@@ -61,7 +60,6 @@ namespace System.IO.Packaging
         /// TreatAsSafe: because it is a public method and no Package related objects
         ///         are given out from this API other than a part stream
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         WebRequest IWebRequestCreate.Create(Uri uri)
         {
             if (uri == null)
@@ -176,7 +174,6 @@ namespace System.IO.Packaging
                 return _traceSwitch.Enabled;
             }
 
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 _traceSwitch.Enabled = value;

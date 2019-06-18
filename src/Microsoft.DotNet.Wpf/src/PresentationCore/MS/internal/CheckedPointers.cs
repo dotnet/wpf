@@ -29,7 +29,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method takes unsafe pointer
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe CheckedCharPointer(char * pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(char));
@@ -38,7 +37,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method returns unsafe pointer
         /// </SecurityNote>        
-        [SecurityCritical]
         internal unsafe char * Probe(int offset, int length)
         {
             return (char*) _checkedPointer.Probe(offset * sizeof(char), length * sizeof(char));
@@ -55,7 +53,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method takes unsafe pointer
         /// </SecurityNote>    
-        [SecurityCritical]
         internal unsafe CheckedIntPointer(int * pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(int));
@@ -64,7 +61,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method returns unsafe pointer
         /// </SecurityNote>        
-        [SecurityCritical]
         internal unsafe int * Probe(int offset, int length)
         {
             return (int *) _checkedPointer.Probe(offset * sizeof(int), length * sizeof(int));
@@ -81,7 +77,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method takes unsafe pointer
         /// </SecurityNote>    
-        [SecurityCritical]
         internal unsafe CheckedUShortPointer(ushort * pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(ushort));
@@ -90,7 +85,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - The method returns unsafe pointer
         /// </SecurityNote>                
-        [SecurityCritical]
         internal unsafe ushort * Probe(int offset, int length)
         {
             return (ushort *) _checkedPointer.Probe(offset * sizeof(ushort), length * sizeof(ushort));

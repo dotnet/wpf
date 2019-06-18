@@ -517,7 +517,6 @@ namespace MS.Internal
 
         internal static bool IsContainer
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return BindUriHelper.Container != null;

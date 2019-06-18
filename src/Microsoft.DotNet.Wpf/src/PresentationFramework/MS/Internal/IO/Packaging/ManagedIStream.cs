@@ -49,7 +49,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls Marshal.WriteInt32 which LinkDemands, takes pointers as input
         ///</SecurityNote>
-        [SecurityCritical]
         void IStream.Read(Byte[] buffer, Int32 bufferSize, IntPtr bytesReadPtr)
         {
             Int32 bytesRead = _ioStream.Read(buffer, 0, (int) bufferSize);
@@ -71,7 +70,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls Marshal.WriteInt64 which LinkDemands, takes pointers as input
         ///</SecurityNote>
-        [SecurityCritical]
         void IStream.Seek(Int64 offset, Int32 origin, IntPtr newPositionPtr)
         {
             SeekOrigin  seekOrigin;
@@ -157,7 +155,6 @@ namespace MS.Internal.IO.Packaging
         ///<SecurityNote>
         ///     Critical: calls Marshal.WriteInt32 which LinkDemands, takes pointers as input
         ///</SecurityNote>
-        [SecurityCritical]
         void IStream.Write(Byte[] buffer, Int32 bufferSize, IntPtr bytesWrittenPtr)
         {
             _ioStream.Write(buffer, 0, bufferSize);

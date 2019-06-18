@@ -23,8 +23,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("E7FF32D2-34AA-499B-BBE9-9CD4EE6C59F7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMPrintTicketResource : IXpsOMResource
     {
 

@@ -44,7 +44,6 @@ namespace System.Windows.Input
         ///     This handles critical data in the form of PresentationSource but there are demands on the
         ///     critical data
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
             if (inputSource == null)
@@ -68,7 +67,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public PresentationSource InputSource 
         { 
-            [SecurityCritical]
             get 
             {
                 return _inputSource.Value;

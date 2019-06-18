@@ -92,13 +92,11 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical - Gets to the unmanaged layer (ctor, HandleMessage, UpdateWindowSettings).
         /// </SecurityNote>
-        [SecurityCritical]
         private static WindowMessage s_updateWindowSettings;
 
         /// <SecurityNote>
         /// Critical - Gets to the unmanaged layer (ctor, HandleMessage, UpdateWindowSettings).
         /// </SecurityNote>
-        [SecurityCritical]
         private static WindowMessage s_needsRePresentOnWake;
 
         /// <summary>
@@ -109,7 +107,6 @@ namespace System.Windows.Interop
         /// <securitynote>
         /// critical: gets to the unmanaged layer
         /// </securitynote>
-        [SecurityCritical]
         private static WindowMessage s_DisplayDevicesAvailabilityChanged;
 
         /// <summary>
@@ -137,7 +134,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical - obtained under an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
         private NativeMethods.HWND _hWnd;
 
         private NativeMethods.RECT _hwndClientRectInScreenCoords = new NativeMethods.RECT();
@@ -244,7 +240,6 @@ namespace System.Windows.Interop
         /// Critical        - Sets the SecurityCritical static variables holding the message ids; calls RegisterWindowMessage.
         /// TreatAsSafe     - The message ids are not exposed; no external parameters are taken in.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static HwndTarget()
         {
             s_updateWindowSettings = UnsafeNativeMethods.RegisterWindowMessage("UpdateWindowSettings");
@@ -268,8 +263,6 @@ namespace System.Windows.Interop
         ///            can be used to draw to a window
         /// PublicOk - demands UIPermission
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
         public HwndTarget(IntPtr hwnd)
         {
             bool exceptionThrown = true;
@@ -352,7 +345,6 @@ namespace System.Windows.Interop
         /// Critical as it calls unsafe native methods.
         /// Treat as safe because it does not return anything.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void InitializeDpiAwarenessAndDpiScales()
         {
             // Only do this once to get:
@@ -403,7 +395,6 @@ namespace System.Windows.Interop
         /// Safe because doesn't return anything and only updates
         /// enum-valued properties.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void GetProcessDpiAwareness(
             IntPtr hWnd,
             out PROCESS_DPI_AWARENESS appManifestProcessDpiAwareness,
@@ -518,7 +509,6 @@ namespace System.Windows.Interop
         /// We might consider rendering popup's at their native DPI's as well,
         /// eventually
         /// </remarks>
-        [SecurityCritical]
         private static HandleRef NormalizeWindow(HandleRef hWnd, bool normalizeChildWindows, bool normalizePopups)
         {
             HandleRef normalizedHwnd = hWnd;
@@ -566,7 +556,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical as it calls a function that performs an elevation (IsWindow).
         ///</SecurityNote>
-        [SecurityCritical]
         private void AttachToHwnd(IntPtr hwnd)
         {
             int processId = 0;
@@ -621,7 +610,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This code causes unmanaged code elevation
         /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore, EntryPoint = "MilVisualTarget_AttachToHwnd")]
         internal static extern int VisualTarget_AttachToHwnd(
             IntPtr hwnd
@@ -631,7 +619,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This code causes unmanaged code elevation
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore, EntryPoint = "MilVisualTarget_DetachFromHwnd")]
         internal static extern int VisualTarget_DetachFromHwnd(
             IntPtr hwnd
@@ -716,8 +703,6 @@ namespace System.Windows.Interop
             // we should also expose HwndSource (the only way to get to the HwndTarget instance).
             // We don't want to bite off that much exposure at this point in the product, so we enforce
             // that this is not accessible from partial trust for now.
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
             set
             {
                 if (value != RenderMode.Default && value != RenderMode.SoftwareOnly)
@@ -739,7 +724,6 @@ namespace System.Windows.Interop
         /// PublicOK - dispose is in effect stoping the contents of the target from
         /// rendering. Equivalent to removing all elements in window, considered safe.
         /// </SecurityNote>
-        [SecurityCritical]
         public override void Dispose()
         {
            // Its outside the try finally block because we want the exception to be
@@ -788,7 +772,6 @@ namespace System.Windows.Interop
         /// Critical - uses unmanaged pointer handle _hWnd
         /// TreatAsSafe - doesn't return or expose _hWnd
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void CreateUCEResources(DUCE.Channel channel, DUCE.Channel outOfBandChannel)
         {
             // create visual target resources
@@ -890,7 +873,6 @@ namespace System.Windows.Interop
         /// Critical - uses unmanaged pointer handle _hWnd
         /// TreatAsSafe - doesn't return or expose _hWnd
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void ReleaseUCEResources(DUCE.Channel channel, DUCE.Channel outOfBandChannel)
         {
             if (_compositionTarget.IsOnChannel(channel))
@@ -944,7 +926,6 @@ namespace System.Windows.Interop
         /// <securitynote>
         /// Critical - Calls PtrToStructure which is Critical
         /// </securitynote>
-        [SecurityCritical]
         private bool HandleDpiChangedMessage(IntPtr wParam, IntPtr lParam)
         {
             bool handled = false;
@@ -983,7 +964,6 @@ namespace System.Windows.Interop
         /// <securitynote>
         /// Critical: Calls Critical method <see cref="GetDpiScaleForWindow"/>
         /// </securitynote>
-        [SecurityCritical]
         private bool HandleDpiChangedAfterParentMessage()
         {
             bool handled = false;
@@ -1029,7 +1009,6 @@ namespace System.Windows.Interop
         /// Elevates permissions via unsafe native methods, handles messages to
         /// retrieve automation provider the last one is most risky
         /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr HandleMessage(WindowMessage msg, IntPtr wparam, IntPtr lparam)
         {
             IntPtr result = Unhandled;
@@ -1398,7 +1377,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: calls critical code.
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnMonitorPowerEvent(object sender, MonitorPowerEventArgs eventArgs)
         {
             OnMonitorPowerEvent(sender, eventArgs.PowerOn, /*paintOnWake*/true);
@@ -1407,7 +1385,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: calls critical code.
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnMonitorPowerEvent(object sender, bool powerOn, bool paintOnWake)
         {
             if (powerOn)
@@ -1441,7 +1418,6 @@ namespace System.Windows.Interop
         /// Critical - Elevates permissions via unsafe native methods, calls Invalidate
         /// TreatAsSafe - Doesn't return or expose critical handle _hWnd
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void InvalidateSelf(object s, EventArgs args)
         {
             UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
@@ -1464,7 +1440,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical - Elevates permissions via unsafe native methods, calls into begin paint
         /// </SecurityNote>
-        [SecurityCritical]
         private void DoPaint()
         {
             NativeMethods.PAINTSTRUCT ps = new NativeMethods.PAINTSTRUCT();
@@ -1512,7 +1487,6 @@ namespace System.Windows.Interop
         /// Critical - This method exposes the automation object which can be used to
         /// query the system for critical information or spoof input.
         /// </SecurityNote>
-        [SecurityCritical]
         internal AutomationPeer EnsureAutomationPeer(Visual root)
         {
             return EnsureAutomationPeer(root, _hWnd);
@@ -1522,7 +1496,6 @@ namespace System.Windows.Interop
         /// Critical - This method exposes the automation object which can be used to
         /// query the system for critical information or spoof input.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static AutomationPeer EnsureAutomationPeer(Visual root, IntPtr handle)
         {
             AutomationPeer peer = null;
@@ -1561,7 +1534,6 @@ namespace System.Windows.Interop
         /// query the system for critical information or spoof input.
         /// 2) it Asserts to call ReturnRawElementProvider
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr CriticalHandleWMGetobject(IntPtr wparam, IntPtr lparam, Visual root, IntPtr handle)
         {
             try
@@ -1661,7 +1633,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///   Critical: This can be used to cause annoyance by causing re rendering
         /// </SecurityNote>
-        [SecurityCritical]
         private bool OnSettingChange(Int32 firstParam)
         {
             if ( (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHING ||
@@ -1718,7 +1689,6 @@ namespace System.Windows.Interop
         /// Critical - accesses a critical member (_hwnd)
         /// TreatAsSafe - uses the _hwnd to call a safeNativeMethods. Data is cached - but not considered critical.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnResize()
         {
 #if DEBUG
@@ -1783,7 +1753,6 @@ namespace System.Windows.Interop
         /// Critical - calls critical methods (ClientToScreen)
         /// TreatAsSafe - no information returned, coordinates stored in member field.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateWindowAndClientCoordinates()
         {
             HandleRef hWnd = _hWnd.MakeHandleRef(this);
@@ -1908,7 +1877,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical - Calls native method <see cref="UnsafeNativeMethods.SetWindowPos"/>
         ///</SecurityNote>
-        [SecurityCritical]
         internal void OnDpiChanged(HwndDpiChangedEventArgs e)
         {
             var oldDpi = _currentDpiScale;
@@ -1935,7 +1903,6 @@ namespace System.Windows.Interop
         ///     Critical:
         ///         Calls native method <see cref="UnsafeNativeMethods.InvalidateRect"/>
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OnDpiChangedAfterParent(HwndDpiChangedAfterParentEventArgs e)
         {
             var oldDpi = _currentDpiScale;
@@ -1994,7 +1961,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical - accepts an unmanaged pointer to a structure
         ///</SecurityNote>
-        [SecurityCritical]
         private void OnWindowPosChanging(IntPtr lParam)
         {
             _windowPosChanging = true;
@@ -2005,7 +1971,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical - accepts an unmanaged pointer to a structure
         ///</SecurityNote>
-        [SecurityCritical]
         private void OnWindowPosChanged(IntPtr lParam)
         {
             _windowPosChanging = false;
@@ -2016,7 +1981,6 @@ namespace System.Windows.Interop
         ///<SecurityNote>
         /// Critical - accepts an unmanaged pointer to a structure
         ///</SecurityNote>
-        [SecurityCritical]
         private void UpdateWindowPos(IntPtr lParam)
         {
             //
@@ -2298,7 +2262,6 @@ namespace System.Windows.Interop
         /// TreatAsSafe - just updates composition information for this window,
         ///               does not accept arbitrary input.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateWindowSettings(bool enableRenderTarget, DUCE.ChannelSet? channelSet)
         {
             MediaContext mctx = MediaContext.From(Dispatcher);
@@ -2482,8 +2445,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public override Visual RootVisual
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
             set
             {
                 base.RootVisual = value;
@@ -2710,7 +2671,6 @@ namespace System.Windows.Interop
             ///     Critical: We dont want _notificationHwnd to be exposed and used
             ///         by anyone besides this class.
             /// </SecurityNode>
-            [SecurityCritical]
             private HwndWrapper _notificationHwnd; // The hwnd used to listen system wide messages
 
             /// <SecurityNode>
@@ -2718,7 +2678,6 @@ namespace System.Windows.Interop
             ///         messages. We want this to be critical that no one can get it
             ///         listen to window messages.
             /// </SecurityNode>
-            [SecurityCritical]
             private HwndWrapperHook _notificationHook;
 
             private int _hwndTargetCount;
@@ -2728,7 +2687,6 @@ namespace System.Windows.Interop
             ///<SecurityNote>
             /// Critical - obtained under an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
             private IntPtr _hPowerNotify;
 
             #endregion
@@ -2737,7 +2695,6 @@ namespace System.Windows.Interop
             ///     Critical: Calls critical code.
             ///     TreatAsSafe: Doesn't expose the critical resource.
             /// </SecurityNode>
-            [SecurityCritical, SecurityTreatAsSafe]
             public NotificationWindowHelper()
             {
                 // Check for Vista or newer is needed for RegisterPowerSettingNotification.
@@ -2776,7 +2733,6 @@ namespace System.Windows.Interop
             ///     Critical: Calls critical code.
             ///     TreatAsSafe: Doesn't expose the critical resource.
             /// </SecurityNode>
-            [SecurityCritical, SecurityTreatAsSafe]
             public void Dispose()
             {
                 if (_hPowerNotify != IntPtr.Zero)
@@ -2800,7 +2756,6 @@ namespace System.Windows.Interop
             ///     Critical: Calls critical code.
             ///     TreatAsSafe: Doesn't expose the critical resource.
             /// </SecurityNode>
-            [SecurityCritical, SecurityTreatAsSafe]
             public void AttachHwndTarget(HwndTarget hwndTarget)
             {
                 Debug.Assert(hwndTarget != null);
@@ -2822,7 +2777,6 @@ namespace System.Windows.Interop
             ///     Critical: Calls critical code.
             ///     TreatAsSafe: Doesn't expose the critical resource.
             /// </SecurityNode>
-            [SecurityCritical, SecurityTreatAsSafe]
             public bool DetachHwndTarget(HwndTarget hwndTarget)
             {
                 Debug.Assert(hwndTarget != null);
@@ -2838,7 +2792,6 @@ namespace System.Windows.Interop
             /// <SecurityNode>
             ///     Critical: Elevates permissions via unsafe native methods
             /// </SecurityNode>
-            [SecurityCritical]
             private IntPtr NotificationFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
                 IntPtr retInt = IntPtr.Zero;

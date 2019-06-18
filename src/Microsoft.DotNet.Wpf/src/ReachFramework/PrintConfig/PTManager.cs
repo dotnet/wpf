@@ -463,7 +463,6 @@ namespace System.Printing
         /// <SecurityNote>
         /// Critical    -   Releases handle to printer device
         /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -473,7 +472,6 @@ namespace System.Printing
         /// <SecurityNote>
         /// Critical    -   Calls critical PTProvider.Dispose
         /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -501,7 +499,6 @@ namespace System.Printing
         /// <SecurityNote>
         /// Critical    -   Calls critical PTProvider.Release
         /// </SecurityNote>
-        [SecurityCritical]
         public virtual void Release()
         {
             if (!this._disposed)

@@ -52,7 +52,6 @@ namespace System.Windows.Automation.Peers
         ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
         ///                   co-ordinates to screen space.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Rect GetBoundingRectangleCore()
         {
             TextElement textElement = (TextElement)Owner;
@@ -103,7 +102,6 @@ namespace System.Windows.Automation.Peers
         ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
         ///                   co-ordinates to screen space.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Point GetClickablePointCore()
         {
             Point pt = new Point();

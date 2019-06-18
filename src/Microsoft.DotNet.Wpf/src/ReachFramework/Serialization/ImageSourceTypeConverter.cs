@@ -162,7 +162,6 @@ namespace System.Windows.Xps.Serialization
         ///
         ///            3) Uses the information to detrmine Bitmap Source type so it can be serialzied into stream with the same type.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public
         override
         object
@@ -378,7 +377,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical - 1)  Asserts mediaAccessPermission for non site of origin data
         /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         void
@@ -452,7 +450,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical: This code calls an inernal PresentationCore function CriticalCopyPixels
         /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         UInt32
@@ -488,7 +485,6 @@ namespace System.Windows.Xps.Serialization
         ///            2)   Access unmanaged code, codecs
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         string

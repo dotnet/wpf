@@ -45,13 +45,11 @@ namespace MS.Internal.WindowsRuntime
             /// <summary>
             /// Activation factory to instantiate InputPane RCWs
             /// </summary>
-            [SecurityCritical]
             private static IActivationFactory _winRtActivationFactory;
 
             /// <summary>
             /// The appropriate RCW for calling TryShow/Hide
             /// </summary>
-            [SecurityCritical]
             private InputPaneRcw.IInputPane2 _inputPane;
 
             #endregion
@@ -66,7 +64,6 @@ namespace MS.Internal.WindowsRuntime
             /// Safe: Doesn't expose or accept any critical data.
             /// </SecurityNote>
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-            [SecuritySafeCritical]
             static InputPane()
             {
                 // We don't want to throw here - so wrap in try..catch
@@ -96,7 +93,6 @@ namespace MS.Internal.WindowsRuntime
             ///         Accesses COM RCWs IActivationFactory, IInputPaneInterop, IInputPane2.
             ///         Calls GetWinRtActivationFactory and IInputPaneInterop.GetForWindow.
             /// </SecurityNote>
-            [SecurityCritical]
             private InputPane(IntPtr? hwnd)
             {
                 if (s_WinRTType == null)
@@ -159,7 +155,6 @@ namespace MS.Internal.WindowsRuntime
             ///         Calls InputPane constructor
             ///         Accesses CriticalHandle from HwndSource
             /// </SecurityNote>
-            [SecurityCritical]
             internal static InputPane GetForWindow(HwndSource source)
             {
                 return new InputPane(source?.CriticalHandle ?? null);
@@ -173,7 +168,6 @@ namespace MS.Internal.WindowsRuntime
             ///     Critical
             ///         Accesses COM RCW function IInputPane2.TryShow
             /// </SecurityNote>
-            [SecurityCritical]
             internal bool TryShow()
             {
                 bool result = false;
@@ -200,7 +194,6 @@ namespace MS.Internal.WindowsRuntime
             ///     Critical
             ///         Accesses COM RCW function IInputPane2.TryHide
             /// </SecurityNote>
-            [SecurityCritical]
             internal bool TryHide()
             {
                 bool result = false;
@@ -229,7 +222,6 @@ namespace MS.Internal.WindowsRuntime
             ///     Critical
             ///         Accesses COM RCW IActivationFactory and function WindowsRuntimeMarshal.GetActivationFactory
             /// </SecurityNote>
-            [SecurityCritical]
             private static IActivationFactory GetWinRtActivationFactory(bool forceInitialization = false)
             {
                 if (forceInitialization || _winRtActivationFactory == null)
@@ -282,7 +274,6 @@ namespace MS.Internal.WindowsRuntime
             ///     SafeCritical
             ///         Does not expose critical COM RCWs to callers
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private void Dispose(bool disposing)
             {
                 if (!_disposed)

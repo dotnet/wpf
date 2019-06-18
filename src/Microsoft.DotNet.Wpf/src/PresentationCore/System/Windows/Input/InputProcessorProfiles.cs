@@ -45,7 +45,6 @@ namespace System.Windows.Input
         /// </summary>
         /// Critical - as this sets the value for _ipp.
         /// Safe - as this just initializes it to null.
-        [SecurityCritical, SecurityTreatAsSafe]
         internal InputProcessorProfiles()
         {
             // _ipp is a ValueType, hence no need for new.
@@ -68,7 +67,6 @@ namespace System.Windows.Input
         /// Critical - calls critical method (inputprocessorprofilesload)
         ///            calls Critical setter on _ipp.Value
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool Initialize(object o)
         {
             Debug.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "Initialize called on MTA thread!");
@@ -95,7 +93,6 @@ namespace System.Windows.Input
         /// Safe - as the worst that would happen is NullReference exception when _ipp is accessed.
         ///        Setting _ipp.Value to null is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Uninitialize()
         {
             Debug.Assert(_ipp.Value != null, "Uninitialize called without initializing");
@@ -123,7 +120,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal short CurrentInputLanguage
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 if (_ipp.Value != null)
@@ -168,7 +164,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal ArrayList InputLanguageList
         {
-            [SecurityCritical, SecurityTreatAsSafe]
              get
              {
                  int nCount;
@@ -210,7 +205,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: This calls into ITfSource which is an interop COM call
         /// </SecurityNote>
-        [SecurityCritical]
         private void AdviseNotifySink(object o)
         {
             Debug.Assert(_cookie == UnsafeNativeMethods.TF_INVALID_COOKIE, "Cookie is already set.");
@@ -231,7 +225,6 @@ namespace System.Windows.Input
         /// Safe - as the worst that'll happen is that we'll lose some text framework notifications.
         ///        Note that _ipp is marked SecurityCritical for set.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UnadviseNotifySink()
         {
             Debug.Assert(_cookie != UnsafeNativeMethods.TF_INVALID_COOKIE, "Cookie is not set.");
@@ -253,7 +246,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         /// Critical - Field for Critical Type.
         /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataForSet<UnsafeNativeMethods.ITfInputProcessorProfiles> _ipp;
 
         // The cookie for the advised sink.

@@ -29,7 +29,6 @@ namespace System.Windows.Interop
         ///     SecurityCritical: Accesses HwndSource.
         ///     TreatAsSafe: Information is not given out.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public HwndPanningFeedback(HwndSource hwndSource)
         {
             if (hwndSource == null)
@@ -57,7 +56,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         private HandleRef Handle
         {
-            [SecurityCritical]
             get
             {
                 if (_hwndSource != null)
@@ -83,7 +81,6 @@ namespace System.Windows.Interop
         ///     SecurityCritical: Changes the on-screen position of a window.
         ///     SecurityCritical: Accesses Handle.
         /// </SecurityNote>
-        [SecurityCritical]
         public void UpdatePanningFeedback(Vector totalOverpanOffset, bool inInertia)
         {
             if ((_hwndSource != null) && IsSupported)
@@ -114,7 +111,6 @@ namespace System.Windows.Interop
         ///     SecurityCritical: Changes the on-screen position of a window.
         ///     SecurityCritical: Accesses Handle.
         /// </SecurityNote>
-        [SecurityCritical]
         private object OnUpdatePanningFeedback(object args)
         {
             HwndPanningFeedback panningFeedback = (HwndPanningFeedback)args;
@@ -138,7 +134,6 @@ namespace System.Windows.Interop
         ///     SecurityCritical: Accesses _handle.
         ///     TreatAsSafe: Returns the window to its original position, which is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void EndPanningFeedback(bool animateBack)
         {
             if (_hwndSource != null && _isProvidingPanningFeedback)
@@ -164,7 +159,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     SecurityCritical: Access to the window.
         /// </SecurityNote>
-        [SecurityCritical]
         private HwndSource _hwndSource;
     }
 }

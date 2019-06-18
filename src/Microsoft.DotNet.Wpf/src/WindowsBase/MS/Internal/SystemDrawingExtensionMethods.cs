@@ -28,7 +28,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract IntPtr GetHandleFromMetafile(Object data);
 
         // Get the metafile from the handle of the enhanced metafile.
@@ -42,21 +41,18 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract IntPtr GetHBitmap(object data, out int width, out int height);
 
         // Get a bitmap handle from a Bitmap
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract IntPtr GetHBitmapFromBitmap(object data);
 
         // Convert a metafile to HBitmap
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract IntPtr ConvertMetafileToHBitmap(IntPtr handle);
 
         // return a stream for the ExifUserComment in the given Gif
@@ -77,7 +73,6 @@ namespace MS.Internal
         ///    Critical: This calls into copy pixels which is link demand protected. It initially had a demand and this
         ///              code did not work in PT
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract object GetBitmapFromBitmapSource(object source);
     }
 }

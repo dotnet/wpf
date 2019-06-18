@@ -37,8 +37,6 @@ namespace MS.Win32 {
     // The attributes are commented out here because this is a partial class and the attributes are already
     // applied in SafeNativeMethodsCLR.cs
     //</SecurityNote> 
-    //[SecurityCritical, SecurityTreatAsSafe]
-    //[SuppressUnmanagedCodeSecurity]
     [FriendAccessAllowed]
     internal partial class SafeNativeMethods
     {        
@@ -66,7 +64,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static  bool InSendMessage()
         {
              return SafeNativeMethodsPrivate.InSendMessage();
@@ -78,7 +75,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static int GetQueueStatus(uint flags)
         {
              return SafeNativeMethodsPrivate.GetQueueStatus(flags);
@@ -88,7 +84,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static  int GetInputState()
         {
              return SafeNativeMethodsPrivate.GetInputState();
@@ -99,7 +94,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static bool IsUxThemeActive() { return SafeNativeMethodsPrivate.IsThemeActive() != 0; }
 
 
@@ -107,7 +101,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static  bool SetCaretPos(int x, int y)
         {
             // To be consistent with our other PInvoke wrappers
@@ -123,7 +116,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static  bool DestroyCaret()
         {
             // To be consistent with our other PInvoke wrappers
@@ -139,7 +131,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static int GetCaretBlinkTime()
         {
             // To be consistent with our other PInvoke wrappers
@@ -173,7 +164,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
             UInt16[] charTypes)
         {
@@ -192,7 +182,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
             public static int GetSysColor(int nIndex)
         {
                 return SafeNativeMethodsPrivate.GetSysColor(nIndex);
@@ -202,7 +191,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: Exposes no critical data and doesn't affect clipboard state
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static bool IsClipboardFormatAvailable(int format)
         {
             return SafeNativeMethodsPrivate.IsClipboardFormatAvailable(format);
@@ -229,7 +217,6 @@ namespace MS.Win32 {
        ///     Critical: This code elevates to unmanaged code permission
        ///     TreatAsSafe: This function is safe to call
        /// </SecurityNote>
-       [SecurityCritical,SecurityTreatAsSafe]
         public static bool  IsDebuggerPresent() { return SafeNativeMethodsPrivate.IsDebuggerPresent(); }
 #endif
 #if BASE_NATIVEMETHODS
@@ -241,7 +228,6 @@ namespace MS.Win32 {
         /// Critical: This code elevates to unmanaged code permission
         /// TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static void QueryPerformanceCounter(out long lpPerformanceCount)
         {
             if (!SafeNativeMethodsPrivate.QueryPerformanceCounter(out lpPerformanceCount))
@@ -254,7 +240,6 @@ namespace MS.Win32 {
         /// Critical: This code elevates to unmanaged code permission
         /// TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static void QueryPerformanceFrequency(out long lpFrequency)
         { 
             if (!SafeNativeMethodsPrivate.QueryPerformanceFrequency(out lpFrequency))
@@ -267,7 +252,6 @@ namespace MS.Win32 {
         ///     Critical: This code elevates to unmanaged code permission
         ///     TreatAsSafe: This function is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static  int GetMessageTime()
         {
             return SafeNativeMethodsPrivate.GetMessageTime();
@@ -279,13 +263,11 @@ namespace MS.Win32 {
         ///  This method accesses an UnsafeNativeMethod under an elevation.  This is
         ///  still safe because it just returns the style or ex style which we consider safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Int32 GetWindowStyle(HandleRef hWnd, bool exStyle)
         {
             int nIndex = exStyle ? NativeMethods.GWL_EXSTYLE : NativeMethods.GWL_STYLE;
             return UnsafeNativeMethods.GetWindowLong(hWnd, nIndex);
         }
-        [SuppressUnmanagedCodeSecurity]
         private static partial class SafeNativeMethodsPrivate
         {
             [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]

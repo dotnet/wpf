@@ -46,7 +46,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override bool IsActiveForInput
         {
-            [SecuritySafeCritical]
             get
             {
                 return _penContexts != null;
@@ -61,7 +60,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override object SyncRoot
         {
-            [SecuritySafeCritical]
             get
             {
                 return _penContexts != null ? _penContexts.SyncRoot : null;
@@ -73,7 +71,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal PenContexts PenContexts
         {
-            [SecurityCritical]
             get
             {
                 return _penContexts;
@@ -91,7 +88,6 @@ namespace System.Windows.Input.StylusWisp
         /// TreatAsSafe: 
         ///          - no data handed out or accepted
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void UpdateState(UIElement element)
         {
             bool unhookPenContexts = true;
@@ -151,7 +147,6 @@ namespace System.Windows.Input.StylusWisp
         /// TreatAsSafe: 
         ///          - no data handed out or accepted
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
@@ -181,7 +176,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         private PenContexts _penContexts;
 
         #endregion

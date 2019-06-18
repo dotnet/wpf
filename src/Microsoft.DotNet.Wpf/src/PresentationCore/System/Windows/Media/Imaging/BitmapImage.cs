@@ -305,7 +305,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - eventually accesss critical resources
         /// TreatAsSafe - All inputs verified
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();

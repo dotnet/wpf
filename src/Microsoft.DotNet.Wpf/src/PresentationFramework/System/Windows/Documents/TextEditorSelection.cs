@@ -49,7 +49,6 @@ namespace System.Windows.Documents
         ///     TreatAsSafe - command bindings have link demands to prevent "hijacking" of built-in avalon commands.
         ///                           however registering our own internal commands is safe.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void _RegisterClassHandlers(Type controlType, bool registerEventListeners)
         {
             // Shared handlers used multiple times below.

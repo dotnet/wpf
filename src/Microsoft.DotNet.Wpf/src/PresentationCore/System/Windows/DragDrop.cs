@@ -382,7 +382,6 @@ namespace System.Windows
         ///            intranet and internet zone.
         /// PublicOK - It's disabled in partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public static DragDropEffects DoDragDrop(DependencyObject dragSource, object data, DragDropEffects allowedEffects)
         {
             DataObject dataObject;
@@ -477,7 +476,6 @@ namespace System.Windows
         ///               Demmand the unmanaged code permission to block the register drop target
         ///               both intranet and internet zone.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RegisterDropTarget(IntPtr windowHandle)
         {
             if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
@@ -505,7 +503,6 @@ namespace System.Windows
         ///               Demmand the unmanaged code permission to block the revoke drop target
         ///               both intranet and internet zone.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RevokeDropTarget(IntPtr windowHandle)
         {
             if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
@@ -599,7 +596,6 @@ namespace System.Windows
         /// <param name="allowedEffects">
         /// The allowed effects that is one of the DragDropEffects values.
         /// </param>
-        [SecurityCritical]
         private static DragDropEffects OleDoDragDrop(DependencyObject dragSource, DataObject dataObject, DragDropEffects allowedEffects)
         {
             int[] dwEffect;

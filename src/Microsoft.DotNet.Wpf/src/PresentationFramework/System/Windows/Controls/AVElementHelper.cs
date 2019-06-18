@@ -718,7 +718,6 @@ namespace System.Windows.Controls
         ///     TreatAsSafe: The value is not exposed and the call simply checks to see
         ///     if the value is null
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.IsASubPropertyChange)

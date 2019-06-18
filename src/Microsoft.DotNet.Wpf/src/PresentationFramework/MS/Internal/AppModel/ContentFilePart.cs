@@ -39,7 +39,6 @@ namespace MS.Internal.AppModel
         /// Critical    -   Accesses member _fullPath.
         /// TreatAsSafe -   Initializing _fullPath to null is safe
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ContentFilePart(Package container, Uri uri) :
                 base(container, uri)
         {
@@ -65,7 +64,6 @@ namespace MS.Internal.AppModel
         ///                 to return the stream because we know that the stream will be read only
         ///                 and cannot be used to get the application into an invalid state.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Stream GetStreamCore(FileMode mode, FileAccess access)
         {
             Stream stream = null;
@@ -121,7 +119,6 @@ namespace MS.Internal.AppModel
         /// <securitynote>
         /// Asserts for to get the location of the entry assembly
         /// </securitynote>
-        [SecurityCritical]
         private Uri GetEntryAssemblyLocation()
         {
             Uri entryLocation = null;
@@ -154,7 +151,6 @@ namespace MS.Internal.AppModel
         /// <securitynote>
         /// Asserts to open the file
         /// </securitynote>
-        [SecurityCritical]
         private Stream CriticalOpenFile(string filename)
         {
             Stream s = null;
@@ -184,7 +180,6 @@ namespace MS.Internal.AppModel
         /// <securitynote>
         /// Contains critical path information that shouldn't be disclosed.
         /// </securitynote>
-        [SecurityCritical]
         private string _fullPath;
 
         #endregion Private Members

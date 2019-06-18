@@ -108,7 +108,6 @@ namespace MS.Internal
             ///     Critical: Calls native methods
             ///     Safe: Returns only non-critical information to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static DpiScale2 GetSystemDpiFromDeviceCaps()
             {
                 HandleRef hWndDesktop = new HandleRef(IntPtr.Zero, IntPtr.Zero);

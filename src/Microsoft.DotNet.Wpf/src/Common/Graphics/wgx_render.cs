@@ -787,7 +787,6 @@ namespace MS.Internal
         ///         We ensure the call to GetExceptionForHR is safe since we pass an IntPtr that has a value of -1 so that 
         ///         GetExceptionForHR ignores IErrorInfo of the current thread, which could reveal critical information otherwise.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static Exception ConvertHRToException(int hr)
         {
             Exception exceptionForHR = Marshal.GetExceptionForHR(hr, (IntPtr)(-1));

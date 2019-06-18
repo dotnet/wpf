@@ -24,8 +24,6 @@ namespace System.Windows
     /// This class has been reviewed under the assumption that it is not used in partial trust.
     /// If this changes all methods will need to be re-reviewed.
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
-    [UIPermission(SecurityAction.LinkDemand, Window=UIPermissionWindow.AllWindows)]
     public class SplashScreen
     {
         private IntPtr _hwnd = IntPtr.Zero;
@@ -47,7 +45,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical - Calls critical ctor overload.
         /// </SecurityNote>
-        [SecurityCritical]
         public SplashScreen(string resourceName) : this(Assembly.GetEntryAssembly(), resourceName)
         {
         }
@@ -57,7 +54,6 @@ namespace System.Windows
         ///         PublicOK: Does not expose HINSTANCE.
         ///                   Not available in partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public SplashScreen(Assembly resourceAssembly, string resourceName)
         {
             if (resourceAssembly == null)
@@ -77,7 +73,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical - Calls critical Show overload.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Show(bool autoClose)
         {
             Show(autoClose, false);
@@ -89,7 +84,6 @@ namespace System.Windows
         ///                   The created window handle is not exposed.
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         public void Show(bool autoClose, bool topMost)
         {
             // If we've already been shown it isn't an error to call show
@@ -131,7 +125,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical - Calls critical SplashScreen.Close.
         /// </SecurityNote>
-        [SecurityCritical]
         private static object ShowCallback(object arg)
         {
             SplashScreen splashScreen = (SplashScreen)arg;
@@ -162,7 +155,6 @@ namespace System.Windows
         ///         Critical:   Calls UnsafeNativeMethods to create and update a layered window.
         ///                     Manipulates native objects passed in.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr CreateWindow(NativeMethods.BitmapHandle hBitmap, int width, int height, bool topMost)
         {
             if (_defWndProc == null)
@@ -243,7 +235,6 @@ namespace System.Windows
         ///     PublicOK: Only the splash screen window can be activated.
         ///               This class is not available in partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Close(TimeSpan fadeoutDuration)
         {
             object result = null;
@@ -272,7 +263,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///     Critical: P-Invokes SetActiveWindow to make sure the fade out animation is visible (if a fade out is specified)
         /// </SecurityNote>
-        [SecurityCritical]
         private object CloseInternal(Object fadeOutArg)
         {
             TimeSpan fadeoutDuration = (TimeSpan) fadeOutArg;
@@ -318,7 +308,6 @@ namespace System.Windows
         ///              the splash screen is not dangerous.
         ///              This class is not available in partial trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Fadeout_Tick(object unused, EventArgs args)
         {
             DateTime dtNow = DateTime.UtcNow;
@@ -339,7 +328,6 @@ namespace System.Windows
         ///     TreatAsSafe: Only frees resources allocated by this class and stored privately.
         ///                  Checks that resource pointers are valid before attempting to free them.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DestroyResources()
         {
             if (_dt != null)
@@ -382,7 +370,6 @@ namespace System.Windows
         ///     Critical:   Calls out to WIC to decode the image buffer.
         ///                 Calls out to several other UnsafeNativeMethods to get DC and create a DDB.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool CreateLayeredWindowFromImgBuffer(IntPtr pImgBuffer, long cImgBufferLen, bool topMost)
         {
             bool bSuccess = false;

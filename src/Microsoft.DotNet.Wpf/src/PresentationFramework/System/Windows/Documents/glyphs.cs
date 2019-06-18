@@ -316,7 +316,6 @@ namespace System.Windows.Documents
         /// Critical as it accesses the base Uri
         /// TreatAsSafe as it only uses this to load glyphtypefaces, and this information is not disclosed.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ParseGlyphRunProperties()
         {
             LayoutDependentGlyphRunProperties glyphRunProperties = null;

@@ -45,20 +45,17 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         ///    Critical: This is a pointer variable and hence not safe to expose.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe FamilyCollection.CachedFace *   _face;
 
         /// <SecurityNote>
         /// Critical: Determines value of CheckedPointer.Size, which is used for bounds checking.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe int _sizeInBytes;
 
         /// <SecurityNote>
         ///    Critical: This accesses a pointer and is unsafe; the sizeInBytes is critical because it
         ///              is used for bounds checking (via CheckedPointer)
         /// </SecurityNote>
-        [SecurityCritical]
         public unsafe CachedFontFace(FamilyCollection familyCollection, FamilyCollection.CachedFace* face, int sizeInBytes)
         {
             _familyCollection = familyCollection;
@@ -71,7 +68,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public bool IsNull
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -86,7 +82,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public static CachedFontFace Null
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -101,7 +96,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public unsafe FamilyCollection.CachedPhysicalFace* CachedPhysicalFace
         {
-            [SecurityCritical]    
             get
             {
                 return (FamilyCollection.CachedPhysicalFace *)_face;
@@ -113,7 +107,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public unsafe FamilyCollection.CachedCompositeFace* CompositeFace
         {
-            [SecurityCritical]
             get
             {
                 return (FamilyCollection.CachedCompositeFace *)_face;
@@ -127,7 +120,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public CheckedPointer CheckedPointer
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -143,7 +135,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public FontStyle Style
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -159,7 +150,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public FontWeight Weight
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -175,7 +165,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public FontStretch Stretch
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -204,7 +193,6 @@ namespace MS.Internal.FontCache
         ///        font and thus won't allow you to figure what fonts might be installed on
         ///        the machine.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public GlyphTypeface CreateGlyphTypeface()
         {
             unsafe

@@ -31,7 +31,6 @@ namespace MS.Internal.Security.RightsManagement
     ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
     ///     UnsafeNativeMethods
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     [StructLayout(LayoutKind.Sequential)]
     internal class ActivationServerInfo
     {
@@ -48,7 +47,6 @@ namespace MS.Internal.Security.RightsManagement
     ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
     ///     UnsafeNativeMethods
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     // Declare a class to represent unmanaged SYSTEMTIME structure expected by DRM SDK 
     [ StructLayout( LayoutKind.Sequential )]
     internal class SystemTime 
@@ -125,7 +123,6 @@ namespace MS.Internal.Security.RightsManagement
     ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
     ///     UnsafeNativeMethods
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     [StructLayout(LayoutKind.Sequential)]
     internal class BoundLicenseParams
     {

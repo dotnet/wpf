@@ -165,7 +165,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - it does an elevation in calling MilUtility_PolygonBounds and is unsafe
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe static Rect GetBoundsHelper(
             Pen pen, 
             Matrix *pWorldMatrix, 
@@ -282,7 +281,6 @@ namespace System.Windows.Media
         /// Critical as this calls a method that elevates (MilUtility_GeometryGetArea)
         /// TreatAsSafe - net effect of this is to calculate the area of a geometry, so it's considered safe.
         ///</SecurityNote>
-        [SecurityCritical]
         public virtual double GetArea(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -402,7 +400,6 @@ namespace System.Windows.Media
         /// Critical - as this does an elevation in calling MilUtility_PathGeometryHitTest.
         /// TreatAsSafe - as this doesn't expose anything sensitive.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal virtual bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             if (IsObviouslyEmpty())
@@ -471,7 +468,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Accepts pointers, does an elevation in calling MilUtility_PolygonHitTest.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type, 
                                                 Point *pPoints, uint pointCount, byte *pTypes, uint typeCount)
         {
@@ -623,7 +619,6 @@ namespace System.Windows.Media
         ///                             ( in effect creating a different flavor of this shape from this one).
         ///                          Considered safe.
         ///</SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetFlattenedPathGeometry(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -710,7 +705,6 @@ namespace System.Windows.Media
         ///
         ///                      Considered safe.
         ///</SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetWidenedPathGeometry(Pen pen, double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -870,7 +864,6 @@ namespace System.Windows.Media
         /// Critical - as this calls GetGlyphs() which is critical.
         /// Safe - as this doesn't expose font information but just gives out a Geometry.
         /// </SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetOutlinedPathGeometry(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -997,7 +990,6 @@ namespace System.Windows.Media
             /// Critical as this has an unsafe block.
             /// TreatAsSafe - net effect is simply to read data.
             ///</SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal bool IsEmpty()
             {
                 if ((SerializedData == null) || (SerializedData.Length <= 0))
@@ -1026,7 +1018,6 @@ namespace System.Windows.Media
             /// </SecurityNote>
             internal uint Size
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if ((SerializedData == null) || (SerializedData.Length <= 0))
@@ -1063,7 +1054,6 @@ namespace System.Windows.Media
         /// Critical as this has an unsafe block.
         /// TreatAsSafe - This allocates a buffer locally and writes to it.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static PathGeometryData MakeEmptyPathGeometryData()
         {
             PathGeometryData data = new PathGeometryData();

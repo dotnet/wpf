@@ -38,7 +38,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     //     SecurityTreatAsSafe:  Demands CompoundFileIOPermission before it makes any calls to
     //      unmanaged APIs
     // </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SecurityTreatAsSafe]
     internal static class SafeNativeCompoundFileMethods
     {
         /// <summary>

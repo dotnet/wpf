@@ -58,7 +58,6 @@ namespace MS.Internal.AppModel
         /// The native code passes queries here only for the recognized command groups:
         /// standard (NULL), ApplicaitonCommands, EditingCommands.
         /// </remarks>
-        [SecurityCritical]
         internal void QueryStatus(Guid guidCmdGroup, uint cmdId, ref uint flags)
         {
             /***IMPORTANT:
@@ -103,7 +102,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: Calls the critical CommandWithArgument.QueryEnabled().
         /// </SecurityNote>
-        [SecurityCritical]
         private object QueryEnabled(object command)
         {
             if (Application.Current.MainWindow == null)
@@ -124,7 +122,6 @@ namespace MS.Internal.AppModel
         /// The native code passes here only commands of the recognized command groups:
         /// standard (NULL), ApplicaitonCommands, EditingCommands.
         /// </remarks>
-        [SecurityCritical]
         internal void ExecCommand(Guid guidCmdGroup, uint commandId, object arg)
         {
             if (Application.Current == null || Application.IsShuttingDown == true)
@@ -147,7 +144,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///    Critical:This API calls into Execute
         /// </SecurityNote>
-        [SecurityCritical]
         private object ExecCommandCallback(object arguments)
         {
             object[] args = (object[])arguments;
@@ -178,7 +174,6 @@ namespace MS.Internal.AppModel
         ///    Critical:This API accesses the commandmapping table and returns it
         ///    TreatAsSafe: It returns a copy which is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IDictionary GetOleCmdMappingTable(Guid guidCmdGroup)
         {
             IDictionary mappingTable = null;
@@ -207,7 +202,6 @@ namespace MS.Internal.AppModel
         ///     TreatAsSafe: All the values that it adds are predefined handlers in this class
         ///     no external values
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureOleCmdMappingTable()
         {
             if (_oleCmdMappingTable.Value == null)
@@ -235,7 +229,6 @@ namespace MS.Internal.AppModel
         ///     TreatAsSafe: All the values that it adds are predefined handlers in this class
         ///     no external values
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureApplicationCommandsTable()
         {
             if (_applicationCommandsMappingTable.Value == null)
@@ -284,7 +277,6 @@ namespace MS.Internal.AppModel
         /// Critical: Initializes _editingCommandsMappingTable, which is a critical for set.
         /// TreatAsSafe: Only predefined commands are used. EditingCommands are enabled in partial trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureEditingCommandsTable()
         {
             if (_editingCommandsMappingTable.Value == null)
@@ -319,14 +311,12 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: This can be used to spoof paste command
         /// </SecurityNote>
-        [SecurityCritical]
         public CommandWithArgument(RoutedCommand command) : this(command, null)
         { }
 
         /// <SecurityNote>
         ///     Critical: This can be used to spoof paste command
         /// </SecurityNote>
-        [SecurityCritical]
         public CommandWithArgument(RoutedCommand command, object argument)
         {
             _command = new SecurityCriticalDataForSet<RoutedCommand>(command);
@@ -336,7 +326,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///    Critical:This API calls into ExecuteCore and CriticalCanExecute
         /// </SecurityNote>
-        [SecurityCritical]
         public bool Execute(IInputElement target, object argument)
         {
             if (argument == null)
@@ -369,7 +358,6 @@ namespace MS.Internal.AppModel
         ///     Critical: This code calls into Routedcommand.QueryStatus
         ///     with a trusted bit, that can be used to cause an elevation.
         /// </SecurityNote>
-        [SecurityCritical]
         public bool QueryEnabled(IInputElement target, object argument)
         {
             if (argument == null)

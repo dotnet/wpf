@@ -56,7 +56,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal int DoubleTapDelta
         {
-            [SecuritySafeCritical]
             get
             {
                 return _tabletInfo.DeviceType == TabletDeviceType.Touch ?
@@ -73,7 +72,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal int DoubleTapDeltaTime
         {
-            [SecuritySafeCritical]
             get
             {
                 return _tabletInfo.DeviceType == TabletDeviceType.Touch ? 
@@ -92,7 +90,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         ///     Critical:   Calls StylusLogic.CurrentStylusLogic
         /// </SecurityNote>
-        [SecurityCritical]
         internal PointerTabletDevice(PointerTabletDeviceInfo deviceInfo)
             : base(deviceInfo)
         {
@@ -111,7 +108,6 @@ namespace System.Windows.Input.StylusPointer
         ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceCursors
         ///                     Does not accept/expose any information 
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void BuildStylusDevices()
         {
             UInt32 cursorCount = 0;
@@ -146,7 +142,6 @@ namespace System.Windows.Input.StylusPointer
         ///      Critical:  Uses DoubleTapDelta
         ///      Safe:      Does not expose critical data
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void UpdateSizeDeltas()
         {
             // Query default settings for mouse drag and double tap (with minimum of 1x1 size).
@@ -225,7 +220,6 @@ namespace System.Windows.Input.StylusPointer
         /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 return Stylus.CurrentStylusDevice?.ActiveSource;

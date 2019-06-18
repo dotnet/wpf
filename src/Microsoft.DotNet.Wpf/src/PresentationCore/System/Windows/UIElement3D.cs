@@ -45,7 +45,6 @@ namespace System.Windows
         ///  Critical: This code is used to register various thunks that are used to send input to the tree
         ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static UIElement3D()
         {
             UIElement.RegisterEvents(typeof(UIElement3D));
@@ -1069,7 +1068,6 @@ namespace System.Windows
         /// Critical - Calls a critical method (PresentationSource.CriticalFromVisual)
         /// TreatAsSafe - No exposure
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void UpdateIsVisibleCache() // Called from PresentationSource
         {
             // IsVisible is a read-only property.  It derives its "base" value

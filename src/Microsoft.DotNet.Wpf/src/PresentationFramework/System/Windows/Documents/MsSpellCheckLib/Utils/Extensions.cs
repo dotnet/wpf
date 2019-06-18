@@ -33,7 +33,6 @@ namespace System.Windows.Documents.MsSpellCheckLib
         ///     Critical - calls into COM
         ///     Safe - Does not expose any unmanaged resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static List<string> ToList(
             this IEnumString enumString, 
             bool shouldSuppressCOMExceptions = true, 
@@ -85,7 +84,6 @@ namespace System.Windows.Documents.MsSpellCheckLib
         ///     Critical - Calls into COM 
         ///     Safe - Does not expose any unmanaged resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static List<SpellingError> ToList(
             this IEnumSpellingError spellingErrors, 
             SpellChecker spellChecker, 

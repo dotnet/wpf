@@ -31,7 +31,6 @@ namespace MS.Internal.Interop
     /// This class is not safe to use in partial trust.
     /// Critical: This class is a wrapper for a native structure that manages its own resources.
     /// </SecurityNote>
-    [SecurityCritical]
     [StructLayout(LayoutKind.Explicit)]
     internal class PROPVARIANT : IDisposable
     {
@@ -40,7 +39,6 @@ namespace MS.Internal.Interop
             /// <SecurityNote>
             /// Critical: Suppresses unmanaged code security.
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport(MS.Win32.ExternDll.Ole32)]
             internal static extern int PropVariantClear(PROPVARIANT pvar);
         }
@@ -63,7 +61,6 @@ namespace MS.Internal.Interop
         /// </SecurityNote>
         public VarEnum VarType
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get { return (VarEnum)vt; }
         }
 
@@ -72,7 +69,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public string GetValue()
         {
             if (vt == (ushort)VarEnum.VT_LPWSTR)
@@ -87,7 +83,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetValue(bool f)
         {
             Clear();
@@ -99,7 +94,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetValue(string val)
         {
             Clear();
@@ -111,7 +105,6 @@ namespace MS.Internal.Interop
         /// Critical - Calls critical PropVariantClear
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Clear()
         {
             NativeMethods.PropVariantClear(this);
@@ -123,7 +116,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             Dispose(true);
@@ -134,7 +126,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~PROPVARIANT()
         {
             Dispose(false);
@@ -144,7 +135,6 @@ namespace MS.Internal.Interop
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             Clear();

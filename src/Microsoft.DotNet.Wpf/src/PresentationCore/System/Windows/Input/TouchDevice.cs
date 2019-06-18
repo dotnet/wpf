@@ -34,7 +34,6 @@ namespace System.Windows.Input
     ///     This is for defense in depth since there is no scenario where partial trust code
     ///     needs to inherit from this class.
     /// </SecurityNote>
-    [UIPermission(SecurityAction.InheritanceDemand, Unrestricted = true)]
     public abstract class TouchDevice : InputDevice, IManipulator
     {
         /// <summary>
@@ -49,7 +48,6 @@ namespace System.Windows.Input
         ///     Critical: Retrieves an InputManager instance.
         ///     PublicOK: Does not expose the InputManager.
         /// </SecurityNote>
-        [SecurityCritical]
         protected TouchDevice(int deviceId)
             : base()
         {
@@ -71,7 +69,6 @@ namespace System.Windows.Input
         ///     Critical: Attaches to InputManager event handlers.
         ///     TreatAsSafe: Does not expose the InputManager.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void AttachTouchDevice()
         {
             _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
@@ -82,7 +79,6 @@ namespace System.Windows.Input
         ///     Critical: Detaches from InputManager event handlers.
         ///     TreatAsSafe: Does not expose the InputManager.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DetachTouchDevice()
         {
             _inputManager.PostProcessInput -= new ProcessInputEventHandler(PostProcessInput);
@@ -147,7 +143,6 @@ namespace System.Windows.Input
         ///</SecurityNote>
         public sealed override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -159,8 +154,6 @@ namespace System.Windows.Input
         ///     Critical - PresentationSource is critical data.
         ///     PublicOK - This method has a link demand.
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         protected void SetActiveSource(PresentationSource activeSource)
         {
             _activeSource = activeSource;
@@ -196,7 +189,6 @@ namespace System.Windows.Input
         ///     Critical - Access _activeSource.
         ///     TreatAsSafe - Does not expose _activeSource.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IInputElement CriticalHitTest(Point point, bool isSynchronize)
         {
             IInputElement over = null;
@@ -616,7 +608,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses critical data (_activeSource)
         ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
             if (visual == null)
@@ -656,7 +647,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseLostCapture(IInputElement oldCapture)
         {
             Debug.Assert(oldCapture != null, "oldCapture should be non-null.");
@@ -670,7 +660,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseGotCapture(IInputElement captured)
         {
             Debug.Assert(captured != null, "captured should be non-null.");
@@ -806,7 +795,6 @@ namespace System.Windows.Input
         ///     Critical: Accesses _activeSource
         ///     PublicOK: Does not expose _activeSource.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Synchronize()
         {
             if (_activeSource != null &&
@@ -829,7 +817,6 @@ namespace System.Windows.Input
         ///               manipulation. But the decision is to limit the scope
         ///               of this raw method to full trust.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         protected virtual void OnManipulationEnded(bool cancel)
         {
             UIElement manipulatableElement = GetManipulatableElement();
@@ -1008,7 +995,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseTouchEnterOrLeave(DependencyObject element, bool isLeave)
         {
             Debug.Assert(element != null);
@@ -1029,7 +1015,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTouchDown()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchDownEvent);
@@ -1046,7 +1031,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTouchMove()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchMoveEvent);
@@ -1063,7 +1047,6 @@ namespace System.Windows.Input
         ///     Critical - Accesses _inputManager.
         ///     TreatAsSafe - Does not expose _inputManager and event raised is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTouchUp()
         {
             TouchEventArgs e = CreateEventArgs(Touch.PreviewTouchUpEvent);
@@ -1083,7 +1066,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical: This method can be used for input spoofing
         /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             InputEventArgs inputEventArgs = e.StagingItem.Input;
@@ -1388,7 +1370,6 @@ namespace System.Windows.Input
         ///               manipulation. But the decision is to limit the scope
         ///               of this raw method to full trust.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         void IManipulator.ManipulationEnded(bool cancel)
         {
             this.OnManipulationEnded(cancel);
@@ -1422,13 +1403,11 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical - PresentationSource must be protected.
         /// </SecurityNote>
-        [SecurityCritical]
         private PresentationSource _activeSource;
 
         /// <SecurityNote>
         ///     Critical - InputManager must be protected.
         /// </SecurityNote>
-        [SecurityCritical]
         private InputManager _inputManager;
 
         private WeakReference _manipulatingElement;

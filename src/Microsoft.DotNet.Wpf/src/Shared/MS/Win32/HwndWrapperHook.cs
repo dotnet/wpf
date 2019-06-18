@@ -24,7 +24,6 @@ namespace MS.Win32
     /// <SecurityNote>
     ///     Critical: This can be used to inject hooks into avalon
     /// </SecurityNote>
-    [SecurityCritical]
     [FriendAccessAllowed]
     internal delegate IntPtr HwndWrapperHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled);
 }

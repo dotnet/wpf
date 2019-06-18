@@ -36,7 +36,6 @@ namespace MS.Win32.PresentationCore
 {
     internal static partial class UnsafeNativeMethods
     {
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class MilCoreApi
         {
             ///<SecurityNote>
@@ -292,7 +291,6 @@ namespace MS.Win32.PresentationCore
                 out BitmapSourceSafeMILHandle /* CWICWrapperBitmap as IWICBitmapSource */ pCWICWrapperBitmap);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICComponentInfo
         {
             ///<SecurityNote>
@@ -344,7 +342,6 @@ namespace MS.Win32.PresentationCore
                 out UInt32 pcchActual);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapCodecInfo
         {
             ///<SecurityNote>
@@ -430,7 +427,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICMetadataQueryReader
         {
             ///<SecurityNote>
@@ -485,7 +481,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICMetadataQueryWriter
         {
             ///<SecurityNote>
@@ -511,7 +506,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICFastMetadataEncoder
         {
             ///<SecurityNote>
@@ -535,7 +529,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class EnumString
         {
             ///<SecurityNote>
@@ -561,7 +554,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class IPropertyBag2
         {
             ///<SecurityNote>
@@ -576,7 +568,6 @@ namespace MS.Win32.PresentationCore
                 );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapSource
         {
             ///<SecurityNote>
@@ -625,7 +616,6 @@ namespace MS.Win32.PresentationCore
                 IntPtr /* BYTE* */ pvPixels);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapDecoder
         {
             ///<SecurityNote>
@@ -702,7 +692,6 @@ namespace MS.Win32.PresentationCore
                 );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapFrameDecode
         {
             ///<SecurityNote>
@@ -735,7 +724,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class MILUnknown
         {
             [DllImport(DllImport.MilCore, EntryPoint = "MILAddRef")]
@@ -770,7 +758,6 @@ namespace MS.Win32.PresentationCore
                 out IntPtr ppvObject);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICStream
         {
             ///<SecurityNote>
@@ -791,7 +778,6 @@ namespace MS.Win32.PresentationCore
                 uint cbSize);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WindowsCodecApi
         {
             ///<SecurityNote>
@@ -813,8 +799,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_Initialize_Proxy")]
             internal static extern int /* HRESULT */ Initialize(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 SafeMILHandle /* IPropertyBag2* */ pIEncoderOptions);
@@ -822,16 +806,12 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_Commit_Proxy")]
             internal static extern int /* HRESULT */ Commit(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR);
 
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_SetSize_Proxy")]
             internal static extern int /* HRESULT */ SetSize(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 int width,
@@ -840,8 +820,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-           [SecurityCritical]
-           [SuppressUnmanagedCodeSecurity]
            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_SetResolution_Proxy")]
             internal static extern int /* HRESULT */ SetResolution(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 double dpiX,
@@ -850,8 +828,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_WriteSource_Proxy")]
             internal static extern int /* HRESULT */ WriteSource(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 SafeMILHandle /* IWICBitmapSource* */ pIBitmapSource,
@@ -860,8 +836,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_SetThumbnail_Proxy")]
             internal static extern int /* HRESULT */ SetThumbnail(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICBitmapSource* */ pIThumbnail);
@@ -869,8 +843,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_GetMetadataQueryWriter_Proxy")]
             internal static extern int /* HRESULT */ GetMetadataQueryWriter(
                 SafeMILHandle /* IWICBitmapFrameEncode */ THIS_PTR,
@@ -880,8 +852,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_SetColorContexts_Proxy")]
             internal static extern int /* HRESULT */ SetColorContexts(SafeMILHandle /* IWICBitmapEncoder*  */ THIS_PTR,
                     uint nIndex,
@@ -894,8 +864,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_Initialize_Proxy")]
             internal static extern int /* HRESULT */ Initialize(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR,
                 IntPtr /* IStream */ pStream,
@@ -909,8 +877,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_CreateNewFrame_Proxy")]
             internal static extern int /* HRESULT */ CreateNewFrame(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR,
                 out SafeMILHandle /* IWICBitmapFrameEncode ** */ ppIFramEncode,
@@ -920,8 +886,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_SetThumbnail_Proxy")]
             internal static extern int /* HRESULT */ SetThumbnail(SafeMILHandle /* IWICBitmapEncoder*  */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICBitmapSource* */ pIThumbnail);
@@ -929,8 +893,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_SetPalette_Proxy")]
             internal static extern int /* HRESULT */ SetPalette(SafeMILHandle /* IWICBitmapEncoder*  */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICPalette* */ pIPalette);
@@ -938,8 +900,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_GetMetadataQueryWriter_Proxy")]
             internal static extern int /* HRESULT */ GetMetadataQueryWriter(
                 SafeMILHandle /* IWICBitmapEncoder */ THIS_PTR,
@@ -949,8 +909,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_Commit_Proxy")]
             internal static extern int /* HRESULT */ Commit(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR);
         }
@@ -980,8 +938,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetType_Proxy")]
             internal static extern int /* HRESULT */ GetType(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 out WICPaletteType pePaletteType);
@@ -989,8 +945,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetColorCount_Proxy")]
             internal static extern int /* HRESULT */ GetColorCount(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 out int pColorCount);
@@ -998,8 +952,6 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetColors_Proxy")]
             internal static extern int /* HRESULT */ GetColors(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 int colorCount,
@@ -1009,14 +961,11 @@ namespace MS.Win32.PresentationCore
             ///<SecurityNote>
             /// Critical as this code performs an elevation.
             ///</SecurityNote>
-            [SecurityCritical]
-            [SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_HasAlpha_Proxy")]
             internal static extern int /* HRESULT */ HasAlpha(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                    out bool pfHasAlpha);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICImagingFactory
         {
             ///<SecurityNote>
@@ -1205,7 +1154,6 @@ namespace MS.Win32.PresentationCore
             );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICComponentFactory
         {
             ///<SecurityNote>
@@ -1230,7 +1178,6 @@ namespace MS.Win32.PresentationCore
             );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICMetadataBlockReader
         {
             ///<SecurityNote>
@@ -1253,7 +1200,6 @@ namespace MS.Win32.PresentationCore
             );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICPixelFormatInfo
         {
             ///<SecurityNote>
@@ -1287,7 +1233,6 @@ namespace MS.Win32.PresentationCore
             );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapClipper
         {
             ///<SecurityNote>
@@ -1300,7 +1245,6 @@ namespace MS.Win32.PresentationCore
                 ref Int32Rect prc);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapFlipRotator
         {
             ///<SecurityNote>
@@ -1313,7 +1257,6 @@ namespace MS.Win32.PresentationCore
                 WICBitmapTransformOptions options);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapScaler
         {
             ///<SecurityNote>
@@ -1328,7 +1271,6 @@ namespace MS.Win32.PresentationCore
                 WICInterpolationMode mode);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICFormatConverter
         {
             ///<SecurityNote>
@@ -1345,7 +1287,6 @@ namespace MS.Win32.PresentationCore
                 WICPaletteType paletteTranslate
                 );
         }
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class IWICColorContext
         {
             internal enum WICColorContextType : uint 
@@ -1385,7 +1326,6 @@ namespace MS.Win32.PresentationCore
                 );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICColorTransform
         {
             ///<SecurityNote>
@@ -1401,7 +1341,6 @@ namespace MS.Win32.PresentationCore
                 );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmap
         {
             ///<SecurityNote>
@@ -1432,7 +1371,6 @@ namespace MS.Win32.PresentationCore
                 System.Windows.Media.SafeMILHandle /* IMILPalette */ pIPalette);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICBitmapLock
         {
             ///<SecurityNote>
@@ -1455,7 +1393,6 @@ namespace MS.Win32.PresentationCore
                 );
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class WICCodec
         {
             // When updating this value be sure to update milrender.h's version
@@ -1525,7 +1462,6 @@ namespace MS.Win32.PresentationCore
             internal static extern void CoUninitialize();
 }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class Mscms
         {
             [DllImport(DllImport.Mscms, EntryPoint = "CreateMultiProfileTransform")]
@@ -1559,7 +1495,6 @@ namespace MS.Win32.PresentationCore
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class MILFactory2
         {
             [DllImport(DllImport.MilCore, EntryPoint = "MILCreateFactory")]
@@ -1596,7 +1531,6 @@ namespace MS.Win32.PresentationCore
                 out SafeMILHandle /* IMILRenderTargetBitmap */ ppIRenderTargetBitmap);
         }
 
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal static class InteropDeviceBitmap
         {
             internal delegate void FrontBufferAvailableCallback(bool lost, uint version);

@@ -55,7 +55,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr FetchRunRedefined(
         IntPtr                      pols,               
         int                         lscpFetch,
@@ -82,7 +81,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetRunCharWidths(
         IntPtr                      pols,
         Plsrun                      plsrun,
@@ -106,7 +104,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr DrawTextRun(
         IntPtr                      pols,
         Plsrun                      plsrun,
@@ -217,7 +214,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetGlyphsRedefined(
         IntPtr                      pols,                   
         IntPtr*                     plsplsruns,             
@@ -239,7 +235,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetGlyphPositions(
         IntPtr                      pols,               
         IntPtr                      *plsplsruns,
@@ -261,7 +256,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr DrawGlyphs(
         IntPtr                      pols,
         Plsrun                      plsrun,
@@ -287,7 +281,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr EnumText(
         IntPtr                      pols,
         Plsrun                      plsrun,
@@ -315,7 +308,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr EnumTab(
         IntPtr                      pols,
         Plsrun                      plsrun,
@@ -333,7 +325,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetCharCompressionInfoFullMixed(
         IntPtr                      pols,
         LsDevice                    device,
@@ -349,7 +340,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetCharExpansionInfoFullMixed(
         IntPtr                      pols,
         LsDevice                    device,
@@ -365,7 +355,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetGlyphCompressionInfoFullMixed(
         IntPtr                      pols,
         LsDevice                    device,
@@ -381,7 +370,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetGlyphExpansionInfoFullMixed(
         IntPtr                      pols,
         LsDevice                    device,
@@ -404,7 +392,6 @@ namespace MS.Internal.TextFormatting
     /// <SecurityNote>
     /// Critical    - Recieves native pointers as parameters.
     /// </SecurityNote>
-    [SecurityCritical]
     internal unsafe delegate LsErr GetObjectHandlerInfo(
         IntPtr                      pols,               // Line Layout context
         uint                        objectId,           // installed object id
@@ -814,89 +801,47 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsIMethods
     {
-        [SecurityCritical]
         public IntPtr pfnCreateILSObj;
-        [SecurityCritical]
         public IntPtr pfnDestroyILSObj;
-        [SecurityCritical]
         public IntPtr pfnSetDoc;
-        [SecurityCritical]
         public IntPtr pfnCreateLNObj;
-        [SecurityCritical]
         public IntPtr pfnDestroyLNObj;
-        [SecurityCritical]
         public IntPtr pfnFmt;
-        [SecurityCritical]
         public IntPtr pfnFmtResume;
-        [SecurityCritical]
         public IntPtr pfnGetModWidthPrecedingChar;
-        [SecurityCritical]
         public IntPtr pfnGetModWidthFollowingChar;
-        [SecurityCritical]
         public IntPtr pfnTruncate;
-        [SecurityCritical]
         public IntPtr pfnFindPrevBreakOppInside;
-        [SecurityCritical]
         public IntPtr pfnFindNextBreakOppInside;
-        [SecurityCritical]
         public IntPtr pfnFindBreakOppBeforeCpTruncate;
-        [SecurityCritical]
         public IntPtr pfnFindBreakOppAfterCpTruncate;
-        [SecurityCritical]
         public IntPtr pfnCreateStartOppInside;
-        [SecurityCritical]
         public IntPtr pfnProposeBreakAfter;
-        [SecurityCritical]
         public IntPtr pfnProposeBreakBefore;
-        [SecurityCritical]
         public IntPtr pfnCreateBreakOppAfter;
-        [SecurityCritical]
         public IntPtr pfnCreateStartOppBefore;
-        [SecurityCritical]
         public IntPtr pfnCreateDobjFragment;
-        [SecurityCritical]
         public IntPtr pfnForceBreak;
-        [SecurityCritical]
         public IntPtr pfnCreateBreakRecord;
-        [SecurityCritical]
         public IntPtr pfnSetBreak;
-        [SecurityCritical]
         public IntPtr pfnDestroyStartOpp;
-        [SecurityCritical]
         public IntPtr pfnDestroyBreakOpp;
-        [SecurityCritical]
         public IntPtr pfnDuplicateBreakRecord;
-        [SecurityCritical]
         public IntPtr pfnDestroyBreakRecord;
-        [SecurityCritical]
         public IntPtr pfnGetSpecialEffectsFromDobj;
-        [SecurityCritical]
         public IntPtr pfnGetSpecialEffectsFromDobjFragment;
-        [SecurityCritical]
         public IntPtr pfnGetSubmissionInfoFromDobj;
-        [SecurityCritical]
         public IntPtr pfnGetSublinesFromDobj;
-        [SecurityCritical]
         public IntPtr pfnGetSubmissionInfoFromDobjFragment;
-        [SecurityCritical]
         public IntPtr pfnGetSubsFromDobjFragment;
-        [SecurityCritical]
         public IntPtr pfnFExpandWithPrecedingChar;
-        [SecurityCritical]
         public IntPtr pfnFExpandWithFollowingChar;
-        [SecurityCritical]
         public IntPtr pfnCalcPresentation;
-        [SecurityCritical]
         public IntPtr pfnQueryPointPcp;
-        [SecurityCritical]
         public IntPtr pfnQueryCpPpoint;
-        [SecurityCritical]
         public IntPtr pfnEnum;
-        [SecurityCritical]
         public IntPtr pfnDisplay;
-        [SecurityCritical]
         public IntPtr pfnDestroyDobj;
-        [SecurityCritical]
         public IntPtr pfnDestroyDobjFragment;
     }
 
@@ -916,11 +861,8 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct LscbkRedefined
     {
-        [SecurityCritical]
         public FetchRunRedefined        pfnFetchRunRedefined;
-        [SecurityCritical]
         public GetGlyphsRedefined       pfnGetGlyphsRedefined;
-        [SecurityCritical]
         public FetchLineProps           pfnFetchLineProps;
     }
 
@@ -999,166 +941,88 @@ namespace MS.Internal.TextFormatting
         public IntPtr                           pols;  // Opaque client object
     
         // Memory management on unmanaged heap
-        [SecurityCritical]
         public IntPtr                           pfnNewPtr;
-        [SecurityCritical]
         public IntPtr                           pfnDisposePtr;
-        [SecurityCritical]
         public IntPtr                           pfnReallocPtr;
 
         // General application callbacks
-        [SecurityCritical]
         public IntPtr                           pfnFetchRun;
-        [SecurityCritical]
         public GetAutoNumberInfo                pfnGetAutoNumberInfo;
-        [SecurityCritical]
         public IntPtr                           pfnGetNumericSeparators;
-        [SecurityCritical]
         public IntPtr                           pfnCheckForDigit;
-        [SecurityCritical]
         public FetchPap                         pfnFetchPap;
-        [SecurityCritical]
         public FetchLineProps                   pfnFetchLineProps;
-        [SecurityCritical]
         public IntPtr                           pfnFetchTabs;
-        [SecurityCritical]
         public IntPtr                           pfnReleaseTabsBuffer;
-        [SecurityCritical]
         public IntPtr                           pfnGetBreakThroughTab;
-        [SecurityCritical]
         public IntPtr                           pfnGetPosTabProps;        
-        [SecurityCritical]
         public IntPtr                           pfnFGetLastLineJustification;
-        [SecurityCritical]
         public IntPtr                           pfnCheckParaBoundaries;
-        [SecurityCritical]
         public GetRunCharWidths                 pfnGetRunCharWidths;
-        [SecurityCritical]
         public IntPtr                           pfnCheckRunKernability;
-        [SecurityCritical]
         public IntPtr                           pfnGetRunCharKerning;
-        [SecurityCritical]
         public GetRunTextMetrics                pfnGetRunTextMetrics;
-        [SecurityCritical]
         public GetRunUnderlineInfo              pfnGetRunUnderlineInfo;
-        [SecurityCritical]
         public GetRunStrikethroughInfo          pfnGetRunStrikethroughInfo;
-        [SecurityCritical]
         public IntPtr                           pfnGetBorderInfo;
-        [SecurityCritical]
         public IntPtr                           pfnReleaseRun;
-        [SecurityCritical]
         public IntPtr                           pfnReleaseRunBuffer;
-        [SecurityCritical]
         public Hyphenate                        pfnHyphenate;
-        [SecurityCritical]
         public GetPrevHyphenOpp                 pfnGetPrevHyphenOpp;
-        [SecurityCritical]
         public GetNextHyphenOpp                 pfnGetNextHyphenOpp;
-        [SecurityCritical]
         public IntPtr                           pfnGetHyphenInfo;
-        [SecurityCritical]
         public DrawUnderline                    pfnDrawUnderline;
-        [SecurityCritical]
         public DrawStrikethrough                pfnDrawStrikethrough;
-        [SecurityCritical]
         public IntPtr                           pfnDrawBorder;
-        [SecurityCritical]
         public IntPtr                           pfnFInterruptUnderline;
-        [SecurityCritical]
         public IntPtr                           pfnFInterruptShade;
-        [SecurityCritical]
         public IntPtr                           pfnFInterruptBorder;
-        [SecurityCritical]
         public IntPtr                           pfnShadeRectangle;
-        [SecurityCritical]
         public DrawTextRun                      pfnDrawTextRun;
-        [SecurityCritical]
         public IntPtr                           pfnDrawSplatLine;
-        [SecurityCritical]
         public FInterruptShaping                pfnFInterruptShaping;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphs;
-        [SecurityCritical]
         public GetGlyphPositions                pfnGetGlyphPositions;
-        [SecurityCritical]
         public DrawGlyphs                       pfnDrawGlyphs;
-        [SecurityCritical]
         public IntPtr                           pfnReleaseGlyphBuffers;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphExpansionInfo;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphExpansionInkInfo;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphRunInk;
-        [SecurityCritical]
         public IntPtr                           pfnGetEms;
-        [SecurityCritical]
         public IntPtr                           pfnPunctStartLine;
-        [SecurityCritical]
         public IntPtr                           pfnModWidthOnRun;
-        [SecurityCritical]
         public IntPtr                           pfnModWidthSpace;
-        [SecurityCritical]
         public IntPtr                           pfnCompOnRun;
-        [SecurityCritical]
         public IntPtr                           pfnCompWidthSpace;
-        [SecurityCritical]
         public IntPtr                           pfnExpOnRun;
-        [SecurityCritical]
         public IntPtr                           pfnExpWidthSpace;
-        [SecurityCritical]
         public IntPtr                           pfnGetModWidthClasses;
-        [SecurityCritical]
         public IntPtr                           pfnGetBreakingClasses;
-        [SecurityCritical]
         public IntPtr                           pfnFTruncateBefore;
-        [SecurityCritical]
         public IntPtr                           pfnCanBreakBeforeChar;
-        [SecurityCritical]
         public IntPtr                           pfnCanBreakAfterChar;
-        [SecurityCritical]
         public IntPtr                           pfnFHangingPunct;
-        [SecurityCritical]
         public IntPtr                           pfnGetSnapGrid;
-        [SecurityCritical]
         public IntPtr                           pfnDrawEffects;
-        [SecurityCritical]
         public IntPtr                           pfnFCancelHangingPunct;
-        [SecurityCritical]
         public IntPtr                           pfnModifyCompAtLastChar;
-        [SecurityCritical]
         public GetDurMaxExpandRagged            pfnGetDurMaxExpandRagged;
-        [SecurityCritical]
         public GetCharExpansionInfoFullMixed    pfnGetCharExpansionInfoFullMixed;
-        [SecurityCritical]
         public GetGlyphExpansionInfoFullMixed   pfnGetGlyphExpansionInfoFullMixed;
-        [SecurityCritical]
         public GetCharCompressionInfoFullMixed  pfnGetCharCompressionInfoFullMixed;
-        [SecurityCritical]
         public GetGlyphCompressionInfoFullMixed pfnGetGlyphCompressionInfoFullMixed;
-        [SecurityCritical]
         public IntPtr                           pfnGetCharAlignmentStartLine;
-        [SecurityCritical]
         public IntPtr                           pfnGetCharAlignmentEndLine;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphAlignmentStartLine;
-        [SecurityCritical]
         public IntPtr                           pfnGetGlyphAlignmentEndLine;
-        [SecurityCritical]
         public IntPtr                           pfnGetPriorityForGoodTypography;
 
-        [SecurityCritical]
         public EnumText                         pfnEnumText;
-        [SecurityCritical]
         public EnumTab                          pfnEnumTab;
-        [SecurityCritical]
         public IntPtr                           pfnEnumPen;
-        [SecurityCritical]
         public GetObjectHandlerInfo             pfnGetObjectHandlerInfo;      
     
         // Debugging
-        [SecurityCritical]
         public IntPtr                           pfnAssertFailedPtr;
 
         // Even more LSCONTEXTINFO
@@ -1411,19 +1275,16 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public LsLInfo*         plslinfoArray;          // array of LSLINFO structs, each per each break
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public IntPtr*          plinepenaltyArray;      // array of unsafe handle to TSLINEPENALITYINFO struct, each per each break
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public IntPtr*          pplolineArray;          // array of unsafe handle to Loline struct, each per each break
     }
 
@@ -1451,19 +1312,16 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public char*                        pwch;           // array of character codes
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public ushort*                      rggmap;         // wchar->glyph mapping
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public ushort*                       rgchprop;       // array of char properties as returned by GetGlyphs
         public int                          cwch;           // number of characters
         public int                          duChangeRight;  // nominal-to-ideal changes on the right side of the run
@@ -1471,25 +1329,21 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public ushort*                      rggindex;       // glyph indices
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public uint*                        rggprop;        // array of glyph properties as returned by GetGlyphs
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public int*                         rgduWidth;      // array of glyph widths as returned by GetGlypPositions
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public GlyphOffset*                 rggoffset;      // array of glyph offset as returned by GetGlypPositions
         public int                          cgindex;        // number of glyphs
     }
@@ -1503,25 +1357,21 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public char*    pwch;                   // array of character codes
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public int*     rgduNominalWidth;       // array of nominal widths
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public int*     rgduChangeLeft;         // array of nominal-to-ideal changes on the left side
         
         /// <SecurityNote>
         ///   Critical : Native pointer
         /// <SecurityNote>
-        [SecurityCritical]
         public int*     rgduChangeRight;        // array of nominal-to-ideal changes on the right side
         public int      cwch;                   // number of characters
     }
@@ -1542,9 +1392,7 @@ namespace MS.Internal.TextFormatting
     internal struct InlineInit
     {
         public uint             dwVersion;
-        [SecurityCritical]
         public InlineFormat     pfnFormat;
-        [SecurityCritical]
         public InlineDraw       pfnDraw;
     }
 
@@ -1695,8 +1543,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoCreateContext")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateContext")]
         internal static extern LsErr LoCreateContext(
             ref LsContextInfo               contextInfo,      // const
             ref LscbkRedefined              lscbkRedef,
@@ -1706,8 +1553,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoDestroyContext")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoDestroyContext")]
         internal static extern LsErr LoDestroyContext(
             IntPtr                  ploc
             );
@@ -1715,8 +1561,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoCreateLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateLine")]
         internal static extern LsErr LoCreateLine(
             IntPtr                  ploc,
             int                     cp,
@@ -1733,8 +1578,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeLine")]
         internal static extern LsErr LoDisposeLine(
             IntPtr                  ploline,
             [MarshalAs(UnmanagedType.Bool)]
@@ -1744,8 +1588,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoAcquireBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoAcquireBreakRecord")]
         internal static extern LsErr LoAcquireBreakRecord(
             IntPtr                  ploline,
             out IntPtr              pbreakrec
@@ -1754,8 +1597,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeBreakRecord")]
         internal static extern LsErr LoDisposeBreakRecord(
             IntPtr                  pBreakRec,
             [MarshalAs(UnmanagedType.Bool)]
@@ -1765,8 +1607,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoCloneBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoCloneBreakRecord")]
         internal static extern LsErr LoCloneBreakRecord(
             IntPtr                  pBreakRec,
             out IntPtr              pBreakRecClone
@@ -1775,8 +1616,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "LoRelievePenaltyResource")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoRelievePenaltyResource")]
         internal static extern LsErr LoRelievePenaltyResource(
             IntPtr                  ploline
             );
@@ -1784,8 +1624,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoSetBreaking")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetBreaking")]
         internal static extern LsErr LoSetBreaking(
             IntPtr                  ploc,
             int                     strategy
@@ -1794,8 +1633,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoSetDoc")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetDoc")]
         internal static extern LsErr LoSetDoc(
             IntPtr                  ploc,
             int                     isDisplay,
@@ -1806,8 +1644,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoSetTabs")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetTabs")]
         internal static unsafe extern LsErr LoSetTabs(
             IntPtr                  ploc,
             int                     durIncrementalTab,
@@ -1818,8 +1655,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoDisplayLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisplayLine")]
         internal static extern LsErr LoDisplayLine(
             IntPtr                  ploline,
             ref LSPOINT             pt,
@@ -1830,8 +1666,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoEnumLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoEnumLine")]
         internal static extern LsErr LoEnumLine(
             IntPtr                  ploline,
             bool                    reverseOder,
@@ -1842,8 +1677,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLineCpPpoint")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLineCpPpoint")]
         internal static extern LsErr LoQueryLineCpPpoint(
             IntPtr                  ploline,
             int                     lscpQuery,
@@ -1856,8 +1690,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLinePointPcp")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLinePointPcp")]
         internal static extern LsErr LoQueryLinePointPcp(
             IntPtr                  ploline,
             ref LSPOINT             ptQuery,        //  use POINT as POINTUV
@@ -1870,8 +1703,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoCreateBreaks")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateBreaks")]
         internal static extern LsErr LoCreateBreaks(
             IntPtr                  ploc,               // Line Services context
             int                     cpFirst,
@@ -1885,8 +1717,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoCreateParaBreakingSession")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateParaBreakingSession")]
         internal static extern LsErr LoCreateParaBreakingSession(
             IntPtr                  ploc,               // Line Services context
             int                     cpParagraphFirst,
@@ -1900,8 +1731,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeParaBreakingSession")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeParaBreakingSession")]
         internal static extern LsErr LoDisposeParaBreakingSession(
             IntPtr                  ploparabreak,
             [MarshalAs(UnmanagedType.Bool)]
@@ -1911,8 +1741,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint="LocbkGetObjectHandlerInfo")]
+        [DllImport(DllImport.PresentationNative, EntryPoint="LocbkGetObjectHandlerInfo")]
         internal unsafe static extern LsErr LocbkGetObjectHandlerInfo(
             IntPtr                  ploc,               // Line Services context
             uint                    objectId,           // installed object id
@@ -1925,7 +1754,6 @@ namespace MS.Internal.TextFormatting
         /// 
         /// We need to do this wrapper for the TAS to work correctly with enforcement.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void LoGetEscString(
             ref EscStringInfo escStringInfo)
         {
@@ -1935,8 +1763,7 @@ namespace MS.Internal.TextFormatting
         ///<SecurityNote>
         /// Critical - as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "LoGetEscString")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoGetEscString")]
         private static extern void LoGetEscStringImpl(
             ref EscStringInfo escStringInfo
             );
@@ -1944,8 +1771,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "LoAcquirePenaltyModule")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoAcquirePenaltyModule")]
         internal static extern LsErr LoAcquirePenaltyModule(
             IntPtr                  ploc,       // Line Services context
             out IntPtr              penaltyModuleHandle
@@ -1954,8 +1780,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposePenaltyModule")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposePenaltyModule")]
         internal static extern LsErr LoDisposePenaltyModule(
             IntPtr                  penaltyModuleHandle
             );
@@ -1963,8 +1788,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "LoGetPenaltyModuleInternalHandle")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoGetPenaltyModuleInternalHandle")]
         internal static extern LsErr LoGetPenaltyModuleInternalHandle(
             IntPtr                  penaltyModuleHandle,
             out IntPtr              penaltyModuleInternalHandle
@@ -1976,8 +1800,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSink")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSink")]
         internal unsafe static extern void* CreateTextAnalysisSink();
 
         /// <summary>
@@ -1987,8 +1810,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "GetScriptAnalysisList")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "GetScriptAnalysisList")]
         internal unsafe static extern void* GetScriptAnalysisList(void* textAnalysisSink);
 
         /// <summary>
@@ -1998,8 +1820,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "GetNumberSubstitutionList")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "GetNumberSubstitutionList")]
         internal unsafe static extern void* GetNumberSubstitutionList(void* textAnalysisSink);
 
         /// <summary>
@@ -2008,8 +1829,7 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSource")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSource")]
         internal unsafe static extern int CreateTextAnalysisSource(char* text,
                                                                    uint    length,
                                                                    char*   culture,

@@ -34,7 +34,6 @@ namespace MS.Internal
         ///     Critical: This code sets the allowed assemblies on AssemblyList 
         ///     TreatAsSafe: Initializing the data is ok since it does not expose anything
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static AssemblyFilter()
         {
             _disallowedListExtracted = new SecurityCriticalDataForSet<bool>(false);
@@ -44,7 +43,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical: This code calls into unmanaged Api that has a SUC on this (IAssemblCache related)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void FilterCallback(Object sender, AssemblyLoadEventArgs args)
         {
             // This code is reentrant
@@ -92,7 +90,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical: This code elevates to extract assembly name
         /// </SecurityNote>
-        [SecurityCritical]
         private string AssemblyNameWithFileVersion(Assembly a)
         {
             FileVersionInfo fileVersionInfo;
@@ -117,7 +114,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical: This code populates _assemblyList with Disallowed Elements and sets the bit that dictates whether to repopulate it
         /// </SecurityNote>
-        [SecurityCritical]
         private bool AssemblyOnDisallowedList(String assemblyToCheck)
         {
             bool retVal = false;
@@ -139,7 +135,6 @@ namespace MS.Internal
         ///     Critical: This code opens an HKLM registry location and reads it. We do not want 
         ///     to call this over and over as it could cause performance issues
         /// </SecurityNote>
-        [SecurityCritical]
         private void ExtractDisallowedRegistryList()
         {
             string[] disallowedAssemblies;

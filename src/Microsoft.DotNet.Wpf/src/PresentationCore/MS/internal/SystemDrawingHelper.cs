@@ -40,7 +40,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr GetHandleFromMetafile(Object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
@@ -66,7 +65,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr GetHBitmap(object data, out int width, out int height)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
@@ -83,7 +81,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr GetHBitmapFromBitmap(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
@@ -94,7 +91,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr ConvertMetafileToHBitmap(IntPtr handle)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
@@ -138,7 +134,6 @@ namespace MS.Internal
         ///    Critical: This calls into copy pixels which is link demand protected. It initially had a demand and this
         ///              code did not work in PT
         /// </SecurityNote>
-        [SecurityCritical]
         internal static object GetBitmapFromBitmapSource(object source)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);

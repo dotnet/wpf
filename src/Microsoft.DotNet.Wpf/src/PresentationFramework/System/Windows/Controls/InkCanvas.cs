@@ -1057,7 +1057,6 @@ namespace System.Windows.Controls
         ///     Critical: Calls critical method GestureRecognizer.CriticalRecognize.  It is important
         ///         that this is only called if userInitiated is true.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseGestureOrStrokeCollected(InkCanvasStrokeCollectedEventArgs e, bool userInitiated)
         {
             Debug.Assert(e != null, "EventArg can not be null");
@@ -2129,7 +2128,6 @@ namespace System.Windows.Controls
         /// <SecurityNote>
         ///     Critical -      Elevates the AllClipboard permission for checking the supported data in InkCanvas.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool UserInitiatedCanPaste()
         {
             ( new UIPermission(UIPermissionClipboard.AllClipboard) ).Assert();//BlessedAssert
@@ -2233,7 +2231,6 @@ namespace System.Windows.Controls
         ///                 calling SetDataObject.
         ///     TreatAsSafe: There is no input here. The ISF data are safe to being put in the clipboard.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private InkCanvasClipboardDataFormats CopyToDataObject()
         {
              DataObject dataObj;
@@ -2574,7 +2571,6 @@ namespace System.Windows.Controls
         ///     TreatAsSafe: We don't take user input here. Shift+Insert is the correct key binding,
         ///                  and therefore is expected by the user.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void _RegisterClipboardHandlers()
         {
             Type ownerType = typeof(InkCanvas);
@@ -2896,7 +2892,6 @@ namespace System.Windows.Controls
         ///     TreatAsSafe -   We check whether QueryCanPaste is initiated by user or not
         ///                     before invoking the critical method.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void _OnQueryCommandEnabled(object sender, CanExecuteRoutedEventArgs args)
         {
             RoutedCommand command = (RoutedCommand)(args.Command);

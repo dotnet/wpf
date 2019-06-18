@@ -251,7 +251,6 @@ namespace System.Windows.Media
         /// TreatAsSafe         - FamilyCollection does security demands for the necessary permissions; fontLocation is
         ///                       not exposed by the resulting FontFamily objects
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static ICollection<FontFamily> CreateFamilyCollection(
             Uri     fontLocation,
             Uri     fontFamilyBaseUri,
@@ -284,7 +283,6 @@ namespace System.Windows.Media
         /// Critical    - This method accesses the critical Util.WindowsFontsUriObject
         /// TreatAsSafe - It specifies null as the BaseUri of the resulting FontFamily objects
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static ICollection<FontFamily> CreateDefaultFamilyCollection()
         {
             return CreateFamilyCollection(

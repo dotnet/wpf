@@ -29,7 +29,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Create unmanaged critical resource 
         /// </SecurityNote>
-        [SecurityCritical]
         internal FactoryMaker()
         {
             lock (s_factoryMakerLock)
@@ -69,7 +68,6 @@ namespace System.Windows.Media
         ///     TreatAsSafe - this function elevates to call release ( on an object we own). 
         ///                          net effect is a shutdown of the FactoryMaker. Considered safe. 
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void Dispose(bool fDisposing)
         {
                 if (!_disposed)
@@ -118,7 +116,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal IntPtr FactoryPtr
         {
-            [SecurityCritical]
             get
             {
                 Debug.Assert(s_pFactory != IntPtr.Zero);
@@ -131,7 +128,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal IntPtr ImagingFactoryPtr
         {
-            [SecurityCritical]
             get
             {
                 if (s_pImagingFactory == IntPtr.Zero)
@@ -149,12 +145,10 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - this is a pointer to an unmanaged object that methods are called directly on
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr s_pFactory;
         /// <SecurityNote>
         /// Critical - this is a pointer to an unmanaged object that methods are called directly on
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr s_pImagingFactory;
 
         /// <summary>

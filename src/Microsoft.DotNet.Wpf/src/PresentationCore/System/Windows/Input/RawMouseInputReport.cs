@@ -55,7 +55,6 @@ namespace System.Windows.Input
         ///     Critical:This handles critical data in the form of PresentationSource and ExtraInformation 
         ///     TreatAsSafe:There are demands on the  critical data(PresentationSource/ExtraInformation)
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public RawMouseInputReport(
             InputMode mode,
             int timestamp, 
@@ -107,7 +106,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public IntPtr ExtraInformation 
         {
-            [SecurityCritical]
             get 
             {
                 return _extraInformation.Value;

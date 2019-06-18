@@ -18,7 +18,6 @@ namespace MS.Internal.Printing.Configuration
     /// <SecurityNote>
     ///     Critical: base class SafeHandle is critical
     /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeWinSpoolPrinterHandle : SafeHandle
     {
         private SafeWinSpoolPrinterHandle()
@@ -41,7 +40,6 @@ namespace MS.Internal.Printing.Configuration
         /// <SecurityNote>
         ///     Critical: Calls native method to close printer handle
         /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethods.ClosePrinter(base.handle);

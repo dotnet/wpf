@@ -37,7 +37,6 @@ namespace System.Windows.Interop
         /// Critical - calls critical code, access unmanaged resources
         /// PublicOK - demands unmanaged code permission
         /// </SecurityNote>
-        [SecurityCritical]
         unsafe public static BitmapSource CreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
@@ -60,7 +59,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         /// Critical - calls critical code, access unmanaged resources
         /// </SecurityNote>
-        [SecurityCritical]
         unsafe internal static BitmapSource CriticalCreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
@@ -89,7 +87,6 @@ namespace System.Windows.Interop
         /// Critical - calls critical code, access unmanaged resources
         /// PublicOK - demands unmanaged code permission
         /// </SecurityNote>
-        [SecurityCritical ]
         unsafe public static BitmapSource CreateBitmapSourceFromHIcon(
             IntPtr icon,
             Int32Rect sourceRect,
@@ -121,7 +118,6 @@ namespace System.Windows.Interop
         /// Critical - calls critical code, access unmanaged resources
         /// PublicOK - demands unmanaged code permission
         /// </SecurityNote>
-        [SecurityCritical ]
         unsafe public static BitmapSource CreateBitmapSourceFromMemorySection(
             IntPtr section,
             int pixelWidth,

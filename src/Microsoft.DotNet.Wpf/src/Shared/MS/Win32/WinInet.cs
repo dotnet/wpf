@@ -23,7 +23,6 @@ internal static class WinInet
     /// </SecurityNote>
     internal static Uri InternetCacheFolder
     {
-        [SecurityCritical]
         get
         {
             // copied value 260 from orginal implementation in BitmapDownload.cs 

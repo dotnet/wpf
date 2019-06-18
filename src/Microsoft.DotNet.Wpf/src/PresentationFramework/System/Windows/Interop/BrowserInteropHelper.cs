@@ -35,7 +35,6 @@ namespace System.Windows.Interop
         /// Critical because it sets critical data.
         /// Safe because it is the static ctor, and the data doesn't go anywhere.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static BrowserInteropHelper()
         {
             SetBrowserHosted(false);
@@ -54,7 +53,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static object ClientSite
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -81,7 +79,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static dynamic HostScript
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 // Allows to disable script interop through the registry in partial trust code.
@@ -133,7 +130,6 @@ namespace System.Windows.Interop
         /// <remarks>
         /// HostingFlags is set after this property.
         /// </remarks>
-        [SecurityCritical]
         internal static void SetBrowserHosted(bool value)
         {
             _isBrowserHosted.Value = value;
@@ -145,7 +141,6 @@ namespace System.Windows.Interop
         internal static HostingFlags HostingFlags 
         { 
             get { return _hostingFlags.Value; }
-            [SecurityCritical]
             set { _hostingFlags.Value = value; }
         }
         
@@ -216,7 +211,6 @@ namespace System.Windows.Interop
             {
                 return IsViewer && _isInitialViewerNavigation.Value;
             }
-            [SecurityCritical]
             set
             {
                 _isInitialViewerNavigation.Value = value;
@@ -226,14 +220,12 @@ namespace System.Windows.Interop
         ///<SecurityNote> 
         ///     Critical : Field for critical type IHostBrowser
         ///</SecurityNote> 
-        [SecurityCritical]
         internal static IHostBrowser HostBrowser;
 
         /// <SecurityNote>
         /// Critical: Calls Marshal.ReleaseComObject().
         ///           Drops the security critical service provider stored in _hostHtmlDocumentProvider.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void ReleaseBrowserInterfaces()
         {
             if (HostBrowser != null)
@@ -259,7 +251,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         internal static UnsafeNativeMethods.IServiceProvider HostHtmlDocumentServiceProvider
         {
-            [SecurityCritical]
             get
             {
                 // HostHtmlDocumentServiceProvider is used by DynamicScriptObject for IDispatchEx
@@ -280,7 +271,6 @@ namespace System.Windows.Interop
         ///           interop to let Internet Explorer make security decisions with regards to zones. By
         ///           passing in another service provider it may be possible to interfere with this logic.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void InitializeHostHtmlDocumentServiceProvider(DynamicScriptObject scriptObject)
         {
             // The service provider is used for Internet Explorer IDispatchEx use.
@@ -314,7 +304,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: this calls ForwardTranslateAccelerator, which is SUC'ed.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void HostFilterInput(ref MSG msg, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg.message;
@@ -336,7 +325,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: this calls ForwardTranslateAccelerator, which is SUC'ed.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr PostFilterInput(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (!handled)
@@ -357,7 +345,6 @@ namespace System.Windows.Interop
         ///     Critical: this attaches an event to ThreadFilterMessage, which requires an assert
         ///     Safe: doesn't expose anything, just does some internal plumbing stuff
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void InitializeHostFilterInput()
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert(); // Blessed assert
@@ -376,7 +363,6 @@ namespace System.Windows.Interop
         ///     Critical: setting critical _isScriptInteropDisabled flag.
         ///     Safe: _isScriptInteropDisabled is set from a trusted source.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureScriptInteropAllowed()
         {
             if (_isScriptInteropDisabled.Value == null)
@@ -405,14 +391,12 @@ namespace System.Windows.Interop
         ///<SecurityNote> 
         ///     Critical : Field for critical type UnsafeNativeMethods.IServiceProvider
         ///</SecurityNote> 
-        [SecurityCritical]
         private static SecurityCriticalDataForSet<UnsafeNativeMethods.IServiceProvider> _hostHtmlDocumentServiceProvider;
         private static SecurityCriticalDataForSet<bool> _initializedHostScript;
 
         ///<SecurityNote> 
         ///     Critical - call is SUC'ed
         ///</SecurityNote> 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.PresentationHostDll, EntryPoint="ForwardTranslateAccelerator")]
         private static extern int ForwardTranslateAccelerator(ref MSG pMsg, bool appUnhandled);
     }

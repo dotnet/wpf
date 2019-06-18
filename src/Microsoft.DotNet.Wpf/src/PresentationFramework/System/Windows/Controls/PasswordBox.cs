@@ -169,7 +169,6 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Password
         {
-            [SecurityCritical]
             get
             {
                 string password;
@@ -194,7 +193,6 @@ namespace System.Windows.Controls
                 return password;
             }
 
-            [SecurityCritical]
             set
             {
                 if (value == null)
@@ -1231,7 +1229,6 @@ namespace System.Windows.Controls
         /// 2. Attacker reads Password property.
         /// --> attacker has cracked open a SecureString without UnmanagedCode permission.
         /// </SecurityNote>
-        [SecurityCritical]
         private void SetSecurePassword(SecureString value)
         {
             this.TextContainer.BeginChange();

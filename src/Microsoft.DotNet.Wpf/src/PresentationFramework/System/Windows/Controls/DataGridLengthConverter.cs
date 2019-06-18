@@ -128,7 +128,6 @@ namespace System.Windows.Controls
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for DataGridLength, not an arbitrary class
         /// </SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext context,
             CultureInfo culture,

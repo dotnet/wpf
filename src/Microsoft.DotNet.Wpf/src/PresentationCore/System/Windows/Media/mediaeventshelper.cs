@@ -78,7 +78,6 @@ namespace System.Windows.Media
         ///     Critical: This function hooks up and exposes the unmanaged proxy that
         ///     sinks events from windows media
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CreateMediaEventsHelper(MediaPlayer mediaPlayer,
                                                      out MediaEventsHelper eventsHelper,
                                                      out SafeMILHandle unmanagedProxy)

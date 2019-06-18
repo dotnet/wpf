@@ -95,7 +95,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - This takes in raw bytes of a bit map
         ///</SecurityNote>
-        [SecurityCritical]
         private
         static
         UInt32

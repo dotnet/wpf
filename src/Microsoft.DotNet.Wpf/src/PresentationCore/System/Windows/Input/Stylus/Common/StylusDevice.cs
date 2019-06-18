@@ -98,8 +98,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical]
-            [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
             get
             {
                 return StylusDeviceImpl.ActiveSource;
@@ -163,7 +161,6 @@ namespace System.Windows.Input
         ///     PublicOK: This code does take any inputs or outputs nor is this operation risky (no
         ///               random Stylus input can be spoofed using this API).
         /// </SecurityNote>
-        [SecurityCritical]
         public void Synchronize()
         {
             StylusDeviceImpl.Synchronize();
@@ -251,7 +248,6 @@ namespace System.Windows.Input
         ///     Critical - accesses critical data _inputSource.Value
         ///     PublicOK - we do the elevation of _inputSource to get RootVisual.
         ///</SecurityNote>
-        [SecurityCritical]
         public Point GetPosition(IInputElement relativeTo)
         {
             VerifyAccess();
@@ -315,7 +311,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal int DoubleTapDeltaTime
         {
-            [SecuritySafeCritical]
             get { return StylusDeviceImpl.DoubleTapDeltaTime; }
         }
 
@@ -359,7 +354,6 @@ namespace System.Windows.Input
         ///                Called by MouseDevice for StylusDevice promoted mouse events to query
         ///                the mouse button state that should be reported.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MouseButtonState GetMouseButtonState(MouseButton mouseButton, MouseDevice mouseDevice)
         {
             return StylusDeviceImpl.GetMouseButtonState(mouseButton, mouseDevice);

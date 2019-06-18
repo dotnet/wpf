@@ -44,7 +44,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHandleFromMetafile(Object data)
         {
             IntPtr hMetafile = IntPtr.Zero;
@@ -76,7 +75,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHBitmap(object data, out int width, out int height)
         {
             Bitmap bitmapData = GetBitmapImpl(data);
@@ -99,7 +97,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHBitmapFromBitmap(object data)
         {
             Bitmap bitmap = data as Bitmap;
@@ -110,7 +107,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code returns a handle to an unmanaged object
         /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr ConvertMetafileToHBitmap(IntPtr handle)
         {
             Metafile metafile = new Metafile(handle, false);
@@ -192,7 +188,6 @@ namespace MS.Internal
         ///    Critical: This calls into copy pixels which is link demand protected. It initially had a demand and this
         ///              code did not work in PT
         /// </SecurityNote>
-        [SecurityCritical]
         internal override object GetBitmapFromBitmapSource(object source)
         {
             BitmapSource contentImage = (BitmapSource)source;

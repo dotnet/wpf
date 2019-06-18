@@ -238,7 +238,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: This code does not expose the critical resource.
         ///                  Translating points considered safe to expose.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point TranslatePoint(Point pt, DependencyObject from, DependencyObject to)
         {
             bool unused = false;
@@ -250,7 +249,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: This code does not expose the critical resource.
         ///                  Translating points considered safe to expose.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point TranslatePoint(Point pt, DependencyObject from, DependencyObject to, out bool translated)
         {
             translated = false;

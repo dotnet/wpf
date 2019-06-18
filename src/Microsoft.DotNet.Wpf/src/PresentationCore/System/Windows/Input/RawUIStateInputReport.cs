@@ -39,7 +39,6 @@ namespace System.Windows.Input
         ///     Critical:This handles critical data in the form of PresentationSource
         ///     TreatAsSafe:The data has demands on the property when someone tries to access it.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public RawUIStateInputReport(
             PresentationSource inputSource,
             InputMode mode,

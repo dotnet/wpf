@@ -30,8 +30,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         object GetData(string format);
 
         /// <summary>
@@ -44,8 +42,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         object GetData(Type format);
 
         /// <summary>
@@ -60,8 +56,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         object GetData(string format, bool autoConvert);
 
         /// <summary>
@@ -73,8 +67,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(string format);
 
         /// <summary>
@@ -86,8 +78,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(Type format);
 
         /// <summary>
@@ -102,8 +92,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(string format, bool autoConvert);
 
         /// <summary>
@@ -114,8 +102,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         string[] GetFormats();
 
         /// <summary>
@@ -131,8 +117,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         string[] GetFormats(bool autoConvert);
 
         /// <summary>
@@ -144,8 +128,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         void SetData(object data);
 
         /// <summary>
@@ -158,8 +140,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         void SetData(string format, object data);
 
          /// <summary>
@@ -172,8 +152,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         void SetData(Type format, object data);
 
         /// <summary>
@@ -189,8 +167,6 @@ namespace System.Windows
         ///     Critical: This code has an inheritance demand since we do not want to allow subclassing of 
         ///     this API in partial trust
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Clipboard = UIPermissionClipboard.AllClipboard)]
         void SetData(string format, object data, bool autoConvert);
      }
 

@@ -27,7 +27,6 @@ namespace MS.Win32
         ///     Critical: Calls into P/Invoke methods
         ///     Safe: Returns a safe boolean to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static bool IsKnowledgeBase2533623OrGreater()
         {
             const string AddDllDirectoryName = nameof(AddDllDirectoryName);
@@ -82,7 +81,6 @@ namespace MS.Win32
         ///         Calls into Critical P/Invoke methods
         ///         Returns native module handle
         /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr SecureLoadLibraryEx(string lpFileName, IntPtr hFile, UnsafeNativeMethods.LoadLibraryFlags dwFlags)
         {
             if (!IsKnowledgeBase2533623OrGreater())

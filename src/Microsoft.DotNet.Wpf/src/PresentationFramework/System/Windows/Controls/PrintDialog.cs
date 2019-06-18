@@ -47,7 +47,6 @@ namespace System.Windows.Controls
         ///     PublicOk:    - We are setting these to "known" values of null.  There
         ///                    is no data exposure here.
         /// </SecurityNote>
-        [SecurityCritical]
         public
         PrintDialog(
             )
@@ -220,7 +219,6 @@ namespace System.Windows.Controls
         /// </SecurityNote>
         public PrintQueue PrintQueue
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -232,7 +230,6 @@ namespace System.Windows.Controls
 
                 return _printQueue;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -255,7 +252,6 @@ namespace System.Windows.Controls
         /// </SecurityNote>
         public PrintTicket PrintTicket
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -267,7 +263,6 @@ namespace System.Windows.Controls
 
                 return _printTicket;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -332,7 +327,6 @@ namespace System.Windows.Controls
         ///     PublicOk:    - Data is internal to this dialog and can only be retrieved
         ///                    by other critical code.  No information leaves this method.
         /// </SecurityNote>
-        [SecurityCritical]
         public
         Nullable<bool>
         ShowDialog()
@@ -394,7 +388,6 @@ namespace System.Windows.Controls
         ///                    this method resetting this flag we would not be honoring the security
         ///                    goal of displaying the dialog once per print job.
         /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         PrintVisual(
@@ -435,7 +428,6 @@ namespace System.Windows.Controls
         ///                    this method resetting this flag we would not be honoring the security
         ///                    goal of displaying the dialog once per print job.
         /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         PrintDocument(
@@ -466,7 +458,6 @@ namespace System.Windows.Controls
         /// <SecurityNote>
         ///     Critical:    - Asserts to obtain the default print queue from the local server.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintQueue
         AcquireDefaultPrintQueue()
@@ -503,7 +494,6 @@ namespace System.Windows.Controls
         ///     Critical:    - Asserts to obtain the PrintTicket from the specified PrintQueue
         ///                    object or create a blank PrintTicket object (i.e. PrintTicket::ctor).
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintTicket
         AcquireDefaultPrintTicket(
@@ -560,7 +550,6 @@ namespace System.Windows.Controls
         ///                    not leave the scope of this method.  It is only used to calculate
         ///                    non-critical values.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         UpdatePrintableAreaSize(
@@ -635,7 +624,6 @@ namespace System.Windows.Controls
         ///                    or the user chose to print.  It is okay for the application
         ///                    to use the XpsDocumentWriter to print at this point.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         XpsDocumentWriter
         CreateWriter(
@@ -684,7 +672,6 @@ namespace System.Windows.Controls
         ///        PrintQueue and PrintTicket for the case of web applications.  If the
         ///        dialog was not invoked then an exception is thrown.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         void
         PickCorrectPrintingEnvironment(
@@ -746,7 +733,6 @@ namespace System.Windows.Controls
         /// trust application unless they can satisfy a printing permission
         /// demand.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintTicket                 _printTicket;
 
@@ -755,7 +741,6 @@ namespace System.Windows.Controls
         /// trust application unless they can satisfy a printing permission
         /// demand.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintQueue                  _printQueue;
 
@@ -765,7 +750,6 @@ namespace System.Windows.Controls
         /// we can safely perform the necessary asserts to print as long as the
         /// user said printing was okay.
         /// </SecurityNote>
-        [SecurityCritical]
         private
         bool                        _dialogInvoked;
 
@@ -814,7 +798,6 @@ namespace System.Windows.Controls
             ///     Critical    -   PrintTicket argument is critical because it is defined in the none APTCA assembly ReachFramework.dll
             ///     TreatAsSafe -   PrintTicket type is safe
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public
             PrintDlgPrintTicketEventHandler(
                 PrintTicket printTicket
@@ -832,7 +815,6 @@ namespace System.Windows.Controls
             ///                 -   Makes use of PrintTicketLevel type which is critical because it is defined in the none APTCA assembly ReachFramework.dll
             ///     TreatAsSafe -   PrintTicket type is safe
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public
             void
             SetPrintTicket(
@@ -853,7 +835,6 @@ namespace System.Windows.Controls
             /// <SecurityNote>
             ///     Critical    -   Field for PrintTicket type which is critical because it is defined in the none APTCA assembly ReachFramework.dll
             /// </SecurityNote>
-            [SecurityCritical]
             private
             PrintTicket _printTicket;
 

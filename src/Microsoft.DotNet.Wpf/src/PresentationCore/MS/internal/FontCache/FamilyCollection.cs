@@ -64,7 +64,6 @@ namespace MS.Internal.FontCache
         ///     Critical    : Accesses the Security Critical FontSource.GetStream().
         ///     TreatAsSafe : Does not expose this stream publicly.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static List<CompositeFontFamily> GetCompositeFontList(FontSourceCollection fontSourceCollection)
         {
             List<CompositeFontFamily> compositeFonts = new List<CompositeFontFamily>();
@@ -88,7 +87,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         private bool UseSystemFonts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return (_fontCollection == DWriteFactory.SystemFontCollection);
@@ -101,7 +99,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         private IList<CompositeFontFamily> UserCompositeFonts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_userCompositeFonts == null)
@@ -136,7 +133,6 @@ namespace MS.Internal.FontCache
             /// </SecurityNote>
             internal static Text.TextInterface.FontCollection LegacyArabicFontCollection
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (_legacyArabicFontCollection == null)
@@ -278,7 +274,6 @@ namespace MS.Internal.FontCache
             ///                FamilyCollection.SxSFontsLocation security critical.
             ///     TreatAsSafe : Does not expose security critical data.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static CompositeFontFamily GetCompositeFontFamilyAtIndex(int index)
             {
                 if (_systemCompositeFonts[index] == null)
@@ -334,7 +329,6 @@ namespace MS.Internal.FontCache
         ///             The folderUri parameter is critical as it may contain privileged information
         ///             (i.e., the location of Windows Fonts);
         /// </SecurityNote>
-        [SecurityCritical]
         private FamilyCollection(Uri folderUri, MS.Internal.Text.TextInterface.FontCollection fontCollection)
         {
             _folderUri = folderUri;
@@ -352,7 +346,6 @@ namespace MS.Internal.FontCache
         ///                constructor which is declared critical and guarantees not to disclose the URI.
         /// TreatAsSafe -  Demands Uri Read permissions for the uri passed to constructors
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static FamilyCollection FromUri(Uri folderUri)
         {
             SecurityHelper.DemandUriReadPermission(folderUri);
@@ -373,7 +366,6 @@ namespace MS.Internal.FontCache
         ///             (even -- or especially -- if the URI is right), as this would enable partial trust 
         ///             clients to guess the location of Windows Fonts through trial and error.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static FamilyCollection FromWindowsFonts(Uri folderUri)
         {
             return new FamilyCollection(folderUri, DWriteFactory.SystemFontCollection);
@@ -403,7 +395,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - calls into critical GetFontFromFamily
         /// </SecurityNote>
-        [SecurityCritical]
         internal IFontFamily LookupFamily(
             string familyName,
             ref FontStyle fontStyle,
@@ -535,7 +526,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - calls into critical Text.TextInterface.Font.FaceNames
         /// </SecurityNote>
-        [SecurityCritical]
         private static Text.TextInterface.Font GetFontFromFamily(Text.TextInterface.FontFamily fontFamily, string faceName)
         {
             faceName = faceName.ToUpper(CultureInfo.InvariantCulture);
@@ -639,7 +629,6 @@ namespace MS.Internal.FontCache
             /// </SecurityNote>
             Text.TextInterface.FontFamily IEnumerator<Text.TextInterface.FontFamily>.Current
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (_currentFamily < 0 || _currentFamily >= _familyCount)
@@ -772,7 +761,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         internal uint FamilyCount
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _fontCollection.FamilyCount + (UseSystemFonts ? SystemCompositeFonts.NumOfSystemCompositeFonts : checked((uint)UserCompositeFonts.Count));

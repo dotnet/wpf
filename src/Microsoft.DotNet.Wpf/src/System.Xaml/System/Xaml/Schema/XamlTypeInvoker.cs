@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,21 +32,18 @@ namespace System.Xaml.Schema
         ///           is initialized.
         ///           Can be used to instantiate object bypassing ctor access checks.
         /// </SecurityNote>
-        [SecurityCritical]
         private Action<object> _constructorDelegate;
 
         /// <SecurityNote>
         /// Critical: Used to determine whether it's safe to instantiate this object via _constructorDelegate,
         ///           and thus bypass security checks.
         /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isPublic;
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
         /// <SecurityNote>
         /// Critical: Used to determine whether we need to demand ReflectionPermission before instantiating this type
         /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isInSystemXaml;
         // ^^^^^----- End of unused members.  -----^^^^^
 
@@ -268,7 +265,6 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         private bool IsInSystemXaml
         {
-            [SecuritySafeCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
             get
             {
@@ -290,7 +286,6 @@ namespace System.Xaml.Schema
         /// </SecurityNote>
         private bool IsPublic
         {
-            [SecuritySafeCritical]
             get
             {
                 if (_isPublic == ThreeValuedBool.NotSet)
@@ -311,7 +306,6 @@ namespace System.Xaml.Schema
         /// Critical: See explanation in SafeReflectionInvoker.
         /// Safe: See explanation in SafeReflectionInvoker.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private object CreateInstanceWithActivator(Type type, object[] arguments)
         {
             return SafeReflectionInvoker.CreateInstance(type, arguments);
@@ -347,9 +341,7 @@ namespace System.Xaml.Schema
             /// Safe: Never leaks the uninitialized object, always calls constructor first.
             /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
@@ -373,9 +365,7 @@ namespace System.Xaml.Schema
             ///       (so it can't be accidentally reused on a partial-trust callstack).
             /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)

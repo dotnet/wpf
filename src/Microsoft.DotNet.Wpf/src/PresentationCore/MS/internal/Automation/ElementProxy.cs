@@ -149,7 +149,6 @@ namespace MS.Internal.Automation
         ///     Critical    - Calls critical HostedWindowWrapper.Handle.
         ///     TreatAsSafe - Critical data is used internally and not explosed
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IRawElementProviderSimple GetHostHelper(HostedWindowWrapper hwndWrapper)
         {
             return AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle);
@@ -539,7 +538,6 @@ namespace MS.Internal.Automation
         ///</SecurityNote>
         internal static ReferenceType AutomationInteropReferenceType
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_shouldCheckInTheRegistry)

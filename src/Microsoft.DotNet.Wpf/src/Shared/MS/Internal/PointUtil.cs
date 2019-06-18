@@ -39,14 +39,12 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a Point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point ClientToRoot(Point point, PresentationSource presentationSource)
         {
             bool success = true;
             return TryClientToRoot(point, presentationSource, true, out success);
         }
 
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point TryClientToRoot(Point point, PresentationSource presentationSource, bool throwOnError, out bool success)
         {
             // Only do if we allow throwing on error or have a valid PresentationSource and CompositionTarget.
@@ -77,7 +75,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point RootToClient(Point point, PresentationSource presentationSource)
         {
             // REVIEW:
@@ -182,7 +179,6 @@ namespace MS.Internal
         ///     SecurityTreatAsSafe: This data is ok to give out
         ///     validate all code paths that lead to this.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static Point ClientToScreen(Point pointClient, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.
@@ -209,7 +205,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a Point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point ScreenToClient(Point pointScreen, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.
@@ -249,7 +244,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect ElementToRoot(Rect rectElement, Visual element, PresentationSource presentationSource)
         {
             GeneralTransform    transformElementToRoot  = element.TransformToAncestor(presentationSource.RootVisual);
@@ -278,7 +272,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect RootToClient(Rect rectRoot, PresentationSource presentationSource)
         {
             CompositionTarget   target                  = presentationSource.CompositionTarget;
@@ -308,7 +301,6 @@ namespace MS.Internal
         ///    Critical: UnsafeNativeMethods.ClientToScreen
         ///    TreatAsSafe: Transforming a Point is considered safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect ClientToScreen(Rect rectClient, HwndSource hwndSource)
         {
             Point corner1 = ClientToScreen(rectClient.TopLeft, hwndSource);

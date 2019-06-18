@@ -63,8 +63,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public InputEventArgs Input
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                
             get {return _input;}
         }
 
@@ -103,8 +101,6 @@ namespace System.Windows.Input
         ///                the security of an operation, and therefore should not be protected from partial 
         ///                trust callers with LinkDemands.
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                
         public void SetData(object key, object value)
         {
             _dictionary[key] = value;

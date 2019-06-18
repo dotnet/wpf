@@ -51,7 +51,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - stores ActiveXHost - critical data. 
         ///</SecurityNote> 
-        [SecurityCritical]
         internal ActiveXSite(ActiveXHost host)
         {
             if (host == null)
@@ -185,7 +184,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleClientSite.GetContainer(out UnsafeNativeMethods.IOleContainer container)
         {
             container = this.Host.Container;
@@ -194,7 +192,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property and critical methods AttachWindow
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleClientSite.ShowObject()
         {
             if (HostState >= ActiveXHelper.ActiveXState.InPlaceActive)
@@ -239,7 +236,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - Calls critical code. 
         ///</SecurityNote> 
-        [SecurityCritical]
         IntPtr UnsafeNativeMethods.IOleInPlaceSite.GetWindow()
         {
             try
@@ -276,7 +272,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceSite.OnUIActivate()
         {
             HostState = ActiveXHelper.ActiveXState.UIActive;
@@ -287,7 +282,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - accesses ParentHandle - critical data. 
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceSite.GetWindowContext(out UnsafeNativeMethods.IOleInPlaceFrame ppFrame, out UnsafeNativeMethods.IOleInPlaceUIWindow ppDoc,
                                              NativeMethods.COMRECT lprcPosRect, NativeMethods.COMRECT lprcClipRect, NativeMethods.OLEINPLACEFRAMEINFO lpFrameInfo)
         {
@@ -320,7 +314,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceSite.OnUIDeactivate(int fUndoable)
         {
             this.Host.Container.OnUIDeactivate(this.Host);
@@ -334,7 +327,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceSite.OnInPlaceDeactivate()
         {
             if (HostState == ActiveXHelper.ActiveXState.UIActive)
@@ -355,7 +347,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - calls critical Host property
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceSite.DeactivateAndUndo()
         {
             return this.Host.ActiveXInPlaceObject.UIDeactivate();
@@ -378,12 +369,10 @@ namespace MS.Internal.Controls
         ///</SecurityNote> 
         ActiveXHelper.ActiveXState HostState
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return this.Host.ActiveXState;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 this.Host.ActiveXState = value;
@@ -396,7 +385,6 @@ namespace MS.Internal.Controls
         ///</SecurityNote> 
         internal NativeMethods.COMRECT HostBounds
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return this.Host.Bounds;
@@ -412,7 +400,6 @@ namespace MS.Internal.Controls
         /// WebOCHostedInBrowserProcess: We could get spurious property change notifications. 
         /// But the WebBrowser control doesn't rely on any currently.
         /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.IPropertyNotifySink.OnChanged(int dispid)
         {
             // Some controls fire OnChanged() notifications when getting values of some properties. ASURT 20190.
@@ -454,7 +441,6 @@ namespace MS.Internal.Controls
         /// WebOCHostedInBrowserProcess: We could get spurious property change notifications.
         /// But the WebBrowser control doesn't rely on any currently.
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnPropertyChanged(int dispid)
         {
             /*
@@ -496,7 +482,6 @@ namespace MS.Internal.Controls
         ///</SecurityNote>         
         internal ActiveXHost Host
         {
-            [SecurityCritical]
             get { return _host; }
         }
         #endregion Internal Properties
@@ -511,7 +496,6 @@ namespace MS.Internal.Controls
         /////<SecurityNote> 
         /////     Critical - returns critical data. 
         /////</SecurityNote> 
-        //[SecurityCritical ]              
         //internal ActiveXHost GetAxHost() 
         //{
         //    return this.Host;
@@ -520,7 +504,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - instantiates ConnectionPointCoookie - a critical class. 
         ///</SecurityNote> 
-        [SecurityCritical]
         internal void StartEvents()
         {
             if (_connectionPoint != null)
@@ -547,7 +530,6 @@ namespace MS.Internal.Controls
         ///     Critical - calls critical _connectionPoint property
         ///     NOT TAS - stopping listening to events - could turn off some mitigations. 
         ///</SecurityNote> 
-        [SecurityCritical]
         internal void StopEvents()
         {
             if (_connectionPoint != null)
@@ -561,7 +543,6 @@ namespace MS.Internal.Controls
         ///     Critical - calls critical Host property
         ///     TreatAsSafe - changing the size of the control is considered safe. 
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal int OnActiveXRectChange(NativeMethods.COMRECT lprcPosRect)
         {
             if (this.Host.ActiveXInPlaceObject != null)
@@ -583,13 +564,11 @@ namespace MS.Internal.Controls
         ///<SecurityNote> 
         ///     Critical - contains critical data. 
         ///</SecurityNote> 
-        [SecurityCritical]
         private ActiveXHost _host;
 
         ///<SecurityNote> 
         ///     Critical - contains critical data. 
         ///</SecurityNote> 
-        [SecurityCritical]
         private ConnectionPointCookie _connectionPoint;
 
         #endregion Private Fields

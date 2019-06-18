@@ -38,7 +38,6 @@ namespace MS.Internal.AppModel
         ///     Critical:       Calls GetDC, ReleaseDC and GetDeviceCaps that are marked SecurityCritical
         ///     TreatAsSafe:    These set local static fields that aren't directly exposed outside this class.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSystemMetrics()
         {
             if (s_systemBitDepth == 0)
@@ -82,7 +81,6 @@ namespace MS.Internal.AppModel
         /// TreatAsSafe: There is a demand here
         /// </SecurityNote>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static void GetDefaultIconHandles(out NativeMethods.IconHandle largeIconHandle, out NativeMethods.IconHandle smallIconHandle)
         {
             largeIconHandle = null;
@@ -101,7 +99,6 @@ namespace MS.Internal.AppModel
         ///     Critical: Since it calls CreateIconHandleFromImageSource
         ///     TAS:      Since it creates icons with known h/w i.e. IconWidth/Height or SmallIconWidth/Height
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static void GetIconHandlesFromImageSource(ImageSource image, out NativeMethods.IconHandle largeIconHandle, out NativeMethods.IconHandle smallIconHandle)
         {
             EnsureSystemMetrics();
@@ -113,7 +110,6 @@ namespace MS.Internal.AppModel
         ///     Critical: Since it calls CreateIconHandleFromBitmapFrame
         /// </SecurityNote>
         /// <returns>A new HICON based on the image source</returns>
-        [SecurityCritical]
         public static NativeMethods.IconHandle CreateIconHandleFromImageSource(ImageSource image, Size size)
         {
             EnsureSystemMetrics();
@@ -195,7 +191,6 @@ namespace MS.Internal.AppModel
         /// <returns></returns>
         //
         //  Creates and HICON from a bitmap frame
-        [SecurityCritical]
         private static NativeMethods.IconHandle CreateIconHandleFromBitmapFrame(BitmapFrame sourceBitmapFrame)
         {
             Invariant.Assert(sourceBitmapFrame != null, "sourceBitmapFrame cannot be null here");
@@ -226,7 +221,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical: Critical as this code create a DIB section and writes data to it
         /// </SecurityNote>
-        [SecurityCritical]
         internal static NativeMethods.IconHandle CreateIconCursor(
             byte[] colorArray,
             int width,

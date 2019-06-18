@@ -56,7 +56,6 @@ static class WpfWebRequestHelper
     /// Safe: Activates the CustomCredentialPolicy, which makes sure the user's system credentials are not
     ///     sent across the Internet.
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebRequest CreateRequest(Uri uri)
     {
@@ -165,7 +164,6 @@ static class WpfWebRequestHelper
     /// </SecurityNote>
     internal static string DefaultUserAgent
     {
-        [SecurityCritical, SecurityTreatAsSafe]
         get
         {
             if (_defaultUserAgent == null)
@@ -188,7 +186,6 @@ static class WpfWebRequestHelper
     ///     non-HTTP web responses. They will all need to be revised if secure handling of other types of
     ///     requests/responses becomes necessary.
     /// </SecurityNote>
-    [SecurityCritical]
     [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
@@ -225,7 +222,6 @@ static class WpfWebRequestHelper
     ///     cannot be altered (beyond what its public APIs allow, but the security-sensitive ones demand
     ///     appropriate permission).
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
@@ -250,7 +246,6 @@ static class WpfWebRequestHelper
     /// <SecurityNote>
     /// [See GetResponse()]
     /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {

@@ -70,7 +70,6 @@ namespace MS.Internal.Controls
         /// <SecurityNote> 
         ///     Critical - calls base class ctor which is critical. 
         /// </SecurityNote> 
-        [SecurityCritical]
         internal WebBrowserSite(WebBrowser host) : base(host)
         {
         }
@@ -95,7 +94,6 @@ namespace MS.Internal.Controls
         ///     TreatAsSafe - information returned from this method is innocous.
         ///                   lists the set of browser features/options we've enabled. 
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         int UnsafeNativeMethods.IDocHostUIHandler.GetHostInfo(NativeMethods.DOCHOSTUIINFO info)
         {
             WebBrowser wb = (WebBrowser)Host;
@@ -131,7 +129,6 @@ namespace MS.Internal.Controls
         /// Critical : Accepts critical IOleInPlaceActiveObject, IOleCommandTarget, IOleInPlaceFrame, IOleInPlaceUIWindow as argument
         /// Safe     : Performs no actions on critical argument, exposes no critical data to caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         int UnsafeNativeMethods.IDocHostUIHandler.ShowUI(int dwID, UnsafeNativeMethods.IOleInPlaceActiveObject activeObject,
                 NativeMethods.IOleCommandTarget commandTarget, UnsafeNativeMethods.IOleInPlaceFrame frame,
                 UnsafeNativeMethods.IOleInPlaceUIWindow doc)
@@ -162,7 +159,6 @@ namespace MS.Internal.Controls
         /// Critical : Accepts critical IOleInPlaceUIWindow as argument
         /// Safe     : Performs no actions on critical argument, exposes no critical data to caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         int UnsafeNativeMethods.IDocHostUIHandler.ResizeBorder(NativeMethods.COMRECT rect, UnsafeNativeMethods.IOleInPlaceUIWindow doc, bool fFrameWindow)
         {
             return NativeMethods.E_NOTIMPL;
@@ -176,7 +172,6 @@ namespace MS.Internal.Controls
         /// <SecurityNote>
         /// Critical : Accepts critical IOleDropTarget as argument
         /// </SecurityNote>
-        [SecurityCritical]
         int UnsafeNativeMethods.IDocHostUIHandler.GetDropTarget(UnsafeNativeMethods.IOleDropTarget pDropTarget, out UnsafeNativeMethods.IOleDropTarget ppDropTarget)
         {
             //
@@ -190,7 +185,6 @@ namespace MS.Internal.Controls
         ///    Critical: This code access critical member Host.
         ///    TreatAsSafe: The object returned is sandboxed in the managed environment.
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         int UnsafeNativeMethods.IDocHostUIHandler.GetExternal(out object ppDispatch)
         {
             WebBrowser wb = (WebBrowser)Host;
@@ -252,7 +246,6 @@ namespace MS.Internal.Controls
         /// WebOCHostedInBrowserProcess: Potential for input spoofing. Currently we handle only the Tab key, 
         ///     which is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         int UnsafeNativeMethods.IOleControlSite.TranslateAccelerator(ref MSG msg, int grfModifiers)
         {
             // Handle tabbing out of the WebOC
@@ -273,7 +266,6 @@ namespace MS.Internal.Controls
         /// Critical: Access the critical Host property.
         /// TAS: Host is not exposed.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void MoveFocusCallback(object direction)
         {
             Host.MoveFocus(new TraversalRequest((FocusNavigationDirection)direction));

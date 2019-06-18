@@ -115,7 +115,6 @@ namespace MS.Internal.PtsHost
         /// <SecurityNote>
         /// Critical, because it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe virtual void GetFloaterPolygons(
             FloaterBaseParaClient paraClient,       // IN:
             uint fswdirTrack,                   // IN:  direction of Track

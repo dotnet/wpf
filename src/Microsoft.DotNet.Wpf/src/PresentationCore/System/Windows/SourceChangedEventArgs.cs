@@ -30,7 +30,6 @@ namespace System.Windows
         ///     data
         ///     PublicOK: As this code does not expose the data.
         /// </SecurityNote>
-        [SecurityCritical]
         public SourceChangedEventArgs(PresentationSource oldSource,
                                       PresentationSource newSource)
         :this(oldSource, newSource, null, null)
@@ -58,7 +57,6 @@ namespace System.Windows
         ///     critical data.
         ///     PublicOK:As this code does not expose any critical data.
         /// </SecurityNote>
-        [SecurityCritical]
         public SourceChangedEventArgs(PresentationSource oldSource,
                                       PresentationSource newSource,
                                       IInputElement element,
@@ -83,7 +81,6 @@ namespace System.Windows
         /// </SecurityNote>
         public PresentationSource OldSource
         {
-            [SecurityCritical]
             get 
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -104,7 +101,6 @@ namespace System.Windows
         /// </SecurityNote>
         public PresentationSource NewSource
         {
-            [SecurityCritical]
             get 
             {
                 SecurityHelper.DemandUIWindowPermission();

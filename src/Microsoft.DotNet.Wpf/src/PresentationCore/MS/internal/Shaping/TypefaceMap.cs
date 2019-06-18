@@ -79,7 +79,6 @@ namespace MS.Internal.Shaping
         /// Critical      - calls critical methods (PinAndGetCharacterPointer, Itemize)
         /// TreatAsSafe   - only returns shaping info for the given string
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void GetShapeableText(
             CharacterBufferReference    characterBufferReference,
             int                         stringLength,

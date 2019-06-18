@@ -35,7 +35,6 @@ namespace MS.Internal.FontFace
         /// <SecurityNote>
         /// Critical - As it uses raw pointers.
         /// </SecurityNote>
-        [SecurityCritical]
         unsafe void GetAdvanceWidths(
             char*   characterString,
             int     characterLength,

@@ -66,7 +66,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public IntPtr Handle
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -79,7 +78,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         internal IntPtr CriticalHandle
         {
-            [SecurityCritical]
             get
             {
                 Invariant.Assert(_window != null, "Cannot be null since we verify in the constructor");
@@ -99,14 +97,12 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public IntPtr Owner
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
                 Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
                 return _window.OwnerHandle;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -132,7 +128,6 @@ namespace System.Windows.Interop
         ///   Critical: Create and exposes the window handle.
         ///   PublicOK: We demand UIPermission.
         /// </SecurityNote>
-        [SecurityCritical]
         public IntPtr EnsureHandle()
         {
             SecurityHelper.DemandUIWindowPermission();

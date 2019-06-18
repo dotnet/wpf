@@ -83,9 +83,7 @@ internal static class SecurityHelper
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
 #if REACHFRAMEWORK
-        [SecurityCritical]
 #else        
-        [SecuritySafeCritical]
 #endif        
         internal static bool CheckUnmanagedCodePermission()
         {
@@ -104,7 +102,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUnmanagedCode()
         {
             if(_unmanagedCodePermission == null)
@@ -125,7 +122,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         internal static CodeAccessPermission CreateUserInitiatedRoutedEventPermission()
         {
             if(_userInitiatedRoutedEventPermission == null)
@@ -142,7 +138,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasUserInitiatedRoutedEventPermission()
         {
             try
@@ -166,7 +161,6 @@ internal static class SecurityHelper
         /// Critical: This code throws an exception if someone sets value to be true and we are in partial trust
         /// TreatAsSafe: The only reason we mark this as critical is to track code
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ThrowExceptionIfSettingTrueInPartialTrust(ref bool value)
         {
             if (value == true && !SecurityHelper.CheckUnmanagedCodePermission())
@@ -179,7 +173,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandWebBrowserPermission()
         {
             CachedWebBrowserPermission.Demand();
@@ -190,7 +183,6 @@ internal static class SecurityHelper
         ///</SecurityNote>
         internal static WebBrowserPermission CachedWebBrowserPermission
         {
-            [SecurityCritical]
             get
             {
                 if (_webBrowserPermission == null)
@@ -212,7 +204,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerAndAppDomainHaveUnrestrictedWebBrowserPermission()
         {
             if (!MS.Internal.SecurityHelper.AppDomainHasPermission(CachedWebBrowserPermission))
@@ -236,7 +227,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasUserInitiatedNavigationPermission()
         {
             try
@@ -259,7 +249,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         internal static CodeAccessPermission CreateUserInitiatedNavigationPermission()
         {
             if(_userInitiatedNavigationPermission == null)
@@ -277,7 +266,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandPrintDialogPermissions()
         {
             if(_defaultPrintingPermission == null)
@@ -296,7 +284,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasMemberAccessReflectionPermission()
         {
             try
@@ -328,7 +315,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool IsFullTrustCaller()
         {
             try
@@ -359,7 +345,6 @@ internal static class SecurityHelper
         ///    Critical: This code extracts the permission set associated with an appdomain by elevating
         ///    TreatAsSafe: The information is not exposed
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasPermissionWithAppDomainOptimization(params IPermission[] permissionsToCheck)
         {
 #if NETFX
@@ -396,7 +381,6 @@ internal static class SecurityHelper
         ///     such as file paths.
         /// Safe: Does not expose the permission object to the caller.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool AppDomainHasPermission(IPermission permissionToCheck)
         {
 #if NETFX
@@ -412,7 +396,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical: Elevates to extract the AppDomain BaseDirectory and returns it, which is sensitive information.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static Uri GetBaseDirectory(AppDomain domain)
         {
             Uri appBase = null;
@@ -445,7 +428,6 @@ internal static class SecurityHelper
         ///               Assuming we are accessing http content from an https site it will
         ///               throw a demand
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void BlockCrossDomainForHttpsApps(Uri uri)
         {
             // if app is HTTPS, no cross domain allowed
@@ -471,7 +453,6 @@ internal static class SecurityHelper
         /// if a condition for accessing Unc content is not satisfied, but since we want to track
         /// its callers, we are not marking this as SecurityTreatAsSafe.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void EnforceUncContentAccessRules(Uri contentUri)
         {
             // this should be called only for UNC content
@@ -503,7 +484,6 @@ internal static class SecurityHelper
          /// <SecurityNote>
          ///   Critical: This code elevates to call MapUrlToZone in the form of a SUC
          /// </SecurityNote>
-         [SecurityCritical]
          internal static int MapUrlToZoneWrapper(Uri uri)
          {
               int targetZone = NativeMethods.URLZONE_LOCAL_MACHINE ; // fail securely this is the most priveleged zone
@@ -546,7 +526,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandFilePathDiscoveryWriteRead()
         {
             FileIOPermission permobj = new FileIOPermission(PermissionState.None);
@@ -557,7 +536,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: This extracts permission set for app domain
         ///</SecurityNote>
-        [SecurityCritical]
         internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
         {
 #if NETFX
@@ -614,7 +592,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasSerializationPermission()
         {
             try
@@ -645,7 +622,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasAllClipboardPermission()
         {
             try
@@ -662,7 +638,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandAllClipboardPermission()
         {
             if(_uiPermissionAllClipboard == null)
@@ -676,7 +651,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandPathDiscovery(string path)
         {
             new FileIOPermission(FileIOPermissionAccess.PathDiscovery, path).Demand();
@@ -686,7 +660,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CheckEnvironmentPermission()
         {
             try
@@ -704,7 +677,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandEnvironmentPermission()
         {
             if(_unrestrictedEnvironmentPermission == null)
@@ -718,7 +690,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUriDiscoveryPermission(Uri uri)
         {
             CodeAccessPermission permission = CreateUriDiscoveryPermission(uri);
@@ -729,7 +700,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         internal static CodeAccessPermission CreateUriDiscoveryPermission(Uri uri)
         {
             // explicitly disallow sub-classed Uris to guard against
@@ -751,7 +721,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         internal static CodeAccessPermission CreateUriReadPermission(Uri uri)
         {
             // explicitly disallow sub-classed Uris to guard against
@@ -773,7 +742,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUriReadPermission(Uri uri)
         {
             CodeAccessPermission permission = CreateUriReadPermission(uri);
@@ -790,7 +758,6 @@ internal static class SecurityHelper
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool CallerHasPathDiscoveryPermission(string path)
         {
             try
@@ -812,7 +779,6 @@ internal static class SecurityHelper
         ///</SecurityNote>
         internal static PermissionSet EnvelopePermissionSet
         {
-            [SecurityCritical]
             get
             {
                 if (_envelopePermissionSet == null)
@@ -832,7 +798,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         private static PermissionSet CreateEnvelopePermissionSet()
         {
             PermissionSet permissionSet = new PermissionSet(PermissionState.None);
@@ -849,7 +814,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         ///</SecurityNote>
-        [SecurityCritical]
         internal static void DemandRightsManagementPermission()
         {
             if(_rightsManagementPermission == null)
@@ -863,7 +827,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         ///</SecurityNote>
-        [SecurityCritical]
         internal static void DemandCompoundFileIOPermission()
         {
             if(_compoundFileIOPermission == null)
@@ -877,7 +840,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         ///</SecurityNote>
-        [SecurityCritical]
         internal static void DemandPathDiscovery(string path)
         {
             FileIOPermission permobj = new FileIOPermission(PermissionState.None);
@@ -889,7 +851,6 @@ internal static class SecurityHelper
         /// Note that the XAML reader relies on being able to call RunClassConstructor() on non-public types.
         /// This is considered a security flaw, and a future version of the CLR will likely plug it.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void RunClassConstructor(Type t)
         {
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(t.TypeHandle);
@@ -903,7 +864,6 @@ internal static class SecurityHelper
         /// TreatAsSafe: Determining size is deemed as a safe operation
         /// </SecurityNote>
         /// <remarks> The LinkDemand on Marshal.SizeOf() was removed in v4. </remarks>
-        [SecuritySafeCritical]
         internal static int SizeOf(Type t)
         {
             return Marshal.SizeOf(t);
@@ -915,7 +875,6 @@ internal static class SecurityHelper
         /// Critical: This calls into Marshal.SizeOf which has a link demand
         /// TreatAsSafe: Determining size is deemed as a safe operation
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static int SizeOf(Object o)
         {
             return Marshal.SizeOf(o);
@@ -929,7 +888,6 @@ internal static class SecurityHelper
         ///           the IErrorInfo may have security sensitive information like file paths stored in it
         /// TreatAsSafe: Uses overload of GetExceptionForHR that omits IErrorInfo information from exception message
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static Exception GetExceptionForHR(int hr)
         {
             return Marshal.GetExceptionForHR(hr, new IntPtr(-1));
@@ -943,7 +901,6 @@ internal static class SecurityHelper
         ///           the IErrorInfo may have security sensitive information like file paths stored in it
         /// TreatAsSafe: Uses overload of ThrowExceptionForHR that omits IErrorInfo information from exception message
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void ThrowExceptionForHR(int hr)
         {
             Marshal.ThrowExceptionForHR(hr, new IntPtr(-1));
@@ -956,7 +913,6 @@ internal static class SecurityHelper
         /// TreatAsSafe: Clears the per thread IErrorInfo by calling GetHRForException a second time 
         ///              with an exception object with no security sensitive information
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static int GetHRForException(Exception exception)
         {
             if (exception == null)
@@ -982,7 +938,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandRegistryPermission()
         {
             if(_unrestrictedRegistryPermission == null)
@@ -998,7 +953,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUIWindowPermission()
         {
             if(_allWindowsUIPermission == null)
@@ -1013,7 +967,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandInfrastructurePermission()
         {
             if(_infrastructurePermission == null)
@@ -1031,7 +984,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandMediaPermission(MediaPermissionAudio audioPermissionToDemand,
                                                    MediaPermissionVideo videoPermissionToDemand,
                                                    MediaPermissionImage imagePermissionToDemand)
@@ -1052,9 +1004,7 @@ internal static class SecurityHelper
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
 #if REACHFRAMEWORK        
-        [SecurityCritical]
 #else        
-        [SecuritySafeCritical]
 #endif        
         internal static bool CallerHasMediaPermission(MediaPermissionAudio audioPermissionToDemand,
                                                       MediaPermissionVideo videoPermissionToDemand,
@@ -1079,7 +1029,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUnrestrictedUIPermission()
         {
             if(_unrestrictedUIPermission == null)
@@ -1094,7 +1043,6 @@ internal static class SecurityHelper
 #if PRESENTATION_CORE
         internal static bool AppDomainGrantedUnrestrictedUIPermission
         {
-            [SecurityCritical]
             get
             {
                 if(!_appDomainGrantedUnrestrictedUIPermission.HasValue)
@@ -1105,7 +1053,6 @@ internal static class SecurityHelper
                 return _appDomainGrantedUnrestrictedUIPermission.Value;
             }
         }
-        [SecurityCritical]
         private static bool? _appDomainGrantedUnrestrictedUIPermission;
 
 #endif
@@ -1114,7 +1061,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandFileIOReadPermission(string fileName)
         {
             new FileIOPermission(FileIOPermissionAccess.Read, fileName).Demand();
@@ -1125,7 +1071,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandFileDialogSavePermission()
         {
             if(_fileDialogSavePermission == null)
@@ -1142,7 +1087,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandUnrestrictedFileIOPermission()
         {
             if(_unrestrictedFileIOPermission == null)
@@ -1156,7 +1100,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandFileDialogOpenPermission()
         {
             if(_fileDialogOpenPermission == null)
@@ -1177,7 +1120,6 @@ internal static class SecurityHelper
         ///     TreatAsSafe - The MessageBox API takes a static strings and known enums as input.  There is nothing
         ///                   unsafe with the dialog and it is not spoofable from Avalon as it is a Win32 window.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         static
         void
@@ -1217,7 +1159,6 @@ internal static class SecurityHelper
         ///     TreatAsSafe - The MessageBox API takes a static strings and known enums as input.  There is nothing
         ///                   unsafe with the dialog and it is not spoofable from Avalon as it is a Win32 window.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         static
         void
@@ -1247,7 +1188,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandMediaAccessPermission(String uri)
         {
             CodeAccessPermission casPermission= SecurityHelper.CreateMediaAccessPermission(uri);
@@ -1262,7 +1202,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         ///  Critical: Returns a permission object, which can be misused.
         ///</SecurityNote>
-        [SecurityCritical]
         internal
         static
         CodeAccessPermission
@@ -1313,9 +1252,7 @@ internal static class SecurityHelper
         /// Safe     - The method denies the caller access to the full exception object.
         /// </SecurityNote>
 #if REACHFRAMEWORK        
-        [SecurityCritical]
 #else        
-        [SecuritySafeCritical]
 #endif        
         internal static bool CallerHasWebPermission( Uri uri )
         {
@@ -1333,7 +1270,6 @@ internal static class SecurityHelper
         /// <SecurityNote>
         /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void DemandWebPermission( Uri uri )
         {
             // We do this first as a security measure since the call below
@@ -1365,7 +1301,6 @@ internal static class SecurityHelper
         /// <summary>
         /// By default none of the plug-in serializer code must succeed for partially trusted callers
         /// </summary>
-        [SecurityCritical]
         internal static void DemandPlugInSerializerPermissions()
         {
             if(_plugInSerializerPermissions == null)
@@ -1396,7 +1331,6 @@ internal static class SecurityHelper
         ///<SecurityNote>
         /// Critical - Asserts registry permission on the caller-provided key.
         ///</SecurityNote>
-       [SecurityCritical]
        static internal object ReadRegistryValue( RegistryKey baseRegistryKey, string keyName, string valueName )
        {
             object value = null;

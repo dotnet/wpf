@@ -73,7 +73,6 @@ namespace MS.Internal.AppModel
         /// TreatAsSafe - the act of putting this content in a new webbrowser control (and by extention, a new PresentationHost) 
         ///               isolates the xaml content from the rest of the application.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object XamlConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
             asyncObjectConverter = null;

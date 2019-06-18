@@ -128,8 +128,6 @@ namespace System.Windows.Navigation
         /// Critical: does object serialization
         /// Public OK: has a LinkDemand
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

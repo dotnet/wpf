@@ -29,7 +29,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical calls ProcessInputEventArgs.Reset ( critical as it handles InputManager)
         ///</SecurityNote> 
-        [SecurityCritical]
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _canceled = false;

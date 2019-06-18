@@ -95,7 +95,6 @@ namespace System.Windows.Automation.Peers
         /// <SecurityNote>
         ///     Critical - Calls critical AutomationPeer.Hwnd setter.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static AutomationPeer GetRootAutomationPeer(Visual rootVisual, IntPtr hwnd)
         {
             AutomationPeer root = null;
@@ -201,7 +200,6 @@ namespace System.Windows.Automation.Peers
         ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
         ///                   co-ordinates to screen space.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         override protected Rect GetBoundingRectangleCore()
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
@@ -230,7 +228,6 @@ namespace System.Windows.Automation.Peers
         ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
         ///                   co-ordinates to screen space.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override Rect GetVisibleBoundingRectCore()
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
@@ -513,7 +510,6 @@ namespace System.Windows.Automation.Peers
         ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
         ///                   co-ordinates to screen space.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         override protected Point GetClickablePointCore()
         {
             Point pt = new Point(double.NaN, double.NaN);

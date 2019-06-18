@@ -39,7 +39,6 @@ namespace Microsoft.Win32
     ///     We Don't want arbitrary Partially trusted code deriving from CommonDialog.
     ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
     /// </SecurityNote>
-    [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
     public abstract class CommonDialog
     {
         //---------------------------------------------------
@@ -66,7 +65,6 @@ namespace Microsoft.Win32
         ///     PublicOk: This method is abstract, and there is an InheritanceDemand for 
         ///             UIPermission (UIPermissionWindow.AllWindows) to derive from CommonDialog.
         /// </SecurityNote>
-        [SecurityCritical]
         public abstract void Reset();
 
         /// <summary>
@@ -83,7 +81,6 @@ namespace Microsoft.Win32
         ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
         ///     PublicOk: Demands Permission appropriate to the dialog (defaults to UIPermissionWindow.AllWindows)
         /// </SecurityNote>
-        [SecurityCritical]
         public virtual Nullable<bool> ShowDialog()
         {
             CheckPermissionsToShowDialog();
@@ -158,7 +155,6 @@ namespace Microsoft.Win32
         ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
         ///     PublicOk: Demands UIPermission (UIPermissionWindow.AllWindows)
         /// </SecurityNote>
-        [SecurityCritical]
         public Nullable<bool> ShowDialog(Window owner)
         {
             CheckPermissionsToShowDialog();
@@ -253,7 +249,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical:  Calls UnsafeNativeMethods.SetFocus() and UnsafeNativeMethods.PostMessage()
         /// </SecurityNote>
-        [SecurityCritical]
         protected virtual IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
         {
             // WM_INITDIALOG
@@ -283,7 +278,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Demands permissions appropriate to the dialog to be shown.
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void CheckPermissionsToShowDialog()
         {
             // Verify we're on the right thread.  
@@ -314,7 +308,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical: Calls UnsafeNativeMethods.SetWindowPos()
         /// </SecurityNote>
-        [SecurityCritical]
         internal void MoveToScreenCenter(HandleRef hWnd)
         {
             // Create an IntPtr to store a handle to the monitor.
@@ -425,7 +418,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical: hWnds are critical data.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwndOwnerWindow;
 
         #endregion Private Fields

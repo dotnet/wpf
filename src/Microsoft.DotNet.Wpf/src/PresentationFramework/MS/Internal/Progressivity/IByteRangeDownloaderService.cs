@@ -53,7 +53,6 @@ namespace MS.Internal.Progressivity
         /// <SecurityNote>
         /// Critical : Accepts critical SafeHandle argument
         /// </SecurityNote>
-        [SecurityCritical]
         void InitializeByteRangeDownloader(
             [MarshalAs(UnmanagedType.LPWStr)] string url,
             [MarshalAs(UnmanagedType.LPWStr)] string tempFile,

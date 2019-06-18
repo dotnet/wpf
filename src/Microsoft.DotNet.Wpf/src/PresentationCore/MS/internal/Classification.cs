@@ -207,8 +207,6 @@ namespace MS.Internal
         ///<SecurityNote>
         /// Critical - as this code performs an elevation. 
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, EntryPoint="MILGetClassificationTables")]
         internal static extern void MILGetClassificationTables(out RawClassificationTables ct);
         /// <SecurityNote>
@@ -217,7 +215,6 @@ namespace MS.Internal
         ///    TreatAsSafe: The constructor is safe since it simply stores these pointers. The risk here 
         ///    in the future is not of these pointers being spoofed since they are not settable from outside.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static Classification()
         {
             unsafe 
@@ -243,7 +240,6 @@ namespace MS.Internal
         ///    TreatAsSafe: This code is ok since it reduces codepoint to one of 256 possible
         ///    values and will always succeed. Also this information is ok to expose.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static public short GetUnicodeClassUTF16(char codepoint)
         {
             unsafe 
@@ -266,7 +262,6 @@ namespace MS.Internal
         ///    TreatAsSafe: There is bounds checking in place and this dereferences a valid structure which
         ///    is guaranteed to be populated
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static public short GetUnicodeClass(int unicodeScalar)
         {
             unsafe
@@ -322,7 +317,6 @@ namespace MS.Internal
         ///    TreatAsSafe: This information is safe to expose at the same time the unicodeScalar passed in
         ///    is validated for bounds
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static public bool IsCombining(int unicodeScalar)
         {
             unsafe
@@ -344,7 +338,6 @@ namespace MS.Internal
         ///    TreatAsSafe: This information is safe to expose at the same time the unicodeScalar passed in
         ///    is validated for bounds
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static public bool IsJoiner(int unicodeScalar)
         {
             unsafe
@@ -379,7 +372,6 @@ namespace MS.Internal
         ///    a string, a char array or an unmanaged char*. The third case is critical and tightly controlled
         ///    so the risk of bogus length is significantly mitigated.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static public int AdvanceUntilUTF16(
             CharacterBuffer     charBuffer,
             int                 offsetToFirstChar,
@@ -418,7 +410,6 @@ namespace MS.Internal
         ///    TreatAsSafe: This code exposes the index of the next non UTF16 character in a run. This is ok to expose
         ///    Also the calls to CharBuffer and CahrAttribute do the requisite bounds checking.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]        
         static public int AdvanceWhile(
             CharacterBufferRange unicodeString, 
             ItemClass            itemClass 
@@ -453,7 +444,6 @@ namespace MS.Internal
         /// </SecurityNote>
         private static unsafe short*** UnicodeClassTable
         {
-            [SecurityCritical]
             get { return (short***)_unicodeClassTable.Value; }
         }
         /// <SecurityNote>
@@ -461,7 +451,6 @@ namespace MS.Internal
         /// </SecurityNote>
         private static unsafe CharacterAttribute* CharAttributeTable
         {
-            [SecurityCritical]
             get { return (CharacterAttribute*)_charAttributeTable.Value; }
         }
 
@@ -469,7 +458,6 @@ namespace MS.Internal
         ///    Critical: This accesses unsafe code and indexes into an array
         ///    Safe    : This method does bound check on the input char class.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static CharacterAttribute CharAttributeOf(int charClass)
         {   
             unsafe 

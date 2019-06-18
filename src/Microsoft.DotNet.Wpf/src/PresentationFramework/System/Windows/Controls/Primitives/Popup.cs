@@ -1468,7 +1468,6 @@ namespace System.Windows.Controls.Primitives
         ///     TreatAsSafe: It initializes this to new value of the popuproot and
         ///     this should not cause any untowards behavior since it is not configurable
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void CreateNewPopupRoot()
         {
             if (_popupRoot.Value == null)
@@ -1572,7 +1571,6 @@ namespace System.Windows.Controls.Primitives
         ///     TreatAsSafe:popuproot is critical for set so that you cannot set it to
         ///     arbitrary values
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetRootVisualToPopupRoot()
         {
             if (PopupAnimation != PopupAnimation.None && IsTransparent)
@@ -1591,7 +1589,6 @@ namespace System.Windows.Controls.Primitives
         /// Critical - it calls a critical method (BuildWindow)
         /// TreatAsSafe - it calls it passing hooks defined in this class
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void BuildWindow(Visual targetVisual)
         {
             // AllowsTransparency is applied to popup only at creation time
@@ -1623,7 +1620,6 @@ namespace System.Windows.Controls.Primitives
         /// Critical - it calls a critical method (DestroyWindow)
         /// TreatAsSafe - it calls it passing hooks defined in this class
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DestroyWindow()
         {
             if (_secHelper.IsWindowAlive())
@@ -1742,7 +1738,6 @@ namespace System.Windows.Controls.Primitives
         ///   Critical : Uses critical type NativeMethods.WINDOWPOS*
         ///   Safe     : No information is exposed
         /// <SecurityNote>
-        [SecuritySafeCritical]
         private IntPtr PopupFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch ((WindowMessage)msg)
@@ -2732,7 +2727,6 @@ namespace System.Windows.Controls.Primitives
         ///     What it does expose is hotx and hoty which are ok to give out since they signify
         ///      hot area on mouse cursor or icon
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void GetMouseCursorSize(out int width, out int height, out int hotX, out int hotY)
         {
             /*
@@ -2984,7 +2978,6 @@ namespace System.Windows.Controls.Primitives
             /// </SecurityNote>
             internal bool IsChildPopup
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (!_isChildPopupInitialized)
@@ -3004,7 +2997,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it accesses critical data (_window).
             /// TreatAsSafe - it's safe to return whether window is valid and not disposed.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal bool IsWindowAlive()
             {
                 if (_window != null)
@@ -3020,7 +3012,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it accesses critical data (_window). it calls critical methods (GetPresentationSource)
             /// TreatAsSafe - it's safe to expose client to screen coordinates.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal Point ClientToScreen(Visual rootVisual, Point clientPoint)
             {
                 // Get the HwndSource of the target element.
@@ -3039,7 +3030,6 @@ namespace System.Windows.Controls.Primitives
             ///          - It asserts unmanaged code permission
             /// TreatAsSafe - it's safe to expose client to screen coordinates.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private NativeMethods.POINT ClientToScreen(HwndSource hwnd, Point clientPt)
             {
                 bool isChildPopup = IsChildPopup;
@@ -3070,7 +3060,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it calls critical methods (GetPresentationSource, GetCursorPos).
             /// TreatAsSafe - it's safe to return mouse position when it's over this window.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal NativeMethods.POINT GetMouseCursorPos(Visual targetVisual)
             {
                 if (Mouse.DirectlyOver != null)
@@ -3122,7 +3111,6 @@ namespace System.Windows.Controls.Primitives
             /// outside the parent visual area if we are in partial trust. the childness of the popup is determined
             /// when its window is created.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void SetPopupPos(bool position, int x, int y, bool size, int width, int height)
             {
                 int flags = NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE;
@@ -3143,7 +3131,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it calls critical methods (ParentHandle)
             /// TreatAsSafe - it is safe to return a window's rectangle.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal Rect GetParentWindowRect()
             {
                 NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, 0, 0);
@@ -3161,7 +3148,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it accesses critical data (window).
             /// TreatAsSafe - it's safe to return a window's to-device matrix
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal Matrix GetTransformToDevice()
             {
                 CompositionTarget ct = _window.Value.CompositionTarget;
@@ -3177,7 +3163,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it accesses critical data (window).
             /// TreatAsSafe - it's safe to return a window's to-device matrix
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static Matrix GetTransformToDevice(Visual targetVisual)
             {
                 HwndSource hwndSource = null;
@@ -3202,7 +3187,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it accesses critical data (window).
             /// TreatAsSafe - it's safe to return a window's from-device matrix
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal Matrix GetTransformFromDevice()
             {
                 CompositionTarget ct = _window.Value.CompositionTarget;
@@ -3217,7 +3201,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it accesses critical data (window).and sets root visual
             /// </SecurityNote>
-            [SecurityCritical]
             internal void SetWindowRootVisual(Visual v)
             {
                 _window.Value.RootVisual = v;
@@ -3227,7 +3210,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it calls critical methods (GetPresentationSource).
             /// TreatAsSafe - it's safe to return whether a Visual's PresentationSource is null or not.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static bool IsVisualPresentationSourceNull(Visual visual)
             {
                 return (PopupSecurityHelper.GetPresentationSource(visual) == null);
@@ -3238,7 +3220,6 @@ namespace System.Windows.Controls.Primitives
             /// TreatAsSafe: it's safe to show the window; its security is already defined (child if partial trust,
             /// with no boundaries otherwise).
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void ShowWindow()
             {
                 if (IsChildPopup)
@@ -3273,7 +3254,6 @@ namespace System.Windows.Controls.Primitives
             /// TreatAsSafe - it's safe to hide the window; its security is already defined (child if partial trust,
             /// with no boundaries otherwise).
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void HideWindow()
             {
                 UnsafeNativeMethods.ShowWindow(new HandleRef(null, Handle), NativeMethods.SW_HIDE);
@@ -3288,7 +3268,6 @@ namespace System.Windows.Controls.Primitives
             ///     e.g., we don't allow WebOC inside Popup window, this is a better performed way. If we change that, we should make sure we are comparing
             ///     to all weboc on the page. We can get a list of weboc by walking the navigationservice tree.
             /// </remarks>
-            [SecurityCritical]
             private IntPtr GetLastWebOCHwnd()
             {
                 // Get the bottom hwnd in z-order.
@@ -3332,7 +3311,6 @@ namespace System.Windows.Controls.Primitives
             ///     Note that setting the _isChildPopup boolean is critical.
             ///
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void SetHitTestable(bool hitTestable)
             {
                 // demands unmanaged code permission. it's risky to take this demand out.
@@ -3405,7 +3383,6 @@ namespace System.Windows.Controls.Primitives
             ///          - Creates an HwndSource
             ///          - Adds a hook to the HwndSource
             /// </SecurityNote>
-            [SecurityCritical]
             internal void BuildWindow(int x, int y, Visual placementTarget,
                 bool transparent, HwndSourceHook hook, AutoResizedEventHandler handler, HwndDpiChangedEventHandler dpiChangedHandler)
             {
@@ -3505,7 +3482,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it calls critical methods (GetForegroundWindow).
             /// </SecurityNote>
-            [SecurityCritical]
             private static bool ConnectedToForegroundWindow(IntPtr window)
             {
                 IntPtr foregroundWindow = UnsafeNativeMethods.GetForegroundWindow();
@@ -3529,7 +3505,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it exposes handle from an HwndSource object.
             /// </SecurityNote>
-            [SecurityCritical]
             private static IntPtr GetHandle(HwndSource hwnd)
             {
                 // add hook to the popup's window
@@ -3540,7 +3515,6 @@ namespace System.Windows.Controls.Primitives
             /// Critical - it gets the handle from an HwndSource object.
             ///          - it calls Critical GetParent.
             /// </SecurityNote>
-            [SecurityCritical]
             private static IntPtr GetParentHandle(HwndSource hwnd)
             {
                 if (hwnd != null)
@@ -3560,7 +3534,6 @@ namespace System.Windows.Controls.Primitives
             /// </SecurityNote>
             private IntPtr Handle
             {
-                [SecurityCritical]
                 get
                 {
                     return (GetHandle(_window.Value));
@@ -3572,7 +3545,6 @@ namespace System.Windows.Controls.Primitives
             /// </SecurityNote>
             private IntPtr ParentHandle
             {
-                [SecurityCritical]
                 get
                 {
                     return (GetParentHandle(_window.Value));
@@ -3582,7 +3554,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it gets a PresentationSource from a Visual.
             /// </SecurityNote>
-            [SecurityCritical]
             private static PresentationSource GetPresentationSource(Visual visual)
             {
                 return (visual != null ? PresentationSource.CriticalFromVisual(visual) : null);
@@ -3598,7 +3569,6 @@ namespace System.Windows.Controls.Primitives
             ///                   co-ordinates to screen space.
             ///     </SecurityNote>
             /// </summary>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void ForceMsaaToUiaBridge(PopupRoot popupRoot)
             {
                 if (Handle != IntPtr.Zero && (UnsafeNativeMethods.IsWinEventHookInstalled(NativeMethods.EVENT_OBJECT_FOCUS) || UnsafeNativeMethods.IsWinEventHookInstalled(NativeMethods.EVENT_OBJECT_STATECHANGE)))
@@ -3632,7 +3602,6 @@ namespace System.Windows.Controls.Primitives
             ///                 Remove the hook from the window.
             ///                 Call hwnd.Dispose.
             /// </SecurityNote>
-            [SecurityCritical]
             internal void DestroyWindow(HwndSourceHook hook, AutoResizedEventHandler onAutoResizedEventHandler, HwndDpiChangedEventHandler onDpiChagnedEventHandler)
             {
                 // Do this first to prevent infinite loops in dispose
@@ -3662,7 +3631,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it determines whether this is a restricted popup window or not.
             /// </SecurityNote>
-            [SecurityCritical]
             private bool _isChildPopup;
 
             /// <summary>
@@ -3671,7 +3639,6 @@ namespace System.Windows.Controls.Primitives
             /// <SecurityNote>
             /// Critical - it indicates whether _isChildPopup has been intialized or not.
             /// </SecurityNote>
-            [SecurityCritical]
             private bool _isChildPopupInitialized;
 
             /// <SecurityNote>
@@ -3709,7 +3676,6 @@ namespace System.Windows.Controls.Primitives
             /// </SecurityNote>
             internal static bool IsPerMonitorDpiScalingActive
             {
-                [SecuritySafeCritical]
                 get
                 {
                     if (!HwndTarget.IsPerMonitorDpiScalingEnabled)
@@ -3761,7 +3727,6 @@ namespace System.Windows.Controls.Primitives
             ///     Critical - Calls into Native methods
             ///     Safe - Does not return critical resources or handles to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static NativeMethods.POINTSTRUCT GetPlacementOrigin(Popup popup)
             {
                 var placementOrigin = new NativeMethods.POINTSTRUCT(0, 0);

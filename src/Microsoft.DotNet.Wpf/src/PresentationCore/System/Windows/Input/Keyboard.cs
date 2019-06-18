@@ -370,7 +370,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public static KeyboardDevice PrimaryDevice
         {
-            [SecurityCritical]
             get
             {
                 KeyboardDevice keyboardDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
@@ -388,7 +387,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses critical data(_activeSource)
         ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool IsFocusable(DependencyObject element)
         {
             // This should really be its own property, but it is hard to do efficiently.

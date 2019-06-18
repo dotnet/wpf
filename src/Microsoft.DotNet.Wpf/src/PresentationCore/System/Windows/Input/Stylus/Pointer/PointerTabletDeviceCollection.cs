@@ -77,7 +77,6 @@ namespace System.Windows.Input.StylusPointer
         ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDevices
         ///                     Does not accept or expose any secure information
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void Refresh()
         {
             try

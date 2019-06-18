@@ -49,13 +49,11 @@ namespace MS.Internal.Shaping
         /// </SecurityNote>
         public ushort this[int index]
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
                 return _storage[_index + index];
             }
-            [SecurityCritical,SecurityTreatAsSafe]
             set
             {
                 Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
@@ -73,7 +71,6 @@ namespace MS.Internal.Shaping
         public int Length
         {
             get { return _length; }
-            [SecurityCritical]
             set { _length = value; }
         }
 
@@ -291,7 +288,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         ///     Critical:Holds reference to a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         private ushort*     _array;
 
         /// <SecurityNote>
@@ -304,7 +300,6 @@ namespace MS.Internal.Shaping
         ///     Critical: This code probes into checked pointer. 
         ///     Safe    : The pointer is validated at probing.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
         {            
             _array = array.Probe(0, arrayLength);
@@ -319,13 +314,11 @@ namespace MS.Internal.Shaping
         /// </SecurityNote>
         public override ushort this[int index]
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Invariant.Assert(index >= 0 && index < _arrayLength.Value);
                 return _array[index];
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 Invariant.Assert(index >= 0 && index < _arrayLength.Value);

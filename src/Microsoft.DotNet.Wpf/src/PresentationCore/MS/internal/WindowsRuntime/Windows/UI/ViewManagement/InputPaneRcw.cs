@@ -29,7 +29,6 @@ namespace MS.Internal.WindowsRuntime
             /// <SecurityNote>
             ///     Critical: This elevates to unmanaged code permission.
             /// </SecurityNote>
-            [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
             [Guid("75CF2C57-9195-4931-8332-F0B409E916AF"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
             [ComImport]
             internal interface IInputPaneInterop
@@ -50,7 +49,6 @@ namespace MS.Internal.WindowsRuntime
             /// <SecurityNote>
             ///     Critical: This elevates to unmanaged code permission.
             /// </SecurityNote>
-            [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
             [Guid("8A6B3F26-7090-4793-944C-C3F2CDE26276"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
             [ComImport]
             internal interface IInputPane2

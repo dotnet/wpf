@@ -422,7 +422,6 @@ namespace MS.Internal.PtsHost
         /// Safe - as this can't be be used to pass arbitrary parameters.  All parameters passed
         ///        in are either Critical for set or are generated within the function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ReadOnlyCollection<ColumnResult> GetColumnResults(out bool hasTextContent)
         {
             Invariant.Assert(!IsDisposed);
@@ -546,7 +545,6 @@ namespace MS.Internal.PtsHost
         /// Critical - as this calls Critical function PTS.FsQueryTrackDetails and
         ///            passes an IntPtr directly.
         /// </SecurityNote>
-        [SecurityCritical]
         internal TextContentRange GetTextContentRangeFromColumn(IntPtr pfstrack)
         {
             Invariant.Assert(!IsDisposed);
@@ -586,7 +584,6 @@ namespace MS.Internal.PtsHost
         /// Critical - as this calls Critical function PTS.FsQueryTrackDetails and
         ///            passes an IntPtr directly.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ReadOnlyCollection<ParagraphResult> GetParagraphResultsFromColumn(IntPtr pfstrack, Vector parentOffset, out bool hasTextContent)
         {
             Invariant.Assert(!IsDisposed);

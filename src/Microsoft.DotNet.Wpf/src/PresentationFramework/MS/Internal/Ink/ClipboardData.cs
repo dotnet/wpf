@@ -42,7 +42,6 @@ namespace MS.Internal.Ink
         ///     Critical: This code copies ink content to the clipboard and accepts a dataobject which is
         ///     created under an elevation
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool CopyToDataObject(IDataObject dataObject)
         {
             // Check if the data can be copied

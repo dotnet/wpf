@@ -49,7 +49,6 @@ namespace MS.Internal.Printing.Configuration
     // CLR runtime treats CriticalFinalizerObject subclasses specially during interop marshaling
     // and finalization. SafeHandle supports reference counting to prevent handle recycling issue
     // (CriticalHandle doesn't).
-    [SecurityCritical]
     internal sealed class SafePTProviderHandle : System.Runtime.InteropServices.SafeHandle
     {
         // Called by P/Invoke when returning SafeHandle. It's private in order to prevent handle
@@ -57,7 +56,6 @@ namespace MS.Internal.Printing.Configuration
         /// <SecurityNote>
         ///     Critical: This code derives from SafeHandle which is link demand and inheritance demand protected
         /// </SecurityNote>
-        [SecurityCritical]
         private SafePTProviderHandle() : base(IntPtr.Zero, true)
         {
         }
@@ -88,7 +86,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - calls into code with SUC applied to enable Devmode  manipulation in Intranet Zone
         ///</SecurityNote>
-	[SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return PTUtility.IsSuccessCode(UnsafeNativeMethods.PTCloseProviderImpl(this.handle));
@@ -176,7 +173,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable Devmode  manipulation in Intranet Zone
         ///               Initializes critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -245,7 +241,6 @@ namespace MS.Internal.Printing.Configuration
         ///             - calls a critical method to seek a COM IStream
         ///             - Access critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         [PrintingPermission(
          SecurityAction.Demand,
         Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -323,7 +318,6 @@ namespace MS.Internal.Printing.Configuration
         ///             - calls a critical method to seek a COM IStream
         ///             - Accesses critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -439,7 +433,6 @@ namespace MS.Internal.Printing.Configuration
         ///             - calls a critical method to seek a COM IStream
         ///             - Accesses critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -511,7 +504,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable the conversion of a PrintTicket to devmode in Intranet Zone
         ///             - Accesses critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         [PrintingPermission(
          SecurityAction.Demand,
          Level = PrintingPermissionLevel.DefaultPrinting)]
@@ -580,7 +572,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - calls into SafeHandle Dispose() method to release critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         public override void Release()
         {
             if (_providerHandle != null)
@@ -601,7 +592,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - calls into SafeHandle Dispose() method to release critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (_disposed)
@@ -632,7 +622,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Accesses critical _providerHandle
         ///</SecurityNote>
-        [SecurityCritical]
         private void VerifyAccess()
         {
             if (_providerHandle == null)
@@ -660,8 +649,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - the method copies content from the managed stream object to unmanaged memory
         ///             - calls a critical method to seek a COM IStream
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)] 
         private static IStream IStreamFromMemoryStream(MemoryStream stream)
         {
             if (stream == null)
@@ -707,8 +694,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - the method copies unmanaged memory content into a managed stream object
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)] 
         private static MemoryStream MemoryStreamFromIStream(IStream stream)
         {
 
@@ -743,8 +728,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Asserts unmanaged code permissions to write to COM IStream
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)] 
         private static void CopyArrayToIStream(byte [] src, IStream dst, uint byteCount)
         {
             Invariant.Assert(src.Length >= byteCount);
@@ -806,8 +789,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Asserts unmanaged code permissions to read from COM IStream
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         private static void CopyIStreamToArray(IStream src, byte [] dst, uint byteCount)
         {
             Invariant.Assert(dst.Length >= byteCount);
@@ -859,8 +840,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Asserts unmanaged code permissions to change COM IStream position and length
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         private static void EnsureRemainingIStreamLength(IStream stream, uint byteCount)
         {
             ulong iStreamPosition = 0;
@@ -897,7 +876,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - SUC applied; Creates an IStream that can read from\write to arbitrary memory locations
         ///</SecurityNote>
-        [SecurityCritical]
         private static IStream CreateStreamOnHGlobal()
         {
             IStream result;
@@ -914,7 +892,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Calls a critical method to release COM object.
         ///</SecurityNote>
-        [SecurityCritical]
         private static void DeleteIStream(ref IStream stream)
         {
             if (stream != null)
@@ -927,8 +904,6 @@ namespace MS.Internal.Printing.Configuration
         ///<SecurityNote>
         /// Critical    - Asserts unmanaged code permissions to seeek COM IStream.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         private static void RewindIStream(IStream stream)
         {
             stream.Seek(0, 0 /*STREAM_SEEK_SET*/ , IntPtr.Zero);
@@ -956,7 +931,6 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// handle of unmanaged provider this provider instance is bound to
         /// </summary>
-        [SecurityCritical]
         private SafePTProviderHandle _providerHandle;
 
         /// <summary>

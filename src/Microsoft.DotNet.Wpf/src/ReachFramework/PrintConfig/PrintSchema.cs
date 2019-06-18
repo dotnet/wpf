@@ -2086,8 +2086,6 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] OrientationEnums = (int[])Enum.GetValues(typeof(PageOrientation));
             }
 
-            [System.Security.SecuritySafeCritical]
-            [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Unrestricted = true)]
             internal class PageOutputColorKeys
             {
                 private PageOutputColorKeys() {}

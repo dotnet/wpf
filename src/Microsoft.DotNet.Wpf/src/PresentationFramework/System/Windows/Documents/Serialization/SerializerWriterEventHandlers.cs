@@ -59,7 +59,6 @@ namespace System.Windows.Documents.Serialization
         /// Critical    -   PrintTicketLevel type is tagged critical because it is defined in non APTCA ReachFramework.dll
         /// Safe        -   The type is an inert enum that does not contain critical information
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public WritingPrintTicketRequiredEventArgs(
             System.Windows.Xps.Serialization.PrintTicketLevel       printTicketLevel,
             int                                                     sequence
@@ -81,7 +80,6 @@ namespace System.Windows.Documents.Serialization
         System.Windows.Xps.Serialization.PrintTicketLevel
         CurrentPrintTicketLevel
         {
-            [SecuritySafeCritical]
             get
             {
                 return _printTicketLevel;
@@ -112,13 +110,11 @@ namespace System.Windows.Documents.Serialization
         PrintTicket
         CurrentPrintTicket
         {
-            [SecuritySafeCritical]
             set
             {
                 _printTicket = value;
             }
 
-            [SecuritySafeCritical]
             get
             {
                 return _printTicket;
@@ -131,7 +127,6 @@ namespace System.Windows.Documents.Serialization
         /// Critical    -   PrintTicket type is tagged critical because it is defined in non APTCA ReachFramework.dll
         /// Safe        -   The type is an API wrapper over an XML document does not inherently contain critical information or perform critical operations
         /// </SecurityNote>
-        [SecurityCritical] // SecAnnotate complains when a field backing a critical type is marked [SecuritySafeCritical]
         private System.Windows.Xps.Serialization.PrintTicketLevel _printTicketLevel;
         private int                                                         _sequence;
 
@@ -139,7 +134,6 @@ namespace System.Windows.Documents.Serialization
         /// Critical    -   PrintTicket type is tagged critical because it is defined in non APTCA ReachFramework.dll
         /// Safe        -   The type is an API wrapper over an XML document does not inherently contain critical information or perform critical operations
         /// </SecurityNote>
-        [SecurityCritical] // SecAnnotate complains when a field backing a critical type is marked [SecuritySafeCritical]
         private PrintTicket _printTicket;
 #endif
     };

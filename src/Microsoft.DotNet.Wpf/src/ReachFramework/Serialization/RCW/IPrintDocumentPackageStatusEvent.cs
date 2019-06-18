@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("ED90C8AD-5C34-4D05-A1EC-0E8A9B3AD7AF"), TypeLibType(TypeLibTypeFlags.FDual | TypeLibTypeFlags.FNonExtensible | TypeLibTypeFlags.FDispatchable)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IPrintDocumentPackageStatusEvent
     {
         [DispId(1)]

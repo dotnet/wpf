@@ -242,15 +242,12 @@ namespace System.Windows.Media
         /// </SecurityNote>
         public static RenderMode ProcessRenderMode
         {
-            [SecurityCritical]
             get
             {
                 return UnsafeNativeMethods.MilCoreApi.RenderOptions_IsSoftwareRenderingForcedForProcess() ?
                     RenderMode.SoftwareOnly : RenderMode.Default;
             }
 
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
             set
             {
                 if (value != RenderMode.Default && value != RenderMode.SoftwareOnly)

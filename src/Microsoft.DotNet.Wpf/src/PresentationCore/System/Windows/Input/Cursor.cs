@@ -108,7 +108,6 @@ namespace System.Windows.Input
         ///    TreatAsSafe: This code is safe to expose because in the worst case you change cursor for your app
         /// See SecurityNote on _cursorHandle.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         [FriendAccessAllowed] //used by ColumnHeader.GetCursor in PresentationFramework
         internal Cursor(SafeHandle cursorHandle )
         {
@@ -140,7 +139,6 @@ namespace System.Windows.Input
         ///    Critical: SafeHandle code link demands on dispose.
         ///    TreatAsSafe: Safe to dispose a cursor.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         void Dispose(bool disposing)
         {
             if ( _cursorHandle != null )
@@ -174,7 +172,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal SafeHandle Handle
         {
-            [SecurityCritical]
             get
             {
                 return _cursorHandle ?? NativeMethods.CursorHandle.GetInvalidCursor();
@@ -201,7 +198,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: 1) We demand FileIOPermission. Then it's okay to throw an exception about any failure.
         ///         2) Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadFromFile(string fileName)
         {
             SecurityHelper.DemandFileIOReadPermission(fileName);
@@ -251,7 +247,6 @@ namespace System.Windows.Input
         /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
         /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LegacyLoadFromStream(Stream cursorStream)
         {
             //Generate a temporal file based on the memory stream.
@@ -320,7 +315,6 @@ namespace System.Windows.Input
         /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
         /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadFromStream(Stream cursorStream)
         {
             if (MS.Internal.CoreAppContextSwitches.AllowExternalProcessToBlockAccessToTemporaryFiles)
@@ -362,7 +356,6 @@ namespace System.Windows.Input
         /// Critical: Sets _cursorHandle, which is of a SecurityCritical type.
         /// TreatAsSafe: Anyone is allowed to set the cursor. See SecurityNote on _cursorHandle.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadCursorHelper(CursorType cursorType)
         {
             if (cursorType != CursorType.None)
@@ -406,7 +399,6 @@ namespace System.Windows.Input
         /// (Effect is only within the application's UI.) That's why TreatAsSafe methods are allowed to set this
         /// field. Individual methods on SafeHandle still guard access to the OS handle.
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeHandle  _cursorHandle;
 
         private static readonly int[] CursorTypes = {

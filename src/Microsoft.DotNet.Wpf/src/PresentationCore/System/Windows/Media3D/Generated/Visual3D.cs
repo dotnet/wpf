@@ -238,7 +238,6 @@ namespace System.Windows.Media.Media3D
         ///     as this provides a hook to the property system that we don't
         ///     want exposed under PartialTrust.
         /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,

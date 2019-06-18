@@ -206,7 +206,6 @@ namespace MS.Internal.AppModel
         ///             to an assembly from which a stream for the Uri was created and GetResourceManagerWrapper
         ///             guarantees that given a Uri, the stream is always created from that mapped Assembly
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override PackagePart GetPartCore(Uri uri)
         {
             string partName;

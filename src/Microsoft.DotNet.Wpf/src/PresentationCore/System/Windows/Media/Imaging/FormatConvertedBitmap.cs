@@ -91,7 +91,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical resources
         /// PublicOK - All inputs verified
         /// </SecurityNote>
-        [SecurityCritical ]
         public void EndInit()
         {
             WritePreamble();
@@ -117,7 +116,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - access critical resource
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();

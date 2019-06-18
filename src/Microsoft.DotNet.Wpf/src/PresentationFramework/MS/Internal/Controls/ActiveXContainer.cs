@@ -33,7 +33,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical - accesses critical _host member.
         ///</SecurityNote>
-        [SecurityCritical]
         internal ActiveXContainer(ActiveXHost host)
         {
             this._host = host;
@@ -67,7 +66,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical - calls _host.ActiveXInstance
         ///</SecurityNote>
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleContainer.EnumObjects(int grfFlags, out UnsafeNativeMethods.IEnumUnknown ppenum)
         {
             ppenum = null;
@@ -111,7 +109,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical - accesses critical _host member.
         ///</SecurityNote>
-        [SecurityCritical]
         IntPtr UnsafeNativeMethods.IOleInPlaceFrame.GetWindow()
         {
             return _host.ParentHandle.Handle;
@@ -120,7 +117,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.ContextSensitiveHelp(int fEnterMode)
         {
             return NativeMethods.S_OK;
@@ -129,7 +125,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.GetBorder(NativeMethods.COMRECT lprectBorder)
         {
             return NativeMethods.E_NOTIMPL;
@@ -138,7 +133,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.RequestBorderSpace(NativeMethods.COMRECT pborderwidths)
         {
             return NativeMethods.E_NOTIMPL;
@@ -147,7 +141,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.SetBorderSpace(NativeMethods.COMRECT pborderwidths)
         {
             return NativeMethods.E_NOTIMPL;
@@ -156,7 +149,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.SetActiveObject(UnsafeNativeMethods.IOleInPlaceActiveObject pActiveObject, string pszObjName)
         {
             //Winforms has code to remove selection handler around the active object
@@ -197,7 +189,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.InsertMenus(IntPtr hmenuShared, NativeMethods.tagOleMenuGroupWidths lpMenuWidths)
         {
             return NativeMethods.S_OK;
@@ -206,7 +197,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.SetMenu(IntPtr hmenuShared, IntPtr holemenu, IntPtr hwndActiveObject)
         {
             return NativeMethods.E_NOTIMPL;
@@ -215,7 +205,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.RemoveMenus(IntPtr hmenuShared)
         {
             return NativeMethods.E_NOTIMPL;
@@ -224,7 +213,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.SetStatusText(string pszStatusText)
         {
             return NativeMethods.E_NOTIMPL;
@@ -233,7 +221,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.EnableModeless(bool fEnable)
         {
             return NativeMethods.E_NOTIMPL;
@@ -242,7 +229,6 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical: Implements critical interface method
         ///</SecurityNote> 
-        [SecurityCritical]
         int UnsafeNativeMethods.IOleInPlaceFrame.TranslateAccelerator(ref MSG lpmsg, short wID)
         {
             return NativeMethods.S_FALSE;
@@ -254,7 +240,6 @@ namespace MS.Internal.Controls
         ///     Critical - calls ActiveXHost.
         ///     TreatAsSafe - transitioning to UIActive is ok.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnUIActivate(ActiveXHost site)
         {
             // The ShDocVw control repeatedly calls OnUIActivate() with the same
@@ -281,7 +266,6 @@ namespace MS.Internal.Controls
         ///     Critical - calls ActiveXHost.
         ///     TreatAsSafe - transitioning away from UI-Active is ok.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnUIDeactivate(ActiveXHost site)
         {
 #if DEBUG
@@ -302,7 +286,6 @@ namespace MS.Internal.Controls
         ///     TreatAsSafe - Transitioning away from in-place is ok.
         ///                   Clearing the active site is ok.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnInPlaceDeactivate(ActiveXHost site)
         {
             //TODO: Clear the focus here too?
@@ -325,7 +308,6 @@ namespace MS.Internal.Controls
         ///</SecurityNote>
         internal ActiveXHost ActiveXHost
         {
-            [SecurityCritical]
             get { return _host; }
         }
 
@@ -341,14 +323,12 @@ namespace MS.Internal.Controls
         ///<SecurityNote>
         ///     Critical - data - ptr. to control.
         ///</SecurityNote>
-        [SecurityCritical]
         private ActiveXHost _host;
 
 
         ///<SecurityNote>
         ///     Critical - data - ptr. to control.
         ///</SecurityNote>
-        [SecurityCritical]
         private ActiveXHost _siteUIActive;
 
         #endregion Private Fields

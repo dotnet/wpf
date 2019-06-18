@@ -153,7 +153,6 @@ namespace System.Windows.Ink
         ///     PublicOK: We demand UnmanagedCode before proceeding and
         ///             UnmanagedCode is the only permission we assert.
         /// </SecurityNote>
-        [SecurityCritical]
         public ReadOnlyCollection<GestureRecognitionResult> Recognize(StrokeCollection strokes)
         {
             //
@@ -180,7 +179,6 @@ namespace System.Windows.Ink
         ///         can use this method
         /// </SecurityNote>
         // Built into Core, also used by Framework.
-        [SecurityCritical]
         internal ReadOnlyCollection<GestureRecognitionResult> CriticalRecognize(StrokeCollection strokes)
         {
             return RecognizeImpl(strokes);
@@ -195,7 +193,6 @@ namespace System.Windows.Ink
         /// <SecurityNote>
         ///     Critical: Calls SecurityCritical method NativeRecognizer.Recognize
         /// </SecurityNote>
-        [SecurityCritical]
         private ReadOnlyCollection<GestureRecognitionResult> RecognizeImpl(StrokeCollection strokes)
         {
             if (strokes == null)

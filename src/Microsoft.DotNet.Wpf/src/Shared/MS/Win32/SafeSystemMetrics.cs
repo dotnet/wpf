@@ -46,7 +46,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int VirtualScreenWidth
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();                
@@ -64,7 +63,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int VirtualScreenHeight
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -82,7 +80,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int DoubleClickDeltaX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CXDOUBLECLK);
@@ -98,7 +95,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int DoubleClickDeltaY
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CYDOUBLECLK);
@@ -115,7 +111,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int DragDeltaX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CXDRAG);
@@ -131,7 +126,6 @@ namespace MS.Win32
         /// </SecurityNote>
         internal static int DragDeltaY
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CYDRAG);
@@ -147,7 +141,6 @@ namespace MS.Win32
         ///</SecurityNote> 
         internal static bool IsImmEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return  (UnsafeNativeMethods.GetSystemMetrics(SM.IMMENABLED) != 0);

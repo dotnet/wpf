@@ -47,7 +47,6 @@ namespace MS.Internal
         /// TreatAsSafe - Not controllable from external input. 
         ///               The information stored indicates whether invariant behavior is "strict" or not. Considered safe. 
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static Invariant()
         {
             _strict = _strictDefaultValue;
@@ -109,7 +108,6 @@ namespace MS.Internal
         ///                  means we've hit a bug in avalon code and we cannot safely
         ///                  continue.
         /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition)
         {
             if (!condition)
@@ -141,7 +139,6 @@ namespace MS.Internal
         ///                  means we've hit a bug in avalon code and we cannot safely
         ///                  continue.
         /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition, string invariantMessage)
         {
             if (!condition)
@@ -176,7 +173,6 @@ namespace MS.Internal
         ///                  means we've hit a bug in avalon code and we cannot safely
         ///                  continue.
         /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition, string invariantMessage, string detailMessage)
         {
             if (!condition)
@@ -254,7 +250,6 @@ namespace MS.Internal
         ///         Note that if this code were made to be callable publicly,
         ///         we would have a potential denial-of-service vulnerability.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private // DO NOT MAKE PUBLIC OR INTERNAL -- See security note
             static void FailFast(string message, string detailMessage)
         {
@@ -294,7 +289,6 @@ namespace MS.Internal
         ///</SecurityNote>
         private static bool IsDialogOverrideEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 RegistryKey key;
@@ -353,7 +347,6 @@ namespace MS.Internal
         /// Critical - this data member required elevated permissions to be set. 
         /// TreatAsSafe - this data indicates whether "strict" invariant mode is to be used. Considered safe
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe] 
         private static bool _strict;
 
         // Used to initialize the default value of _strict in the static ctor.

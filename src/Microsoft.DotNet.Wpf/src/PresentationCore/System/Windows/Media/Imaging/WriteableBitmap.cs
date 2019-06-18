@@ -56,7 +56,6 @@ namespace System.Windows.Media.Imaging
         ///     Critical: Creates and accesses a handle to an unmanaged resource.
         ///     PublicOK: Inputs are safe.
         /// </SecurityNote>
-        [SecurityCritical]
         public WriteableBitmap(
             BitmapSource source
             )
@@ -79,7 +78,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical: Creates and accesses a handle to an unmanaged resource.
         ///   PublicOK: Inputs are safe.
         /// </SecurityNote>
-        [SecurityCritical]
         public WriteableBitmap(
             int pixelWidth,
             int pixelHeight,
@@ -194,7 +192,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical: Accesses a handle to an unmanaged resource.
         ///   PublicOK: Input dirty rect is sanitized before use.
         /// </SecurityNote>
-        [SecurityCritical]
         public void AddDirtyRect(Int32Rect dirtyRect)
         {
             WritePreamble();
@@ -269,7 +266,6 @@ namespace System.Windows.Media.Imaging
         ///   PublicOK: Pointers are not exposed to caller.  This method
         ///             should work from partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public bool TryLock(Duration timeout)
         {
             WritePreamble();
@@ -353,7 +349,6 @@ namespace System.Windows.Media.Imaging
         ///   PublicOK: Pointers are not exposed to caller.  This method
         ///             should work from partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Unlock()
         {
             WritePreamble();
@@ -396,7 +391,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical: Accesses critical code, performs unsafe operations.
         ///   PublicOK: Demands unmanaged code permission.
         /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             IntPtr    sourceBuffer,
@@ -431,7 +425,6 @@ namespace System.Windows.Media.Imaging
         ///     PublicOK: The overall operation is safe, and the input is sanitized.
         ///               This method should work from partial trust.
         /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             Array     sourceBuffer,
@@ -490,7 +483,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical code, accepts pointer arguments
         /// PublicOK - demands unmanaged code permission
         /// </SecurityNote>
-        [SecurityCritical]
         public unsafe void WritePixels(
             Int32Rect sourceRect,
             IntPtr buffer,
@@ -549,7 +541,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - This method gets direct access to the input Array's memory.
         /// PublicOk - Input is a managed buffer which is safe, other inputs are safe as well
         /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             Array pixels,
@@ -664,7 +655,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical code.
         ///   TreatAsSafe:  Method only produces clones of original buffers.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
@@ -681,7 +671,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical code. (AcquireBackBuffer, FreezeBackBuffer)
         ///   TreatAsSafe:  Method gets the back buffer, but doesn't expose it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override bool FreezeCore(bool isChecking)
         {
             bool canFreeze = (_lockCount == 0) && base.FreezeCore(isChecking);
@@ -760,7 +749,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical code.
         ///   TreatAsSafe:  Method only produces clones of original buffers.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
@@ -777,7 +765,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical code.
         ///   TreatAsSafe:  Method only produces GetAsFrozen of original buffers.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
@@ -794,7 +781,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical code.
         ///   TreatAsSafe:  Method only produces GetCurrentValueAsFrozen of original image.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
@@ -829,7 +815,6 @@ namespace System.Windows.Media.Imaging
         ///     Critical: Creates and accesses a handle to an unmanaged resource.
         ///     PublicOK: Inputs are safe.
         /// </SecurityNote>
-        [SecurityCritical]
         private void InitFromBitmapSource(
             BitmapSource source
             )
@@ -917,7 +902,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///   Critical: Accesses critical code, performs unsafe operations.
         /// </SecurityNote>
-        [SecurityCritical]
         private void WritePixelsImpl(
             Int32Rect sourceRect,
             IntPtr    sourceBuffer,
@@ -1137,7 +1121,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///   Critical: Accesses a handle to an unmanaged resource.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool AcquireBackBuffer(TimeSpan timeout, bool waitForCopy)
         {
             bool backBufferAcquired = false;
@@ -1186,7 +1169,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///   Critical: Accesses a handle to an unmanaged resource.
         /// </SecurityNote>
-        [SecurityCritical]
         private void CopyCommon(WriteableBitmap sourceBitmap)
         {
             // Avoid Animatable requesting resource updates for invalidations
@@ -1219,7 +1201,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///   Critical:     Access critical resources.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EndInit()
         {
             _bitmapInit.EndInit();
@@ -1233,7 +1214,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - access critical resource
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             IsSourceCached = true;
@@ -1256,7 +1236,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///     Critical - Calls Marshal.SizeOf, which has a link demand for some reason.
         /// </SecurityNote>
-        [SecurityCritical]
         private void ValidateArrayAndGetInfo(Array sourceBuffer,
                                                        bool backwardsCompat,
                                                        out int elementSize,
@@ -1409,7 +1388,6 @@ namespace System.Windows.Media.Imaging
         ///   TreateAsSafe: We allocate the double buffered bitmap ourself and the user can never
         ///                 get ahold of it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateBitmapSourceResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             //
@@ -1495,7 +1473,6 @@ namespace System.Windows.Media.Imaging
         ///   Critical:     Accesses critical methods and a handle to an unmanaged resource.
         ///   TreatAsSafe:  Inputs are supplied internally.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnCommittingBatch(object sender, EventArgs args)
         {
             Debug.Assert(_isWaitingForCommit);  // How else are we here?
@@ -1580,7 +1557,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         public IntPtr BackBuffer
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnmanagedCode();
@@ -1589,7 +1565,6 @@ namespace System.Windows.Media.Imaging
                 return _backBuffer;
             }
 
-            [SecurityCritical]
             private set
             {
                 _backBuffer = value;
@@ -1599,14 +1574,12 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         ///     Critical: The pointer to the back buffer pixels.
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _backBuffer;
 
         /// <SecurityNote>
         ///     Critical: The size of the back buffer.  Should never be exposed
         ///     to external parties.
         /// </SecurityNote>
-        [SecurityCritical]
         private uint _backBufferSize;
 
         /// <summary>
@@ -1636,21 +1609,18 @@ namespace System.Windows.Media.Imaging
         ///     Critical: The pointer to the IMILSwDoubleBufferedBitmap
         ///               interface that manages the back and front buffers.
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _pDoubleBufferedBitmap;   // CSwDoubleBufferedBitmap
 
         /// <SecurityNote>
         ///     Critical: The pointer to the IWICWGXBitmapLock interface that
         ///               provides access to the back buffer pointer.
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _pBackBufferLock;         // IWICBitmapLock
 
         /// <SecurityNote>
         ///     Critical: The pointer to the IMILBitmap interface that is the
         ///               back buffer.
         /// </SecurityNote>
-        [SecurityCritical]
         private BitmapSourceSafeMILHandle _pBackBuffer; // IWICBitmap
 
         private uint _lockCount = 0;

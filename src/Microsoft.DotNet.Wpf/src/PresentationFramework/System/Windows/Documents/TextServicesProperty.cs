@@ -71,7 +71,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - commits changes to edit buffer, might alow input spoofing
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OnEndEdit(
             UnsafeNativeMethods.ITfContext context, 
             int ecReadOnly,

@@ -46,7 +46,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical resource
         /// PublicOK - inputs verified or safe
         /// </SecurityNote>
-        [SecurityCritical ]
         public BmpBitmapDecoder(
             Uri bitmapUri,
             BitmapCreateOptions createOptions,
@@ -65,7 +64,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical resource
         /// PublicOK - inputs verified or safe
         /// </SecurityNote>
-        [SecurityCritical ]
         public BmpBitmapDecoder(
             Stream bitmapStream,
             BitmapCreateOptions createOptions,
@@ -81,7 +79,6 @@ namespace System.Windows.Media.Imaging
         /// Critical: Uses a SafeFileHandle, which is a SecurityCritical type (in v4).
         ///     Calls SecurityCritical base class constructor.
         /// </SecurityNote>
-        [SecurityCritical]
         internal BmpBitmapDecoder(
             SafeMILHandle decoderHandle,
             BitmapDecoder decoder,

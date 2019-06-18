@@ -78,7 +78,6 @@ namespace MS.Internal.Shaping
         /// <SecurityNote>
         /// Critical - calls critical code
         /// </SecurityNote>
-        [SecurityCritical]
         public void SetLength(int length)
         {
             _glyphs.Length = length;

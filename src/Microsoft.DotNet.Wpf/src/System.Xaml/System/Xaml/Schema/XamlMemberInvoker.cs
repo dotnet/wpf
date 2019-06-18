@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,7 +72,6 @@ namespace System.Xaml.Schema
         /// Critical: See explanation in SafeReflectionInvoker
         /// Safe: See explanation in SafeReflectionInvoker.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private object GetValueSafeCritical(object instance)
         {
             if (UnderlyingGetter.IsStatic)
@@ -103,7 +102,6 @@ namespace System.Xaml.Schema
         /// Critical: See explanation in SafeReflectionInvoker
         /// Safe: See explanation in SafeReflectionInvoker.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void SetValueSafeCritical(object instance, object value)
         {
             if (UnderlyingSetter.IsStatic)
@@ -180,10 +178,8 @@ namespace System.Xaml.Schema
         /// Safe: Gets the result from SafeCritical method SafeReflectionInvoker.IsSystemXamlNonPublic.
         ///       The MethodInfo we're checking is exactly the one we're invoking, so even if the
         ///       MethodInfo lies about its visibility, there is no harm.
-        /// Note: The [SecurityCritical] attribute isn't functionally necessary but flags the
         ///       method as security critical and changes should be reviewed.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
             ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)

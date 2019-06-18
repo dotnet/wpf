@@ -746,7 +746,6 @@ namespace System.Windows.Controls.Primitives
         /// Critical - calling critical InputManager.Current
         /// Safe - InputManager.Current is not exposed and used temporary to determine the mouse state
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool GetMouseLeftButtonReleased()
         {
             return InputManager.Current.PrimaryMouseDevice.LeftButton == MouseButtonState.Released;

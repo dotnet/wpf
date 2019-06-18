@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1405,9 +1405,7 @@ namespace System.Xaml
             ///       This is not privileged info, as it is available via AppDomain.GetAssemblies().
             /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             public void Hook()
             {
@@ -1419,9 +1417,7 @@ namespace System.Xaml
             /// Safe: We just remove a handler that we ourselves added.
             /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             public void Unhook()
             {

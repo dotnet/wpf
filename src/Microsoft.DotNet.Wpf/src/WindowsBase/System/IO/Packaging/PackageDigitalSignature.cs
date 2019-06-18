@@ -300,7 +300,6 @@ namespace System.IO.Packaging
         ///     Critical: calls X509Certificate2 ctor which LinkDemands
         ///     TreatAsSafe: X509Certificate2 is only used internally and not returned
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public VerifyResult Verify(X509Certificate signingCertificate)
         {
             ThrowIfInvalidated();

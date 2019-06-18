@@ -50,7 +50,6 @@ namespace Microsoft.Win32
         ///     PublicOk: It is okay to set the options to their defaults.  The
         ///             ctor does not show the dialog.
         /// </SecurityNote>
-        [SecurityCritical]
         public OpenFileDialog() : base()
         {
             Initialize();
@@ -84,7 +83,6 @@ namespace Microsoft.Win32
         ///               doesn't allow user code to specify the file to be opened, 
         ///               and opens the file with read-only FileAccess.
         /// </SecurityNote>
-        [SecurityCritical]
         public Stream OpenFile()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -137,7 +135,6 @@ namespace Microsoft.Win32
         ///     PublicOk: Demands FileDialogPermission  (FileDialogPermission.Read), and only
         ///             opens the files for read access.
         /// </SecurityNote>
-        [SecurityCritical]
         public Stream[] OpenFiles()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -194,7 +191,6 @@ namespace Microsoft.Win32
         ///     Critical: Sets Dialog options, which are critical for set.
         ///     PublicOk: Demands FileIOPermission (PermissionState.Unrestricted)
         /// </SecurityNote>
-        [SecurityCritical]
         public override void Reset()
         {
             SecurityHelper.DemandUnrestrictedFileIOPermission();
@@ -237,7 +233,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_ALLOWMULTISELECT);
             }
-            [SecurityCritical]
             set
             {
                 SetOption(NativeMethods.OFN_ALLOWMULTISELECT, value);
@@ -265,7 +260,6 @@ namespace Microsoft.Win32
             {
                 return GetOption(NativeMethods.OFN_READONLY);
             }
-            [SecurityCritical]
             set
             {
                 SetOption(NativeMethods.OFN_READONLY, value);
@@ -295,7 +289,6 @@ namespace Microsoft.Win32
                 // so negate the results of GetOption...
                 return !GetOption(NativeMethods.OFN_HIDEREADONLY);
             }
-            [SecurityCritical]
             set
             {
                 // ... and SetOption.
@@ -330,7 +323,6 @@ namespace Microsoft.Win32
         ///     The alternative would be to not call the base method, but it currently
         ///     does additional validation we don't want to bypass.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CheckPermissionsToShowDialog()
         {
             SecurityHelper.DemandFileDialogOpenPermission();
@@ -374,7 +366,6 @@ namespace Microsoft.Win32
         ///     Critical:   Call to UnsafeNativeMethods.GetOpenFileName() and
         ///                 UnsafeNativeMethods.CommDlgExtendedError()
         /// </SecurityNote>
-        [SecurityCritical]
         internal override bool RunFileDialog(NativeMethods.OPENFILENAME_I ofn)
         {
             bool result = false;
@@ -435,7 +426,6 @@ namespace Microsoft.Win32
         ///     Critical, as it calls methods on COM interface IFileDialog and IShellItem
         ///               and returns full file paths that must not be exposed to partial trust code.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override string[] ProcessVistaFiles(IFileDialog dialog)
         {
             var openDialog = (IFileOpenDialog)dialog;
@@ -463,7 +453,6 @@ namespace Microsoft.Win32
         ///     TreatAsSafe, as it returns the managed COM interface, and not a handle.
         ///     Calls on the interface will still be treated with security scrutiny.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override IFileDialog CreateVistaDialog()
         {
             new SecurityPermission(PermissionState.Unrestricted).Assert();
@@ -508,7 +497,6 @@ namespace Microsoft.Win32
         /// <SecurityNote> 
         ///     Critical: Sets Dialog options, which are critical for set.
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize()
         {
             // OFN_FILEMUSTEXIST

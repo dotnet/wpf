@@ -40,8 +40,6 @@ namespace MS.Internal.Security.RightsManagement
     ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
     ///      RightsManagementPermission and then call through to the matching member of the Private Static class PrivateUnsafeNativeMethods
     /// </SecurityNote>
-    /// The partial class only needs to be marked security critical in one of the parts [SecurityCritical]
-    /// Adding [SecurityCritical] note here adds to a compiler error "Duplicate 'SecurityCritical' attribute"
     internal static partial class SafeNativeMethods
     {
         /// <SecurityNote>
@@ -51,8 +49,6 @@ namespace MS.Internal.Security.RightsManagement
         ///     SafeNativeMethods is responsible for performing appropriate Asserts prior to calling 
         ///     PrivateUnsafeNativeMethods which in turn is marked with SuppressUnmanagedCodeSecurity
         /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity] // Blessed 
         private static class UnsafeNativeMethods
         {
             [DllImport(ExternDll.MsDrm, SetLastError = false, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]

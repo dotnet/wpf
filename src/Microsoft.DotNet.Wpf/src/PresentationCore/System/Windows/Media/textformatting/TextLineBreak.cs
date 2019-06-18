@@ -87,7 +87,6 @@ namespace System.Windows.Media.TextFormatting
         /// Critical - as this calls unmanaged API LoCloneBreakRecord.
         /// PublicOK - as it takes no parameter and retain no additional unmanaged resource. 
         /// </SecurityNote>
-        [SecurityCritical]
         public TextLineBreak Clone()
         {
             IntPtr pbreakrec = IntPtr.Zero;
@@ -117,7 +116,6 @@ namespace System.Windows.Media.TextFormatting
         ///            when building the next break. No code should have access to set it otherwise. 
         /// Safe - as this does not take any parameter that it passes directly to the critical function. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DisposeInternal(bool finalizing)
         {
             if (_breakRecord.Value != IntPtr.Zero)

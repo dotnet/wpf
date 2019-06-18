@@ -75,7 +75,6 @@ namespace System.Windows.Media.TextFormatting
         /// <SecurityNote>
         ///  Critical - as this method returns unmanaged resource to the client.
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource();
 
 

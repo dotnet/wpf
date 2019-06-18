@@ -41,7 +41,6 @@ namespace MS.Internal
         /// </SecurityNote>
         internal static bool IsCompositionEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (!IsOSVistaOrNewer)
@@ -69,7 +68,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - Suppresses unmanaged code security.  Calls Marshal.ReleaseComObject which has a LinkDemand.
         /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         internal static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

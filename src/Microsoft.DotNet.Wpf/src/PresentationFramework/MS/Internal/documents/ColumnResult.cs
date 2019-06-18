@@ -45,7 +45,6 @@ namespace MS.Internal.Documents
         /// <SecurityNote>
         /// Critical - as this can set the Critical variable _columnHandle to an arbitrary value.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ColumnResult(FlowDocumentPage page, ref PTS.FSTRACKDESCRIPTION trackDesc, Vector contentOffset)
         {
             _page = page;
@@ -68,7 +67,6 @@ namespace MS.Internal.Documents
         /// <SecurityNote>
         /// Critical - as this can set the Critical variable _columnHandle to an arbitrary value.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ColumnResult(BaseParaClient subpage, ref PTS.FSTRACKDESCRIPTION trackDesc, Vector contentOffset)
         {
             // Subpage must be figure, floater or subpage paraclient
@@ -157,7 +155,6 @@ namespace MS.Internal.Documents
         /// </SecurityNote>
         internal ReadOnlyCollection<ParagraphResult> Paragraphs
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_paragraphs == null)
@@ -241,7 +238,6 @@ namespace MS.Internal.Documents
         /// Critical - as this calls Critical function GetTextContentRangeFromColumn.
         /// Safe - as the IntPtr _columnHandle is Critical for setting the value.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureTextContentRange()
         {
             if (_contentRange == null)
@@ -303,7 +299,6 @@ namespace MS.Internal.Documents
         /// SecurityTreatAsSafe.  If ever we remove the readonly tag, we should make this
         /// a SecurityCriticalDataForSet object.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private readonly IntPtr _columnHandle;
 
         /// <summary>

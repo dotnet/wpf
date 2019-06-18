@@ -109,7 +109,6 @@ namespace MS.Internal
         ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
         ///     TreatAsSafe: ok to enable tracing
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public MediaTrace(string switchName, bool initialState) : this(switchName)
         {
             _switch.Enabled = initialState;
@@ -178,7 +177,6 @@ namespace MS.Internal
         ///   TreatAsSafe: This code is ok to call since it enables trace which
         ///                 is safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Enable()
         {
             _switch.Enabled = true;
@@ -189,7 +187,6 @@ namespace MS.Internal
         ///   TreatAsSafe: This code is ok to call since it  disables trace which
         ///                 is safe.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Disable()
         {
             _switch.Enabled = false;

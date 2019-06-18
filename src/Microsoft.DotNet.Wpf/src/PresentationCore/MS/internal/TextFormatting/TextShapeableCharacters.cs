@@ -289,7 +289,6 @@ namespace System.Windows.Media.TextFormatting
         /// <SecurityNote>
         ///    Critical: This code deals with pointers and calls SC methods like GetAdvanceWidthsUnshaped
         /// </SecurityNote>
-        [SecurityCritical]
         internal sealed override unsafe void GetAdvanceWidthsUnshaped(
             char*         characterString,
             int           characterLength,

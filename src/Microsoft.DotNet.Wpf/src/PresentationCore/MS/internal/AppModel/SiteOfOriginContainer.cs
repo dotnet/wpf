@@ -80,7 +80,6 @@ namespace MS.Internal.AppModel
         ///</SecurityNote> 
         internal static Uri SiteOfOriginForClickOnceApp
         {
-            [SecurityCritical, SecurityTreatAsSafe, FriendAccessAllowed]
             get
             {
                 // The ClickOnce API, ApplicationDeployment.IsNetworkDeployed, determines whether the app is network-deployed
@@ -125,7 +124,6 @@ namespace MS.Internal.AppModel
             {
                 return _browserSource.Value;
             }
-            [SecurityCritical, FriendAccessAllowed]
             set
             {    
                _browserSource.Value = value; 
@@ -211,7 +209,6 @@ namespace MS.Internal.AppModel
             {
                 return _traceSwitch.Enabled;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 _traceSwitch.Enabled = value;
@@ -293,7 +290,6 @@ namespace MS.Internal.AppModel
         ///               requires an assert to access and are available in partial trust.  We are not using them because the need 
         ///               for a site of origin is not dependent on update or uri parameters.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static Uri GetDeploymentUri()
         {
             Invariant.Assert(ApplicationDeployment.IsNetworkDeployed);

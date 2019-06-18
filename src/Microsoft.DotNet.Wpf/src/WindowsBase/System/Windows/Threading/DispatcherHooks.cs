@@ -29,8 +29,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event EventHandler DispatcherInactive
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -38,8 +36,6 @@ namespace System.Windows.Threading
                     _dispatcherInactive += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -68,8 +64,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event DispatcherHookEventHandler OperationPosted
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -77,8 +71,6 @@ namespace System.Windows.Threading
                     _operationPosted += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -107,8 +99,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event DispatcherHookEventHandler OperationStarted
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -116,8 +106,6 @@ namespace System.Windows.Threading
                     _operationStarted += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -146,8 +134,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event DispatcherHookEventHandler OperationCompleted
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -155,8 +141,6 @@ namespace System.Windows.Threading
                     _operationCompleted += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -180,8 +164,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event DispatcherHookEventHandler OperationPriorityChanged
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -189,8 +171,6 @@ namespace System.Windows.Threading
                     _operationPriorityChanged += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -214,8 +194,6 @@ namespace System.Windows.Threading
         /// </SecurityNote>
         public event DispatcherHookEventHandler OperationAborted
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             add
             {
                 lock(_instanceLock)
@@ -223,8 +201,6 @@ namespace System.Windows.Threading
                     _operationAborted += value;
                 }
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                                    
             remove
             {
                 lock(_instanceLock)
@@ -243,7 +219,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationAborted
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseDispatcherInactive(Dispatcher dispatcher)
         {
             EventHandler dispatcherInactive = _dispatcherInactive;
@@ -257,7 +232,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationPosted
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseOperationPosted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPosted = _operationPosted;
@@ -272,7 +246,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationStarted
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseOperationStarted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationStarted = _operationStarted;
@@ -287,7 +260,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationCompleted
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseOperationCompleted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationCompleted = _operationCompleted;
@@ -302,7 +274,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationPriorityChanged
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseOperationPriorityChanged(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPriorityChanged = _operationPriorityChanged;
@@ -317,7 +288,6 @@ namespace System.Windows.Threading
         ///     Critical: accesses _operationAborted
         ///     TreatAsSafe: no exposure
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RaiseOperationAborted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationAborted = _operationAborted;
@@ -333,37 +303,31 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private EventHandler _dispatcherInactive;
 
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private DispatcherHookEventHandler _operationPosted;
 
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private DispatcherHookEventHandler _operationStarted;
 
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private DispatcherHookEventHandler _operationCompleted;
 
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private DispatcherHookEventHandler _operationPriorityChanged;
 
         /// <SecurityNote>
         ///     Do not expose to partially trusted code.
         /// </SecurityNote>
-        [SecurityCritical]
         private DispatcherHookEventHandler _operationAborted;
     }
 }

@@ -35,7 +35,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Calls a critical method - PreProcessInput
         ///          - Accesses critical data _inputManager.Value
         ///</SecurityNote>
-        [SecurityCritical]
         internal WispLogic(InputManager inputManager)
         {
             Statistics.FeaturesUsed |= StylusTraceLogger.FeatureFlags.WispStackEnabled;
@@ -73,7 +72,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: - Call critical method: TabletDeviceCollection.DisposeTablets().
         ///               - Accesses SecurityCriticalData __penContextsMap and _InputManager.Value.
         /// </SecurityNote>
-        [SecurityCritical]
         void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if (_shutdownHandler != null)
@@ -95,7 +93,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         /// Critical - calls security critical code (ProcessInputReport)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void ProcessSystemEvent(PenContext penContext,
                                                   int tabletDeviceId,
                                                   int stylusDeviceId,
@@ -146,7 +143,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         /// Critical - calls security critical code (ProcessInputReport)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void ProcessInput(
                             RawStylusActions actions,
                             PenContext penContext,
@@ -181,7 +177,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical:  Calls SecurityCritical method QueueStylusEvent
         /// </SecurityNote>
-        [SecurityCritical]
         void CoalesceAndQueueStylusEvent(RawStylusInputReport inputReport)
         {
             StylusDeviceBase stylusDevice = inputReport?.StylusDevice?.StylusDeviceImpl;
@@ -293,7 +288,6 @@ namespace System.Windows.Input.StylusWisp
         ///           - Access SecurityCritical data (RawStylusInputReport.PenContexts).
         ///           - PenThreadWorker.ThreadProc() is TAS boundry
         /// </SecurityNote>
-        [SecurityCritical]
         void ProcessInputReport(RawStylusInputReport inputReport)
         {
             // First, assign the StylusDevice (note it may still be null for new StylusDevice)
@@ -316,7 +310,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical:  Accesses critical field _queueStylusEvents
         /// </SecurityNote>
         /// <param name="report"></param>
-        [SecurityCritical]
         private void QueueStylusEvent(RawStylusInputReport report)
         {
             // ETW event indicating that a stylus input report was queued.
@@ -353,7 +346,6 @@ namespace System.Windows.Input.StylusWisp
         ///               calls security critical code ProcessInput which has a link demand (UIPermissionAttribute)
         ///             TAS boundry at Synchronize and StylusLogic constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal object InputManagerProcessInput(object oInput)
         {
             RawStylusInputReport rawStylusInputReport = null;
@@ -430,7 +422,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - calls security critical code (ProcessInput)
         ///           - TAS boundry at StylusDevice::ChangeStylusCapture
         /// </SecurityNote>
-        [SecurityCritical]
         internal void InputManagerProcessInputEventArgs(InputEventArgs input)
         {
             _inputManager.Value.ProcessInput(input);
@@ -440,7 +431,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         /// Critical - Accesses security critical data _deferredMouseMove.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool DeferMouseMove(RawMouseInputReport mouseInputReport)
         {
             if (!_triedDeferringMouseMove)
@@ -470,7 +460,6 @@ namespace System.Windows.Input.StylusWisp
         ///                 deferred.  Once sent the mouse event ref is cleared so only single
         ///                 mouse event can ever be sent.  No data goes in or out.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal object ProcessDeferredMouseMove(object oInput)
         {
             // Make sure we haven't flushed the deferred event before dispatcher version processes.
@@ -503,7 +492,6 @@ namespace System.Windows.Input.StylusWisp
         ///                 constructor, InputManager.ProcessInput.
         ///
         /// </SecurityNote>
-        [SecurityCritical]
         private void SendDeferredMouseEvent(bool sendInput)
         {
             if (sendInput)
@@ -534,7 +522,6 @@ namespace System.Windows.Input.StylusWisp
         ///           accesses e.StagingItem.Input and InputReport.InputSource and _inputManager.Value.
         ///            It can also be used for Input spoofing.
         ///</SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (_inputEnabled)
@@ -1064,7 +1051,6 @@ namespace System.Windows.Input.StylusWisp
         ///              ProcessMouseMove, and CallPlugInsForMouse.
         ///            It can also be used for Input spoofing.
         ///</SecurityNote>
-        [SecurityCritical]
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
@@ -1229,7 +1215,6 @@ namespace System.Windows.Input.StylusWisp
         ///              - accesses e.StagingItem.Input, _inputManager.Value and TabletDevices.
         ///              It can also be used for Input spoofing.
         ///</SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             //only sync with mouse capture if we're enabled, or else there are no tablet devices
@@ -1464,7 +1449,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - calls a critical function ( PushInput)
         ///          - called by PostProcessInput
         ///</SecurityNote>
-        [SecurityCritical]
         void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
@@ -1504,7 +1488,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - calls a critical method ( pushInput).
         ///           - called by PostProcessInput
         ///</SecurityNote>
-        [SecurityCritical]
         void PromotePreviewToMain(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
@@ -1565,7 +1548,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls SecurityCritical methods.
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainToOther(ProcessInputEventArgs e)
         {
             StagingAreaInputItem stagingItem = e.StagingItem;
@@ -1627,7 +1609,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Accesses e.StagingItem.Input.
         /// </SecurityNote>
-        [SecurityCritical]
         private static bool IsTouchPromotionEvent(StylusEventArgs stylusEventArgs)
         {
             if (stylusEventArgs != null)
@@ -1650,7 +1631,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls PromoteMainMoveToTouch, PromoteMainDownToTouch or PromoteMainUpToTouch
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainToTouch(ProcessInputEventArgs e, StylusEventArgs stylusEventArgs)
         {
             WispStylusDevice stylusDevice = stylusEventArgs.StylusDeviceImpl.As<WispStylusDevice>();
@@ -1673,7 +1653,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls PromoteMainToMouse
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainDownToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1700,7 +1679,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls PromoteMainToMouse
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainMoveToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1739,7 +1717,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls PromoteMainToMouse
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainUpToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -1782,7 +1759,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: Calls PromoteMainToMouse
         /// </SecurityNote>
-        [SecurityCritical]
         internal void PromoteStoredItemsToMouse(WispStylusTouchDevice touchDevice)
         {
             if (!ShouldPromoteToMouse(touchDevice.StylusDevice.As<WispStylusDevice>()))
@@ -1854,7 +1830,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: accesses stagingItem.Input
         ///           - called by PostProcessInput
         /// </SecurityNote>
-        [SecurityCritical]
         private void PromoteMainToMouse(StagingAreaInputItem stagingItem)
         {
             if (!stagingItem.Input.Handled)
@@ -1936,7 +1911,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: - accesses e.StagingItem.Input and PresentationSource.CriticalFromVisual
         ///           - called by PreProcessInput
         /// </SecurityNote>
-        [SecurityCritical]
         void CallPlugInsForMouse(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
@@ -2150,7 +2124,6 @@ namespace System.Windows.Input.StylusWisp
         ///
         ///      At the top called from PreProcessInput and PreNotifyInput which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         void UpdateMouseState()
         {
             MouseDevice mouseDevice = _inputManager.Value.PrimaryMouseDevice;
@@ -2620,7 +2593,6 @@ namespace System.Windows.Input.StylusWisp
         ///           - called by PreProcessInput
         ///           - Not TAS since this can inject stylus events.
         /// </SecurityNote>
-        [SecurityCritical]
         bool IsValidStylusAction(RawStylusInputReport rawStylusInputReport)
         {
             bool allowEvent = true;
@@ -2707,7 +2679,6 @@ namespace System.Windows.Input.StylusWisp
         ///               - calls SecurityCritical methods (InputManager.ProcessInput).
         ///           - Not TAS since this can inject stylus events.
         /// </SecurityNote>
-        [SecurityCritical]
         private void GenerateInRange(RawStylusInputReport rawStylusInputReport)
         {
             StylusDevice stylusDevice = rawStylusInputReport.StylusDevice;
@@ -2737,7 +2708,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical - Calls into SecurityCritical code (OnDeviceChange, OnScreenMeasurementsChanged,
         ///                 ReadSystemConfig, OnTabletAdded and OnTabletRemoved).
         /// </SecurityNote>
-        [SecurityCritical, FriendAccessAllowed]
         internal override void HandleMessage(WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             switch (msg)
@@ -2780,7 +2750,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Calls into SecurityCritical code.
         ///           - called by SecurityCritical code (Event handlers at top)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             if (inputReport.StylusDevice != null)
@@ -2793,7 +2762,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical - Calls in to SecurityCritical code (StylusDevice.UpdateEventStylusPoints)
         ///      At the top called from StylusLogic::PreNotifyInput event which is SecurityCritical.
         /// </SecurityNote>
-        [SecurityCritical]
         private void VerifyStylusPlugInCollectionTarget(RawStylusInputReport rawStylusInputReport)
         {
             switch (rawStylusInputReport.Actions)
@@ -2950,7 +2918,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Calls into security critical code. (InputManagerProcessInputEventArgs)
         ///           - called by PreProcessInput (which is SecurityCritical)
         /// </SecurityNote>
-        [SecurityCritical]
         private void GenerateGesture(RawStylusInputReport rawStylusInputReport, SystemGesture gesture)
         {
             StylusDevice stylusDevice = rawStylusInputReport.StylusDevice;
@@ -2981,7 +2948,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Calls into security critical code. (InputManagerProcessInputEventArgs)
         ///           - called by PreProcessInput (which is SecurityCritical)
         /// </SecurityNote>
-        [SecurityCritical]
         private void ProcessMouseMove(WispStylusDevice stylusDevice, int timestamp, bool isSynchronize)
         {
             System.Diagnostics.Debug.Assert(stylusDevice != null);
@@ -3039,7 +3005,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical: accesses e.StagingItem.Input
         ///             calls into SecurityCritical code (InputManagerProcessInputEventArgs)
         ///</SecurityNote>
-        [SecurityCritical]
         private void UpdateButtonStates(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
@@ -3096,7 +3061,6 @@ namespace System.Windows.Input.StylusWisp
         ///<SecurityNote>
         ///     Critical:    calls UnsafeNativeMethods.WindowFromPoint
         ///</SecurityNote>
-        [SecurityCritical]
         private static bool InWindowClientRect(Point ptClient, PresentationSource inputSource)
         {
             bool inClientRect = false;
@@ -3145,7 +3109,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal override TabletDeviceCollection TabletDevices
         {
-            [SecurityCritical]
             get
             {
                 return WispTabletDevices;
@@ -3154,7 +3117,6 @@ namespace System.Windows.Input.StylusWisp
 
         internal WispTabletDeviceCollection WispTabletDevices
         {
-            [SecurityCritical]
             get
             {
                 if (_tabletDeviceCollection == null)
@@ -3280,7 +3242,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         /// Critical - calls into SecurityCritical code (Enable)
         /// </SecurityNote>
-        [SecurityCritical]
         internal void EnableCore()
         {
             lock (__penContextsLock)
@@ -3317,7 +3278,6 @@ namespace System.Windows.Input.StylusWisp
         ///
         ///                - TreatAsSafe boundry at HwndSource constructor.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterHwndForInput(InputManager inputManager, PresentationSource inputSource)
         {
             HwndSource hwndSource = (HwndSource)inputSource;
@@ -3385,7 +3345,6 @@ namespace System.Windows.Input.StylusWisp
         ///
         ///                - TreatAsSafe boundry at HwndStylusInputProvider::Dispose
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UnRegisterHwndForInput(HwndSource hwndSource)
         {
             bool shutdownWorkThread = Dispatcher.HasShutdownStarted;
@@ -3431,7 +3390,6 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: - Accesses a critical member variable: __penContextsMap
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenContexts GetPenContextsFromHwnd(PresentationSource presentationSource)
         {
             // Only safe to call from UI thread since only it will change Map.
@@ -3451,7 +3409,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: - Calls critical methods - InputReport.InputSource,
         ///                   PenContexts.ConsiderInRange and GetPenContextsFromHwnd.
         /// </SecurityNote>
-        [SecurityCritical]
         internal bool ShouldConsiderStylusInRange(RawMouseInputReport mouseInputReport)
         {
             int timestamp = mouseInputReport.Timestamp;
@@ -3490,7 +3447,6 @@ namespace System.Windows.Input.StylusWisp
         ///                 and calls SecurityCritical method
         ///                 PenContexts.GetTabletDeviceIDPenContext.
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenContext GetStylusPenContextForHwnd(PresentationSource presentationSource, int tabletDeviceId)
         {
             // Only safe to call from UI thread since only it will change Map.
@@ -3516,7 +3472,6 @@ namespace System.Windows.Input.StylusWisp
         ///                 TabletDeviceCollection.ShouldEnableTablets, TabletDeviceCollection.UpdateTablets and EnableCore.
         ///               TreatAsSafe boundry is SystemResources.SystemThemeFilterMessage in PF.dll
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnDeviceChange()
         {
             Debug.Assert(!_inputEnabled, "StylusLogic has been enabled unexpectly.");
@@ -3541,7 +3496,6 @@ namespace System.Windows.Input.StylusWisp
         ///             Called by StylusLogic.HandleMessage.
         ///             TreatAsSafe boundry is HwndWrapperHook class (called via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnTabletAdded(uint wisptisIndex)
         {
             lock (__penContextsLock)
@@ -3607,7 +3561,6 @@ namespace System.Windows.Input.StylusWisp
         ///             Called by app code via reflection (see above).
         ///             TreatAsSafe boundry is HwndWrapperHook class (called via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnTabletRemoved(uint wisptisIndex)
         {
             OnTabletRemovedImpl(wisptisIndex, isInternalCall: false);
@@ -3621,7 +3574,6 @@ namespace System.Windows.Input.StylusWisp
         ///             Called by StylusLogic.HandleMessage, and by OnTabletRemoved.
         ///             TreatAsSafe boundry is HwndWrapperHook class (called via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnTabletRemovedImpl(uint wisptisIndex, bool isInternalCall)
         {
             // Nothing to do if the Stylus hasn't been enabled yet.
@@ -3709,7 +3661,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: Calls PenContexts.Disable/Enable
         ///               Calls TabletCollection.UpdateTablets
         /// </SecurityNote>
-        [SecurityCritical]
         private void RefreshTablets()
         {
             // rebuild all contexts and tablet collection
@@ -3731,7 +3682,6 @@ namespace System.Windows.Input.StylusWisp
         //                and accesses SecurityCritical data via TabletDevices.
         ///               Called by StylusLogic.OnTabletAdded, StylusLogic.OnTabletRemovedImpl.
         /// </SecurityNote>
-        [SecurityCritical]
         private int GetDeviceCount()
         {
             PenThread penThread = null;
@@ -3764,7 +3714,6 @@ namespace System.Windows.Input.StylusWisp
         ///             Called by HwndStylusInputProvider.FilterMessage.
         ///             TreatAsSafe boundry is HwndWrapperHook class (called via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnScreenMeasurementsChanged()
         {
             // We only need to have one of these queued up on our dispatcher.
@@ -3792,7 +3741,6 @@ namespace System.Windows.Input.StylusWisp
         ///             Called by HwndStylusInputProvider.FilterMessage.
         ///             TreatAsSafe boundry is HwndWrapperHook class (called via HwndSource.InputFilterMessage).
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OnWindowEnableChanged(IntPtr hwnd, bool disabled)
         {
             // See if this is one of our windows.
@@ -3837,7 +3785,6 @@ namespace System.Windows.Input.StylusWisp
         ///
         /// TreatAsSafe - Just updates TabletDevice size info use for mapping input data.  No data goes in or out.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal object ProcessDisplayChanged(object oInput)
         {
             _updatingScreenMeasurements = false;
@@ -3961,7 +3908,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Marked critical to prevent inadvertant code from
         ///             modifying raw stylus input reports.
         /// </SecurityNote>
-        [SecurityCritical]
         Queue<RawStylusInputReport> _queueStylusEvents = new Queue<RawStylusInputReport>();
 
         int _lastStylusDeviceId;
@@ -3986,7 +3932,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Marked critical to prevent inadvertant code from
         ///             modifying deferred mouse move information.
         /// </SecurityNote>
-        [SecurityCritical]
         RawMouseInputReport _deferredMouseMove;
 
         DispatcherOperationCallback _processDeferredMouseMove;
@@ -3995,7 +3940,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Marked critical to prevent inadvertant code from
         ///             modifying this deferred mouse deactivate information.
         /// </SecurityNote>
-        [SecurityCritical]
         RawMouseInputReport _mouseDeactivateInputReport;
 
         bool _inputEnabled = false;
@@ -4007,7 +3951,6 @@ namespace System.Windows.Input.StylusWisp
         /// Critical - Marked critical to prevent inadvertant spread
         ///             to transparent code.
         /// </SecurityNote>
-        [SecurityCritical]
         Dictionary<object, PenContexts> __penContextsMap = new Dictionary<object, PenContexts>(2);
 
         object __stylusDeviceLock = new object();

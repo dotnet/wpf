@@ -618,7 +618,6 @@ namespace MS.Internal.TextFormatting
         ///    Critical: This code has unsafe code block that uses pointers.
         ///    TreatAsSafe: This code does not expose the pointer and the call does bounds checking.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private TextRunInfo CreateSpecialRunFromTextContent(
             TextRunInfo     runInfo,
             int             cchFetched

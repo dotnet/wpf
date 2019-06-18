@@ -48,7 +48,6 @@ namespace MS.Internal.PtsHost
         ///        both marked Critical for set.  SubpageHandle parameter just returns
         ///        _paraHandle.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void Dispose()
         {
             if (SubpageHandle != IntPtr.Zero)
@@ -75,7 +74,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnArrange()
         {
             base.OnArrange();
@@ -159,7 +157,6 @@ namespace MS.Internal.PtsHost
         ///        SecurityCriticalDataForSet which ensures that partial trust code won't be able to set it to a random value.
         ///        The subpageDetails parameter passed to other methods is generated securely in this function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateViewport(ref PTS.FSRECT viewport)
         {
             // Query subpage details
@@ -244,7 +241,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override IInputElement InputHitTest(PTS.FSPOINT pt)
         {
             IInputElement ie = null;
@@ -322,7 +318,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override List<Rect> GetRectangles(ContentElement e, int start, int length)
         {
             List<Rect> rectangles = new List<Rect>();
@@ -390,7 +385,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void ValidateVisual(PTS.FSKUPDATE fskupdInherited)
         {
             // Figure is always reported as NEW. Override PTS inherited value.
@@ -545,7 +539,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override TextContentRange GetTextContentRange()
         {
             TextContentRange textContentRange;
@@ -614,7 +607,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private ReadOnlyCollection<ParagraphResult> GetChildrenParagraphResults(out bool hasTextContent)
         {
             List<ParagraphResult> paragraphResults;
@@ -716,7 +708,6 @@ namespace MS.Internal.PtsHost
         ///        is marked Critical for set and _paraHandle is readonly data for this
         ///        function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ReadOnlyCollection<ColumnResult> GetColumnResults(out bool hasTextContent)
         {
             List<ColumnResult> columnResults = new List<ColumnResult>(0);
@@ -838,7 +829,6 @@ namespace MS.Internal.PtsHost
         {
             get { return _paraHandle.Value; }
 
-            [SecurityCritical]
             set { _paraHandle.Value = value; }
         }
 

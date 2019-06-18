@@ -57,7 +57,6 @@ namespace System.Windows.Input
         ///             ExtraInformation 
         ///     TreatAsSafe:The data has demands on the property when someone tries to access it.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public RawKeyboardInputReport(
             PresentationSource inputSource,
             InputMode mode,
@@ -114,7 +113,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         public IntPtr ExtraInformation
         {
-            [SecurityCritical]
             get
             {
                 return _extraInformation.Value;

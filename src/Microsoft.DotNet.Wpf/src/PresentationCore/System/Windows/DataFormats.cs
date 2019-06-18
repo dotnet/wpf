@@ -54,10 +54,8 @@ namespace System.Windows
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
         ///<SecurityNote>
-        ///  Critical:Calls UnsafeNativeMethods.RegisterClipboardFormat which uses [SuppressUnmanagedCodeSecurity]
         ///  PublicOK:So we demand unmanaged code before calling.
         ///</SecurityNote>
-        [SecurityCritical]
         public static DataFormat GetDataFormat(string format)
         {
             if (format == null)
@@ -374,7 +372,6 @@ namespace System.Windows
         /// Safe     - The StringBuilder object is constructed internally so we are not passing 
         ///            GetClipboardFormatName() a possibly malicious object.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static DataFormat InternalGetDataFormat(int id)
         {
             // Ensures the predefined Win32 data formats into our format list.
@@ -425,7 +422,6 @@ namespace System.Windows
         ///                  any user's input and won't be called from any arbitrary code externally either.
         ///                  It only builds up an internal format table which is safe all the time.                  
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsurePredefined()
         {
             // Lock the data format list to obtains the mutual-exclusion.

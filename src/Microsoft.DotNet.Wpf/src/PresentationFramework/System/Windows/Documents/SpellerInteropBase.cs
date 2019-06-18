@@ -99,7 +99,6 @@ namespace System.Windows.Documents
 
         #region Factory
 
-        [SecuritySafeCritical]
         public static SpellerInteropBase CreateInstance()
         {
             SpellerInteropBase spellerInterop = null;
@@ -146,7 +145,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Implementors may call into COM interop. 
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void SetLocale(CultureInfo culture);
 
 
@@ -156,7 +154,6 @@ namespace System.Windows.Documents
         /// Critical - Implementeors may call into COM interop. 
         /// All known callers are marked SecurityTreatAsSafe, so we need not mark this SecuritySafeCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract int EnumTextSegments(char[] text, int count,
             EnumSentencesCallback sentenceCallback, EnumTextSegmentsCallback segmentCallback, object data);
 
@@ -167,7 +164,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Implementors may call into COM interop. 
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void UnloadDictionary(object dictionary); 
 
          /// <summary>
@@ -178,7 +174,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// critical - returns reference to internal wrapper to COM interface.
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract object LoadDictionary(string lexiconFilePath);
 
 
@@ -208,7 +203,6 @@ namespace System.Windows.Documents
         /// 1. Works with paths, loads files. See also remarks section for more detail.
         /// 2. Asserts FileIOPermission to load file from specified locations.
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract object LoadDictionary(Uri item, string trustedFolder);
 
         /// <summary>
@@ -217,7 +211,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Implementors may call into COM interop. 
         /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void ReleaseAllLexicons();
 
         /// <summary>
@@ -230,7 +223,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         internal abstract SpellerMode Mode
         {
-            [SecuritySafeCritical] 
             set;
         }
 
@@ -242,7 +234,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal abstract bool MultiWordMode
         {
-            [SecurityCritical] set;
+             set;
         }
 
         /// <summary>
@@ -250,7 +242,6 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="culture"></param>
         /// <param name="spellingReform"></param>
-        [SecurityCritical]
         internal abstract void SetReformMode(CultureInfo culture, SpellingReform spellingReform);
 
         /// <summary>

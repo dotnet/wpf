@@ -19,7 +19,6 @@ namespace MS.Internal.FontCache
     ///<SecurityNote>
     ///     Critical - Interprocess communication between client and service is critical.
     ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     [FriendAccessAllowed]
     internal class FontCacheConfig
     {
@@ -415,7 +414,6 @@ namespace MS.Internal.FontCache
     ///<SecurityNote>
     ///     Critical - Interprocess communication between client and service is critical.
     ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class IPCCacheManager
     {
         //----------------------

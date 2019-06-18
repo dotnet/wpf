@@ -78,7 +78,6 @@ namespace MS.Internal.Shaping
         /// Critical - as this accesses _firstFontFamily which is marked critical.
         /// Safe - as this doesn't expose it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal CompositeFontFamily(
             string          friendlyName,
             IFontFamily     firstFontFamily

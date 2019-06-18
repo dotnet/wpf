@@ -909,7 +909,6 @@ namespace System.Windows
             /// Safe: BAML inside an assembly is allowed to access internals in that assembly.
             ///       We are loading the BAML directly from an assembly, so we know the source.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private ResourceDictionary LoadDictionary(Assembly assembly, string assemblyName, string resourceName, bool isTraceEnabled, out Uri dictionarySourceUri)
             {
                 ResourceDictionary dictionary = null;
@@ -1064,7 +1063,6 @@ namespace System.Windows
         ///     Critical - Creates HwndWrappers and adds hooks.
         ///     Safe: The _hwndNotify windows are critical and this function is safe to call
         ///</SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener()
         {
             // Create a new notify window if we haven't already created any corresponding to ProcessDpiAwarenessContextValue for this thread.
@@ -1091,7 +1089,6 @@ namespace System.Windows
         ///     Critical: Calls <see cref="CreateResourceChangeListenerWindow(DpiAwarenessContextValue)"/>, which is Critical
         ///     Safe:   Does not expose any Critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener(DpiAwarenessContextValue dpiContextValue)
         {
             EnsureResourceChangeListener();
@@ -1122,7 +1119,6 @@ namespace System.Windows
         ///     Critical:   Calls into Critical methods
         ///     Safe: Does not return any Critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener(DpiUtil.HwndDpiInfo hwndDpiInfo)
         {
             EnsureResourceChangeListener();
@@ -1158,7 +1154,6 @@ namespace System.Windows
         ///     Critical:   Creates HWND's and HwndWrapper
         ///     Safe: Does not return Critical resources directly to the caller
         /// </SecurityNote>
-        [SecurityCritical]
         private static DpiUtil.HwndDpiInfo CreateResourceChangeListenerWindow(DpiAwarenessContextValue dpiContextValue, int x = 0, int y = 0, [System.Runtime.CompilerServices.CallerMemberName] string callerName = "")
         {
             Debug.Assert(_hwndNotify != null);
@@ -1207,7 +1202,6 @@ namespace System.Windows
         ///     Critical - Calls dispose on the critical hwnd wrapper.
         ///     TreatAsSafe: It is safe to dispose the wrapper
         ///</SecurityNote>
-        [SecuritySafeCritical]
         private static void OnShutdownFinished(object sender, EventArgs args)
         {
             if (_hwndNotify != null && _hwndNotify.Count != 0)
@@ -1358,7 +1352,6 @@ namespace System.Windows
         ///     Critical - Accesses the critical data.
         ///                 _hwndNotify
         /// </SecurityNote>
-        [SecurityCritical]
         private static void InvalidateTabletDevices(WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             
@@ -1389,7 +1382,6 @@ namespace System.Windows
         ///                   Net effect is an invalidation of tree and reload of BAML from theme files.
         ///                   Worse that could happen is a DOS attack within the app.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private static void InvalidateResources(bool isSysColorsOrSettingsChange)
         {
             SystemResourcesHaveChanged = true;
@@ -1414,7 +1406,6 @@ namespace System.Windows
         ///     messages handled in this function, no data is passed in or out, the only form of attack possible
         ///     here is DOS by excessive calls to this.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static IntPtr SystemThemeFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg;
@@ -1633,7 +1624,6 @@ namespace System.Windows
         /// </SecurityNote>
         private static HwndWrapper Hwnd
         {
-            [SecurityCritical]
             get
             {
                 EnsureResourceChangeListener();
@@ -1715,7 +1705,6 @@ namespace System.Windows
         ///         <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/>, 
         ///         is Critical
         /// </SecurityNote>
-        [SecurityCritical]
         internal static HwndWrapper GetDpiAwarenessCompatibleNotificationWindow(HandleRef hwnd)
         {
             var processDpiAwarenessContextValue = ProcessDpiAwarenessContextValue;
@@ -1759,7 +1748,7 @@ namespace System.Windows
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
         [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
-        [ThreadStatic] [SecurityCritical] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
+        [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();
         private static DTypeMap _themeStyleCache = new DTypeMap(100); // This is based upon the max DType.ID found in MSN scenario

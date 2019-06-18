@@ -31,7 +31,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to allocate native memory 
         ///             - Sets a critical for set member
         ///</SecurityNote>
-        [SecurityCritical]
         public HGlobalBuffer(int length)
         {
             Invariant.Assert(length > 0);
@@ -45,10 +44,8 @@ namespace MS.Internal.Printing.Configuration
         ///</SecurityNote>
         public SafeMemoryHandle Handle
         {
-            [SecurityCritical]
             get;
 
-            [SecurityCritical]
             private set;
         }
     
@@ -58,7 +55,6 @@ namespace MS.Internal.Printing.Configuration
         public int Length {
             get;
 
-            [SecurityCritical]
             private set;
         }
     
@@ -66,7 +62,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - Calls into code with SUC applied to free native memory 
         ///             - Sets critical SafeMemoryHandle member
         ///</SecurityNote>
-        [SecurityCritical]
         public void Release()
         {
             SafeHandle handle = this.Handle;

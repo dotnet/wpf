@@ -303,7 +303,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe - inkdata is a disconnected copy from the one passed in
         ///         underlying unmanaged code has been security reviewed and fuzzed
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
 #else
         /// <summary>
         /// Takes an ISF Stream and populates the StrokeCollection
@@ -829,7 +828,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// <SecurityNote>
     ///     Critical - Calls the DrawingAttributeSerializer.DecodeAsISF critical method
     /// </SecurityNote>
-    [SecurityCritical]
 #else
     /// <summary>
     /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
@@ -1707,7 +1705,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///              security reviewed and fuzzed
         ///
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
 #else
         /// <summary>
         /// This functions Saves the Ink as Ink Serialized Format based on the Compression code
@@ -1912,7 +1909,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes all of the strokes in a strokecollection to ISF
@@ -2043,7 +2039,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves the stroke Ids in the stream.
@@ -2520,7 +2515,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
         ///
         /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// This function serializes Drawing Attributes Table in the stream. For information on how they are serialized, please refer to the spec.

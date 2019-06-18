@@ -57,7 +57,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: only initializes _stylusPoints to null, _userInitialize to false
         /// 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal InkCollectionBehavior(EditingCoordinator editingCoordinator, InkCanvas inkCanvas)
             : base(editingCoordinator, inkCanvas)
         {
@@ -133,7 +132,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: This method simply clones critical member _stylusPoints and passes that to transparent code
         ///         _stylusPoints is only critical when passed to InkCanvas.RaiseGestureOrStrokeCollected.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnSwitchToMode(InkCanvasEditingMode mode)
         {
             Debug.Assert(EditingCoordinator.IsInMidStroke, "SwitchToMode should only be called in a mid-stroke");
@@ -263,7 +261,6 @@ namespace MS.Internal.Ink
         ///         Also accesses critical member _userInitiated, which is used to determine if all of the 
         ///         stylusPoints were user initiated
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void StylusInputBegin(StylusPointCollection stylusPoints, bool userInitiated)
         {
             _userInitiated = false;
@@ -310,7 +307,6 @@ namespace MS.Internal.Ink
         ///         Also accesses critical member _userInitiated, which is used to determine if all of the 
         ///         stylusPoints were user initiated
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void StylusInputContinue(StylusPointCollection stylusPoints, bool userInitiated)
         {
             //we never set _userInitated to true after it is initialized, only to false
@@ -337,7 +333,6 @@ namespace MS.Internal.Ink
         ///         is passed to critical method InkCanvas.RaiseGestureOrStrokeCollected are already marked
         ///         critical.  No critical data is passed in this method.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void StylusInputEnd(bool commit)
         {
             // The follow code raises Gesture and/or StrokeCollected event
@@ -443,14 +438,12 @@ namespace MS.Internal.Ink
         ///     Critical: This is critical data passed as an argument to 
         ///         critical method InkCanvas.RaiseGestureOrStrokeCollected.
         /// </SecurityNote>
-        [SecurityCritical]
         private StylusPointCollection                           _stylusPoints;
 
         /// <SecurityNote>
         ///     Critical: We use this to track if the input that makes up _stylusPoints
         ///         100% came frome the user (using the RoutedEventArgs.UserInitiated property)
         /// </SecurityNote>
-        [SecurityCritical]
         private bool                                            _userInitiated;
 
         /// <summary>

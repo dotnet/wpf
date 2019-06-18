@@ -41,7 +41,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public abstract unsafe char* GetCharacterPointer();
 
         /// <summary>
@@ -219,7 +218,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             // Even though we could allocate GCHandle for this purpose, we would need
@@ -238,7 +236,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_characterArray, GCHandleType.Pinned);
@@ -252,7 +249,6 @@ namespace MS.Internal
         ///    Critical     : This method has access to GCHandle which can provide memory address info.
         ///    Treat As Safe: This method does not expose any security critical info.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
             gcHandle.Free();
@@ -334,7 +330,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             // Even though we could allocate GCHandle for this purpose, we would need
@@ -353,7 +348,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_string, GCHandleType.Pinned);
@@ -367,7 +361,6 @@ namespace MS.Internal
         ///    Critical     : This method has access to GCHandle which can provide memory address info.
         ///    Treat As Safe: This method does not expose any security critical info.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
             gcHandle.Free();
@@ -409,13 +402,11 @@ namespace MS.Internal
         ///     Critical: This code is unsafe since it holds a pointer
         ///     EnforcementCritical
         /// </SecurityNote>
-        [SecurityCritical]
         private char*   _unsafeString;
 
         /// <SecurityNote>
         ///     Critical: Length is critical to avoid buffer overrun. 
         /// </SecurityNote>
-        [SecurityCritical]
         private int     _length;
 
 
@@ -428,7 +419,6 @@ namespace MS.Internal
         ///     Critical: This code is unsafe since it manipulates a pointer, it constructs an object with 
         ///     length data from user
         /// </SecurityNote>
-        [SecurityCritical]
         public UnsafeStringCharacterBuffer(
             char*   characterString,
             int     length
@@ -458,13 +448,11 @@ namespace MS.Internal
         /// </SecurityNote>
         public override char this[int characterOffset]
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get {
                 if (characterOffset >= _length || characterOffset < 0)
                     throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
                 return _unsafeString[characterOffset];
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set { throw new NotSupportedException(); }
         }
 
@@ -478,7 +466,6 @@ namespace MS.Internal
         /// </SecurityNote>
         public override int Count
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get { return _length; }
         }
 
@@ -489,7 +476,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical:This returns the pointer
         /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             return _unsafeString;
@@ -502,7 +488,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///    Critical:This code manipulates a pointer and returns it
         /// </SecurityNote>
-        [SecurityCritical]
         public override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = new GCHandle();
@@ -516,7 +501,6 @@ namespace MS.Internal
         ///    Critical     : This method has access to GCHandle which can provide memory address info.
         ///    Treat As Safe: This method does not expose any security critical info.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
         }
@@ -533,7 +517,6 @@ namespace MS.Internal
         ///              and returns its contents embedded in the stringbuilder passed in.
         ///    Safe:     This method does proper bound check.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override  void AppendToStringBuilder(
             StringBuilder   stringBuilder,
             int             characterOffset,

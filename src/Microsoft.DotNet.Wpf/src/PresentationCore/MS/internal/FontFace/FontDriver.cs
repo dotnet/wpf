@@ -107,7 +107,6 @@ namespace MS.Internal.FontFace
         ///     Critical: Calls into probe which is critical and also has unsafe code blocks
         ///     TreatAsSafe: This code is Ok to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static ushort ReadOpenTypeUShort(CheckedPointer pointer)
         {
             unsafe
@@ -122,7 +121,6 @@ namespace MS.Internal.FontFace
         ///     Critical: Calls into probe which is critical and also has unsafe code blocks
         ///     TreatAsSafe: This code IS Ok to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static int ReadOpenTypeLong(CheckedPointer pointer)
         {
             unsafe
@@ -140,7 +138,6 @@ namespace MS.Internal.FontFace
         /// <SecurityNote>
         ///    Critical:  constructs data for a checked pointer.
         /// </SecurityNote>
-        [SecurityCritical]
         internal TrueTypeFontDriver(UnmanagedMemoryStream unmanagedMemoryStream, Uri sourceUri)
         {
             _sourceUri = sourceUri;
@@ -275,7 +272,6 @@ namespace MS.Internal.FontFace
         ///  Critical: Does an elevation by calling TrueTypeSubsetter which we are treating as equivalent to
         ///            unsafe native methods
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal byte[] ComputeFontSubset(ICollection<ushort> glyphs)
         {
             SecurityHelper.DemandUnmanagedCode();

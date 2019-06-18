@@ -108,7 +108,6 @@ namespace System.Windows.Input.StylusPointer
         ///                    this data is read only.  This cannot be used to spoof
         ///                    input as an invalid ID would create invalid data.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal PointerData(uint pointerId)
         {
             if (IsValid = GetPointerInfo(pointerId, ref _info))

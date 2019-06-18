@@ -119,7 +119,6 @@ namespace System.Windows
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for CultureInfo.GetCultureInfo, not an arbitrary class/method
         ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,
                                          object value,

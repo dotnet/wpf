@@ -682,7 +682,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical   : Calls MetroToGdiConverter.StartDocument which is critical because it returns the print job id
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         void
         StartDocument(

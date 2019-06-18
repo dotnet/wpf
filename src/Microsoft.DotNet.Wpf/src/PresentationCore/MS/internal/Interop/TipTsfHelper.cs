@@ -101,7 +101,6 @@ namespace MS.Internal.Interop
         ///     SafeCritical
         ///         Does not expose critical data to callers (InputPane)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void Show(DependencyObject focusedObject)
         {
             // We need to only show if applicable to this focused object
@@ -142,7 +141,6 @@ namespace MS.Internal.Interop
         ///     SafeCritical
         ///         Does not expose critical data to callers (InputPane)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void Hide(DependencyObject focusedObject)
         {
             // If the touch stack is disabled or the WM_POINTER touch stack 
@@ -204,7 +202,6 @@ namespace MS.Internal.Interop
         /// </summary>
         /// <param name="focusedVisual">The visual to get the HwndSource for</param>
         /// <returns>The HwndSource associated with the Visual</returns>
-        [SecurityCritical]
         private static HwndSource GetHwndSource(DependencyObject focusedObject)
         {
             return PresentationSource.CriticalFromVisual(focusedObject) as HwndSource;

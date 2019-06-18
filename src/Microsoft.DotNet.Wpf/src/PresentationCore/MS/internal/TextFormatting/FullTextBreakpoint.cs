@@ -58,7 +58,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this reads critical property callback exception.
         /// Safe - as it reads the exception for the purpose of error reporting.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IList<TextBreakpoint> CreateMultiple(
             TextParagraphCache          paragraphCache,
             int                         firstCharIndex,
@@ -154,7 +153,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this calls critical method TextMetrics.Compute and it accesses unsafe pointer
         /// Safe - as it does not expose critical data
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private FullTextBreakpoint(
             FullTextState           fullText,
             int                     firstCharIndex,
@@ -226,7 +224,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this sets critical data _ploline.
         /// Safe - as it does not set the critical data thru input parameters. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void Dispose(bool disposing)
         {
             if(_ploline.Value != IntPtr.Zero)
@@ -252,7 +249,6 @@ namespace MS.Internal.TextFormatting
         /// Safe - as it does not take parameter that being passed to the critical method or 
         ///        return sensitive data from the critical method.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override TextLineBreak GetTextLineBreak()
         {
             if (_isDisposed)
@@ -274,7 +270,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         ///  Critical - as this method returns unmanaged resource to the client.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource()
         {
             if (_isDisposed)

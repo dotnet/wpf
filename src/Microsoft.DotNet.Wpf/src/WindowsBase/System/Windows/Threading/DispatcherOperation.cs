@@ -26,7 +26,6 @@ namespace System.Windows.Threading
         ///    Critical: Accesses a critical field.
         ///    TreatAsSafe: Initializing critical field to a known safe value.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         static DispatcherOperation()
         {
             _invokeInSecurityContext = new ContextCallback(InvokeInSecurityContext);
@@ -35,7 +34,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: accesses _executionContext
         /// </SecurityNote>
-        [SecurityCritical]
         internal DispatcherOperation(
             Dispatcher dispatcher,
             Delegate method,
@@ -62,7 +60,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: calls critical constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal DispatcherOperation(
             Dispatcher dispatcher,
             Delegate method,
@@ -82,7 +79,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: calls critical constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal DispatcherOperation(
             Dispatcher dispatcher,
             DispatcherPriority priority,
@@ -100,7 +96,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: calls critical constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal DispatcherOperation(
             Dispatcher dispatcher,
             DispatcherPriority priority,
@@ -209,7 +204,6 @@ namespace System.Windows.Threading
         ///    Critical: This code calls into PushFrame which has a link demand
         ///    PublicOk: The act of waiting for operation to complete is safe.
         /// </SecurityNote>
-        [SecurityCritical]
         public DispatcherOperationStatus Wait(TimeSpan timeout)
         {
             if((_status == DispatcherOperationStatus.Pending || _status == DispatcherOperationStatus.Executing) &&
@@ -326,7 +320,6 @@ namespace System.Windows.Threading
         /// </returns>
         internal long Id
         {
-            [SecurityCritical]
             get
             {
                 long addr;
@@ -429,7 +422,6 @@ namespace System.Windows.Threading
         ///    Critical: This code calls into ExecutionContext.Run which is link demand protected
         ///              accesses _executionContext
         /// </SecurityNote>
-        [SecurityCritical]
         internal void Invoke()
         {
             // Mark this operation as executing.
@@ -493,7 +485,6 @@ namespace System.Windows.Threading
         ///                 This may cause reentrancy, and effects program correctness, so must be
         ///                 done carefully.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void InvokeCompletions()
         {
             switch(_status)
@@ -524,7 +515,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: This code can execute arbitrary code
         /// </SecurityNote>
-        [SecurityCritical]
         private static void InvokeInSecurityContext(Object state)
         {
             DispatcherOperation operation = (DispatcherOperation) state;
@@ -535,7 +525,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: This code calls into SynchronizationContext.SetSynchronizationContext which link demands
         /// </SecurityNote>
-        [SecurityCritical]
         private void InvokeImpl()
         {
             SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
@@ -740,7 +729,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Obtained under an elevation.
         /// </SecurityNote>
-        [SecurityCritical]
         private CulturePreservingExecutionContext _executionContext;
         private static readonly ContextCallback _invokeInSecurityContext;
         
@@ -772,7 +760,6 @@ namespace System.Windows.Threading
         /// <SecurityNote>
         ///     Critical: calls critical constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal DispatcherOperation(
             Dispatcher dispatcher,
             DispatcherPriority priority,

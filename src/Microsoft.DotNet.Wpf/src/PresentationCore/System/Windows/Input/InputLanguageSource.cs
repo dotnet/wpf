@@ -195,7 +195,6 @@ namespace System.Windows.Input
         /// Critical - calls unmanaged code (initializing input)
         /// TreatAsSafe - ok to call any number of times
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureInputProcessorProfile()
         {
             // _ipp has been initialzied. Don't do this again.

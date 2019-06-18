@@ -45,7 +45,6 @@ namespace System.Windows.Xps.Serialization
         ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
         ///             
         /// </SecurityNote>
-        [SecurityCritical]
         public
         BitmapEncoder
         GetEncoder(
@@ -126,7 +125,6 @@ namespace System.Windows.Xps.Serialization
         ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
         ///             
         /// </SecurityNote>
-        [SecurityCritical]
         public
         bool
         IsSupportedMimeType(

@@ -137,7 +137,6 @@ namespace System.Windows.Controls
         ///     Critical: calls InstanceDescriptor ctor which LinkDemands
         ///     PublicOK: can only make an InstanceDescriptor for VirtualizationCacheLength, not an arbitrary class
         ///</SecurityNote>
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             if (destinationType == null)

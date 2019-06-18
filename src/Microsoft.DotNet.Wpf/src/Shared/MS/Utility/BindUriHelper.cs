@@ -86,7 +86,6 @@ namespace MS.Internal.Utility
             {
                 return BaseUriHelper.BaseUri;
             }
-            [SecurityCritical]
             set
             {
                  BaseUriHelper.BaseUri = BaseUriHelper.FixFileUri(value);

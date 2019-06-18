@@ -49,7 +49,6 @@ namespace System.Windows.Documents
         ///             bit in the event args, to add (critical) clipboard commands.
         /// TreatAsSafe - the bit is protected by UserIniatedRoutedEvent permission
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
@@ -269,7 +268,6 @@ namespace System.Windows.Documents
         ///     SecurityCritical: This code asserts to get the containing HWND.
         ///     TreatAsSafe: The HWND is not exposed, only its RECT.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void GetClippedPositionOffsets(TextEditor This, ITextPointer position, LogicalDirection direction,
             out double horizontalOffset, out double verticalOffset)
         {
@@ -449,7 +447,6 @@ namespace System.Windows.Documents
             ///             code paths to be blocked this function is not TreatAsSafe because
             ///             we want to track any new callers to this call
             /// </SecurityNote>
-            [SecurityCritical]
             internal void AddMenuItems(TextEditor textEditor, bool userInitiated)
             {
                 // create a special menu item for paste which only works for user initiated paste
@@ -567,7 +564,6 @@ namespace System.Windows.Documents
             /// Critical - calls unmanaged code.
             /// TreatAsSafe - does not expose the unmanaged interface. retrieve the candidate list and add menu item.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private bool AddReconversionItems(TextEditor textEditor)
             {
                 MenuItem menuItem;
@@ -634,7 +630,6 @@ namespace System.Windows.Documents
             ///             code paths to be blocked this function is not TreatAsSafe because
             ///             we want to track any new callers to this call
             /// </SecurityNote>
-            [SecurityCritical]
             private bool AddClipboardItems(TextEditor textEditor, bool userInitiated)
             {
                 MenuItem menuItem;
@@ -670,7 +665,6 @@ namespace System.Windows.Documents
             /// Critical - access CandidateList
             /// TreatAsSafe - does not do anything for the unmanaged interface. It's just a null check.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void DelayReleaseCandidateList()
             {
                 if (CandidateList != null)
@@ -684,7 +678,6 @@ namespace System.Windows.Documents
             /// Critical - calls unmanaged code.
             /// TreatAsSafe - just release it.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private object ReleaseCandidateList(object o)
             {
                 if (CandidateList != null)
@@ -705,7 +698,6 @@ namespace System.Windows.Documents
             /// </SecurityNote>
             internal UnsafeNativeMethods.ITfCandidateList CandidateList
             {
-                 [SecurityCritical]
                  get
                  {
                      if ( _candidateList == null)
@@ -723,7 +715,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///  Critical : Field for critical type ITfCandidateList
             /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
         }
 
@@ -738,7 +729,6 @@ namespace System.Windows.Documents
             /// Critical - accepts a parameter which may be used to set the userInitiated
             ///             bit on a command, which is used for security purposes later.
             /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 OnClickImpl(userInitiated);
@@ -760,7 +750,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             /// Critical - calls unmanaged code.
             /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 Invariant.Assert(_menu.CandidateList != null);

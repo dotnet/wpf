@@ -31,7 +31,6 @@ namespace MS.Internal
         ///    Critical - "by definition" - this class is intended only for data that's
         ///               Critical for setting.
         /// </SecurityNote>
-        [SecurityCritical]
         internal SecurityCriticalDataForMultipleGetAndSet(T value)
         { 
             _value = value; 
@@ -43,13 +42,11 @@ namespace MS.Internal
         /// </SecurityNote>
         internal T Value 
         {
-            [SecurityCritical]
             get
             {
                 return _value;
             }
 
-            [SecurityCritical]
             set
             {
                 _value = value;
@@ -59,7 +56,6 @@ namespace MS.Internal
         /// <SecurityNote>
         /// Critical - by definition as this data is Critical for set.
         /// </SecurityNote>>
-        [SecurityCritical]
         private T _value;
     }
 }

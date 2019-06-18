@@ -523,7 +523,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///                    - no data handed out or accepted
         ///                    - called by Add and Insert
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private void EnsureEventsHooked()
         {
             if (this.Count == 0)

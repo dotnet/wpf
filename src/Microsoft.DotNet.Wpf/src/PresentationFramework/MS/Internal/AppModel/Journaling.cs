@@ -283,8 +283,6 @@ namespace MS.Internal.AppModel
         /// Critical: does object serialization
         /// Public OK: has a LinkDemand
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -524,8 +522,6 @@ namespace MS.Internal.AppModel
         /// Critical: does object serialization
         /// Public OK: has a LinkDemand
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -639,7 +635,6 @@ namespace MS.Internal.AppModel
         /// Critical: Sets the crtical _typeName.
         /// Safe: The type is a subtype of PageFunctionBase, and the application has access to it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal JournalEntryPageFunctionType(JournalEntryGroupState jeGroupState, PageFunctionBase pageFunction)
             : base(jeGroupState, pageFunction)
         {
@@ -655,7 +650,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Sets the critical _typeName.
         /// </SecurityNote>
-        [SecurityCritical]
         protected JournalEntryPageFunctionType(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -669,8 +663,6 @@ namespace MS.Internal.AppModel
         /// Critical: does object serialization
         /// Public OK: has a LinkDemand
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -701,7 +693,6 @@ namespace MS.Internal.AppModel
         /// Safe: The object created is of the same type that the application originally navigated to.
         ///     It is necessarily derived from PageFunctionBase.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override PageFunctionBase ResumePageFunction()
         {
             PageFunctionBase pageFunction;
@@ -808,8 +799,6 @@ namespace MS.Internal.AppModel
         /// Critical: does object serialization
         /// Public OK: has a LinkDemand
         /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

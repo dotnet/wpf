@@ -50,7 +50,6 @@ namespace MS.Internal
         ///     The intent is to prevent that from being exposed. We mark this critical to ensure that this is called an created
         ///     only from known locations. Also some of the interface methods that it implements have inheritance demand.
         /// </SecurityNote>
-        [SecurityCritical]
         internal ConstrainedDataObject(System.Windows.IDataObject data)
         {
             // This check guarantees us that we can never create a Constrained data Object with a null dataobject
@@ -77,7 +76,6 @@ namespace MS.Internal
         ///     Critical: This accesses the _innerDataObject. 
         ///     TreatAsSafe: It filters for the risky information and fails in the case where consumer queries for Xaml or ApplicationTrust
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public object GetData(string format, bool autoConvert)
         {
             if (format == null)
@@ -140,7 +138,6 @@ namespace MS.Internal
         ///     Critical: This accesses the _innerDataObject. 
         ///     TreatAsSafe: It filters for the risky information and fails in the case where consumer queries for Xaml or ApplicationTrust
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public bool GetDataPresent(string format, bool autoConvert)
         {
             bool dataPresent =  false;
@@ -181,7 +178,6 @@ namespace MS.Internal
         ///     Critical: This code touches _innerData which can expose information about formats we do not want to publicly expose
         ///     for the partial trust to full trust paste scenario.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public string[] GetFormats(bool autoConvert)
         {
             string[] formats = _innerData.GetFormats(autoConvert);
@@ -210,7 +206,6 @@ namespace MS.Internal
         ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
         ///     to block illegitimate conditions
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void SetData(object data)
         {
             _innerData.SetData(data);
@@ -225,7 +220,6 @@ namespace MS.Internal
         ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
         ///     to block illegitimate conditions
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetData(string format, object data)
         {
             _innerData.SetData(format, data);
@@ -240,7 +234,6 @@ namespace MS.Internal
         ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
         ///     to block illegitimate conditions
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetData(Type format, object data)
         {
             _innerData.SetData(format, data);
@@ -257,7 +250,6 @@ namespace MS.Internal
         ///     TreatAsSafe: It does not expose it and relies on the protection in DataObject 
         ///     to block illegitimate conditions
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetData(string format, Object data, bool autoConvert)
         {
             _innerData.SetData(format, data, autoConvert);
@@ -307,7 +299,6 @@ namespace MS.Internal
         ///     TreatAsSafe: This function is critical only for tracking purposes
         /// </SecurityNote>
         /// <param name="format"></param>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool IsCriticalFormat(string format)
         {
             return (IsFormatEqual(format, DataFormats.Xaml) ||
@@ -328,7 +319,6 @@ namespace MS.Internal
         ///     content on the clipboard. This is deisabled for the scenario where target application has more permissions than source of 
         ///     data object and that is the only scenario where we create an instance of this class.
         /// </SecurityNote>
-        [SecurityCritical]
         private System.Windows.IDataObject _innerData;
         #endregion Private Fields
 

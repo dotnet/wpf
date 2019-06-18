@@ -46,7 +46,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this calls the setter of _ploPenaltyModule.
         /// Safe - as it does not set the value arbitrarily from the value it receives from caller. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextPenaltyModule(SecurityCriticalDataForSet<IntPtr> ploc)
         {
             IntPtr ploPenaltyModule;
@@ -83,7 +82,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - as this calls method to dispose unmanaged penalty module.
         /// Safe - as it does not arbitrarily set critical data.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             if (_ploPenaltyModule.Value != IntPtr.Zero)
@@ -104,7 +102,6 @@ namespace MS.Internal.TextFormatting
         /// <SecurityNote>
         /// Critical - as this returns pointer to unmanaged memory owned by LS.
         /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr DangerousGetHandle()
         {
             if (_isDisposed)

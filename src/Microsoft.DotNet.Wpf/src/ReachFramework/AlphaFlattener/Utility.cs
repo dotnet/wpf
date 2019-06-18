@@ -28,7 +28,6 @@ using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 
 // This code is debug only until we decide to go all the way with enforcements.
 #if ENFORCEMENT
-//[assembly:SecurityCritical] //needed to run critical code
 #endif
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -1242,7 +1241,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical   : pixels may contain critical information
         /// </SecurityNote>
-        [SecurityCritical]
         static public void BlendOverColor(byte[] pixels, int count, Color colorX, double opacity, bool opacityOnly)
         {
 /*          if (Configuration.ForceAlphaOpaque)
@@ -1304,7 +1302,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical   : pixels may contain critical information
         /// </SecurityNote>
-        [SecurityCritical]
         static public void BlendUnderColor(byte[] pixels, int count, Color colorY, double opacity, bool opacityOnly)
         {
             Byte b  = colorY.A;
@@ -1360,7 +1357,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical   : pixels may contain critical information
         /// </SecurityNote>
-        [SecurityCritical]
         static public void BlendPixels(byte[] pixelsA, bool opacityOnlyA, byte[] pixelsB, bool opacityOnlyB, int count, byte[] pixelsC)
         {
             int p = 0;
@@ -1413,7 +1409,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         ///     Critical   : pixels may contain critical information
         /// </SecurityNote>
-        [SecurityCritical]
         static public byte[] ClipPixels(byte[] pixels, int width, int height, int x0, int y0, int clipWidth, int clipHeight)
         {
             Debug.Assert(
@@ -1459,7 +1454,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <SecurityNote>
         /// Critical: This code calls an internal PresentationCore function CriticalCopyPixels
         /// </SecurityNote>
-        [SecurityCritical]
         internal static bool NeedPremultiplyAlpha(BitmapSource bitmapSource)
         {
             if ((bitmapSource != null) && (bitmapSource.Format ==  PixelFormats.Pbgra32))
@@ -1800,7 +1794,6 @@ namespace Microsoft.Internal.AlphaFlattener
         ///<SecurityNote>
         /// Critical    - It calls critical internal function CriticalUriDiscoveryPermission
         ///</SecurityNote>
-        [SecurityCritical]
         [FriendAccessAllowed]
         public static Uri GetFontUri(GlyphTypeface typeface)
         {

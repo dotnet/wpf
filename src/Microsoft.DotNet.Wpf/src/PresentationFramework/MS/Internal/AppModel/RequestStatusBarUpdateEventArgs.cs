@@ -27,7 +27,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical - Sets the status bar text; could open up for spoofing attacks.
         /// </SecurityNote>
-        [SecurityCritical]
         internal RequestSetStatusBarEventArgs(string text)
             : base()
         {
@@ -42,7 +41,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         ///     Critical - Sets the status bar text; could open up for spoofing attacks.
         /// </SecurityNote>
-        [SecurityCritical]
         internal RequestSetStatusBarEventArgs(Uri targetUri)
             : base()
         {
@@ -75,7 +73,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         internal static RequestSetStatusBarEventArgs Clear
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return new RequestSetStatusBarEventArgs(String.Empty);

@@ -934,7 +934,6 @@ namespace System.Windows.Markup
         ///            interface and IStreamInfo.Assembly is set by the ResourceContainer code that is
         ///            SecurityCritical, but treated as safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object LoadBaml(
             Stream stream,
             ParserContext parserContext,

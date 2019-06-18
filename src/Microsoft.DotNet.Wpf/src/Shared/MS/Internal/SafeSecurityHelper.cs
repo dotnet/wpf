@@ -58,7 +58,6 @@ namespace System.Xaml
         ///                      We limit this call to only call this function with a 2 as the count of elements.
         ///                      Thereby containing any potential for the call to Win32 to cause a buffer overrun.
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void TransformLocalRectToScreen(HandleRef hwnd, ref NativeMethods.RECT rcWindowCoords)
         {
             int retval = MS.Internal.WindowsBase.NativeMethodsSetLastError.MapWindowPoints(hwnd , new HandleRef(null, IntPtr.Zero), ref rcWindowCoords, 2);
@@ -120,7 +119,6 @@ namespace System.Xaml
         ///     TreatAsSafe: PresentationSource is not exposed and Client to Screen co-ordinates is
         ///     safe to expose
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point ClientToScreen(UIElement relativeTo, Point point)
         {
             GeneralTransform transform;
@@ -338,7 +336,6 @@ namespace System.Xaml
         ///   Critical: This code elevates to access registry
         ///   TreatAsSafe: The information it exposes is safe to give out and all it does is read a specific key
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static bool IsFeatureDisabled(KeyToRead key)
         {
             string regValue = null;
@@ -427,7 +424,6 @@ namespace System.Xaml
         ///   Critical: This code elevates to access registry
         ///   TreatAsSafe: The information it exposes is safe to give out and all it does is read a specific key
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static internal CultureInfo GetCultureInfoByIetfLanguageTag(string languageTag)
         {
             CultureInfo culture = null;

@@ -211,8 +211,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal static extern int MilComposition_SyncFlush(
             IntPtr pChannel
@@ -221,8 +219,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_GetPointAtLengthFraction(
             MilMatrix3x2D *pMatrix,
@@ -236,8 +232,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PolygonBounds(
             MilMatrix3x2D *pWorldMatrix,
@@ -256,8 +250,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PolygonHitTest(
             MilMatrix3x2D *pGeometryMatrix,
@@ -275,8 +267,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PathGeometryHitTest(
             MilMatrix3x2D *pMatrix,
@@ -293,8 +283,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PathGeometryHitTestPathGeometry(
             MilMatrix3x2D *pMatrix1,
@@ -312,8 +300,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_GeometryGetArea(
             FillRule fillRule,
@@ -327,8 +313,6 @@ namespace System.Windows.Media.Composition
         ///<SecurityNote>
         /// Critical as this code performs an elevation.
         ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern void MilUtility_ArcToBezier(
             Point ptStart,              // The arc's start point

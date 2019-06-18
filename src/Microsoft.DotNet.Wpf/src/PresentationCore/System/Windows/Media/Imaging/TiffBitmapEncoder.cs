@@ -85,7 +85,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - will eventually create unmanaged resources
         /// PublicOK - all inputs are verified
         /// </SecurityNote>
-        [SecurityCritical ]
         public TiffBitmapEncoder() :
             base(true)
         {
@@ -131,7 +130,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -155,7 +153,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - calls Critical Initialize()
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             PROPBAG2 propBag = new PROPBAG2();
@@ -206,7 +203,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - CLSID used for creation of critical resources
         /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatTiff;
 
         private const TiffCompressOption c_defaultCompressionMethod = TiffCompressOption.Default;

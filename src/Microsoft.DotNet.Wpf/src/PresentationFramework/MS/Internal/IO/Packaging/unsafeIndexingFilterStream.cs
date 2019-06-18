@@ -52,7 +52,6 @@ namespace MS.Internal.IO.Packaging
     ///                            3. Behaves more like an unmanaged IStream as opposed to managed Stream.   
     ///                            4. This class does not do any elevation of privilege. 
     /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal class UnsafeIndexingFilterStream : Stream
     {
         //------------------------------------------------------

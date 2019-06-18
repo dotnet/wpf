@@ -34,7 +34,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical - accepts PresentationSource. 
         ///</SecurityNote> 
-        [SecurityCritical]
         public KeyEventArgs(KeyboardDevice keyboard, PresentationSource inputSource, int timestamp, Key key) : base(keyboard, timestamp)
         {
             if (inputSource == null)
@@ -64,7 +63,6 @@ namespace System.Windows.Input
         ///</SecurityNote> 
         public PresentationSource InputSource
         {
-            [SecurityCritical ] 
             get 
             {
                 SecurityHelper.DemandUnrestrictedUIPermission(); 
@@ -214,7 +212,6 @@ namespace System.Windows.Input
         ///</SecurityNote> 
         internal PresentationSource UnsafeInputSource
         {
-            [SecurityCritical] 
             get 
             {
                 return _inputSource;
@@ -240,7 +237,6 @@ namespace System.Windows.Input
         ///<SecurityNote> 
         ///     Critical - PresentationSource required elevations to create it. 
         ///</SecurityNote> 
-        [SecurityCritical] 
         private PresentationSource _inputSource;
 
         private bool _isRepeat;

@@ -158,7 +158,6 @@ namespace MS.Internal.PtsHost
         ///            CreateSubpageFiniteHelper and Critical setter for paraClient.SubpageHandle.
         ///            This takes the unvalidated parameter footnoteRejector.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void FormatFloaterContentFinite(
             FloaterBaseParaClient paraClient,       // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !IntPtr.Zero
@@ -380,7 +379,6 @@ namespace MS.Internal.PtsHost
         /// Safe - as the parameters passed in are either generated in this function
         ///        or they are Critical for set.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void FormatFloaterContentBottomless(
             FloaterBaseParaClient paraClient,       // IN:
             int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
@@ -705,7 +703,6 @@ namespace MS.Internal.PtsHost
         ///     b) calls the Critical constructor of SubpageBreakRecord,
         ///     c) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void CreateSubpageFiniteHelper(
             PtsContext ptsContext,              // IN:  ptr to FS context
             IntPtr brParaIn,                    // IN:  break record---use if !NULL
@@ -761,7 +758,6 @@ namespace MS.Internal.PtsHost
         ///        pointer parameters directly that'll be written to,
         ///     b) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void CreateSubpageBottomlessHelper(
             PtsContext ptsContext,              // IN:  ptr to FS context
             IntPtr nSeg,                        // IN:  name of the segment to start from

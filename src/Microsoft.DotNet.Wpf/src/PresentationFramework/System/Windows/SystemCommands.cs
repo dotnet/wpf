@@ -32,7 +32,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         private static void _PostSystemCommand(Window window, SC command)
         {
             IntPtr hwnd = new WindowInteropHelper(window).Handle;
@@ -48,8 +47,6 @@ namespace System.Windows
         ///   Critical : Calls critical methods
         ///   Safe     : Demands full trust permissions
         /// <SecurityNote>
-        [SecuritySafeCritical]
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public static void CloseWindow(Window window)
         {
             Verify.IsNotNull(window, "window");
@@ -60,8 +57,6 @@ namespace System.Windows
         ///   Critical : Calls critical methods
         ///   Safe     : Demands full trust permissions
         /// <SecurityNote>
-        [SecuritySafeCritical]
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public static void MaximizeWindow(Window window)
         {
             Verify.IsNotNull(window, "window");
@@ -72,8 +67,6 @@ namespace System.Windows
         ///   Critical : Calls critical methods
         ///   Safe     : Demands full trust permissions
         /// <SecurityNote>
-        [SecuritySafeCritical]
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public static void MinimizeWindow(Window window)
         {
             Verify.IsNotNull(window, "window");
@@ -84,8 +77,6 @@ namespace System.Windows
         ///   Critical : Calls critical methods
         ///   Safe     : Demands full trust permissions
         /// <SecurityNote>
-        [SecuritySafeCritical]
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public static void RestoreWindow(Window window)
         {
             Verify.IsNotNull(window, "window");
@@ -98,8 +89,6 @@ namespace System.Windows
         ///   Critical : Calls critical methods
         ///   Safe     : Demands full trust permissions
         /// <SecurityNote>
-        [SecuritySafeCritical]
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public static void ShowSystemMenu(Window window, Point screenLocation)
         {
             Verify.IsNotNull(window, "window");
@@ -110,7 +99,6 @@ namespace System.Windows
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// <SecurityNote>
-        [SecurityCritical]
         internal static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
         {
             const uint TPM_RETURNCMD = 0x0100;

@@ -162,7 +162,6 @@ namespace System.Windows.Media
         ///     Critical: Sets RootVisual to null
         ///     PublicOK: This code has the same affect as removing elements in a window
         /// </SecurityNote>
-        [SecurityCritical]
         public override void Dispose()
         {
             try

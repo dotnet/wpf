@@ -76,7 +76,6 @@ namespace System.Windows.Interop
         ///                 Calls StylusLogic.GetCurrentStylusLogicAs<T>
         ///                 Calls MS.Win32.UnsafeNativeMethods.GetWindowLong
         /// </SecurityNote>
-        [SecurityCritical]
         internal HwndPointerInputProvider(HwndSource source)
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert();
@@ -103,7 +102,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical:   Calls Dispose(bool)
         /// </SecurityNote>
-        [SecurityCritical]
         ~HwndPointerInputProvider()
         {
             Dispose(false);
@@ -115,7 +113,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical:   InputProviderSite.Dispose
         /// </SecurityNote>
-        [SecurityCritical]
         private void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -138,7 +135,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     SafeCritical:   Calls Dispose(bool)
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -169,7 +165,6 @@ namespace System.Windows.Interop
         ///     Critical:   Calls UnsafeNativeMethods.GetRawPointerDeviceData
         ///                 Returns raw pointer data
         /// </SecurityNote>
-        [SecurityCritical]
         private int[] GenerateRawStylusData(PointerData pointerData, PointerTabletDevice tabletDevice)
         {
             // Since we are copying raw pointer data, we want to use every property supported by this pointer.
@@ -252,7 +247,6 @@ namespace System.Windows.Interop
         ///                 Calls PointerStylusDevice.ProcessInteractions
         ///                 Can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private bool ProcessMessage(uint pointerId, RawStylusActions action, int timestamp)
         {
             bool handled = false;
@@ -369,8 +363,6 @@ namespace System.Windows.Interop
         ///                     Does not expose any secure data
         ///     UIPermission for calling PointToScreen
         /// </SecurityNote>
-        [SecuritySafeCritical]
-        [UIPermission(SecurityAction.Assert, Window = UIPermissionWindow.AllWindows)]
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
             Point originScreenCoord = _source.Value.RootVisual.PointToScreen(new Point(0, 0));
@@ -446,7 +438,6 @@ namespace System.Windows.Interop
         /// <param name="lParam"></param>
         /// <param name="handled">If this has been successfully processed</param>
         /// <returns></returns>
-        [SecurityCritical]
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             handled = false;

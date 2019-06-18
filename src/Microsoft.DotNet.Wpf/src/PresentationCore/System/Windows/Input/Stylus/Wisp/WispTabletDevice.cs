@@ -35,7 +35,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical:  creates security critical data (IPimcTablet3)
         /// </SecurityNote>
-        [SecurityCritical]
         internal WispTabletDevice(TabletDeviceInfo tabletInfo, PenThread penThread)
             : base(tabletInfo)
         {
@@ -81,7 +80,6 @@ namespace System.Windows.Input
         /// Dispose pattern override from base
         /// </summary>
         /// <param name="disposing">True if disposing, false if finalizing</param>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -104,7 +102,6 @@ namespace System.Windows.Input
         ///                 - accesses security critical data _pimcTablet.Value
         ///           - called by constructor
         /// </SecurityNote>
-        [SecurityCritical]
         internal WispStylusDevice UpdateStylusDevices(int stylusId)
         {
             // REENTRANCY NOTE: Use PenThread to talk to wisptis.exe to make sure we are not reentrant!
@@ -171,7 +168,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -216,7 +212,6 @@ namespace System.Windows.Input
         ///                 - accesses security critical data _pimcTablet.Value
         ///                 - takes in data that is potential security risk (hwnd)
         /// </SecurityNote>
-        [SecurityCritical]
         internal PenContext CreateContext(IntPtr hwnd, PenContexts contexts)
         {
             PenContext penContext;
@@ -243,7 +238,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal PenThread PenThread
         {
-            [SecurityCritical]
             get
             {
                 return _penThread;
@@ -257,7 +251,6 @@ namespace System.Windows.Input
         ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
         ///               - accesses security critical data _pimcTablet.Value
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateScreenMeasurements()
         {
             Debug.Assert(CheckAccess());
@@ -315,7 +308,6 @@ namespace System.Windows.Input
         ///
         ///      At the top called from StylusLogic::PreProcessInput event which is SecurityCritical
         /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateSizeDeltas(StylusPointDescription description, WispLogic stylusLogic)
         {
             // Query default settings for mouse drag and double tap (with minimum of 1x1 size).
@@ -370,7 +362,6 @@ namespace System.Windows.Input
         ///                      StylusLogic.GetCurrentStylusLogicAs
         ///                      Marshal.ReleaseComObject
         /// </SecurityNote>
-        [SecurityCritical]
         internal void DisposeOrDeferDisposal()
         {
             // Only dispose when no input events are left in the queue
@@ -472,7 +463,6 @@ namespace System.Windows.Input
         /// </summary>
         internal UInt32 WispTabletKey
         {
-            [SecurityCritical]
             get
             {
                 return _tabletInfo.WispTabletKey;
@@ -482,7 +472,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///     Critical to prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
 
         protected Size _cancelSize = Size.Empty;

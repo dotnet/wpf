@@ -133,7 +133,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - It calls critical internal function CriticalFileReadPermission
         ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         ComputeFontSubset(
@@ -291,7 +290,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - It calls critical internal function CriticalFileReadPermission
         ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         FontEmbeddingAction
@@ -365,7 +363,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - It calls critical internal function CriticalFileReadPermission
         ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         bool
@@ -475,7 +472,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
         ///</SecurityNote>
-        [SecurityCritical]
         private
         FEMCacheItem
         AcquireCacheItem(
@@ -537,7 +533,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
         ///</SecurityNote>
-        [SecurityCritical]
         public
         FEMCacheItem(
             GlyphTypeface                   glyphTypeface,
@@ -611,7 +606,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - Calls RecordUsage which demands descovery permision for GlyphTypeFace
         ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         AddGlyphRunUsage(
@@ -669,7 +663,6 @@ namespace System.Windows.Xps.Serialization
         /// <SecurityNote>
         /// Critical -  1)  Calls SubSet font which assert unmanaged and returns raw font data
         /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         Commit(
@@ -748,7 +741,6 @@ namespace System.Windows.Xps.Serialization
         ///             2)  returns raw font data.
         ///             
         /// </SecurityNote>
-        [SecurityCritical]
         private
         void
         SubSetFont(
@@ -791,7 +783,6 @@ namespace System.Windows.Xps.Serialization
         ///<SecurityNote>
         /// Critical    - It calls critical internal function CriticalFileReadPermission
         ///</SecurityNote>
-        [SecurityCritical]
         internal
         Uri
         CopyFontStream()
@@ -945,7 +936,6 @@ namespace System.Windows.Xps.Serialization
         /// Critical    - This property is filled under assert permision thus 
         ///               must be security critical
         ///</SecurityNote>
-        [SecurityCritical]
         private Uri _fontUri;
         private static readonly int _readBlockSize = 1048576; //1MB
 

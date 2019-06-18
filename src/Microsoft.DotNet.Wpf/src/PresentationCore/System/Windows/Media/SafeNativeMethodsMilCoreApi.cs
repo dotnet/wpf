@@ -34,7 +34,6 @@ namespace MS.Win32.PresentationCore
        ///               callers - no risk. 
        ///  Critical: This code elevates priviliges by adding a SuppressUnmanagedCodeSecurity  
        ///</SecurityNote>
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static int MilCompositionEngine_InitializePartitionManager(int nPriority)
        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_InitializePartitionManager(nPriority);
@@ -45,13 +44,11 @@ namespace MS.Win32.PresentationCore
        ///               callers - no risk. 
        ///  Critical: This code elevates priviliges by adding a SuppressUnmanagedCodeSecurity  
        ///</SecurityNote>
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static int MilCompositionEngine_DeinitializePartitionManager()
        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_DeinitializePartitionManager();
        }
 
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static long GetNextPerfElementId()
        {
            return SafeNativeMethodsPrivate.GetNextPerfElementId();
@@ -60,7 +57,6 @@ namespace MS.Win32.PresentationCore
        /// <SecurityNote>
        ///  Critical - Uses SuppressUnmanagedCodeSecurityAttribute.
        /// </SecurityNote>
-       [SuppressUnmanagedCodeSecurity, SecurityCritical(SecurityCriticalScope.Everything)]
        private static partial class SafeNativeMethodsPrivate
        {
             [DllImport(DllImport.MilCore)]

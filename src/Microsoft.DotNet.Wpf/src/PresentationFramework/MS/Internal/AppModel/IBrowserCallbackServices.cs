@@ -59,14 +59,12 @@ namespace MS.Internal.AppModel
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("5FFAD804-61C8-445c-8C31-A2101C64C510")]
-    //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity]
     internal interface IBrowserCallbackServices
     {
         /// <SecurityNote>
         /// Critical due to SUC. 
         /// A caller can treat the opearion as safe.
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void OnBeforeShowNavigationWindow();
 
         /// <summary>
@@ -77,7 +75,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical due to SUC and because the operation is inherently unsafe.
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void PostReadyStateChange([In, MarshalAs(UnmanagedType.I4)] int readyState);
 
         /// <summary>
@@ -91,7 +88,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - may allow listening to fully qualified uris (path discovery)
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void DelegateNavigation([In, MarshalAs(UnmanagedType.BStr)] string url, [In, MarshalAs(UnmanagedType.BStr)] string targetName, [In, MarshalAs(UnmanagedType.BStr)] string headers);
 
         /// <summary>
@@ -105,7 +101,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool UpdateAddressBar([In, MarshalAs(UnmanagedType.BStr)] string url);
 
         /// <summary>
@@ -125,7 +120,6 @@ namespace MS.Internal.AppModel
         /// Critical - Pinvoke call for back and forward
         /// </SecurityNote>
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void UpdateBackForwardState();
 
         /// <summary>
@@ -137,7 +131,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - Pinvoke call to update travel log
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void UpdateTravelLog([In, MarshalAs(UnmanagedType.Bool)]bool addNewEntry);
 
         /// <summary>
@@ -157,7 +150,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote>
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool ChangeDownloadState([In]bool fIsDownloading);
 
         /// <summary>
@@ -168,7 +160,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote> 
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool IsDownlevelPlatform();
 
         /// <summary>
@@ -179,7 +170,6 @@ namespace MS.Internal.AppModel
         /// </SecurityNote> 
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool IsShuttingDown();
 
         /// <summary>
@@ -189,7 +179,6 @@ namespace MS.Internal.AppModel
         /// Critical - call is SUC'ed
         /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool TabOut(bool forward);
 
         /// <summary>
@@ -203,7 +192,6 @@ namespace MS.Internal.AppModel
         /// Critical - call is SUC'ed
         /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void ProcessUnhandledException([In, MarshalAs(UnmanagedType.BStr)] string pErrorMsg);
 
         /// <summary>
@@ -213,7 +201,6 @@ namespace MS.Internal.AppModel
         /// Critical - call is SUC'ed
         /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         int GetOleClientSite([Out, MarshalAs(UnmanagedType.IUnknown)] out object oleClientSite);
 
         /// <summary>
@@ -223,7 +210,6 @@ namespace MS.Internal.AppModel
         /// Critical - Call is SUC'ed
         /// </SecurityNote>
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         int UpdateCommands();
 
         /// <remarks>
@@ -236,7 +222,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical - Call is SUC'ed. The WebOC should not be exposed to partial-trust code.
         /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         IntPtr CreateWebBrowserControlInBrowserProcess();
     }
 
@@ -246,12 +231,10 @@ namespace MS.Internal.AppModel
     /// </summary>
     /// <SecurityNote>
     /// Critical due to SUC. 
-    /// Even if a partilar method is considered safe, which many are, applying [SecurityTreatAsSafe] to it 
     /// here won't help much, because the transparency model still requires SUC-d methods to be called only
     /// from SecurityCritical ones.
     /// </SecurityNote>
     [ComImport, Guid("AD5D6F02-5F4E-4D77-9FC0-381981317144"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface IHostBrowser
     {
         /// <summary>
@@ -298,7 +281,6 @@ namespace MS.Internal.AppModel
     };
 
     [ComImport, Guid("AD5D6F03-0002-4D77-9FC0-381981317144"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface IHostBrowser2
     {
         // Use IBCS.TabOut() instead. The implementation of TabOut is not fully factored out yet.

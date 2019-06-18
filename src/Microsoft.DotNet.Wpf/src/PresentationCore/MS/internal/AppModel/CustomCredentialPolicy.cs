@@ -46,7 +46,6 @@ namespace MS.Internal.AppModel
         /// Critical - Accesses critical members
         /// PublicOK - Nothing is exposed, and nothing depends on user input. We're just creating objects for use later.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static CustomCredentialPolicy()
         {
             _lockObj = new object();
@@ -57,7 +56,6 @@ namespace MS.Internal.AppModel
         /// Critical - Access critical member _environmentPermissionSet
         /// PublicOK - Nothing is exposed, and nothing depends on user input. We're just creating objects for use later.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public CustomCredentialPolicy()
         {
             _environmentPermissionSet = new PermissionSet(null);
@@ -69,7 +67,6 @@ namespace MS.Internal.AppModel
         /// Critical    - Asserts for permission to set the credential policy.
         /// TreatAsSafe - Nothing is exposed. This method is safe to call at any time.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static internal void EnsureCustomCredentialPolicy()
         {
             if (!_initialized)
@@ -110,7 +107,6 @@ namespace MS.Internal.AppModel
         ///               from the framework. The only ouput is whether or not credentials should
         ///               be sent, which is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public bool ShouldSendCredential(Uri challengeUri, WebRequest request, NetworkCredential credential, IAuthenticationModule authenticationModule)
         {
             switch (MapUrlToZone(challengeUri))
@@ -136,7 +132,6 @@ namespace MS.Internal.AppModel
         ///            fact that default credential are being used and are available might
         ///            something we would not want revealed, which is why it is not TAS.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool IsDefaultCredentials(NetworkCredential credential)
         {
             _environmentPermissionSet.Assert();  // BlessedAssert: 
@@ -154,7 +149,6 @@ namespace MS.Internal.AppModel
         /// Critical    - Call critical method MapUrlToZone.
         /// TreatAsSafe - Returns the zone of the uri, which is not critical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static SecurityZone MapUrlToZone(Uri uri)
         {
             EnsureSecurityManager();
@@ -184,7 +178,6 @@ namespace MS.Internal.AppModel
         /// Critical    - Accesses critical member _securityManager and calls the SUC'd MapUrlToZone.
         /// TreatAsSafe - Doesn't expose anything, doesn't take user input, safe to call at any time.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSecurityManager()
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
@@ -209,16 +202,12 @@ namespace MS.Internal.AppModel
         ///<SecurityNote> 
         /// Critical - requires an elevation to create. 
         ///</SecurityNote> 
-        [SecurityCritical]
         private static UnsafeNativeMethods.IInternetSecurityManager _securityManager;
 
-        [SecurityCritical]
         private static object _lockObj;
 
-        [SecurityCritical]
         private static bool _initialized;
 
-        [SecurityCritical]
         PermissionSet _environmentPermissionSet;
     }
 }

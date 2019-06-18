@@ -71,7 +71,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static bool IsThreadModal
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -92,7 +91,6 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static MSG CurrentKeyboardMessage
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -109,14 +107,12 @@ namespace System.Windows.Interop
         internal static MSG UnsecureCurrentKeyboardMessage
         {
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
-            [SecurityCritical]
             get
             {
                 return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
             }
 
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
-            [SecurityCritical]
             set
             {
                 ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage = value;
@@ -135,7 +131,6 @@ namespace System.Windows.Interop
         ///     Critical: This is blocked off as defense in depth
         ///     PublicOk: There is a demand here
         /// </SecurityNote>
-        [SecurityCritical]
         public static void PushModal()
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -148,7 +143,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This bypasses the demand for unrestricted UIPermission.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalPushModal()
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -165,7 +159,6 @@ namespace System.Windows.Interop
         ///     Critical: This is blocked off as defense in depth
         ///     PublicOk: There is a demand here
         /// </SecurityNote>
-        [SecurityCritical]
         public static void PopModal()
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -178,7 +171,6 @@ namespace System.Windows.Interop
         /// <SecurityNote>
         ///     Critical: This bypasses the demand for unrestricted UIPermission.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalPopModal()
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -195,8 +187,6 @@ namespace System.Windows.Interop
         ///     Critical: This is blocked off as defense in depth
         ///     PublicOk: There is a demand here
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public static void RaiseIdle()
         {
@@ -214,10 +204,8 @@ namespace System.Windows.Interop
         ///     Critical: This is blocked off as defense in depth
         ///     PublicOk: There is a demand here
         /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         [SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public static bool RaiseThreadMessage(ref MSG msg)
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -239,12 +227,10 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static event EventHandler ThreadIdle
         {
-            [SecurityCritical]
             add {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle += value;
             }
-            [SecurityCritical]
             remove {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle -= value;
@@ -265,12 +251,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
-            [SecurityCritical]
             add {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage += value;
             }
-            [SecurityCritical]
             remove {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage -= value;
@@ -291,14 +275,10 @@ namespace System.Windows.Interop
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-            [SecurityCritical]
             add
             {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage += value;
             }
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
-            [SecurityCritical]
             remove {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage -= value;
             }
@@ -313,7 +293,6 @@ namespace System.Windows.Interop
         ///     window in another security context. Also, MSG contains a window
         ///     handle, which we don't want to expose.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalAddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             ComponentDispatcher.CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
@@ -328,7 +307,6 @@ namespace System.Windows.Interop
         ///     window in another security context. Also, MSG contains a window
         ///     handle, which we don't want to expose.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalRemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             ComponentDispatcher.CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
@@ -347,12 +325,10 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static event EventHandler EnterThreadModal
         {
-            [SecurityCritical]
             add {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal += value;
             }
-            [SecurityCritical]
             remove {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal -= value;
@@ -372,13 +348,11 @@ namespace System.Windows.Interop
         /// </SecurityNote>
         public static event EventHandler LeaveThreadModal
         {
-            [SecurityCritical]
             add
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal += value;
             }
-            [SecurityCritical]
             remove {
                 SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;

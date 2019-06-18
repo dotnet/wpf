@@ -67,8 +67,6 @@ namespace System.Windows
         ///     Critical: calls Exception.GetObjectData which LinkDemands
         ///     PublicOK: a demand exists here
         ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

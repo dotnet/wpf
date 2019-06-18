@@ -570,9 +570,9 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKFIG
         {
-            [SecurityCritical] internal GetFigureProperties pfnGetFigureProperties;
-            [SecurityCritical] internal GetFigurePolygons pfnGetFigurePolygons;
-            [SecurityCritical] internal CalcFigurePosition pfnCalcFigurePosition;
+             internal GetFigureProperties pfnGetFigureProperties;
+             internal GetFigurePolygons pfnGetFigurePolygons;
+             internal CalcFigurePosition pfnCalcFigurePosition;
         }
         // ------------------------------------------------------------------
         // fscbkfigds.h
@@ -616,38 +616,38 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKGEN
         {
-            [SecurityCritical] internal FSkipPage pfnFSkipPage;
-            [SecurityCritical] internal GetPageDimensions pfnGetPageDimensions;
-            [SecurityCritical] internal GetNextSection pfnGetNextSection;
-            [SecurityCritical] internal GetSectionProperties pfnGetSectionProperties;
-            [SecurityCritical] internal GetJustificationProperties pfnGetJustificationProperties;
-            [SecurityCritical] internal GetMainTextSegment pfnGetMainTextSegment;
-            [SecurityCritical] internal GetHeaderSegment pfnGetHeaderSegment;
-            [SecurityCritical] internal GetFooterSegment pfnGetFooterSegment;
-            [SecurityCritical] internal UpdGetSegmentChange pfnUpdGetSegmentChange;
-            [SecurityCritical] internal GetSectionColumnInfo pfnGetSectionColumnInfo;
-            [SecurityCritical] internal GetSegmentDefinedColumnSpanAreaInfo pfnGetSegmentDefinedColumnSpanAreaInfo;
-            [SecurityCritical] internal GetHeightDefinedColumnSpanAreaInfo pfnGetHeightDefinedColumnSpanAreaInfo;
-            [SecurityCritical] internal GetFirstPara pfnGetFirstPara;
-            [SecurityCritical] internal GetNextPara pfnGetNextPara;
-            [SecurityCritical] internal UpdGetFirstChangeInSegment pfnUpdGetFirstChangeInSegment;
-            [SecurityCritical] internal UpdGetParaChange pfnUpdGetParaChange;
-            [SecurityCritical] internal GetParaProperties pfnGetParaProperties;
-            [SecurityCritical] internal CreateParaclient pfnCreateParaclient;
-            [SecurityCritical] internal TransferDisplayInfo pfnTransferDisplayInfo;
-            [SecurityCritical] internal DestroyParaclient pfnDestroyParaclient;
-            [SecurityCritical] internal FInterruptFormattingAfterPara pfnFInterruptFormattingAfterPara;
-            [SecurityCritical] internal GetEndnoteSeparators pfnGetEndnoteSeparators;
-            [SecurityCritical] internal GetEndnoteSegment pfnGetEndnoteSegment;
-            [SecurityCritical] internal GetNumberEndnoteColumns pfnGetNumberEndnoteColumns;
-            [SecurityCritical] internal GetEndnoteColumnInfo pfnGetEndnoteColumnInfo;
-            [SecurityCritical] internal GetFootnoteSeparators pfnGetFootnoteSeparators;
-            [SecurityCritical] internal FFootnoteBeneathText pfnFFootnoteBeneathText;
-            [SecurityCritical] internal GetNumberFootnoteColumns pfnGetNumberFootnoteColumns;
-            [SecurityCritical] internal GetFootnoteColumnInfo pfnGetFootnoteColumnInfo;
-            [SecurityCritical] internal GetFootnoteSegment pfnGetFootnoteSegment;
-            [SecurityCritical] internal GetFootnotePresentationAndRejectionOrder pfnGetFootnotePresentationAndRejectionOrder;
-            [SecurityCritical] internal FAllowFootnoteSeparation pfnFAllowFootnoteSeparation;
+             internal FSkipPage pfnFSkipPage;
+             internal GetPageDimensions pfnGetPageDimensions;
+             internal GetNextSection pfnGetNextSection;
+             internal GetSectionProperties pfnGetSectionProperties;
+             internal GetJustificationProperties pfnGetJustificationProperties;
+             internal GetMainTextSegment pfnGetMainTextSegment;
+             internal GetHeaderSegment pfnGetHeaderSegment;
+             internal GetFooterSegment pfnGetFooterSegment;
+             internal UpdGetSegmentChange pfnUpdGetSegmentChange;
+             internal GetSectionColumnInfo pfnGetSectionColumnInfo;
+             internal GetSegmentDefinedColumnSpanAreaInfo pfnGetSegmentDefinedColumnSpanAreaInfo;
+             internal GetHeightDefinedColumnSpanAreaInfo pfnGetHeightDefinedColumnSpanAreaInfo;
+             internal GetFirstPara pfnGetFirstPara;
+             internal GetNextPara pfnGetNextPara;
+             internal UpdGetFirstChangeInSegment pfnUpdGetFirstChangeInSegment;
+             internal UpdGetParaChange pfnUpdGetParaChange;
+             internal GetParaProperties pfnGetParaProperties;
+             internal CreateParaclient pfnCreateParaclient;
+             internal TransferDisplayInfo pfnTransferDisplayInfo;
+             internal DestroyParaclient pfnDestroyParaclient;
+             internal FInterruptFormattingAfterPara pfnFInterruptFormattingAfterPara;
+             internal GetEndnoteSeparators pfnGetEndnoteSeparators;
+             internal GetEndnoteSegment pfnGetEndnoteSegment;
+             internal GetNumberEndnoteColumns pfnGetNumberEndnoteColumns;
+             internal GetEndnoteColumnInfo pfnGetEndnoteColumnInfo;
+             internal GetFootnoteSeparators pfnGetFootnoteSeparators;
+             internal FFootnoteBeneathText pfnFFootnoteBeneathText;
+             internal GetNumberFootnoteColumns pfnGetNumberFootnoteColumns;
+             internal GetFootnoteColumnInfo pfnGetFootnoteColumnInfo;
+             internal GetFootnoteSegment pfnGetFootnoteSegment;
+             internal GetFootnotePresentationAndRejectionOrder pfnGetFootnotePresentationAndRejectionOrder;
+             internal FAllowFootnoteSeparation pfnFAllowFootnoteSeparation;
         }
         // ------------------------------------------------------------------
         // fscbkgends.h
@@ -672,14 +672,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKOBJ
         {
-            [SecurityCritical] internal IntPtr pfnNewPtr;
-            [SecurityCritical] internal IntPtr pfnDisposePtr;
-            [SecurityCritical] internal IntPtr pfnReallocPtr;
-            [SecurityCritical] internal DuplicateMcsclient pfnDuplicateMcsclient;
-            [SecurityCritical] internal DestroyMcsclient pfnDestroyMcsclient;
-            [SecurityCritical] internal FEqualMcsclient pfnFEqualMcsclient;
-            [SecurityCritical] internal ConvertMcsclient pfnConvertMcsclient;
-            [SecurityCritical] internal GetObjectHandlerInfo pfnGetObjectHandlerInfo;
+             internal IntPtr pfnNewPtr;
+             internal IntPtr pfnDisposePtr;
+             internal IntPtr pfnReallocPtr;
+             internal DuplicateMcsclient pfnDuplicateMcsclient;
+             internal DestroyMcsclient pfnDestroyMcsclient;
+             internal FEqualMcsclient pfnFEqualMcsclient;
+             internal ConvertMcsclient pfnConvertMcsclient;
+             internal GetObjectHandlerInfo pfnGetObjectHandlerInfo;
         }
         // ------------------------------------------------------------------
         // fscbktxt.h
@@ -693,37 +693,37 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKTXT
         {
-            [SecurityCritical] internal CreateParaBreakingSession pfnCreateParaBreakingSession;
-            [SecurityCritical] internal DestroyParaBreakingSession pfnDestroyParaBreakingSession;
-            [SecurityCritical] internal GetTextProperties pfnGetTextProperties;
-            [SecurityCritical] internal GetNumberFootnotes pfnGetNumberFootnotes;
-            [SecurityCritical] internal GetFootnotes pfnGetFootnotes;
-            [SecurityCritical] internal FormatDropCap pfnFormatDropCap;
-            [SecurityCritical] internal GetDropCapPolygons pfnGetDropCapPolygons;
-            [SecurityCritical] internal DestroyDropCap pfnDestroyDropCap;
-            [SecurityCritical] internal FormatBottomText pfnFormatBottomText;
-            [SecurityCritical] internal FormatLine pfnFormatLine;
-            [SecurityCritical] internal FormatLineForced pfnFormatLineForced;
-            [SecurityCritical] internal FormatLineVariants pfnFormatLineVariants;
-            [SecurityCritical] internal ReconstructLineVariant pfnReconstructLineVariant;
-            [SecurityCritical] internal DestroyLine pfnDestroyLine;
-            [SecurityCritical] internal DuplicateLineBreakRecord pfnDuplicateLineBreakRecord;
-            [SecurityCritical] internal DestroyLineBreakRecord pfnDestroyLineBreakRecord;
-            [SecurityCritical] internal SnapGridVertical pfnSnapGridVertical;
-            [SecurityCritical] internal GetDvrSuppressibleBottomSpace pfnGetDvrSuppressibleBottomSpace;
-            [SecurityCritical] internal GetDvrAdvance pfnGetDvrAdvance;
-            [SecurityCritical] internal UpdGetChangeInText pfnUpdGetChangeInText;
-            [SecurityCritical] internal UpdGetDropCapChange pfnUpdGetDropCapChange;
-            [SecurityCritical] internal FInterruptFormattingText pfnFInterruptFormattingText;
-            [SecurityCritical] internal GetTextParaCache pfnGetTextParaCache;
-            [SecurityCritical] internal SetTextParaCache pfnSetTextParaCache;
-            [SecurityCritical] internal GetOptimalLineDcpCache pfnGetOptimalLineDcpCache;
-            [SecurityCritical] internal GetNumberAttachedObjectsBeforeTextLine pfnGetNumberAttachedObjectsBeforeTextLine;
-            [SecurityCritical] internal GetAttachedObjectsBeforeTextLine pfnGetAttachedObjectsBeforeTextLine;
-            [SecurityCritical] internal GetNumberAttachedObjectsInTextLine pfnGetNumberAttachedObjectsInTextLine;
-            [SecurityCritical] internal GetAttachedObjectsInTextLine pfnGetAttachedObjectsInTextLine;
-            [SecurityCritical] internal UpdGetAttachedObjectChange pfnUpdGetAttachedObjectChange;
-            [SecurityCritical] internal GetDurFigureAnchor pfnGetDurFigureAnchor;
+             internal CreateParaBreakingSession pfnCreateParaBreakingSession;
+             internal DestroyParaBreakingSession pfnDestroyParaBreakingSession;
+             internal GetTextProperties pfnGetTextProperties;
+             internal GetNumberFootnotes pfnGetNumberFootnotes;
+             internal GetFootnotes pfnGetFootnotes;
+             internal FormatDropCap pfnFormatDropCap;
+             internal GetDropCapPolygons pfnGetDropCapPolygons;
+             internal DestroyDropCap pfnDestroyDropCap;
+             internal FormatBottomText pfnFormatBottomText;
+             internal FormatLine pfnFormatLine;
+             internal FormatLineForced pfnFormatLineForced;
+             internal FormatLineVariants pfnFormatLineVariants;
+             internal ReconstructLineVariant pfnReconstructLineVariant;
+             internal DestroyLine pfnDestroyLine;
+             internal DuplicateLineBreakRecord pfnDuplicateLineBreakRecord;
+             internal DestroyLineBreakRecord pfnDestroyLineBreakRecord;
+             internal SnapGridVertical pfnSnapGridVertical;
+             internal GetDvrSuppressibleBottomSpace pfnGetDvrSuppressibleBottomSpace;
+             internal GetDvrAdvance pfnGetDvrAdvance;
+             internal UpdGetChangeInText pfnUpdGetChangeInText;
+             internal UpdGetDropCapChange pfnUpdGetDropCapChange;
+             internal FInterruptFormattingText pfnFInterruptFormattingText;
+             internal GetTextParaCache pfnGetTextParaCache;
+             internal SetTextParaCache pfnSetTextParaCache;
+             internal GetOptimalLineDcpCache pfnGetOptimalLineDcpCache;
+             internal GetNumberAttachedObjectsBeforeTextLine pfnGetNumberAttachedObjectsBeforeTextLine;
+             internal GetAttachedObjectsBeforeTextLine pfnGetAttachedObjectsBeforeTextLine;
+             internal GetNumberAttachedObjectsInTextLine pfnGetNumberAttachedObjectsInTextLine;
+             internal GetAttachedObjectsInTextLine pfnGetAttachedObjectsInTextLine;
+             internal UpdGetAttachedObjectChange pfnUpdGetAttachedObjectChange;
+             internal GetDurFigureAnchor pfnGetDurFigureAnchor;
         }
         // ------------------------------------------------------------------
         // fscbktxtds.h
@@ -807,35 +807,35 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKWRD
         {
-            [SecurityCritical] internal IntPtr pfnGetSectionHorizMargins;
-            [SecurityCritical] internal IntPtr pfnFPerformColumnBalancing;
-            [SecurityCritical] internal IntPtr pfnCalculateColumnBalancingApproximateHeight;
-            [SecurityCritical] internal IntPtr pfnCalculateColumnBalancingStep;
-            [SecurityCritical] internal IntPtr pfnGetColumnSectionBreak;
-            [SecurityCritical] internal IntPtr pfnFSuppressKeepWithNextAtTopOfPage;
-            [SecurityCritical] internal IntPtr pfnFSuppressKeepTogetherAtTopOfPage;
-            [SecurityCritical] internal IntPtr pfnFAllowSpaceAfterOverhang;
-            [SecurityCritical] internal IntPtr pfnFormatLineWord;
-            [SecurityCritical] internal IntPtr pfnGetSuppressedTopSpace;
-            [SecurityCritical] internal IntPtr pfnChangeSplatLineHeight;
-            [SecurityCritical] internal IntPtr pfnGetDvrAdvanceWord;
-            [SecurityCritical] internal IntPtr pfnGetMinDvrAdvance;
-            [SecurityCritical] internal IntPtr pfnGetDurTooNarrowForFigure;
-            [SecurityCritical] internal IntPtr pfnResolveOverlap;
-            [SecurityCritical] internal IntPtr pfnGetOffsetForFlowAroundAndBBox;
-            [SecurityCritical] internal IntPtr pfnGetClientGeometryHandle;
-            [SecurityCritical] internal IntPtr pfnDuplicateClientGeometryHandle;
-            [SecurityCritical] internal IntPtr pfnDestroyClientGeometryHandle;
-            [SecurityCritical] internal IntPtr pfnObstacleAddNotification;
-            [SecurityCritical] internal IntPtr pfnGetFigureObstaclesForRestart;
-            [SecurityCritical] internal IntPtr pfnRepositionFigure;
-            [SecurityCritical] internal IntPtr pfnFStopBeforeLr;
-            [SecurityCritical] internal IntPtr pfnFStopBeforeLine;
-            [SecurityCritical] internal IntPtr pfnFIgnoreCollision;
-            [SecurityCritical] internal IntPtr pfnGetNumberOfLinesForColumnBalancing;
-            [SecurityCritical] internal IntPtr pfnFCancelPageBreakBefore;
-            [SecurityCritical] internal IntPtr pfnChangeVrTopLineForFigure;
-            [SecurityCritical] internal IntPtr pfnFApplyWidowOrphanControlInFootnoteResolution;
+             internal IntPtr pfnGetSectionHorizMargins;
+             internal IntPtr pfnFPerformColumnBalancing;
+             internal IntPtr pfnCalculateColumnBalancingApproximateHeight;
+             internal IntPtr pfnCalculateColumnBalancingStep;
+             internal IntPtr pfnGetColumnSectionBreak;
+             internal IntPtr pfnFSuppressKeepWithNextAtTopOfPage;
+             internal IntPtr pfnFSuppressKeepTogetherAtTopOfPage;
+             internal IntPtr pfnFAllowSpaceAfterOverhang;
+             internal IntPtr pfnFormatLineWord;
+             internal IntPtr pfnGetSuppressedTopSpace;
+             internal IntPtr pfnChangeSplatLineHeight;
+             internal IntPtr pfnGetDvrAdvanceWord;
+             internal IntPtr pfnGetMinDvrAdvance;
+             internal IntPtr pfnGetDurTooNarrowForFigure;
+             internal IntPtr pfnResolveOverlap;
+             internal IntPtr pfnGetOffsetForFlowAroundAndBBox;
+             internal IntPtr pfnGetClientGeometryHandle;
+             internal IntPtr pfnDuplicateClientGeometryHandle;
+             internal IntPtr pfnDestroyClientGeometryHandle;
+             internal IntPtr pfnObstacleAddNotification;
+             internal IntPtr pfnGetFigureObstaclesForRestart;
+             internal IntPtr pfnRepositionFigure;
+             internal IntPtr pfnFStopBeforeLr;
+             internal IntPtr pfnFStopBeforeLine;
+             internal IntPtr pfnFIgnoreCollision;
+             internal IntPtr pfnGetNumberOfLinesForColumnBalancing;
+             internal IntPtr pfnFCancelPageBreakBefore;
+             internal IntPtr pfnChangeVrTopLineForFigure;
+             internal IntPtr pfnFApplyWidowOrphanControlInFootnoteResolution;
         }
         // ------------------------------------------------------------------
         // fscbkwrdds.h
@@ -873,15 +873,15 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCONTEXTINFO
         {
-            [SecurityCritical] internal uint version;                  // version number
-            [SecurityCritical] internal uint fsffi;                    // compatibility flags
-            [SecurityCritical] internal int drMinColumnBalancingStep;  // min step for col balancing algorithm
-            [SecurityCritical] internal int cInstalledObjects;         // number of installed objects
-            [SecurityCritical] internal IntPtr pInstalledObjects;      // array of installed objects
-            [SecurityCritical] internal IntPtr pfsclient;              // client data for this context
-            [SecurityCritical] internal IntPtr ptsPenaltyModule;       // Penalty module
-            [SecurityCritical] internal FSCBK fscbk;                   // FS client callbacks
-            [SecurityCritical] internal AssertFailed pfnAssertFailed;  // debugging callback
+             internal uint version;                  // version number
+             internal uint fsffi;                    // compatibility flags
+             internal int drMinColumnBalancingStep;  // min step for col balancing algorithm
+             internal int cInstalledObjects;         // number of installed objects
+             internal IntPtr pInstalledObjects;      // array of installed objects
+             internal IntPtr pfsclient;              // client data for this context
+             internal IntPtr ptsPenaltyModule;       // Penalty module
+             internal FSCBK fscbk;                   // FS client callbacks
+             internal AssertFailed pfnAssertFailed;  // debugging callback
         }
         // ------------------------------------------------------------------
         // fsdefs.h
@@ -1074,22 +1074,22 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSFLOATERCBK
         {
-            [SecurityCritical] internal GetFloaterProperties pfnGetFloaterProperties;
-            [SecurityCritical] internal FormatFloaterContentFinite pfnFormatFloaterContentFinite;
-            [SecurityCritical] internal FormatFloaterContentBottomless pfnFormatFloaterContentBottomless;
-            [SecurityCritical] internal UpdateBottomlessFloaterContent pfnUpdateBottomlessFloaterContent;
-            [SecurityCritical] internal GetFloaterPolygons pfnGetFloaterPolygons;
-            [SecurityCritical] internal ClearUpdateInfoInFloaterContent pfnClearUpdateInfoInFloaterContent;
-            [SecurityCritical] internal CompareFloaterContents pfnCompareFloaterContents;
-            [SecurityCritical] internal DestroyFloaterContent pfnDestroyFloaterContent;
-            [SecurityCritical] internal DuplicateFloaterContentBreakRecord pfnDuplicateFloaterContentBreakRecord;
-            [SecurityCritical] internal DestroyFloaterContentBreakRecord pfnDestroyFloaterContentBreakRecord;
-            [SecurityCritical] internal GetFloaterContentColumnBalancingInfo pfnGetFloaterContentColumnBalancingInfo;
-            [SecurityCritical] internal GetFloaterContentNumberFootnotes pfnGetFloaterContentNumberFootnotes;
-            [SecurityCritical] internal GetFloaterContentFootnoteInfo pfnGetFloaterContentFootnoteInfo;
-            [SecurityCritical] internal TransferDisplayInfoInFloaterContent pfnTransferDisplayInfoInFloaterContent;
-            [SecurityCritical] internal GetMCSClientAfterFloater pfnGetMCSClientAfterFloater;
-            [SecurityCritical] internal GetDvrUsedForFloater pfnGetDvrUsedForFloater;
+             internal GetFloaterProperties pfnGetFloaterProperties;
+             internal FormatFloaterContentFinite pfnFormatFloaterContentFinite;
+             internal FormatFloaterContentBottomless pfnFormatFloaterContentBottomless;
+             internal UpdateBottomlessFloaterContent pfnUpdateBottomlessFloaterContent;
+             internal GetFloaterPolygons pfnGetFloaterPolygons;
+             internal ClearUpdateInfoInFloaterContent pfnClearUpdateInfoInFloaterContent;
+             internal CompareFloaterContents pfnCompareFloaterContents;
+             internal DestroyFloaterContent pfnDestroyFloaterContent;
+             internal DuplicateFloaterContentBreakRecord pfnDuplicateFloaterContentBreakRecord;
+             internal DestroyFloaterContentBreakRecord pfnDestroyFloaterContentBreakRecord;
+             internal GetFloaterContentColumnBalancingInfo pfnGetFloaterContentColumnBalancingInfo;
+             internal GetFloaterContentNumberFootnotes pfnGetFloaterContentNumberFootnotes;
+             internal GetFloaterContentFootnoteInfo pfnGetFloaterContentFootnoteInfo;
+             internal TransferDisplayInfoInFloaterContent pfnTransferDisplayInfoInFloaterContent;
+             internal GetMCSClientAfterFloater pfnGetMCSClientAfterFloater;
+             internal GetDvrUsedForFloater pfnGetDvrUsedForFloater;
         }
         // ------------------------------------------------------------------
         // fsfloatercbkds.h
@@ -1256,23 +1256,23 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSIMETHODS
         {
-            [SecurityCritical] internal ObjCreateContext pfnCreateContext;
-            [SecurityCritical] internal ObjDestroyContext pfnDestroyContext;
-            [SecurityCritical] internal ObjFormatParaFinite pfnFormatParaFinite;
-            [SecurityCritical] internal ObjFormatParaBottomless pfnFormatParaBottomless;
-            [SecurityCritical] internal ObjUpdateBottomlessPara pfnUpdateBottomlessPara;
-            [SecurityCritical] internal ObjSynchronizeBottomlessPara pfnSynchronizeBottomlessPara;
-            [SecurityCritical] internal ObjComparePara pfnComparePara;
-            [SecurityCritical] internal ObjClearUpdateInfoInPara pfnClearUpdateInfoInPara;
-            [SecurityCritical] internal ObjDestroyPara pfnDestroyPara;
-            [SecurityCritical] internal ObjDuplicateBreakRecord pfnDuplicateBreakRecord;
-            [SecurityCritical] internal ObjDestroyBreakRecord pfnDestroyBreakRecord;
-            [SecurityCritical] internal ObjGetColumnBalancingInfo pfnGetColumnBalancingInfo;
-            [SecurityCritical] internal ObjGetNumberFootnotes pfnGetNumberFootnotes;
-            [SecurityCritical] internal ObjGetFootnoteInfo pfnGetFootnoteInfo;
-            [SecurityCritical] internal IntPtr pfnGetFootnoteInfoWord;
-            [SecurityCritical] internal ObjShiftVertical pfnShiftVertical;
-            [SecurityCritical] internal ObjTransferDisplayInfoPara pfnTransferDisplayInfoPara;
+             internal ObjCreateContext pfnCreateContext;
+             internal ObjDestroyContext pfnDestroyContext;
+             internal ObjFormatParaFinite pfnFormatParaFinite;
+             internal ObjFormatParaBottomless pfnFormatParaBottomless;
+             internal ObjUpdateBottomlessPara pfnUpdateBottomlessPara;
+             internal ObjSynchronizeBottomlessPara pfnSynchronizeBottomlessPara;
+             internal ObjComparePara pfnComparePara;
+             internal ObjClearUpdateInfoInPara pfnClearUpdateInfoInPara;
+             internal ObjDestroyPara pfnDestroyPara;
+             internal ObjDuplicateBreakRecord pfnDuplicateBreakRecord;
+             internal ObjDestroyBreakRecord pfnDestroyBreakRecord;
+             internal ObjGetColumnBalancingInfo pfnGetColumnBalancingInfo;
+             internal ObjGetNumberFootnotes pfnGetNumberFootnotes;
+             internal ObjGetFootnoteInfo pfnGetFootnoteInfo;
+             internal IntPtr pfnGetFootnoteInfoWord;
+             internal ObjShiftVertical pfnShiftVertical;
+             internal ObjTransferDisplayInfoPara pfnTransferDisplayInfoPara;
         }
         // ------------------------------------------------------------------
         // fskalignpage.h
@@ -1389,13 +1389,11 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             /// <SecurityNote>
             ///   Critical : Native pointer
             /// </SecurityNote>
-            [SecurityCritical]
             internal unsafe int* rgcVertices;   // array of vertex counts (array containing number of vertices for each polygon)
             internal int cfspt;                 // total number of vertices in all polygons
             /// <SecurityNote>
             ///   Critical : Native pointer
             /// </SecurityNote>
-            [SecurityCritical]
             internal unsafe FSPOINT* rgfspt;    // array of all vertices
             internal int fWrapThrough;
         }
@@ -1783,21 +1781,21 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKFETCH
         {
-            [SecurityCritical] internal GetFirstHeaderRow pfnGetFirstHeaderRow;
-            [SecurityCritical] internal GetNextHeaderRow pfnGetNextHeaderRow;
-            [SecurityCritical] internal GetFirstFooterRow pfnGetFirstFooterRow;
-            [SecurityCritical] internal GetNextFooterRow pfnGetNextFooterRow;
-            [SecurityCritical] internal GetFirstRow pfnGetFirstRow;
-            [SecurityCritical] internal GetNextRow pfnGetNextRow;
-            [SecurityCritical] internal UpdFChangeInHeaderFooter pfnUpdFChangeInHeaderFooter;
-            [SecurityCritical] internal UpdGetFirstChangeInTable pfnUpdGetFirstChangeInTable;
-            [SecurityCritical] internal UpdGetRowChange pfnUpdGetRowChange;
-            [SecurityCritical] internal UpdGetCellChange pfnUpdGetCellChange;
-            [SecurityCritical] internal GetDistributionKind pfnGetDistributionKind;
-            [SecurityCritical] internal GetRowProperties pfnGetRowProperties;
-            [SecurityCritical] internal GetCells pfnGetCells;
-            [SecurityCritical] internal FInterruptFormattingTable pfnFInterruptFormattingTable;
-            [SecurityCritical] internal CalcHorizontalBBoxOfRow pfnCalcHorizontalBBoxOfRow;
+             internal GetFirstHeaderRow pfnGetFirstHeaderRow;
+             internal GetNextHeaderRow pfnGetNextHeaderRow;
+             internal GetFirstFooterRow pfnGetFirstFooterRow;
+             internal GetNextFooterRow pfnGetNextFooterRow;
+             internal GetFirstRow pfnGetFirstRow;
+             internal GetNextRow pfnGetNextRow;
+             internal UpdFChangeInHeaderFooter pfnUpdFChangeInHeaderFooter;
+             internal UpdGetFirstChangeInTable pfnUpdGetFirstChangeInTable;
+             internal UpdGetRowChange pfnUpdGetRowChange;
+             internal UpdGetCellChange pfnUpdGetCellChange;
+             internal GetDistributionKind pfnGetDistributionKind;
+             internal GetRowProperties pfnGetRowProperties;
+             internal GetCells pfnGetCells;
+             internal FInterruptFormattingTable pfnFInterruptFormattingTable;
+             internal CalcHorizontalBBoxOfRow pfnCalcHorizontalBBoxOfRow;
         }
         /// <SecurityNote>
         /// Critical - as this structure points to several callbacks that'll be
@@ -1808,20 +1806,20 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKCELL
         {
-            [SecurityCritical] internal FormatCellFinite pfnFormatCellFinite;
-            [SecurityCritical] internal FormatCellBottomless pfnFormatCellBottomless;
-            [SecurityCritical] internal UpdateBottomlessCell pfnUpdateBottomlessCell;
-            [SecurityCritical] internal CompareCells pfnCompareCells;
-            [SecurityCritical] internal ClearUpdateInfoInCell pfnClearUpdateInfoInCell;
-            [SecurityCritical] internal SetCellHeight pfnSetCellHeight;
-            [SecurityCritical] internal DestroyCell pfnDestroyCell;
-            [SecurityCritical] internal DuplicateCellBreakRecord pfnDuplicateCellBreakRecord;
-            [SecurityCritical] internal DestroyCellBreakRecord pfnDestroyCellBreakRecord;
-            [SecurityCritical] internal GetCellNumberFootnotes pfnGetCellNumberFootnotes;
-            [SecurityCritical] internal IntPtr pfnGetCellFootnoteInfo;
-            [SecurityCritical] internal IntPtr pfnGetCellFootnoteInfoWord;
-            [SecurityCritical] internal GetCellMinColumnBalancingStep pfnGetCellMinColumnBalancingStep;
-            [SecurityCritical] internal TransferDisplayInfoCell pfnTransferDisplayInfoCell;
+             internal FormatCellFinite pfnFormatCellFinite;
+             internal FormatCellBottomless pfnFormatCellBottomless;
+             internal UpdateBottomlessCell pfnUpdateBottomlessCell;
+             internal CompareCells pfnCompareCells;
+             internal ClearUpdateInfoInCell pfnClearUpdateInfoInCell;
+             internal SetCellHeight pfnSetCellHeight;
+             internal DestroyCell pfnDestroyCell;
+             internal DuplicateCellBreakRecord pfnDuplicateCellBreakRecord;
+             internal DestroyCellBreakRecord pfnDestroyCellBreakRecord;
+             internal GetCellNumberFootnotes pfnGetCellNumberFootnotes;
+             internal IntPtr pfnGetCellFootnoteInfo;
+             internal IntPtr pfnGetCellFootnoteInfoWord;
+             internal GetCellMinColumnBalancingStep pfnGetCellMinColumnBalancingStep;
+             internal TransferDisplayInfoCell pfnTransferDisplayInfoCell;
         }
         // ------------------------------------------------------------------
         // fstablecbkds.h
@@ -1906,26 +1904,26 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLEOBJCBK
         {
-            [SecurityCritical] internal GetTableProperties pfnGetTableProperties;
-            [SecurityCritical] internal AutofitTable pfnAutofitTable;
-            [SecurityCritical] internal UpdAutofitTable pfnUpdAutofitTable;
-            [SecurityCritical] internal GetMCSClientAfterTable pfnGetMCSClientAfterTable;
-            [SecurityCritical] internal IntPtr pfnGetDvrUsedForFloatTable;
+             internal GetTableProperties pfnGetTableProperties;
+             internal AutofitTable pfnAutofitTable;
+             internal UpdAutofitTable pfnUpdAutofitTable;
+             internal GetMCSClientAfterTable pfnGetMCSClientAfterTable;
+             internal IntPtr pfnGetDvrUsedForFloatTable;
         }
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKFETCHWORD
         {
-            [SecurityCritical] internal IntPtr pfnGetTablePropertiesWord;
-            [SecurityCritical] internal IntPtr pfnGetRowPropertiesWord;
-            [SecurityCritical] internal IntPtr pfnGetRowWidthWord;
-            [SecurityCritical] internal IntPtr pfnGetNumberFiguresForTableRow;
-            [SecurityCritical] internal IntPtr pfnGetFiguresForTableRow;
-            [SecurityCritical] internal IntPtr pfnFStopBeforeTableRowLr;
-            [SecurityCritical] internal IntPtr pfnFIgnoreCollisionForTableRow;
-            [SecurityCritical] internal IntPtr pfnChangeRowHeightRestriction;
-            [SecurityCritical] internal IntPtr pfnNotifyRowPosition;
-            [SecurityCritical] internal IntPtr pfnNotifyRowBorderAbove;
-            [SecurityCritical] internal IntPtr pfnNotifyTableBreakRec;
+             internal IntPtr pfnGetTablePropertiesWord;
+             internal IntPtr pfnGetRowPropertiesWord;
+             internal IntPtr pfnGetRowWidthWord;
+             internal IntPtr pfnGetNumberFiguresForTableRow;
+             internal IntPtr pfnGetFiguresForTableRow;
+             internal IntPtr pfnFStopBeforeTableRowLr;
+             internal IntPtr pfnFIgnoreCollisionForTableRow;
+             internal IntPtr pfnChangeRowHeightRestriction;
+             internal IntPtr pfnNotifyRowPosition;
+             internal IntPtr pfnNotifyRowBorderAbove;
+             internal IntPtr pfnNotifyTableBreakRec;
         }
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLEOBJINIT
@@ -2038,7 +2036,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // assert
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate void AssertFailed(
+         internal delegate void AssertFailed(
             string arg1,                        // IN:
             string arg2,                        // IN:
             int arg3,                           // IN:
@@ -2046,7 +2044,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fscbkfig.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int GetFigureProperties(
+         internal delegate int GetFigureProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclientFigure,         // IN:
             IntPtr nmpFigure,                   // IN:  figure's name
@@ -2062,7 +2060,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int durDistTextRight,           // OUT: distance to text from MaxU side
             out int dvrDistTextTop,             // OUT: distance to text from MinV side
             out int dvrDistTextBottom);         // OUT: distance to text from MaxV side
-        [SecurityCritical] internal unsafe delegate int GetFigurePolygons(
+         internal unsafe delegate int GetFigurePolygons(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclientFigure,         // IN:
             IntPtr nmpFigure,                   // IN:  figure's name
@@ -2074,7 +2072,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             FSPOINT* rgfspt,                    // OUT: array of all vertices
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-        [SecurityCritical] internal delegate int CalcFigurePosition(
+         internal delegate int CalcFigurePosition(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclientFigure,         // IN:
             IntPtr nmpFigure,                   // IN:  figure's name
@@ -2093,11 +2091,11 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fscbkgen.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int FSkipPage(
+         internal delegate int FSkipPage(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of first section on the page
             out int fSkip);                     // OUT: skip it due to odd/even page issue
-        [SecurityCritical] internal delegate int GetPageDimensions(
+         internal delegate int GetPageDimensions(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section on page
             out uint fswdir,                    // OUT: direction of main text
@@ -2105,12 +2103,12 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int durPage,                    // OUT: page width
             out int dvrPage,                    // OUT: page height
             ref FSRECT fsrcMargin);             // OUT: rectangle within page margins
-        [SecurityCritical] internal delegate int GetNextSection(
+         internal delegate int GetNextSection(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsCur,                      // IN:  name of current section
             out int fSuccess,                   // OUT: next section exists
             out IntPtr nmsNext);                // OUT: name of the next section
-        [SecurityCritical] internal delegate int GetSectionProperties(
+         internal delegate int GetSectionProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int fNewPage,                   // OUT: stop page before this section?
@@ -2119,7 +2117,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int ccol,                       // OUT: number of columns in the main text segment
             out int cSegmentDefinedColumnSpanAreas, // OUT:
             out int cHeightDefinedColumnSpanAreas); // OUT:
-        [SecurityCritical] internal unsafe delegate int GetJustificationProperties(
+         internal unsafe delegate int GetJustificationProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr* rgnms,                      // IN:  array of the section names on the page
             int cnms,                           // IN:  number of sections on the page
@@ -2127,11 +2125,11 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int fJustify,                   // OUT: apply justification/alignment to the page?
             out FSKALIGNPAGE fskal,             // OUT: kind of vertical alignment for the page
             out int fCancelAtLastColumn);       // OUT: cancel justification for the last column of the page?
-        [SecurityCritical] internal delegate int GetMainTextSegment(
+         internal delegate int GetMainTextSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsSection,                  // IN:  name of section
             out IntPtr nmSegment);              // OUT: name of the main text segment for this section
-        [SecurityCritical] internal delegate int GetHeaderSegment(
+         internal delegate int GetHeaderSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
@@ -2142,7 +2140,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int dvrFromEdge,                // OUT: distance from top edge of the paper
             out uint fswdirHeader,              // OUT: direction for header
             out IntPtr nmsHeader);              // OUT: name of header segment
-        [SecurityCritical] internal delegate int GetFooterSegment(
+         internal delegate int GetFooterSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
@@ -2153,122 +2151,122 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int dvrFromEdge,                // OUT: distance from bottom edge of the paper
             out uint fswdirFooter,              // OUT: direction for footer
             out IntPtr nmsFooter);              // OUT: name of footer segment
-        [SecurityCritical] internal delegate int UpdGetSegmentChange(
+         internal delegate int UpdGetSegmentChange(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of the segment
             out FSKCHANGE fskch);               // OUT: kind of change
-        [SecurityCritical] internal unsafe delegate int GetSectionColumnInfo(
+         internal unsafe delegate int GetSectionColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             uint fswdir,                        // IN:  direction of section
             int ncol,                           // IN:  size of the preallocated fscolinfo array
             FSCOLUMNINFO* fscolinfo,            // OUT: array of the colinfo structures
             out int ccol);                      // OUT: actual number of the columns in the segment
-        [SecurityCritical] internal unsafe delegate int GetSegmentDefinedColumnSpanAreaInfo(
+         internal unsafe delegate int GetSegmentDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
             IntPtr* rgnmSeg,                    // OUT: array of segment names for segment-defined areas
             int* rgcColumns,                    // OUT: arrays of number of columns spanned
             out int cAreasActual);              // OUT: actual number of segment-defined areas
-        [SecurityCritical] internal unsafe delegate int GetHeightDefinedColumnSpanAreaInfo(
+         internal unsafe delegate int GetHeightDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
             int* rgdvrAreaHeight,               // OUT: array of segment names for height-defined areas
             int* rgcColumns,                    // OUT: arrays of number of columns spanned
             out int cAreasActual);              // OUT: actual number of height-defined areas
-        [SecurityCritical] internal delegate int GetFirstPara(
+         internal delegate int GetFirstPara(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of segment
             out int fSuccessful,                // OUT: does segment contain any paragraph?
             out IntPtr nmp);                    // OUT: name of the first paragraph in segment
-        [SecurityCritical] internal delegate int GetNextPara(
+         internal delegate int GetNextPara(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of segment
             IntPtr nmpCur,                      // IN:  name of current para
             out int fFound,                     // OUT: is there next paragraph?
             out IntPtr nmpNext);                // OUT: name of the next paragraph in section
-        [SecurityCritical] internal delegate int UpdGetFirstChangeInSegment(
+         internal delegate int UpdGetFirstChangeInSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of segment
             out int fFound,                     // OUT: anything changed?
             out int fChangeFirst,               // OUT: first paragraph changed?
             out IntPtr nmpBeforeChange);        // OUT: name of paragraph before the change if !fChangeFirst
-        [SecurityCritical] internal delegate int UpdGetParaChange(
+         internal delegate int UpdGetParaChange(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of the paragraph
             out FSKCHANGE fskch,                // OUT: kind of change
             out int fNoFurtherChanges);         // OUT: no changes after?
-        [SecurityCritical] internal delegate int GetParaProperties(
+         internal delegate int GetParaProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             ref FSPAP fspap);                   // OUT: paragraph properties
-        [SecurityCritical] internal delegate int CreateParaclient(
+         internal delegate int CreateParaclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             out IntPtr pfsparaclient);          // OUT: opaque to PTS paragraph client
-        [SecurityCritical] internal delegate int TransferDisplayInfo(
+         internal delegate int TransferDisplayInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclientOld,            // IN:  opaque to PTS old paragraph client
             IntPtr pfsparaclientNew);           // IN:  opaque to PTS new paragraph client
-        [SecurityCritical] internal delegate int DestroyParaclient(
+         internal delegate int DestroyParaclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient);              // IN:  opaque to PTS paragraph client
-        [SecurityCritical] internal delegate int FInterruptFormattingAfterPara(
+         internal delegate int FInterruptFormattingAfterPara(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
             IntPtr nmp,                         // IN:  name of paragraph
             int vr,                             // IN:  current v position
             out int fInterruptFormatting);      // OUT: is it time to stop formatting?
-        [SecurityCritical] internal delegate int GetEndnoteSeparators(
+         internal delegate int GetEndnoteSeparators(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsSection,                  // IN:  name of section
             out IntPtr nmsEndnoteSeparator,     // OUT: name of the endnote separator segment
             out IntPtr nmEndnoteContSeparator,  // OUT: name of endnote cont separator segment
             out IntPtr nmsEndnoteContNotice);   // OUT: name of the endnote cont notice segment
-        [SecurityCritical] internal delegate int GetEndnoteSegment(
+         internal delegate int GetEndnoteSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsSection,                  // IN:  name of section
             out int fEndnotesPresent,           // OUT: are there endnotes for this segment?
             out IntPtr nmsEndnotes);            // OUT: name of endnote segment
-        [SecurityCritical] internal delegate int GetNumberEndnoteColumns(
+         internal delegate int GetNumberEndnoteColumns(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int ccolEndnote);               // OUT: number of columns in endnote area
-        [SecurityCritical] internal unsafe delegate int GetEndnoteColumnInfo(
+         internal unsafe delegate int GetEndnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             uint fswdir,                        // IN:  direction of section
             int ncolEndnote,                    // IN:  size of preallocated fscolinfo array
             FSCOLUMNINFO* fscolinfoEndnote,     // OUT: array of the colinfo structures
             out int ccolEndnote);               // OUT: actual number of the columns in footnote area
-        [SecurityCritical] internal delegate int GetFootnoteSeparators(
+         internal delegate int GetFootnoteSeparators(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsSection,                  // IN:  name of section
             out IntPtr nmsFtnSeparator,         // OUT: name of the footnote separator segment
             out IntPtr nmsFtnContSeparator,     // OUT: name of the ftn cont separator segment
             out IntPtr nmsFtnContNotice);       // OUT: name of the footnote cont notice segment
-        [SecurityCritical] internal delegate int FFootnoteBeneathText(
+         internal delegate int FFootnoteBeneathText(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int fFootnoteBeneathText);      // OUT: position footnote right after text?
-        [SecurityCritical] internal delegate int GetNumberFootnoteColumns(
+         internal delegate int GetNumberFootnoteColumns(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int ccolFootnote);              // OUT: number of columns in footnote area
-        [SecurityCritical] internal unsafe delegate int GetFootnoteColumnInfo(
+         internal unsafe delegate int GetFootnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             uint fswdir,                        // IN:  direction of main text
             int ncolFootnote,                   // IN:  size of preallocated fscolinfo array
             FSCOLUMNINFO* fscolinfoFootnote,    // OUT: array of the colinfo structures
             out int ccolFootnote);              // OUT: actual number of the columns in footnote area
-        [SecurityCritical] internal delegate int GetFootnoteSegment(
+         internal delegate int GetFootnoteSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmftn,                       // IN:  name of footnote
             out IntPtr nmsFootnote);            // OUT: name of footnote segment
-        [SecurityCritical] internal unsafe delegate int GetFootnotePresentationAndRejectionOrder(
+         internal unsafe delegate int GetFootnotePresentationAndRejectionOrder(
             IntPtr pfsclient,                           // IN:  client opaque data
             int cFootnotes,                             // IN:  size of all arrays
             IntPtr* rgProposedPresentationOrder,        // IN:  footnotes in proposed pres order
@@ -2277,7 +2275,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             IntPtr* rgFinalPresentationOrder,           // OUT: footnotes in final pres order
             out int fProposedRejectionOrderAccepted,    // OUT: agree with proposed order?
             IntPtr* rgFinalRejectionOrder);             // OUT: footnotes in final reject order
-        [SecurityCritical] internal delegate int FAllowFootnoteSeparation(
+         internal delegate int FAllowFootnoteSeparation(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmftn,                       // IN:  name of footnote
             out int fAllow);                    // OUT: allow separating footnote from its reference
@@ -2287,19 +2285,19 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // NewPtr
         // DisposePtr
         // ReallocPtr
-        [SecurityCritical] internal delegate int DuplicateMcsclient(
+         internal delegate int DuplicateMcsclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pmcsclientIn,                // IN:  margin collapsing state
             out IntPtr pmcsclientNew);          // OUT: duplicated margin collapsing state
-        [SecurityCritical] internal delegate int DestroyMcsclient(
+         internal delegate int DestroyMcsclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pmcsclient);                 // IN:  margin collapsing state to destroy
-        [SecurityCritical] internal delegate int FEqualMcsclient(
+         internal delegate int FEqualMcsclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pmcsclient1,                 // IN:  first margin collapsing state to compare
             IntPtr pmcsclient2,                 // IN:  second margin collapsing state to compare
             out int fEqual);                    // OUT: are MStructs equal?
-        [SecurityCritical] internal delegate int ConvertMcsclient(
+         internal delegate int ConvertMcsclient(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2307,14 +2305,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             IntPtr pmcsclient,                  // IN:  pointer to the input margin collapsing state
             int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
             out int dvr);                       // OUT: dvr, calculated based on margin collapsing state
-        [SecurityCritical] internal delegate int GetObjectHandlerInfo(
+         internal delegate int GetObjectHandlerInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             int idobj,                          // IN:  id of the object handler
             IntPtr pobjectinfo);                // OUT: initialization information for the specified object
         // ------------------------------------------------------------------
         // fscbktxt.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int CreateParaBreakingSession(
+         internal delegate int CreateParaBreakingSession(
             IntPtr pfsclient,                   // IN:  client opaque data 
             IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2327,21 +2325,21 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             int urPageLeftMargin,               // IN:  left margin of the page
             out IntPtr ppfsparabreakingsession, // OUT: paragraph breaking session
             out int fParagraphJustified);       // OUT: if paragraph is justified
-        [SecurityCritical] internal delegate int DestroyParaBreakingSession(
+         internal delegate int DestroyParaBreakingSession(
             IntPtr pfsclient,                   // IN:  client opaque data 
             IntPtr pfsparabreakingsession);     // IN:  session to destroy
-        [SecurityCritical] internal delegate int GetTextProperties(
+         internal delegate int GetTextProperties(
             IntPtr pfsclient,                   // IN:  client opaque data 
             IntPtr nmp,                         // IN:  name of paragraph
             int iArea,                          // IN:  column-span area index
             ref FSTXTPROPS fstxtprops);         // OUT: text paragraph properties
-        [SecurityCritical] internal delegate int GetNumberFootnotes(
+         internal delegate int GetNumberFootnotes(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             int fsdcpStart,                     // IN:  dcp at the beginning of the range
             int fsdcpLim,                       // IN:  dcp at the end of the range
             out int nFootnote);                 // OUT: number of footnote references in the range
-        [SecurityCritical] internal unsafe delegate int GetFootnotes(
+         internal unsafe delegate int GetFootnotes(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             int fsdcpStart,                     // IN:  dcp at the beginning of the range
@@ -2350,7 +2348,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             IntPtr* rgnmftn,                    // OUT: array of footnote names in the range
             int* rgdcp,                         // OUT: array of footnote refs in the range
             out int cFootnotes);                // OUT: actual number of footnotes
-        [SecurityCritical] internal delegate int FormatDropCap(
+         internal delegate int FormatDropCap(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2364,7 +2362,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices,                  // OUT: number of vertices
             out int durText);                   // OUT: distance from text
-        [SecurityCritical] internal unsafe delegate int GetDropCapPolygons(
+         internal unsafe delegate int GetDropCapPolygons(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc,                    // IN:  pointer to drop cap
             IntPtr nmp,                         // IN:  para name
@@ -2376,10 +2374,10 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             FSPOINT* rgfspt,                    // OUT: array of all vertices
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-        [SecurityCritical] internal delegate int DestroyDropCap(
+         internal delegate int DestroyDropCap(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc);                   // IN:  pointer to drop cap created by client
-        [SecurityCritical] internal delegate int FormatBottomText(
+         internal delegate int FormatBottomText(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2388,7 +2386,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             IntPtr pfslineLast,                 // IN:  last formatted line
             int dvrLine,                        // IN:  height of last line
             out IntPtr pmcsclientOut);          // OUT: margin collapsing state at bottom of text
-        [SecurityCritical] internal delegate int FormatLine(
+         internal delegate int FormatLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2418,7 +2416,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int durBBox,                    // OUT: dur of of the line's ink
             out int dcpDepend,                  // OUT: number of chars after line break that were considered
             out int fReformatNeighborsAsLastLine); // OUT: should line segments be reformatted?
-        [SecurityCritical] internal delegate int FormatLineForced(
+         internal delegate int FormatLineForced(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2446,7 +2444,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int urBBox,                     // OUT: ur of the line's ink
             out int durBBox,                    // OUT: dur of of the line's ink
             out int dcpDepend);                 // OUT: number of chars after line break that were considered
-        [SecurityCritical] internal unsafe delegate int FormatLineVariants(
+         internal unsafe delegate int FormatLineVariants(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparabreakingsession,      // IN:  current session
             int dcp,                            // IN:  dcp at the beginning line variants
@@ -2466,7 +2464,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int nLineVariantsActual,        // OUT: actual number of variants
             out int iLineVariantBest);          // OUT: best line variant index
 
-        [SecurityCritical] internal delegate int ReconstructLineVariant(
+         internal delegate int ReconstructLineVariant(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2496,53 +2494,53 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int durBBox,                    // OUT: dur of of the line's ink
             out int dcpDepend,                  // OUT: number of chars after line break that were considered
             out int fReformatNeighborsAsLastLine);  // OUT: should line segments be reformatted?
-        [SecurityCritical] internal delegate int DestroyLine(
+         internal delegate int DestroyLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsline);                    // IN:  pointer to line created by client
-        [SecurityCritical] internal delegate int DuplicateLineBreakRecord(
+         internal delegate int DuplicateLineBreakRecord(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pbrlineIn,                   // IN:  client's forced break record to duplicate
             out IntPtr pbrlineDup);             // OUT: duplicated client's forced break record
-        [SecurityCritical] internal delegate int DestroyLineBreakRecord(
+         internal delegate int DestroyLineBreakRecord(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pbrlineIn);                  // IN:  client's forced break record to duplicate
-        [SecurityCritical] internal delegate int SnapGridVertical(
+         internal delegate int SnapGridVertical(
             IntPtr pfsclient,                   // IN:  client opaque data
             uint fswdir,                        // IN:  current direction
             int vrMargin,                       // IN:  top margin
             int vrCurrent,                      // IN:  current vertical position
             out int vrNew);                     // OUT: snapped vertical position
-        [SecurityCritical] internal delegate int GetDvrSuppressibleBottomSpace(
+         internal delegate int GetDvrSuppressibleBottomSpace(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsline,                     // IN:  pointer to line created by client
             uint fswdir,                        // IN:  current direction
             out int dvrSuppressible);           // OUT: empty space suppressible at the bottom
-        [SecurityCritical] internal delegate int GetDvrAdvance(
+         internal delegate int GetDvrAdvance(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
             int dcp,                            // IN:  dcp at the beginning of the line
             uint fswdir,                        // IN:  current direction
             out int dvr);                       // OUT: advance amount in tight wrap
-        [SecurityCritical] internal delegate int UpdGetChangeInText(
+         internal delegate int UpdGetChangeInText(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             out int dcpStart,                   // OUT: start of change
             out int ddcpOld,                    // OUT: number of chars in old range
             out int ddcpNew);                   // OUT: number of chars in new range
-        [SecurityCritical] internal delegate int UpdGetDropCapChange(
+         internal delegate int UpdGetDropCapChange(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             out int fChanged);                  // OUT: dropcap changed?
-        [SecurityCritical] internal delegate int FInterruptFormattingText(
+         internal delegate int FInterruptFormattingText(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
             int dcp,                            // IN:  current dcp
             int vr,                             // IN:  current v position
             out int fInterruptFormatting);      // OUT: is it time to stop formatting?
-        [SecurityCritical] internal delegate int GetTextParaCache(
+         internal delegate int GetTextParaCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2567,7 +2565,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int fOptimalLines,              // OUT: para had its lines optimized
             out int fOptimalLineDcpsCached,     // OUT: cached dcp's for lines available
             out int dvrMinLineHeight);          // OUT: minimal line height
-        [SecurityCritical] internal unsafe delegate int SetTextParaCache(
+         internal unsafe delegate int SetTextParaCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2591,16 +2589,16 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             int fOptimalLines,                  // IN:  paragraph has its lines optinmized
             int* rgdcpOptimalLines,             // IN:  array of dcp's of optimal lines
             int dvrMinLineHeight);              // IN:  minimal line height
-        [SecurityCritical] internal unsafe delegate int GetOptimalLineDcpCache(
+         internal unsafe delegate int GetOptimalLineDcpCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             int cLines,                         // IN:  number of lines - size of pre-allocated array
             int* rgdcp);                        // OUT: array of dcp's to fill
-        [SecurityCritical] internal delegate int GetNumberAttachedObjectsBeforeTextLine(
+         internal delegate int GetNumberAttachedObjectsBeforeTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             int dcpFirst,                       // IN:  dcp at the beginning of the range
             out int cAttachedObjects);          // OUT: number of attached objects
-        [SecurityCritical] internal unsafe delegate int GetAttachedObjectsBeforeTextLine(
+         internal unsafe delegate int GetAttachedObjectsBeforeTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             int dcpFirst,                       // IN:  dcp at the beginning of the range
@@ -2611,7 +2609,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out int cObjects,                   // OUT: actual number of objects
             out int fEndOfParagraph);           // OUT: paragraph ended after last object
 
-        [SecurityCritical] internal delegate int GetNumberAttachedObjectsInTextLine(
+         internal delegate int GetNumberAttachedObjectsInTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsline,                     // IN:  pointer to line created by client
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2620,7 +2618,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             int fFoundAttachedObjectsBeforeLine,// IN:  Attached objects before line found
             int dcpMaxAnchorAttachedObjectBeforeLine, // IN: Max dcp of anchor in objects before line
             out int cAttachedObjects);          // OUT: number of attached objects
-        [SecurityCritical] internal unsafe delegate int GetAttachedObjectsInTextLine(
+         internal unsafe delegate int GetAttachedObjectsInTextLine(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsline,                     // IN:  pointer to line created by client
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2634,13 +2632,13 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             int* rgdcpAnchor,                   // OUT: array of dcp of the objects anchors
             out int cObjects);                  // OUT: actual number of objects
 
-        [SecurityCritical] internal delegate int UpdGetAttachedObjectChange(
+         internal delegate int UpdGetAttachedObjectChange(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of text paragraph
             IntPtr nmpAttachedObject,           // IN:  name of object
             out FSKCHANGE fskchObject);         // OUT: kind of change for object
 
-        [SecurityCritical] internal delegate int GetDurFigureAnchor(
+         internal delegate int GetDurFigureAnchor(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsparaclientFigure,         // IN:
@@ -2652,12 +2650,12 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fsfloatercbk.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int GetFloaterProperties(
+         internal delegate int GetFloaterProperties(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmFloater,                   // IN:  name of the floater
             uint fswdirTrack,                   // IN:  direction of Track
             out FSFLOATERPROPS fsfloaterprops); // OUT: properties of the floater
-        [SecurityCritical] internal delegate int FormatFloaterContentFinite(
+         internal delegate int FormatFloaterContentFinite(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsbrkFloaterContentIn,      // IN:  break record---use if !NULL
@@ -2680,7 +2678,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSBBOX fsbbox,                  // OUT: floater bbox
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices);                  // OUT: total number of vertices in all polygons
-        [SecurityCritical] internal delegate int FormatFloaterContentBottomless(
+         internal delegate int FormatFloaterContentBottomless(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmFloater,                   // IN:  name of floater
@@ -2696,7 +2694,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSBBOX fsbbox,                  // OUT: floater bbox
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices);                 // OUT: total number of vertices in all polygons
-        [SecurityCritical] internal delegate int UpdateBottomlessFloaterContent(
+         internal delegate int UpdateBottomlessFloaterContent(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             IntPtr pfsparaclient,               // IN:
             IntPtr nmFloater,                   // IN:  name of floater
@@ -2711,7 +2709,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSBBOX fsbbox,                  // OUT: floater bbox
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices);                 // OUT: total number of vertices in all polygons
-        [SecurityCritical] internal unsafe delegate int GetFloaterPolygons(
+         internal unsafe delegate int GetFloaterPolygons(
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             IntPtr nmFloater,                   // IN:  name of floater
@@ -2723,48 +2721,48 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             FSPOINT* rgfspt,                    // OUT: array of all vertices
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-        [SecurityCritical] internal delegate int ClearUpdateInfoInFloaterContent(
+         internal delegate int ClearUpdateInfoInFloaterContent(
             IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
-        [SecurityCritical] internal delegate int CompareFloaterContents(
+         internal delegate int CompareFloaterContents(
             IntPtr pfsFloaterContentOld,        // IN:
             IntPtr pfsFloaterContentNew,        // IN:
             out FSCOMPRESULT fscmpr);           // OUT: result of comparison
-        [SecurityCritical] internal delegate int DestroyFloaterContent(
+         internal delegate int DestroyFloaterContent(
             IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
-        [SecurityCritical] internal delegate int DuplicateFloaterContentBreakRecord(
+         internal delegate int DuplicateFloaterContentBreakRecord(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsbrkFloaterContent,        // IN:  pointer to break record
             out IntPtr pfsbrkFloaterContentDup);// OUT pointer to duplicate break record
-        [SecurityCritical] internal delegate int DestroyFloaterContentBreakRecord(
+         internal delegate int DestroyFloaterContentBreakRecord(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsbrkFloaterContent);       // IN:  pointer to break record
-        [SecurityCritical] internal delegate int GetFloaterContentColumnBalancingInfo(
+         internal delegate int GetFloaterContentColumnBalancingInfo(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             uint fswdir,                        // IN:  current direction
             out int nlines,                     // OUT: number of text lines
             out int dvrSumHeight,               // OUT: sum of all line heights
             out int dvrMinHeight);              // OUT: minimum line height
-        [SecurityCritical] internal delegate int GetFloaterContentNumberFootnotes(
+         internal delegate int GetFloaterContentNumberFootnotes(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             out int cftn);                      // OUT: number of footnotes
-        [SecurityCritical] internal delegate int GetFloaterContentFootnoteInfo(
+         internal delegate int GetFloaterContentFootnoteInfo(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             uint fswdir,                        // IN:  current direction
             int nftn,                           // IN:  size of FSFTNINFO array
             int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
             ref FSFTNINFO fsftninf,             // IN/OUT: array of footnote info
             out int iftnLim);                   // OUT: lim index used by this paragraph
-        [SecurityCritical] internal delegate int TransferDisplayInfoInFloaterContent(
+         internal delegate int TransferDisplayInfoInFloaterContent(
             IntPtr pfsFloaterContentOld,        // IN:
             IntPtr pfsFloaterContentNew);       // IN:
-        [SecurityCritical] internal delegate int GetMCSClientAfterFloater(
+         internal delegate int GetMCSClientAfterFloater(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsparaclient,               // IN:
             IntPtr nmFloater,                   // IN:  name of floater
             uint fswdirTrack,                   // IN:  direction of Track
             IntPtr pmcsclientIn,                // IN:  input opaque to PTS MCSCLIENT
             out IntPtr pmcsclientOut);          // OUT: MCSCLIENT that floater will return to track
-        [SecurityCritical] internal delegate int GetDvrUsedForFloater(
+         internal delegate int GetDvrUsedForFloater(
             IntPtr pfsclient,                   // IN:  client context
             IntPtr pfsparaclient,               // IN:
             IntPtr nmFloater,                   // IN:  name of floater
@@ -2775,16 +2773,16 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fsimeth.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int ObjCreateContext(
+         internal delegate int ObjCreateContext(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsc,                        // IN:  FS context
             IntPtr pfscbkobj,                   // IN:  callbacks (FSCBKOBJ)
             uint ffi,                           // IN:  formatting flags
             int idobj,                          // IN:  id of the object
             out IntPtr pfssobjc);               // OUT: object context
-        [SecurityCritical] internal delegate int ObjDestroyContext(
+         internal delegate int ObjDestroyContext(
             IntPtr pfssobjc);                   // IN:  object context
-        [SecurityCritical] internal delegate int ObjFormatParaFinite(
+         internal delegate int ObjFormatParaFinite(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsobjbrk,                   // IN:  break record---use if !NULL
@@ -2812,7 +2810,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
             out int dvrTopSpace,                // OUT: top space due to collapsed margin
             out int fBreakInsidePossible);      // OUT: internal vertical break possible, needed for recursive KWN logic
-        [SecurityCritical] internal delegate int ObjFormatParaBottomless(
+         internal delegate int ObjFormatParaBottomless(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2834,7 +2832,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
             out int dvrTopSpace,                // OUT: top space due to collapsed margin
             out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
-        [SecurityCritical] internal delegate int ObjUpdateBottomlessPara(
+         internal delegate int ObjUpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -2855,13 +2853,13 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
             out int dvrTopSpace,                // OUT: top space due to collapsed margin
             out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
-        [SecurityCritical] internal delegate int ObjSynchronizeBottomlessPara(
+         internal delegate int ObjSynchronizeBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsgeom,                     // IN: pointer to geometry
             uint fswdir,                        // IN: direction
             int dvrShift);                      // IN: shift by this value
-        [SecurityCritical] internal delegate int ObjComparePara(
+         internal delegate int ObjComparePara(
             IntPtr pfsparaclientOld,            // IN:
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
             IntPtr pfsparaclientNew,            // IN:
@@ -2869,27 +2867,27 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             uint fswdir,                        // IN:  track's direction
             out FSCOMPRESULT fscmpr,            // OUT: comparison result
             out int dvrShifted);                // OUT: amount of shift if result is fscomprShifted
-        [SecurityCritical] internal delegate int ObjClearUpdateInfoInPara(
+         internal delegate int ObjClearUpdateInfoInPara(
             IntPtr pfspara);                    // IN:  pointer to the para data
-        [SecurityCritical] internal delegate int ObjDestroyPara(
+         internal delegate int ObjDestroyPara(
             IntPtr pfspara);                    // IN:  pointer to the para data
-        [SecurityCritical] internal delegate int ObjDuplicateBreakRecord(
+         internal delegate int ObjDuplicateBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsbrkrecparaOrig,           // IN:  pointer to the para break record
             out IntPtr pfsbrkrecparaDup);       // OUT: pointer to the duplicate break record
-        [SecurityCritical] internal delegate int ObjDestroyBreakRecord(
+         internal delegate int ObjDestroyBreakRecord(
             IntPtr pfssobjc,                    // IN:  object context
             IntPtr pfsobjbrk);                  // OUT: pointer to the para break record
-        [SecurityCritical] internal delegate int ObjGetColumnBalancingInfo(
+         internal delegate int ObjGetColumnBalancingInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
             out int nlines,                     // OUT: number of text lines
             out int dvrSumHeight,               // OUT: sum of all line heights
             out int dvrMinHeight);              // OUT: minimum line height
-        [SecurityCritical] internal delegate int ObjGetNumberFootnotes(
+         internal delegate int ObjGetNumberFootnotes(
             IntPtr pfspara,                     // IN:  pointer to the para data
             out int nftn);                      // OUT: number of footnotes
-        [SecurityCritical] internal unsafe delegate int ObjGetFootnoteInfo(
+         internal unsafe delegate int ObjGetFootnoteInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
             int nftn,                           // IN:  size of FSFTNINFO array
@@ -2903,31 +2901,31 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         //    int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
         //    FSFTNINFOWORD* pfsftninf,           // IN/OUT: array of footnote info for word
         //    out int iftnLim);                   // OUT: lim index used by this paragraph
-        [SecurityCritical] internal delegate int ObjShiftVertical(
+         internal delegate int ObjShiftVertical(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsshift,                    // IN:  pointer to the shift data
             uint fswdir,                        // IN:  wdir for bbox - the same as the one passed to formatting method
             out FSBBOX fsbbox);                 // OUT: output BBox
-        [SecurityCritical] internal delegate int ObjTransferDisplayInfoPara(
+         internal delegate int ObjTransferDisplayInfoPara(
             IntPtr pfsparaOld,                  // IN:  pointer to the old para data
             IntPtr pfsparaNew);                 // IN:  pointer to the new para data
         // ------------------------------------------------------------------
         // fstableobjhandlerds.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int GetTableProperties(
+         internal delegate int GetTableProperties(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             uint fswdirTrack,                       // IN:  
             out FSTABLEOBJPROPS fstableobjprops);   // OUT: 
-        [SecurityCritical] internal delegate int AutofitTable(
+         internal delegate int AutofitTable(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  
             IntPtr nmTable,                         // IN:  
             uint fswdirTrack,                       // IN:  
             int durAvailableSpace,                  // IN:  
             out int durTableWidth);                 // OUT: Table width after autofit. It is the same for all rows :)
-        [SecurityCritical] internal delegate int UpdAutofitTable(      // calculate widths of table
+         internal delegate int UpdAutofitTable(      // calculate widths of table
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  
             IntPtr nmTable,                         // IN:  
@@ -2937,7 +2935,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             // Should we store the old one? It is possible for the
             // table width to change with pfNoChangeInCellWidths = .T. ?
             out int fNoChangeInCellWidths);         // OUT: 
-        [SecurityCritical] internal delegate int GetMCSClientAfterTable(
+         internal delegate int GetMCSClientAfterTable(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  
             IntPtr nmTable,                         // IN:  
@@ -2957,7 +2955,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fstablecbk.h
         // ------------------------------------------------------------------
-        [SecurityCritical] internal delegate int GetFirstHeaderRow(
+         internal delegate int GetFirstHeaderRow(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             int fRepeatedHeader,                    // IN:  
@@ -2970,78 +2968,78 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                             int fRepeatedHeader,                    // IN:  
                             out int fFound,                         // OUT: 
                             out IntPtr pnmNextHeaderRow);           // OUT: 
-        [SecurityCritical] internal delegate int GetFirstFooterRow(
+         internal delegate int GetFirstFooterRow(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             int fRepeatedFooter,                    // IN:  
             out int fFound,                         // OUT: 
             out IntPtr pnmFirstFooterRow);          // OUT: 
-        [SecurityCritical] internal delegate int GetNextFooterRow(
+         internal delegate int GetNextFooterRow(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             IntPtr nmFooterRow,                     // IN:  
             int fRepeatedFooter,                    // IN:  
             out int fFound,                         // OUT: 
             out IntPtr pnmNextFooterRow);           // OUT: 
-        [SecurityCritical] internal delegate int GetFirstRow(
+         internal delegate int GetFirstRow(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             out int fFound,                         // OUT: 
             out IntPtr pnmFirstRow);                // OUT: 
-        [SecurityCritical] internal delegate int GetNextRow(
+         internal delegate int GetNextRow(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             IntPtr nmRow,                           // IN:  
             out int fFound,                         // OUT: 
             out IntPtr pnmNextRow);                 // OUT: 
-        [SecurityCritical] internal delegate int UpdFChangeInHeaderFooter( // we don't do update in header/footer
+         internal delegate int UpdFChangeInHeaderFooter( // we don't do update in header/footer
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             out int fHeaderChanged,                 // OUT: 
             out int fFooterChanged,                 // OUT: 
             out int fRepeatedHeaderChanged,         // OUT: unneeded for bottomless page, but...
             out int fRepeatedFooterChanged);        // OUT: unneeded for bottomless page, but...
-        [SecurityCritical] internal delegate int UpdGetFirstChangeInTable(
+         internal delegate int UpdGetFirstChangeInTable(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             out int fFound,                         // OUT: 
             out int fChangeFirst,                   // OUT: 
             out IntPtr pnmRowBeforeChange);         // OUT: 
-        [SecurityCritical] internal delegate int UpdGetRowChange(
+         internal delegate int UpdGetRowChange(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             IntPtr nmRow,                           // IN:  
             out FSKCHANGE fskch,                    // OUT: 
             out int fNoFurtherChanges);             // OUT: 
-        [SecurityCritical] internal delegate int UpdGetCellChange(
+         internal delegate int UpdGetCellChange(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmRow,                           // IN:  
             IntPtr nmCell,                          // IN:  
             out int fWidthChanged,                  // OUT: 
             out FSKCHANGE fskchCell);               // OUT: 
-        [SecurityCritical] internal delegate int GetDistributionKind(
+         internal delegate int GetDistributionKind(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmTable,                         // IN:  
             uint fswdirTable,                       // IN:  
             out FSKTABLEHEIGHTDISTRIBUTION tabledistr); // OUT: 
-        [SecurityCritical] internal delegate int GetRowProperties(
+         internal delegate int GetRowProperties(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmRow,                           // IN:  
             uint fswdirTable,                       // IN:  
             out FSTABLEROWPROPS rowprops);          // OUT: 
-        [SecurityCritical] internal unsafe delegate int GetCells(
+         internal unsafe delegate int GetCells(
             IntPtr pfsclient,                       // IN:  
             IntPtr nmRow,                           // IN:  
             int cCells,                             // IN:  
             IntPtr* rgnmCell,                       // IN/OUT: 
             FSTABLEKCELLMERGE* rgkcellmerge);       // IN/OUT: 
-        [SecurityCritical] internal delegate int FInterruptFormattingTable(
+         internal delegate int FInterruptFormattingTable(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclient,                   // IN:  
             IntPtr nmRow,                           // IN:  
             int dvr,                                // IN:  
             out int fInterrupt);                    // OUT: 
-        [SecurityCritical] internal unsafe delegate int CalcHorizontalBBoxOfRow(
+         internal unsafe delegate int CalcHorizontalBBoxOfRow(
             IntPtr pfsclient,                       // IN:
             IntPtr nmRow,                           // IN:
             int cCells,                             // IN:
@@ -3049,7 +3047,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             IntPtr* rgpfscell,                      // IN:
             out int urBBox,                         // OUT:
             out int durBBox);                       // OUT:
-        [SecurityCritical] internal delegate int FormatCellFinite(     // unless cell has vertical text or is special in some other ways,
+         internal delegate int FormatCellFinite(     // unless cell has vertical text or is special in some other ways,
             // this calls maps directly to a create subpage call :-)
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  table's para client
@@ -3064,7 +3062,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out IntPtr ppfscell,                    // OUT: cell object
             out IntPtr pfsbrkcellOut,               // OUT: break if cell does not fit in dvrAvailable
             out int dvrUsed);                       // OUT: height -- min height required 
-        [SecurityCritical] internal delegate int FormatCellBottomless(
+         internal delegate int FormatCellBottomless(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  table's para client
             IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
@@ -3072,7 +3070,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSFMTRBL fmtrbl,                    // OUT: 
             out IntPtr ppfscell,                    // OUT: cell object
             out int dvrUsed);                       // OUT: height -- min height required 
-        [SecurityCritical] internal delegate int UpdateBottomlessCell( // unless cell has vertical text or is special in some other ways,
+         internal delegate int UpdateBottomlessCell( // unless cell has vertical text or is special in some other ways,
             // this calls maps directly to a update subpage call :-)
             IntPtr pfscell,                         // IN/OUT: cell object
             IntPtr pfsparaclientTable,              // IN:  table's para client
@@ -3081,14 +3079,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             out FSFMTRBL fmtrbl,                    // IN:  
             out int dvrUsed);                       // OUT: height -- min height required 
 
-        [SecurityCritical] internal delegate int CompareCells(
+         internal delegate int CompareCells(
             IntPtr pfscellOld,
             IntPtr pfscellNew,
             out FSCOMPRESULT pfscmpr);
 
-        [SecurityCritical] internal delegate int ClearUpdateInfoInCell(
+         internal delegate int ClearUpdateInfoInCell(
             IntPtr pfscell);                        // IN/OUT: cell object
-        [SecurityCritical] internal delegate int SetCellHeight(
+         internal delegate int SetCellHeight(
             IntPtr pfscell,                         // IN/OUT: cell object
             IntPtr pfsparaclientTable,              // IN:  table's para client
             IntPtr pfsbrkcell,                      // IN:  not NULL if cell broken from previous page/column
@@ -3096,16 +3094,16 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             int fBrokenHere,                        // IN:  true if cell broken on this page/column: no reformatting
             uint fswdirTable,                       // IN:  
             int dvrActual);                         // IN:  
-        [SecurityCritical] internal delegate int DestroyCell(
+         internal delegate int DestroyCell(
             IntPtr pfsCell);                        // IN:  
-        [SecurityCritical] internal delegate int DuplicateCellBreakRecord(
+         internal delegate int DuplicateCellBreakRecord(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsbrkcell,                      // IN:  
             out IntPtr ppfsbrkcellDup);             // OUT: 
-        [SecurityCritical] internal delegate int DestroyCellBreakRecord(
+         internal delegate int DestroyCellBreakRecord(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsbrkcell);                     // IN:  
-        [SecurityCritical] internal delegate int GetCellNumberFootnotes(
+         internal delegate int GetCellNumberFootnotes(
             IntPtr pfscell,                         // IN:  
             out int cFtn);                          // OUT: 
         /*
@@ -3116,12 +3114,12 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         PFSFTNINFO pfsftninf,
         LONG* piFtnLim);
     */
-        [SecurityCritical] internal delegate int GetCellMinColumnBalancingStep(
+         internal delegate int GetCellMinColumnBalancingStep(
             IntPtr pfscell,                         // IN:
             uint fswdir,                            // IN:
             out int pdvrMinStep);                   // OUT:
 
-        [SecurityCritical] internal delegate int TransferDisplayInfoCell(
+         internal delegate int TransferDisplayInfoCell(
             IntPtr pfscellOld,
             IntPtr pfscellNew);
 
@@ -3170,8 +3168,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int GetFloaterHandlerInfo(
             [In] 
             ref FSFLOATERINIT pfsfloaterinit,   // IN:  pointer to floater init data (callbacks)
@@ -3180,8 +3177,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int GetTableObjHandlerInfo(
             [In] 
             ref FSTABLEOBJINIT pfstableobjinit, // IN:  pointer to floater init data (callbacks)
@@ -3190,8 +3186,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int CreateInstalledObjectsInfo(
             [In] 
             ref FSIMETHODS fssubtrackparamethods,//IN:  pointer to subtrack paragraph callbacks
@@ -3202,8 +3197,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int DestroyInstalledObjectsInfo(
             IntPtr pInstalledObjects);          // IN:  pointer to installed objects array
         // ------------------------------------------------------------------
@@ -3212,8 +3206,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int CreateDocContext(
             [In] 
             ref FSCONTEXTINFO fscontextinfo,    // IN:  pointer to context information
@@ -3222,16 +3215,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int DestroyDocContext(
             IntPtr pfscontext);                 // IN:  pointer to the FS context
 #if NEVER
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsSetDebugFlags(
             IntPtr pfscontext,                  // IN:  pointer to the FS context
             uint dwFlags);                      // IN:  debug flags (see fsdebugflags.h)
@@ -3243,8 +3234,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsCreatePageFinite(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsBRPageStart,              // IN:  ptr to brk record of prev. page
@@ -3256,8 +3246,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsUpdateFinitePage(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfspage,                     // IN:  ptr to page to update
@@ -3269,8 +3258,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsCreatePageBottomless(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr fsnmsect,                    // IN:  name of the section to start from
@@ -3280,8 +3268,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsUpdateBottomlessPage(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfspage,                     // IN:  ptr to page to update
@@ -3291,8 +3278,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsClearUpdateInfoInPage(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfspage);                    // IN:  ptr to page to clear
@@ -3300,14 +3286,12 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroyPage(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfspage);                    // IN:  ptr to page
 
 #if NEVER
-//CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
 [DllImport(DllImport.PresentationNative)]//CASRemoval:
 internal static extern int FsDuplicatePageBreakRecord(
     IntPtr pfscontext,              // IN:  ptr to FS context
@@ -3318,8 +3302,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroyPageBreakRecord(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsbreakrec);                // IN:  ptr to page break record
@@ -3331,8 +3314,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsCreateSubpageFinite(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pBRSubPageStart,             // IN: ptr to brk record of subpage
@@ -3368,8 +3350,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsCreateSubpageBottomless(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr nSeg,                        // IN:  name of the segment to start from
@@ -3399,8 +3380,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsUpdateBottomlessSubpage(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubpage,                  // IN:  ptr to the subpage
@@ -3430,8 +3410,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsCompareSubpages(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubpageOld,               // IN:  ptr to the old subpage
@@ -3441,8 +3420,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsClearUpdateInfoInSubpage(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pSubpage);                   // IN:  ptr to subpage
@@ -3450,8 +3428,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroySubpage(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpage);                   // IN:  ptr to subpage
@@ -3459,8 +3436,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDuplicateSubpageBreakRecord(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pBreakRecSubPageIn,          // IN:  ptr to subpage break record
@@ -3469,8 +3445,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroySubpageBreakRecord(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsbreakrec);                // IN:  ptr to subpage break record
@@ -3478,8 +3453,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsGetSubpageColumnBalancingInfo(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpage,                    // IN:  ptr to the subpage
@@ -3491,8 +3465,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsGetNumberSubpageFootnotes(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpage,                    // IN:  ptr to the subpage
@@ -3501,8 +3474,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsGetSubpageFootnoteInfo(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpage,                    // IN:  ptr to the subpage
@@ -3515,8 +3487,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsTransferDisplayInfoSubpage(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpageOld,                 // IN:  ptr to the old subpage
@@ -3528,8 +3499,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsFormatSubtrackFinite(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsBRSubtackIn,              // IN:  ptr to brk record of subtrack
@@ -3558,8 +3528,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsFormatSubtrackBottomless(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr fsnmSegment,                 // IN:  name of the segment to start from
@@ -3585,8 +3554,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsUpdateBottomlessSubtrack(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack,                 // IN:  ptr to subtrack
@@ -3612,8 +3580,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsSynchronizeBottomlessSubtrack(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack,                 // IN:  ptr to subtrack
@@ -3624,8 +3591,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsCompareSubtrack(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrackOld,              // IN:  ptr to old subtrack
@@ -3637,8 +3603,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsClearUpdateInfoInSubtrack(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack);                // IN:  ptr to subtrack
@@ -3646,8 +3611,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroySubtrack(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack);                // IN:  ptr to subtrack
@@ -3655,8 +3619,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDuplicateSubtrackBreakRecord(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsBRSubtrackIn,             // IN:  ptr to brk record of subtrack
@@ -3665,8 +3628,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsDestroySubtrackBreakRecord(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsbreakrec);                // IN:  ptr to subtrack break record
@@ -3674,8 +3636,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsGetSubtrackColumnBalancingInfo(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack,                 // IN:  ptr to subtrack
@@ -3687,8 +3648,7 @@ internal static extern int FsDuplicatePageBreakRecord(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsGetNumberSubtrackFootnotes(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrack,                 // IN:  ptr to subtrack
@@ -3723,8 +3683,7 @@ FSERR FSAPI FsShiftSubtrackVertical(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsTransferDisplayInfoSubtrack(
             IntPtr pfscontext,                  // IN:  ptr to FS context
             IntPtr pfsSubtrackOld,              // IN:  ptr to old subtrack
@@ -3739,8 +3698,7 @@ FSERR FSAPI FsShiftSubtrackVertical(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQueryFloaterDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsfloater,                  // IN:
@@ -3770,7 +3728,6 @@ FSERR FSAPI FsRestoreGeometry(
 FSERR FSAPI FsReleaseGeometry(
                         PFSCONTEXT,     /* IN: ptr to FS context                */
                         PFSGEOM);       /* IN: pointer to geometry              */
-//CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
 [DllImport(DllImport.PresentationNative)]//CASRemoval:
 internal static extern int FsRegisterFloatObstacle(
     IntPtr pfsContext,                  // IN:  ptr to FS context
@@ -3779,7 +3736,6 @@ internal static extern int FsRegisterFloatObstacle(
     [In]
     ref FSFLTOBSTINFO pfsFloaterObstInfo);// IN:  float obstacle info
 
-//CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
 [DllImport(DllImport.PresentationNative)]//CASRemoval:
 internal static extern int FsGetMaxNumberEmptySpaces(
     IntPtr pfsContext,                  // IN:  ptr to FS context
@@ -3787,7 +3743,6 @@ internal static extern int FsGetMaxNumberEmptySpaces(
     uint fswdir,                        // IN:  current direction
     out int pMaxNumberEmptySpaces);     // OUT: maximum number of possible EmptySpace elements
 
-//CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
 [DllImport(DllImport.PresentationNative)]//CASRemoval:
 internal static unsafe extern int FsGetEmptySpaces(
     IntPtr pfsContext,                  // IN:  ptr to FS context
@@ -3808,7 +3763,6 @@ internal static unsafe extern int FsGetEmptySpaces(
     out int pfClearRight,               // OUT: clear on right side?
     out int pfSuppressAutoclear);       // OUT: suppress autoclear?
 
-//CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
 [DllImport(DllImport.PresentationNative)]//CASRemoval:
 internal static extern int FsGetNextTick(
     IntPtr pfsContext,                  // IN:  ptr to FS context
@@ -3859,8 +3813,7 @@ FSERR FSAPI FsGetIntervals(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQueryPageDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPage,                       // IN:  ptr to page
@@ -3890,8 +3843,7 @@ FSERR FSAPI FsQueryFootnoteColumnTrackList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQueryPageSectionList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPage,                       // IN:  ptr to page
@@ -3902,8 +3854,7 @@ FSERR FSAPI FsQueryFootnoteColumnTrackList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQuerySectionDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSection,                    // IN:  ptr to section
@@ -3912,8 +3863,7 @@ FSERR FSAPI FsQueryFootnoteColumnTrackList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySectionBasicColumnList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSection,                    // IN:  ptr to section
@@ -3924,8 +3874,7 @@ FSERR FSAPI FsQueryFootnoteColumnTrackList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySegmentDefinedColumnSpanAreaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSection,                    // IN:  ptr to section
@@ -3936,8 +3885,7 @@ FSERR FSAPI FsQueryFootnoteColumnTrackList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQueryHeightDefinedColumnSpanAreaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSection,                    // IN:  ptr to section
@@ -3980,8 +3928,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQueryTrackDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pTrack,                      // IN:  ptr to track
@@ -3990,8 +3937,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTrackParaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pTrack,                      // IN:  ptr to track
@@ -4002,8 +3948,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySubpageDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubPage,                    // IN:  ptr to subpage
@@ -4012,8 +3957,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySubpageBasicColumnList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubPage,                    // IN:  ptr to subpage
@@ -4025,8 +3969,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySubpageSegmentDefinedColumnSpanAreaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubPage,                    // IN:  ptr to subpage
@@ -4037,8 +3980,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern unsafe int FsQuerySubpageHeightDefinedColumnSpanAreaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubPage,                    // IN:  ptr to subpage
@@ -4050,8 +3992,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQuerySubtrackDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubTrack,                   // IN:  ptr to subtrack
@@ -4060,8 +4001,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQuerySubtrackParaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubTrack,                   // IN:  ptr to subtrack
@@ -4072,8 +4012,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static extern int FsQueryTextDetails(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
@@ -4082,8 +4021,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryLineListSingle(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
@@ -4094,8 +4032,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryLineListComposite(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
@@ -4106,8 +4043,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryLineCompositeElementList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pLine,                       // IN:  ptr to line
@@ -4118,8 +4054,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryDcpLineVariantsFromCachedTextPara(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
@@ -4131,8 +4066,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryAttachedObjectList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
@@ -4140,8 +4074,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             FSATTACHEDOBJECTDESCRIPTION* rgAttachedObjects,      // OUT: array of attached object descriptions
             out int cAttachedObjectDesc);               // OUT: actual number of figures
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryFigureObjectDetails(
         			IntPtr pfsContext, /* IN: ptr to FS context						*/
         			IntPtr pPara,      /* IN: ptr to figure para						*/
@@ -4162,8 +4095,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTableObjDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableobj,                         // IN:  
@@ -4174,8 +4106,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTableObjTableProperDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableProper,                      // IN:  
@@ -4184,8 +4115,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTableObjRowList(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableProper,                      // IN:  
@@ -4196,8 +4126,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTableObjRowDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstablerow,                         // IN:  
@@ -4206,8 +4135,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryTableObjCellList(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstablerow,                         // IN:  
@@ -4254,8 +4182,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsTransformRectangle(
             uint fswdirIn,                          // IN:  
             ref FSRECT rectPage,                    // IN:  
@@ -4266,8 +4193,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         /// <SecurityNote>
         /// Critical - as there is an elevation - SuppressUnmanagedCodeSecurity.
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity, DllImport(DllImport.PresentationNative)]
+        [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsTransformBbox(
             uint fswdirIn,                          // IN:  
             ref FSRECT rectPage,                    // IN:  

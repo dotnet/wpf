@@ -1346,7 +1346,6 @@ namespace System.Windows.Controls
         ///            for security purposes later.
         /// TreatAsSafe - passes false for userInitiated
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void OnClick()
         {
             OnClickImpl(false);
@@ -1356,7 +1355,6 @@ namespace System.Windows.Controls
         /// Critical - accepts a parameter which may be used to set the userInitiated
         ///             bit on a command, which is used for security purposes later.
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnClickCore(bool userInitiated)
         {
             OnClick();
@@ -1366,7 +1364,6 @@ namespace System.Windows.Controls
         /// Critical - Calls InvokeClickAfterRender which sets the userInitiated
         ///             bit on a command, which is used for security purposes later.
         /// </SecurityNote>
-        [SecurityCritical]
         internal void OnClickImpl(bool userInitiated)
         {
             if (IsCheckable)
@@ -1407,7 +1404,6 @@ namespace System.Windows.Controls
         /// Critical - sets the userInitiated bit on a command, which is used
         ///            for security purposes later.
         /// </SecurityNote>
-        [SecurityCritical]
         private object InvokeClickAfterRender(object arg)
         {
             bool userInitiated = (bool)arg;
@@ -1426,7 +1422,6 @@ namespace System.Windows.Controls
         ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
         ///                 before setting the variable
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1451,7 +1446,6 @@ namespace System.Windows.Controls
         ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
         ///                 before setting the variable
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1473,7 +1467,6 @@ namespace System.Windows.Controls
         /// Critical - sets _userInitiatedPress
         /// TreatAsSafe - setting this to false is safe
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1493,7 +1486,6 @@ namespace System.Windows.Controls
         /// Critical - sets _userInitiatedPress
         /// TreatAsSafe - setting this to false is safe
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1533,7 +1525,6 @@ namespace System.Windows.Controls
         ///             bit, which is used for security purposes later.
         /// TreatAsSafe - e.UserInitiated can always be trusted
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void HandleMouseUp(MouseButtonEventArgs e)
         {
             // See comment above in HandleMouseDown.
@@ -1919,7 +1910,6 @@ namespace System.Windows.Controls
         ///             bit, which is used for security purposes later.
         /// PublicOK - e.UserInitiated can always be trusted
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -2073,7 +2063,6 @@ namespace System.Windows.Controls
         ///             bit, which is used for security purposes later.
         /// PublicOK - e.UserInitiated can always be trusted
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnAccessKey(AccessKeyEventArgs e)
         {
             base.OnAccessKey(e);
@@ -2316,7 +2305,6 @@ namespace System.Windows.Controls
         ///             bit, which is used for security purposes later.
         /// TreatAsSafe - passes false.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void ClickItem()
         {
             ClickItem(false);
@@ -2325,7 +2313,6 @@ namespace System.Windows.Controls
         /// Critical - Calls OnClickCore, setting the userInitiated
         ///             bit, which is used for security purposes later.
         /// </SecurityNote>
-        [SecurityCritical]
         private void ClickItem(bool userInitiated)
         {
             try
@@ -2776,7 +2763,6 @@ namespace System.Windows.Controls
         /// <SecurityNote>
         ///     Critical: Setting this to true indicates that the mouse down was user initiated
         /// </SecurityNote>
-        [SecurityCritical]
         private bool _userInitiatedPress;
         #endregion
 

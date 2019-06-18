@@ -36,7 +36,6 @@ namespace System.Windows.Media
     /// <SecurityNote>
     /// CompositionTarget subclassing is not allowed in Partial Trust - Demands UIPermissionWindow.AllWindows for inheritance
     /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand,Window=UIPermissionWindow.AllWindows)]
     public abstract class CompositionTarget : DispatcherObject, IDisposable, ICompositionTarget
     {
         //
@@ -182,15 +181,12 @@ namespace System.Windows.Media
         /// </SecurityNote>
         public virtual Visual RootVisual
         {
-            [SecurityCritical]
             get
             {
                 VerifyAPIReadOnly();
                 return (_rootVisual.Value);
             }
 
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
-            [SecurityCritical]
             set
             {
                 VerifyAPIReadWrite();
@@ -430,7 +426,6 @@ namespace System.Windows.Media
         /// Critical - calls critical code, access critical resources (handles)
         /// TreatAsSafe - safe to compile the visual at anytime
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Compile(DUCE.Channel channel)
         {
             MediaContext mctx = MediaContext.From(Dispatcher);
@@ -492,7 +487,6 @@ namespace System.Windows.Media
         /// Critical - calls critical code, access critical resources
         /// TreatAsSafe - safe to reparent a visual
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetRootVisual(Visual visual)
         {
             // We need to make this function robust by leaving the

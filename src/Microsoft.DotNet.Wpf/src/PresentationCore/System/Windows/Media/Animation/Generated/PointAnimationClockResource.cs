@@ -116,7 +116,6 @@ namespace System.Windows.Media.Animation
         ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
         ///     Channels can handle bad pointers and will not affect other appdomains or processes
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void UpdateResource(
             DUCE.ResourceHandle handle,
             DUCE.Channel channel)

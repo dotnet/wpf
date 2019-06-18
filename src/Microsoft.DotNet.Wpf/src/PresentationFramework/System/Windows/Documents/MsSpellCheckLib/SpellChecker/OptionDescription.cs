@@ -64,7 +64,6 @@ namespace System.Windows.Documents.MsSpellCheckLib
             ///     Critical: Makes COM calls.
             ///     Safe: Does not directly expose any unamanged resources to the caller. 
             /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static OptionDescription Create(IOptionDescription optionDescription, bool shouldSuppressCOMExceptions = true, bool shouldReleaseCOMObject = true)
             {
                 if (optionDescription == null)

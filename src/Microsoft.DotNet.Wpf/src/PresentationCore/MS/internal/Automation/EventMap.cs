@@ -268,7 +268,6 @@ namespace MS.Internal.Automation
         ///    Critical: Calls critical member PresentationSource.CriticalCurrentSources
         ///    Safe: Does not expose anything to the user
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void NotifySources()
         {
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
@@ -286,7 +285,6 @@ namespace MS.Internal.Automation
         ///    Critical: Calls critical member PresentationSource.RootVisual
         ///    Safe: Does not expose anything to the user
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private static object NotifySource(Object args)
         {
             object[] argsArray = (object[])args;

@@ -37,7 +37,6 @@ namespace MS.Internal.AppModel
         ///                SecurityCriticalDataForSet, and this field is used by the BamlRecordReader to
         ///                allow legitimate internal types in Partial Trust.
         /// </SecurityNote>
-        [SecurityCritical]
         internal BamlStream(Stream stream, Assembly assembly)
         {
             _assembly.Value = assembly;

@@ -58,7 +58,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - it satisfies Marshal.* LinkDemands for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
         /// </SecurityNote>
-        [SecurityCritical]
         public void GetInputScopes(out IntPtr ppinputscopes, out int count)
         {
             if (_inputScope != null)
@@ -93,7 +92,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - it satisfies Marshal.AllocCoTaskMem() LinkDemand for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
         /// </SecurityNote>
-        [SecurityCritical]
         public int GetPhrase(out IntPtr ppbstrPhrases, out int count)
         {
             count = _inputScope == null ? 0 : _inputScope.PhraseList.Count;

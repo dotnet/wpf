@@ -38,8 +38,6 @@ namespace MS.Win32.Compile
         /// <SecurityNote>
         ///     Critical: This code calls into unmanaged code
         /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("urlmon.dll", CharSet = CharSet.Unicode)]
         internal static extern int FindMimeFromData(
                         IBindCtx pBC,                   // bind context - can be NULL

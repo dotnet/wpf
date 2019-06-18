@@ -148,7 +148,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical System.Exception.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -266,7 +265,6 @@ namespace System.Printing
         ///<SecurityNote>
         /// Critical    - calls Win32 FormatMessage API
         /// </SecurityNote>
-        [System.Security.SecurityCritical]
         private static
         String
         GetFormattedWin32Error(
@@ -408,7 +406,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical System.Exception.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -576,7 +573,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical PrintSystemException.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -731,7 +727,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical PrintSystemException.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -937,7 +932,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical PrintSystemException.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -1310,7 +1304,6 @@ namespace System.Printing
         /// <SecurityNote>
         ///     Critical    -   Calls critical PrintSystemException.GetObjectData
         /// </SecurityNote>
-        [SecurityCritical]
         public override void GetObjectData(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context

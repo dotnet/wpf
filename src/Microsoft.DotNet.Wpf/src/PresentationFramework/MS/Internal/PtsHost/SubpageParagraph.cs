@@ -118,7 +118,6 @@ namespace MS.Internal.PtsHost
         ///     d) calls Critical function PTS.FsTransformBbox
         ///     e) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void FormatParaFinite(
             SubpageParaClient paraClient,       // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !NULL
@@ -334,7 +333,6 @@ namespace MS.Internal.PtsHost
         ///     a) doesn't take any pointer parameter that'll be passed directly.
         ///     b) All Critical data are either Critical for set or generated in the function.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal unsafe void FormatParaBottomless(
             SubpageParaClient paraClient,       // IN:
             int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
@@ -504,7 +502,6 @@ namespace MS.Internal.PtsHost
         ///     d) calls Critical function PTS.FsTransformBbox
         ///     e) it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void UpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             SubpageParaClient paraClient,       // IN:

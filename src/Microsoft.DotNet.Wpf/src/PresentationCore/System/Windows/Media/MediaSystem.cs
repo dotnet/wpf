@@ -51,7 +51,6 @@ namespace System.Windows.Media
         ///                we will create a transport object nobody is going to use. Access to the transport
         ///                object pointer is security critical.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         public static bool Startup(MediaContext mc)
         {
             //
@@ -121,7 +120,6 @@ namespace System.Windows.Media
         /// <remarks>
         /// The code is only present in internal builds
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private static void ReadAnimationSmoothingSetting()
         {
 #if PRERELEASE
@@ -159,7 +157,6 @@ namespace System.Windows.Media
         /// TreatAsSafe -- shutting down the transport is considered a safe operation. Worst case
         ///                is that the client stops rendering Avalon content.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static void Shutdown(MediaContext mc)
         {
             using (CompositionEngineLock.Acquire())
@@ -193,7 +190,6 @@ namespace System.Windows.Media
         /// own composition engine whicih would worst cases prevent his app from rendering.
         /// No critical data is being passed in or out since there are no arguments or return values.
         /// </SecurityNote>		
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void NotifyRedirectionEnvironmentChanged()
         {
             using (CompositionEngineLock.Acquire())
@@ -217,7 +213,6 @@ namespace System.Windows.Media
         ///   TreatAsSafe - Transport initialization is considered safe. Service channel
         ///                 creation is safe.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void ConnectTransport()
         {
             if (IsTransportConnected)
@@ -258,7 +253,6 @@ namespace System.Windows.Media
         /// TreatAsSafe - Shutting down the transport is considered safe. 
         ///               Closing the service channel is safe.
         /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void DisconnectTransport()
         {
             if (!IsTransportConnected)
@@ -345,7 +339,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal static bool ForceSoftwareRendering
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get 
             {
                 using (CompositionEngineLock.Acquire())
@@ -364,7 +357,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal static DUCE.Channel ServiceChannel
         {
-            [SecurityCritical]
             get { return s_serviceChannel; }
         }
 
@@ -376,7 +368,6 @@ namespace System.Windows.Media
         /// </SecurityNote>
         internal static IntPtr Connection
         {
-            [SecurityCritical]
             get { return s_pConnection; }
         }
 
@@ -401,7 +392,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Controlled unmanaged resource.
         /// </SecurityNote>
-        [SecurityCritical]
         private static DUCE.Channel s_serviceChannel;
 
         private static bool s_animationSmoothing = true;
@@ -412,7 +402,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - Controlled unmanaged resource.
         /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr s_pConnection;
 
         /// <summary>
@@ -422,7 +411,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - controls rendering mode (hw/sw). 
         /// </SecurityNote>
-        [SecurityCritical]
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
      }
 }

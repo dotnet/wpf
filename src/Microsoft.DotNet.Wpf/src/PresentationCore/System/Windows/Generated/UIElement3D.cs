@@ -219,7 +219,6 @@ namespace System.Windows
         ///<SecurityNote>
         ///     Critical - sets the MarkAsUserInitiated bit.
         ///</SecurityNote>
-        [SecurityCritical]
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
             if (args == null)
@@ -242,7 +241,6 @@ namespace System.Windows
         ///<SecurityNote>
         ///     Critical - sets the MarkAsUserInitiated bit.
         ///</SecurityNote>
-        [SecurityCritical]
         [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {

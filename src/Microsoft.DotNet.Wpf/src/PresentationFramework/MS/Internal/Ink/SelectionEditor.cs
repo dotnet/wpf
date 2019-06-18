@@ -160,7 +160,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: Doesn't handle critical data.  Also, this method is called by 
         ///         SecurityTransparent code in the input system and can not be marked SecurityCritical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnAdornerMouseButtonDownEvent(object sender, MouseButtonEventArgs args)
         {
             // If the ButtonDown is raised by RightMouse, we should just bail out.
@@ -203,7 +202,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: Doesn't handle critical data.  Also, this method is called by 
         ///         SecurityTransparent code in the input system and can not be marked SecurityCritical.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnAdornerMouseMoveEvent(object sender, MouseEventArgs args)
         {
             Point pointOnSelectionAdorner = args.GetPosition(InkCanvas.SelectionAdorner);

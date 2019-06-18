@@ -109,7 +109,6 @@ namespace MS.Internal.Ink
         ///     Critical: This code copies ink content to the clipboard
         ///                 Note the TAS boundary is InkCanvas.CopyToDataObject
         /// </SecurityNote>
-        [SecurityCritical]
         internal InkCanvasClipboardDataFormats CopySelectedData(IDataObject dataObject)
         {
             InkCanvasClipboardDataFormats copiedDataFormat = InkCanvasClipboardDataFormats.None;
@@ -332,7 +331,6 @@ namespace MS.Internal.Ink
         /// 
         ///     TreatAsSafe: We only execute this code if the application has UnmanagedCode permission 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool CopySelectionInXAML(IDataObject dataObject, StrokeCollection strokes, List<UIElement> elements, Matrix transform, Size size)
         {
             //NOTE: after meeting with the partial trust team, we have 

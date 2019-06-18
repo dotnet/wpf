@@ -41,7 +41,6 @@ namespace System.Windows.Diagnostics
         ///     critical - used to store HwndSource
         /// </SecurityNote>
         [ThreadStatic]
-        [SecurityCritical]
         private static HwndSource s_ActiveHwndSource;
 
         static VisualDiagnostics()
@@ -144,7 +143,6 @@ namespace System.Windows.Diagnostics
         ///                calls critical method PresentationSource.FromDependencyObject
         ///     safe - does not expose the value
         /// </SecurityNode>
-        [SecuritySafeCritical]
         private static void RaiseVisualTreeChangedEvent(
                                 EventHandler<VisualTreeChangeEventArgs> visualTreeChanged,
                                 VisualTreeChangeEventArgs args,
@@ -233,7 +231,6 @@ namespace System.Windows.Diagnostics
             }
         }
 
-        [SecurityCritical]      // elevates to read environment
         internal static bool IsEnvironmentVariableSet(string value, string environmentVariable)
         {
             if (value != null)
@@ -343,7 +340,6 @@ namespace System.Windows.Diagnostics
             //      Critical - calls PresentationSource.FromDependencyObject
             //      Safe - result used for comparison only, not exposed
             // </SecurityNote>
-            [SecuritySafeCritical]
             private static bool IsChangePermitted(DependencyObject d)
             {
                 // if the outer change was type (a), OnVisualChildChanged saved
@@ -360,7 +356,6 @@ namespace System.Windows.Diagnostics
             ///     Critical - calls IsEnvironmentVariableSet
             ///     Safe - not controlled by caller.  Value not directly exposed.
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static bool? PrecomputeIsEnableVisualTreeChangedAllowed()
             {
                 if (!IsEnabled)
@@ -379,7 +374,6 @@ namespace System.Windows.Diagnostics
             ///     Critical - elevates to read registry
             ///     Safe - not controlled by caller.  Value not directly exposed to user
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private static bool GetDevModeFromRegistry()
             {
                 new RegistryPermission(RegistryPermissionAccess.Read, c_devmodeRegKeyFullPath).Assert();

@@ -107,7 +107,6 @@ namespace MS.Internal.IO.Packaging
         ///                      (DigitalSignatureProcessor.StringToTranform) that only creates built-in .NET Transform
         ///                      instances which are safe XML Transforms.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool Verify(X509Certificate2 signer)
         {
             Invariant.Assert(signer != null);
@@ -441,7 +440,6 @@ namespace MS.Internal.IO.Packaging
         ///     Critical - We are calling the TransformXml method which is Critical due to the Transform parameter.
         ///     TreatAsSafe - It is safe because we are creating only built-in Transform instances.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static String GenerateDigestValue(
             Stream s,
             String transformName,
@@ -466,7 +464,6 @@ namespace MS.Internal.IO.Packaging
         ///     Critical - We are calling the TransformXml method which is Critical due to the Transform parameter.
         ///     TreatAsSafe - It is safe because we are creating only built-in Transform instances.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static String GenerateDigestValue(
             Stream s,
             List<String> transforms,
@@ -590,7 +587,6 @@ namespace MS.Internal.IO.Packaging
         /// we have similar logic regarding these two transforms.So both these methods must be updated
         /// in sync.
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static Transform StringToTransform(String transformName)
         {
             Invariant.Assert(transformName != null);
@@ -761,7 +757,6 @@ namespace MS.Internal.IO.Packaging
         ///                   are built in .NET XML transforms.  Since we using built in .NET transforms the transform on
         ///                   the XML data is not a security threat.  The only data we supply is data from the package.    
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private PackageDigitalSignature Sign(
             IEnumerable<Uri>                            parts,
             IEnumerable<System.IO.Packaging.PackageRelationshipSelector>    relationshipSelectors,
@@ -1017,7 +1012,6 @@ namespace MS.Internal.IO.Packaging
         ///                NOTE:  This elevation is due to the feature in the CLR XML code that demands for "full trust".
         ///                       (http://bugcheck/default.asp?URL=/bugs/SQLBUDefectTracking/392346.asp)
         /// </SecurityNote>
-        [SecurityCritical]
         private static Stream TransformXml(Transform xForm, Object source)
         {
             (new PermissionSet(PermissionState.Unrestricted)).Assert();  // Blessed

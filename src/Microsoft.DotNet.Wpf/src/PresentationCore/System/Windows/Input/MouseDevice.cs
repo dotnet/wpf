@@ -44,7 +44,6 @@ namespace System.Windows.Input
         /// TreatAsSafe: This constructor handles critical data but does not expose it
         ///             It stores instance but there are demands on the instances.
         /// </SecurityNote>
-       [SecurityCritical,SecurityTreatAsSafe]
        internal MouseDevice(InputManager inputManager)
        {
             _inputManager = new SecurityCriticalData<InputManager>(inputManager);
@@ -129,7 +128,6 @@ namespace System.Windows.Input
         ///     Critical: accesses critical data (CriticalActiveSource)
         ///     TreatAsSafe: doesn't expose critical data, just returns screen coordinates of non-critical data
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Point GetScreenPositionFromSystem()
         {
             // Win32 has issues reliably returning where the mouse is.  Until we figure
@@ -170,7 +168,6 @@ namespace System.Windows.Input
         ///                  in turn only uses it to pass to PointUtil.ScreenToClient to convert mouse
         ///                  position from screen to client co-ords
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected Point GetClientPosition()
         {
             Point ptClient = new Point(0, 0);
@@ -235,7 +232,6 @@ namespace System.Windows.Input
 
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical ]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -255,7 +251,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal PresentationSource CriticalActiveSource
         {
-            [SecurityCritical]
             get
             {
                 if (_inputSource != null)
@@ -342,7 +337,6 @@ namespace System.Windows.Input
         ///     Critical: This element acceses PresentationSource , MouseInputProvider (critical data)
         ///     PublicOK: This operation is inherently safe and does not store or expose the critical data
         /// </SecurityNote>
-        [SecurityCritical]
         public bool Capture(IInputElement element, CaptureMode captureMode)
         {
             int timeStamp = Environment.TickCount;
@@ -478,7 +472,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses critical data (InputManager and InputProviders).
         ///               It also returns critical data
         /// </SecurityNote>
-        [SecurityCritical]
         private IMouseInputProvider FindMouseInputProviderForCursor( )
         {
             // The shape of this API goes on the assumption that, like Win32, the cursor
@@ -537,7 +530,6 @@ namespace System.Windows.Input
         ///     PublicOK: Calling SetCursor is a safe operation since it only affects current app.Also it does not
         ///     expose critical data (IMouseInputProvider)
         /// </SecurityNote>
-        [SecurityCritical]
         public bool SetCursor(Cursor cursor)
         {
 //             VerifyAccess();
@@ -625,7 +617,6 @@ namespace System.Windows.Input
         ///     Critical - accesses critical data _inputSource.Value
         ///     PublicOK - we do the elevation of _inputSource to get RootVisual.
         ///</SecurityNote>
-        [SecurityCritical  ]
         public Point GetPosition(IInputElement relativeTo)
         {
 //             VerifyAccess();
@@ -878,7 +869,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses critical data (CriticalActiveSource)
         ///     TreatAsSafe: Although it accesses critical data it does not modify or expose it, only compares against it.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
             if (visual == null)
@@ -969,7 +959,6 @@ namespace System.Windows.Input
         ///     PublicOK: This code does not expose the HwndSource or store it, nor is
         ///                 this operation risky.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Synchronize()
         {
             // System.Console.WriteLine("Synchronize");
@@ -1030,7 +1019,6 @@ namespace System.Windows.Input
         ///     Critical:This code access input manager and causes cursor to be updated
         ///     TreatAsSafe: No risky critical data stored and inputs and outputs are safe.
         /// </Securitynote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool UpdateCursorPrivate()
         {
             int timeStamp = Environment.TickCount;
@@ -1047,7 +1035,6 @@ namespace System.Windows.Input
         ///     and remove for the same
         ///     TreatAsSafe: This code does not expose the PresentationSource and simply changes the mouse over element
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ChangeMouseOver(IInputElement mouseOver, int timestamp)
         {
             DependencyObject o = null;
@@ -1140,7 +1127,6 @@ namespace System.Windows.Input
         ///     TreatAsSafe: This operation is ok to expose since mouse capture is ok. Even if you get the
         ///               source changed events you cannot get to the sources themselves
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ChangeMouseCapture(IInputElement mouseCapture, IMouseInputProvider providerCapture, CaptureMode captureMode, int timestamp)
         {
             DependencyObject o = null;
@@ -1262,7 +1248,6 @@ namespace System.Windows.Input
         ///            It also accesses HwndSource and InputManager and can be used for Input spoofing.
         ///            accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
@@ -1480,7 +1465,6 @@ namespace System.Windows.Input
         ///     It also accesss Input Source and can be used for input spoofing
         ///     accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             if ( e.StagingItem.Input.RoutedEvent == InputManager.PreviewInputReportEvent )
@@ -1918,7 +1902,6 @@ namespace System.Windows.Input
         ///     function is not ok to expose publicly and hence the critical.
         ///     accesses e.StagingItem.Input
         /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // PreviewMouseWheel --> MouseWheel
@@ -2180,7 +2163,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses PresentationSource and returns element which is hittest
         ///     TreatAsSafe: This function is safe to expose. Only the element being clicked on is returned.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void GlobalHitTest(bool clientUnits, Point pt, PresentationSource inputSource, out IInputElement enabledHit, out IInputElement originalHit)
         {
             enabledHit = originalHit = null;
@@ -2247,7 +2229,6 @@ namespace System.Windows.Input
         ///     Critical: This code accesses PresentationSource and returns element which is hittest
         ///     TreatAsSafe: This function is safe to expose. Only the element being clicked on is returned.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void LocalHitTest(bool clientUnits, Point pt, PresentationSource inputSource, out IInputElement enabledHit, out IInputElement originalHit)
         {
             enabledHit = originalHit = null;
@@ -2325,7 +2306,6 @@ namespace System.Windows.Input
         /// </SecurityNote>
         internal bool IsActive
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _inputSource != null && _inputSource.Value != null;

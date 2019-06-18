@@ -32,8 +32,6 @@ namespace MS.Internal.Printing.Configuration
     ///<SecurityNote>
     /// Critical    - Win32 Print API calls which enables printing and print queue/server management
     ///</SecurityNote>
-    [SuppressUnmanagedCodeSecurityAttribute]
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static class UnsafeNativeMethods
     {
         #region Public Methods
@@ -54,7 +52,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable
         ///               Devmode  manipulation in Intranet Zone
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTOpenProviderEx(
             string deviceName,
             int maxVersion,
@@ -110,7 +107,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable
         ///               Device capabilities manipulation in Intranet Zone
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTGetPrintCapabilities(
             SafePTProviderHandle handle,
             IStream printTicket,
@@ -145,7 +141,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable enable Print Ticket
         ///               manipulation in Intranet Zone
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTMergeAndValidatePrintTicket(
             SafePTProviderHandle handle,
             IStream baseTicket,
@@ -187,7 +182,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable conversion of a devmode to a PrintTicket
         ///               manipulation in Intranet Zone
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTConvertDevModeToPrintTicket(
             SafePTProviderHandle handle,
             uint dmSize,
@@ -229,7 +223,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to enable the conversion
         ///               of a PrintTicket to devmode in Intranet Zone
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTConvertPrintTicketToDevMode(
             SafePTProviderHandle handle,
             IStream printTicket,
@@ -269,7 +262,6 @@ namespace MS.Internal.Printing.Configuration
         /// Critical    - calls into code with SUC applied to release native resources
         /// TreatAsSafe - this method demands DefaultPrinting to run
         ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTReleaseMemory(HandleRef devMode)
         {
             try

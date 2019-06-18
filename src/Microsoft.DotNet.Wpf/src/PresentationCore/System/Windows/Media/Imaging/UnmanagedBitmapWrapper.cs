@@ -37,7 +37,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - calls critical code method BitmapSource.UpdateCachedSettings
         /// TreatAsSafe - all inputs are checked
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public UnmanagedBitmapWrapper(BitmapSourceSafeMILHandle bitmapSource) :
             base(true)
         {            
@@ -59,7 +58,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - eventually access'es critical resources (_wicSource)
         /// TreatAsSafe - all inputs are checked
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal UnmanagedBitmapWrapper(bool initialize) :
             base(true)        
         {       

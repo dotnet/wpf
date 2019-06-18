@@ -159,7 +159,6 @@ namespace System.Windows.Documents
             ///   Critical: This code calls into _createDataObject
             ///   TreatAsSafe: This will bail if called in partial trust
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]	
             internal bool SourceOnMouseMove(Point mouseMovePoint)
             {
                 // Not allow the initiating DragDrop operation without the unmanaged code permission.
@@ -679,7 +678,6 @@ namespace System.Windows.Documents
             /// Safe - This doesn't expose the information. The SetForegroundWindow call will only
             ///        set the drop window as the foreground without exposing the information. 
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void Win32SetForegroundWindow()
             {
                 PresentationSource source = null;

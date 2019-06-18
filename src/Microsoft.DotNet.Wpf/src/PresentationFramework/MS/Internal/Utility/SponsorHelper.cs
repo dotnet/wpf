@@ -59,8 +59,6 @@ namespace MS.Internal.Utility
         /// random parameters and hence can’t be used to keep random objects alive or access any other object
         /// in the application. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [SecurityPermissionAttribute(SecurityAction.Assert, RemotingConfiguration = true)]
         internal void Register()
         {
             _lease.Register((ISponsor)this);
@@ -72,8 +70,6 @@ namespace MS.Internal.Utility
         /// random parameters and hence can’t be used to keep random objects alive or access any other object
         /// in the application. 
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [SecurityPermissionAttribute(SecurityAction.Assert, RemotingConfiguration = true)]
         internal void Unregister()
         {
             _lease.Unregister((ISponsor)this);

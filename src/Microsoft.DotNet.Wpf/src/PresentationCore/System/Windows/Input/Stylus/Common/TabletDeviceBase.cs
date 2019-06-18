@@ -69,7 +69,6 @@ namespace System.Windows.Input
 
         protected bool _disposed = false;
 
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -80,13 +79,11 @@ namespace System.Windows.Input
         /// Allow for custom disposal from derived types
         /// </summary>
         /// <param name="disposing"></param>
-        [SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             _disposed = true;
         }
 
-        [SecurityCritical]
         ~TabletDeviceBase()
         {
             Dispose(false);
@@ -210,7 +207,6 @@ namespace System.Windows.Input
         ///     Critical: The generated system gesture is posted back to the input system.
         ///         SystemGesture events need to be protected.
         /// </SecurityNote>
-        [SecurityCritical]
         internal SystemGesture? GenerateStaticGesture(RawStylusInputReport stylusInputReport)
         {
             return _multiTouchSystemGestureLogic?.GenerateStaticGesture(stylusInputReport);

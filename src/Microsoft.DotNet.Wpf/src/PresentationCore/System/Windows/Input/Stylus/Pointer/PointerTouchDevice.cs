@@ -46,8 +46,6 @@ namespace System.Windows.Input.StylusPointer
         ///               manipulation. But the decision is to limit the scope
         ///               of this raw method to full trust.
         /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         protected override void OnManipulationEnded(bool cancel)
         {
             base.OnManipulationEnded(cancel);
@@ -88,7 +86,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Critical:  Accesses ActiveSource
         ///     Safe:      The height or width of the bounding rect is not critical
         /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override double GetStylusPointWidthOrHeight(StylusPoint stylusPoint, bool isWidth)
         {
             double pixelsPerInch = DpiUtil.DefaultPixelsPerInch;

@@ -42,7 +42,6 @@ namespace MS.Internal.FontCache
         ///     Critical - retreives security sensitive info about a FontSource like raw font data.
         ///     Safe     - does a demand before it gives out the information asked.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public IFontSource Create(string uriString)
         {
             return new FontSource(new Uri(uriString), false);
@@ -66,7 +65,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - Calls Security Critical method Initialize().
         /// </SecurityNote>
-        [SecurityCritical]
         public FontSource(Uri fontUri, bool skipDemand)
         {
             Initialize(fontUri, skipDemand, false, isInternalCompositeFont: false);
@@ -75,7 +73,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - Calls Security Critical method Initialize().
         /// </SecurityNote>
-        [SecurityCritical]
         public FontSource(Uri fontUri, bool skipDemand, bool isComposite)
         {
             Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont: false);
@@ -95,7 +92,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - fontUri can contain information about local file system, skipDemand is used to make security decisions.
         /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
         {
             _fontUri = fontUri;
@@ -132,7 +128,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - as this gives out full file path.
         /// </SecurityNote>
-        [SecurityCritical]
         public string GetUriString()
         {
             return _fontUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.SafeUnescaped);
@@ -141,7 +136,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - as this gives out full file path.
         /// </SecurityNote>
-        [SecurityCritical]
         public string ToStringUpperInvariant()
         {
             return GetUriString().ToUpperInvariant();
@@ -151,7 +145,6 @@ namespace MS.Internal.FontCache
         /// Critical - fontUri can contain information about local file system.
         /// TreatAsSafe - we only compute its hash code.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override int GetHashCode()
         {
             return HashFn.HashString(ToStringUpperInvariant(), 0);
@@ -163,7 +156,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public Uri Uri
         {
-            [SecurityCritical]
             get
             {
                 return _fontUri;
@@ -176,7 +168,6 @@ namespace MS.Internal.FontCache
         /// </SecurityNote>
         public bool IsAppSpecific
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return Util.IsAppSpecificUri(_fontUri);
@@ -197,7 +188,6 @@ namespace MS.Internal.FontCache
         /// Also, fontUri can contain information about local file system.
         /// TreatAsSafe - we only use it to obtain the last write time.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public DateTime GetLastWriteTimeUtc()
         {
             if (IsFile)
@@ -229,7 +219,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - as this gives out UnmanagedMemoryStream content which is from a file.
         /// </SecurityNote>
-        [SecurityCritical]
         public UnmanagedMemoryStream GetUnmanagedStream()
         {
             if (IsFile)
@@ -298,7 +287,6 @@ namespace MS.Internal.FontCache
         /// Critical    - accesses security critical method FileMapping.OpenFile
         /// TreatAsSafe - Does not give out sensitive info.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void TestFileOpenable()
         {
             if (IsFile)
@@ -315,7 +303,6 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - as this gives out Stream content which is from a file.
         /// </SecurityNote>
-        [SecurityCritical]
         public Stream GetStream()
         {
             if (IsFile)
@@ -446,7 +433,6 @@ namespace MS.Internal.FontCache
         ///     Critical - as this function calls critical WindowsFontsUriObject.
         ///     TreatAsSafe - as the WindowsFontsUriObject is used to determine whether to demand permissions.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DemandFileIOPermission()
         {
             // Demand FileIORead permission for any non-system fonts.
@@ -487,7 +473,6 @@ namespace MS.Internal.FontCache
             ///         which cause an elevation.
             ///     TreatAsSafe - as this only pins and unpins an array of bytes.
             /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal PinnedByteArrayStream(byte [] bits)
             {
                 _memoryHandle = GCHandle.Alloc(bits, GCHandleType.Pinned);
@@ -524,7 +509,6 @@ namespace MS.Internal.FontCache
             ///     TreatAsSafe: This code is ok to call. In the worst case it destroys some
             ///     objects in the app
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
@@ -556,14 +540,12 @@ namespace MS.Internal.FontCache
         /// <SecurityNote>
         /// Critical - fontUri can contain information about local file system.
         /// </SecurityNote>
-        [SecurityCritical]
         private Uri     _fontUri;
 
         /// <SecurityNote>
         /// Critical - determines whether the font source was constructed from internal data,
         /// in which case the permission demand should be skipped.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool    _skipDemand;
 
         private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);

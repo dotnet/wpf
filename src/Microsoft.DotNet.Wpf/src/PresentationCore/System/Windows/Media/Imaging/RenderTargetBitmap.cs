@@ -47,7 +47,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical resources
         /// PublicOK - All inputs verified
         /// </SecurityNote>
-        [SecurityCritical]
         public RenderTargetBitmap(
             int pixelWidth,
             int pixelHeight,
@@ -123,7 +122,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access unmanaged resource
         /// TreatAsSafe - making a clone which is safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CopyCommon(RenderTargetBitmap sourceBitmap)
         {
             _bitmapInit.BeginInit();
@@ -230,7 +228,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access unmanaged resource
         /// PublicOk - Clear is safe (no inputs)
         /// </SecurityNote>
-        [SecurityCritical]
         public void Clear()
         {
             HRESULT.Check(MILRenderTargetBitmap.Clear(_renderTargetBitmap));
@@ -245,7 +242,6 @@ namespace System.Windows.Media.Imaging
         /// </SecurityNote>
         internal SafeMILHandle MILRenderTarget
         {
-            [SecurityCritical]
             get
             {
                 return _renderTargetBitmap;
@@ -259,7 +255,6 @@ namespace System.Windows.Media.Imaging
         /// Critical - access critical resource _convertedDUCEPtr
         /// TreatAsSafe - Critical data is used internally and not exposed
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RenderTargetContentsChanged()
         {
             // If the render target has changed, we need to update the UCE resource.  We ensure
@@ -284,7 +279,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - creates critical resource
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             try
@@ -336,7 +330,6 @@ namespace System.Windows.Media.Imaging
         /// <SecurityNote>
         /// Critical - unmanaged resource - not safe for handing out
         /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle /* IMILRenderTargetBitmap */ _renderTargetBitmap;
 }
     #endregion // RenderTargetBitmap

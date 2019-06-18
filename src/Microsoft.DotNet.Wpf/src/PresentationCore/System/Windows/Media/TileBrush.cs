@@ -69,7 +69,6 @@ namespace System.Windows.Media
         /// Treat as safe because the first is simply a math utility function with no
         /// critical data exposure, and the second is passed pointers to type-correct data.
         /// </SecurityNote>            
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void GetTileBrushMapping(
             Rect shapeFillBounds,   
             out Matrix tileBrushMapping

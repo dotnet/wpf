@@ -50,7 +50,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: The method is safe because only safe arguments are passed to CreateCursorFromDrawing
         ///                  Also the size of the cursor will be limited to the half size of the current primary screen.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Cursor GetPenCursor(DrawingAttributes drawingAttributes, bool isHollow, bool isRightToLeft, double dpiScaleX, double dpiScaleY)
         {
             // Create pen Drawing.
@@ -113,7 +112,6 @@ namespace MS.Internal.Ink
         ///     TreatAsSafe: The method is safe because there is no input parameter.
         ///                  The erase cursor is created internally which is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Cursor GetStrokeEraserCursor()
         {
             if ( s_StrokeEraserCursor == null )
@@ -215,7 +213,6 @@ namespace MS.Internal.Ink
         /// <SecurityNote>
         ///     Critical: Critical as this code calls IconHelper.CreateIconCursor which is Critical
         /// </SecurityNote>
-        [SecurityCritical]
         private static Cursor CreateCursorFromDrawing(Drawing drawing, Point hotspot)
         {
             // A default cursor.
@@ -302,7 +299,6 @@ namespace MS.Internal.Ink
         /// <SecurityNote>
         /// Critical - The code supresses the unmanaged code security
         /// </SecurityNote>
-        [SecurityCritical]
         private static RenderTargetBitmap RenderVisualToBitmap(Visual visual, int width, int height)
         {
             // Use RenderTargetBitmap and BitmapVisualManager to render drawing visual into
@@ -325,7 +321,6 @@ namespace MS.Internal.Ink
         /// <SecurityNote>
         /// Critical - Call the internal BitmapSource.CriticalCopyPixels which skips the MediaPermission Demand.
         /// </SecurityNote>
-        [SecurityCritical]
         private static byte[] GetPixels(RenderTargetBitmap rtb, int width, int height)
         {
             int strideColorBitmap = width * 4 /* 32 BitsPerPixel */;

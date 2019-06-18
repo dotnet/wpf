@@ -35,7 +35,6 @@ namespace System.Windows.Documents
         /// Critical - as this calls the setter for _winEventProc.Value.
         /// Safe - as this doesn't allow an arbitrary value to be set.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal WinEventHandler(int eventMin, int eventMax)
         {
             _eventMin = eventMin;
@@ -81,7 +80,6 @@ namespace System.Windows.Documents
         ///     Critical: This code frees the gchandle and is critical because it calls GCHandle
         ///     TreatAsSafe: Ok to call free on a handle that we have allocated
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void Clear()
         {
             // Make sure that the hooks is uninitialzied.
@@ -101,7 +99,6 @@ namespace System.Windows.Documents
         /// Safe - as this does not allow an arbitrary method to be set up as a hook and
         ///        also doesn't allow an aribtrary value to be set on _hHook.Value.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Start()
         {
             if (_gchThis.IsAllocated)
@@ -122,7 +119,6 @@ namespace System.Windows.Documents
         /// Safe - as this does not allow an arbitrary hook to be removed and sets
         ///        _hHook.Value to IntPtr.Zero which is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Stop()
         {
             if (_hHook.Value != IntPtr.Zero )
@@ -164,7 +160,6 @@ namespace System.Windows.Documents
             ///     TreatAsSafe: This code does not take any parameter or return state.
             ///                  It simply attaches private callbacks.
             /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public WinEventHandlerShutDownListener(WinEventHandler target)
                 : base(target, ShutDownEvents.DispatcherShutdown)
             {

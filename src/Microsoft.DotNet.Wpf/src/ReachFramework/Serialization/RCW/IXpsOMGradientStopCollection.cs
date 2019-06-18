@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("C9174C3A-3CD3-4319-BDA4-11A39392CEEF"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMGradientStopCollection
     {
         void Append([In] IXpsOMGradientStop stop);

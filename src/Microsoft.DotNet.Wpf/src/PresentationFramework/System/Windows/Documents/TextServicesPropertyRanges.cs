@@ -55,7 +55,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Accepts critical argument of type ITfProperty and ITfRange
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnRange(UnsafeNativeMethods.ITfProperty property,
                                       int ecReadonly, 
                                       UnsafeNativeMethods.ITfRange range)
@@ -69,7 +68,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code, commits raw input to the system
         /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnEndEdit(UnsafeNativeMethods.ITfContext context,
                                         int ecReadOnly, 
                                         UnsafeNativeMethods.ITfEditRecord editRecord) 
@@ -128,7 +126,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls unmanaged code (GetExtent)
         /// </SecurityNote>
-        [SecurityCritical]
         protected void ConvertToTextPosition(UnsafeNativeMethods.ITfRange range,
                                                out ITextPointer start, 
                                                out ITextPointer end)
@@ -161,8 +158,6 @@ namespace System.Windows.Documents
         ///            It could be any variant in a Cicero property in general.
         ///            non Avalon derived class is blocked by link demand
         /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted= true)]
-        [SecurityCritical]
         protected static Object GetValue(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
             if (property == null)
@@ -180,7 +175,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - unsafe block to manipulate a pointer of a pointer to GUID.
         /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
                                 UnsafeNativeMethods.ITfEditRecord editRecord) 
         {

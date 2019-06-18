@@ -29,7 +29,6 @@ namespace MS.Internal
         ///
         ///     Which is un-managed code - ergo also critical. 
         ///</SecurityNote> 
-        [SecurityCritical]
         public void GetWindow( /* [out] */ ref IntPtr phwnd)
         {
             phwnd = IntPtr.Zero;

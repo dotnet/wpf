@@ -23,9 +23,7 @@ namespace System.Windows
         /// </SecurityNote>
         internal XamlLoadPermission LoadPermission
         {
-            [SecurityCritical]
             get;
-            [SecurityCritical]
             private set;
         }
 
@@ -36,9 +34,7 @@ namespace System.Windows
         /// </SecurityNote>
         internal Stream Stream
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get;
-            [SecurityCritical]
             private set;
         }
 
@@ -55,7 +51,6 @@ namespace System.Windows
         /// Critical: Sets critical properties LoadPermission and Stream
         /// Safe: Demands LoadPermission before setting it
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal DeferrableContent(Stream stream, Baml2006SchemaContext schemaContext, 
             IXamlObjectWriterFactory objectWriterFactory, IServiceProvider serviceProvider,
             object rootObject)

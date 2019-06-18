@@ -40,7 +40,6 @@ namespace System.Windows.Documents
         ///     Critical: This code calls into NlLoad, which elevates unmanaged code permission.
         ///     TreatAsSafe: This function call takes no input parameters
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal NLGSpellerInterop()
         {
             // Start the lifetime of Natural Language library
@@ -125,7 +124,6 @@ namespace System.Windows.Documents
         ///     Critical: This code calls into NlUnload, which elevates unmanaged code permission.
         ///     TreatAsSafe: This function call takes no input memory block
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void Dispose(bool disposing)
         {
             if (_isDisposed)
@@ -156,7 +154,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code calls into NlLoad, which elevates unmanaged code permission.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void SetLocale(CultureInfo culture)
         {
             _textChunk.put_Locale(culture.LCID);
@@ -167,7 +164,6 @@ namespace System.Windows.Documents
         /// Critical - This code extracts the TextContext which is a COM pointer with elevation code. it also
         /// sets TextContext's options based on untrusted input.
         /// </SecurityNote>
-        [SecurityCritical]
         private void SetContextOption(string option, object value)
         {
             ITextContext textContext;
@@ -205,7 +201,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - access ITextChunk and calls Critical SetInputArray() with untrusted params.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override int EnumTextSegments(char[] text, int count,
             EnumSentencesCallback sentenceCallback, EnumTextSegmentsCallback segmentCallback, object data)
         {
@@ -297,7 +292,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// critical - works with critical _textChunk member
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void UnloadDictionary(object dictionary)
         {
             ILexicon lexicon = dictionary as ILexicon;
@@ -328,7 +322,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// critical - returns reference to internal wrapper to COM interface.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override object LoadDictionary(string lexiconFilePath)
         {
             return AddLexicon(lexiconFilePath);
@@ -361,7 +354,6 @@ namespace System.Windows.Documents
         /// 1. Works with paths, loads files. See also remarks section for more detail.
         /// 2. Asserts FileIOPermission to load file from specified locations.
         /// </SecurityNote>
-        [SecurityCritical]
         internal override object LoadDictionary(Uri item, string trustedFolder)
         {
             // Assert neccessary security to load trusted files.
@@ -382,7 +374,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - uses security critical _textChunk
         /// </SecurityNote>
-        [SecurityCritical]
         internal override void ReleaseAllLexicons()
         {
             ITextContext textContext = null;
@@ -422,7 +413,6 @@ namespace System.Windows.Documents
             /// <SecurityNote> 
             /// Critical - Calls into SetContextOption
             /// </SecurityNote>
-            [SecurityCritical]
             set
             {
                 _mode = value;
@@ -455,7 +445,6 @@ namespace System.Windows.Documents
             /// <SecurityNote> 
             /// Critical - Calls into SetContextOption
             /// </SecurityNote>
-            [SecurityCritical]
             set
             {
                 _multiWordMode = value;
@@ -471,7 +460,6 @@ namespace System.Windows.Documents
         /// </SecurityNote>
         /// <param name="culture"></param>
         /// <param name="spellingReform"></param>
-        [SecurityCritical]
         internal override void SetReformMode(CultureInfo culture, SpellingReform spellingReform)
         {
             const int
@@ -640,7 +628,6 @@ namespace System.Windows.Documents
             /// Critical - calls into COM API's
             /// </SecurityNote>
             /// </summary>
-            [SecurityCritical]
             private void EnumerateSuggestions()
             {
                 List<string> suggestions = new List<string>();
@@ -694,7 +681,6 @@ namespace System.Windows.Documents
             /// Critical - Calls into COM API's
             /// </SecurityNote>
             /// </summary>
-            [SecurityCritical]
             private void EnumerateSubSegments()
             {
                 _textSegment.get_Count(out _subSegmentCount);
@@ -728,7 +714,6 @@ namespace System.Windows.Documents
                 ///     and this method does not give out any criticals 
                 ///     resources (COM objects) to the caller.
                 /// </SecurityNote>
-                [SecuritySafeCritical]
                 get
                 {
                     if (_subSegments == null)
@@ -751,7 +736,6 @@ namespace System.Windows.Documents
                 ///     and this method does not give out the critical 
                 ///     resource (the COM object) to the caller.
                 /// </SecurityNote>
-                [SecuritySafeCritical]
                 get
                 {
                     if (_sTextRange == null)
@@ -781,7 +765,6 @@ namespace System.Windows.Documents
                 ///     gives out any critical resources (the COM objects) 
                 ///     to the caller.
                 /// </SecurityNote>
-                [SecuritySafeCritical]
                 get
                 {
                     if (_suggestions == null)
@@ -804,7 +787,6 @@ namespace System.Windows.Documents
                 ///     and this method does not give out any critical 
                 ///     resources (COM objects) to the caller.
                 /// </SecurityNote>
-                [SecuritySafeCritical]
                 get
                 {
                     return (RangeRole != RangeRole.ecrrIncorrect);
@@ -820,7 +802,6 @@ namespace System.Windows.Documents
             /// Critical - Calls into SubSegments
             /// Safe: Called by transparent callers in Speller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             public void EnumSubSegments(EnumTextSegmentsCallback segmentCallback, object data)
             {
                 bool result = true;
@@ -847,7 +828,6 @@ namespace System.Windows.Documents
             /// Critical - Calls Marshal.ReleaseComObject
             /// Safe - Called by transparent methods Dispose() and the finalizer
             /// </SecurityNote>
-            [SecuritySafeCritical]
             protected virtual void Dispose(bool disposing)
             {
                 if (_disposed)
@@ -889,7 +869,6 @@ namespace System.Windows.Documents
                 /// <SecurityNote>
                 /// Critical - calls into COM API's
                 /// </SecurityNote>
-                [SecurityCritical]
                 get
                 {
                     if (_rangeRole == null)
@@ -937,7 +916,6 @@ namespace System.Windows.Documents
             /// Critical - Calls into COM API's
             /// </SecurityNote>
             /// <param name="sentence"></param>
-            [SecurityCritical]
             public SpellerSentence(ISentence sentence)
             {
                 _disposed = false;
@@ -1008,7 +986,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             /// Critical - Calls Dispose(true)
             /// </SecurityNote>
-            [SecurityCritical]
             public void Dispose()
             {
                 Dispose(true);
@@ -1018,7 +995,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             /// Critical - Calls SpellerSegment.Dispose
             /// </SecurityNote>
-            [SecurityCritical]
             protected virtual void Dispose(bool disposing)
             {
                 if (_disposed)
@@ -1042,7 +1018,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             /// Critical: Calls SpellerSentence.Dispose(bool)
             /// </SecurityNote>
-            [SecurityCritical]
             ~SpellerSentence()
             {
                 Dispose(false);
@@ -1092,7 +1067,6 @@ namespace System.Windows.Documents
         /// - demands access to the file specified by a path before doing any work wtih it.
         /// - makes sure no file information is disclosed in PartialTrust if there was an exception.
         /// </SecurityNote>
-        [SecurityCritical]
         private ILexicon AddLexicon(string lexiconFilePath)
         {
             ITextContext textContext = null;
@@ -1147,7 +1121,6 @@ namespace System.Windows.Documents
         ///     Critical: This takes an arbitrary clsid and iid and calls NlGetClassObject.
         ///     It return a pointer to the COM object instantiated.
         /// </SecurityNote>
-        [SecurityCritical]
         private static object CreateInstance(Guid clsid, Guid iid)
         {
             object classObject;
@@ -1159,7 +1132,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Calls CreateInstance, which is Critical.
         /// </SecurityNote>
-        [SecurityCritical]
         private static ITextContext CreateTextContext()
         {
             return (ITextContext)CreateInstance(CLSID_ITextContext, IID_ITextContext);
@@ -1169,7 +1141,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Calls CreateInstance, which is Critical.
         /// </SecurityNote>
-        [SecurityCritical]
         private static ITextChunk CreateTextChunk()
         {
             return (ITextChunk)CreateInstance(CLSID_ITextChunk, IID_ITextChunk);
@@ -1179,7 +1150,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Calls CreateInstance, which is Critical.
         /// </SecurityNote>
-        [SecurityCritical]
         private static ILexicon CreateLexicon()
         {
             return (ILexicon)CreateInstance(CLSID_Lexicon, IID_ILexicon);
@@ -1193,7 +1163,6 @@ namespace System.Windows.Documents
         ///     Critical: This code has an unsafe code block where it dereferences an object
         ///      and calls a method with an elevation
         /// </SecurityNote>
-        [SecurityCritical]
         private static int EnumVariantNext(UnsafeNativeMethods.IEnumVariant variantEnumerator, NativeMethods.VARIANT variant, int[] fetched)
         {
             int result;
@@ -1224,21 +1193,18 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: This elevates to unmanaged code permission
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.PresentationNative, PreserveSig = false)]
             internal static extern void NlLoad();
 
             /// <SecurityNote>
             ///     Critical: This elevates to unmanaged code permission
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.PresentationNative, PreserveSig = true)]
             internal static extern void NlUnload();
 
             /// <SecurityNote>
             ///     Critical: This elevates to unmanaged code permission
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport(DllImport.PresentationNative, PreserveSig = false)]
             internal static extern void NlGetClassObject(ref Guid clsid, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object classObject);
         }
@@ -1251,7 +1217,6 @@ namespace System.Windows.Documents
             //[
             //]
             //HRESULT ReadFrom ([in] BSTR filename);
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void ReadFrom ([MarshalAs( UnmanagedType.BStr )]string fileName);
 
             //[
@@ -1436,26 +1401,22 @@ namespace System.Windows.Documents
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_LexiconCount )(
             //     ITextContext * This,
             //     /* [ref][retval][out] */ long *pval);
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_LexiconCount([MarshalAs(UnmanagedType.I4)] out Int32 lexiconCount);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Lexicon )(
             //     ITextContext * This,
             //     /* [in] */ long index,
             //     /* [ref][retval][out] */ ILexicon **pval);
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Lexicon(Int32 index, [MarshalAs(UnmanagedType.Interface)] out ILexicon lexicon);
 
             // /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AddLexicon )(
             //     ITextContext * This,
             //     /* [in] */ ILexicon *pLexicon);
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void AddLexicon([In, MarshalAs(UnmanagedType.Interface)] ILexicon lexicon);
 
             // /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *RemoveLexicon )(
             //     ITextContext * This,
             //     /* [in] */ ILexicon *pLexicon);
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void RemoveLexicon([In, MarshalAs(UnmanagedType.Interface)] ILexicon lexicon);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Version )(
@@ -1479,7 +1440,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and returns a COM pointer
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Options([MarshalAs(UnmanagedType.Interface)] out IProcessingOptions val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Capabilities )(
@@ -1729,7 +1689,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void SetInputArray([In] IntPtr inputArray, Int32 size);
 
             // /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *RegisterEngine )(
@@ -1780,7 +1739,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///   Critical : Returns critical argument of type IEnumVariant
             /// </SecurityNote>
-            [SecurityCritical]
             void get_Sentences([MarshalAs(UnmanagedType.Interface)] out MS.Win32.UnsafeNativeMethods.IEnumVariant val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PropertyCount )(
@@ -1806,7 +1764,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Context([MarshalAs(UnmanagedType.Interface)] out ITextContext val);
 
             // /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_Context )(
@@ -1815,7 +1772,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and take a COM pointer
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void put_Context([MarshalAs(UnmanagedType.Interface)] ITextContext val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Locale )(
@@ -1829,7 +1785,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void put_Locale(Int32 val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_IsLocaleReliable )(
@@ -1858,7 +1813,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and returns a COM pointer
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void GetEnumerator([MarshalAs(UnmanagedType.Interface)] out MS.Win32.UnsafeNativeMethods.IEnumVariant val);
 
             // /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *ToString )(
@@ -1883,7 +1837,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void put_ReuseObjects(bool val);
         }
 
@@ -1915,7 +1868,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Count(out Int32 val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Parent )(
@@ -1930,7 +1882,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and retrieves a pointer
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Item(Int32 index, [MarshalAs(UnmanagedType.Interface)] out ITextSegment val);
 
             // /* [propget][restricted][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get__NewEnum )(
@@ -2012,7 +1963,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and retrieves a range
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Range([MarshalAs(UnmanagedType.Struct)] out STextRange val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Identifier )(
@@ -2031,7 +1981,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Count(out Int32 val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Item )(
@@ -2041,7 +1990,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and retrieves a pi
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Item(Int32 index, [MarshalAs(UnmanagedType.Interface)] out ITextSegment val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Expansions )(
@@ -2089,7 +2037,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and retrieves a range
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Role(out RangeRole val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PrimaryType )(
@@ -2128,7 +2075,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code and retrieves a range
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void get_Suggestions([MarshalAs(UnmanagedType.Interface)] out MS.Win32.UnsafeNativeMethods.IEnumVariant val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_Lemmas )(
@@ -2231,7 +2177,6 @@ namespace System.Windows.Documents
             /// <SecurityNote>
             ///     Critical: Elevates to call unmanaged code
             /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void put_Item(object index, object val);
 
             // /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_IsReadOnly )(
@@ -2253,7 +2198,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code holds reference to a COM object which can run code under elevation
         /// </SecurityNote>
-        [SecurityCritical]
         private ITextChunk _textChunk;
 
         // True after this object has been disposed.

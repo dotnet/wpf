@@ -53,7 +53,6 @@ namespace System.Windows.Automation
         /// <internalonly>
         /// Constructor for serialization
         /// </internalonly>
-        //CASRemoval:[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
         protected ProxyAssemblyNotLoadedException(SerializationInfo info, StreamingContext context) : base(info, context) {}
 
         /// <summary>
@@ -64,8 +63,6 @@ namespace System.Windows.Automation
         /// <SecurityNote>
         ///     Critical : Base method is critical
         /// <SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

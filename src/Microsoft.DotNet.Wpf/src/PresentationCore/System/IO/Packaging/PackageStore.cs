@@ -48,7 +48,6 @@ namespace System.IO.Packaging
     ///         2. Allow PT code to add/get/remove only the well-known platform Package type (trusted code): ZipPackage
     ///    TreatAsSafe: These are public methods.
     ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     public static class PackageStore
     {
         static PackageStore()

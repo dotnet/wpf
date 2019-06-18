@@ -104,7 +104,6 @@ namespace MS.Internal.FontFace
         /// </SecurityNote>
         IDictionary<XmlLanguage,string> IFontFamily.Names
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_familyNames == null)
@@ -130,7 +129,6 @@ namespace MS.Internal.FontFace
         ///        font and thus won't allow you to figure what fonts might be installed on
         ///        the machine.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal GlyphTypeface GetGlyphTypeface(
             FontStyle       style,
             FontWeight      weight,
@@ -163,7 +161,6 @@ namespace MS.Internal.FontFace
         ///        font and thus won't allow you to figure what fonts might be installed on
         ///        the machine.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal GlyphTypeface MapGlyphTypeface(
             FontStyle               style,
             FontWeight              weight,
@@ -244,7 +241,6 @@ namespace MS.Internal.FontFace
             /// <SecurityNote>
             /// Critical - calls into critical Text.TextInterface.Font properties
             /// </SecurityNote>
-            [SecurityCritical]
             internal MatchingFace(Text.TextInterface.Font face)
             {
                 _face = face;
@@ -420,7 +416,6 @@ namespace MS.Internal.FontFace
         /// Critical - calls into critical Text.TextInterface.FontFamily property
         /// TreatAsSafe - Metrics are safe to expose.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         double IFontFamily.Baseline(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)
@@ -459,7 +454,6 @@ namespace MS.Internal.FontFace
         /// Critical - calls into critical Text.TextInterface.FontFamily property
         /// TreatAsSafe - Metrics are safe to expose.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         double IFontFamily.LineSpacing(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)

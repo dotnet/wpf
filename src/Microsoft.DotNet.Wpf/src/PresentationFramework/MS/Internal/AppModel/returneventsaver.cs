@@ -56,7 +56,6 @@ namespace MS.Internal.AppModel
         /// Critical - sets the critical _returnList.
         /// TreatAsSafe - _returnList is not exposed in any way.
         /// </SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void _Detach(PageFunctionBase pf)
         {
             if (pf._Return != null && pf._Saver == null)
@@ -117,7 +116,6 @@ namespace MS.Internal.AppModel
         ///     to create a delegate over the exact method, and even if that method had a LinkDemand,
         ///     it was satisfied by the application.
         /// </SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void _Attach(Object caller, PageFunctionBase child)
         {
             ReturnEventSaverInfo[] list = null;
@@ -166,7 +164,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: contains metadata for delegates created under elevation.
         /// </SecurityNote> 
-        [SecurityCritical]
         private ReturnEventSaverInfo[] _returnList;     // The list of delegates we want to persist and return later 
     }
 }

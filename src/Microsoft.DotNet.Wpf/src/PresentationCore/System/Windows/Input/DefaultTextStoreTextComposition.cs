@@ -42,7 +42,6 @@ namespace System.Windows.Input
         ///<SecurityNote>
         ///     Critical - calls base ctor - which in turn stores the inputmanager that's critical. 
         ///</SecurityNote> 
-        [SecurityCritical]
         internal DefaultTextStoreTextComposition(InputManager inputManager, IInputElement source, string text, TextCompositionAutoComplete autoComplete) : base(inputManager, source, text, autoComplete)
         {
         }
@@ -64,7 +63,6 @@ namespace System.Windows.Input
         ///   Critical: This completes the composition and in doing so calls GetTransitionaryContext which gives it ITfContext
         ///   TreatAsSafe: The context is not exposed, neither are the other members
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void Complete()
         {
 //             VerifyAccess();
@@ -95,7 +93,6 @@ namespace System.Windows.Input
         /// <SecurityNote>
         ///   Critical: This exposes ITfContext which has unsecure methods
         /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ITfContext GetTransitoryContext()
         {
             DefaultTextStore defaultTextStore = DefaultTextStore.Current;
@@ -115,7 +112,6 @@ namespace System.Windows.Input
         ///     Critical: calls Marshal.ReleaseComObject which has a LinkDemand
         ///	TreatAsSafe: can't pass in arbitrary COM object to release
         ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
         {
             UnsafeNativeMethods.ITfContextComposition contextComposition;

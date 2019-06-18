@@ -47,7 +47,6 @@ namespace System.Windows.Documents.Serialization
         ///  Critical: Full trust is required, so that partial trust applications do not load or use potentially
         ///  unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerProvider()
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -94,7 +93,6 @@ namespace System.Windows.Documents.Serialization
         ///  Critical: Full trust is required, so that partial trust applications do not install 
         ///  potentially unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void RegisterSerializer(SerializerDescriptor serializerDescriptor, bool overwrite)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -130,7 +128,6 @@ namespace System.Windows.Documents.Serialization
         ///  Critical: Full trust is required, so that partial trust applications do not uninstall
         ///  serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void UnregisterSerializer(SerializerDescriptor serializerDescriptor)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -165,7 +162,6 @@ namespace System.Windows.Documents.Serialization
         ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
         ///  unsafe serializer plug ins
         ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerWriter CreateSerializerWriter(SerializerDescriptor serializerDescriptor, Stream stream)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -250,7 +246,6 @@ namespace System.Windows.Documents.Serialization
         ///</SecurityNote> 
         /// <returns>SerializerDescriptor for new serializer</returns>
         [SuppressMessage("Microsoft.Security", "CA2116:AptcaMethodsShouldOnlyCallAptcaMethods")]
-        [SecurityCritical, SecurityTreatAsSafe]        
         private SerializerDescriptor CreateSystemSerializerDescriptor()
         {
             SecurityHelper.DemandPlugInSerializerPermissions();

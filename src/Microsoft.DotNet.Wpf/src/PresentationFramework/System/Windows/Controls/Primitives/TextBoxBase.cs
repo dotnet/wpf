@@ -144,7 +144,6 @@ namespace System.Windows.Controls.Primitives
         ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Copy will
         ///     check for clipboard permission.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Copy()
         {
             TextEditorCopyPaste.Copy(this.TextEditor, false);
@@ -158,7 +157,6 @@ namespace System.Windows.Controls.Primitives
         ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Cut will
         ///     check for clipboard permission.
         /// </SecurityNote>
-        [SecurityCritical]
         public void Cut()
         {
             TextEditorCopyPaste.Cut(this.TextEditor, false);
@@ -2200,7 +2198,6 @@ namespace System.Windows.Controls.Primitives
         ///    Critical:This code register command handlers for texteditor related events and commands (OnGotFocus)
         ///    TreatAsSafe: This just hooks up methods that are internal to this class
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnInputMethodEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TextBoxBase textBox = (TextBoxBase)d;

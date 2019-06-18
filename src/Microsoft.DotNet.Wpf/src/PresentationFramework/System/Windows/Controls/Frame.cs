@@ -272,7 +272,6 @@ namespace System.Windows.Controls
         /// Critical as it access the base uri through GetUriToNavigate
         /// TreatAsSafe since it does not disclose this
         ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Frame frame = (Frame)d;

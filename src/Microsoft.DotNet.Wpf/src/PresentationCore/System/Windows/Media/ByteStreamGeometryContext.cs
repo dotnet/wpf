@@ -45,7 +45,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ByteStreamGeometryContext()
         {
             // For now, we just write this into the stream.  We'll update its fields as we go.
@@ -86,7 +85,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// PublicOK - This function takes the address of a stack variable.
         /// </SecurityNote>
-        [SecurityCritical]
         public override void BeginFigure(Point startPoint, bool isFilled, bool isClosed)
         {
             VerifyApi();
@@ -120,7 +118,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// Safe - This function takes the address of a stack variable.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
         {
             VerifyApi();
@@ -145,7 +142,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// Safe - This function takes the address of a stack variable.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public override void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             VerifyApi();
@@ -171,7 +167,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// Safe - This function takes the address of a stack variable.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
         {
             VerifyApi();
@@ -243,7 +238,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// PublicOk - This function takes the address of a stack variable.
         /// </SecurityNote>
-        [SecurityCritical]
         public override void ArcTo(Point point, Size size, double rotationAngle, bool isLargeArc, SweepDirection sweepDirection, bool isStroked, bool isSmoothJoin)
         {
             VerifyApi();
@@ -353,7 +347,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void DisposeCore()
         {
             if (!_disposed)
@@ -394,7 +387,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: This code has unsafe code and dereferences a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void ReadData(byte* pbData,
                                       int bufferOffset,
                                       int cbDataSize)
@@ -426,7 +418,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: This code has unsafe code and dereferences a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void OverwriteData(byte* pbData,
                                       int bufferOffset,
                                       int cbDataSize)
@@ -453,7 +444,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: This code has unsafe code and dereferences a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void AppendData(byte* pbData,
                                       int cbDataSize)
         {
@@ -484,7 +474,6 @@ namespace System.Windows.Media
         ///     Critical: This code has unsafe code and dereferences a pointer
         ///     TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void ShrinkToFit()
         {
             Debug.Assert(_chunkList.Count != 0);
@@ -532,7 +521,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: This code has unsafe code and dereferences a pointer
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void ReadWriteData(bool reading,
                                           byte* pbData,
                                           int cbDataSize,
@@ -609,7 +597,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void FinishFigure()
         {
             if (_currentPathFigureDataOffset != -1)
@@ -656,7 +643,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void FinishSegment()
         {
             if (_currentPolySegmentDataOffset != -1)
@@ -706,7 +692,6 @@ namespace System.Windows.Media
         /// Critical - it has an unsafe block
         /// TreatAsSafe - manipulating a buffer is considered safe
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void GenericPolyTo(IList<Point> points,
                                    bool isStroked, 
                                    bool isSmoothJoin,
@@ -750,7 +735,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - it has an unsafe block
         /// </SecurityNote>
-        [SecurityCritical]
         unsafe private void GenericPolyTo(Point* points,
                                    int count,
                                    bool isStroked,
@@ -775,7 +759,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         /// Critical - it has an unsafe block
         /// </SecurityNote>
-        [SecurityCritical]
         private void GenericPolyToHelper(bool isStroked, bool isSmoothJoin, bool hasCurves, MIL_SEGMENT_TYPE segmentType)
         {
             // Do we need to finish the old segment?

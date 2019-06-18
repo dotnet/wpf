@@ -38,7 +38,6 @@ namespace System.Windows.Input
         /// TreatAsSafe: This constructor handles critical data but does not expose it
         ///             It stores instance but there are demands on the instances.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal Win32MouseDevice(InputManager inputManager)
             : base(inputManager)
         {
@@ -57,7 +56,6 @@ namespace System.Windows.Input
         ///     Critical: Makes calls to UnsafeNativeMethods (GetKeyState)
         ///     TreatAsSafe: Only returns the current state of the specified button
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
         {
             MouseButtonState mouseButtonState = MouseButtonState.Released;

@@ -231,7 +231,6 @@ namespace System.Windows
         ///     as this provides a hook to the property system that we don't
         ///     want exposed under PartialTrust.
         /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,
@@ -437,7 +436,6 @@ namespace System.Windows
         ///<SecurityNote>
         ///     Critical - sets the MarkAsUserInitiated bit.
         ///</SecurityNote>
-        [SecurityCritical]
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
             if (args == null)
@@ -460,7 +458,6 @@ namespace System.Windows
         ///<SecurityNote>
         ///     Critical - sets the MarkAsUserInitiated bit.
         ///</SecurityNote>
-        [SecurityCritical]
         [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {

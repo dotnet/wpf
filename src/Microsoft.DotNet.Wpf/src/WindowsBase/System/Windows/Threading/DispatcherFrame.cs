@@ -18,7 +18,6 @@ namespace System.Windows.Threading
         ///     of the call to RegisterWindowMessage
         ///     TreatAsSafe:This is safe to call
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static DispatcherFrame()
         {
         }
@@ -89,7 +88,6 @@ namespace System.Windows.Threading
                 return shouldContinue;
             }
 
-            [SecurityCritical] 
             set
             {
                 // This method is free-threaded.

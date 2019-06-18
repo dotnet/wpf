@@ -67,7 +67,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Major entry point into the full-trust hosting code. Expects trusted input.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.I4)]
         int Run([In, MarshalAs(UnmanagedType.LPWStr)]  string strUrl,
@@ -90,7 +89,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Affects the native window containment.
         /// </SecurityNote>
-        [SecurityCritical]
         void SetParent(IntPtr parentHandle);
 
         // <summary> Show the viewport     </summary> 
@@ -106,7 +104,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: The callback object needs to be trusted.
         /// </SecurityNote>
-        [SecurityCritical]
         void SetBrowserCallback([In, MarshalAs(UnmanagedType.Interface)]object browserCallback);
 
         // <summary>If the Application is loaded we use LoadHistory else create a new app object </summary>
@@ -141,7 +138,6 @@ namespace MS.Internal.AppModel
         /// Critical: Binary (de)serialization is used to reconstitute the internal journal.
         ///     We have to trust the input stream represents legitimate objects.
         /// </SecurityNote>
-        [SecurityCritical]
         void LoadHistory([MarshalAs(UnmanagedType.Interface)]object ucomIStream);
 
         //<summary> 
@@ -156,7 +152,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: Can execute privileged commands such as Paste and shut-down.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         int ExecCommand([MarshalAs(UnmanagedType.LPStruct)]Guid guidCmdGroup, uint command, object arg);
 
@@ -168,7 +163,6 @@ namespace MS.Internal.AppModel
         /// <SecurityNote>
         /// Critical: A PT app is not supposed to be able to shut itself down.
         /// </SecurityNote>
-        [SecurityCritical]
         void PostShutdown();
 
         // <summary> Activate or deactivate RootBrowswerWindow  </summary>

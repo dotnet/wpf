@@ -59,7 +59,6 @@ namespace System.Windows.Documents
         /// percolating
         /// TreatAsSafe: Ok to expose
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static ImmComposition()
         {
         }
@@ -70,7 +69,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls critical code (UpdateSource)
         /// </SecurityNote>
-        [SecurityCritical]
         internal ImmComposition(HwndSource source)
         {
             UpdateSource(null, source);
@@ -91,7 +89,6 @@ namespace System.Windows.Documents
         /// Critical - gets HwndSource (protected), then creates a new
         ///            composition based on this.
         /// </SecurityNote>
-        [SecurityCritical]
         internal static ImmComposition GetImmComposition(FrameworkElement scope)
         {
             HwndSource source = PresentationSource.CriticalFromVisual(scope) as HwndSource;
@@ -123,7 +120,6 @@ namespace System.Windows.Documents
         ///   Critical: This code removes the handler for OnSourceChanged which is critical
         ///   TreatAsSafe:Removing the handler is a safe operation
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnDetach(TextEditor editor)
         {
             if (editor != _editor)
@@ -149,7 +145,6 @@ namespace System.Windows.Documents
         ///    TreatAsSafe: Calling this is safe. Since this does not expose the presentation source. Also the
         ///                 handler that is attached is private and critical
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnGotFocus(TextEditor editor)
         {
             if (editor == _editor)
@@ -220,7 +215,6 @@ namespace System.Windows.Documents
         ///               causes someone's current input to commit. No additional
         ///               spoofing or information disclosure could occur.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CompleteComposition()
         {
             UnregisterMouseListeners();
@@ -312,7 +306,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - calls critical code - NewSource, OldSource and UpdateSource.
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnSourceChanged(object sender, SourceChangedEventArgs e)
         {
             HwndSource newSource = null;
@@ -347,7 +340,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - Calls critical code (add/remove hook)
         /// </SecurityNote>
-        [SecurityCritical]
         private void UpdateSource(HwndSource oldSource, HwndSource newSource)
         {
             // If this object is moving directly from one source to another
@@ -411,7 +403,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - access raw Win32 messages, raw input, etc. and can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr ImmCompositionFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr lret = IntPtr.Zero;
@@ -466,7 +457,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - This can be used to spoof input and it takes IntPtr from untrusted sources
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnWmImeComposition(IntPtr hwnd, IntPtr lParam, ref bool handled)
         {
             IntPtr himc;
@@ -580,7 +570,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - This can be used to spoof input and it takes IntPtr from untrusted sources
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnWmImeChar(IntPtr wParam, ref bool handled)
         {
             if (!IsInKeyboardFocus && !_losingFocus)
@@ -666,7 +655,6 @@ namespace System.Windows.Documents
         /// Critical - accepts raw Win32 messages, calls unmanaged code, deals
         ///            with unmanaged data structures
         /// </SecurityNote>
-        [SecurityCritical]
         private void OnWmImeNotify(IntPtr hwnd, IntPtr wParam)
         {
             IntPtr himc;
@@ -809,7 +797,6 @@ namespace System.Windows.Documents
         /// Critical - elevates to access protected resources (hwnd)
         /// TreatAsSafe - positions the composition window, which is safe to do
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateNearCaretCompositionWindow()
         {
             ITextView view;
@@ -926,7 +913,6 @@ namespace System.Windows.Documents
         /// Critical - unparents the composition window visually
         /// TreatAsSafe - while a DOS, this doesn't present any specific security threat.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnHwndDisposed(object sender, EventArgs args)
         {
             UpdateSource(_source, null);
@@ -1096,7 +1082,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical (TextCompositionManager) code.
         /// TreatAsSafe - doesn't accept or return critical information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTextInputStartEvent(FrameworkTextComposition composition, int resultLength, string compositionString)
         {
             composition.Stage = TextCompositionStage.None;
@@ -1131,7 +1116,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical (TextCompositionManager) code.
         /// TreatAsSafe - doesn't accept or return critical information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTextInputUpdateEvent(FrameworkTextComposition composition, int resultLength, string compositionString)
         {
             composition.Stage = TextCompositionStage.Started;
@@ -1164,7 +1148,6 @@ namespace System.Windows.Documents
         /// Critical - calls critical (TextCompositionManager) code.
         /// TreatAsSafe - doesn't accept or return critical information.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool RaiseTextInputEvent(FrameworkTextComposition composition, string compositionString)
         {
             composition.Stage = TextCompositionStage.Started;
@@ -1420,7 +1403,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - This can be used to spoof input and it takes IntPtr from untrusted sources
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr OnWmImeRequest(IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr lret = IntPtr.Zero;
@@ -1452,7 +1434,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Crtical: This code calls into PtrToStruct which is marked critical.It can also be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr OnWmImeRequest_ReconvertString(IntPtr lParam, ref bool handled, bool fDocFeed)
         {
             if (!fDocFeed)
@@ -1526,7 +1507,6 @@ namespace System.Windows.Documents
         ///              This should not be called unless we're sure the first param is the pointer to
         ///              NativeMethods.RECONVERTSTRING.
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe static void StoreSurroundingText(IntPtr reconv, string surrounding)
         {
             // Copy the string to the pointer right after the structure.
@@ -1649,7 +1629,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         /// Critical - This can be used to spoof input and it takes IntPtr from untrusted sources
         /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr OnWmImeRequest_ConfirmReconvertString(IntPtr lParam, ref bool handled)
         {
             if (!IsInKeyboardFocus)
@@ -1749,7 +1728,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - the return value says only if IME is near caret Chinese IME.
         ///               exposing this information is safe.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool IsReadingWindowIme()
         {
             int prop = UnsafeNativeMethods.ImmGetProperty(new HandleRef(this, SafeNativeMethods.GetKeyboardLayout(0)), NativeMethods.IGP_PROPERTY);
@@ -1764,7 +1742,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - the mouse input here is ignored, but rather the mouse
         ///               is directly queried, so there is no spoofing possibility
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnMouseButtonEvent(object sender, MouseButtonEventArgs e)
         {
             e.Handled = InternalMouseEventHandler();
@@ -1778,7 +1755,6 @@ namespace System.Windows.Documents
         /// TreatAsSafe - the mouse input here is ignored, but rather the mouse
         ///               is directly queried, so there is no spoofing possibility
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnMouseEvent(object sender, MouseEventArgs e)
         {
             e.Handled = InternalMouseEventHandler();
@@ -1791,7 +1767,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code, sends WM_* messages, simulates mouse
         ///            messages to the IME. This could result in input spoofing.
         /// </SecurityNote>
-        [SecurityCritical]
         private bool InternalMouseEventHandler()
         {
             int btnState = 0;
@@ -2097,7 +2072,6 @@ namespace System.Windows.Documents
         //
         // HwndSource of this instance of ImmComposition.
         //
-        [SecurityCritical]
         private HwndSource _source;
 
         //
@@ -2165,7 +2139,6 @@ namespace System.Windows.Documents
         /// <SecurityNote>
         ///     Critical: This code registers a custom message and calls into a critical method
         /// </SecurityNote>
-        [SecurityCritical]
         private static WindowMessage s_MsImeMouseMessage = UnsafeNativeMethods.RegisterWindowMessage("MSIMEMouseOperation");
 
         // This is the composition undo unit.

@@ -189,7 +189,6 @@ namespace MS.Internal.PtsHost
         /// <SecurityNote>
         /// Critical, because it is unsafe method.
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void CalcHorizontalBBoxOfRow(
             int cCells,
             IntPtr* rgnmCell,
@@ -224,7 +223,6 @@ namespace MS.Internal.PtsHost
         /// <SecurityNote>
         /// Critical - takes pointers that cannot be validated by this method
         /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetCells(
             int cCells,
             IntPtr* rgnmCell,

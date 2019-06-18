@@ -25,8 +25,8 @@
 using System;
 using System.IO;                    // FileNotFoundException
 using System.Reflection;            // Assembly
-using System.Security;              // [SecurityCritical]
-using System.Security.Permissions;  // [ReflectionPermission]
+using System.Security;              // 
+using System.Security.Permissions;  // 
 
 using MS.Internal.WindowsBase;      // [FriendAccessAllowed] // BuildInfo
 
@@ -52,7 +52,6 @@ namespace MS.Internal
         ///     Critical: accesses AppDomain.AssemblyLoad event
         ///     TreatAsSafe: the event is not exposed - merely updates internal state.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static AssemblyHelper()
         {
             // create the records for each uncommon assembly
@@ -85,7 +84,6 @@ namespace MS.Internal
         ///     Critical: accesses critical field _records
         ///     TreatAsSafe: it's OK to read the IsLoaded bit
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         [FriendAccessAllowed]
         internal static bool IsLoaded(UncommonAssembly assemblyEnum)
         {
@@ -201,8 +199,6 @@ namespace MS.Internal
         ///     Critical:  Asserts RestrictedMemberAccess permission
         ///     TreatAsSafe:  Only used internally to load our own types
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [ReflectionPermission(SecurityAction.Assert, RestrictedMemberAccess=true)]
         private static object LoadExtensionFor(string name)
         {
             // The docs claim that Activator.CreateInstance will create an instance
@@ -237,7 +233,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code potentially sets the IsLoaded bit for the given assembly.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             OnLoaded(args.LoadedAssembly);
@@ -246,7 +241,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical:  This code potentially sets the IsLoaded bit for the given assembly.
         /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLoaded(Assembly assembly)
         {
             // although this method can be called on an arbitrary thread, there's no
@@ -284,7 +278,6 @@ namespace MS.Internal
         ///                 situations.  Make sure the IsLoaded bit is only set by authorized
         ///                 code, namely OnLoaded.
         /// </SecurityNote>
-        [SecurityCritical]
         private static AssemblyRecord[] _records;
 
         #endregion Private Data

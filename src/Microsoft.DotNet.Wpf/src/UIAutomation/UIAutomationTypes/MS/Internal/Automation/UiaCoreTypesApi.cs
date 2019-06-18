@@ -54,7 +54,6 @@ namespace MS.Internal.Automation
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         ///    TreatAsSafe: This method simply converts a Guid representing an automation type to an int, making it safe to use.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static int UiaLookupId(AutomationIdType type, ref Guid guid)
         {   
             return RawUiaLookupId( type, ref guid );
@@ -64,7 +63,6 @@ namespace MS.Internal.Automation
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         ///    TreatAsSafe: This method only returns a fixed known object representing an Unsupported value, making it safe to use.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static object UiaGetReservedNotSupportedValue()
         {
             object notSupportedValue;
@@ -76,7 +74,6 @@ namespace MS.Internal.Automation
         ///    Critical: This code calls into the unmanaged UIAutomationCore.dll
         ///    TreatAsSafe: This method only returns a fixed known object representing a MixedAttribute value, making it safe to use.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static object UiaGetReservedMixedAttributeValue()
         {
             object mixedAttributeValue;
@@ -88,7 +85,6 @@ namespace MS.Internal.Automation
         ///    Critical: This code loads the unmanaged UIAutomationCore.dll and attempts to get the proc address of a Win7 only export.
         ///    TreatAsSafe: Does not return critical data, does not change critical state, does not consume untrusted input.
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static bool SupportsWin7Identifiers()
         {
             IntPtr automationCoreHandle = LoadLibraryHelper.SecureLoadLibraryEx(DllImport.UIAutomationCore, IntPtr.Zero, UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_SYSTEM32);
@@ -119,7 +115,6 @@ namespace MS.Internal.Automation
         ///              We pass an IntPtr that has a value of -1 so that ThrowExceptionForHR ignores IErrorInfo of the current thread.
         /// </SecurityNote>
         /// Check hresult for error...
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void CheckError(int hr)
         {
             if (hr >= 0)
@@ -130,18 +125,12 @@ namespace MS.Internal.Automation
             Marshal.ThrowExceptionForHR(hr, (IntPtr)(-1));
         }
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaLookupId", CharSet = CharSet.Unicode)]
         private static extern int RawUiaLookupId(AutomationIdType type, ref Guid guid);
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaGetReservedNotSupportedValue", CharSet = CharSet.Unicode)]
         private static extern int RawUiaGetReservedNotSupportedValue([MarshalAs(UnmanagedType.IUnknown)] out object notSupportedValue);
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaGetReservedMixedAttributeValue", CharSet = CharSet.Unicode)]
         private static extern int RawUiaGetReservedMixedAttributeValue([MarshalAs(UnmanagedType.IUnknown)] out object mixedAttributeValue);
 

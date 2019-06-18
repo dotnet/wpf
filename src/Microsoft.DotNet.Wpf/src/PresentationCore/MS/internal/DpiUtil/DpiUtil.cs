@@ -38,7 +38,6 @@ namespace MS.Internal
         /// <SecurityNote>
         ///     Critical: Calls into critical methods
         /// </SecurityNote>
-        [SecurityCritical]
         internal static DpiAwarenessContextHandle GetDpiAwarenessContext(IntPtr hWnd)
         {
             return DpiAwarenessContextHelper.GetDpiAwarenessContext(hWnd);
@@ -59,7 +58,6 @@ namespace MS.Internal
         ///     Critical: Passes critical window handle (HWND)
         ///     Safe: Returns only non-critical information to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static PROCESS_DPI_AWARENESS GetProcessDpiAwareness(IntPtr hWnd)
         {
             return ProcessDpiAwarenessHelper.GetProcessDpiAwareness(hWnd);
@@ -152,7 +150,6 @@ namespace MS.Internal
         ///     Critical:   Takes a native handle as input
         ///     Safe:   Does not return any Critical information back to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static HwndDpiInfo GetExtendedDpiInfoForWindow(IntPtr hWnd, bool fallbackToNearestMonitorHeuristic)
         {
             return new HwndDpiInfo(hWnd, fallbackToNearestMonitorHeuristic);
@@ -170,7 +167,6 @@ namespace MS.Internal
         ///     Critical:   Takes a native handle as input
         ///     Safe:   Does not return any Critical information back to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static HwndDpiInfo GetExtendedDpiInfoForWindow(IntPtr hWnd)
         {
             return GetExtendedDpiInfoForWindow(hWnd, true);

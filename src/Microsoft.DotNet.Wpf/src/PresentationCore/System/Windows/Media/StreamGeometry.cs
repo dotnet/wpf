@@ -82,7 +82,6 @@ namespace System.Windows.Media
         /// Critical as this has an unsafe block.
         /// PublicOK - This method reads from a buffer.
         ///</SecurityNote>
-        [SecurityCritical]
         public override bool IsEmpty()
         {
             ReadPreamble();
@@ -112,7 +111,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     TreatAsSafe: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool AreBoundsValid(ref MilRectD bounds)
         {
             if (IsEmpty())
@@ -146,7 +144,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     TreatAsSafe: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CacheBounds(ref MilRectD bounds)
         {
             unsafe
@@ -169,7 +166,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     TreatAsSafe: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetDirty()
         {
             if (!IsEmpty())
@@ -230,7 +226,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     PublicOK: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical]
         public override bool MayHaveCurves()
         {
             // IsEmpty() calls ReadPreamble()
@@ -259,7 +254,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     TreatAsSafe: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool HasHollows()
         {
             // IsEmpty() calls ReadPreamble()
@@ -286,7 +280,6 @@ namespace System.Windows.Media
         ///     Critical: Manipulates unsafe code
         ///     TreatAsSafe: Access a local byte[] as a pointer.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool HasGaps()
         {
             // IsEmpty() calls ReadPreamble()
@@ -421,7 +414,6 @@ namespace System.Windows.Media
         /// <SecurityNote>
         ///     Critical: Manipulates unsafe code
         /// </SecurityNote>
-        [SecurityCritical]
         private unsafe int GetFigureSize(byte* pbPathData)
         {
             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
@@ -433,7 +425,6 @@ namespace System.Windows.Media
         ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
         ///     Channels are safe to call into and do not go cross domain and cross process
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

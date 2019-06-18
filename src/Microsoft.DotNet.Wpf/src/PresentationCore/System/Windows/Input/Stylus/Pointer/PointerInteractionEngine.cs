@@ -168,7 +168,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="stylusDevice"></param>
         /// <param name="configuration"></param>
-        [SecurityCritical]
         internal PointerInteractionEngine(PointerStylusDevice stylusDevice, List<UnsafeNativeMethods.INTERACTION_CONTEXT_CONFIGURATION> configuration = null)
         {
             _stylusDevice = stylusDevice;
@@ -226,7 +225,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         /// Critical:  Calls UnsafeNativeMethods.DestroyInteractionContext
         /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -245,7 +243,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         /// Critical: Calls Dispose(bool)
         /// </SecurityNote>
-        [SecurityCritical]
         ~PointerInteractionEngine()
         {
             Dispose(false);
@@ -254,7 +251,6 @@ namespace System.Windows.Input.StylusPointer
         /// <SecurityNote>
         /// Critical: Calls Dispose()
         /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -274,7 +270,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical:   Calls UnsafeNativeMethods.BufferPointerPacketsInteractionContext
         ///                   UnsafeNativeMethods.ProcessBufferedPacketsInteractionContext
         /// </SecurityNote>
-        [SecurityCritical]
         internal void Update(RawStylusInputReport rsir)
         {
             try
@@ -310,7 +305,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical:   Calls InteractionDetected callback
         ///             Can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private void Callback(IntPtr clientData, ref UnsafeNativeMethods.INTERACTION_CONTEXT_OUTPUT output)
         {
             SystemGesture gesture = SystemGesture.None;
@@ -380,7 +374,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical:   Calls InteractionDetected callback
         ///             Can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private void DetectFlick(RawStylusInputReport rsir)
         {
             // Make sure the flick engine has the latest data if applicable.
@@ -417,7 +410,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical:   Calls InteractionDetected callback
         ///             Can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private void DetectHover()
         {
             // Hover only applies to Pen
@@ -516,7 +508,6 @@ namespace System.Windows.Input.StylusPointer
         /// Critical:   Calls InteractionDetected callback
         ///             Can be used to spoof input
         /// </SecurityNote>
-        [SecurityCritical]
         private SystemGesture DetectDragOrFlick(UnsafeNativeMethods.INTERACTION_CONTEXT_OUTPUT output)
         {
             SystemGesture gesture = SystemGesture.None;

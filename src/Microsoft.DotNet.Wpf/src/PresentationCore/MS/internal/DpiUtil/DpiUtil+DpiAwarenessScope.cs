@@ -91,7 +91,6 @@ namespace MS.Internal
             ///     Safe:       Does not return Critical resources back to the caller.
             ///                 The handle saved in this instance is a pseudo-handle which is really just an integer.
             /// </SecurityNote>
-            [SecuritySafeCritical]
             private DpiAwarenessScope(
                 DpiAwarenessContextValue dpiAwarenessContextValue,
                 bool updateIfThreadInMixedHostingMode,
@@ -143,7 +142,6 @@ namespace MS.Internal
             /// </SecurityNote>
             private bool IsThreadInMixedHostingBehavior
             {
-                [SecuritySafeCritical]
                 get
                 {
                     return SafeNativeMethods.GetThreadDpiHostingBehavior() == NativeMethods.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED;
@@ -163,7 +161,6 @@ namespace MS.Internal
             ///     Critical: Calls into native methods
             ///     Safe: Does not return any information to the caller
             /// </SecurityNote>
-            [SecuritySafeCritical]
             public void Dispose()
             {
                 if (this.OldDpiAwarenessContext != null)
@@ -182,7 +179,6 @@ namespace MS.Internal
             ///     Safe: returns only non-Critical and safe information to the caller
             /// </SecurityNote>
             /// <returns>True if the Window is Unaware or System Aware, otherwise False</returns>
-            [SecuritySafeCritical]
             private bool IsWindowUnawareOrSystemAware(IntPtr hWnd)
             {
                 var dpiAwarenessContext = GetDpiAwarenessContext(hWnd);

@@ -28,7 +28,6 @@ namespace System.Windows.Xps.Packaging
         /// <SecurityNote>
         /// Critical: Calls into COM, sets critical member packageTarget
         /// </SecurityNote>
-        [SecurityCritical]
         internal
         XpsOMPackagingPolicy(
             IXpsDocumentPackageTarget packageTarget
@@ -66,7 +65,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal
         void
         EnsureXpsOMPackageWriter()
@@ -98,7 +96,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal
         void
         CloseXpsOMPackageWriter(
@@ -124,7 +121,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal
         void
         StartNewDocument()
@@ -462,7 +458,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public
         override
         XpsResourceStream
@@ -564,7 +559,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public
         override
         XpsResourceStream
@@ -634,7 +628,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         public
         override
         XpsResourceStream
@@ -793,7 +786,6 @@ namespace System.Windows.Xps.Packaging
         /// <SecurityNote>
         /// Critical: Calls into COM, returns COM interface IOpcPartUri
         /// </SecurityNote>
-        [SecurityCritical]
         private
         IOpcPartUri
         GenerateIOpcPartUri(
@@ -807,7 +799,6 @@ namespace System.Windows.Xps.Packaging
         /// <SecurityNote>
         /// Critical: Calls into COM, returns COM interface IOpcPartUri
         /// </SecurityNote>
-        [SecurityCritical]
         private
         IOpcPartUri
         GenerateIOpcPartUri(
@@ -838,7 +829,6 @@ namespace System.Windows.Xps.Packaging
         /// <SecurityNote>
         /// Critical: Calls into COM, returns COM interface IXpsOMPrintTicketResource
         /// </SecurityNote>
-        [SecurityCritical]
         private
         IXpsOMPrintTicketResource
         GeneratePrintTicketResource(
@@ -903,7 +893,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private
         void
         AddCurrentPageToPackageWriter()
@@ -939,7 +928,6 @@ namespace System.Windows.Xps.Packaging
         /// Critical: Calls into COM
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
-        [SecuritySafeCritical]
         private
         void
         SetHyperlinkTargetsForCurrentPage()

@@ -29,7 +29,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: Accesses critical _stylusLogic and InputManager
         ///     TreatAsSafe: This constructor handles critical data but does not expose it
         /// </SecurityNote>
-        [SecuritySafeCritical]
         internal WispStylusTouchDevice(StylusDeviceBase stylusDevice)
             : base(stylusDevice)
         {
@@ -103,7 +102,6 @@ namespace System.Windows.Input.StylusWisp
         ///               manipulation. But the decision is to limit the scope
         ///               of this raw method to full trust.
         /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         protected override void OnManipulationEnded(bool cancel)
         {
             base.OnManipulationEnded(cancel);
@@ -136,7 +134,6 @@ namespace System.Windows.Input.StylusWisp
         /// </SecurityNote>
         internal WispLogic.StagingAreaInputItemList StoredStagingAreaItems
         {
-            [SecurityCritical]
             get
             {
                 if (_storedStagingAreaItems == null)
@@ -151,7 +148,6 @@ namespace System.Windows.Input.StylusWisp
         ///     Critical: Accesses _stylusLogic. Could be TreatAsSafe
         ///               because doesn't expose _stylusLogic itself.
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnActivateImpl()
         {
             if (ActiveDeviceCount == 1)
@@ -167,7 +163,6 @@ namespace System.Windows.Input.StylusWisp
         ///               Could be TreatAsSafe because doesn't expose the
         ///               objects themselves.
         /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnDeactivateImpl()
         {
             if (_storedStagingAreaItems != null)
@@ -192,13 +187,11 @@ namespace System.Windows.Input.StylusWisp
         /// <SecurityNote>
         ///     Critical: To prevent accidental spread to transparent code
         /// </SecurityNote>
-        [SecurityCritical]
         private WispLogic _stylusLogic;
 
         /// <SecurityNote>
         ///     Critical: Holds the staging items to be promoted to mouse.
         /// </SecurityNote>
-        [SecurityCritical]
         private WispLogic.StagingAreaInputItemList _storedStagingAreaItems;
 
         private static object NoMousePromotionStylusDevice = new object();

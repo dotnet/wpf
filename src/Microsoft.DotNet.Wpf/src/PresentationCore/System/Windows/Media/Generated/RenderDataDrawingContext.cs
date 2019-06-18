@@ -48,7 +48,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawLine(
             Pen pen,
             Point point0,
@@ -102,7 +101,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawLine(
             Pen pen,
             Point point0,
@@ -168,7 +166,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRectangle(
             Brush brush,
             Pen pen,
@@ -227,7 +224,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRectangle(
             Brush brush,
             Pen pen,
@@ -297,7 +293,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRoundedRectangle(
             Brush brush,
             Pen pen,
@@ -370,7 +365,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRoundedRectangle(
             Brush brush,
             Pen pen,
@@ -454,7 +448,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawEllipse(
             Brush brush,
             Pen pen,
@@ -529,7 +522,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawEllipse(
             Brush brush,
             Pen pen,
@@ -603,7 +595,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawGeometry(
             Brush brush,
             Pen pen,
@@ -658,7 +649,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawImage(
             ImageSource imageSource,
             Rect rectangle)
@@ -712,7 +702,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawImage(
             ImageSource imageSource,
             Rect rectangle,
@@ -766,7 +755,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawGlyphRun(
             Brush foregroundBrush,
             GlyphRun glyphRun)
@@ -813,7 +801,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawDrawing(
             Drawing drawing)
         {
@@ -862,7 +849,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawVideo(
             MediaPlayer player,
             Rect rectangle)
@@ -914,7 +900,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawVideo(
             MediaPlayer player,
             Rect rectangle,
@@ -966,7 +951,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushClip(
             Geometry clipGeometry)
         {
@@ -1010,7 +994,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacityMask(
             Brush opacityMask)
         {
@@ -1056,7 +1039,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacity(
             Double opacity)
         {
@@ -1103,7 +1085,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacity(
             Double opacity,
             AnimationClock opacityAnimations)
@@ -1151,7 +1132,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushTransform(
             Transform transform)
         {
@@ -1195,7 +1175,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushGuidelineSet(
             GuidelineSet guidelines)
         {
@@ -1278,7 +1257,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void PushGuidelineY1(
             Double coordinate)
         {
@@ -1326,7 +1304,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void PushGuidelineY2(
             Double leadingCoordinate,
             Double offsetToDrivenCoordinate)
@@ -1373,7 +1350,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         public override void PushEffect(
             BitmapEffect effect,
@@ -1421,7 +1397,6 @@ namespace System.Windows.Media
         ///    Critical:This code calls into unsafe code
         ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
         /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void Pop(
             )
         {

@@ -43,7 +43,6 @@ namespace System.Windows.Input
         ///            these cases we need to demand the appropriate permission.
         /// TreatAsSafe - Calls CheckSecureCommand which does the appropriate demand.
         /// </SecurityNote>
-        [SecurityCritical]
         public InputBinding(ICommand command, InputGesture gesture) 
         {   
             if (command == null)
@@ -103,7 +102,6 @@ namespace System.Windows.Input
         ///            these cases we need to demand the appropriate permission.
         /// TreatAsSafe - Calls CheckSecureCommand which does the appropriate demand.
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             InputBinding inputBinding = (InputBinding)d;
@@ -170,7 +168,6 @@ namespace System.Windows.Input
                 return _gesture;
             }
             
-            [SecurityCritical]
             set
             {
                 WritePreamble();
@@ -201,7 +198,6 @@ namespace System.Windows.Input
         ///            later we assume that the binding was protected.
         /// TreatAsSafe - Demand() is not an unsafe operation
         /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         void CheckSecureCommand(ICommand command, InputGesture gesture)
         {
             // In v3.5, only ApplicationCommands.Paste was treated as ISecureCommand,

@@ -63,7 +63,6 @@ namespace System.Windows.Media
             /// Critical - Creates a channel, calls a Channel method, calls methods performing elevations.
             /// TreatAsSafe - It is safe for the media context to create and use a channel.
             /// </securitynote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void CreateChannels()
             {
                 Invariant.Assert(_asyncChannel == null);
@@ -94,7 +93,6 @@ namespace System.Windows.Media
             /// Critical - Closes channels.
             /// TreatAsSafe - It is safe for the media context to sync channels channel.
             /// </securitynote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void RemoveSyncChannels()
             {
                 //
@@ -125,7 +123,6 @@ namespace System.Windows.Media
             /// Critical - Closes channels.
             /// TreatAsSafe - It is safe for the media context to close a channel.
             /// </securitynote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void RemoveChannels()
             {
                 if (_asyncChannel != null)
@@ -158,7 +155,6 @@ namespace System.Windows.Media
             ///     access from insecure access. It is also ok for this method to allocate the native objects
             ///     since there is nothing security critical about having the channel infrastructure initialized.
             /// </securitynote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal DUCE.Channel AllocateSyncChannel()
             {
                 DUCE.Channel syncChannel;
@@ -223,7 +219,6 @@ namespace System.Windows.Media
             /// Critical - Creates and returns a synchronous channel.
             /// TreatAsSafe - Closing a channel is safe.
             /// </securitynote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void ReleaseSyncChannel(DUCE.Channel channel)
             {
                 Invariant.Assert(_freeSyncChannels != null);
@@ -253,7 +248,6 @@ namespace System.Windows.Media
             /// </SecurityNote>
             internal DUCE.Channel Channel
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     return _asyncChannel;
@@ -269,7 +263,6 @@ namespace System.Windows.Media
             /// </SecurityNote>
             internal DUCE.Channel OutOfBandChannel
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     return _asyncOutOfBandChannel;
@@ -285,7 +278,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Critical - Channels are a controlled unmanaged resource.
             /// </SecurityNote>
-            [SecurityCritical]
             private DUCE.Channel _asyncChannel;
 
 
@@ -298,7 +290,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Critical - Channels are a controlled unmanaged resource.
             /// </SecurityNote>
-            [SecurityCritical]
             private DUCE.Channel _asyncOutOfBandChannel;
 
             /// <summary>
@@ -307,7 +298,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Critical - Channels are a controlled unmanaged resource.
             /// </SecurityNote>
-            [SecurityCritical]
             private Queue<DUCE.Channel> _freeSyncChannels;
 
             /// <summary>
@@ -316,7 +306,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Critical - Channels are a controlled unmanaged resource.
             /// </SecurityNote>
-            [SecurityCritical]
             private DUCE.Channel _syncServiceChannel;
 
             /// <summary>
@@ -325,7 +314,6 @@ namespace System.Windows.Media
             /// <SecurityNote>
             /// Critical - Controlled unmanaged resource.
             /// </SecurityNote>
-            [SecurityCritical]
             private IntPtr _pSyncConnection;
         }
     }

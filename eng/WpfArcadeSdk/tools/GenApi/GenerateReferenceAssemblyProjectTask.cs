@@ -104,6 +104,7 @@ namespace WpfArcadeSdk.Build.Tasks
                 RemoveItemsByName(xmlProjectDoc, MarkupResourceName);
                 RemoveItemsByName(xmlProjectDoc, ResourceName);
                 RemoveItemsByName(xmlProjectDoc, CompileItemName);
+                RemoveItemsByName(xmlProjectDoc, EmbeddedResourceName);
 
                 RemovePropertiesByName(xmlProjectDoc, EnableAnalyzersProperty);
 
@@ -392,7 +393,7 @@ namespace WpfArcadeSdk.Build.Tasks
         private const string ItemGroupName = "ItemGroup";
         private const string IncludeAttrName = "Include";
         private const string TargetName = "Target";
-
+        private const string EmbeddedResourceName = "EmbeddedResource";
         private const string True = "True";
 
         #endregion Private Fields

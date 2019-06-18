@@ -443,10 +443,10 @@ namespace MS.Internal.AppModel
         Int32 AddDataBlock(IntPtr pDataBlock);
 
         [PreserveSig]
-        Int32 CopyDataBlock(UInt32 dwSig, out IntPtr ppDataBlock);
+        Int32 CopyDataBlock(uint dwSig, out IntPtr ppDataBlock);
 
         [PreserveSig]
-        Int32 RemoveDataBlock(UInt32 dwSig);
+        Int32 RemoveDataBlock(uint dwSig);
 
         void GetFlags(out uint pdwFlags);
         void SetFlags(uint dwFlags);

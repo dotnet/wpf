@@ -29,6 +29,6 @@ namespace System.Windows.Shell
         /// Shell link data flags to enable. For more details see the SHELL_LINK_DATA_FLAGS documentation
         /// https://docs.microsoft.com/windows/desktop/api/shlobj_core/ne-shlobj_core-shell_link_data_flags 
         /// </summary>
-        public UInt32[] FlagsToEnable { get; set; }
+        public int[] FlagsToEnable { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview7.19316.2" CoherentParentDependency="Microsoft.NETCore.App">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview7.19315.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>ebeaa64fb85e9d6e576d142d8e5dc345eccec8e1</Sha>
+      <Sha>a446ca927d3ad4f9e6baa6544822eb1321655f85</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
@@ -59,9 +59,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>1fca079ddec2aabf56e256dab03e39b31b5036c7</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview7-27818-02">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview7-27818-05">
       <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>00df5c6b304566a04d15dcdadfda710d73dd950b</Sha>
+      <Sha>521f511254af16a0410fc2c7feb7ae9ae6ef15cb</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19318.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
@@ -75,9 +75,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>1fca079ddec2aabf56e256dab03e39b31b5036c7</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-preview7.19317.15">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-preview7.19318.5">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>6a1b846653e9a595eed706f0dbf19d0f5e63570f</Sha>
+      <Sha>cc513ae5e64e5c637d4691d141c3e0025bfab25b</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="4.6.0-preview7.19318.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>

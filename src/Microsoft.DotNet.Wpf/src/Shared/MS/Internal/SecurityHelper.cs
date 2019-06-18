@@ -475,11 +475,7 @@ internal static class SecurityHelper
         [SecurityCritical]
         internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
         {
-#if NETFX
-            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
-#else
             PermissionSet permissionSetAppDomain = new PermissionSet(PermissionState.Unrestricted);
-#endif
 
             // Ensure we remove the FileIO read permission to site of origin.
             // We choose to use unrestricted here because it does not matter

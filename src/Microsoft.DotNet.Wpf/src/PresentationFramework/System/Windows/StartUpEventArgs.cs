@@ -61,9 +61,7 @@ namespace System.Windows
         {
             string[] retValue = null;
 
-            if (!BrowserInteropHelper.IsBrowserHosted && 
-                 ( ( Application.Current.MimeType != MimeType.Application ) 
-                   || ! IsOnNetworkShareForDeployedApps() ))
+            if (!BrowserInteropHelper.IsBrowserHosted )
             {
                 string[] args = Environment.GetCommandLineArgs();
                 Invariant.Assert(args.Length >= 1);

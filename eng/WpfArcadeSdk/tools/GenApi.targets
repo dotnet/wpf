@@ -72,7 +72,7 @@
     
     <MSBuild Projects="@(ProjectToBuild)"
              Targets="Restore;Build"
-             Properties="TargetFramework=$(TargetFramework);Platform=$(Platform);RuntimeIdentifier=$(RuntimeIdentifier);IsShipping=true;EnableXlfLocalization=false"/>
+             Properties="TargetFramework=$(TargetFramework);Platform=$(Platform);RuntimeIdentifier=$(RuntimeIdentifier);IsShipping=true;EnableXlfLocalization=false;NoWarn=CS0108,CS0618,CS3003"/>
   </Target>
 
 </Project>

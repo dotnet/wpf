@@ -1,1 +1,8 @@
-M:System.Windows.AttachedPropertyBrowsableAttribute.IsBrowsable
+# WindowsBase
+# TODO:  This type removal is bad, it should remove the member IsBrowsable.  Do this when we know how.
+T:System.Windows.AttachedPropertyBrowsableAttribute
+
+# PresentationCore
+T:System.Windows.Media.Composition.DUCE.Channel
+T:System.Windows.Media.Composition.DUCE.ResourceHandle
+T:System.Windows.Media.TextFormatting.TextParagraphCache

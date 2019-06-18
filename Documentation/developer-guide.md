@@ -68,9 +68,9 @@ Then to copy the WPF assemblies to this published location, simply run the copy-
 located in the `eng` folder of the repo and point it to the location of your test application:
 > eng\copy-wpf.ps1 -destination "c:\mysampleproj"
 
-#### Copying binaries to testhost installation of dotnet
+#### Copying binaries to test host installation of dotnet
 
-If you want/need to test an existing application that targets the shared installation, it is safest to setup a test host, rather than trying to copy assemblies over the shared installation. This method is also effective for internal contributors who are working on porting our current test corpus from .NET Framework to .NET Core and wants to run the tests against locally built assemblies. Note that there is nothing fundamentally different between a testhost installation of dotnet and the one installed in `$env:ProgramFiles`. However the dotnet host dll won't be able to find the testhost install if the appropriate environment variables aren't set. Note that these environment variables are set for you by copy-wpf.ps1 
+If you want/need to test an existing application that targets the shared installation, it is safest to setup a test host, rather than trying to copy assemblies over the shared installation. A test host is a complete install of dotnet (host and runtimes) used for testing applications and can be setup by using the [dotnet install script](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script). This method is also effective for internal contributors who are working on porting our current test corpus from .NET Framework to .NET Core and wants to run the tests against locally built assemblies. Note that there is nothing fundamentally different between a testhost installation of dotnet and the one installed in `$env:ProgramFiles`. However the dotnet host dll won't be able to find the testhost install if the appropriate environment variables aren't set. Note that these environment variables are set for you by copy-wpf.ps1 
 
 You can run the copy-wpf.ps1 script again and be sure to pass in the `-testhost` parameter:
 > eng\copy-wpf.ps1 -testhost -destination "c:\testhost\x86"
@@ -121,12 +121,9 @@ installed, we can then simply reference those local binaries directly from the p
 ### Testing specific versions of the Microsoft.WindowsDesktop.App runtime
 At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occuring, or need to compare functionality between two different versions.
 
-For testing different versions of the runtime, you can install a specific version of the runtimes via the dotnet install script: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
-**Note**: These install the versions to your %user% directory, so you can use the DOTNET_ROOT environment variables to ensure these get used as described above. Otherwise, you can point them to install in %programfiles% and specify which version of the runtime should be picked up.
+For testing different versions of the runtime, you can install a specific version of the runtimes via the [dotnet install script](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script). Below is an example powershell script of how you can use the `dotnet-install.ps1` script that will install both 32-bit and 64-bit versions of the `Microsoft.WindowsDesktop.App` runtime into the specified folder:
 
-Below is an example powershell script of how you can use the `dotnet-install.ps1` script:
-
-```
+```ps1
 $dotnet_install = "$env:TEMP\dotnet-install.ps1"
 $x64InstallDir  = "$env:ProgramFiles\dotnet"
 $x86InstallDir  = "${env:ProgramFiles(x86)}\dotnet"

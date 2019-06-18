@@ -17,7 +17,7 @@ function Print-Usage()
     Write-Host ""
     Write-Host "Common parameters:"
     Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. If using -testhost,"
-    Write-Host "                          this is the path to the location of dotnet.exe in the test host folder."
+    Write-Host "                          copies to the testhost location specified."
     Write-Host "  -arch <value>           Architecture of binaries to copy. Can be either x64 or x86. Default is x86."
     Write-Host "  -release                Copy release binaries. Default is to copy Debug binaries"
     Write-Host "  -testhost               Copy binaries over the testhost installation of dotnet"

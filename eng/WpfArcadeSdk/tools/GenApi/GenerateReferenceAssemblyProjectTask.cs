@@ -107,6 +107,7 @@ namespace WpfArcadeSdk.Build.Tasks
                 RemoveItemsByName(xmlProjectDoc, EmbeddedResourceName);
 
                 RemovePropertiesByName(xmlProjectDoc, EnableAnalyzersProperty);
+                RemovePropertiesByName(xmlProjectDoc, ModuleInitializerTag);
 
                 RemoveTagByName(xmlProjectDoc, TargetName);
 
@@ -394,6 +395,7 @@ namespace WpfArcadeSdk.Build.Tasks
         private const string IncludeAttrName = "Include";
         private const string TargetName = "Target";
         private const string EmbeddedResourceName = "EmbeddedResource";
+        private const string ModuleInitializerTag = "InjectModuleInitializer";
         private const string True = "True";
 
         #endregion Private Fields

@@ -11217,7 +11217,12 @@ namespace System.Windows.Interop
         public static bool IsBrowserHosted { get { throw null; } }
         public static System.Uri Source { get { throw null; } }
     }
-
+    public sealed partial class DocObjHost : System.MarshalByRefObject, System.IServiceProvider
+    {
+        public DocObjHost() { }
+        public override object InitializeLifetimeService() { throw null; }
+        object System.IServiceProvider.GetService(System.Type serviceType) { throw null; }
+    }
     public sealed partial class DynamicScriptObject : System.Dynamic.DynamicObject
     {
         internal DynamicScriptObject() { }

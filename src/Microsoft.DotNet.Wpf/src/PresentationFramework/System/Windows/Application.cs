@@ -145,6 +145,13 @@ namespace System.Windows
                 }
             }
 
+            // Post a work item to start the Dispatcher (if we are browser hosted) so that the Dispatcher
+            // will be running before OnStartup is fired. We can't check to see if we are browser-hosted
+            // in the app ctor because BrowerInteropHelper.IsBrowserHosted hasn't been set yet.
+            Dispatcher.BeginInvoke(
+                DispatcherPriority.Send,
+                new DispatcherOperationCallback(StartDispatcherInBrowser), null);
+
             //
             // (Application not shutting down when calling
             // Application.Current.Shutdown())
@@ -252,14 +259,17 @@ namespace System.Windows
 
         /// <summary>
         /// This will return true IFF this is a browser hosted, and this is the user's deployed
-        /// application, not our deployment application. 
+        /// application, not our deployment application. We can't use BrowserCallbackServices for
+        /// this test, because it may not be hooked up yet. BrowserInteropHelper.IsBrowserHosted
+        /// is set before any of the code in the new AppDomain will be run yet.
         /// </summary>
-        /// <remarks>
-        /// Always returns <code>false</code> on .NET core 3+
-        /// </remarks>
         internal static bool InBrowserHostedApp()
         {
+#if NETFX
+            return BrowserInteropHelper.IsBrowserHosted && !(Application.Current is XappLauncherApp);
+#else
             return false;
+#endif
         }
 
         /// <summary>
@@ -1826,8 +1836,12 @@ namespace System.Windows
             //so that when the app explicitly calls Shutdown, we have a dispatcher to service the posted
             //Shutdown DispatcherOperationCallback
 
-            // Invoke the Dispatcher synchronously
-            RunDispatcher(null);
+            // Invoke the Dispatcher synchronously if we are not in the browser
+            if (!BrowserInteropHelper.IsBrowserHosted)
+            {
+                RunDispatcher(null);
+            }
+
             return _exitCode;
         }
 
@@ -2524,8 +2538,8 @@ namespace System.Windows
             Window w = root as Window;
             if (w == null)
             {
-                // Creates and returns a NavigationWindow for standalone cases
-                // Browser hosted cases are no longer supported since .NET Core 3.0
+                //Creates and returns a NavigationWindow for standalone cases
+                //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
                 NavigationWindow appWin = GetAppWindow();
 
                 //Since we cancel PreBPReady event here, the other navigation events won't fire twice.
@@ -2705,6 +2719,36 @@ namespace System.Windows
             }
 
             return isRootElement;
+        }
+
+        /// <SecurityNote>
+        ///     Critical: This code starts dispatcher run
+        /// </SecurityNote>
+        [SecurityCritical]
+        [DebuggerNonUserCode] // to treat this method as non-user code even when symbols are available
+        private object StartDispatcherInBrowser(object unused)
+        {
+            if (BrowserInteropHelper.IsBrowserHosted)
+            {
+                BrowserInteropHelper.InitializeHostFilterInput();
+
+                // This seemingly meaningless try-catch-throw is a workaround for a CLR deficiency/bug in
+                // exception handling. When an unhandled exception on the main thread crosses
+                // the AppDomain boundary, the p/invoke layer catches it and throws another exception. Thus,
+                // the original exception is lost before the debugger is notified. The result is no managed
+                // callstack whatsoever. The workaround is based on a debugger/CLR feature that notifies of
+                // exceptions unhandled in 'user code'. This works only when the Just My Code feature is enabled
+                // in VS.
+                try
+                {
+                    RunDispatcher(null);
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            return null;
         }
 
         /// <SecurityNote>

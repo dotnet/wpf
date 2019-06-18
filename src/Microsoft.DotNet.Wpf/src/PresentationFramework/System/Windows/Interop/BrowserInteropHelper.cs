@@ -113,12 +113,19 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Indicates whether the app is a browser hosted app - always returns false.
+        /// Returns true if the app is a browser hosted app.
         /// </summary>
         /// <remarks>
-        /// Always returns false .NET Core 3.0 onwards. Browser hosting is not suppported.
+        /// Note that HostingFlags may not be set at the time this property is queried first. 
+        /// That's why they are still separate. Also, this one is public.
         /// </remarks>
-        public static bool IsBrowserHosted => false; 
+        public static bool IsBrowserHosted
+        {
+            get
+            {
+                return _isBrowserHosted.Value;
+            }
+        }
 
         /// <SecurityNote>
         /// This is critical because setting the BrowserHosted status is a critical resource.
@@ -166,6 +173,22 @@ namespace System.Windows.Interop
             }
         }
 
+        /// <summary>
+        /// Returns true if avalon it top level.
+        /// Also returns true if not browser-hosted.
+        /// </summary>
+        /// <SecurityNote>
+        /// Critical: setting this information is a critical resource.
+        /// </SecurityNote>
+        internal static bool IsAvalonTopLevel
+        {
+            get
+            {
+                if (!IsBrowserHosted)
+                    return true;
+                return (HostingFlags & HostingFlags.hfHostedInFrame) == 0;
+            }
+        }
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.

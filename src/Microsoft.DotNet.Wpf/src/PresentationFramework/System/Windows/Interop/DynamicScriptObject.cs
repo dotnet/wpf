@@ -420,7 +420,11 @@ namespace System.Windows.Interop
                             // COM interop special-cases DateTime as it's not revealed to be visible by any
                             // of the first two checks below.
                             if (
+#if NETFX
+                                !Marshal.IsTypeVisibleFromCom(argType) 
+#else
                                 !MarshalLocal.IsTypeVisibleFromCom(argType)
+#endif
                                 && !argType.IsCOMObject && argType != typeof(DateTime))
                             {
                                 throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));

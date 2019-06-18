@@ -353,24 +353,60 @@ internal static class SecurityHelper
         /// path.
         ///</summary>
         ///<remarks>
-        /// In .NET Core 3.0+, always return true.
+        /// This function exists solely as a an optimazation for the debugger scenario
         ///</remarks>
+        /// <SecurityNote>
+        ///    Critical: This code extracts the permission set associated with an appdomain by elevating
+        ///    TreatAsSafe: The information is not exposed
+        /// </SecurityNote>
         [SecuritySafeCritical]
         internal static bool CallerHasPermissionWithAppDomainOptimization(params IPermission[] permissionsToCheck)
         {
+#if NETFX
+            // in case of passing null return true
+            if (permissionsToCheck == null)
+                return true;
+            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
+            for ( int i = 0 ; i < permissionsToCheck.Length ; i++ )
+            {
+                psToCheck.AddPermission(permissionsToCheck[i]);
+            }
+            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
+            if (psToCheck.IsSubsetOf(permissionSetAppDomain))
+            {
+                return true;
+            }
+            return false;
+#else
             return true;
+#endif
         }
 
         /// <summary> Enables an efficient check for a specific permisison in the AppDomain's permission grant
         /// without having to catch a SecurityException in the case the permission is not granted.
         /// <summary>
-        /// <remarks>
-        /// In .NET Core 3.0+, always return true
-        /// </remarks>
+        /// <SecurityNote>
+        /// Caveat: This is not a generally valid substitute for doing a full Demand. The main cases not
+        /// covered are:
+        ///   1) call from PT AppDomain into full-trust one;
+        ///   2) captured PT callstack (via ExecutionContext) from another thread or context. Our Dispatcher
+        ///     does this.
+        ///
+        /// Critical: Accesses the Critical AppDomain.PermissionSet, which might contain sensitive information
+        ///     such as file paths.
+        /// Safe: Does not expose the permission object to the caller.
+        /// </SecurityNote>
         [SecuritySafeCritical]
         internal static bool AppDomainHasPermission(IPermission permissionToCheck)
         {
+#if NETFX
+            Invariant.Assert(permissionToCheck != null);
+            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
+            psToCheck.AddPermission(permissionToCheck);
+            return psToCheck.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+#else
             return true;
+#endif
         }
 
         /// <SecurityNote>
@@ -524,8 +560,11 @@ internal static class SecurityHelper
         [SecurityCritical]
         internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
         {
-            // In .NET Core 3.0+, always use PermissionState.Unrestricted
+#if NETFX
+            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
+#else
             PermissionSet permissionSetAppDomain = new PermissionSet(PermissionState.Unrestricted);
+#endif
 
             // Ensure we remove the FileIO read permission to site of origin.
             // We choose to use unrestricted here because it does not matter

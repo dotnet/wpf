@@ -112,6 +112,8 @@ namespace WpfArcadeSdk.Build.Tasks
 
                 RemoveTagByName(xmlProjectDoc, TargetName);
 
+                RemovePropertiesByName(xmlProjectDoc, EnableDefaultCompileItemsTag);
+
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(ReferenceAssemblyProjectFile);
             }
@@ -398,6 +400,7 @@ namespace WpfArcadeSdk.Build.Tasks
         private const string EmbeddedResourceName = "EmbeddedResource";
         private const string ModuleInitializerTag = "InjectModuleInitializer";
         private const string True = "True";
+        private const string EnableDefaultCompileItemsTag = "EnableDefaultCompileItems";
 
         #endregion Private Fields
 

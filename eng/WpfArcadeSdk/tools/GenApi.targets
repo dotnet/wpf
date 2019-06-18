@@ -12,11 +12,7 @@
     <GenAPITargetDir>$(IntermediateOutputPath)ref\</GenAPITargetDir>
     <GenAPITargetPath>$(GenAPITargetDir)$(AssemblyName).cs</GenAPITargetPath>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
-  </PropertyGroup>
-
+  
   <Target Name="EnsureGenAPITargetDirectory"
           BeforeTargets="GenerateReferenceAssemblySource"
           Condition="!Exists('$(GenAPITargetDir)')">

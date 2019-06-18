@@ -24,9 +24,14 @@
       WindowsFormsIntegration;
     </GenAPIEnabledProjects>
 
+    <GlobalApiExclusionsFile Condition="'$(GlobalApiExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalApiExclusions.txt</GlobalApiExclusionsFile>
+
+    <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
+    <GenAPIAdditionalParameters Condition="'$(GlobalApiExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-api-list "$(GlobalApiExclusionsFile)"</GenAPIAdditionalParameters>
+
     <GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'==''
                                                 and '$(GenAPIEnabledProjects)'!=''
                                                 and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</GenerateReferenceAssemblySource>
-    
+
   </PropertyGroup>
 </Project>

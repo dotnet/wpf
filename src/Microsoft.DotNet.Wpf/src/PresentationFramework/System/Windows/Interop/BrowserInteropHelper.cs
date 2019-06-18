@@ -60,12 +60,6 @@ namespace System.Windows.Interop
 
                 object oleClientSite = null;
 
-#if NETFX
-                if (IsBrowserHosted)
-                {
-                    Application.Current.BrowserCallbackServices.GetOleClientSite(out oleClientSite);
-                }
-#endif
 
                 return oleClientSite;
             }

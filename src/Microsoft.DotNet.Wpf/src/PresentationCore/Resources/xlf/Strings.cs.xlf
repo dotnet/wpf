@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="cs" original="../Strings.resx">
     <body>
@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="Color_ColorContextNotsRGB_or_scRGB">
         <source>Color context must be sRGB or scRGB for this operation.</source>
-        <target state="translated">Barevný kontext pro tuto operaci musí být buď  sRGB, nebo scRGB.</target>
+        <target state="translated">Barevný kontext pro tuto operaci musí být buď sRGB, nebo scRGB.</target>
         <note />
       </trans-unit>
       <trans-unit id="Color_ColorContextTypeMismatch">
@@ -714,7 +714,7 @@
       </trans-unit>
       <trans-unit id="DirectoryNotFoundExceptionWithFileName">
         <source>Cannot find a part of the path '{0}'.</source>
-        <target state="translated">Nelze najít část cesty  {0}.</target>
+        <target state="translated">Nelze najít část cesty {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="DragDrop_DragActionInvalid">
@@ -994,7 +994,7 @@
       </trans-unit>
       <trans-unit id="FaceIndexValidOnlyForTTC">
         <source>Nonzero font face index values are valid only for TrueType collections (.ttc).</source>
-        <target state="translated">Nenulové hodnoty indexu ploch fontu jsou platné pouze pro kolekce TrueType  (.ttc).</target>
+        <target state="translated">Nenulové hodnoty indexu ploch fontu jsou platné pouze pro kolekce TrueType (.ttc).</target>
         <note />
       </trans-unit>
       <trans-unit id="FamilyCollection_CannotFindCompositeFontsLocation">
@@ -1089,7 +1089,7 @@
       </trans-unit>
       <trans-unit id="General_BadType">
         <source>The object passed to '{0}' is not a valid type.</source>
-        <target state="translated">Objekt předaný typu  {0} není platný typ.</target>
+        <target state="translated">Objekt předaný typu {0} není platný typ.</target>
         <note />
       </trans-unit>
       <trans-unit id="General_Expected_Type">
@@ -1174,7 +1174,7 @@
       </trans-unit>
       <trans-unit id="HwndSourceDisposed">
         <source>Cannot access a disposed HwndSource.</source>
-        <target state="translated">Není přístup k použitému zdroji  HwndSource.</target>
+        <target state="translated">Není přístup k použitému zdroji HwndSource.</target>
         <note />
       </trans-unit>
       <trans-unit id="HwndTarget_HardwareNotSupportDueToProtocolMismatch">
@@ -1629,7 +1629,7 @@
       </trans-unit>
       <trans-unit id="IncompatibleStylusPointDescriptions">
         <source>The StylusPointDescriptions are incompatible. Use the StylusPointDescription.GetCommonDescription method to find a common StylusPointDescription and then call StylusPointCollection.Reformat to return a compatible StylusPointCollection.</source>
-        <target state="translated">StylusPointDescriptions jsou nekompatibilní. Použijte metodu  StylusPointDescription.GetCommonDescription pro nalezení společného popisu StylusPointDescription a pak vyvolejte StylusPointCollection.Reformat pro návrat kompatibilní kolekce StylusPointCollection.</target>
+        <target state="translated">StylusPointDescriptions jsou nekompatibilní. Použijte metodu StylusPointDescription.GetCommonDescription pro nalezení společného popisu StylusPointDescription a pak vyvolejte StylusPointCollection.Reformat pro návrat kompatibilní kolekce StylusPointCollection.</target>
         <note />
       </trans-unit>
       <trans-unit id="IncreaseZoomText">
@@ -1694,7 +1694,7 @@
       </trans-unit>
       <trans-unit id="InvalidAdditionalDataForStylusPoint">
         <source>The additional data passed in does not match what is expected based on the StylusPointDescription.</source>
-        <target state="translated">Další vložená data neodpovídají očekávání podle popisu  StylusPointDescription.</target>
+        <target state="translated">Další vložená data neodpovídají očekávání podle popisu StylusPointDescription.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBufferLength">
@@ -1844,7 +1844,7 @@
       </trans-unit>
       <trans-unit id="InvalidStylusPointDescription">
         <source>StylusPointDescription must contain at least X, Y and NormalPressure in that order.</source>
-        <target state="translated">StylusPointDescription musí obsahovat alespoň  X, Y a NormalPressure v tomto pořadí.</target>
+        <target state="translated">StylusPointDescription musí obsahovat alespoň X, Y a NormalPressure v tomto pořadí.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidStylusPointDescriptionButtonsMustBeLast">
@@ -2009,7 +2009,7 @@
       </trans-unit>
       <trans-unit id="MediaContext_InfiniteTickLoop">
         <source>An infinite loop appears to have resulted from repeatedly invalidating the TimeManager during the Layout/Render process.</source>
-        <target state="translated">Nekonečná smyčka vznikla  z opakovaného zneplatňování manažera TimeManager během procesu Layout/Render.</target>
+        <target state="translated">Nekonečná smyčka vznikla z opakovaného zneplatňování manažera TimeManager během procesu Layout/Render.</target>
         <note />
       </trans-unit>
       <trans-unit id="MediaContext_NoBadShaderHandler">
@@ -3194,7 +3194,7 @@
       </trans-unit>
       <trans-unit id="Timing_CreateClockMustReturnNewClock">
         <source>The {0}.CreateClock method returned a pre-existing object, rather than a new object inheriting from TimelineClock.</source>
-        <target state="translated">Metoda {0}.CreateClock vrátila již dříve existující objekt, nikoliv nový objekt  odvozený od TimelineClock.</target>
+        <target state="translated">Metoda {0}.CreateClock vrátila již dříve existující objekt, nikoliv nový objekt odvozený od TimelineClock.</target>
         <note />
       </trans-unit>
       <trans-unit id="Timing_DifferentThreads">
@@ -3279,7 +3279,7 @@
       </trans-unit>
       <trans-unit id="Timing_SeekDestinationIndefinite">
         <source>The ClockController.Seek method was called using TimeSeekOrigin.Duration as the seekOrigin parameter for a Clock that has a duration of Forever. Clocks that have duration of Forever must use TimeSeekOrigin.BeginTime.</source>
-        <target state="translated">Metoda ClockController.Seek byla vyvolána pomocí prvku  TimeSeekOrigin.Duration jako parametr seekOrigin pro Clock, jejichž trvání je Forever. Clock, které mají nastaveno trvání na hodnotu Forever, musejí používat TimeSeekOrigin.BeginTime.</target>
+        <target state="translated">Metoda ClockController.Seek byla vyvolána pomocí prvku TimeSeekOrigin.Duration jako parametr seekOrigin pro Clock, jejichž trvání je Forever. Clock, které mají nastaveno trvání na hodnotu Forever, musejí používat TimeSeekOrigin.BeginTime.</target>
         <note />
       </trans-unit>
       <trans-unit id="Timing_SeekDestinationNegative">
@@ -3509,7 +3509,7 @@
       </trans-unit>
       <trans-unit id="VisualTarget_AnotherTargetAlreadyConnected">
         <source>Another target is already connected to this HostVisual.</source>
-        <target state="translated">K tomuto hostitelskému prvku  HostVisual je již připojen jiný cíl.</target>
+        <target state="translated">K tomuto hostitelskému prvku HostVisual je již připojen jiný cíl.</target>
         <note />
       </trans-unit>
       <trans-unit id="Visual_ArgumentOutOfRange">
@@ -3599,7 +3599,7 @@
       </trans-unit>
       <trans-unit id="XmlLangGetCultureFailure">
         <source>There is no registered CultureInfo with the IetfLanguageTag '{0}'.</source>
-        <target state="translated">Neexistuje registrovaná  CultureInfo pro IetfLanguageTag {0}.</target>
+        <target state="translated">Neexistuje registrovaná CultureInfo pro IetfLanguageTag {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="XmlLangGetSpecificCulture">

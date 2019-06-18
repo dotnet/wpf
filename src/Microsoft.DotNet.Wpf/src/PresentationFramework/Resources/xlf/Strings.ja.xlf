@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
@@ -1854,7 +1854,7 @@
       </trans-unit>
       <trans-unit id="GenerationNotInProgress">
         <source>Must call GenerateNext while content generation is in progress.</source>
-        <target state="translated">コンテンツ生成の実行中に  GenerateNext を呼び出す必要があります。</target>
+        <target state="translated">コンテンツ生成の実行中に GenerateNext を呼び出す必要があります。</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_CountIsWrong">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... あと {0} 個のインスタンス ...)</target>
+        <target state="translated">(... あと {0} 個のインスタンス ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -6399,7 +6399,7 @@
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderDiscardControlHasIncorrectType">
         <source>PackagePart references a Discard Control that has an incorrect content type.</source>
-        <target state="translated">PackagePart が、無効なコンテンツ型を持つ  Discard Control を参照しています。</target>
+        <target state="translated">PackagePart が、無効なコンテンツ型を持つ Discard Control を参照しています。</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderDuplicateReference">
@@ -6434,12 +6434,12 @@
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderRestrictedFontHasIncorrectType">
         <source>PackagePart references a Restricted Font that has an incorrect content type.</source>
-        <target state="translated">PackagePart が、無効なコンテンツ型を持つ  Restricted Font を参照しています。</target>
+        <target state="translated">PackagePart が、無効なコンテンツ型を持つ Restricted Font を参照しています。</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderThumbnailHasIncorrectType">
         <source>PackagePart references a Thumbnail that has an incorrect content type.</source>
-        <target state="translated">PackagePart が、無効なコンテンツ型を持つ  Thumbnail を参照しています。</target>
+        <target state="translated">PackagePart が、無効なコンテンツ型を持つ Thumbnail を参照しています。</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderUnlistedResource">

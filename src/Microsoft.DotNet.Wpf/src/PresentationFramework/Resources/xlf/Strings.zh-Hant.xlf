@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
         <source>Cannot get window handle for control '{0}'. Windowless ActiveX controls are not supported.</source>
@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="DataGrid_InvalidSortDescription">
         <source>The SortDescriptions added are not valid. The probable solutions are to set the CanUserSort on the Column to false, or to use SortMemberPath property on the Column, or to handle the Sorting event on DataGrid.</source>
-        <target state="translated">新增的 SortDescriptions 無效。可能的解決方案是在 Column 上將  CanUserSort 設定為 false，或是在 Column 上使用 SortMemberPath 屬性，或在 DataGrid 上處理 Sorting 事件。</target>
+        <target state="translated">新增的 SortDescriptions 無效。可能的解決方案是在 Column 上將 CanUserSort 設定為 false，或是在 Column 上使用 SortMemberPath 屬性，或在 DataGrid 上處理 Sorting 事件。</target>
         <note />
       </trans-unit>
       <trans-unit id="DataGrid_NewColumnInvalidDisplayIndex">
@@ -1704,7 +1704,7 @@
       </trans-unit>
       <trans-unit id="FilterGetValueMustBeStringOrDateTime">
         <source>Only string and DateTime types are supported for marshalling to PROPVARIANT.</source>
-        <target state="translated">只有 string 與  DateTime 型別支援封送處理至 PROPVARIANT。</target>
+        <target state="translated">只有 string 與 DateTime 型別支援封送處理至 PROPVARIANT。</target>
         <note />
       </trans-unit>
       <trans-unit id="FilterGetValueNotSupported">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... 其他 {0} 個執行個體 ...)</target>
+        <target state="translated">(... 其他 {0} 個執行個體 ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -5539,7 +5539,7 @@
       </trans-unit>
       <trans-unit id="TemplateTextNotSupported">
         <source>'{0}' text is not valid at this location in a Template section.</source>
-        <target state="translated">'{0}' 文字在  Template 區段中的此位置是無效的。</target>
+        <target state="translated">'{0}' 文字在 Template 區段中的此位置是無效的。</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateUnknownProp">
@@ -6109,7 +6109,7 @@
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">沒有開啟的 IParentUndoUnit 時，無法新增 nonparent  復原單位。</target>
+        <target state="translated">沒有開啟的 IParentUndoUnit 時，無法新增 nonparent 復原單位。</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">

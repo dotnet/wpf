@@ -7,7 +7,7 @@
   "description": "A project for creating a .NET Core WPF Application",
   "groupIdentity": "Microsoft.Common.WPF",
   "precedence": "3000",
-  "identity": "Microsoft.Common.WPF",
+  "identity": "Microsoft.Common.WPF.VisualBasic.3.0",
   "shortName": "wpf",
   "tags": {
     "language": "VB",

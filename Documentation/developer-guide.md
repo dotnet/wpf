@@ -75,7 +75,7 @@ If you want/need to test an existing application that targets the shared install
 You can run the copy-wpf.ps1 script again and be sure to pass in the `-testhost` parameter:
 > eng\copy-wpf.ps1 -testhost -destination "c:\testhost\x86"
 
-If your testhost directory has multiple versions of the `Microsoft.WindowsDesktop.App` shared runtime in it, you canuse the `-version` parameter to specify which one you want:
+If your testhost directory has multiple versions of the `Microsoft.WindowsDesktop.App` shared runtime in it, you can use the `-version` parameter to specify which one you want:
 
 > eng\copy-wpf.ps1 -testhost -destination "c:\testhost\x86" -version "3.0.0-preview6-27728-04"  
 

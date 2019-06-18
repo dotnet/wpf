@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+using System.Collections;
 
 namespace System.Windows.Shell
 {
@@ -24,5 +24,11 @@ namespace System.Windows.Shell
         public string IconResourcePath { get; set; }
 
         public int IconResourceIndex { get; set; }
+
+        /// <summary>
+        /// Shell link data flags to enable. For more details see the SHELL_LINK_DATA_FLAGS documentation
+        /// https://docs.microsoft.com/windows/desktop/api/shlobj_core/ne-shlobj_core-shell_link_data_flags 
+        /// </summary>
+        public IEnumerable<UInt32> FlagsToEnable { get; set; }
     }
 }

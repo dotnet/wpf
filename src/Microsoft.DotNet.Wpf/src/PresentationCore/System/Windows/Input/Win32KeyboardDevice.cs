@@ -68,32 +68,9 @@ namespace System.Windows.Input
                 // the state of keys.
                 getKeyStatesFromSystem = true;
             }
-            else if (SecurityHelper.AppDomainGrantedUnrestrictedUIPermission)
-            {
-                // This is a trusted AppDomain, so we are willing to expose
-                // the state of keys regardless of whether or not a WPF
-                // window has focus.  This is important for child HWND
-                // hosting scenarios.
-                getKeyStatesFromSystem = true;
-            }
             else
             {
-                // Security Mitigation: 
-                // No WPF window has focus in this AppDomain, and this is a
-                // partially-trusted AppDomain, so we do not generally want
-                // to expose the state of keys.  However, we make an exception
-                // for modifier keys, as they are considered safe.
-                switch (key)
-                {
-                    case Key.LeftAlt:
-                    case Key.RightAlt:
-                    case Key.LeftCtrl:
-                    case Key.RightCtrl:
-                    case Key.LeftShift:
-                    case Key.RightShift:
-                        getKeyStatesFromSystem = true;
-                        break;
-                }
+                getKeyStatesFromSystem = true;
             }
 
             if (getKeyStatesFromSystem)

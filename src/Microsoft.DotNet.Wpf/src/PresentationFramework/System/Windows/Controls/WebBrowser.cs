@@ -88,40 +88,12 @@ namespace System.Windows.Controls
         static WebBrowser()
         {
 #if NETFX
-            if (IsWebOCPermissionRestricted)
-            {
-                // Breaking change for v4, intended to be backported to v3.x: We block PT hosting of the WebOC:
-                //   - In non-IE browser (intended for Firefox presently) for Internet-zone XBAPs, in order 
-                //     not to expose IE's attack surface;
-                //   - In PT standalone ClickOnce application. WPF does not support this in general, but a WebBrowser
-                //     can be instantiated and navigated, and script in it will run, which could be harmful.
-                if (BrowserInteropHelper.IsBrowserHosted) 
+                // ClickOnce uses AppLaunch.exe to host partial-trust applications.
+                string hostProcessName = Path.GetFileName(UnsafeNativeMethods.GetModuleFileName(new HandleRef()));
+                if (string.Compare(hostProcessName, "AppLaunch.exe", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    if ((BrowserInteropHelper.HostingFlags & HostingFlags.hfHostedInIEorWebOC) == 0)
-                    {
-                        // Explicitly trust only these zones...
-                        int sourceZone = AppSecurityManager.MapUrlToZone(BrowserInteropHelper.Source);
-                        if (sourceZone != NativeMethods.URLZONE_INTRANET && sourceZone != NativeMethods.URLZONE_TRUSTED &&
-                        sourceZone != NativeMethods.URLZONE_LOCAL_MACHINE)
-                        {
-                            // Enable explicit opt-out of this blocking.
-                            if (RegistryKeys.ReadLocalMachineBool(RegistryKeys.WPF_Hosting, RegistryKeys.value_UnblockWebBrowserControl) != true)
-                            {
-                                //[Using a resource string for another issue that's close enough in meaning.]
-                                throw new SecurityException(SR.Get(SRID.AffectedByMsCtfIssue, "http://go.microsoft.com/fwlink/?LinkID=168882"));
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // ClickOnce uses AppLaunch.exe to host partial-trust applications.
-                    string hostProcessName = Path.GetFileName(UnsafeNativeMethods.GetModuleFileName(new HandleRef()));
-                    if (string.Compare(hostProcessName, "AppLaunch.exe", StringComparison.OrdinalIgnoreCase) == 0)
-                    {
-                        // No explanation message is warranted in this case since it's not supported anyway.
-                        SecurityHelperPF.DemandWebBrowserPermission();
-                    }
+                    // No explanation message is warranted in this case since it's not supported anyway.
+                    SecurityHelperPF.DemandWebBrowserPermission();
                 }
 
                 RegisterWithRBW();
@@ -169,17 +141,7 @@ namespace System.Windows.Controls
                 (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
             }
 
-#if NETFX
-            // If the webbrowser permission is restricted, we don't allow webbrowser to be inside Popup.   
-            if (IsWebOCPermissionRestricted)
-            {
-                Loaded += new RoutedEventHandler(LoadedHandler);
-            }
-            _hostingAdaptor = IsWebOCHostedInBrowserProcess ? 
-                new WebOCHostedInBrowserAdaptor(this) : new WebOCHostingAdaptor(this);
-#else 
             _hostingAdaptor = new WebOCHostingAdaptor(this);
-#endif
         }
 
         #endregion Constructor
@@ -961,47 +923,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        /// Starting from v3 SP2, we host the WebOC in the IE 7+ browser process when it's running at low 
-        /// integrity level ('protected mode'). This is to prevent elevation of privilege via our process in
-        /// case a bug in the WebOC is exploited. PresentationHost is on IE's silent elevation list; thus, 
-        /// potentially bigger damange could be effected by running malicious code in our process.
-        /// 
-        /// Starting from v4, we always host the WebOC in IE. This addresses other security concerns:
-        ///   - Mixing CLR code and JavaScript in the same process enables more attack vectors;
-        ///   - We have to play constant catch-up with IE as new Feature Control Keys and other security 
-        ///     mitigations are added. By hosting the WebOC in the IE process, new FCKs automatically apply 
-        ///     (at the risk of being breaking changes, but this risk is justified for partial trust XBAPs).
-        ///     
-        /// Note that we must keep any WebOC in the IE process even in deeply nested situations like this,
-        /// if we allow them:
-        ///     IE / XBAP / WebOC / XBAP / WebOC [this is in terms of container/visual nesting]
-        /// If the WebOC hosted via the inner XBAP is allowed to run outside the protected-mode IE, the whole
-        /// feature is defeated! To ensure we are aware of this situation, the native hosting code sets both
-        /// hfHostedInWebOC and hfHostedInIE. For v4, WebOC hosting is entirely blocked in this situation. 
-        /// See further explanation in COleDocument::InitDocHost().
-        /// </SecurityNote>
-        internal static bool IsWebOCHostedInBrowserProcess
-        {
-            get
-            {
-#if NETFX
-                if(!IsWebOCPermissionRestricted)
-                    return false;
-                HostingFlags hf = BrowserInteropHelper.HostingFlags;
-                return (hf & HostingFlags.hfHostedInIE) != 0 
-                        || // Backup condition in case the low-integrity IE process is compromised. 
-                           // The hfHostedInIE flag cannot be trusted, because it's derived by talking to code 
-                           // in the IE process. (Theretically, one could pretend to be our Mozilla plugin by 
-                           // creating a similar hosting envrionment within IE! Then no IWebBrowser...)
-                           // But hfIsBrowserLowIntegrityProcess is reliable because it's determined externally.
-                       (hf & HostingFlags.hfIsBrowserLowIntegrityProcess) != 0;
-#else
-                return false;
-#endif
-            }
-        }
-
         #endregion Internal Properties
 
         //----------------------------------------------
@@ -1384,10 +1305,6 @@ namespace System.Windows.Controls
 
         #region Private Fields
 
-#if NETFX
-        private static readonly bool IsWebOCPermissionRestricted = 
-            !SecurityHelperPF.CallerAndAppDomainHaveUnrestrictedWebBrowserPermission();
-#endif
 
         // Reference to the native ActiveX control's IWebBrowser2
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
@@ -1454,6 +1371,9 @@ namespace System.Windows.Controls
         /// the WebOC either in-process or in the browser process (when IsWebOCHostedInBrowserProcess==true).
         /// This base class handles the in-process hosting.
         /// </summary>
+        /// <remarks>
+        /// IsWebOCHostedInBrowserProcess property no longer exists since .NET Core 3.0
+        /// </remarks>
         internal class WebOCHostingAdaptor
         {
             internal WebOCHostingAdaptor(WebBrowser webBrowser)
@@ -1497,82 +1417,6 @@ namespace System.Windows.Controls
             protected WebBrowser _webBrowser;
         };
 
-#if NETFX
-        /// <summary>
-        /// Used when WebBrowser.IsWebOCHostedInBrowserProcess.
-        /// </summary>
-        private class WebOCHostedInBrowserAdaptor : WebOCHostingAdaptor
-        {
-            internal WebOCHostedInBrowserAdaptor(WebBrowser webBrowser) : base(webBrowser) { }
-
-            /// <SecurityNote>
-            /// Critical: Calls the native CoRegisterPSClsid().
-            /// TAS: Enabling a specific interface to be marshaled. The proxy-stub code is in our PHProxy DLL.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
-            static WebOCHostedInBrowserAdaptor()
-            {
-                // IDocHostUIHandler is not marshalable ... probably because no one has needed to use it
-                // cross-thread. PresentationHostProxy.dll is compiled with a clone of it and contains
-                // proxy-stub code for it. Registering the proxy-stub this way rather than in the registry
-                // is cleaner because it applies only to our scenarios. 
-                // The same thing is done in the browser process, by our in-proc handler.
-                Guid iidDHUIH = typeof(UnsafeNativeMethods.IDocHostUIHandler).GUID;
-                Guid clsidPresHostProxy = new Guid("e302cb55-5f9d-41a3-9ef3-61827fb8b46d");
-                int hr = UnsafeNativeMethods.CoRegisterPSClsid(ref iidDHUIH, ref clsidPresHostProxy);
-                if (hr != NativeMethods.S_OK)
-                {
-                    Marshal.ThrowExceptionForHR(hr);
-                }
-            }
-
-            /// <SecurityNote>
-            /// Critical: Calls the SUC'd CreateIDispatchSTAForwarder().
-            /// TAS: Wrapping a managed object in a native one that trivially delegates IDispatch calls is safe.
-            /// </SecurityNote>
-            internal override object ObjectForScripting
-            {
-                [SecurityCritical, SecurityTreatAsSafe]
-                get
-                {
-                    return _threadBoundObjectForScripting;
-                }
-
-                [SecurityCritical, SecurityTreatAsSafe]
-                set
-                {
-                    _threadBoundObjectForScripting = 
-                        value == null ? null : ActiveXHelper.CreateIDispatchSTAForwarder(value);
-                }
-            }
-
-            /// <SecurityNote>
-            /// Critical: As a native object, the WebOC should not be exposed to partial-trust code.
-            /// </SecurityNote>
-            [SecurityCritical]
-            internal override object CreateWebOC()
-            {
-                IntPtr pWebOC = Application.Current.BrowserCallbackServices.CreateWebBrowserControlInBrowserProcess();
-                object webOC = Marshal.GetTypedObjectForIUnknown(pWebOC, typeof(UnsafeNativeMethods.IWebBrowser2));
-                Marshal.Release(pWebOC);
-                return webOC;
-            }
-
-            /// <SecurityNote>
-            /// Critical: WebBrowserEvent instances should not be exposed to partial-trust code.
-            /// </SecurityNote>
-            [SecurityCritical]
-            internal override object CreateEventSink()
-            {
-                return ActiveXHelper.CreateIDispatchSTAForwarder(
-                    (UnsafeNativeMethods.DWebBrowserEvents2)base.CreateEventSink());
-            }
-
-            // This is a native object that wraps the ObjectForScripting provided by the application
-            // in order to ensure calls arrive on WebBrowser's thread. 
-            object _threadBoundObjectForScripting;
-        };
-#endif
         #endregion Private Class
     }
 }

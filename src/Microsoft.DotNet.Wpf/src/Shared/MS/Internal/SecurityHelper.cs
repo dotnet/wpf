@@ -202,31 +202,6 @@ internal static class SecurityHelper
         }
         static WebBrowserPermission _webBrowserPermission;
 
-        ///<summary>
-        /// Check whether the call stack has the permissions needed for WebBrowser.
-        /// Optimization: false is returned if the AppDomain's permission grant does not include the
-        ///   WebBrowserPermission. This preliminary check will defeat an Assert on the callstack, but it
-        ///   avoids the SecurityException in PT when the full WB permission is not granted.
-        /// </summary>
-        /// <SecurityNote>
-        /// Critical - Exceptions raised by a demand may contain security sensitive information that should not be passed to transparent callers
-        /// Safe     - The method denies the caller access to the full exception object.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        internal static bool CallerAndAppDomainHaveUnrestrictedWebBrowserPermission()
-        {
-            if (!MS.Internal.SecurityHelper.AppDomainHasPermission(CachedWebBrowserPermission))
-                return false;
-            try
-            {
-                SecurityHelper.DemandWebBrowserPermission();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-            return true;
-        }
 
         ///<summary>
         /// Check to see if we have User initiated navigation permission.
@@ -348,33 +323,6 @@ internal static class SecurityHelper
         }
         static PermissionSet _fullTrustPermissionSet = null;
 
-
-        /// <summary> Enables an efficient check for a specific permisison in the AppDomain's permission grant
-        /// without having to catch a SecurityException in the case the permission is not granted.
-        /// <summary>
-        /// <SecurityNote>
-        /// Caveat: This is not a generally valid substitute for doing a full Demand. The main cases not
-        /// covered are:
-        ///   1) call from PT AppDomain into full-trust one;
-        ///   2) captured PT callstack (via ExecutionContext) from another thread or context. Our Dispatcher
-        ///     does this.
-        ///
-        /// Critical: Accesses the Critical AppDomain.PermissionSet, which might contain sensitive information
-        ///     such as file paths.
-        /// Safe: Does not expose the permission object to the caller.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        internal static bool AppDomainHasPermission(IPermission permissionToCheck)
-        {
-#if NETFX
-            Invariant.Assert(permissionToCheck != null);
-            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
-            psToCheck.AddPermission(permissionToCheck);
-            return psToCheck.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-#else
-            return true;
-#endif
-        }
 
         /// <SecurityNote>
         /// Critical: Elevates to extract the AppDomain BaseDirectory and returns it, which is sensitive information.
@@ -1056,25 +1004,6 @@ internal static class SecurityHelper
             _unrestrictedUIPermission.Demand();
         }
         static UIPermission _unrestrictedUIPermission = null;
-#endif
-
-#if PRESENTATION_CORE
-        internal static bool AppDomainGrantedUnrestrictedUIPermission
-        {
-            [SecurityCritical]
-            get
-            {
-                if(!_appDomainGrantedUnrestrictedUIPermission.HasValue)
-                {
-                    _appDomainGrantedUnrestrictedUIPermission = AppDomainHasPermission(new UIPermission(PermissionState.Unrestricted));
-                }
-
-                return _appDomainGrantedUnrestrictedUIPermission.Value;
-            }
-        }
-        [SecurityCritical]
-        private static bool? _appDomainGrantedUnrestrictedUIPermission;
-
 #endif
 
 #if PRESENTATION_CORE

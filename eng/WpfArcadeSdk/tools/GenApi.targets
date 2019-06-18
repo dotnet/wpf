@@ -16,12 +16,38 @@
   <PropertyGroup>
     <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
   </PropertyGroup>
-  
-  <Target Name="EnsureGenAPITargetDirectory" 
-          BeforeTargets="GenerateReferenceAssemblySource" 
+
+  <Target Name="EnsureGenAPITargetDirectory"
+          BeforeTargets="GenerateReferenceAssemblySource"
           Condition="!Exists('$(GenAPITargetDir)')">
     <MakeDir Directories="$(GenAPITargetDir)" />
   </Target>
+
+  <PropertyGroup>
+    <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
+    <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TaskFactoryReference Include="mscorlib" />
+    <TaskFactoryReference Include="netstandard" />
+  </ItemGroup>
+
+  <!-- 
+    Defines a task to create a reference assembly project using the current building project's 
+    csproj as a template.
+  -->
+  <UsingTask TaskName="GenerateReferenceAssemblyProjectTask"
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <CurrentProjectFile ParameterType="System.String" Required="true"/>
+      <ReferenceAssemblyProjectFile ParameterType="System.String" Required="true"/>
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(WpfArcadeSdkToolsDir)GenApi\GenerateReferenceAssemblyProjectTask.cs" />
+    </Task>
+  </UsingTask>
 
   <!-- 
     Generates a reference assembly project that builds the generated sources from GenAPI.
@@ -34,107 +60,23 @@
       <ReferenceAssemblyProjectFile>$(IntermediateOutputPath)ref\$(MSBuildProjectName)-ref.csproj</ReferenceAssemblyProjectFile>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ReferenceAssemblyProjectContents Include="ProjectHeader">
-        <!-- 
-            In the CDATA section that follows, 
-              %40 ~= @
-              %25 ~= % 
-              %3B ~= ;
-              %24 ~= $
-          -->
-        <Text>
-          <![CDATA[
-<Project Sdk="Microsoft.NET.Sdk" InitialTargets="EnumerateAdditionalNugetReference%3BEnumerateAdditionalProjectReference">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Platforms>AnyCPU%3Bx64</Platforms>
-    <IsShipping>true</IsShipping>
-  </PropertyGroup>
- ]]>
-        </Text>
-      </ReferenceAssemblyProjectContents>
-
-      <!-- 
-        We need a reference to Microsoft.DotNet.Wpf.GitHub when building from dotnet-wpf-int. 
-        When building from dotnet/wpf, this reference is not needed.
-      -->
-      <ReferenceAssemblyProjectContents Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
-        <Text>
-          <![CDATA[
-  <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
-  </ItemGroup>
-  ]]>
-        </Text>
-      </ReferenceAssemblyProjectContents>
-      <ReferenceAssemblyProjectContents Include="ProjectBody">
-        <Text>
-          <![CDATA[
-  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
-  <PropertyGroup>
-    <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
-  </PropertyGroup>
-  
-  <Target Name="EnumerateAdditionalProjectReference"
-          BeforeTargets="_GenerateRestoreGraph"
-          Condition="'%24(AdditionalProjectReferences)'!=''"
-          Returns="%40(ProjectReference)">
-     <ItemGroup>
-       <_AdditionalProjectReferences Remove="%40(_AdditionalProjectReferences)" />
-       <_AdditionalProjectReferences Include="%24(AdditionalProjectReferences)" />
-       
-       <ProjectReference Include="%24([System.String]::Copy('%25(_AdditionalProjectReferences.Identity)'))" />
-       
-     </ItemGroup>
-  </Target>
-  
-  <Target Name="EnumerateAdditionalNugetReference"
-          BeforeTargets="_GenerateRestoreGraph"
-          Condition="'%24(AdditionalPackages)'!=''"
-          Returns="%40(PackageReference)">
-     <ItemGroup>
-       <_AdditionalPackages Remove="%40(_AdditionalPackages)" />
-       <_AdditionalPackages Include="%24(AdditionalPackages)" />
-       
-       <PackageReference Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" 
-                         Version="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[1])" />
-       
-       <AdditionalNugetIds Remove="%40(AdditionalNugetIds)" />
-       <AdditionalNugetIds Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" />
-     </ItemGroup>
-  </Target>
-  
-</Project>]]>
-        </Text>
-      </ReferenceAssemblyProjectContents>
-    </ItemGroup>
-
     <MakeDir Condition="!Exists('$(IntermediateOutputPath)ref\')"
              Directories="$(IntermediateOutputPath)ref\" />
 
     <Delete Files="$(ReferenceAssemblyProjectFile)" Condition="Exists('$(ReferenceAssemblyProjectFile)')" />
 
-    <WriteLinesToFile Lines="%(ReferenceAssemblyProjectContents.Text)"
-                      File="$(ReferenceAssemblyProjectFile)"
-                      Overwrite="false"/>
+    <GenerateReferenceAssemblyProjectTask
+             CurrentProjectFile="$(MSBuildProjectFullPath)"
+             ReferenceAssemblyProjectFile="$(ReferenceAssemblyProjectFile)" />
 
     <ItemGroup>
-      <!-- 
-        Add all specifically flagged PackageReferences from the source project.  Projects should use IncludeGeneratedReferenceProject as Item Metadata
-        in any PackageReference that needs to be included here.
-      -->
-      <_AdditionalPackageReferences Include="@(PackageReference)" Condition="'%(PackageReference.IncludeGeneratedReferenceProject)'=='true'" />
-      <_AdditionalProjectReferences Include="@(ProjectReference)" />
       <ProjectToBuild Remove="@(ProjectToBuild)" />
-      <ProjectToBuild Include="$(ReferenceAssemblyProjectFile)">
-        <AdditionalProperties>AdditionalPackages=@(_AdditionalPackageReferences->'%(Identity)+%(Version)');AdditionalProjectReferences=@(_AdditionalProjectReferences->'%(Identity)')</AdditionalProperties>
-      </ProjectToBuild>
+      <ProjectToBuild Include="$(ReferenceAssemblyProjectFile)" />
     </ItemGroup>
+    
     <MSBuild Projects="@(ProjectToBuild)"
              Targets="Restore;Build"
-             Properties="TargetFramework=$(TargetFramework);Platform=$(Platform);RuntimeIdentifier=$(RuntimeIdentifier)">
-    </MSBuild>
+             Properties="TargetFramework=$(TargetFramework);Platform=$(Platform);RuntimeIdentifier=$(RuntimeIdentifier);IsShipping=true"/>
   </Target>
-  
+
 </Project>

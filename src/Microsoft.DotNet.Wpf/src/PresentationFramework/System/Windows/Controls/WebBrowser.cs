@@ -87,21 +87,8 @@ namespace System.Windows.Controls
         [SecurityCritical, SecurityTreatAsSafe]
         static WebBrowser()
         {
-#if NETFX
-                // ClickOnce uses AppLaunch.exe to host partial-trust applications.
-                string hostProcessName = Path.GetFileName(UnsafeNativeMethods.GetModuleFileName(new HandleRef()));
-                if (string.Compare(hostProcessName, "AppLaunch.exe", StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    // No explanation message is warranted in this case since it's not supported anyway.
-                    SecurityHelperPF.DemandWebBrowserPermission();
-                }
-
-                RegisterWithRBW();
-            }
-#endif
 
             TurnOnFeatureControlKeys();
-
             ControlsTraceLogger.AddControl(TelemetryControls.WebBrowser);
         }
 
@@ -558,11 +545,8 @@ namespace System.Windows.Controls
                 if (value != null)
                 {
                     Type t = value.GetType();
-#if NETFX
-                    if (!System.Runtime.InteropServices.Marshal.IsTypeVisibleFromCom(t))
-#else
+
                     if (!System.Runtime.InteropServices.MarshalLocal.IsTypeVisibleFromCom(t))
-#endif
                     {
                         throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
                     }
@@ -968,17 +952,6 @@ namespace System.Windows.Controls
             }
         }
 
-        private static void RegisterWithRBW()
-        {
-#if NETFX
-            // if we are browser hosted, rbw should have been created here.  
-            // what if RootBrowserWindow is null.  
-            if (RootBrowserWindow != null)
-            {
-                RootBrowserWindow.AddLayoutUpdatedHandler();
-            }
-#endif
-        }
 
         // Turn on all the WebOC Feature Control Keys implementing various security mitigations. 
         // Whenever possible, we do it programmatically instead of adding reg-keys so that these are on on all WPF apps. 
@@ -1069,19 +1042,6 @@ namespace System.Windows.Controls
             UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_LEGACY_COMPRESSION, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
             UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_TELNET_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
 
-#if NETFX
-            // For use of the WebOC in stand-alone applications and full-trust XBAPs, we don't want to
-            // impact existing behavior causing potential different layout due to the appearance of
-            // address bar and status bar. We therefore only apply the following flag where the spoofing
-            // threat is the most relevant, when restricted permissions apply.
-            if (IsWebOCPermissionRestricted)
-            {
-                UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_FORCE_ADDR_AND_STATUS, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            }
-#endif
-
-            // The relevant IE 8 FCKs are applied only in the registry because they don't work through the API. 
-            // We are trying to change this unfortunate trend. .
         }
         
         ///<SecurityNote> 
@@ -1264,38 +1224,6 @@ namespace System.Windows.Controls
 
         #endregion Private Methods
 
-        //----------------------------------------------
-        //
-        // Private Properties
-        //
-        //----------------------------------------------
-
-        #region Private Properties
-
-#if NETFX
-        /// <SecurityNote>
-        /// Critical - Retrieves RBW and sets it on _rbw.
-        /// TreatAsSafe - The RBW is exposed via Application.MainWindow anyhow.
-        /// </SecurityNote>        
-        private static RootBrowserWindow RootBrowserWindow
-        {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get
-            {
-                if (_rbw.Value == null)
-                {
-                    if (Application.Current != null)
-                    {
-                        _rbw.Value = Application.Current.MainWindow as RootBrowserWindow;
-                    }
-                }
-
-                return _rbw.Value;
-            }
-        }
-#endif
-
-        #endregion Private Properties
 
         //----------------------------------------------
         //
@@ -1319,15 +1247,6 @@ namespace System.Windows.Controls
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie                           _cookie;
-
-#if NETFX
-        /// <SecurityNote> 
-        ///     Critical for set - We want to protect the RBW from being set from non-trusted sources.
-        ///                        There's no need to make it SecurityCritical because it's exposed anyhow via Application.MainWindow.
-        /// </SecurityNote> 
-        private static SecurityCriticalDataForSet<RootBrowserWindow> _rbw;
-#endif
-
         private object                                           _objectForScripting;
         private Stream                                           _documentStream;
 

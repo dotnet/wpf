@@ -71,45 +71,15 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls a COM interface method.
-        ///           Calls the constructor of DynamicScriptObject.
-        ///           Calls InitializeHostHtmlDocumentServiceProvider.
-        /// Safe: The browser's object model is safe for scripting.
-        ///       The implementation of IHostBrowser.GetHostScriptObject() is responsible to block cross-domain access.
-        /// </SecurityNote>
-        public static dynamic HostScript
-        {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get
-            {
-                // Allows to disable script interop through the registry in partial trust code.
-                EnsureScriptInteropAllowed();
-
-                // IE's marshaling proxy for the HTMLWindow object doesn't work in MTA.
-                Verify.IsApartmentState(ApartmentState.STA);
-
-                IHostBrowser2 hb2 = HostBrowser as IHostBrowser2;
-                if (hb2 == null)
-                    return null; // One possibility is we are running under NPWPF v3.5.
-                try
-                {
-                    var hostScriptObject = (UnsafeNativeMethods.IDispatch)hb2.HostScriptObject;
-                    if (hostScriptObject == null)
-                        return null;
-
-                    var scriptObject = new DynamicScriptObject(hostScriptObject);
-
-                    InitializeHostHtmlDocumentServiceProvider(scriptObject);
-
-                    return scriptObject;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    return null;
-                }
-            }
-        }
+        /// <summary>
+        /// Gets a script object that provides access to the HTML window object,
+        /// custom script functions, and global variables for the HTML page, if the XAML browser application (XBAP)
+        /// is hosted in a frame.
+        /// </summary>
+        /// <remarks>
+        /// Starting .NET Core 3.0, XBAP's are not supported - <see cref="HostScript"/> will always return <code>null</code>
+        /// </remarks>
+        public static dynamic HostScript => null;
 
         /// <summary>
         /// Returns true if the app is a browser hosted app.
@@ -185,32 +155,6 @@ namespace System.Windows.Interop
             set
             {
                 _isInitialViewerNavigation.Value = value;
-            }
-        }
-
-        ///<SecurityNote> 
-        ///     Critical : Field for critical type IHostBrowser
-        ///</SecurityNote> 
-        [SecurityCritical]
-        internal static IHostBrowser HostBrowser;
-
-        /// <SecurityNote>
-        /// Critical: Calls Marshal.ReleaseComObject().
-        ///           Drops the security critical service provider stored in _hostHtmlDocumentProvider.
-        /// </SecurityNote>
-        [SecurityCritical]
-        internal static void ReleaseBrowserInterfaces()
-        {
-            if (HostBrowser != null)
-            {
-                Marshal.ReleaseComObject(HostBrowser);
-                HostBrowser = null;
-            }
-
-            if (_hostHtmlDocumentServiceProvider.Value != null)
-            {
-                Marshal.ReleaseComObject(_hostHtmlDocumentServiceProvider.Value);
-                _hostHtmlDocumentServiceProvider.Value = null;
             }
         }
 

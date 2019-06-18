@@ -348,39 +348,6 @@ internal static class SecurityHelper
         }
         static PermissionSet _fullTrustPermissionSet = null;
 
-        ///<summary>
-        /// Return true if the caller has the correct permission set to get a folder
-        /// path.
-        ///</summary>
-        ///<remarks>
-        /// This function exists solely as a an optimazation for the debugger scenario
-        ///</remarks>
-        /// <SecurityNote>
-        ///    Critical: This code extracts the permission set associated with an appdomain by elevating
-        ///    TreatAsSafe: The information is not exposed
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        internal static bool CallerHasPermissionWithAppDomainOptimization(params IPermission[] permissionsToCheck)
-        {
-#if NETFX
-            // in case of passing null return true
-            if (permissionsToCheck == null)
-                return true;
-            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
-            for ( int i = 0 ; i < permissionsToCheck.Length ; i++ )
-            {
-                psToCheck.AddPermission(permissionsToCheck[i]);
-            }
-            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
-            if (psToCheck.IsSubsetOf(permissionSetAppDomain))
-            {
-                return true;
-            }
-            return false;
-#else
-            return true;
-#endif
-        }
 
         /// <summary> Enables an efficient check for a specific permisison in the AppDomain's permission grant
         /// without having to catch a SecurityException in the case the permission is not granted.

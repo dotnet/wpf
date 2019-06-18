@@ -83,14 +83,6 @@ namespace System.Windows.Controls.Primitives
             // b) create TextContainer and call InitializeTextContainer
             // c) configure TextEditor by setting appropriate properties
             CoerceValue(HorizontalScrollBarVisibilityProperty);
-
-            // Security team really wants to set AllowDrop property value as "False"
-            // not to generate the security exception that can be happened in the
-            // partial trust environment.
-            if (!SecurityHelper.CallerHasPermissionWithAppDomainOptimization(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)))
-            {
-                AllowDrop = false;
-            }
         }
 
         #endregion Constructors

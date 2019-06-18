@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
@@ -649,7 +649,7 @@
       </trans-unit>
       <trans-unit id="CannotRemoveUnrealizedItems">
         <source>Range of Remove({0},{1}) cannot include items without a corresponding user interface element.</source>
-        <target state="new">Range of Remove({0},{1}) cannot include items without a corresponding user interface element.</target>
+        <target state="translated">Remove({0},{1}) aralığı, ilgili bir kullanıcı arabirimi öğesi olmayan öğeler içeremez.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
@@ -854,7 +854,7 @@
       </trans-unit>
       <trans-unit id="Collection_BadType">
         <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
-        <target state="new">Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</target>
+        <target state="translated">'{0}' türündeki koleksiyona '{1}' türünde örnek eklenemez. Yalnızca '{2}' türündeki öğelere izin verilir.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... {0} daha fazla örnek ...)</target>
+        <target state="translated">(... {0} örnek daha ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">

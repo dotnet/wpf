@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="cs" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
         <source>Cannot get window handle for control '{0}'. Windowless ActiveX controls are not supported.</source>
-        <target state="translated">Nelze získat ovladač okna pro ovládání prvku  {0}. Ovládací prvky ActiveX bez oken nejsou podporovány.</target>
+        <target state="translated">Nelze získat ovladač okna pro ovládání prvku {0}. Ovládací prvky ActiveX bez oken nejsou podporovány.</target>
         <note />
       </trans-unit>
       <trans-unit id="AbsoluteUriNotAllowed">
@@ -249,7 +249,7 @@
       </trans-unit>
       <trans-unit id="BadDistance">
         <source>Requested distance is outside the content of the associated document.</source>
-        <target state="translated">Požadovaná vzdálenost  zasahuje mimo obsah asociovaného dokumentu.</target>
+        <target state="translated">Požadovaná vzdálenost zasahuje mimo obsah asociovaného dokumentu.</target>
         <note />
       </trans-unit>
       <trans-unit id="BadFixedTextPosition">
@@ -944,7 +944,7 @@
       </trans-unit>
       <trans-unit id="CopyToNotEnoughSpace">
         <source>Number of elements in source Enumerable is greater than available space from index to the end of destination array.</source>
-        <target state="translated">Počet prvků ve zdrojovém výčtu je větší než prostor, který je k dispozici mezi  indexem a koncem cílového pole.</target>
+        <target state="translated">Počet prvků ve zdrojovém výčtu je větší než prostor, který je k dispozici mezi indexem a koncem cílového pole.</target>
         <note />
       </trans-unit>
       <trans-unit id="CorePropertyEnumeratorPositionedOutOfBounds">
@@ -1014,12 +1014,12 @@
       </trans-unit>
       <trans-unit id="CyclicStyleReferenceDetected">
         <source>Cyclic reference found while evaluating the Style property on element '{0}'.</source>
-        <target state="translated">Při hodnocení vlastnosti Style prvku  {0} byla nalezena cyklická reference.</target>
+        <target state="translated">Při hodnocení vlastnosti Style prvku {0} byla nalezena cyklická reference.</target>
         <note />
       </trans-unit>
       <trans-unit id="CyclicThemeStyleReferenceDetected">
         <source>Cyclic reference found while evaluating the ThemeStyle property on element '{0}'.</source>
-        <target state="translated">Při hodnocení vlastnosti ThemeStyle prvku  {0} byla nalezena cyklická reference.</target>
+        <target state="translated">Při hodnocení vlastnosti ThemeStyle prvku {0} byla nalezena cyklická reference.</target>
         <note />
       </trans-unit>
       <trans-unit id="DataGridCellItemAutomationPeer_LocalizedControlType">
@@ -1224,12 +1224,12 @@
       </trans-unit>
       <trans-unit id="DisplayMemberPathAndItemTemplateDefined">
         <source>Cannot set both DisplayMemberPath and ItemTemplate.</source>
-        <target state="translated">Nelze nastavit současně  cestu DisplayMemberPath a šablonu ItemTemplate.</target>
+        <target state="translated">Nelze nastavit současně cestu DisplayMemberPath a šablonu ItemTemplate.</target>
         <note />
       </trans-unit>
       <trans-unit id="DisplayMemberPathAndItemTemplateSelectorDefined">
         <source>Cannot set both DisplayMemberPath and ItemTemplateSelector. When one is nonempty, it must be cleared before the other can be set.</source>
-        <target state="translated">Nelze nastavit současně cestu DisplayMemberPath a selektor  ItemTemplateSelector. Pokud je jeden z těchto prvků jiný než prázdný, je potřeba jej nejprve vyprázdnit a pak teprve nastavit druhý.</target>
+        <target state="translated">Nelze nastavit současně cestu DisplayMemberPath a selektor ItemTemplateSelector. Pokud je jeden z těchto prvků jiný než prázdný, je potřeba jej nejprve vyprázdnit a pak teprve nastavit druhý.</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentApplicationCannotInitializeUI">
@@ -1314,7 +1314,7 @@
       </trans-unit>
       <trans-unit id="DocumentGridVisualTreeOutOfSync">
         <source>Visual collection is out of sync with RowCache.</source>
-        <target state="translated">Kolekce Visual není synchronizována s  RowCache.</target>
+        <target state="translated">Kolekce Visual není synchronizována s RowCache.</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentPageView_ParentNotDocumentPageHost">
@@ -1379,7 +1379,7 @@
       </trans-unit>
       <trans-unit id="DocumentViewerChildMustImplementIDocumentPaginatorSource">
         <source>The child of a DocumentViewer must implement the IDocumentPaginatorSource interface.</source>
-        <target state="translated">Podřízený prvek prohlížeče  DocumentViewer musí implementovat rozhraní IDocumentPaginatorSource.</target>
+        <target state="translated">Podřízený prvek prohlížeče DocumentViewer musí implementovat rozhraní IDocumentPaginatorSource.</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentViewerOneMasterPage">
@@ -1389,7 +1389,7 @@
       </trans-unit>
       <trans-unit id="DocumentViewerOnlySupportsFixedDocumentSequence">
         <source>DocumentViewer supports only FixedDocument or FixedDocumentSequence documents.</source>
-        <target state="translated">DocumentViewer podporuje pouze dokumenty  FixedDocument nebo FixedDocumentSequence.</target>
+        <target state="translated">DocumentViewer podporuje pouze dokumenty FixedDocument nebo FixedDocumentSequence.</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentViewerPageViewsCollectionEmpty">
@@ -1529,7 +1529,7 @@
       </trans-unit>
       <trans-unit id="EventTriggerBadAction">
         <source>EventTrigger cannot have action of type '{0}'. It must be a TriggerAction.</source>
-        <target state="translated">Spouštěč události EventTrigger nemusí obsahovat akci typu  {0}. Musí to být TriggerAction.</target>
+        <target state="translated">Spouštěč události EventTrigger nemusí obsahovat akci typu {0}. Musí to být TriggerAction.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventTriggerDoNotSetProperties">
@@ -1539,12 +1539,12 @@
       </trans-unit>
       <trans-unit id="EventTriggerDoesNotEnterExit">
         <source>Event triggers do not support EnterActions or ExitActions.</source>
-        <target state="translated">Spouštěče události nepodporují funkce  EnterActions a ExitActions.</target>
+        <target state="translated">Spouštěče události nepodporují funkce EnterActions a ExitActions.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventTriggerEventUnresolvable">
         <source>Cannot resolve event '{0}' for EventTrigger.</source>
-        <target state="translated">Nelze nalézt událost  {0}  pro EventTrigger.</target>
+        <target state="translated">Nelze nalézt událost {0} pro EventTrigger.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventTriggerNeedEvent">
@@ -1569,7 +1569,7 @@
       </trans-unit>
       <trans-unit id="ExceptionValidationRuleValidateNotSupported">
         <source>Calling Validate method of ExceptionValidationRule is not supported. Validation results for ExceptionValidationRule are set implicitly by the binding engine when exceptions are caught.</source>
-        <target state="translated">Vyvolání metody Validate pravidla  ExceptionValidationRule není podporováno. Výsledky validace pro ExceptionValidationRule jsou nastaveny implicitně nástrojem vazby hned při zjištění výjimky.</target>
+        <target state="translated">Vyvolání metody Validate pravidla ExceptionValidationRule není podporováno. Výsledky validace pro ExceptionValidationRule jsou nastaveny implicitně nástrojem vazby hned při zjištění výjimky.</target>
         <note />
       </trans-unit>
       <trans-unit id="ExpectedBamlSchemaContext">
@@ -1729,7 +1729,7 @@
       </trans-unit>
       <trans-unit id="FilterLoadInvalidModeFlag">
         <source>Mode word contains flags that are not valid.</source>
-        <target state="translated">Slovo režim obsahuje  příznaky, které jsou neplatné.</target>
+        <target state="translated">Slovo režim obsahuje příznaky, které jsou neplatné.</target>
         <note />
       </trans-unit>
       <trans-unit id="FilterNullGetTextBufferPointer">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... {0} dalších instancí ...)</target>
+        <target state="translated">(... počet dalších instancí: {0} ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -2249,7 +2249,7 @@
       </trans-unit>
       <trans-unit id="InvalidControlTemplateTargetType">
         <source>ControlTemplate's TargetType must be Control, Page, PageFunctionBase or a subclass of the same. '{0}' type is not valid.</source>
-        <target state="translated">TargetType šablony ControlTemplate musí být Control, Page, PageFunctionBase nebo jejich podtřída. Typ  {0} je neplatný.</target>
+        <target state="translated">TargetType šablony ControlTemplate musí být Control, Page, PageFunctionBase nebo jejich podtřída. Typ {0} je neplatný.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidCtorParameterNoInfinity">
@@ -2274,7 +2274,7 @@
       </trans-unit>
       <trans-unit id="InvalidCtorParameterUnknownGridUnitType">
         <source>'{0}' parameter is not valid. Valid values are GridUnitType.Auto, GridUnitType.Pixel, or GridUnitType.Star.</source>
-        <target state="translated">Parametr {0} je neplatný. Platné hodnoty jsou  GridUnitType.Auto, GridUnitType.Pixel, nebo GridUnitType.Star.</target>
+        <target state="translated">Parametr {0} je neplatný. Platné hodnoty jsou GridUnitType.Auto, GridUnitType.Pixel, nebo GridUnitType.Star.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidCtorParameterUnknownVirtualizationCacheLengthUnitType">
@@ -2444,7 +2444,7 @@
       </trans-unit>
       <trans-unit id="InvalidSFContentType">
         <source>Invalid content type for StoryFragments part.</source>
-        <target state="translated">Neplatný typ obsahu pro součást  StoryFragments.</target>
+        <target state="translated">Neplatný typ obsahu pro součást StoryFragments.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSelectionPages">
@@ -3069,12 +3069,12 @@
       </trans-unit>
       <trans-unit id="ListView_MissingParameterlessConstructor">
         <source>'{0}' does not have a parameterless constructor. GridViewHeaderRowPresenter needs the constructor to create a floating header during column reorder operation.</source>
-        <target state="translated">Prvek {0} nemá konstruktor bez parametrů.  GridViewHeaderRowPresenter potřebuje tento konstruktor pro vytvoření plovoucí hlavičky během operace přerovnávání sloupce.</target>
+        <target state="translated">Prvek {0} nemá konstruktor bez parametrů. GridViewHeaderRowPresenter potřebuje tento konstruktor pro vytvoření plovoucí hlavičky během operace přerovnávání sloupce.</target>
         <note />
       </trans-unit>
       <trans-unit id="ListView_NotAllowShareColumnToTwoColumnCollection">
         <source>Sharing GridViewColumn among multiple GridViewColumnCollections or adding the same GridViewColumn into one GridViewColumnCollection more than once is not allowed.</source>
-        <target state="translated">Sdílení sloupce GridViewColumn více kolekcemi  GridViewColumnCollections nebo přidání téhož sloupce GridViewColumn do jedné kolekce GridViewColumnCollection více než jednou není povoleno.</target>
+        <target state="translated">Sdílení sloupce GridViewColumn více kolekcemi GridViewColumnCollections nebo přidání téhož sloupce GridViewColumn do jedné kolekce GridViewColumnCollection více než jednou není povoleno.</target>
         <note />
       </trans-unit>
       <trans-unit id="ListView_ViewCannotBeShared">
@@ -3119,7 +3119,7 @@
       </trans-unit>
       <trans-unit id="MarkupExtensionResourceKey">
         <source>Resource markup extension must have ResourceKey property set before ProvideValue can be called.</source>
-        <target state="translated">Přípona označení zdroje musí mít nastavenu vlastnost  ResourceKey před vyvoláním funkce ProvideValue.</target>
+        <target state="translated">Přípona označení zdroje musí mít nastavenu vlastnost ResourceKey před vyvoláním funkce ProvideValue.</target>
         <note />
       </trans-unit>
       <trans-unit id="MarkupExtensionResourceNotFound">
@@ -3289,7 +3289,7 @@
       </trans-unit>
       <trans-unit id="MustBeTypeOrString">
         <source>'{0}' is not a valid type for DataTemplate.DataType; it must be String or Type.</source>
-        <target state="translated">Typ {0} není platný typ pro  DataTemplate.DataType; musí to být String  nebo Type.</target>
+        <target state="translated">Typ {0} není platný typ pro DataTemplate.DataType; musí to být String nebo Type.</target>
         <note />
       </trans-unit>
       <trans-unit id="MustImplementIUriContext">
@@ -3299,7 +3299,7 @@
       </trans-unit>
       <trans-unit id="MustNotTemplateUnassociatedControl">
         <source>ControlTemplate must be associated with a Control by setting the Control.Template property before it is used to template that Control.</source>
-        <target state="translated">Šablona ControlTemplate musí být asociována s ovladačem nastavením vlastnosti  Control.Template před použitím jako šablony pro tento ovladač.</target>
+        <target state="translated">Šablona ControlTemplate musí být asociována s ovladačem nastavením vlastnosti Control.Template před použitím jako šablony pro tento ovladač.</target>
         <note />
       </trans-unit>
       <trans-unit id="MustUseWindowStyleNone">
@@ -3394,7 +3394,7 @@
       </trans-unit>
       <trans-unit id="NoDefaultUpdateSourceTrigger">
         <source>FrameworkPropertyMetadata.DefaultUpdateSourceTrigger cannot be set to UpdateSourceTrigger.Default; this would create a circular definition.</source>
-        <target state="translated">FrameworkPropertyMetadata.DefaultUpdateSourceTrigger nelze nastavit na  UpdateSourceTrigger.Default; tím by vznikla definice v kruhu.</target>
+        <target state="translated">FrameworkPropertyMetadata.DefaultUpdateSourceTrigger nelze nastavit na UpdateSourceTrigger.Default; tím by vznikla definice v kruhu.</target>
         <note />
       </trans-unit>
       <trans-unit id="NoElement">
@@ -3839,7 +3839,7 @@
       </trans-unit>
       <trans-unit id="ParserDefTag">
         <source>The 'http://schemas.microsoft.com/winfx/2006/xaml' Namespace tag named '{0}' is not valid. Try compiling the XAML.</source>
-        <target state="translated">Tag oboru názvů  http://schemas.microsoft.com/winfx/2006/xaml pojmenovaný {0}je neplatný. Pokuste se zkompilovat  XAML.</target>
+        <target state="translated">Tag oboru názvů http://schemas.microsoft.com/winfx/2006/xaml pojmenovaný {0}je neplatný. Pokuste se zkompilovat XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserDefaultConverterElement">
@@ -4059,7 +4059,7 @@
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoNameValue">
         <source>Name/value pairs in markup extensions must have the format 'Name = Value' with each pair separated by a comma. '{0}' does not follow this format.</source>
-        <target state="translated">Dvojice název/hodnota v příponách označení musí mít formát  Název = Hodnota a každá dvojice musí být oddělena  čárkou. Element {0} tento formát nedodržuje.</target>
+        <target state="translated">Dvojice název/hodnota v příponách označení musí mít formát Název = Hodnota a každá dvojice musí být oddělena čárkou. Element {0} tento formát nedodržuje.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoQuotesInName">
@@ -4109,7 +4109,7 @@
       </trans-unit>
       <trans-unit id="ParserNoComplexMulti">
         <source>Cannot have more than one tag under property element '{0}'.</source>
-        <target state="translated">Nelze mít více než jeden tag pod prvkem vlastnosti  {0}.</target>
+        <target state="translated">Nelze mít více než jeden tag pod prvkem vlastnosti {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserNoDPOnOwner">
@@ -4164,7 +4164,7 @@
       </trans-unit>
       <trans-unit id="ParserNoMatchingIDictionary">
         <source>'{0}' attribute in 'http://schemas.microsoft.com/winfx/2006/xaml' namespace is valid only when used with an IDictionary property.</source>
-        <target state="translated">Atribut {0} v oboru názvů  http://schemas.microsoft.com/winfx/2006/xaml je platný pouze tehdy, pokud je používán u vlastnosti typu IDictionary.</target>
+        <target state="translated">Atribut {0} v oboru názvů http://schemas.microsoft.com/winfx/2006/xaml je platný pouze tehdy, pokud je používán u vlastnosti typu IDictionary.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserNoMatchingIList">
@@ -4304,7 +4304,7 @@
       </trans-unit>
       <trans-unit id="ParserResourceKeyType">
         <source>Type reference cannot find public type named '{0}'.</source>
-        <target state="translated">Reference typu nemůže najít veřejný typ označený  {0}.</target>
+        <target state="translated">Reference typu nemůže najít veřejný typ označený {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserSyncOnRoot">
@@ -4414,7 +4414,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlReaderNoLineInfo">
         <source>'{0}' class must implement IXmlLineInfo to get position information for the XAML being parsed.</source>
-        <target state="translated">Třída {0} musí implementovat  IXmlLineInfo pro získání informací o pozici pro analyzovaný XAML.</target>
+        <target state="translated">Třída {0} musí implementovat IXmlLineInfo pro získání informací o pozici pro analyzovaný XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="PartialTrustPrintDialogMustBeInvoked">
@@ -4429,7 +4429,7 @@
       </trans-unit>
       <trans-unit id="PathParameterIsNull">
         <source>PathParameters list contains null at index {0}.</source>
-        <target state="translated">Seznam PathParameters obsahuje nulu v indexu  {0}.</target>
+        <target state="translated">Seznam PathParameters obsahuje nulu v indexu {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="PathParametersIndexOutOfRange">
@@ -5269,7 +5269,7 @@
       </trans-unit>
       <trans-unit id="StyleNoEventSetters">
         <source>Cannot load XAML file that has EventSetters. Try compiling the XAML.</source>
-        <target state="translated">Nelze načíst soubor XAML obsahující EventSetters. Pokuste se zkompilovat  XAML.</target>
+        <target state="translated">Nelze načíst soubor XAML obsahující EventSetters. Pokuste se zkompilovat XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="StyleNoPropOrEvent">
@@ -5324,7 +5324,7 @@
       </trans-unit>
       <trans-unit id="StyleSetterUnknownProp">
         <source>'{0}' property cannot use markup extensions or property element syntax on Setter. Only the Value property can use markup extensions or property element syntax.</source>
-        <target state="translated">Vlastnost {0} nemůže používat přípony označení nebo syntax prvku vlastnosti v Setter.  Tyto přípony nebo syntax může používat pouze vlastnost Value.</target>
+        <target state="translated">Vlastnost {0} nemůže používat přípony označení nebo syntax prvku vlastnosti v Setter. Tyto přípony nebo syntax může používat pouze vlastnost Value.</target>
         <note />
       </trans-unit>
       <trans-unit id="StyleTagNotSupported">
@@ -5344,7 +5344,7 @@
       </trans-unit>
       <trans-unit id="StyleTriggersCannotTargetTheTemplate">
         <source>Cannot set TargetName property on a Setter within Style.Setters or Style.Triggers section. TargetName applies only to a Setter in Template.Triggers section.</source>
-        <target state="translated">Nelze nastavit vlastnost  TargetName v Setter uvnitř Style.Setters nebo Style.Triggers. TargetName se týká pouze Setter v sekci Template.Triggers.</target>
+        <target state="translated">Nelze nastavit vlastnost TargetName v Setter uvnitř Style.Setters nebo Style.Triggers. TargetName se týká pouze Setter v sekci Template.Triggers.</target>
         <note />
       </trans-unit>
       <trans-unit id="StyleUnknownProp">
@@ -5434,7 +5434,7 @@
       </trans-unit>
       <trans-unit id="Template3DValueOnly">
         <source>FrameworkTemplate supports only values in 3D content. Triggers and resources, for example, are not supported (property '{0}').</source>
-        <target state="translated">FrameworkTemplate podporuje pouze hodnoty s 3D obsahem. Spouštěče a zdroje například podporovány nejsou  (vlastnost {0}).</target>
+        <target state="translated">FrameworkTemplate podporuje pouze hodnoty s 3D obsahem. Spouštěče a zdroje například podporovány nejsou (vlastnost {0}).</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateBadDictionaryKey">
@@ -5449,7 +5449,7 @@
       </trans-unit>
       <trans-unit id="TemplateChildIndexOutOfRange">
         <source>TemplateChildIndex must be value between -1 and 65,534.</source>
-        <target state="translated">TemplateChildIndex musí mít hodnotu v rozmezí  -1 až 65 534.</target>
+        <target state="translated">TemplateChildIndex musí mít hodnotu v rozmezí -1 až 65 534.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateCircularReferenceFound">
@@ -5474,7 +5474,7 @@
       </trans-unit>
       <trans-unit id="TemplateHasNestedNameScope">
         <source>NameScopeProperty found within the content of a FrameworkTemplate, on a '{0}' object. Name scopes within templates are not supported.</source>
-        <target state="translated">NameScopeProperty nalezena v obsahu FrameworkTemplate, na objektu  {0}. Rozsahy názvů nejsou v šablonách podporovány.</target>
+        <target state="translated">NameScopeProperty nalezena v obsahu FrameworkTemplate, na objektu {0}. Rozsahy názvů nejsou v šablonách podporovány.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateInvalidBamlRecord">
@@ -5549,7 +5549,7 @@
       </trans-unit>
       <trans-unit id="TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock">
         <source>Cannot set the IsUndoEnabled property inside the scope of DeclareChangeBlock or BeginChange/EndChange calls.</source>
-        <target state="translated">Nelze nastavit vlastnost  IsUndoEnabled v rámci výzev DeclareChangeBlock nebo BeginChange/EndChange.</target>
+        <target state="translated">Nelze nastavit vlastnost IsUndoEnabled v rámci výzev DeclareChangeBlock nebo BeginChange/EndChange.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextBoxBase_UnmatchedEndChange">
@@ -5569,7 +5569,7 @@
       </trans-unit>
       <trans-unit id="TextBoxInvalidTextContainer">
         <source>Only Decorator or ScrollViewer elements can be used as PART_ContentHost.</source>
-        <target state="translated">Pouze prvky Decorator nebo ScrollViewer lze použít jako  PART_ContentHost.</target>
+        <target state="translated">Pouze prvky Decorator nebo ScrollViewer lze použít jako PART_ContentHost.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextBoxMinMaxLinesMismatch">
@@ -5804,7 +5804,7 @@
       </trans-unit>
       <trans-unit id="TextSchema_TextIsNotAllowedInThisContext">
         <source>Cannot have Text or UIElement at this position in '{0}'.</source>
-        <target state="translated">Na tuto pozici v  {0} nepatří Text ani prvek UIElement.</target>
+        <target state="translated">Na tuto pozici v {0} nepatří Text ani prvek UIElement.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextSchema_TheChildElementBelongsToAnotherTreeAlready">
@@ -5909,7 +5909,7 @@
       </trans-unit>
       <trans-unit id="ThemeDictionaryExtension_Source">
         <source>ThemeDictionaryExtension can be applied only to the Source property on ResourceDictionary.</source>
-        <target state="translated">Koncovku ThemeDictionaryExtension lze použít pouze pro vlastnost Source slovníku  ResourceDictionary.</target>
+        <target state="translated">Koncovku ThemeDictionaryExtension lze použít pouze pro vlastnost Source slovníku ResourceDictionary.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToStringFormatString_Control">
@@ -6149,7 +6149,7 @@
       </trans-unit>
       <trans-unit id="UndoUnitNotFound">
         <source>Cannot close unit. Cannot find unit as open unit in this ParentUndoUnit or its children.</source>
-        <target state="translated">Jednotku nelze zavřít. Nelze najít otevřenou jednotku v této jednotce  ParentUndoUnit nebo její podřízené jednotce.</target>
+        <target state="translated">Jednotku nelze zavřít. Nelze najít otevřenou jednotku v této jednotce ParentUndoUnit nebo její podřízené jednotce.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
@@ -6334,7 +6334,7 @@
       </trans-unit>
       <trans-unit id="WebBrowserNoCastToIWebBrowser2">
         <source>Cannot get IWebBrowser2 from the native ActiveX control.</source>
-        <target state="translated">Nelze nalézt IWebBrowser2 ve vlastním ovladači  ActiveX.</target>
+        <target state="translated">Nelze nalézt IWebBrowser2 ve vlastním ovladači ActiveX.</target>
         <note />
       </trans-unit>
       <trans-unit id="WebBrowserOverlap">
@@ -6449,7 +6449,7 @@
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderUnsupportedEncoding">
         <source>XPS markup must be in one of the following XML encodings: UTF-8, UTF-16.</source>
-        <target state="translated">Označení XPS musí používat jedno z následujících kódování  XML: UTF-8, UTF-16.</target>
+        <target state="translated">Označení XPS musí používat jedno z následujících kódování XML: UTF-8, UTF-16.</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsValidatingLoaderUnsupportedMimeType">

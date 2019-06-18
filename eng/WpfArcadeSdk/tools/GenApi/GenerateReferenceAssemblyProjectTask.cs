@@ -108,6 +108,7 @@ namespace WpfArcadeSdk.Build.Tasks
 
                 RemovePropertiesByName(xmlProjectDoc, EnableAnalyzersProperty);
                 RemovePropertiesByName(xmlProjectDoc, ModuleInitializerTag);
+                RemovePropertiesByName(xmlProjectDoc, CompileDependsOnProperty);
 
                 RemoveTagByName(xmlProjectDoc, TargetName);
 
@@ -389,7 +390,7 @@ namespace WpfArcadeSdk.Build.Tasks
         private const string ResourceName = "Resource";
         private const string CompileItemName = "Compile";
         private const string EnableAnalyzersProperty = "EnableAnalyzers";
-
+        private const string CompileDependsOnProperty = "CompileDependsOn";
         private const string PropertyGroupName = "PropertyGroup";
         private const string ItemGroupName = "ItemGroup";
         private const string IncludeAttrName = "Include";

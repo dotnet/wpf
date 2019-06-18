@@ -25,9 +25,11 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Resources;
 using System.Xml;
+using System.Xml.Linq;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using System.Configuration;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -105,6 +107,8 @@ namespace WpfArcadeSdk.Build.Tasks
 
                 RemovePropertiesByName(xmlProjectDoc, EnableAnalyzersProperty);
 
+                RemoveTagByName(xmlProjectDoc, TargetName);
+
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(ReferenceAssemblyProjectFile);
             }
@@ -157,6 +161,55 @@ namespace WpfArcadeSdk.Build.Tasks
         private void RemovePropertiesByName(XmlDocument xmlProjectDoc, string propName)
         {
             RemoveTagByName(xmlProjectDoc, PropertyGroupName, propName);
+        }
+
+        private void RemoveTagByName(XmlDocument xmlProjectDoc, string tagName)
+        {
+            if (xmlProjectDoc == null || String.IsNullOrEmpty(tagName))
+            {
+                // When the parameters are not valid, simply return it, instead of throwing exceptions.
+                return;
+            }
+
+            XmlNode root = xmlProjectDoc.DocumentElement;
+
+            if (root.HasChildNodes == false)
+            {
+                // If there is no child element in this project file, just return immediatelly.
+                return;
+            }
+
+            ArrayList itemToRemove = new ArrayList();
+
+            for (int i = 0; i < root.ChildNodes.Count; i++)
+            {
+                XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
+
+                if (nodeGroup != null && String.Compare(nodeGroup.Name, tagName, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    itemToRemove.Add(nodeGroup);
+                }
+            }
+
+            //
+            // Now it is the right time to delete the elements.
+            //
+            if (itemToRemove.Count > 0)
+            {
+                foreach (object node in itemToRemove)
+                {
+                    XmlElement item = node as XmlElement;
+
+                    //
+                    // Remove this item from its parent node.
+                    // the parent node should be nodeGroup.
+                    //
+                    if (item != null)
+                    {
+                        root.RemoveChild(item);
+                    }
+                }
+            }
         }
 
         private void RemoveTagByName(XmlDocument xmlProjectDoc, string parentTagName, string tagName)
@@ -338,6 +391,7 @@ namespace WpfArcadeSdk.Build.Tasks
         private const string PropertyGroupName = "PropertyGroup";
         private const string ItemGroupName = "ItemGroup";
         private const string IncludeAttrName = "Include";
+        private const string TargetName = "Target";
 
         private const string True = "True";
 

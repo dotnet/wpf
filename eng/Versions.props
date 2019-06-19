@@ -55,8 +55,6 @@
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
-    <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
@@ -65,6 +63,10 @@
     removed as part of https://github.com/dotnet/wpf/issues/816 
     -->
     <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
+
+    <!-- These versions are specified in global.json -->
+    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
+    <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreSources>

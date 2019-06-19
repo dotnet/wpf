@@ -214,7 +214,6 @@ namespace System.Windows.Automation.Peers
 
 
     ///<summary> This is a helper class to facilate the storage of Security critical data ( aka "Plutonium")
-    /// It's primary purpose is to do put a [SecurityCritical] on all access to the data.
     /// What is "critical data" ? This is any data created that required an Assert for it's creation.
     ///</summary> As an example - the passage of hosted Hwnd between some AutomationPeer and UIA infrastructure.
     public sealed class HostedWindowWrapper
@@ -224,31 +223,17 @@ namespace System.Windows.Automation.Peers
         /// It requires "Full Trust" level of security permissions to be executed, since this
         /// class is wrappign an HWND direct access to which is a critical asset.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _hwnd which is Critical.
-        /// Safe - as the caller already got the critical value.
-        /// In addition, we prevent creating this class by external callers who does not have UnmanagedCode permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public HostedWindowWrapper(IntPtr hwnd)
         {
             (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Demand();
             _hwnd = hwnd;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
-        [SecurityCritical]
         private HostedWindowWrapper()
         {
             _hwnd = IntPtr.Zero;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
-        [SecurityCritical]
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
             HostedWindowWrapper wrapper = new HostedWindowWrapper();
@@ -256,22 +241,14 @@ namespace System.Windows.Automation.Peers
             return wrapper;
         }
 
-        // <SecurityNote>
-        //    Critical "by definition" - this class is intended to store critical data.
-        // </SecurityNote>
         internal IntPtr Handle
         {
-            [SecurityCritical]
             get
             {
                 return _hwnd;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - by definition as this is a wrapper for Critical data.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwnd;
     }
 
@@ -470,11 +447,6 @@ namespace System.Windows.Automation.Peers
         // this method returns null.
         // ConnectedPeer parameter is some peer which is known to be connected (typically root, but if not, this method will
         // walk up from the given connectedPeer up to find a root)
-        ///<SecurityNote>
-        ///     Critical - Accessing _hwnd
-        ///     TreatAsSafe - _hwnd is used internally and not exposed.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal AutomationPeer ValidateConnected(AutomationPeer connectedPeer)
         {
             if(connectedPeer == null)
@@ -520,13 +492,8 @@ namespace System.Windows.Automation.Peers
         /// 1. it's doing an action which is securitycritical
         /// 2. it can not be treated as safe as it doesn't know whether
         ///    the peer is actually this objects's parent or not and must be used by methods which has
-        ///    this information and hence are[SecurityTreatAsSafe].
-        /// <SecurityNote>
-        /// Critical - access _hwnd
-        /// </SecurityNote>
         /// </summary>
         /// <param name="peer"></param>
-        [SecurityCritical]
         internal bool TrySetParentInfo(AutomationPeer peer)
         {
             Invariant.Assert((peer != null));
@@ -605,11 +572,6 @@ namespace System.Windows.Automation.Peers
         /// To obtain the IRawElementProviderSimple interface, the peer should use
         /// System.Windows.Automation.AutomationInteropProvider.HostProviderFromHandle(hwnd).
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical    - Calls critical AutomationPeer.Hwnd.
-        ///     TreatAsSafe - Critical data is used internally and not explosed
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         virtual protected HostedWindowWrapper GetHostRawElementProviderCore()
         {
             HostedWindowWrapper host = null;
@@ -1391,11 +1353,6 @@ namespace System.Windows.Automation.Peers
         }
 
         //
-        ///<SecurityNote>
-        ///     Critical - Accessing _hwnd
-        ///     TreatAsSafe - _hwnd is used internally and not exposed.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureChildren()
         {
             //  if !_childrenValid or _ancestorsInvalid,  indicates that the automation tree under this peer is not up to date, so requires
@@ -2076,14 +2033,9 @@ namespace System.Windows.Automation.Peers
             }
 }
 
-        /// <SecurityNote>
-        ///     Critical - provides access to critial data.
-        /// </SecurityNote>
         internal IntPtr Hwnd
         {
-            [SecurityCritical]
             get { return _hwnd; }
-            [SecurityCritical]
             set { _hwnd = value; }
         }
 
@@ -2423,10 +2375,6 @@ namespace System.Windows.Automation.Peers
         private static Hashtable s_propertyInfo;
 
         private int _index = -1;
-        ///<SecurityNote>
-        ///     Critical - once stored, this hwnd will be used for subsequent automation operations.
-        ///</SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwnd;
         private List<AutomationPeer> _children;
         private AutomationPeer _parent;

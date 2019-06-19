@@ -2760,13 +2760,6 @@ namespace System.Windows.Markup
             return ith;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create instances of
-        /// allowed\accessible internal types. If permission is granted, the parser will directly
-        /// use reflection to create the internal instance. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt creating the internal
-        /// instance using the user app's security context.
-        /// </SecurityNote>
         internal static object CreateInternalInstance(ParserContext pc, Type type)
         {
             object instance = null;
@@ -2800,13 +2793,6 @@ namespace System.Windows.Markup
             return instance;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to get an allowed\accessible
-        /// internal property value on an allowed\accessible type. If permission is granted, the parser
-        /// will directly use reflection to get the property value. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt getting the internal property
-        /// value using the user app's security context.
-        /// </SecurityNote>
         internal static object GetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target)
         {
             object propValue = null;
@@ -2840,12 +2826,6 @@ namespace System.Windows.Markup
             return propValue;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to set an allowed\accessible internal
-        /// property value on an allowed\accessible type. If permission is granted, the parser will directly use
-        /// reflection to set the property value. If not, it will call a method on a generated class in the user's
-        /// code context in order to attempt setting the internal property value using the user app's security context.
-        /// </SecurityNote>
         internal static bool SetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target, object value)
         {
             bool isPublicProperty = false;
@@ -2880,12 +2860,6 @@ namespace System.Windows.Markup
             return false;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create an accessible delegate for a
-        /// non public event handler method. If permission is granted, the parser will directly use reflection
-        /// to create the delegate. If not, it will call a method on a generated class in the user's code context
-        /// in order to attempt creating the delegate using the user app's security context.
-        /// </SecurityNote>
         internal static Delegate CreateDelegate(ParserContext pc, Type delegateType, object target, string handler)
         {
             Delegate d = null;
@@ -2916,13 +2890,6 @@ namespace System.Windows.Markup
             return d;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to add a delegate handler for an
-        /// allowed\accessible internal event on an allowed\accessible type. If permission is granted, the
-        /// parser will directly use reflection to add the event handler delegate. If not, it will call a
-        /// method on a generated class in the user's code context in order to attempt adding the internal
-        /// event handler delegate using the user app's security context.
-        /// </SecurityNote>
         internal static bool AddInternalEventHandler(ParserContext pc, object rootElement, EventInfo eventInfo, object target, Delegate handler)
         {
             bool isPublicEvent = false;

@@ -315,17 +315,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Encodes a custom attribute to the ISF stream
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method Compressor.CompressPropertyData
-        ///             to compress the attribute data
-        ///
-        ///     This directly called by ExtendedPropertySerializer.EncodeAsISF
-        ///                             DrawingAttributeSerializer.PersistStylusTip
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Encodes a custom attribute to the ISF stream
@@ -416,16 +405,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="guid">Guid of property</param>
         /// <param name="data">Data of property</param>
         /// <returns>Length of buffer read</returns>
-        /// <SecurityNote>
-        ///     Critical - calls the Compressor.DecompressPropertyData critical method
-        ///
-        ///     Called directly by  DrawingAttributeSerializer.DecodeAsISF
-        ///                         StrokeCollectionSerializer.DecodeRawISF
-        ///                         StrokeSerializer.DecodeISFIntoStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads a single ExtendedProperty from the stream and add that to the list. Tag may be passed as in
@@ -741,18 +720,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="compressionAlgorithm"></param>
         /// <param name="fTag"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the crtical method ExtendedPropertySerializer.EncodeAsISF (different overload)
-        ///
-        ///     This directly called by ExtendedPropertySerializer.EncodeAsISF (different overload)
-        ///                         and StrokeCollectionSerializer.EncodeISF
-        ///                         and DrawingAttributeSerializer.PersistExtendedProperties
-        ///                         and StrokeSerializer.EncodeStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves all elements in this list in the stream passed with the tags being generated based on the GuidList

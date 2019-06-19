@@ -27,11 +27,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd"></param>
             /// <param name="fallbackToNearestMonitorHeuristic">Semantics of this parameter are identical to that in <see cref="DpiUtil.GetWindowDpi"/></param>
-            /// <SecurityNote>
-            ///     Critical: Takes a native handle as a parameter, and calls into other Critical functions
-            ///     Safe: Does not return Critical resources back to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             internal HwndDpiInfo(IntPtr hWnd, bool fallbackToNearestMonitorHeuristic) : base(
                 item1: (DpiAwarenessContextValue)DpiUtil.GetDpiAwarenessContext(hWnd),
                 item2: DpiUtil.GetWindowDpi(hWnd, fallbackToNearestMonitorHeuristic))
@@ -57,11 +52,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hwnd"></param>
             /// <returns></returns>
-            /// <SecurityNote>
-            ///    Critical: Input is a Critical handle (HWND)
-            ///    Safe: Does not return any Critical information back to the caller.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private static NativeMethods.MONITORINFOEX NearestMonitorInfoFromWindow(IntPtr hwnd)
             {
                 IntPtr hMonitor = SafeNativeMethods.MonitorFromWindow(new HandleRef(null, hwnd), NativeMethods.MONITOR_DEFAULTTONEAREST);

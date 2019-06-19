@@ -68,10 +68,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="tablet">The tablet device to use</param>
         /// <returns>A matrix from the tablet to the screen</returns>
-        /// <SecurityNote>
-        ///     SafeCritical:  Accesses CompositionTarget but does not expose it
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private Matrix GetTabletToViewTransform(TabletDevice tablet)
         {
             Matrix matrix = (_inputSource.Value as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
@@ -152,10 +148,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="inputReport">The raw input to process</param>
         /// <returns>The appropriate collection target</returns>
-        /// <SecurityNote>
-        ///     Critical - Accesses RawStylusInputReport.InputSource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection TargetPlugInCollection(RawStylusInputReport inputReport)
         {
             StylusPlugInCollection pic = null;
@@ -248,10 +240,6 @@ namespace System.Windows.Input.StylusPointer
         /// not being 100% synchronous with the visual tree in terms of hitting the collections.  This is sort of
         /// redundant right now, but needs to be here when we re-implement the RTI.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:  Accesses StylusLogic
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void VerifyStylusPlugInCollectionTarget(RawStylusInputReport rawStylusInputReport)
         {
             switch (rawStylusInputReport.Actions)
@@ -380,12 +368,6 @@ namespace System.Windows.Input.StylusPointer
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls into security critical code TargetPlugInCollection.
-        ///             Called by StylusLogic.CallPluginsForMouse.
-        ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
-        /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection InvokeStylusPluginCollectionForMouse(RawStylusInputReport inputReport, IInputElement directlyOver, StylusPlugInCollection currentPlugInCollection)
         {
             StylusPlugInCollection newPlugInCollection = null;
@@ -446,12 +428,6 @@ namespace System.Windows.Input.StylusPointer
         /// Hwnd input provider in order to keep similar semantics to how the WISP stack accomplishes this.  When the RTI is 
         /// re-implemented, we need to ensure this gets called from there exclusively.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - Calls into security critical code TargetPlugInCollection.
-        ///             Called by StylusLogic.InvokeStylusPluginCollection.
-        ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             // Find PenContexts object for this inputReport.
@@ -522,12 +498,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Used in order to allow StylusPlugins to affect mouse inputs as well as touch.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: - accesses e.StagingItem.Input and PresentationSource.CriticalFromVisual
-        ///               - Calls StylusLogic.GetManagerForSource
-        ///               - called by PreProcessInput
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void InvokePlugInsForMouse(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
@@ -688,9 +658,6 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - PresentationSource is critical
-        ///</SecurityNote>
         internal SecurityCriticalData<PresentationSource> _inputSource;
 
         List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();

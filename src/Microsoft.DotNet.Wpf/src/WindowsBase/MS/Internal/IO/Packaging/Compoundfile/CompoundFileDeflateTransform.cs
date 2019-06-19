@@ -51,18 +51,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="source">stream to read from</param>
         /// <param name="sink">stream to write to</param>
-        ///<SecurityNote>
-        ///     Critical: calls AllocOrRealloc which is allocates pinned memory based on arguments
-        ///     TreatAsSafe: Callers cannot use this to allocate memory of arbitrary size.
-        ///          AllocOrRealloc is used in two occasions:
-        ///          1. Compress - here we provide size based on our default block size (of 4k)
-        ///                  and growth will not exceed double this size (we are compressing, but sometimes
-        ///                  compression doesn't succeed in reducing sizes).
-        ///          2. Decompress - here the block size is based on values obtained from the
-        ///                  stream itself (see ReadBlockHeader) but we are careful to throw on malicious 
-        ///                  input.  Any size > 1MB is considered malicious and rejected.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Decompress(Stream source, Stream sink)
         {
             if (source == null)
@@ -185,18 +173,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>We are careful to avoid use of Position, Length or SetLength on non-seekable streams.  If
         /// source or sink are non-seekable, it is assumed that positions are correctly set upon entry and that
         /// they need not be restored.  We also assume that destination stream length need not be truncated.</remarks>
-        ///<SecurityNote>
-        ///     Critical: calls AllocOrRealloc which is allocates pinned memory based on arguments
-        ///     TreatAsSafe: Callers cannot use this to allocate memory of arbitrary size.
-        ///          AllocOrRealloc is used in two occasions:
-        ///          1. Compress - here we provide size based on our default block size (of 4k)
-        ///                  and growth will not exceed double this size (we are compressing, but sometimes
-        ///                  compression doesn't succeed in reducing sizes).
-        ///          2. Decompress - here the block size is based on values obtained from the
-        ///                  stream itself (see ReadBlockHeader) but we are careful to throw on malicious 
-        ///                  input.  Any size > 1MB is considered malicious and rejected.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Compress(Stream source, Stream sink)
         {
             if (source == null)
@@ -341,10 +317,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>When this exits, buffer is at least as large as size
         /// and gcHandle is pointing to the pinned buffer.  If the buffer was already large enough,
         /// no action is taken.</remarks>
-        /// <SecurityNote>
-        ///     Critical - allocates pinned memory based on arguments
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void AllocOrRealloc(int size, ref byte[] buffer, ref GCHandle gcHandle)
         {
             Invariant.Assert(size >= 0, "Cannot allocate negative number of bytes");

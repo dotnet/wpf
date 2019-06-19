@@ -192,10 +192,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// This function serializes text segment formed by rangeStart and rangeEnd to valid xml using xmlWriter.
         /// </summary>
-        /// <SecurityNote>
-        /// To mask the security exception from XamlWriter.Save in partial trust case,
-        /// this function checks if the current call stack has the all clipboard permission.
-        /// </SecurityNote>
         private static void WriteXamlTextSegment(XmlWriter xmlWriter, ITextPointer rangeStart, ITextPointer rangeEnd, XamlTypeMapper xamlTypeMapper, ref int elementLevel, WpfPayload wpfPayload, bool ignoreWriteHyperlinkEnd, List<int> ignoreList, bool preserveTextElements)
         {
             // Special case for pure text selection - we need a Run wrapper for it.
@@ -1065,10 +1061,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Writes complex properties in form of child elements with compound names
         /// </summary>
-        /// <SecurityNote>
-        /// To mask the security exception from XamlWriter.Save in partial trust case,
-        /// this function checks if the current call stack has unmanaged code permission.
-        /// </SecurityNote>
         private static void WriteComplexProperties(XmlWriter xmlWriter, DependencyObject complexProperties, Type elementType)
         {
             if (!SecurityHelper.CheckUnmanagedCodePermission())

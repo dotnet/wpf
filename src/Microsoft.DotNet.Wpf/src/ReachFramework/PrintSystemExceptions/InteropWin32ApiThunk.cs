@@ -23,11 +23,6 @@ namespace Win32ApiThunk
 {
     static internal class NativeMethodsForPrintExceptions
     {
-        ///<SecurityNote>
-        /// Critical    - SUC applied 
-        ///</SecurityNote>        
-        [System.Security.SuppressUnmanagedCodeSecurityAttribute]
-        [System.Security.SecurityCritical]
         [DllImport("Kernel32.dll", EntryPoint="FormatMessageW",
                    CharSet=CharSet.Unicode,
                    SetLastError=true, 

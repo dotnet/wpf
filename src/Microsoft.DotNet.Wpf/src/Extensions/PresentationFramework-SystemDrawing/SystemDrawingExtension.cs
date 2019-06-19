@@ -41,10 +41,6 @@ namespace MS.Internal
         }
 
         // return the handle from a metafile
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHandleFromMetafile(Object data)
         {
             IntPtr hMetafile = IntPtr.Zero;
@@ -73,10 +69,6 @@ namespace MS.Internal
 
         // Get a bitmap handle from the given data (either BitmapSource or Bitmap)
         // Also return its width and height.
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHBitmap(object data, out int width, out int height)
         {
             Bitmap bitmapData = GetBitmapImpl(data);
@@ -96,10 +88,6 @@ namespace MS.Internal
         }
 
         // Get a bitmap handle from a Bitmap
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr GetHBitmapFromBitmap(object data)
         {
             Bitmap bitmap = data as Bitmap;
@@ -107,10 +95,6 @@ namespace MS.Internal
         }
 
         // Convert a metafile to HBitmap
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override IntPtr ConvertMetafileToHBitmap(IntPtr handle)
         {
             Metafile metafile = new Metafile(handle, false);
@@ -159,9 +143,6 @@ namespace MS.Internal
         }
 
         // Get a bitmap from the given data (either BitmapSource or Bitmap)
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
         private static Bitmap GetBitmapImpl(object data)
         {
             BitmapSource bitmapSource = data as BitmapSource;
@@ -188,11 +169,6 @@ namespace MS.Internal
 
         //returns bitmap snapshot of selected area
         //this code takes a BitmapImage and converts it to a Bitmap so it can be put on the clipboard
-        /// <SecurityNote>
-        ///    Critical: This calls into copy pixels which is link demand protected. It initially had a demand and this
-        ///              code did not work in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override object GetBitmapFromBitmapSource(object source)
         {
             BitmapSource contentImage = (BitmapSource)source;

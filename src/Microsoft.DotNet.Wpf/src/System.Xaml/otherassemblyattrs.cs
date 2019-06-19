@@ -13,4 +13,7 @@ using System.Windows.Markup;
 [assembly:Dependency("System,", LoadHint.Always)]
 [assembly:Dependency("System.Xml,", LoadHint.Sometimes)]
 
+[assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlAccessLevel))]
+[assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlLoadPermission))]
+
 [assembly:XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]

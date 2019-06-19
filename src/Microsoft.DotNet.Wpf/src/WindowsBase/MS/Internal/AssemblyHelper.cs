@@ -25,8 +25,8 @@
 using System;
 using System.IO;                    // FileNotFoundException
 using System.Reflection;            // Assembly
-using System.Security;              // [SecurityCritical]
-using System.Security.Permissions;  // [ReflectionPermission]
+using System.Security;              // 
+using System.Security.Permissions;  // 
 
 using MS.Internal.WindowsBase;      // [FriendAccessAllowed] // BuildInfo
 
@@ -36,12 +36,10 @@ namespace MS.Internal
     internal enum UncommonAssembly
     {
         // Each enum name must match the assembly name, with dots replaced by underscores
-        System_Drawing,
-        System_Xml,
+        System_Drawing_Common,
         System_Private_Xml,
-        System_Xml_Linq,
         System_Private_Xml_Linq,
-        System_Data,
+        System_Data_Common,
         System_Linq_Expressions,
     }
 
@@ -50,11 +48,6 @@ namespace MS.Internal
     {
         #region Constructors
 
-        /// <SecurityNote>
-        ///     Critical: accesses AppDomain.AssemblyLoad event
-        ///     TreatAsSafe: the event is not exposed - merely updates internal state.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static AssemblyHelper()
         {
             // create the records for each uncommon assembly
@@ -83,11 +76,6 @@ namespace MS.Internal
 
         #region Internal Methods
 
-        /// <SecurityNote>
-        ///     Critical: accesses critical field _records
-        ///     TreatAsSafe: it's OK to read the IsLoaded bit
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         [FriendAccessAllowed]
         internal static bool IsLoaded(UncommonAssembly assemblyEnum)
         {
@@ -109,7 +97,7 @@ namespace MS.Internal
         internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force=false)
         {
             if (_systemDrawingExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Drawing)))
+                (force || IsLoaded(UncommonAssembly.System_Drawing_Common)))
             {
                 _systemDrawingExtensionMethods = (SystemDrawingExtensionMethods)LoadExtensionFor("SystemDrawing");
             }
@@ -127,7 +115,7 @@ namespace MS.Internal
         internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force=false)
         {
             if (_systemXmlExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Xml) || IsLoaded(UncommonAssembly.System_Private_Xml)))
+                (force || IsLoaded(UncommonAssembly.System_Private_Xml)))
             {
                 _systemXmlExtensionMethods = (SystemXmlExtensionMethods)LoadExtensionFor("SystemXml");
             }
@@ -145,7 +133,7 @@ namespace MS.Internal
         internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force=false)
         {
             if (_systemXmlLinqExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Xml_Linq) || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
+                (force || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
             {
                 _systemXmlLinqExtensionMethods = (SystemXmlLinqExtensionMethods)LoadExtensionFor("SystemXmlLinq");
             }
@@ -163,7 +151,7 @@ namespace MS.Internal
         internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force=false)
         {
             if (_systemDataExtensionMethods == null &&
-                (force || IsLoaded(UncommonAssembly.System_Data)))
+                (force || IsLoaded(UncommonAssembly.System_Data_Common)))
             {
                 _systemDataExtensionMethods = (SystemDataExtensionMethods)LoadExtensionFor("SystemData");
             }
@@ -199,12 +187,6 @@ namespace MS.Internal
         #region Private Methods
 
         // Get the extension class for the given assembly
-        /// <SecurityNote>
-        ///     Critical:  Asserts RestrictedMemberAccess permission
-        ///     TreatAsSafe:  Only used internally to load our own types
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [ReflectionPermission(SecurityAction.Assert, RestrictedMemberAccess=true)]
         private static object LoadExtensionFor(string name)
         {
             // The docs claim that Activator.CreateInstance will create an instance
@@ -236,19 +218,11 @@ namespace MS.Internal
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical:  This code potentially sets the IsLoaded bit for the given assembly.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             OnLoaded(args.LoadedAssembly);
         }
 
-        /// <SecurityNote>
-        ///     Critical:  This code potentially sets the IsLoaded bit for the given assembly.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLoaded(Assembly assembly)
         {
             // although this method can be called on an arbitrary thread, there's no
@@ -281,12 +255,6 @@ namespace MS.Internal
             public bool IsLoaded { get; set; }
         }
 
-        /// <SecurityNote>
-        ///     Critical:   The IsLoaded status could be used in security-critical
-        ///                 situations.  Make sure the IsLoaded bit is only set by authorized
-        ///                 code, namely OnLoaded.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static AssemblyRecord[] _records;
 
         #endregion Private Data

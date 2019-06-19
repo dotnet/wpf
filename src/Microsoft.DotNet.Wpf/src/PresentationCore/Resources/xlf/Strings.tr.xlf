@@ -409,7 +409,7 @@
       </trans-unit>
       <trans-unit id="Collection_BadType">
         <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
-        <target state="new">Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</target>
+        <target state="translated">'{0}' türündeki koleksiyona '{1}' türünde örnek eklenemez. Yalnızca '{2}' türündeki öğelere izin verilir.</target>
         <note />
       </trans-unit>
       <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
@@ -824,12 +824,12 @@
       </trans-unit>
       <trans-unit id="Effect_Shader30FloatConstantRegisterLimit">
         <source>Pixel Shader Model 3.0 requires floating point constants to be in registers [0-223].</source>
-        <target state="translated">Pixel Shader Model 3.0, kayan nokta sabitlerin yazmaçlarda olmasını gerektirir  [0-223].</target>
+        <target state="translated">Pixel Shader Model 3.0, kayan nokta sabitlerin yazmaçlarda olmasını gerektirir [0-223].</target>
         <note />
       </trans-unit>
       <trans-unit id="Effect_Shader30IntConstantRegisterLimit">
         <source>Pixel Shader Model 3.0 requires integer constants to be in registers [0-15].</source>
-        <target state="translated">Pixel Shader Model 3.0, tamsayı sabitlerin yazmaçlarda olmasını gerektirir  [0-15].</target>
+        <target state="translated">Pixel Shader Model 3.0, tamsayı sabitlerin yazmaçlarda olmasını gerektirir [0-15].</target>
         <note />
       </trans-unit>
       <trans-unit id="Effect_Shader30SamplerRegisterLimit">

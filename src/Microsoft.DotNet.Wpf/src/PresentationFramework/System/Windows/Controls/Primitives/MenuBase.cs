@@ -607,11 +607,6 @@ namespace System.Windows.Controls.Primitives
 
         private static readonly EventPrivateKey InternalMenuModeChangedKey = new EventPrivateKey();
 
-        ///<SecurityNote> 
-        ///     Critical - Accesses HwndSource
-        ///     TreatAsSafe - No information exposed. Simply decides whether or not to restore focus.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RestorePreviousFocus()
         {
             // Only restore focus if focus is still within the menu.  If
@@ -899,12 +894,6 @@ namespace System.Windows.Controls.Primitives
             set { _bitFlags[(int)MenuBaseFlags.OpenOnMouseEnter] = value; }
         }
 
-        ///<SecurityNote> 
-        ///     Critical - Accesses PresentationSource
-        ///     TreatAsSafe - No information exposed. Simply notifies the
-        ///                   PresentationSource to enter/leave menu mode.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private void PushMenuMode(bool isAcquireFocusMenuMode)
         {
             Debug.Assert(_pushedMenuMode == null);
@@ -916,12 +905,6 @@ namespace System.Windows.Controls.Primitives
 
         // **** Note:  This method is called via private reflection from RibbonMenuButton.
         //             Do not rename, remove, or change the method signature without fixing RibbonMenuButton.
-        ///<SecurityNote> 
-        ///     Critical - Accesses PresentationSource
-        ///     TreatAsSafe - No information exposed. Simply notifies the
-        ///                   PresentationSource to enter/leave menu mode.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private void PopMenuMode()
         {
             Debug.Assert(_pushedMenuMode != null);
@@ -934,14 +917,8 @@ namespace System.Windows.Controls.Primitives
 
         // **** Note:  This property is read via private reflection from RibbonMenuButton.
         //             Do not rename/remove this property without fixing RibbonMenuButton.
-        ///<SecurityNote> 
-        ///     Critical - Accesses PresentationSource
-        ///     TreatAsSafe - No information exposed. Simply returns
-        ///                   whether or not we have pushed menu mode.
-        ///</SecurityNote>
         private bool HasPushedMenuMode
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _pushedMenuMode != null;
@@ -959,7 +936,6 @@ namespace System.Windows.Controls.Primitives
             set { _bitFlags[(int)MenuBaseFlags.IsAcquireFocusMenuMode] = value; }
         }
 
-        [SecurityCritical]
         private PresentationSource _pushedMenuMode;
 
         private MenuItem _currentSelection;

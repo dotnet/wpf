@@ -59,14 +59,8 @@ namespace MS.Internal.AppModel
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [Guid("5FFAD804-61C8-445c-8C31-A2101C64C510")]
-    //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity]
     internal interface IBrowserCallbackServices
     {
-        /// <SecurityNote>
-        /// Critical due to SUC. 
-        /// A caller can treat the opearion as safe.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void OnBeforeShowNavigationWindow();
 
         /// <summary>
@@ -74,10 +68,6 @@ namespace MS.Internal.AppModel
         /// shdocvw know that the navigation is complete
         /// </summary>
         /// <param name="readyState"></param>
-        /// <SecurityNote>
-        /// Critical due to SUC and because the operation is inherently unsafe.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void PostReadyStateChange([In, MarshalAs(UnmanagedType.I4)] int readyState);
 
         /// <summary>
@@ -88,10 +78,6 @@ namespace MS.Internal.AppModel
         /// <param name="targetName"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - may allow listening to fully qualified uris (path discovery)
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void DelegateNavigation([In, MarshalAs(UnmanagedType.BStr)] string url, [In, MarshalAs(UnmanagedType.BStr)] string targetName, [In, MarshalAs(UnmanagedType.BStr)] string headers);
 
         /// <summary>
@@ -99,13 +85,8 @@ namespace MS.Internal.AppModel
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - may allow listening to fully qualified uris (path discovery)
-        ///     Can be used for URL spoofing.
-        /// </SecurityNote>
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool UpdateAddressBar([In, MarshalAs(UnmanagedType.BStr)] string url);
 
         /// <summary>
@@ -121,11 +102,7 @@ namespace MS.Internal.AppModel
         /// journal, reparenting a frame to a new tree doesn't affect the new tree.
         /// Its only the tree state where it is being removed from that is affected.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Pinvoke call for back and forward
-        /// </SecurityNote>
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void UpdateBackForwardState();
 
         /// <summary>
@@ -134,10 +111,6 @@ namespace MS.Internal.AppModel
         /// <param name="topLevelNav"></param>
         /// <param name="addNewEntry"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Pinvoke call to update travel log
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void UpdateTravelLog([In, MarshalAs(UnmanagedType.Bool)]bool addNewEntry);
 
         /// <summary>
@@ -152,44 +125,28 @@ namespace MS.Internal.AppModel
         /// Change the download state (spin the globe/wave the flag).
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Elevates to change the browser download state.
-        /// </SecurityNote>
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool ChangeDownloadState([In]bool fIsDownloading);
 
         /// <summary>
         /// Is this a downlevel platform that is not fully integrated
         /// </summary>
-        /// <SecurityNote> 
-        /// Critical - call is SUC'ed
-        /// </SecurityNote> 
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool IsDownlevelPlatform();
 
         /// <summary>
         /// Check if browser is shutting us down
         /// </summary>
-        /// <SecurityNote> 
-        /// Critical - call is SUC'ed
-        /// </SecurityNote> 
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool IsShuttingDown();
 
         /// <summary>
         /// Moves focus out of the application, to the browser frame.
         /// </summary>
-        /// <SecurityNote> 
-        /// Critical - call is SUC'ed
-        /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         bool TabOut(bool forward);
 
         /// <summary>
@@ -199,31 +156,19 @@ namespace MS.Internal.AppModel
         /// NOTE: There's also a DLL-exported function from PresentationHostDll for this purpose.
         ///   See DocObjHost.ProcessUnhandledException().
         /// </summary>
-        /// <SecurityNote> 
-        /// Critical - call is SUC'ed
-        /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void ProcessUnhandledException([In, MarshalAs(UnmanagedType.BStr)] string pErrorMsg);
 
         /// <summary>
         /// Returns the IOleClientSite interface
         /// </summary>
-        /// <SecurityNote> 
-        /// Critical - call is SUC'ed
-        /// </SecurityNote> 
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         int GetOleClientSite([Out, MarshalAs(UnmanagedType.IUnknown)] out object oleClientSite);
 
         /// <summary>
         /// Asks the browser to re-query for command status
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Call is SUC'ed
-        /// </SecurityNote>
         [PreserveSig]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         int UpdateCommands();
 
         /// <remarks>
@@ -233,10 +178,6 @@ namespace MS.Internal.AppModel
         /// lives in another process.
         /// The caller must call Release() on the COM interface.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - Call is SUC'ed. The WebOC should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         IntPtr CreateWebBrowserControlInBrowserProcess();
     }
 
@@ -244,14 +185,7 @@ namespace MS.Internal.AppModel
     /// <summary>
     /// [See master definition in HostSupport.idl.]
     /// </summary>
-    /// <SecurityNote>
-    /// Critical due to SUC. 
-    /// Even if a partilar method is considered safe, which many are, applying [SecurityTreatAsSafe] to it 
-    /// here won't help much, because the transparency model still requires SUC-d methods to be called only
-    /// from SecurityCritical ones.
-    /// </SecurityNote>
     [ComImport, Guid("AD5D6F02-5F4E-4D77-9FC0-381981317144"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface IHostBrowser
     {
         /// <summary>
@@ -298,7 +232,6 @@ namespace MS.Internal.AppModel
     };
 
     [ComImport, Guid("AD5D6F03-0002-4D77-9FC0-381981317144"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface IHostBrowser2
     {
         // Use IBCS.TabOut() instead. The implementation of TabOut is not fully factored out yet.

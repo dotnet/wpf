@@ -87,7 +87,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For Style, this is the type of the first element record
         ///   in the record collection, skipping over the Style element itself.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             Type       styleTargetType = Style.DefaultTargetType;

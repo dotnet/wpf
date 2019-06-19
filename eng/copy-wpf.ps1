@@ -4,22 +4,25 @@ Param(
 [string]$destination,
 [string]$arch="x86",
 [switch]$release,
-[switch]$local,
+[switch]$testhost,
+[string]$version,
 [switch]$help
 )
 
 function Print-Usage()
 {
-    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value>] [-release] [-local]"
+    Write-Host "Usage: copy-wpf.ps1 -destination <value> [-arch <value>] [-release] [-testhost] [-version]"
     Write-Host "    This script helps developers deploy wpf assemblies to the proper location for easy testing. See "
     Write-Host "    developer-guide.md for more information on how to use this script."
     Write-Host ""
     Write-Host "Common parameters:"
-    Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. Ignored"
-    Write-Host "                          if the -local parameter is used."
+    Write-Host "  -destination <value>    Location of .csproj or .vbproj of application to test against. If using -testhost,"
+    Write-Host "                          copies to the testhost location specified."
     Write-Host "  -arch <value>           Architecture of binaries to copy. Can be either x64 or x86. Default is x86."
     Write-Host "  -release                Copy release binaries. Default is to copy Debug binaries"
-    Write-Host "  -local                  Copy binaries over the local dotnet installation in the .dotnet folder"
+    Write-Host "  -testhost               Copy binaries over the testhost installation of dotnet"
+    Write-Host "  -version                When -testhost is used, will copy binaries over specified version of the"
+    Write-Host "                          Microsoft.WindowsDesktop.App shared runtime"
     Write-Host "  -help                   Print help and exit"
     Write-Host ""
 }
@@ -66,21 +69,71 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
     }
 }
 
-if ($help -or ([string]::IsNullOrEmpty($destination) -and !$local))
+function LocationIsSharedInstall($location, $arch)
+{
+    if ($arch -eq "x86")
+    {
+        return $location -eq "${env:ProgramFiles(x86)}\dotnet"
+    }
+    else
+    {
+        return $location -eq "$env:ProgramFiles\dotnet"
+    }
+}
+
+if ($help -or [string]::IsNullOrEmpty($destination))
 {
     Print-Usage
 }
-elseif($local)
+elseif($testhost)
 {
-    $destination = Join-Path $RepoRoot ".dotnet"
-    Write-Host "Copying binaries to local installation"
-    $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\*")
+    if ([string]::IsNullOrEmpty($version))
+    {
+        $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\*")
+        if ($location.Count -gt 1)
+        {
+            Write-Host "WARNING: Multiple versions of the Microsoft.WindowsDesktop.App runtime are located at $destination."
+            Write-Host "         Choosing the last installed runtime. Use -version flag to specify a different version."
+            $runtimeToChoose = $location.Count-1
+
+            # If the last runtime is a backup, ignore it and choose the next one.
+            if ($location[$runtimeToChoose].Path.Contains("Copy"))
+            {
+                $runtimeToChoose = $runtimeToChoose-1
+            }
+            $location = $location[$runtimeToChoose]
+        }
+    }
+    else
+    {
+        $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\$version")        
+    }
+
+    Write-Host "Copying binaries to dotnet installation at $location"
+    
     if(![System.IO.Directory]::Exists($location))
     {
         Write-Host "Location unavailable: " $location -ForegroundColor Red
         return
     }
     CopyBinariesToLocation $location
+
+    if (LocationIsSharedInstall $destination $arch)
+    {
+        # There is nothing fundamentally different about a test host installation versus trying to copy
+        # into program files. We just won't set the DOTNET_ROOT or DOTNET_MULTILEVEL_LOOKUP.
+        Write-Host "Copying to Program Files, skipping setting environment variables."
+    }
+    else
+    {
+        # Set DOTNET_ROOT variables so the host can find it
+        $dotnetVariableToSet = if ($arch -eq "x86") { "env:DOTNET_ROOT(x86)"} else { "env:DOTNET_ROOT"}
+        Write-Host "** Setting $dotnetVariableToSet to $destination **"
+        Set-Item -Path $dotnetVariableToSet -Value $destination
+
+        Write-Host "** Setting env:DOTNET_MULTILEVEL_LOOKUP to 0 **"    
+        $env:DOTNET_MULTILEVEL_LOOKUP=0
+    }
 }
 else
 {

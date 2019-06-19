@@ -236,12 +236,6 @@ namespace System.Windows.Input
         //------------------------------------------------------
 #region Private Methods
 
-        /// <SecurityNote>
-        /// Critical - determines the permission to be applied for a command
-        /// TreatAsSafe - callers don't need to worry, but we need to review
-        ///               any changes to this.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static PermissionSet GetRequiredPermissions(CommandId commandId)
         {
             PermissionSet permissions;

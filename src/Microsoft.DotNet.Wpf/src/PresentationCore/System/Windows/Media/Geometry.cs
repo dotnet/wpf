@@ -162,10 +162,6 @@ namespace System.Windows.Media
         }
 
 
-        /// <SecurityNote>
-        /// Critical - it does an elevation in calling MilUtility_PolygonBounds and is unsafe
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe static Rect GetBoundsHelper(
             Pen pen, 
             Matrix *pWorldMatrix, 
@@ -278,11 +274,6 @@ namespace System.Windows.Media
         /// <param name="tolerance">The computational error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this calls a method that elevates (MilUtility_GeometryGetArea)
-        /// TreatAsSafe - net effect of this is to calculate the area of a geometry, so it's considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public virtual double GetArea(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -398,11 +389,6 @@ namespace System.Windows.Media
         /// <param name="hitPoint">The point tested for containment</param>
         /// <param name="tolerance">The computational error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
-        /// <SecurityNote>
-        /// Critical - as this does an elevation in calling MilUtility_PathGeometryHitTest.
-        /// TreatAsSafe - as this doesn't expose anything sensitive.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal virtual bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             if (IsObviouslyEmpty())
@@ -468,10 +454,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Helper method to be used by derived implementations of ContainsInternal.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accepts pointers, does an elevation in calling MilUtility_PolygonHitTest.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type, 
                                                 Point *pPoints, uint pointCount, byte *pTypes, uint typeCount)
         {
@@ -616,14 +598,6 @@ namespace System.Windows.Media
         /// <param name="tolerance">The approximation error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
         /// <returns>Returns the polygonal approximation as a PathGeometry.</returns>
-        ///<SecurityNote>
-        ///     Critical - calls code that performs an elevation.
-        ///     PublicOK - net effect of this code is to create an "flattened" shape from the current one.
-        ///                          to "flatten" means to approximate with polygons.
-        ///                             ( in effect creating a different flavor of this shape from this one).
-        ///                          Considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetFlattenedPathGeometry(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -701,16 +675,6 @@ namespace System.Windows.Media
         /// <param name="tolerance">The computational error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
         /// <returns>Returns the contour as a PathGeometry.</returns>
-        ///<SecurityNote>
-        /// Critical as this calls a method that elevates ( SUC on PathGeometryWiden).
-        /// PublicOK - net effect of this is to create a new PathGeometry "widened" with a new pen.
-        ///                      To "widen" a path is what we do internally when we draw a path with a pen: we generate the contour of the stroke and then fill it.
-        ///                         The exposed method returns that contour as a PathGeometry.
-        ///                         In effect we're creating a different flavor of the current shape from this one.
-        ///
-        ///                      Considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetWidenedPathGeometry(Pen pen, double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -866,11 +830,6 @@ namespace System.Windows.Media
         /// <param name="tolerance">The computational error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
         /// <returns>Returns an equivalent geometry, properly oriented with no self-intersections.</returns>
-        /// <SecurityNote>
-        /// Critical - as this calls GetGlyphs() which is critical.
-        /// Safe - as this doesn't expose font information but just gives out a Geometry.
-        /// </SecurityNote>
-        [SecurityCritical]
         public virtual PathGeometry GetOutlinedPathGeometry(double tolerance, ToleranceType type)
         {
             ReadPreamble();
@@ -993,11 +952,6 @@ namespace System.Windows.Media
 
         internal struct PathGeometryData
         {
-            ///<SecurityNote>
-            /// Critical as this has an unsafe block.
-            /// TreatAsSafe - net effect is simply to read data.
-            ///</SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal bool IsEmpty()
             {
                 if ((SerializedData == null) || (SerializedData.Length <= 0))
@@ -1020,13 +974,8 @@ namespace System.Windows.Media
             internal MilMatrix3x2D Matrix;
             internal byte[] SerializedData;
 
-            /// <SecurityNote>
-            ///     Critical: Manipulates unsafe code
-            ///     TreatAsSafe - net effect is simply to read data.
-            /// </SecurityNote>
             internal uint Size
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if ((SerializedData == null) || (SerializedData.Length <= 0))
@@ -1059,11 +1008,6 @@ namespace System.Windows.Media
 
         #region Private
 
-        ///<SecurityNote>
-        /// Critical as this has an unsafe block.
-        /// TreatAsSafe - This allocates a buffer locally and writes to it.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static PathGeometryData MakeEmptyPathGeometryData()
         {
             PathGeometryData data = new PathGeometryData();

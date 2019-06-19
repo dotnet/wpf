@@ -46,12 +46,6 @@ namespace System.IO.Packaging
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        /// Critical as the BooleanSwitch has a LinkDemand
-        /// TreatAsSafe as this is just a diag switch, Debug-only and internal-only, no input data
-        ///   is passed to BooleanSwitch, and the overall operation is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static PackWebResponse()
         {
 #if DEBUG
@@ -67,11 +61,6 @@ namespace System.IO.Packaging
         /// <param name="innerUri">inner uri</param>
         /// <param name="partName">part name in the container - null if uri is to entire container only</param>
         /// <remarks>intended for use only by PackWebRequest</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) assigns Critical member _webRequest and calls BeginGetResponse() on it.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PackWebResponse(Uri uri, Uri innerUri, Uri partName, WebRequest innerRequest)
         {
             if (uri == null)
@@ -186,13 +175,6 @@ namespace System.IO.Packaging
         /// Retrieves a stream for reading bytes from the requested resource
         /// </summary>
         /// <returns>stream</returns>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Passes Critical member _webRequest to NetStream constructor
-        /// Safe
-        ///  1) Providing _webRequest to NetStream is safe because NetStream treats _webRequest as Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override Stream GetResponseStream()
         {
             CheckDisposed();
@@ -473,13 +455,6 @@ namespace System.IO.Packaging
         /// AbortResponse - called only from Close()
         /// </summary>
         /// <remarks>assumes caller has locked the syncObject and that we are not disposed</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        /// Safe
-        ///  1) Not modifying WebRequest.Proxy member which is what is really Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void AbortResponse()
         {
 // Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
@@ -799,11 +774,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="ar">async result</param>
         /// <remarks>static method not necessary</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) calls EndGetResponse() on Critical member _webRequest
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ResponseCallback(IAsyncResult ar)
         {
             lock (_lockObject)   // prevent race condition accessing _timeoutTimer, _disposed, _responseAvailable
@@ -978,11 +948,6 @@ namespace System.IO.Packaging
         private Uri             _partName;              // path to stream
         private bool            _disposed;              // closed?
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Proxy member is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
-        [SecurityCritical]                              // only WebRequest.Proxy member is Critical
         private WebRequest      _webRequest;            // the real web request
 
         private WebResponse     _fullResponse;          // the real web response

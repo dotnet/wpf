@@ -32,10 +32,6 @@ namespace System.Windows.Input
         // Only we can make these.  Note that we cache and resuse instances.
         internal ProcessInputEventArgs() {}
         
-        ///<SecurityNote> 
-        /// Critical - calls a critical method base.Reset
-        ///</SecurityNote>        
-        [SecurityCritical]        
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _allowAccessToStagingArea = true;
@@ -58,12 +54,6 @@ namespace System.Windows.Input
         ///<remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         ///</remarks> 
-        ///<SecurityNote> 
-        /// Critical - calls a critical method ( PushInput) 
-        /// PublicOK - there is a link demand for public callers.
-        ///</SecurityNote>
-        [SecurityCritical ]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]        
         public StagingAreaInputItem PushInput(InputEventArgs input, 
                                               StagingAreaInputItem promote) // Note: this should be a bool, and always use the InputItem available on these args.
         {
@@ -88,12 +78,6 @@ namespace System.Windows.Input
         ///<remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         ///</remarks>        
-        ///<SecurityNote> 
-        /// Critical - calls a critical method ( PushInput) 
-        /// PublicOK - there is a link demand for public callers.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]        
         public StagingAreaInputItem PushInput(StagingAreaInputItem input)
         {
             if(!_allowAccessToStagingArea)
@@ -114,11 +98,6 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>        
-        /// <SecurityNote> 
-        ///     Critical - calls a critical function ( InputManager.PopInput)
-        ///     PublicOK - there is a demand.
-        /// </SecurityNote> 
-        [SecurityCritical]
         public StagingAreaInputItem PopInput()
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -141,11 +120,6 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - accesses UnsecureInputManager
-        ///     PublicOK - there is a demand.
-        ///</SecurityNote> 
-        [SecurityCritical]
         public StagingAreaInputItem PeekInput()
         {
             SecurityHelper.DemandUnrestrictedUIPermission();

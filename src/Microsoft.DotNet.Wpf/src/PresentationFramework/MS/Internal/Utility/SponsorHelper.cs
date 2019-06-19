@@ -53,27 +53,11 @@ namespace MS.Internal.Utility
         #endregion ISponsor Interface
 
         #region Internal Methods
-        /// <SecurityNote>
-        /// Critical - asserts permission for RemotingConfiguration
-        /// TreatAsSafe - The constructor for this object is internal and this function does not take 
-        /// random parameters and hence can’t be used to keep random objects alive or access any other object
-        /// in the application. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [SecurityPermissionAttribute(SecurityAction.Assert, RemotingConfiguration = true)]
         internal void Register()
         {
             _lease.Register((ISponsor)this);
         }
 
-        /// <SecurityNote>
-        /// Critical - asserts permission for RemotingConfiguration
-        /// TreatAsSafe - The constructor for this object is internal and this function does not take 
-        /// random parameters and hence can’t be used to keep random objects alive or access any other object
-        /// in the application. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        [SecurityPermissionAttribute(SecurityAction.Assert, RemotingConfiguration = true)]
         internal void Unregister()
         {
             _lease.Unregister((ISponsor)this);

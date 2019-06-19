@@ -197,16 +197,6 @@ namespace MS.Internal.AppModel
         // <param name="uri"></param>
         // <returns></returns>
 
-        /// <SecurityNote>
-        ///   1. Critical - because calling add_AssemblyLoad
-        ///      Safe - because only hooks up specific internal event handler only applicable to for non-browser hosted scneario
-        ///   2. Critical - because creating a new ResourcePart is critical, as the ResourceManagerWrapper
-        ///                 that it uses has an Assembly instance that is SecurityCritical data for accessing internal types.
-        ///      Safe - because a ResourceManagerWrapper is being created based on a Uri name that gets mapped
-        ///             to an assembly from which a stream for the Uri was created and GetResourceManagerWrapper
-        ///             guarantees that given a Uri, the stream is always created from that mapped Assembly
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override PackagePart GetPartCore(Uri uri)
         {
             string partName;

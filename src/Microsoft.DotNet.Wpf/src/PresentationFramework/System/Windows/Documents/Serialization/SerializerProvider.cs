@@ -42,12 +42,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerProvider()
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -89,12 +83,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Registers the serializer plug-in identified by serializerDescriptor in the registry
         /// </summary>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not install 
-        ///  potentially unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void RegisterSerializer(SerializerDescriptor serializerDescriptor, bool overwrite)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -125,12 +113,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not uninstall
-        ///  serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void UnregisterSerializer(SerializerDescriptor serializerDescriptor)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -160,12 +142,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe : The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerWriter CreateSerializerWriter(SerializerDescriptor serializerDescriptor, Stream stream)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();
@@ -241,16 +217,8 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical: XpsSerializerFactory..ctor is defined in a non-APTCA assembly.
-        /// TreatAsSafe: demands appropriate permissions.
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load the ReachFramework.dll
-        ///  which does not the Aptca attribute set
-        ///</SecurityNote> 
         /// <returns>SerializerDescriptor for new serializer</returns>
         [SuppressMessage("Microsoft.Security", "CA2116:AptcaMethodsShouldOnlyCallAptcaMethods")]
-        [SecurityCritical, SecurityTreatAsSafe]        
         private SerializerDescriptor CreateSystemSerializerDescriptor()
         {
             SecurityHelper.DemandPlugInSerializerPermissions();

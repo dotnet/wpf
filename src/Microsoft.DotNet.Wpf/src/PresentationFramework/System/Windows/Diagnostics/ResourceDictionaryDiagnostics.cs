@@ -36,7 +36,6 @@ namespace System.Windows.Diagnostics
     public static class ResourceDictionaryDiagnostics
     {
         // Calls critical method IsEnvironmentVariableSet, but doesn't expose data
-        [SecuritySafeCritical]
         static ResourceDictionaryDiagnostics()
         {
             IsEnabled = VisualDiagnostics.IsEnabled &&

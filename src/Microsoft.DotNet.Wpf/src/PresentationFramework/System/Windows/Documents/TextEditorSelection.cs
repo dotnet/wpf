@@ -44,12 +44,6 @@ namespace System.Windows.Documents
 
         // Registers all text editing command handlers for a given control type
 
-        ///<SecurityNote>
-        ///     Critical - critical - calls a method that performs a link demand. CommandBinding ctor.
-        ///     TreatAsSafe - command bindings have link demands to prevent "hijacking" of built-in avalon commands.
-        ///                           however registering our own internal commands is safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void _RegisterClassHandlers(Type controlType, bool registerEventListeners)
         {
             // Shared handlers used multiple times below.

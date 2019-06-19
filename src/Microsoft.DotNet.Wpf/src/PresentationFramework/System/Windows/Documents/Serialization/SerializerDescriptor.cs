@@ -62,14 +62,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Critical : Creates untrusted object via reflection
-        ///  Safe     : Demands DemandPlugInSerializerPermissions
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static SerializerDescriptor CreateFromFactoryInstance(
             ISerializerFactory  factoryInstance
             )
@@ -126,12 +118,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe     : The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Security", "CA2001:AvoidCallingProblematicMethods")]
         internal ISerializerFactory CreateSerializerFactory()
         {
@@ -173,14 +159,6 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Critical : Creates untrusted object via reflection
-        ///  Safe     : Demands DemandPlugInSerializerPermissions
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         internal static SerializerDescriptor CreateFromRegistry(RegistryKey plugIns, string keyName)
         {
             SecurityHelper.DemandPlugInSerializerPermissions();

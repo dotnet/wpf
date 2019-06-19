@@ -31,21 +31,6 @@ using MS.Internal.Interop;
 
 namespace MS.Internal.Controls
 {
-    /// <SecurityNote>
-    /// 1) By virtue of being derived from InternalDispatchObject, WebBrowserEvent objects are unsafe to expose
-    ///     in partial trust--in principle. Having an object reference, partial-trust code would be able to 
-    ///     call the methods implementing DWebBrowserEvents2. Since most of our current implementation methods
-    ///     are SecurityTreatAsSafe, this exposure concern is insignificant.
-    /// 2) WebOCHostedInBrowserProcess - defense in depth: The DWebBrowserEvents2 implementation is exposed 
-    ///     across a security boundary. We must not allow a compromised low-integrity-level browser process to
-    ///     gain elevation of privilege via our process or tamper with its state. (Attacking the WebOC via this 
-    ///     interface is not interesting, because the WebOC is directly accessible in the browser process.)
-    ///
-    ///     Normally this type and all its methods would be critical however the type derives from InternalDispatchObject.
-    ///     InternalDispatchObject implements the public transparent IReflect interface and via that interface 
-    ///     all the other methods on this type are (by design) publicly accessible. Marking them critical causes 
-    ///     the security subsystem to inject an UnmanagedCode demand that will not be satified in partial trust.
-    /// </SecurityNote>
     [ClassInterface(ClassInterfaceType.None)]
     internal class WebBrowserEvent :
         InternalDispatchObject<UnsafeNativeMethods.DWebBrowserEvents2>,
@@ -53,27 +38,12 @@ namespace MS.Internal.Controls
     {
         private WebBrowser _parent;
 
-        /// <SecurityNote>
-        /// Critical because the base class ctor is critical. 
-        /// Instances should not be exposed in partial trust, unless all methods implementing DWebBrowserEvents2
-        /// are safe to call.
-        /// </SecurityNote>
-        [SecurityCritical]
         public WebBrowserEvent(WebBrowser parent)
         {
             _parent = parent;
             Debug.Assert(parent != null, "WebBrowser control required for hooking webbrowser events");
         }
 
-        /// <SecurityNote>
-        /// Critical: This code extracts the IWebBrowser2 interface
-        /// TreatAsSafe: This does not expose the interface, also calling this will not cause a navigation
-        ///     It simply enforces a few checks.
-        /// WebOCHostedInBrowserProcess: By passing appropriately crafted parameters, malicious code in the 
-        ///     low-integrity browser process could get us to set the SecurityCritical _parent.NavigatingToAboutBlank 
-        ///     to false. This is currently safe. (But setting it to true is not!)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void BeforeNavigate2(object pDisp, ref object url, ref object flags, ref object targetFrameName, ref object postData, ref object headers, ref bool cancel)
         {
             bool newNavigationInitiated = false;
@@ -202,12 +172,7 @@ namespace MS.Internal.Controls
         /// <summary>
         /// Determines whether a URI has a recognized and allowed URI scheme that we shouldn't block on navigation
         /// attempts from the browser, regardless of whether we are partial trust or not.
-        /// <SecurityNote>
-        ///     Critical: Can be used to make a security decision about script execution.
-        ///     TreatAsSafe: Does not perform privileged operations; also usable for non-security related stuff.
-        /// </SecurityNote>
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool IsAllowedScriptScheme(Uri uri)
         {
             return uri != null && (uri.Scheme == "javascript" || uri.Scheme == "vbscript");
@@ -217,7 +182,6 @@ namespace MS.Internal.Controls
         ///     Critical: This code extracts the IWebBrowser2, IHTMLDocument interface.
         ///     TreatAsSafe: This does not expose the interface.
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void NavigateComplete2(object pDisp, ref object url)
         {
             Debug.Assert(url == null || url is string, "invalid url type");
@@ -273,7 +237,6 @@ namespace MS.Internal.Controls
         ///     Critical: This code accesses the IWebBrowser2, IHTMLDocument interface.
         ///     TreatAsSafe: This does not expose the interface.
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void DocumentComplete(object pDisp, ref object url)
         {
             Debug.Assert(url == null || url is string, "invalid url type");
@@ -297,11 +260,6 @@ namespace MS.Internal.Controls
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void CommandStateChange(long command, bool enable)
         {
             if (command == NativeMethods.CSC_NAVIGATEBACK)
@@ -314,32 +272,17 @@ namespace MS.Internal.Controls
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void TitleChange(string text)
         {
             //this.parent.OnDocumentTitleChanged(EventArgs.Empty);
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetSecureLockIcon(int secureLockIcon)
         {
             //this.parent.encryptionLevel = (WebBrowserEncryptionLevel)secureLockIcon;
             //this.parent.OnEncryptionLevelChanged(EventArgs.Empty);
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void NewWindow2(ref object ppDisp, ref bool cancel)
         {
             //CancelEventArgs e = new CancelEventArgs();
@@ -347,205 +290,68 @@ namespace MS.Internal.Controls
             //cancel = e.Cancel;
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void ProgressChange(int progress, int progressMax)
         {
             //WebBrowserProgressChangedEventArgs e = new WebBrowserProgressChangedEventArgs(progress, progressMax);
             //this.parent.OnProgressChanged(e);
         }
 
-        /// <SecurityNote>
-        /// Critical: Setting the browser's status bar allows hyperlink URL spoofing.
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// WebOCHostedInBrowserProcess: Setting the status bar through this method is not interesting, because
-        ///     malicious code in the browser process could do this directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void StatusTextChange(string text)
         {
             _parent.RaiseEvent(new RequestSetStatusBarEventArgs(text));
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void DownloadBegin()
         {
             //this.parent.OnFileDownload(EventArgs.Empty);
         }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void FileDownload(ref bool activeDocument, ref bool cancel) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void PrivacyImpactedStateChange(bool bImpacted) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void UpdatePageStatus(object pDisp, ref object nPage, ref object fDone) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void PrintTemplateTeardown(object pDisp) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void PrintTemplateInstantiation(object pDisp) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void NavigateError(object pDisp, ref object url, ref object frame, ref object statusCode, ref bool cancel) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void ClientToHostWindow(ref long cX, ref long cY) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowClosing(bool isChildWindow, ref bool cancel) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowSetHeight(int height) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowSetWidth(int width) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowSetTop(int top) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowSetLeft(int left) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowSetResizable(bool resizable) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnTheaterMode(bool theaterMode) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnFullScreen(bool fullScreen) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnStatusBar(bool statusBar) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnMenuBar(bool menuBar) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnToolBar(bool toolBar) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnVisible(bool visible) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnQuit() { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void PropertyChange(string szProperty) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void DownloadComplete() { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetPhishingFilterStatus(uint phishingFilterStatus) { }
 
-        /// <SecurityNote>
-        /// Critical: Implements critical interface (UnsafeNativeMethods.DWebBrowserEvents2) member
-        /// NOT PublicOK! The WebBrowserEvent object should not be exposed to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WindowStateChanged(uint dwFlags, uint dwValidFlagsMask) { }
     }
 }

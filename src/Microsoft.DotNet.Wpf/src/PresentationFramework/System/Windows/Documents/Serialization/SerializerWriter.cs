@@ -30,11 +30,6 @@ namespace System.Windows.Documents.Serialization
        /// <summary>
         /// Write a single Visual and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void Write(Visual visual, PrintTicket printTicket);
 
         /// <summary>
@@ -51,22 +46,12 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single Visual and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(Visual visual, PrintTicket printTicket);
 
 
        /// <summary>
         /// Asynchronous Write a single Visual and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(Visual visual, PrintTicket printTicket, object userState);
 
         /// <summary>
@@ -77,11 +62,6 @@ namespace System.Windows.Documents.Serialization
        /// <summary>
         /// Write a single DocumentPaginator and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void Write(DocumentPaginator documentPaginator, PrintTicket printTicket);
 
         /// <summary>
@@ -92,11 +72,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single DocumentPaginator and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(DocumentPaginator documentPaginator, PrintTicket printTicket);
 
         /// <summary>
@@ -107,11 +82,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single DocumentPaginator and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(DocumentPaginator documentPaginator, PrintTicket printTicket, object userState);
 
         /// <summary>
@@ -122,11 +92,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Write a single FixedPage and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void Write(FixedPage fixedPage, PrintTicket printTicket);
 
         /// <summary>
@@ -137,11 +102,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single FixedPage and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedPage fixedPage, PrintTicket printTicket);
 
         /// <summary>
@@ -152,11 +112,6 @@ namespace System.Windows.Documents.Serialization
        /// <summary>
         /// Asynchronous Write a single FixedPage and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedPage fixedPage, PrintTicket printTicket, object userState);
 
 
@@ -168,11 +123,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Write a single FixedDocument and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void Write(FixedDocument fixedDocument, PrintTicket printTicket);
 
         /// <summary>
@@ -183,11 +133,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single FixedDocument and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedDocument fixedDocument, PrintTicket printTicket);
 
         /// <summary>
@@ -198,11 +143,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single FixedDocument and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedDocument fixedDocument, PrintTicket printTicket, object userState);
 
         /// <summary>
@@ -213,11 +153,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Write a single FixedDocumentSequence and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void Write(FixedDocumentSequence fixedDocumentSequence, PrintTicket printTicket);
 
         /// <summary>
@@ -228,11 +163,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single FixedDocumentSequence and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedDocumentSequence fixedDocumentSequence, PrintTicket printTicket);
 
         /// <summary>
@@ -243,11 +173,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Asynchronous Write a single FixedDocumentSequence and close package
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract void WriteAsync(FixedDocumentSequence fixedDocumentSequence, PrintTicket printTicket, object userState);
 
         /// <summary>
@@ -263,11 +188,6 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Create a SerializerWriterCollator to gobble up multiple Visuals
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Takes critical argument of type PrintTicket from non-aptca assembly
-        ///   Safe     : PrintTicket is strongly typed wrapper over an XML document that does not contain security critical information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public abstract SerializerWriterCollator CreateVisualsCollator(PrintTicket documentSequencePT, PrintTicket documentPT);
 
         /// <summary>

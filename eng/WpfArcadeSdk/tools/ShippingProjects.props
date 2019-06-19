@@ -52,24 +52,37 @@
     <WindowsDesktopSdkProject>
       PresentationBuildTasks
     </WindowsDesktopSdkProject>
-    
+
     <CycleBreakerProjects>
-        PresentationFramework-PresentationUI-api-cycle;
-        PresentationFramework-ReachFramework-impl-cycle;
-        PresentationFramework-System.Printing-api-cycle;
-        PresentationFramework-System.Printing-impl-cycle;
-        PresentationUI-PresentationFramework-impl-cycle;
-        ReachFramework-PresentationFramework-api-cycle;
-        ReachFramework-System.Printing-api-cycle;
-        System.Printing-PresentationFramework-api-cycle
+      PresentationFramework-PresentationUI-api-cycle;
+      PresentationFramework-ReachFramework-impl-cycle;
+      PresentationFramework-System.Printing-api-cycle;
+      PresentationFramework-System.Printing-impl-cycle;
+      PresentationUI-PresentationFramework-impl-cycle;
+      ReachFramework-PresentationFramework-api-cycle;
+      ReachFramework-System.Printing-api-cycle;
+      System.Printing-PresentationFramework-api-cycle
     </CycleBreakerProjects>
-    <HandCraftedReferenceProjects>
-        System.Printing-ref
-    </HandCraftedReferenceProjects>
+
+    <!-- 
+      Reference assembly projects are categorized by what repo they are shipping in.
+      If this changes, say due to open sourcing, they must move accordingly or they 
+      will not be including in the ref pack.
+      
+      See: ReferenceAssembly.targets/CopyHandCraftedReferenceProjectsToRefDir
+    -->
+    <ExternalHandCraftedReferenceProjects>
+      System.Xaml-ref;
+    </ExternalHandCraftedReferenceProjects>
+
+    <InternalHandCraftedReferenceProjects>
+      System.Printing-ref;
+    </InternalHandCraftedReferenceProjects>
 
     <HelperProjects>
       $(CycleBreakerProjects);
-      $(HandCraftedReferenceProjects)
+      $(ExternalHandCraftedReferenceProjects);
+      $(InternalHandCraftedReferenceProjects);
     </HelperProjects>
 
     <!--
@@ -103,7 +116,8 @@
       ReachFramework-System.Printing-api-cycle;
       System.Printing-PresentationFramework-api-cycle;
       PresentationUI-PresentationFramework-impl-cycle;
-      System.Printing-ref
+      $(ExternalHandCraftedReferenceProjects);
+      $(InternalHandCraftedReferenceProjects);
     </UseMicrosoftSharedKeyId>
   </PropertyGroup>
 
@@ -117,7 +131,7 @@
     -->
     <NormalizedMSBuildProjectName Condition="!$(MSBuildProjectName.EndsWith('_wpftmp'))">$(MSBuildProjectName)</NormalizedMSBuildProjectName>
     <NormalizedMSBuildProjectName Condition="$(MSBuildProjectName.EndsWith('_wpftmp'))">$(MSBuildProjectName.SubString(0, $(MSBuildProjectName.IndexOf('_'))))</NormalizedMSBuildProjectName>
-    
+
     <IsShipping>false</IsShipping>
     <IsShipping Condition="$(ShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IsShipping>
     <IsShipping Condition="'$(IsPackagingProject)'=='true'">true</IsShipping>
@@ -127,9 +141,9 @@
 
     <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
     <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
-    
+ 
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
     <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
   </PropertyGroup>
-  
+
 </Project>

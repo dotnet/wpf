@@ -316,4 +316,10 @@
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationBuildTasks\ref\PresentationBuildTasks-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>

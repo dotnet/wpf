@@ -76,6 +76,7 @@
       WindowsBase-ref;
       UIAutomationTypes-ref;
       UIAutomationProvider-ref;
+      UIAutomationClient-ref;
     </ExternalHandCraftedReferenceProjects>
 
     <InternalHandCraftedReferenceProjects>

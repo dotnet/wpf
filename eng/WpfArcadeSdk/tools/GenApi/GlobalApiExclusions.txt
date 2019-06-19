@@ -1,6 +1,10 @@
-# WindowsBase
-# TODO:  This type removal is bad, it should remove the member IsBrowsable.  Do this when we know how.
-T:System.Windows.AttachedPropertyBrowsableAttribute
+# NOTE: 
+#   The following commented out removals are due to issues with generating derived classes.
+#   Since automatic generation will add these back, these errors will need to be hand fixed.
+#   Do this by removed the base class function that is not being added to the derived classes.
+#   This is only applicable for internal functions.
+# WindowsBase:
+#   System.Windows.AttachedPropertyBrowsableAttribute.IsBrowsable
 
 # PresentationCore
 T:System.Windows.Media.Composition.DUCE.Channel

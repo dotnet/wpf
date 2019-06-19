@@ -734,8 +734,12 @@ namespace System.Security.RightsManagement
 }
 namespace System.Windows
 {
+    public abstract partial class AttachedPropertyBrowsableAttribute : System.Attribute
+    {
+        protected AttachedPropertyBrowsableAttribute() { }
+    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=true)]
-    public sealed partial class AttachedPropertyBrowsableForTypeAttribute : System.Attribute
+    public sealed partial class AttachedPropertyBrowsableForTypeAttribute : System.Windows.AttachedPropertyBrowsableAttribute
     {
         public AttachedPropertyBrowsableForTypeAttribute(System.Type targetType) { }
         public System.Type TargetType { get { throw null; } }
@@ -744,7 +748,7 @@ namespace System.Windows
         public override int GetHashCode() { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=false)]
-    public sealed partial class AttachedPropertyBrowsableWhenAttributePresentAttribute : System.Attribute
+    public sealed partial class AttachedPropertyBrowsableWhenAttributePresentAttribute : System.Windows.AttachedPropertyBrowsableAttribute
     {
         public AttachedPropertyBrowsableWhenAttributePresentAttribute(System.Type attributeType) { }
         public System.Type AttributeType { get { throw null; } }

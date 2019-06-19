@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationClient-ref", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationClientSideProviders", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj", "{D242FDF9-F132-4154-BB9F-3F85C39F6F4C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationClientSideProviders-ref", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationClientSideProviders\ref\UIAutomationClientSideProviders-ref.csproj", "{38702943-E4E0-4DD8-9301-6BCCB49A759E}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationProvider", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj", "{4C99DEEE-ED7A-4225-8127-3B1E6EDB39D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationProvider-ref", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationProvider\ref\UIAutomationProvider-ref.csproj", "{5F2BDB27-183B-49A7-89E5-E5CA039D5001}"
@@ -643,6 +645,18 @@ Global
 		{702AF75A-9BF3-494C-8265-4E3D1B2937F5}.Release|x64.Build.0 = Release|x64
 		{702AF75A-9BF3-494C-8265-4E3D1B2937F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{702AF75A-9BF3-494C-8265-4E3D1B2937F5}.Release|x86.Build.0 = Release|Any CPU
+	    {38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|x64.ActiveCfg = Debug|x64
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|x64.Build.0 = Debug|x64
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Debug|x86.Build.0 = Debug|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x64.ActiveCfg = Release|x64
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x64.Build.0 = Release|x64
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x86.ActiveCfg = Release|Any CPU
+		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

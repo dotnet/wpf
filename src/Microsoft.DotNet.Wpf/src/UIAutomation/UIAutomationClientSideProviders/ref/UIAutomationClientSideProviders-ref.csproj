@@ -1,31 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{D242FDF9-F132-4154-BB9F-3F85C39F6F4C}</ProjectGuid>
+    <AssemblyName>UIAutomationClientSideProviders</AssemblyName>
+    <PackageId>UIAutomationClientSideProviders-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <Platforms>AnyCPU;x64</Platforms>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <!-- currently not in use 
-    <Compile Include="MS\Internal\AutomationProxies\WordBreaker.cs" />
-    <Compile Include="MS\Internal\UnsupportedAutomationProxies\SuperGridProvider.cs" />
-    <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsCalendar.cs" />
-    <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsDateTimePicker.cs" />
-    <Compile Include="MS\Internal\UnsupportedAutomationProxies\windowspager.cs" /> 
-    -->
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\ref\UIAutomationProvider-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj" />
   </ItemGroup>
   <ItemGroup>
     <NetCoreReference Include="netstandard" />

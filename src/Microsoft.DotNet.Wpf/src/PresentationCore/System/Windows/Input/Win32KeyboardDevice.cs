@@ -60,32 +60,14 @@ namespace System.Windows.Input
         {
             KeyStates keyStates = KeyStates.None;
 
-            bool getKeyStatesFromSystem = false;
-            if(IsActive)
-            {
-                // Our keyboard device is only active if some WPF window in
-                // this AppDomain has focus.  It is always safe to return
-                // the state of keys.
-                getKeyStatesFromSystem = true;
-            }
-            else
-            {
-                getKeyStatesFromSystem = true;
-            }
+            int virtualKeyCode = KeyInterop.VirtualKeyFromKey(key);
+            int nativeKeyState = UnsafeNativeMethods.GetKeyState(virtualKeyCode);
 
-            if (getKeyStatesFromSystem)
-            {
-                int virtualKeyCode = KeyInterop.VirtualKeyFromKey(key);
-                int nativeKeyState;
+            if ((nativeKeyState & 0x00008000) == 0x00008000)
+                keyStates |= KeyStates.Down;
 
-                nativeKeyState = UnsafeNativeMethods.GetKeyState(virtualKeyCode);
-
-                if( (nativeKeyState & 0x00008000) == 0x00008000 )
-                    keyStates |= KeyStates.Down;
-
-                if( (nativeKeyState & 0x00000001) == 0x00000001 )
-                    keyStates |= KeyStates.Toggled;
-            }
+            if ((nativeKeyState & 0x00000001) == 0x00000001)
+                keyStates |= KeyStates.Toggled;
 
             return keyStates;
         }

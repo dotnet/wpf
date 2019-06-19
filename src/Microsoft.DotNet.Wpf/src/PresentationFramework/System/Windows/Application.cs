@@ -29,10 +29,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-#if NETFX
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Lifetime;
-#endif
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
@@ -101,10 +97,6 @@ namespace System.Windows
         static Application()
         {
             ApplicationInit();
-
-#if NETFX
-            NetFxVersionTraceLogger.LogVersionDetails();
-#endif
         }
 
         /// <summary>
@@ -140,12 +132,6 @@ namespace System.Windows
                 }
             }
 
-            // Post a work item to start the Dispatcher (if we are browser hosted) so that the Dispatcher
-            // will be running before OnStartup is fired. We can't check to see if we are browser-hosted
-            // in the app ctor because BrowerInteropHelper.IsBrowserHosted hasn't been set yet.
-            Dispatcher.BeginInvoke(
-                DispatcherPriority.Send,
-                new DispatcherOperationCallback(StartDispatcherInBrowser), null);
 
             //
             // (Application not shutting down when calling
@@ -232,35 +218,9 @@ namespace System.Windows
         public int Run(Window window)
         {
             VerifyAccess();
-
-            //
-            // Browser hosted app should not explictly call App.Run(). We need to filter out those
-            // calls here
-            //
-            if (InBrowserHostedApp())
-            {
-                throw new InvalidOperationException(SR.Get(SRID.CannotCallRunFromBrowserHostedApp));
-            }
-            else
-            {
-                return RunInternal(window);
-            }
+            return RunInternal(window);
         }
 
-        /// <summary>
-        /// This will return true IFF this is a browser hosted, and this is the user's deployed
-        /// application, not our deployment application. We can't use BrowserCallbackServices for
-        /// this test, because it may not be hooked up yet. BrowserInteropHelper.IsBrowserHosted
-        /// is set before any of the code in the new AppDomain will be run yet.
-        /// </summary>
-        internal static bool InBrowserHostedApp()
-        {
-#if NETFX
-            return BrowserInteropHelper.IsBrowserHosted && !(Application.Current is XappLauncherApp);
-#else
-            return false;
-#endif
-        }
 
         /// <summary>
         ///
@@ -876,21 +836,6 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-
-#if NETFX
-                //
-                // Throw if an attempt is made to change RBW.
-                // or we are browser hosted, main window is null, and attempt is made to change RBW.
-                //
-                if ( ( _mainWindow is RootBrowserWindow )
-                     ||
-                    ((BrowserCallbackServices != null ) &&
-                      ( _mainWindow == null ) &&
-                      ( !( value is RootBrowserWindow ))) )
-                {
-                    throw new InvalidOperationException( SR.Get( SRID.CannotChangeMainWindowInBrowser ) ) ;
-                }
-#endif
 
                 if (value != _mainWindow)
                 {
@@ -1532,7 +1477,6 @@ namespace System.Windows
                 switch (state)
                 {
                     case NavigationStateChange.Navigating:
-                        ChangeBrowserDownloadState(true);
                         if (playNavigatingSound)
                         {
                             PlaySound(SOUND_NAVIGATING);
@@ -1540,29 +1484,13 @@ namespace System.Windows
                         break;
                     case NavigationStateChange.Completed:
                         PlaySound(SOUND_COMPLETE_NAVIGATION);
-                        ChangeBrowserDownloadState(false);
-                        UpdateBrowserCommands();
                         break;
                     case NavigationStateChange.Stopped:
-                        ChangeBrowserDownloadState(false);
                         break;
                 }
             }
         }
 
-        internal void UpdateBrowserCommands()
-        {
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsStart);
-
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // ask the browser to re-query us for toolbar button state
-                ibcs.UpdateCommands();
-            }
-
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsEnd);
-        }
 
         /// <summary>
         /// Application Startup.
@@ -1766,10 +1694,7 @@ namespace System.Windows
             //Shutdown DispatcherOperationCallback
 
             // Invoke the Dispatcher synchronously if we are not in the browser
-            if (!BrowserInteropHelper.IsBrowserHosted)
-            {
-                RunDispatcher(null);
-            }
+            RunDispatcher(null);
 
             return _exitCode;
         }
@@ -1788,29 +1713,12 @@ namespace System.Windows
         //   is created before the application.Run is called.
         internal NavigationWindow GetAppWindow()
         {
-            NavigationWindow appWin = null;
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
+            NavigationWindow appWin = new NavigationWindow();
 
-            // standalone case
-            if (ibcs == null)
-            {
-                appWin = new NavigationWindow();
-
-                // We don't want to show the window before the content is ready, but for compatibility reasons
-                // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
-                // to be null when LoadCompleted has happened.
-                new WindowInteropHelper(appWin).EnsureHandle();
-            }
-#if NETFX
-            else // browser hosted case
-            {
-                IHostService ihs = (IHostService)this.GetService(typeof(IHostService));
-                Debug.Assert(ihs != null, "IHostService in RootBrowserWindow cannot be null");
-                appWin = ihs.RootBrowserWindowProxy.RootBrowserWindow;
-                Debug.Assert(appWin != null, "appWin must be non-null");
-                Debug.Assert(appWin is RootBrowserWindow, "appWin must be a RootBrowserWindow");
-            }
-#endif
+            // We don't want to show the window before the content is ready, but for compatibility reasons
+            // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
+            // to be null when LoadCompleted has happened.
+            new WindowInteropHelper(appWin).EnsureHandle();
 
             return appWin;
         }
@@ -1955,52 +1863,9 @@ namespace System.Windows
             {
                 VerifyAccess();
                 _serviceProvider = value ;
-#if NETFX
-                if (value != null)
-                {
-                    _browserCallbackServices = (IBrowserCallbackServices)(_serviceProvider.GetService(typeof(IBrowserCallbackServices)));
-                    ILease lease = RemotingServices.GetLifetimeService(_browserCallbackServices as MarshalByRefObject) as ILease;
-                    if (lease != null)
-                    {
-                        //Per the remoting infrastructure, any remote object will get released in 5 mins unless the lease
-                        //is extended with the lease manager by a sponsor
-                        _browserCallbackSponsor = new SponsorHelper(lease, new TimeSpan(0, 5, 0));
-                        _browserCallbackSponsor.Register();
-                    }
-
-                }
-                else
-                {
-                    CleanUpBrowserCallBackServices();
-                }
-#endif
             }
         }
 
-#if NETFX
-        private void CleanUpBrowserCallBackServices()
-        {
-            if (_browserCallbackServices != null)
-            {
-                if (_browserCallbackSponsor != null)
-                {
-                    _browserCallbackSponsor.Unregister();
-                    _browserCallbackSponsor = null;
-                }
-                _browserCallbackServices = null;
-                // Marshal.ReleaseComObject(IBHS) is called from ApplicationProxyInternal.
-            }
-        }
-
-        internal IBrowserCallbackServices BrowserCallbackServices
-        {
-            get
-            {
-                VerifyAccess();
-                return _browserCallbackServices;
-            }
-        }
-#endif
 
         // is called by NavigationService to detect TopLevel container
         // We check there to call this only if NavigationService is on
@@ -2032,17 +1897,6 @@ namespace System.Windows
                     return _isShuttingDown;
                 }
 
-#if NETFX
-                if (BrowserInteropHelper.IsBrowserHosted)
-                {
-                    Application app = Application.Current;
-                    if ((app != null) && (app.CheckAccess()))
-                    {
-                        IBrowserCallbackServices bcs = app.BrowserCallbackServices;
-                        return ((bcs != null) && bcs.IsShuttingDown());
-                    }
-                }
-#endif
                 return false;
             }
             set
@@ -2202,14 +2056,7 @@ namespace System.Windows
         /// </summary>
         private void EnsureHwndSource()
         {
-            // We don't support Activate, Deactivate, and SessionEnding
-            // events for browser hosted scenarios thus don't create
-            // this HwndSource if BrowserCallbackServices is valid
-#if NETFX
-            if (BrowserCallbackServices == null && _parkingHwnd == null)
-#else
             if (_parkingHwnd == null)
-#endif
             {
                 // _appFilterHook needs to be member variable otherwise
                 // it is GC'ed and we don't get messages from HwndWrapper
@@ -2432,15 +2279,6 @@ namespace System.Windows
             }
         }
 
-        private void ChangeBrowserDownloadState(bool newState)
-        {
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // start or stop waving the flag
-                ibcs.ChangeDownloadState(newState);
-            }
-        }
 
         /// <summary>
         /// Plays a system sound using the PlaySound api.  This is a managed equivalent of the
@@ -2570,31 +2408,6 @@ namespace System.Windows
             return isRootElement;
         }
 
-        [DebuggerNonUserCode] // to treat this method as non-user code even when symbols are available
-        private object StartDispatcherInBrowser(object unused)
-        {
-            if (BrowserInteropHelper.IsBrowserHosted)
-            {
-                BrowserInteropHelper.InitializeHostFilterInput();
-
-                // This seemingly meaningless try-catch-throw is a workaround for a CLR deficiency/bug in
-                // exception handling. When an unhandled exception on the main thread crosses
-                // the AppDomain boundary, the p/invoke layer catches it and throws another exception. Thus,
-                // the original exception is lost before the debugger is notified. The result is no managed
-                // callstack whatsoever. The workaround is based on a debugger/CLR feature that notifies of
-                // exceptions unhandled in 'user code'. This works only when the Just My Code feature is enabled
-                // in VS.
-                try
-                {
-                    RunDispatcher(null);
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-            return null;
-        }
 
         private object RunDispatcher(object ignore)
         {
@@ -2641,10 +2454,6 @@ namespace System.Windows
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;
-#if NETFX
-        private IBrowserCallbackServices    _browserCallbackServices;
-        private SponsorHelper               _browserCallbackSponsor;
-#endif
 
         private bool                        _appIsShutdown;
         private int                         _exitCode;

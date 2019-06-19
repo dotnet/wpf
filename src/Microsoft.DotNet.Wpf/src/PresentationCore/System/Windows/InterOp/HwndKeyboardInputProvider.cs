@@ -103,38 +103,29 @@ namespace System.Windows.Interop
                     // In either case, the window must be enabled.
                     if(SafeNativeMethods.IsWindowEnabled(thisWindow))
                     {
-                        if (SecurityHelper.AppDomainGrantedUnrestrictedUIPermission)
-                        {
-                            // In fully-trusted AppDomains, the only hard requirement
-                            // is that Win32 keyboard focus be on some window owned
-                            // by a thread that is attached to our Win32 queue.  This
-                            // presumes that the thread's message pump will cooperate
-                            // by calling ComponentDispatcher.RaiseThreadMessage.
-                            // If so, WPF will be able to route the keyboard events to the
-                            // element with WPF keyboard focus, regardless of which
-                            // window has Win32 keyboard focus.
-                            //
-                            // Menus/ComboBoxes use this feature.
-                            //
-                            // Dev11 is moving more towards cross-process designer
-                            // support.  They make sure to call AttachThreadInput so
-                            // the the two threads share the same Win32 queue.  In
-                            // addition, they repost the keyboard messages to the
-                            // main UI process/thread for handling.
-                            //
-                            // We rely on the behavior of GetFocus to only return a
-                            // window handle for windows attached to the calling
-                            // thread's queue.
-                            //
-                            result = focus != IntPtr.Zero;
-                        }
-                        else
-                        {
-                            // In partially-trusted AppDomains, we do not want to expose input
-                            // intended for other native windows, or for WPF windows in other
-                            // AppDomains.
-                            result = IsOurWindow(focus);
-                        }
+
+                        // In fully-trusted AppDomains, the only hard requirement
+                        // is that Win32 keyboard focus be on some window owned
+                        // by a thread that is attached to our Win32 queue.  This
+                        // presumes that the thread's message pump will cooperate
+                        // by calling ComponentDispatcher.RaiseThreadMessage.
+                        // If so, WPF will be able to route the keyboard events to the
+                        // element with WPF keyboard focus, regardless of which
+                        // window has Win32 keyboard focus.
+                        //
+                        // Menus/ComboBoxes use this feature.
+                        //
+                        // Dev11 is moving more towards cross-process designer
+                        // support.  They make sure to call AttachThreadInput so
+                        // the the two threads share the same Win32 queue.  In
+                        // addition, they repost the keyboard messages to the
+                        // main UI process/thread for handling.
+                        //
+                        // We rely on the behavior of GetFocus to only return a
+                        // window handle for windows attached to the calling
+                        // thread's queue.
+                        //
+                        result = focus != IntPtr.Zero;
                     }
                 }
                 else

@@ -170,26 +170,6 @@ internal static class SecurityHelper
         }
         static WebBrowserPermission _webBrowserPermission;
 
-        ///<summary>
-        /// Check whether the call stack has the permissions needed for WebBrowser.
-        /// Optimization: false is returned if the AppDomain's permission grant does not include the
-        ///   WebBrowserPermission. This preliminary check will defeat an Assert on the callstack, but it
-        ///   avoids the SecurityException in PT when the full WB permission is not granted.
-        /// </summary>
-        internal static bool CallerAndAppDomainHaveUnrestrictedWebBrowserPermission()
-        {
-            if (!MS.Internal.SecurityHelper.AppDomainHasPermission(CachedWebBrowserPermission))
-                return false;
-            try
-            {
-                SecurityHelper.DemandWebBrowserPermission();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-            return true;
-        }
 
         ///<summary>
         /// Check to see if we have User initiated navigation permission.
@@ -288,49 +268,6 @@ internal static class SecurityHelper
         }
         static PermissionSet _fullTrustPermissionSet = null;
 
-        ///<summary>
-        /// Return true if the caller has the correct permission set to get a folder
-        /// path.
-        ///</summary>
-        ///<remarks>
-        /// This function exists solely as a an optimazation for the debugger scenario
-        ///</remarks>
-        internal static bool CallerHasPermissionWithAppDomainOptimization(params IPermission[] permissionsToCheck)
-        {
-#if NETFX
-            // in case of passing null return true
-            if (permissionsToCheck == null)
-                return true;
-            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
-            for ( int i = 0 ; i < permissionsToCheck.Length ; i++ )
-            {
-                psToCheck.AddPermission(permissionsToCheck[i]);
-            }
-            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
-            if (psToCheck.IsSubsetOf(permissionSetAppDomain))
-            {
-                return true;
-            }
-            return false;
-#else
-            return true;
-#endif
-        }
-
-        /// <summary> Enables an efficient check for a specific permisison in the AppDomain's permission grant
-        /// without having to catch a SecurityException in the case the permission is not granted.
-        /// <summary>
-        internal static bool AppDomainHasPermission(IPermission permissionToCheck)
-        {
-#if NETFX
-            Invariant.Assert(permissionToCheck != null);
-            PermissionSet psToCheck = new PermissionSet(PermissionState.None);
-            psToCheck.AddPermission(permissionToCheck);
-            return psToCheck.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-#else
-            return true;
-#endif
-        }
 
         internal static Uri GetBaseDirectory(AppDomain domain)
         {
@@ -453,11 +390,7 @@ internal static class SecurityHelper
 
         internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
         {
-#if NETFX
-            PermissionSet permissionSetAppDomain = AppDomain.CurrentDomain.PermissionSet;
-#else
             PermissionSet permissionSetAppDomain = new PermissionSet(PermissionState.Unrestricted);
-#endif
 
             // Ensure we remove the FileIO read permission to site of origin.
             // We choose to use unrestricted here because it does not matter
@@ -851,23 +784,6 @@ internal static class SecurityHelper
             _unrestrictedUIPermission.Demand();
         }
         static UIPermission _unrestrictedUIPermission = null;
-#endif
-
-#if PRESENTATION_CORE
-        internal static bool AppDomainGrantedUnrestrictedUIPermission
-        {
-            get
-            {
-                if(!_appDomainGrantedUnrestrictedUIPermission.HasValue)
-                {
-                    _appDomainGrantedUnrestrictedUIPermission = AppDomainHasPermission(new UIPermission(PermissionState.Unrestricted));
-                }
-
-                return _appDomainGrantedUnrestrictedUIPermission.Value;
-            }
-        }
-        private static bool? _appDomainGrantedUnrestrictedUIPermission;
-
 #endif
 
 #if PRESENTATION_CORE

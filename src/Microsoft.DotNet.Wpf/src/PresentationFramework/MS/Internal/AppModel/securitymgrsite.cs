@@ -30,11 +30,6 @@ namespace MS.Internal
             if (Application.Current != null)
             {
                 Window curWindow = Application.Current.MainWindow;
-
-#if NETFX
-                Invariant.Assert( Application.Current.BrowserCallbackServices == null || ( curWindow is RootBrowserWindow )); 
-#endif
-
                 if (curWindow != null)
                 {
                     phwnd = curWindow.CriticalHandle;

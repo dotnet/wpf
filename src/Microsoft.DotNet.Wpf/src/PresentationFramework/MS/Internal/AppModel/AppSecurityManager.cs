@@ -105,29 +105,7 @@ namespace MS.Internal.AppModel
                 MS.Internal.PresentationFramework.SecurityHelper.CallerHasUserInitiatedNavigationPermission()) &&
                   ((fIsTopLevel && isKnownScheme) || fIsMailTo))
             {
-                if (isKnownScheme)
-                {
-#if NETFX
-                    IBrowserCallbackServices ibcs = ( Application.Current != null ) ? Application.Current.BrowserCallbackServices : null ;
-                    if (ibcs != null)
-                    {
-                        launched = CanNavigateToUrlWithZoneCheck(originatingUri , destinationUri); 
-                        if ( launched == LaunchResult.Launched ) 
-                        {
-                            // resetting launched to NotLaunched here; if the assert succeeds
-                            // and ibcs.DelegateNavigation does not throw then we will set it to Launched.
-                            launched = LaunchResult.NotLaunched;
-                            // Browser app.
-                            // We need to see if this is the right behavior when clicking on a link in
-                            // a secondary window in a multi-window browser app 
-                            ibcs.DelegateNavigation( BindUriHelper.UriToString( destinationUri ), targetName, GetHeaders(destinationUri));   
-
-                            launched = LaunchResult.Launched ; 
-                        }                           
-                    }
-#endif
-                }
-                else if (fIsMailTo) // unnecessary if - but being paranoid. 
+                if (!isKnownScheme && fIsMailTo) // unnecessary if - but being paranoid. 
                 {
                     // Shell-Exec the browser to the mailto url. 
                     // assumed safe - because we're only allowing this for mailto urls. 
@@ -150,22 +128,6 @@ namespace MS.Internal.AppModel
         // Whoever is calling this function should do the right demands.
         internal static void UnsafeLaunchBrowser(Uri uri, string targetFrame = null)
         {
-#if NETFX
-            // This'll likely go into SafeLaunchBrowser() function.
-            if (Application.Current != null && Application.Current.CheckAccess())
-            {
-                IBrowserCallbackServices ibcs = Application.Current.BrowserCallbackServices;
-                if (ibcs != null)
-                {
-                    // Browser app.
-                    // TODO: See if this is the right behavior when clicking on a link in
-                    // a secondary window in a multi-window browser app - PS # 840726
-                    ibcs.DelegateNavigation(BindUriHelper.UriToString(uri), targetFrame, GetHeaders(uri));
-                    return;
-                }
-            }
-#endif
-
             ShellExecuteDefaultBrowser(uri);
         }
 

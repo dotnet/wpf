@@ -33,7 +33,6 @@ namespace System.Windows.Interop
     {
         static BrowserInteropHelper()
         {
-            SetBrowserHosted(false);
             IsInitialViewerNavigation = true;
         }
 
@@ -51,48 +50,20 @@ namespace System.Windows.Interop
 
                 object oleClientSite = null;
 
-#if NETFX
-                if (IsBrowserHosted)
-                {
-                    Application.Current.BrowserCallbackServices.GetOleClientSite(out oleClientSite);
-                }
-#endif
 
                 return oleClientSite;
             }
         }
 
-        public static dynamic HostScript
-        {
-            get
-            {
-                // Allows to disable script interop through the registry in partial trust code.
-                EnsureScriptInteropAllowed();
-
-                // IE's marshaling proxy for the HTMLWindow object doesn't work in MTA.
-                Verify.IsApartmentState(ApartmentState.STA);
-
-                IHostBrowser2 hb2 = HostBrowser as IHostBrowser2;
-                if (hb2 == null)
-                    return null; // One possibility is we are running under NPWPF v3.5.
-                try
-                {
-                    var hostScriptObject = (UnsafeNativeMethods.IDispatch)hb2.HostScriptObject;
-                    if (hostScriptObject == null)
-                        return null;
-
-                    var scriptObject = new DynamicScriptObject(hostScriptObject);
-
-                    InitializeHostHtmlDocumentServiceProvider(scriptObject);
-
-                    return scriptObject;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    return null;
-                }
-            }
-        }
+        /// <summary>
+        /// Gets a script object that provides access to the HTML window object,
+        /// custom script functions, and global variables for the HTML page, if the XAML browser application (XBAP)
+        /// is hosted in a frame.
+        /// </summary>
+        /// <remarks>
+        /// Starting .NET Core 3.0, XBAP's are not supported - <see cref="HostScript"/> will always return <code>null</code>
+        /// </remarks>
+        public static dynamic HostScript => null;
 
         /// <summary>
         /// Returns true if the app is a browser hosted app.
@@ -101,21 +72,7 @@ namespace System.Windows.Interop
         /// Note that HostingFlags may not be set at the time this property is queried first. 
         /// That's why they are still separate. Also, this one is public.
         /// </remarks>
-        public static bool IsBrowserHosted
-        {
-            get
-            {
-                return _isBrowserHosted.Value;
-            }
-        }
-
-        /// <remarks>
-        /// HostingFlags is set after this property.
-        /// </remarks>
-        internal static void SetBrowserHosted(bool value)
-        {
-            _isBrowserHosted.Value = value;
-        }
+        public static bool IsBrowserHosted => false;
 
         internal static HostingFlags HostingFlags 
         { 
@@ -147,19 +104,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <summary>
-        /// Returns true if avalon it top level.
-        /// Also returns true if not browser-hosted.
-        /// </summary>
-        internal static bool IsAvalonTopLevel
-        {
-            get
-            {
-                if (!IsBrowserHosted)
-                    return true;
-                return (HostingFlags & HostingFlags.hfHostedInFrame) == 0;
-            }
-        }
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
@@ -187,23 +131,6 @@ namespace System.Windows.Interop
             set
             {
                 _isInitialViewerNavigation.Value = value;
-            }
-        }
-
-        internal static IHostBrowser HostBrowser;
-
-        internal static void ReleaseBrowserInterfaces()
-        {
-            if (HostBrowser != null)
-            {
-                Marshal.ReleaseComObject(HostBrowser);
-                HostBrowser = null;
-            }
-
-            if (_hostHtmlDocumentServiceProvider.Value != null)
-            {
-                Marshal.ReleaseComObject(_hostHtmlDocumentServiceProvider.Value);
-                _hostHtmlDocumentServiceProvider.Value = null;
             }
         }
 
@@ -327,7 +254,6 @@ namespace System.Windows.Interop
             }
         }
 
-        private static SecurityCriticalDataForSet<bool> _isBrowserHosted;
         private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;
         private static SecurityCriticalDataForSet<bool> _isInitialViewerNavigation;
         private static SecurityCriticalDataForSet<bool?> _isScriptInteropDisabled;

@@ -340,13 +340,7 @@ namespace System.Windows.Interop
             AddSource();
 
             // Register dropable window.
-            // The checking CallerHasPermissionWithAppDomainOptimization will call RegisterDropTarget
-            // safely without the security exception in case of no unmanaged code permission.
-            // So RegisterDropTarget will be called safely in case of having the unmanged code permission.
-            // Otherwise, the security exception cause System.Printing to be instatiated which will
-            // load system.drawing module.
-            if (_hwndWrapper.Handle != IntPtr.Zero &&
-                SecurityHelper.CallerHasPermissionWithAppDomainOptimization(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)))
+            if (_hwndWrapper.Handle != IntPtr.Zero)
             {
                 // This call is safe since DragDrop.RegisterDropTarget is checking the unmanged
                 // code permission.

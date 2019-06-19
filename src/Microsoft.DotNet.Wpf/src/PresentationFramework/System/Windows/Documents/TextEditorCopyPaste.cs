@@ -51,7 +51,7 @@ namespace System.Windows.Documents
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(KeyCopy, SR.Get(SRID.KeyCopyDisplayString)), KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SR.Get(SRID.KeyCtrlInsertDisplayString)));
             if (acceptsRichContent)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), KeyCopyFormat, SRID.KeyCopyFormatDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), KeyGesture.CreateFromResourceStrings(KeyCopyFormat, SRID.KeyCopyFormatDisplayString));
             }
             if (!readOnly)
             {

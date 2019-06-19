@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{152C4B33-3B53-4180-B8BC-7BB0BC91A2ED}</ProjectGuid>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);UIAUTOMATIONTYPES</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+  </ItemGroup>
+</Project>

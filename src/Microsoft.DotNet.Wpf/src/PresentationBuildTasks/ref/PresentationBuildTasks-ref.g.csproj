@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
+    <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
+    <!-- 
+      Clear AssemblyVersion => it will ensure that the AssemblyVersion is > 4.0.0.0.
+      In turn, this will ensure that the net4x PresentationBuildTasks.dll 
+      is always loaded directly instead of being matched against the GAC copy of the
+      PresentationBuildTasks 4.0.0.0 that comes form the .NET Framework. 
+      -->
+    <AssemblyVersion />
+    <!--
+            Suppressed Compiler Warnings: 
+
+                CS1058: A previous catch clause already catches all exceptions. All exceptions 
+                thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException 
+    -->
+    <NoWarn>$(NoWarn);1058</NoWarn>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <AssemblyName>PresentationBuildTasks</AssemblyName>
+    <DefineConstants>$(DefineConstants);PBTCOMPILER;PARSERM8BC;NEWLOADER;IGNORABLESUPPORT;ONLYMARKUPEXTENSIONS</DefineConstants>
+    <BinPlaceRuntime>false</BinPlaceRuntime>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(CopyTransitiveReferences)'=='true'">
+    <PackageReference>
+      <PrivateAssets>None</PrivateAssets>
+    </PackageReference>
+  </ItemDefinitionGroup>
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <!-- 
+    Incorporate Microsoft.WinFx.targets in nuget packages under 
+    content\targets\ 
+  -->
+  <ItemGroup>
+    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFx.targets" SubFolder="root\targets" />
+  </ItemGroup>
+  <!--
+    Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop
+  -->
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
+    <PackagingAssemblyContent Include="System.Collections.Immutable.dll" />
+    <PackagingAssemblyContent Include="System.Memory.dll" />
+    <PackagingAssemblyContent Include="System.Numerics.Vectors.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.Metadata.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
+    <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
+    <!-- 
+      Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
+    -->
+    <PackageReference Include="System.CodeDom" Version="4.4.0" />
+  </ItemGroup>
+</Project>

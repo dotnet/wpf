@@ -1,15 +1,15 @@
 <Project>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.GenAPI" Version="$(MicrosoftDotNetGenAPIVersion)" GeneratePathProperty="true"
-                      Condition="'$(GenerateReferenceAssemblySource)'=='true'"/>
+                      Condition="'$(_GenerateReferenceAssemblySource)'=='true'"/>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(GenerateReferenceAssemblySource)'=='true'">
+  <PropertyGroup Condition="'$(_GenerateReferenceAssemblySource)'=='true'">
     <!-- 
       By default, GenAPI's target (GenerateReferenceAssemblySource) generates code into $(TargetDir).
       Instead, WPF generates into the ref directory in the project's source tree.
     -->
-    <GenAPITargetDir>$(IntermediateOutputPath)ref\</GenAPITargetDir>
+    <GenAPITargetDir>$(MSBuildProjectDir)ref\</GenAPITargetDir>
     <GenAPITargetPath>$(GenAPITargetDir)$(AssemblyName).cs</GenAPITargetPath>
   </PropertyGroup>
   
@@ -47,17 +47,18 @@
 
   <!-- 
     Generates a reference assembly project that builds the generated sources from GenAPI.
+    TODO:  This is just being used as a one off to help creation, remove this before merge.
   -->
-  <Target Name="BuildReferenceAssemblyFromSource"
+  <Target Name="GenerateReferenceAssemblyProjectFromRuntimeProject"
           AfterTargets="GenerateReferenceAssemblySource"
-          Condition="'$(GenerateReferenceAssemblySource)' == 'true'" >
+          Condition="'$(_GenerateReferenceAssemblyProject)' == 'true'" >
 
     <PropertyGroup>
-      <ReferenceAssemblyProjectFile>$(IntermediateOutputPath)ref\$(MSBuildProjectName)-ref.csproj</ReferenceAssemblyProjectFile>
+      <ReferenceAssemblyProjectFile>$(GenAPITargetDir)$(MSBuildProjectName)-ref.g.csproj</ReferenceAssemblyProjectFile>
     </PropertyGroup>
 
-    <MakeDir Condition="!Exists('$(IntermediateOutputPath)ref\')"
-             Directories="$(IntermediateOutputPath)ref\" />
+    <MakeDir Condition="!Exists('$(GenAPITargetDir)')"
+             Directories="$(GenAPITargetDir)" />
 
     <Delete Files="$(ReferenceAssemblyProjectFile)" Condition="Exists('$(ReferenceAssemblyProjectFile)')" />
 
@@ -69,10 +70,7 @@
       <ProjectToBuild Remove="@(ProjectToBuild)" />
       <ProjectToBuild Include="$(ReferenceAssemblyProjectFile)" />
     </ItemGroup>
-    
-    <MSBuild Projects="@(ProjectToBuild)"
-             Targets="Restore;Build"
-             Properties="TargetFramework=$(TargetFramework);Platform=$(Platform);RuntimeIdentifier=$(RuntimeIdentifier);IsShipping=true;EnableXlfLocalization=false;NoWarn=CS0108,CS0618,CS3003"/>
+  
   </Target>
 
 </Project>

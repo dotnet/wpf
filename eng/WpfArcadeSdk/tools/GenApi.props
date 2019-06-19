@@ -29,9 +29,20 @@
     <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
     <GenAPIAdditionalParameters Condition="'$(GlobalApiExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-api-list "$(GlobalApiExclusionsFile)"</GenAPIAdditionalParameters>
 
-    <GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'==''
+    <!-- 
+      GenAPI is run on demand.  Note that making a public API change without the associated reference assembly change will result in an ApiCompat error. 
+      See: ApiCompat.props/targets and documentation/api-compat.md.
+    -->
+    <_GenerateReferenceAssemblySource>false</_GenerateReferenceAssemblySource>
+    <_GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'=='true'
+                                                        and '$(GenAPIEnabledProjects)'!=''
+                                                        and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblySource>
+
+    <!-- TODO:  Remove this, just for initial project seeding. -->
+    <_GenerateReferenceAssemblyProject>false</_GenerateReferenceAssemblyProject>
+    <_GenerateReferenceAssemblyProject Condition="'$(GenerateReferenceAssemblyProject)'=='true'
                                                 and '$(GenAPIEnabledProjects)'!=''
-                                                and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</GenerateReferenceAssemblySource>
+                                                and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblyProject>
 
   </PropertyGroup>
 </Project>

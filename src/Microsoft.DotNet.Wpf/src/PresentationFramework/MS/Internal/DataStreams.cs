@@ -44,23 +44,13 @@ namespace MS.Internal.AppModel
     [Serializable]
     internal class DataStreams
     {
-        /// <SecurityNote>
-        /// Critical - as the constructor initializes the Critical member _subStreams.
-        /// Safe - as the initialization is to a safe value.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal DataStreams()
         {
             // Dummy constructor to keep FxCop Critical rules happy.
         }
 
-        /// <SecurityNote>
-        /// Critical - as this refers to Critical member _subStreams.
-        /// Safe - as this doesn't expose the data
-        /// </SecurityNote>
         internal bool HasAnyData
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get 
             {
                 return _subStreams != null && _subStreams.Count > 0
@@ -68,21 +58,11 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this refers to Critical member _subStreams.
-        /// Safe - as this doesn't expose the data.  Returning if a stream exists
-        ///        is not Critical information, the content of the stream is.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool HasSubStreams(object key)
         {
             return _subStreams != null && _subStreams.Contains(key);
         }
 
-        /// <SecurityNote>
-        /// Critical - as this returns Critical data in _subStreams.
-        /// </SecurityNote>
-        [SecurityCritical]
         private ArrayList GetSubStreams(object key)
         {
             ArrayList subStreams = (ArrayList) _subStreams[key];
@@ -103,11 +83,6 @@ namespace MS.Internal.AppModel
         /// </summary>
         /// <param name="element"></param>
         /// <returns>The ArrayList of SubStreams. May be null.</returns>
-        /// <SecurityNote>
-        /// Critical - as this calls Formatter.Serialize under an elevation and 
-        ///            returns the value so obtained.
-        /// </SecurityNote>
-        [SecurityCritical]
         private ArrayList SaveSubStreams(UIElement element)
         {
             ArrayList subStreams = null;
@@ -176,13 +151,6 @@ namespace MS.Internal.AppModel
             return subStreams;
         }
 
-        /// <SecurityNote>
-        /// Critical - as this invokes Critical function SaveSubStreams and sets data
-        ///            in Critical member _subStreams.
-        /// Safe - as this doesn't return the Critical data, so any private members that
-        ///        are saved from Serializing the object are protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SaveState(object node)
         {
             UIElement element = node as UIElement;
@@ -263,11 +231,6 @@ namespace MS.Internal.AppModel
             // Everything in _subStreams is already binary-serialized.
         }
 
-        /// <SecurityNote>
-        /// Critical - as this invokes Deserialize under an elevation on a random stream passed in.
-        /// Safe - Demands SerializationFormatter permissions
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void LoadSubStreams(UIElement element, ArrayList subStreams)
         {
             for (int subStreamIndex = 0; subStreamIndex < subStreams.Count; ++subStreamIndex)
@@ -297,14 +260,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions GetSubStreams and LoadSubStreams.
-        /// Safe - this does not return data obtained from GetSubStreams.  The call to
-        ///        LoadSubStreams won't cause de-serialization of random data.  It'd only
-        ///        cause deserializaton of data returned by GetSubStreams which returns an
-        ///        object from _subStreams array which is Critical and thus is tracked.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadState(object node)
         {
             UIElement element = node as UIElement;
@@ -385,11 +340,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this modifies Critical data member _subStreams.
-        /// Safe - as this just initializes it to a safe value.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Save(Object root)
         {
             if (_subStreams == null)
@@ -411,11 +361,6 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this refers to Critical member _subStreams.
-        /// Safe - as this doesn't expose the data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Clear()
         {
             _subStreams = null;
@@ -439,12 +384,6 @@ namespace MS.Internal.AppModel
         [ThreadStatic]
         static private BinaryFormatter _formatter;
 
-        /// <SecurityNote>
-        /// Critical - This data is critical for two reasons.  One is that this holds
-        ///            data obtained by invoking Serialization under elevation.  The
-        ///            other is that we call DeSerialization on this data under elevation.
-        /// </SecurityNote>
-        [SecurityCritical]
         private HybridDictionary _subStreams = new HybridDictionary(3);
 
         /// <summary>

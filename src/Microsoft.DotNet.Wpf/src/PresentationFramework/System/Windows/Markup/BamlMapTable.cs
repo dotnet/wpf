@@ -60,10 +60,6 @@ namespace System.Windows.Markup
 {
     // Used to read/write mapping Baml Ids
     // to Assembly, types, namespaces, etc.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlMapTable
     {
         // Welcome to the world of "known types".

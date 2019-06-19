@@ -60,11 +60,6 @@ namespace System.Windows.Documents
         }
 
         // The callback from WinEvent.
-        /// <SecurityNote>
-        /// Critical - as this invokes Critical method CriticalSourceHwnd
-        /// TreatAsSafe - as this doesn't expose this information but just calls OnLayoutUpdated on the TextStore.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void WinEventProc(int eventId, IntPtr hwnd)
         {
             Invariant.Assert(eventId == NativeMethods.EVENT_SYSTEM_MOVESIZEEND);

@@ -34,7 +34,7 @@ namespace MS.Internal.AutomationProxies
             return !IsInvalid ? CloseThemeData(handle) == (IntPtr)NativeMethods.S_OK : true;
         }
 
-        [DllImport("UxTheme.dll", CharSet = CharSet.Auto)/*, SuppressUnmanagedCodeSecurity*/]
+        [DllImport("UxTheme.dll", CharSet = CharSet.Auto)/**/]
         private static extern IntPtr CloseThemeData(IntPtr handle);
     }
 }

@@ -142,11 +142,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This sets up a handler for entering menu mode which will recieve a presentationsource
-        ///    TreatAsSafe: The function that it hooks is safe to expose since it does not expose the source
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void SetupMainMenu()
         {
             if (_enterMenuModeHandler == null)
@@ -243,11 +238,6 @@ namespace System.Windows.Controls
         ///     This is the method that responds to the TextInput event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        ///     Critical: accesses ShowSystemMenu & CriticalFromVisual
-        ///     TreatAsSafe: limited to only UserInitiated input.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnTextInput(TextCompositionEventArgs e)
         {
             base.OnTextInput(e);
@@ -354,11 +344,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls PresentationSource.CriticalFromVisual() .
-        /// Safe - as this doesn't return PresentationSource thus obtained.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool OnEnterMenuMode(object sender, EventArgs e)
         {
             // Don't enter menu mode if someone has capture

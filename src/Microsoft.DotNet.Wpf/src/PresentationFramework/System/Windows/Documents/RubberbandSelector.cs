@@ -52,11 +52,6 @@ namespace System.Windows.Documents
         /// Attaches selector to scope to start rubberband selection mode
         /// </summary>
         /// <param name="scope">the scope, typically a DocumentGrid</param>
-        ///<SecurityNote>
-        /// Critical - creates a command binding.
-        /// TAS - registering our own internal commands is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical , SecurityTreatAsSafe ]
         internal void AttachRubberbandSelector(FrameworkElement scope)
         {
             if (scope == null)
@@ -169,14 +164,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical : Demands
-        ///    Safe     : Does not leak security exception information to caller.
-        ///    This code checks for all permissions
-        ///     that it would otherwise assert to enable rubber band copy.  This is to make sure untrusted applications
-        ///     do not trigger a copy.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool HasRubberBandCopyPermissions()
         {
             try
@@ -192,15 +179,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This calls into GetBitmap, which is security critical.  It also puts a bitmap on the
-        ///              clipboard, which is not typically allowed in partially trusted code.It also asserts
-        ///              to add content to the clipboard
-        ///    TreatAsSafe: We guarantee this code can only be triggered by the user deliberately copying the
-        ///              selection.  Because we generate the bitmap from what the user sees, this is no more
-        ///              dangerous than a screen capture.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (HasSelection && _selectionRect.Width > 0 && _selectionRect.Height > 0)

@@ -46,12 +46,6 @@ namespace System.Windows.Documents
         #region Class Internal Methods
 
         // Registers all text editing command handlers for a given control type
-        /// <SecurityNote>
-        /// Critical - elevates to associate a protected command (paste) with keyboard
-        /// TreatAsSafe - Shift+Insert is the correct key binding, and therefore is
-        ///               expected by the user.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void _RegisterClassHandlers(Type controlType, bool acceptsRichContent, bool readOnly, bool registerEventListeners)
         {
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(KeyCopy, SR.Get(SRID.KeyCopyDisplayString)), KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SR.Get(SRID.KeyCtrlInsertDisplayString)));
@@ -85,10 +79,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Creates DataObject for Copy and Drag operations
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into SetData under an assert which has the ability to set xaml content on clipboard.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static DataObject _CreateDataObject(TextEditor This, bool isDragDrop)
         {
             DataObject dataObject;
@@ -228,13 +218,6 @@ namespace System.Windows.Documents
         /// <returns>
         /// true if successful, false otherwise
         /// </returns>
-        /// <SecurityNote>
-        /// To disable paste in partial trust case,
-        /// this function checks if the current call stack has the all clipboard permission.
-        /// Critical: This code calls into AppDomain methods and enables xaml cut and paste
-        /// TreatAsSafe: It has a demand for All Clipboard permissions
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static bool _DoPaste(TextEditor This, IDataObject dataObject, bool isDragDrop)
         {
             // Don't try anything if the caller doesn't have the rights to read from the clipboard...
@@ -338,11 +321,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Cut worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Sets data on the clipboard and accepts a parameter which indicates 
-        ///            whether or not this action was user-initiated.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Cut(TextEditor This, bool userInitiated)
         {
             if (userInitiated)
@@ -409,11 +387,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Copy worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Sets data on the clipboard and accepts a parameter which indicates 
-        ///            whether or not this action was user-initiated.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Copy(TextEditor This, bool userInitiated)
         {
             if (userInitiated)
@@ -466,11 +439,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Paste worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:To disable paste in partial trust case,
-        /// TreatAsSafe: this function checks if the current call stack has the all clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void Paste(TextEditor This)
         {
             // Don't try anything if the caller doesn't have the rights to read from the clipboard...
@@ -625,13 +593,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Cut command event handler.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls TextEditorCopyPaste.Cut, using the UserInitiated
-        ///             bit in the event args, to set data on the clipboard.
-        /// TreatAsSafe - The bit is protected by the UserIniatedRoutedEvent permission and
-        ///               the content being set is based on the active selection.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnCut(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -678,13 +639,6 @@ namespace System.Windows.Documents
         /// Copy command event handler.
         /// This method is used both in Copy, Cut and DragDrop commands.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls TextEditorCopyPaste.Copy, using the UserInitiated
-        ///             bit in the event args, to set data on the clipboard.
-        /// TreatAsSafe - The bit is protected by the UserIniatedRoutedEvent permission and
-        ///               the content being set is based on the active selection.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnCopy(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -800,9 +754,6 @@ namespace System.Windows.Documents
             //  Provide an implementation for this command
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into CriticalSetData which circumvents all checks for setting data
-        /// </SecurityNote>
         /// <summary>
         ///     This code is used to call into an internal overload to set data which circumvents the demand for
         ///     all clipboard permission. Although this is not the cleanest we prefer to cast it to DataObject
@@ -812,7 +763,6 @@ namespace System.Windows.Documents
         /// <param name="dataObjectValue"></param>
         /// <param name="format"></param>
         /// <param name="content"></param>
-        [SecurityCritical]
         private static void CriticalSetDataWrapper(IDataObject dataObjectValue, string format, string content)
         {
             if (dataObjectValue is DataObject)
@@ -835,14 +785,6 @@ namespace System.Windows.Documents
         /// <returns>
         /// true if successful, false otherwise
         /// </returns>
-        /// <SecurityNote>
-        /// This function paste the content data and also can set new apply format with
-        /// checking the unmanaged code permission if the content data is failed to paste.
-        /// Critical: This function falls back to DataFormats.Rtf in case Xaml paste fails. It calls Critical WpfPayload.SaveImage.
-        /// TreatAsSafe: In partial trust we revert to DataFormats.UnicodeText or DataFormats.Text
-        ///              format and hence the risk is mitigated of having Rtf paste enabled
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool PasteContentData(TextEditor This, IDataObject dataObject, IDataObject dataObjectToApply, string formatToApply)
         {
             // CF_BITMAP - pasting a single image.
@@ -1017,11 +959,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Get the paste data from the specified DataObject and data format.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: This function calls the critical methods which access the unmanaged code
-        /// to get the pasted data from DataObject
-        /// </SecurityNote>
-        [SecurityCritical]
         private static object GetPasteData(IDataObject dataObject, string dataFormat)
         {
             object pastedData;

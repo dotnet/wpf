@@ -288,7 +288,6 @@ namespace System.Windows
         /// Critical:   Calls Process.GetProcess
         /// Safe:       Does not accept or expose any critical data
         /// </SecurityNotes>
-        [SecuritySafeCritical]
         private static void WriteEventAndThrow(string message)
         {
             var exception = new NotSupportedException(message);

@@ -20,10 +20,6 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     ///     Represents a module handle (HMODULE) used in API's like LoadLibrary
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical: base class SafeHandleZeroOrMinusOneIsInvalid is critical
-    /// </SecurityNote>
-    [SecurityCritical]
     internal class SafeModuleHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         private SafeModuleHandle()
@@ -31,10 +27,6 @@ namespace MS.Internal.Printing.Configuration
         {
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls native method to unload native module handle
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethods.FreeLibrary(this.handle);

@@ -109,16 +109,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaFinite
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsCreateSubpageFinite and 
-        ///        passes pointer parameter footnoteRejector without validation.
-        ///     b) calls Critical function GetColumnsInfo,
-        ///     c) calls Critical function PTS.FsTransformRectangle
-        ///     d) calls Critical function PTS.FsTransformBbox
-        ///     e) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void FormatParaFinite(
             SubpageParaClient paraClient,       // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !NULL
@@ -323,18 +313,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaBottomless
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsCreateSubpageBottomless.
-        ///     b) calls Critical function GetColumnsInfo,
-        ///     c) calls Critical function PTS.FsTransformRectangle
-        ///     d) calls Critical function PTS.FsTransformBbox
-        ///     e) it is unsafe method.
-        /// Safe, because:
-        ///     a) doesn't take any pointer parameter that'll be passed directly.
-        ///     b) All Critical data are either Critical for set or generated in the function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal unsafe void FormatParaBottomless(
             SubpageParaClient paraClient,       // IN:
             int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
@@ -496,15 +474,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // UpdateBottomlessPara
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsUpdateBottomlessSubpage.
-        ///     b) calls Critical function GetColumnsInfo,
-        ///     c) calls Critical function PTS.FsTransformRectangle
-        ///     d) calls Critical function PTS.FsTransformBbox
-        ///     e) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void UpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             SubpageParaClient paraClient,       // IN:

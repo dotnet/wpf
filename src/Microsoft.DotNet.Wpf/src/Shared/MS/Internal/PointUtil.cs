@@ -35,18 +35,12 @@ namespace MS.Internal
         ///     Convert a point from "client" coordinate space of a window into
         ///     the coordinate space of the root element of the same window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a Point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point ClientToRoot(Point point, PresentationSource presentationSource)
         {
             bool success = true;
             return TryClientToRoot(point, presentationSource, true, out success);
         }
 
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point TryClientToRoot(Point point, PresentationSource presentationSource, bool throwOnError, out bool success)
         {
             // Only do if we allow throwing on error or have a valid PresentationSource and CompositionTarget.
@@ -73,11 +67,6 @@ namespace MS.Internal
         ///     Convert a point from the coordinate space of a root element of
         ///     a window into the "client" coordinate space of the same window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public static Point RootToClient(Point point, PresentationSource presentationSource)
         {
             // REVIEW:
@@ -177,12 +166,6 @@ namespace MS.Internal
         ///     Convert a point from "client" coordinate space of a window into
         ///     the coordinate space of the screen.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: This code causes eleveation to unmanaged code via call to GetWindowLong
-        ///     SecurityTreatAsSafe: This data is ok to give out
-        ///     validate all code paths that lead to this.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static Point ClientToScreen(Point pointClient, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.
@@ -205,11 +188,6 @@ namespace MS.Internal
         ///     Convert a point from the coordinate space of the screen into
         ///     the "client" coordinate space of a window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a Point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point ScreenToClient(Point pointScreen, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.
@@ -245,11 +223,6 @@ namespace MS.Internal
         /// <returns>
         ///     The rectangle in the co-ordinate space of the root visual
         /// </returns>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect ElementToRoot(Rect rectElement, Visual element, PresentationSource presentationSource)
         {
             GeneralTransform    transformElementToRoot  = element.TransformToAncestor(presentationSource.RootVisual);
@@ -274,11 +247,6 @@ namespace MS.Internal
         /// <returns>
         ///     The rectangle in Win32 client co-ordinate space
         /// </returns>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect RootToClient(Rect rectRoot, PresentationSource presentationSource)
         {
             CompositionTarget   target                  = presentationSource.CompositionTarget;
@@ -304,11 +272,6 @@ namespace MS.Internal
         /// <returns>
         ///     The rectangle in Win32 screen co-ordinate space
         /// </returns>
-        /// <SecurityNote>
-        ///    Critical: UnsafeNativeMethods.ClientToScreen
-        ///    TreatAsSafe: Transforming a Point is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect ClientToScreen(Rect rectClient, HwndSource hwndSource)
         {
             Point corner1 = ClientToScreen(rectClient.TopLeft, hwndSource);

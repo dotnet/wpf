@@ -563,13 +563,8 @@ namespace System.Windows.Input
         /// <summary>
         /// Access the current keyboard on/off (open/close) status.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - adjusts the IME state, safe to do at anytime (only DOS possible)
-        /// </SecurityNote>
         public InputMethodState ImeState
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -603,7 +598,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical ]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -653,15 +647,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:    MicrophoneState may update the global compartment that may effects all threads in 
-        ///                  the desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     PublicOK:    There is a link demand.  (safe to get it.)
-        /// </SecurityNote>
         public InputMethodState MicrophoneState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -674,7 +661,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -697,13 +683,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current handwriting on/off status.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - adjusts the HW state, safe to do at anytime (only DOS possible)
-        /// </SecurityNote>
         public InputMethodState HandwritingState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -716,7 +697,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -741,15 +721,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:    SpeechMode may update the global compartment that may effects all threads in 
-        ///                  the desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     PublicOK:    There is a link demand.  (safe to get it.)
-        /// </SecurityNote>
         public SpeechMode SpeechMode
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -767,7 +740,6 @@ namespace System.Windows.Input
                 return SpeechMode.Indeterminate;
             }
 
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -809,13 +781,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current ime conversion mode
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (direct query of IME)
-        /// PublicOK - current conversion mode is safe to expose
-        /// </SecurityNote>
         public ImeConversionModeValues ImeConversionMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -898,7 +865,6 @@ namespace System.Windows.Input
                 return ImeConversionModeValues.Alphanumeric;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidConversionMode(value))
@@ -1078,13 +1044,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current ime sentence mode
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - only allows setting the sentence mode, which is safe
-        /// </SecurityNote>
         public ImeSentenceModeValues ImeSentenceMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -1155,7 +1116,6 @@ namespace System.Windows.Input
                 return ImeSentenceModeValues.None;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidSentenceMode(value))
@@ -1406,12 +1366,6 @@ namespace System.Windows.Input
         ///     InputMethod enabling/disabling function.
         ///     This takes care of both Cicero and IMM32.
         /// </summary> 
-        /// <SecurityNote>
-        ///     Critical: This code calls into DefaultIMC which returns data (the hImc) retrieved under
-        ///     an elevation of privilige. 
-        ///     TreatAsSafe: This method is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void EnableOrDisableInputMethod(bool bEnabled)
         {
             // InputMethod enable/disabled status was changed on the current focus Element.
@@ -1509,10 +1463,6 @@ namespace System.Windows.Input
         /// Converts Imm32 conversion mode values into TSF conversion mode values.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged Windowing and IME APIs.
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ConversionModeFlags Imm32ConversionModeToTSFConversionMode(IntPtr hwnd)
         {
             UnsafeNativeMethods.ConversionModeFlags convMode = 0;
@@ -1551,11 +1501,6 @@ namespace System.Windows.Input
         ///     Advice event sink to Cicero's compartment so we can get the notification
         ///     of the compartment change.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - accesses message pump/input manager directly
-        /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1580,11 +1525,6 @@ namespace System.Windows.Input
         ///     Uninitialize the sink for compartments
         ///     Unadvise the cicero's compartment event sink.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - accesses message pump/input manager directly
-        /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UninitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1605,13 +1545,6 @@ namespace System.Windows.Input
         ///    If there is no function provider in the current keyboard TIP or the keyboard TIP does
         ///    not have ITfFnConfigure, this returns false.
         /// </summary> 
-        /// <SecurityNote>
-        ///     This code calls IME/TIP to show its configuration UI.
-        ///     Critical:    The configuration UI usually have a capability to change session wide state.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     TreatAsSafe: There is Demand.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowConfigureUI(UIElement element, bool fShow)
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -1666,14 +1599,6 @@ namespace System.Windows.Input
         ///    If there is no function provider in the current keyboard TIP or the keyboard TIP does
         ///    not have ITfFnConfigureRegisterWord, this returns false.
         /// </summary> 
-        /// <SecurityNote>
-        ///     This code calls IME/TIP to show its register word UI.
-        ///     Critical:    The word registration usually update the uesr custom dictionary. And the change
-        ///                  of this custom dictionary may affect the conversion of whole desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     TreatAsSafe: There is Demand.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowRegisterWordUI(UIElement element, bool fShow, string strRegister)
         {
             SecurityHelper.DemandUnrestrictedUIPermission();
@@ -1729,10 +1654,6 @@ namespace System.Windows.Input
         /// <summary>
         ///    Get hwnd handle value as IntPtr from UIElement.
         /// </summary> 
-	/// <SecurityNote>
-	///   Critical: This code calls into CriticalFromVisual and also elevates.It exposes the handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr HwndFromInputElement(IInputElement element)
         {
             IntPtr hwnd = (IntPtr)0;
@@ -1773,11 +1694,6 @@ namespace System.Windows.Input
         /// <summary>
         ///    Get ITfFunctionProvider of the current active keyboard TIP.
         /// </summary> 
-        /// <SecurityNote>
-        ///     Critical: This code calls into COM interop pointers (ITfFunctionProvider)
-        ///     TreatAsSafe: This code has a demand for unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -1805,11 +1721,6 @@ namespace System.Windows.Input
         ///    Return the profile info structre of the current active keyboard TIP.
         ///    This enumelates all TIP's profiles and find the active keyboard category TIP.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to get the keyboard information
-        /// TreatAsSafe - discovery of the input language is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private UnsafeNativeMethods.TF_LANGUAGEPROFILE GetCurrentKeybordTipProfile()
         {
             UnsafeNativeMethods.ITfInputProcessorProfiles ipp = InputProcessorProfilesLoader.Load();
@@ -1896,15 +1807,8 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        ///     Critical: This code returns the input method context which is not safe to expose
-        ///               especially so because it can be used to get to Cicero (any input methods)
-        ///               and IME. It also retrieves the window handle for the default IME Window 
-        ///               although this is not exposed.
-        /// </SecurityNote>
         private IntPtr DefaultImc
         {
-            [SecurityCritical]
             get
             {
                 if (_defaultImc==null)

@@ -112,10 +112,6 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Releases resources
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - Releases handle to printer device
-        ///</SecurityNote>
-        [SecurityCritical]
         public abstract void Release();
 
         #endregion
@@ -124,20 +120,12 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Implement Dispose pattern to release handle to print device which can't be released by GC in WOW64
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - Releases handle to printer device
-        ///</SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        ///<SecurityNote>
-        /// Critical    - Releases handle to printer device
-        ///</SecurityNote>
-        [SecurityCritical]
         protected abstract void Dispose(bool disposing);
 
         #endregion

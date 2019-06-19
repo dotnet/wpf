@@ -28,10 +28,6 @@ namespace System.Windows.Media
 {
     static internal class Renderer
     {
-        /// <SecurityNote>
-        /// Critical - unmanaged pointer arguments, access critical resources, calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         static public void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,
@@ -49,10 +45,6 @@ namespace System.Windows.Media
         /// to render it specifically for an effect to be applied to it. It excludes
         /// properties such as transform, clip, offset and guidelines.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - unmanaged pointer arguments, access critical resources, calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         static internal void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,

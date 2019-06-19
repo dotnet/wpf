@@ -68,10 +68,6 @@ namespace System.Windows.Media
         /// 
         /// </summary>
         /// <param name="channel"></param>
-        /// <SecurityNote>
-        /// Critical - calls critical code
-        /// </SecurityNote>
-        [SecurityCritical]
         internal GlyphCache(DUCE.Channel channel)
         {
             _channel = channel;
@@ -84,10 +80,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Sends a callback pointer to this glyphcache for glyph generation requests.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - This code sends a pointer to unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]        
         private unsafe void SendCallbackEntryPoint()
         {
             _createGlyphBitmapsCallbackDelegate = new CreateGlyphsCallbackDelegate(FontCacheAccessor.CreateGlyphsCallback);

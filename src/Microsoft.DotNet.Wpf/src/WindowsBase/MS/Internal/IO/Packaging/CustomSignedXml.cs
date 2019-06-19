@@ -207,7 +207,6 @@ namespace MS.Internal.IO.Packaging
         private const string _NetFxSecurityFullKeyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\Security";
         private const string _NetFxSecurityKey = @"SOFTWARE\Microsoft\.NETFramework\Security";
 
-        [SecurityCritical]
         private static long GetNetFxSecurityRegistryValue(string regValueName, long defaultValue)
         {
             // Acquire permissions to read the one key we care about from the registry
@@ -252,7 +251,6 @@ namespace MS.Internal.IO.Packaging
         private static bool s_readRequireNCNameIdentifier = false;
         private static bool s_requireNCNameIdentifier = true;
 
-        [SecuritySafeCritical]
         private static bool RequireNCNameIdentifier()
         {
             if (s_readRequireNCNameIdentifier)
@@ -273,7 +271,6 @@ namespace MS.Internal.IO.Packaging
 
         private static bool? s_allowAmbiguousReferenceTarget = null;
 
-        [SecuritySafeCritical]
         private static bool AllowAmbiguousReferenceTargets()
         {
             // Allow machine administrators to specify that the legacy behavior of matching the first element

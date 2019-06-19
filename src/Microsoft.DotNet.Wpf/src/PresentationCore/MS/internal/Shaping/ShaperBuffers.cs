@@ -49,10 +49,6 @@ namespace MS.Internal.Shaping
         /// <summary>
         /// ShaperBuffers - constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accepts checked pointers and extracts
-        ///         unsafe pointers.
-        /// </SecurityNote>
         public ShaperBuffers(ushort charCount, ushort glyphCount)
         {
             // the charCount is used to provide an initial size for the

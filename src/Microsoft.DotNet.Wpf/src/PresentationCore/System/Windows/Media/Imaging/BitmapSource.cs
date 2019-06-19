@@ -85,11 +85,6 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - access critical code, accepts pointer arguments
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe public static BitmapSource Create(
             int pixelWidth,
             int pixelHeight,
@@ -115,11 +110,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses _wicSource
-        /// TreatAsSafe: Inputs are safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected BitmapSource()
         {
             // Synchronize for *this* object only by default.
@@ -132,11 +122,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// useVirtuals: Should properties and methods like PixelWidth and CopyPixels use their "default" implementation.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses _wicSource
-        /// TreatAsSafe: Input (bool) is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal BitmapSource(bool useVirtuals)
         {
             _useVirtuals = true;
@@ -374,13 +359,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels">Destination array</param>
         /// <param name="stride">Stride</param>
         /// <param name="offset">Offset in the array to begin copying</param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to expose pixel information
-        ///     PublicOk: There is an inheritance demand to prevent sub classing and there is
-        ///     a web permission demand to prevent non site of origin requests
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             EnsureShouldUseVirtuals();
@@ -399,13 +377,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels">Destination array</param>
         /// <param name="stride">Stride</param>
         /// <param name="offset">Offset to begin at</param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to expose pixel information
-        ///     PublicOk: There is an inheritance demand to prevent sub classing and there is
-        ///     a web permission demand to prevent non site of origin requests
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(Array pixels, int stride, int offset)
         {
             Int32Rect sourceRect = Int32Rect.Empty;
@@ -427,14 +398,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="buffer">Pointer to the buffer</param>
         /// <param name="bufferSize">Size of buffer</param>
         /// <param name="stride">Stride</param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to expose pixel information
-        ///     PublicOk: There is an inheritance demand to prevent sub classing and there is
-        ///     a web permission demand to prevent non site of origin requests
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             ReadPreamble();
@@ -616,14 +579,8 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - access safehandle that points to unmanaged resource
-        /// TreatAsSafe - Set: Its safe because any value is OK as the SafeHandle cannot be created
-        ///                    by an arbitrary IntPtr.
-        /// </SecurityNote>
         internal BitmapSourceSafeMILHandle WicSourceHandle
         {
-            [SecurityCritical]
             get
             {
                 CompleteDelayedCreation();
@@ -637,7 +594,6 @@ namespace System.Windows.Media.Imaging
 
                 return _wicSource;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 if (value != null)
@@ -662,10 +618,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Update local variables from the unmanaged resource
         ///
-        /// <SecurityNote>
-        /// Critical - access/creates critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void UpdateCachedSettings()
         {
             EnsureShouldUseVirtuals();
@@ -698,10 +650,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to expose pixel information
-        /// </SecurityNote>
-        [SecurityCritical]
         [FriendAccessAllowed] // Built into Core, also used by Framework.
         unsafe internal void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
@@ -781,11 +729,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="buffer"></param>
         /// <param name="bufferSize"></param>
         /// <param name="stride"></param>
-        /// <SecurityNote>
-        ///     Critical: There is a risk of buffer overruns when copying data to the buffer.
-        ///               This code can also be used to expose pixel information
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
@@ -826,11 +769,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code is used to check and grant access to pixel data
-        ///     TreatAsSafe: This code does not elevate
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected void CheckIfSiteOfOrigin()
         {
             string uri = null;
@@ -852,11 +790,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Called when DUCE resource requires updating
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource _convertedDUCEPtr
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             base.UpdateResource(channel, skipOnChannelCheck);
@@ -864,12 +797,8 @@ namespace System.Windows.Media.Imaging
             UpdateBitmapSourceResource(channel, skipOnChannelCheck);
         }
 
-        /// <SecurityNote>
-        /// Critical - access/create critical resource, returns unmanaged pointer
-        /// </SecurityNote>
         internal virtual BitmapSourceSafeMILHandle DUCECompatiblePtr
         {
-            [SecurityCritical]
             get
             {
                 BitmapSourceSafeMILHandle /* IWICBitmapSource */ pIWICSource = WicSourceHandle;
@@ -1050,11 +979,6 @@ namespace System.Windows.Media.Imaging
             return GetChannelCore(index);
         }
 
-        /// <SecurityNote>
-        /// SecurityCritical: This code calls critical code SendCommandBitmapSource
-        /// SecurityTreatAsSafe: The code called into demands
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal virtual void UpdateBitmapSourceResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             if (_needsUpdate)
@@ -1082,11 +1006,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Called when a failure to decode is detected.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource WicSourceHandle
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RecoverFromDecodeFailure(Exception e)
         {
             // Set the source to an empty image in case the user doesn't respond to the failed event
@@ -1171,10 +1090,6 @@ namespace System.Windows.Media.Imaging
         }
 
         /// Creates a IWICBitmap
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static BitmapSourceSafeMILHandle CreateCachedBitmap(
             BitmapFrame frame,
             BitmapSourceSafeMILHandle wicSource,
@@ -1550,11 +1465,6 @@ namespace System.Windows.Media.Imaging
         /// CloneCore(), CloneCurrentValueCore(), GetAsFrozenCore() and
         /// GetCurrentValueAsFrozenCore().
         /// </summary>
-        /// <SecurityNote>
-        /// SecurityCritical: This code accesses unmanaged resources
-        /// SecurityTreatAsSafe: Inputs are verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CopyCommon(BitmapSource sourceBitmap)
         {
             _useVirtuals = sourceBitmap._useVirtuals;
@@ -1676,16 +1586,8 @@ namespace System.Windows.Media.Imaging
         private bool _useVirtuals = false;
         internal BitmapInitialize _bitmapInit = new BitmapInitialize();
 
-        /// <SecurityNote>
-        /// Critical: Unmanaged IWICBitmapSource handle. Access only through WicSourceHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapSourceSafeMILHandle _wicSource = null;
 
-        /// <SecurityNote>
-        /// Critical: Unmanaged IWICBitmapSource handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapSourceSafeMILHandle _convertedDUCEPtr;
 
         internal object _syncObject;
@@ -1905,10 +1807,6 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical    - Calls into a P/Invoke method InitializeFromPalette().
-            /// </SecurityNote>
-            [SecurityCritical]
             int IWICBitmapSource.GetPalette(IntPtr /* IWICPalette */ pIPalette)
             {
                 BitmapSource bitmapSource;
@@ -1929,10 +1827,6 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code can be used to expose pixel information
-            /// </SecurityNote>
-            [SecurityCritical]
             int IWICBitmapSource.CopyPixels(IntPtr prc, int cbStride, int cbPixels, IntPtr pvPixels)
             {
                 if (cbStride < 0)

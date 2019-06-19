@@ -286,10 +286,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Get advance widths of unshaped characters
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code deals with pointers and calls SC methods like GetAdvanceWidthsUnshaped
-        /// </SecurityNote>
-        [SecurityCritical]
         internal sealed override unsafe void GetAdvanceWidthsUnshaped(
             char*         characterString,
             int           characterLength,

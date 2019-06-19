@@ -50,10 +50,6 @@ namespace MS.Internal.Progressivity
         // <param name="url">url to be downloaded</param>
         // <param name="tempFile">temporary file where the downloaded bytes should be saved</param>
         // <param name="eventHandle">event handle to be raised when a byte range request is done</param>
-        /// <SecurityNote>
-        /// Critical : Accepts critical SafeHandle argument
-        /// </SecurityNote>
-        [SecurityCritical]
         void InitializeByteRangeDownloader(
             [MarshalAs(UnmanagedType.LPWStr)] string url,
             [MarshalAs(UnmanagedType.LPWStr)] string tempFile,

@@ -64,10 +64,6 @@ namespace MS.Internal.AppModel
         // <summary> This method inits and runs the server </summary> 
         // <returns>Int indicating whether the exit code of the application, failure could also 
         // mean that the app was not launched successfully</returns>
-        /// <SecurityNote>
-        /// Critical: Major entry point into the full-trust hosting code. Expects trusted input.
-        /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         [return: MarshalAs(UnmanagedType.I4)]
         int Run([In, MarshalAs(UnmanagedType.LPWStr)]  string strUrl,
@@ -87,10 +83,6 @@ namespace MS.Internal.AppModel
             );
 
         // <summary> Reparent the viewport </summary>
-        /// <SecurityNote>
-        /// Critical: Affects the native window containment.
-        /// </SecurityNote>
-        [SecurityCritical]
         void SetParent(IntPtr parentHandle);
 
         // <summary> Show the viewport     </summary> 
@@ -103,10 +95,6 @@ namespace MS.Internal.AppModel
         /// Used by C# hosting code to get back to the native browser hosting code.
         /// (The interface type is IBrowserCallbackServices.)
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: The callback object needs to be trusted.
-        /// </SecurityNote>
-        [SecurityCritical]
         void SetBrowserCallback([In, MarshalAs(UnmanagedType.Interface)]object browserCallback);
 
         // <summary>If the Application is loaded we use LoadHistory else create a new app object </summary>
@@ -137,11 +125,6 @@ namespace MS.Internal.AppModel
 
         //<summary> IPersistHistory::LoadHistory implementation called
         //when hosted in the browser </summary>
-        /// <SecurityNote>
-        /// Critical: Binary (de)serialization is used to reconstitute the internal journal.
-        ///     We have to trust the input stream represents legitimate objects.
-        /// </SecurityNote>
-        [SecurityCritical]
         void LoadHistory([MarshalAs(UnmanagedType.Interface)]object ucomIStream);
 
         //<summary> 
@@ -153,10 +136,6 @@ namespace MS.Internal.AppModel
         //<summary> 
         // IOleCommandTarget::Exec called when hosted in the browser
         //</summary>
-        /// <SecurityNote>
-        /// Critical: Can execute privileged commands such as Paste and shut-down.
-        /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         int ExecCommand([MarshalAs(UnmanagedType.LPStruct)]Guid guidCmdGroup, uint command, object arg);
 
@@ -165,10 +144,6 @@ namespace MS.Internal.AppModel
         /// The "post" in the method name is legacy. Now all of Application's shutdown work is complete 
         /// when this method returns. In particular, the managed Dispatcher is shut down.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: A PT app is not supposed to be able to shut itself down.
-        /// </SecurityNote>
-        [SecurityCritical]
         void PostShutdown();
 
         // <summary> Activate or deactivate RootBrowswerWindow  </summary>

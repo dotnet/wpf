@@ -51,13 +51,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintQueueException">
         /// The FallbackPTProvider instance failed to bind to the specified printer.
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable
-        ///               Devmode  manipulation in Intranet Zone
-        ///             - Calls critical GetPrinterInfo2W
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         public FallbackPTProvider(string deviceName, int maxVersion, int clientVersion)
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXPTProviderStart);
@@ -108,14 +101,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintQueueException">
         /// The PTProvider instance failed to retrieve the PrintCapabilities.
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable Device capabilities manipulation 
-        ///               in Intranet Zone
-        ///               Calls critical code to create and dispose critical resources.
-        ///               Exposes critical OemDriverNamespace in returned MemoryStream.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream GetPrintCapabilities(MemoryStream printTicket)
         {
             VerifyAccess();
@@ -274,13 +259,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintQueueException">
         /// The PTProvider instance failed to merge and validate the input PrintTicket(s).
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable enable Print Ticket
-        ///               manipulation in Intranet Zone
-        ///             - Calls critical DevModeToPrintTicket that exposes critical data
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream MergeAndValidatePrintTicket(MemoryStream basePrintTicket,
                                                         MemoryStream deltaPrintTicket,
                                                         PrintTicketScope scope,
@@ -324,12 +302,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintQueueException">
         /// The PTProvider instance failed to convert the DEVMODE to a PrintTicket.
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable conversion of a devmode to a PrintTicket
-        ///               manipulation in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream ConvertDevModeToPrintTicket(byte[] devMode, PrintTicketScope scope)
         {
             VerifyAccess();
@@ -359,12 +331,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintQueueException">
         /// The PTProvider instance failed to convert the PrintTicket to a DEVMODE.
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable the conversion
-        ///               of a PrintTicket to devmode in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         public override byte[] ConvertPrintTicketToDevMode(MemoryStream printTicket,
                                                   BaseDevModeType baseType,
                                                   PrintTicketScope scope)
@@ -391,10 +357,6 @@ namespace MS.Internal.Printing.Configuration
             return result.ByteData;
         }
 
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release unmanaged handle
-        ///</SecurityNote>
-        [SecurityCritical]
         public override void Release()
         {
             if (_deviceHandle != null)
@@ -420,12 +382,8 @@ namespace MS.Internal.Printing.Configuration
         /// <remarks>
         /// Based on Print Schema Reference Guide v1.0 Appendix E.2
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: Exposes critical driverName and driverVersion
-        /// </SecurityNote>
         private string OemDriverNamespace
         {
-            [SecurityCritical]
             get
             {
                 if (this._printTicketNamespace == null)
@@ -458,10 +416,6 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Methods
 
-        /// <SecurityNote>
-        /// Critical    -   Calls critical WinSpoolPrinterCapabilities.Release
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool Validate(DevMode devMode)
         {
             bool settingsChanged = false;
@@ -517,10 +471,6 @@ namespace MS.Internal.Printing.Configuration
             return settingsChanged;
         }
 
-        /// <SecurityNote>
-        /// Critical    -   Accesses critical OemDriverNamespace
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PrintTicketToDevMode(DevMode devMode, InternalPrintTicket ticket, PrintTicketScope scope, DevModeFields supportedFields)
         {
             if (ticket != null)
@@ -536,10 +486,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        /// <SecurityNote>
-        /// Critical    -   Exposes critical OemDriverNamespace data in returned InternalPrintTicket
-        /// </SecurityNote>
-        [SecurityCritical]
         private InternalPrintTicket DevModeToPrintTicket(DevMode devmode, PrintTicketScope scope, DevModeFields supportedFields)
         {
             InternalPrintTicket resultTicket = new InternalPrintTicket();
@@ -548,11 +494,6 @@ namespace MS.Internal.Printing.Configuration
             return resultTicket;
         }
 
-        /// <SecurityNote>
-        /// Critical    - Accesses critical deviceName, driverName, portName
-        ///             - Calls critical constructor
-        /// </SecurityNote>
-        [SecurityCritical]
         private WinSpoolPrinterCapabilities GetCapabilities(DevMode devMode)
         {
             return new WinSpoolPrinterCapabilities(this._deviceName, this._driverName, this._portName, devMode);
@@ -564,12 +505,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="devModeBytes">New DEVMODE settings to apply</param>
         /// <param name="biDirectional">If true updates the devModeBytes array with resolved merge conflicts</param>
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to update printer information in Intranet Zone
-        ///             - Asserts UnmanagedCode permissions to allocate and read from native memory
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         private void SetDocumentProperties(byte[] devModeBytes, bool biDirectional)
         {
             long result = -1;
@@ -616,11 +551,6 @@ namespace MS.Internal.Printing.Configuration
         ///<param name="baseType">Type of DEVMODE (printer default or user default)</param>
         ///<param name="devModeBytes">DEVMODE bytes</param>
         ///<returns>False if the call fails</returns>
-        ///<SecurityNote>
-        /// Critical    -   Calls critical GetPrinterInfo2W
-        ///             -   Calls critical GetPrinterInfo8Or9W
-        ///</SecurityNote>
-        [SecurityCritical]
         private DevMode GetDEVMODE(BaseDevModeType baseType)
         {
             DevMode result;
@@ -670,10 +600,6 @@ namespace MS.Internal.Printing.Configuration
         /// Gets a PRINTER_INFO_2 structure from the providers device
         /// </summary>
         /// <returns>A PRINTER_INFO_2 structure</returns>
-        ///<SecurityNote>
-        /// Critical    - Reads from unmanaged memory to obtain printer information in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         private PRINTER_INFO_2 GetPrinterInfo2W()
         {
             PRINTER_INFO_2WGetter result = new PRINTER_INFO_2WGetter();
@@ -690,10 +616,6 @@ namespace MS.Internal.Printing.Configuration
         /// Gets a PRINTER_INFO_8 or a PRINTER_INFO_9 structure from the providers device
         /// </summary>
         /// <returns>A PRINTER_INFO_8 or PRINTER_INFO_9 structure</returns>
-        ///<SecurityNote>
-        /// Critical    - Reads from unmanaged memory to obtain printer information in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         private PRINTER_INFO_8_AND_9 GetPrinterInfo8Or9W(bool getPrinterInfo8)
         {
             PRINTER_INFO_8_AND_9Getter result = new PRINTER_INFO_8_AND_9Getter();
@@ -712,13 +634,6 @@ namespace MS.Internal.Printing.Configuration
         ///<param name="dwLevel">Level of printer information to process</param>
         ///<param name="action">Delegate that processes printer information</param>
         ///<returns>False if tha call fails</returns>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to obtain printer information in Intranet Zone
-        ///             - passes unmanaged memory to caller supplied delegate
-        ///             - Calls critical HGlobalBuffer ctor, get_Handle, Release
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         private bool GetPrinterW(uint dwLevel, Action<HGlobalBuffer> action)
         {
             uint dwNeeded = 0;
@@ -744,11 +659,6 @@ namespace MS.Internal.Printing.Configuration
             return false;
         }
 
-        ///<SecurityNote>
-        /// Critical    - Accesses critical _providerHandle
-        ///             - Does not expose critical information
-        ///</SecurityNote>
-        [SecurityCritical]
         private void VerifyAccess()
         {
             if (_deviceHandle == null)
@@ -763,10 +673,6 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Implement Dispose pattern to release printer handle which can't be released by GC in WOW64
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release critical _deviceHandle
-        ///</SecurityNote>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (_disposed)
@@ -796,40 +702,14 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Fields
 
-        ///<SecurityNote>
-        /// Critical    - Contains information used to access\control a printer device.
-        ///             - For network printers can also be used discover computer names
-        ///             - Must demand DefaultPrinting to use this member
-        ///</SecurityNote>
-        [SecurityCritical]
         private string _deviceName;
 
-        ///<SecurityNote>
-        /// Critical    - Contains information used to access\control a printer device.
-        ///             - Must demand DefaultPrinting to use this member
-        ///</SecurityNote>
-        [SecurityCritical]
         private string _driverName;
 
-        ///<SecurityNote>
-        /// Critical    - Contains information used to access\control a printer device.
-        ///             - Must demand DefaultPrinting to use this member
-        ///</SecurityNote>
-        [SecurityCritical]
         private string _portName;
 
-        ///<SecurityNote>
-        /// Critical    - Contains information used to access\control a printer device.
-        ///             - Must demand DefaultPrinting to use this member
-        ///</SecurityNote>
-        [SecurityCritical]
         private ushort _driverVersion;
 
-        ///<SecurityNote>
-        /// Critical    - Contains information used to access\control a printer device.
-        ///             - Must demand DefaultPrinting to use this member
-        ///</SecurityNote>
-        [SecurityCritical]
         private SafeWinSpoolPrinterHandle _deviceHandle;
 
         private string _printTicketNamespace;
@@ -856,11 +736,6 @@ namespace MS.Internal.Printing.Configuration
             /// <summary>
             /// A callback that copies PRINTER_INFO_2 fields from an unmanaged buffer
             /// </summary>
-            /// <SecurityNote>
-            /// Critical    -   Reads arbitrary native memory
-            ///             -   Uses critical HGlobalBuffer Handle
-            /// </SecurityNote>
-            [SecurityCritical]
             public void Callback(HGlobalBuffer pPrinterBuffer)
             {
                 // PRINTER_INFO_2 layout from http://msdn.microsoft.com/en-us/library/dd162845(VS.85).aspx
@@ -943,11 +818,6 @@ namespace MS.Internal.Printing.Configuration
             /// <summary>
             /// A callback that copies PRINTER_INFO_8_AND_9 fields from an unmanaged buffer
             /// </summary>
-            /// <SecurityNote>
-            /// Critical    -   Reads arbitrary native memory
-            ///             -   Uses critical HGlobalBuffer Handle
-            /// </SecurityNote>
-            [SecurityCritical]
             public void Callback(HGlobalBuffer pPrinterBuffer)
             {
                 // PRINTER_INFO_8 layout from http://msdn.microsoft.com/en-us/library/dd162851(VS.85).aspx

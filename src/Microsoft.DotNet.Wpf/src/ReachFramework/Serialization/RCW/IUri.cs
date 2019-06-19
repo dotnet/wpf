@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("A39EE748-6A27-4817-A6F2-13914BEF5890"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IUri
     {
         void GetAbsoluteUri(out string pbstrAbsoluteUri);

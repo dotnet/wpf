@@ -130,10 +130,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A Uri to locate the font within the Xps package.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         ComputeFontSubset(
@@ -288,10 +284,6 @@ namespace System.Windows.Xps.Serialization
         /// Determines Embedding action based
         /// on flags in the fsType field
         /// </summery>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         FontEmbeddingAction
@@ -362,10 +354,6 @@ namespace System.Windows.Xps.Serialization
         /// Determines Embedding action based
         /// on flags in the fsType field
         /// </summery>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         bool
@@ -472,10 +460,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A reference to a FEMCacheItem.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
-        ///</SecurityNote>
-        [SecurityCritical]
         private
         FEMCacheItem
         AcquireCacheItem(
@@ -534,10 +518,6 @@ namespace System.Windows.Xps.Serialization
         /// <param name="packagingPolicy">
         /// The BasePackagingPolicy to write to.
         /// </param>
-        ///<SecurityNote>
-        /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         FEMCacheItem(
             GlyphTypeface                   glyphTypeface,
@@ -608,10 +588,6 @@ namespace System.Windows.Xps.Serialization
         /// A reference to a Uri where font is stored
         /// within the package.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - Calls RecordUsage which demands descovery permision for GlyphTypeFace
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         AddGlyphRunUsage(
@@ -666,10 +642,6 @@ namespace System.Windows.Xps.Serialization
         /// and commits the font to the Xps package.
         /// This ends the lifetime of this cache item.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  1)  Calls SubSet font which assert unmanaged and returns raw font data
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         Commit(
@@ -741,14 +713,6 @@ namespace System.Windows.Xps.Serialization
 
         #region Private static methods
 
-        /// <SecurityNote>
-        /// Critical -  1)  Asserts to access the unmanged code.  Access unmanged which is 
-        ///                 capable of memory overuns and uncontroled access the resources.
-        /// 
-        ///             2)  returns raw font data.
-        ///             
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         void
         SubSetFont(
@@ -788,10 +752,6 @@ namespace System.Windows.Xps.Serialization
             _streamWritten = true;
         }
 
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         internal
         Uri
         CopyFontStream()
@@ -941,11 +901,6 @@ namespace System.Windows.Xps.Serialization
         private XpsResourceStream       _fontResourceStream;
         private GlyphTypeface           _glyphTypeface;
         private bool                    _streamWritten; 
-        ///<SecurityNote>
-        /// Critical    - This property is filled under assert permision thus 
-        ///               must be security critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private Uri _fontUri;
         private static readonly int _readBlockSize = 1048576; //1MB
 

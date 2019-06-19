@@ -42,12 +42,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Instantiates an instance of the Print Dialog.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    - setting critical data (_printQueue, _printTicket, _dialogInvoked)
-        ///     PublicOk:    - We are setting these to "known" values of null.  There
-        ///                    is no data exposure here.
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         PrintDialog(
             )
@@ -209,18 +203,8 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets the printer selection.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    - The getter is critical since it accesses critical data in web application mode.
-        ///                  - The getter is calling critical code (AcquireDefaultPrintQueue).
-        ///                  - The setter is critical since it is returning critical data.
-        ///     PublicOk:    - A demand is made for default printing before returning the print queue.  This
-        ///                    would be the same permission required to get the print queue in the first place.
-        ///                  - We also demand before setting the print queue object.  If they can satisfy the
-        ///                    the demand then they are safe to print anyways.
-        /// </SecurityNote>
         public PrintQueue PrintQueue
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -232,7 +216,6 @@ namespace System.Windows.Controls
 
                 return _printQueue;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -244,18 +227,8 @@ namespace System.Windows.Controls
         /// <summary>
         /// Get or sets the current PrintTicket object.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    - The getter is critical since it accesses critical data.
-        ///                  - The getter is calling critical code (AcquireDefaultPrintTicket).
-        ///                  - The setter is critical since it is returning critical data.
-        ///     PublicOk:    - A demand is made for default printing before returning the print ticket.  This
-        ///                    would be the same permission required to get the print ticket in the first place.
-        ///                  - We also demand before setting the print ticket object.  If they can satisfy the
-        ///                    the demand then they are safe to print anyways.
-        /// </SecurityNote>
         public PrintTicket PrintTicket
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -267,7 +240,6 @@ namespace System.Windows.Controls
 
                 return _printTicket;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandPrintDialogPermissions();
@@ -327,12 +299,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Pops the dialog up to the user in a modal form.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    - Accesses and sets critical data.
-        ///     PublicOk:    - Data is internal to this dialog and can only be retrieved
-        ///                    by other critical code.  No information leaves this method.
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         Nullable<bool>
         ShowDialog()
@@ -387,14 +353,6 @@ namespace System.Windows.Controls
         /// <param name="description">
         /// Description of the job to be printed. This shows in the Printer UI
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:    - Sets a critical data property.
-        ///     PublicOk:    - The critical data is a flag that needs to be reset for each print
-        ///                    job to enforce the dialog invocation on every print operation.  Without
-        ///                    this method resetting this flag we would not be honoring the security
-        ///                    goal of displaying the dialog once per print job.
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         PrintVisual(
@@ -428,14 +386,6 @@ namespace System.Windows.Controls
         /// <param name="description">
         /// Description of the job to be printed. This shows in the Printer UI
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:    - Sets a critical data property.
-        ///     PublicOk:    - The critical data is a flag that needs to be reset for each print
-        ///                    job to enforce the dialog invocation on every print operation.  Without
-        ///                    this method resetting this flag we would not be honoring the security
-        ///                    goal of displaying the dialog once per print job.
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         PrintDocument(
@@ -463,10 +413,6 @@ namespace System.Windows.Controls
 
         #region Private methods
 
-        /// <SecurityNote>
-        ///     Critical:    - Asserts to obtain the default print queue from the local server.
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintQueue
         AcquireDefaultPrintQueue()
@@ -499,11 +445,6 @@ namespace System.Windows.Controls
             return printQueue;
         }
 
-        /// <SecurityNote>
-        ///     Critical:    - Asserts to obtain the PrintTicket from the specified PrintQueue
-        ///                    object or create a blank PrintTicket object (i.e. PrintTicket::ctor).
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintTicket
         AcquireDefaultPrintTicket(
@@ -554,13 +495,6 @@ namespace System.Windows.Controls
             return printTicket;
         }
 
-        /// <SecurityNote>
-        ///     Critical:    - Invokes a critical method (PickCorrectPrintingEnvironment).
-        ///     TreatAsSafe: - Critical data returned from above method is internal and does
-        ///                    not leave the scope of this method.  It is only used to calculate
-        ///                    non-critical values.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         UpdatePrintableAreaSize(
@@ -620,22 +554,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:    - Asserts for PrintingPermissionLevel.DefaultPrinting
-        ///                    to be able to use the printQueue to create the
-        ///                    XpsDocumentWriter.
-        ///     TreatAsSafe: - The assert is only done after ensuring that the user
-        ///                    has conciously made a decision to print by successfully
-        ///                    dismissing the Print Dialog.  This logic of a dialog
-        ///                    being required is only needed for partial trust applications.
-        ///                    The logic of checking this criteria is contained within the
-        ///                    PickCorrectPrintingEnvironment method.
-        ///                  - The XpsDocumentWriter instance returned from this method
-        ///                    is not unsafe since the application is either full trust
-        ///                    or the user chose to print.  It is okay for the application
-        ///                    to use the XpsDocumentWriter to print at this point.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         XpsDocumentWriter
         CreateWriter(
@@ -671,20 +589,6 @@ namespace System.Windows.Controls
             return writer;
         }
 
-        /// <SecurityNote>
-        ///     Critical:    - Accesses critical data and returns it to the caller.
-        ///                  - Calls critical code (AcquireDefaultPrintQueue/AcquireDefaultPrintTicket)
-        ///                  - Detects whether a caller is allowed to acquire this data
-        ///                    based on a demand.  This demand is only performed if the
-        ///                    dialog was not invoked already.  It is fine to return the
-        ///                    data if the dialog was invoked, however, the data is still
-        ///                    critical.
-        ///
-        /// NOTE:  This method validates that a dialog was invoked prior to returning the
-        ///        PrintQueue and PrintTicket for the case of web applications.  If the
-        ///        dialog was not invoked then an exception is thrown.
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         void
         PickCorrectPrintingEnvironment(
@@ -741,31 +645,12 @@ namespace System.Windows.Controls
 
         #region Private data
 
-        /// <SecurityNote>
-        /// The PrintTicket is critical and not obtainable from a partial
-        /// trust application unless they can satisfy a printing permission
-        /// demand.
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintTicket                 _printTicket;
 
-        /// <SecurityNote>
-        /// The PrintQueue is critical and not obtainable from a partial
-        /// trust application unless they can satisfy a printing permission
-        /// demand.
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         PrintQueue                  _printQueue;
 
-        /// <SecurityNote>
-        /// This variable is used to determine whether a user actually invoked
-        /// and dismissed the dialog prior to printing.  In a partial trust app,
-        /// we can safely perform the necessary asserts to print as long as the
-        /// user said printing was okay.
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         bool                        _dialogInvoked;
 
@@ -810,11 +695,6 @@ namespace System.Windows.Controls
         {
             #region Constructor
 
-            /// <SecurityNote>
-            ///     Critical    -   PrintTicket argument is critical because it is defined in the none APTCA assembly ReachFramework.dll
-            ///     TreatAsSafe -   PrintTicket type is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public
             PrintDlgPrintTicketEventHandler(
                 PrintTicket printTicket
@@ -827,12 +707,6 @@ namespace System.Windows.Controls
 
             #region Public Methods
 
-            /// <SecurityNote>
-            ///     Critical    -   Makes use of PrintTicket type which is critical because it is defined in the none APTCA assembly ReachFramework.dll
-            ///                 -   Makes use of PrintTicketLevel type which is critical because it is defined in the none APTCA assembly ReachFramework.dll
-            ///     TreatAsSafe -   PrintTicket type is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public
             void
             SetPrintTicket(
@@ -850,10 +724,6 @@ namespace System.Windows.Controls
 
             #region Private Data
 
-            /// <SecurityNote>
-            ///     Critical    -   Field for PrintTicket type which is critical because it is defined in the none APTCA assembly ReachFramework.dll
-            /// </SecurityNote>
-            [SecurityCritical]
             private
             PrintTicket _printTicket;
 

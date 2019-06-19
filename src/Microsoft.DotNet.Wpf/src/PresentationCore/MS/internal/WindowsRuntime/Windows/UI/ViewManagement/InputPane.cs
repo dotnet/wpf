@@ -45,13 +45,11 @@ namespace MS.Internal.WindowsRuntime
             /// <summary>
             /// Activation factory to instantiate InputPane RCWs
             /// </summary>
-            [SecurityCritical]
             private static IActivationFactory _winRtActivationFactory;
 
             /// <summary>
             /// The appropriate RCW for calling TryShow/Hide
             /// </summary>
-            [SecurityCritical]
             private InputPaneRcw.IInputPane2 _inputPane;
 
             #endregion
@@ -61,12 +59,7 @@ namespace MS.Internal.WindowsRuntime
             /// <summary>
             /// Acquires the InputPane type from the winmd
             /// </summary>
-            /// <SecurityNote>
-            /// Critical:  Calls GetWinRtActivationFactory
-            /// Safe: Doesn't expose or accept any critical data.
-            /// </SecurityNote>
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-            [SecuritySafeCritical]
             static InputPane()
             {
                 // We don't want to throw here - so wrap in try..catch
@@ -91,12 +84,6 @@ namespace MS.Internal.WindowsRuntime
             /// Checks that the InputPane type was loaded and gets a new InputPane for the parent window.
             /// </summary>
             /// <exception cref="PlatformNotSupportedException"></exception>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Accesses COM RCWs IActivationFactory, IInputPaneInterop, IInputPane2.
-            ///         Calls GetWinRtActivationFactory and IInputPaneInterop.GetForWindow.
-            /// </SecurityNote>
-            [SecurityCritical]
             private InputPane(IntPtr? hwnd)
             {
                 if (s_WinRTType == null)
@@ -154,12 +141,6 @@ namespace MS.Internal.WindowsRuntime
             /// </summary>
             /// <returns>A new InputPane</returns>
             /// <exception cref="PlatformNotSupportedException"></exception>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Calls InputPane constructor
-            ///         Accesses CriticalHandle from HwndSource
-            /// </SecurityNote>
-            [SecurityCritical]
             internal static InputPane GetForWindow(HwndSource source)
             {
                 return new InputPane(source?.CriticalHandle ?? null);
@@ -169,11 +150,6 @@ namespace MS.Internal.WindowsRuntime
             /// Attempts to show the touch keyboard
             /// </summary>
             /// <returns>True if successful, false otherwise</returns>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Accesses COM RCW function IInputPane2.TryShow
-            /// </SecurityNote>
-            [SecurityCritical]
             internal bool TryShow()
             {
                 bool result = false;
@@ -196,11 +172,6 @@ namespace MS.Internal.WindowsRuntime
             /// Attempts to hide the touch keyboard
             /// </summary>
             /// <returns>True if successful, false otherwise</returns>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Accesses COM RCW function IInputPane2.TryHide
-            /// </SecurityNote>
-            [SecurityCritical]
             internal bool TryHide()
             {
                 bool result = false;
@@ -225,11 +196,6 @@ namespace MS.Internal.WindowsRuntime
             /// <param name="forceInitialization">If true, will create a new IActivationFactory.  If false will
             /// only create a new IActivationFactory if there is no valid cached instance available.</param>
             /// <returns>An IActivationFactory of InputPane or null if it fails to instantiate.</returns>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Accesses COM RCW IActivationFactory and function WindowsRuntimeMarshal.GetActivationFactory
-            /// </SecurityNote>
-            [SecurityCritical]
             private static IActivationFactory GetWinRtActivationFactory(bool forceInitialization = false)
             {
                 if (forceInitialization || _winRtActivationFactory == null)
@@ -275,14 +241,6 @@ namespace MS.Internal.WindowsRuntime
             /// Releases the _inputPane RCW
             /// </summary>
             /// <param name="disposing">True if called from a Dispose() call, false when called from the finalizer</param>
-            /// <SecurityNote>
-            ///     Critical
-            ///         Calls Marshal.ReleaseCOMObject
-            ///         Accesses critical COM RCWs
-            ///     SafeCritical
-            ///         Does not expose critical COM RCWs to callers
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void Dispose(bool disposing)
             {
                 if (!_disposed)

@@ -614,11 +614,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Create special run that matches the content of specified text run
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code has unsafe code block that uses pointers.
-        ///    TreatAsSafe: This code does not expose the pointer and the call does bounds checking.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private TextRunInfo CreateSpecialRunFromTextContent(
             TextRunInfo     runInfo,
             int             cchFetched

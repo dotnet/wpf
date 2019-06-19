@@ -27,39 +27,24 @@ namespace MS.Internal
     [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class SecurityCriticalDataForMultipleGetAndSet<T>
     {
-        /// <SecurityNote>
-        ///    Critical - "by definition" - this class is intended only for data that's
-        ///               Critical for setting.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal SecurityCriticalDataForMultipleGetAndSet(T value)
         { 
             _value = value; 
         }
 
-        /// <SecurityNote>
-        ///    Critical - Setter is Critical "by definition" - this class is intended only
-        ///               for data that's Critical for setting.
-        /// </SecurityNote>
         internal T Value 
         {
-            [SecurityCritical]
             get
             {
                 return _value;
             }
 
-            [SecurityCritical]
             set
             {
                 _value = value;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - by definition as this data is Critical for set.
-        /// </SecurityNote>>
-        [SecurityCritical]
         private T _value;
     }
 }

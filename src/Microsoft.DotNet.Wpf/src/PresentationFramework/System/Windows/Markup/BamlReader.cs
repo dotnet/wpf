@@ -155,10 +155,6 @@ namespace System.Windows.Markup
     /// <summary>
     /// Reads BAML from a Stream and exposes an XmlReader-liker interface for BAML
     /// </summary>
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlReader
     {
         #region Constructor
@@ -2881,10 +2877,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlNodeInfo
         {
             // Create an empty property info record
@@ -2984,10 +2976,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlPropertyInfo : BamlNodeInfo
         {
             // Create an empty property info record
@@ -3015,10 +3003,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlContentPropertyInfo : BamlNodeInfo
         {
             // this doesn't need any different fields it just needs to be
@@ -3034,10 +3018,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         [DebuggerDisplay("{_offset}")]
         internal class BamlKeyInfo : BamlPropertyInfo
         {

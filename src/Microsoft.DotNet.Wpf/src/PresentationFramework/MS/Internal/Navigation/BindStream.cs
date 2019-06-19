@@ -292,10 +292,6 @@ namespace MS.Internal.Navigation
         /// Overridden InitializeLifetimeService method
         /// </summary>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalByRefObject.InitializeLifetimeService which LinkDemands
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object InitializeLifetimeService()
         {
             return _stream.InitializeLifetimeService();

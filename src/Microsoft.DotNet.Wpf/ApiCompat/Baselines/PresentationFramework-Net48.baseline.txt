@@ -11,4 +11,5 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueUnavailableExce
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Documents.TextElementEditingBehaviorAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 TypesMustExist : Type 'System.Windows.Interop.DocObjHost' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-Total Issues: 12
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.Shell.JumpList' in the contract but not the implementation.
+Total Issues: 13

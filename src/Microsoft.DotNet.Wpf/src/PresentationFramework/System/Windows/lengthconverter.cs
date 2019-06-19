@@ -136,11 +136,6 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the double. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for double, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,
                                          object value,

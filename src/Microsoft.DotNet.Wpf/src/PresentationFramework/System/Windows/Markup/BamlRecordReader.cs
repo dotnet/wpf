@@ -84,10 +84,6 @@ namespace System.Windows.Markup
     /// reads BAML from a Stream
     /// This is an internal class
     /// </summary>
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlRecordReader
     {
 #region Constructor

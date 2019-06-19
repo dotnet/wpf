@@ -226,12 +226,6 @@ namespace System.Windows
         /// <param name="dp"></param>
         /// <param name="metadata"></param>
         /// <param name="entry">EffectiveValueEntry computed by base</param>
-        /// <SecurityNote>
-        ///     Putting an InheritanceDemand as a defense-in-depth measure,
-        ///     as this provides a hook to the property system that we don't
-        ///     want exposed under PartialTrust.
-        /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,
@@ -413,10 +407,6 @@ namespace System.Windows
         ///     <see cref="RoutedEventArgs"/> for the event to
         ///     be raised
         /// </param>
-        ///<SecurityNote>
-        ///     By default clears the user initiated bit.
-        ///     To guard against "replay" attacks.
-        ///</SecurityNote>
         public void RaiseEvent(RoutedEventArgs e)
         {
             // VerifyAccess();
@@ -434,10 +424,6 @@ namespace System.Windows
         ///     "Trusted" internal flavor of RaiseEvent.
         ///     Used to set the User-initated RaiseEvent.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
             if (args == null)
@@ -457,10 +443,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
         [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {
@@ -793,11 +775,6 @@ namespace System.Windows
         /// <summary>
         /// Used by UIElement, ContentElement, and UIElement3D to register common Events.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical: This code is used to register various thunks that are used to send input to the tree
-        ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void RegisterEvents(Type type)
         {
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
@@ -884,10 +861,6 @@ namespace System.Windows
 
 
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
             if(!e.Handled)
@@ -917,10 +890,6 @@ namespace System.Windows
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
             if(!e.Handled)
@@ -955,10 +924,6 @@ namespace System.Windows
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
             if(!e.Handled)
@@ -988,10 +953,6 @@ namespace System.Windows
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
             if(!e.Handled)
@@ -1021,10 +982,6 @@ namespace System.Windows
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1050,10 +1007,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1079,10 +1032,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1108,10 +1057,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1137,10 +1082,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1166,10 +1107,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1195,10 +1132,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1224,10 +1157,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1253,10 +1182,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseMoveThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1282,10 +1207,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseMoveThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1311,10 +1232,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewMouseWheelThunk(object sender, MouseWheelEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1340,10 +1257,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseWheelThunk(object sender, MouseWheelEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1374,10 +1287,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseEnterThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1403,10 +1312,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseLeaveThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1432,10 +1337,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnGotMouseCaptureThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1461,10 +1362,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLostMouseCaptureThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1490,10 +1387,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnQueryCursorThunk(object sender, QueryCursorEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1519,10 +1412,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusDownThunk(object sender, StylusDownEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1548,10 +1437,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusDownThunk(object sender, StylusDownEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1577,10 +1462,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusUpThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1606,10 +1487,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusUpThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1635,10 +1512,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusMoveThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1664,10 +1537,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusMoveThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1693,10 +1562,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusInAirMoveThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1722,10 +1587,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusInAirMoveThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1751,10 +1612,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusEnterThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1780,10 +1637,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusLeaveThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1809,10 +1662,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusInRangeThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1838,10 +1687,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusInRangeThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1867,10 +1712,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusOutOfRangeThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1896,10 +1737,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusOutOfRangeThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1925,10 +1762,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusSystemGestureThunk(object sender, StylusSystemGestureEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1954,10 +1787,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusSystemGestureThunk(object sender, StylusSystemGestureEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -1983,10 +1812,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnGotStylusCaptureThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2012,10 +1837,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLostStylusCaptureThunk(object sender, StylusEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2041,10 +1862,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusButtonDownThunk(object sender, StylusButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2070,10 +1887,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnStylusButtonUpThunk(object sender, StylusButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2099,10 +1912,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusButtonDownThunk(object sender, StylusButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2128,10 +1937,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewStylusButtonUpThunk(object sender, StylusButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2157,10 +1962,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewKeyDownThunk(object sender, KeyEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2186,10 +1987,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnKeyDownThunk(object sender, KeyEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2220,10 +2017,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewKeyUpThunk(object sender, KeyEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2249,10 +2042,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnKeyUpThunk(object sender, KeyEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2278,10 +2067,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewGotKeyboardFocusThunk(object sender, KeyboardFocusChangedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2307,10 +2092,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnGotKeyboardFocusThunk(object sender, KeyboardFocusChangedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2336,10 +2117,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewLostKeyboardFocusThunk(object sender, KeyboardFocusChangedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2365,10 +2142,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLostKeyboardFocusThunk(object sender, KeyboardFocusChangedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2394,10 +2167,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewTextInputThunk(object sender, TextCompositionEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2423,10 +2192,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTextInputThunk(object sender, TextCompositionEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2452,10 +2217,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewExecutedThunk(object sender, ExecutedRoutedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2464,10 +2225,6 @@ namespace System.Windows
             CommandManager.OnExecuted(sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnExecutedThunk(object sender, ExecutedRoutedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2476,10 +2233,6 @@ namespace System.Windows
             CommandManager.OnExecuted(sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewCanExecuteThunk(object sender, CanExecuteRoutedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2488,10 +2241,6 @@ namespace System.Windows
             CommandManager.OnCanExecute(sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnCanExecuteThunk(object sender, CanExecuteRoutedEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2500,10 +2249,6 @@ namespace System.Windows
             CommandManager.OnCanExecute(sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnCommandDeviceThunk(object sender, CommandDeviceEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2512,10 +2257,6 @@ namespace System.Windows
             CommandManager.OnCommandDevice(sender, e);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewQueryContinueDragThunk(object sender, QueryContinueDragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2541,10 +2282,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnQueryContinueDragThunk(object sender, QueryContinueDragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2570,10 +2307,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewGiveFeedbackThunk(object sender, GiveFeedbackEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2599,10 +2332,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnGiveFeedbackThunk(object sender, GiveFeedbackEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2628,10 +2357,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewDragEnterThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2657,10 +2382,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDragEnterThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2686,10 +2407,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewDragOverThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2715,10 +2432,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDragOverThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2744,10 +2457,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewDragLeaveThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2773,10 +2482,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDragLeaveThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2802,10 +2507,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewDropThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2831,10 +2532,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDropThunk(object sender, DragEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2860,10 +2557,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewTouchDownThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2889,10 +2582,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTouchDownThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2918,10 +2607,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewTouchMoveThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2947,10 +2632,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTouchMoveThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -2976,10 +2657,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnPreviewTouchUpThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -3005,10 +2682,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTouchUpThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -3034,10 +2707,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnGotTouchCaptureThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -3063,10 +2732,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnLostTouchCaptureThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -3092,10 +2757,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTouchEnterThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
@@ -3121,10 +2782,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnTouchLeaveThunk(object sender, TouchEventArgs e)
         {
             Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");

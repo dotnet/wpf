@@ -2261,15 +2261,6 @@ namespace System.Windows.Navigation
             }
         }
 
-        /// <SecurityNote>
-        /// Critical because it sets BrowserInterop.IsInitialViewerNavigation
-        /// Safe because IsInitialViewerNavigation is set to false and this method completes a navigation.
-        ///     Any further navigation will not be considered "initial".
-        ///
-        /// Consider: Do we really need IsInitialViewerNavigation to be Critical? No security decision is done
-        /// based on that.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
@@ -3154,16 +3145,11 @@ namespace System.Windows.Navigation
         /// <exception cref="System.InvalidOperationException">
         /// Can't journal by URI without a URI.
         /// </exception>
-        /// <SecurityNote>
-        /// Critical:  accesses the browsercallback services (via Journal)
-        /// TreatAsSafe:  only uses bcs to update the journal with already valid content.
-        /// </SecurityNote>
         /// <remarks> _bp is still the previous content (before the new navigation). It can be null.
         /// destinationJournalEntry can be null.
         /// No journal entry is created for certain types of Content or when there is no
         /// NavigationWindow [which is where the Journal is].
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe]
         private JournalEntry UpdateJournal(
             NavigationMode navigationMode, JournalReason journalReason, JournalEntry destinationJournalEntry)
         {

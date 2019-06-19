@@ -178,11 +178,6 @@ namespace System.Windows
         /// <param name="value"> the object to be converted to another type </param>
         /// <param name="destinationType"> The destination type of the conversion </param>
         /// <returns> null will always be returned because TextDecorations cannot be converted to any other type. </returns>        
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for TextDecoration, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor) && value is IEnumerable<TextDecoration>)

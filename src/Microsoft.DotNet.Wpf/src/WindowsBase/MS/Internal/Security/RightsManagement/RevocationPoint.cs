@@ -27,13 +27,6 @@ namespace MS.Internal.Security.RightsManagement
     /// and probably n the class properties as well. 
     /// The Frequency property in the public API space would be better represented by a TimeSpan (not DateTime). 
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class exposes access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal class RevocationPoint
     {
         //------------------------------------------------------

@@ -77,11 +77,6 @@ namespace System.Windows.Media.Composition
         /// <summary>
         /// Aquires the composition engine lock.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - all inputs validated, locking is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static CompositionEngineLock Acquire()
         {
             UnsafeNativeMethods.MilCoreApi.EnterCompositionEngineLock();
@@ -92,11 +87,6 @@ namespace System.Windows.Media.Composition
         /// <summary>
         /// Releases the composition engine lock. Using Dispose enables the using syntax.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - all inputs validated, unlocking is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             UnsafeNativeMethods.MilCoreApi.ExitCompositionEngineLock();
@@ -117,10 +107,6 @@ namespace System.Windows.Media.Composition
         /// <param name="pbTo"> byte* pointing to the "to" array.  Must be DWORD aligned. </param>
         /// <param name="pbFrom"> byte* pointing to the "from" array.  Must be DWORD aligned. </param>
         /// <param name="cbData"> int - count of bytes to copy.  Must be a multiple of 4. </param>
-        /// <SecurityNote>
-        ///     Critical: This code accesses an unsafe code block
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void CopyBytes(byte* pbTo,
                                               byte* pbFrom,
                                               int cbData)
@@ -141,10 +127,6 @@ namespace System.Windows.Media.Composition
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - pinvoke wrappers
-        /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         private static class UnsafeNativeMethods
         {
             [DllImport(DllImport.MilCore)]
@@ -360,10 +342,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Primary channel.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - Track usage of the channel pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             IntPtr _hChannel;
 
             private Channel _referenceChannel;
@@ -377,10 +355,6 @@ namespace System.Windows.Media.Composition
             /// New create channel will belong to the same partition as the given referenceChannel.
             /// To create the very first channel in the group, use null argument.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - accesses critical resources (handles)
-            /// </SecurityNote>
-            [SecurityCritical]
             public Channel(Channel referenceChannel, bool isOutOfBandChannel, IntPtr pConnection, bool isSynchronous)
             {
                 IntPtr referenceChannelHandle = IntPtr.Zero;
@@ -405,11 +379,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Commits the commands enqueued into the Channel.
             /// </summary>
-            /// <SecurityNote>
-            ///    Critical: This code calls into MilConnection_CommitChannel which causes an elevation
-            ///    TreatAsSafe: This commits operations to the channel. Committing to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal void Commit()
             {
                 if (_hChannel == IntPtr.Zero)
@@ -431,14 +400,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Closes the current batch on the Channel.
             /// </summary>
-            /// <SecurityNote>
-            ///    Critical: This code calls into MilConnection_CloseBatch which causes an elevation
-            ///    TreatAsSafe: Closing a batch is safe and nothing is exposed. Batches are in the 
-            ///                 render thread, and can only be written to from the UI thread while
-            ///                 they're open using other SC/STAS methods on DUCE.Channel. Once closed,
-            ///                 the only operation that can be done on a batch is Channel.Commit.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal void CloseBatch()
             {
                 if (_hChannel == IntPtr.Zero)
@@ -461,11 +422,6 @@ namespace System.Windows.Media.Composition
             ///   Flush the currently recorded commands to the target device and prepare
             ///   to receive new commands. Block until last command was executed.
             /// </summary>
-            /// <SecurityNote>
-            ///   Critical - This code calls into MilComposition_SyncFlush which causes an elevation.
-            ///   TreatAsSafe - The net effect is to wait until render completes.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void SyncFlush()
             {
                 if (_hChannel == IntPtr.Zero)
@@ -486,13 +442,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Commits the channel and then closes it.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - This code calls into MilConnection_CommitChannel and
-            ///            MilConnection_DestroyChannel which causes an elevation.
-            /// TreatAsSafe - Even if called prematurely, this will simply make all the subsequent
-            ///               channel operations fail (whether silently or by raising an exception).
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void Close()
             {
                 if (_hChannel != IntPtr.Zero)
@@ -514,13 +463,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Commits the commands enqueued into the Channel.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical    -- Calls into MilChannel_Present which causes an elevation.
-            /// TreatAsSafe -- This call is only relevant to synchronous channels and causes the compositor
-            ///                associated with the synchronous channel to compose and present, which is
-            ///                considered safe. Asynchronous channels no-op this call.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal void Present()
             {
                 HRESULT.Check(UnsafeNativeMethods.WgxConnection_SameThreadPresent(_pConnection));
@@ -534,12 +476,6 @@ namespace System.Windows.Media.Composition
             /// Returns true iff the resource was created on the channel. The caller is responsible to
             /// update the resource appropriately.
             /// </return>
-            /// <SecurityNote>
-            /// Critical - Calls into MilResource_CreateOrAddRefOnChannel which causes an elevation.
-            /// TreatAsSafe - All inputs are safe wrappers, manipulating handle on the channel
-            /// will only affect resources that belong to the current process.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal bool CreateOrAddRefOnChannel(object instance, ref DUCE.ResourceHandle handle, DUCE.ResourceType resourceType)
             {
                 bool handleNeedsCreation = handle.IsNull;
@@ -574,12 +510,6 @@ namespace System.Windows.Media.Composition
             /// Returns the duplicated handle (valid on the target channel) or the null
             /// handle if duplication failed.
             /// </return>
-            /// <SecurityNote>
-            ///     Critical - Calls security critical code.
-            ///     TreatAsSafe - All inputs are safe wrappers, manipulating handle on the channel
-            ///                   will only affect resources that belong to the current process.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal DUCE.ResourceHandle DuplicateHandle(
                 DUCE.ResourceHandle original,
                 DUCE.Channel targetChannel
@@ -607,12 +537,6 @@ namespace System.Windows.Media.Composition
             /// <return>
             /// Returns true iff the resource is not on this channel anymore.
             /// </return>
-            /// <SecurityNote>
-            /// Critical - Calls security critical code.
-            /// TreatAsSafe - All inputs are safe wrappers, manipulating handle on the channel
-            /// will only affect resources that belong to the current process.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal bool ReleaseOnChannel(DUCE.ResourceHandle handle)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
@@ -643,12 +567,6 @@ namespace System.Windows.Media.Composition
             /// <return>
             /// Returns the ref count for a resource on this channel.
             /// </return>
-            /// <SecurityNote>
-            /// Critical - Calls security critical code.
-            /// TreatAsSafe - All inputs are safe wrappers, manipulating handle on the channel
-            /// will only affect resources that belong to the current process.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal uint GetRefCount(DUCE.ResourceHandle handle)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
@@ -669,13 +587,8 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// IsConnected returns true if the channel is connected.
             /// </summary>
-            ///<SecurityNote>
-            /// Critical - this code performs an elevation.
-            /// TreatAsSafe - it's safe to return whether a channel is connected or not.
-            ///</SecurityNote>
             internal bool IsConnected
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     return MediaContext.CurrentMediaContext.IsConnected;
@@ -685,13 +598,8 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// MarshalType returns the marshal type of the channel.
             /// </summary>
-            ///<SecurityNote>
-            /// Critical - this code performs an elevation.
-            /// TreatAsSafe - it's safe to return a channel's marshal type.
-            ///</SecurityNote>
             internal ChannelMarshalType MarshalType
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     Invariant.Assert(_hChannel != IntPtr.Zero);
@@ -731,10 +639,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// SendCommand sends a command struct through the composition thread.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - This code accepts a raw pointer and calls other SecurityCritical code.
-            /// </SecurityNote>
-            [SecurityCritical]
             unsafe internal void SendCommand(
                 byte *pCommandData,
                 int cSize)
@@ -748,10 +652,6 @@ namespace System.Windows.Media.Composition
             /// current open batch, or whether it will be added to a new and separate batch
             /// which is then immediately closed, leaving the current batch untouched.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - This code accepts a raw pointer and calls native code under SUC.
-            /// </SecurityNote>
-            [SecurityCritical]
             unsafe internal void SendCommand(
                 byte *pCommandData,
                 int cSize,
@@ -788,10 +688,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// BeginCommand opens a command on a channel
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - This code accepts a raw pointer and calls native code under SUC.
-            /// </SecurityNote>
-            [SecurityCritical]
             unsafe internal void BeginCommand(
                 byte *pbCommandData,
                 int cbSize,
@@ -829,10 +725,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// AppendCommandData appends data to an open command on a channel
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - This code accepts a raw pointer and calls native code under SUC.
-            /// </SecurityNote>
-            [SecurityCritical]
             unsafe internal void AppendCommandData(
                 byte *pbCommandData,
                 int cbSize)
@@ -868,11 +760,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// EndCommand closes an open command on a channel
             /// </summary>
-            ///<SecurityNote>
-            /// Critical - this code performs an elevation.
-            /// TreatAsSafe - it's safe to end a command in a well known channel.
-            ///</SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal void EndCommand()
             {
                 if (_hChannel == IntPtr.Zero)
@@ -893,10 +780,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// SendCommand that creates an slave bitmap resource
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - this code performs an elevation.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal void SendCommandBitmapSource(
                 DUCE.ResourceHandle imageHandle,
                 BitmapSourceSafeMILHandle pBitmapSource
@@ -914,10 +797,6 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// SendCommand that creates an slave media resource
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - this code performs an elevation.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal void SendCommandMedia(
                 DUCE.ResourceHandle mediaHandle,
                 SafeMediaHandle pMedia,
@@ -948,14 +827,6 @@ namespace System.Windows.Media.Composition
             /// The window message ID. If the hwnd parameter is null then this
             /// parameter is ignored.
             /// </param>
-            /// <securitynote>
-            /// Critical        - Passes a window handle to native code. This will
-            ///                   cause milcore to periodically post the specified
-            ///                   message to the specified window. The caller is
-            ///                   safe if it owns the window and the message was
-            ///                   registered with RegisterMessage.
-            /// </securitynote>
-            [SecurityCritical]
             internal void SetNotificationWindow(IntPtr hwnd, WindowMessage message)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
@@ -975,17 +846,6 @@ namespace System.Windows.Media.Composition
             /// The method may return with no available messages if the channel
             /// is disconnected while waiting.
             /// </remarks>
-            /// <SecurityNote>
-            /// Critical        - Blocks the thread until the channel receives
-            ///                   a message. This is unsafe if done by any
-            ///                   component other than the owner of the channel
-            ///                   because the channel may not send any
-            ///                   messages, in which case the function will
-            ///                   never return. Only the owner of the channel
-            ///                   knows whether a message can be reasonably
-            ///                   expected to eventually be sent.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal void WaitForNextMessage()
             {
                 int waitReturn;
@@ -1010,16 +870,6 @@ namespace System.Windows.Media.Composition
             /// <returns>
             /// True if a message was retrieved, false otherwise.
             /// </returns>
-            /// <SecurityNote>
-            /// Critical        - Removes a message from the channel. This is
-            ///                   unsafe if done by any component other than
-            ///                   the owner of the channel because eating
-            ///                   messages may result in the process not responding.
-            ///                   Also has an unsafe block, but that is safe
-            ///                   to callers because we just need it to use
-            ///                   the sizeof operator.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal bool PeekNextMessage(out MilMessage.Message message)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
@@ -1815,11 +1665,6 @@ namespace System.Windows.Media.Composition
             // -----------------------------------------------------------------------------------------------------------------------
             // Public imports for composition nodes.
             //
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetTransform(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hTransform,
@@ -1841,11 +1686,6 @@ namespace System.Windows.Media.Composition
             }
 
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetEffect(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hEffect,
@@ -1867,11 +1707,6 @@ namespace System.Windows.Media.Composition
             }
             
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetCacheMode(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hCacheMode,
@@ -1892,11 +1727,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetOffset(
                 DUCE.ResourceHandle hCompositionNode,
                 double offsetX,
@@ -1918,11 +1748,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetContent(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hContent,
@@ -1943,11 +1768,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetAlpha(
                 DUCE.ResourceHandle hCompositionNode,
                 double alpha,
@@ -1968,11 +1788,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetAlphaMask(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hAlphaMaskBrush,
@@ -1993,11 +1808,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetScrollableAreaClip(
                 DUCE.ResourceHandle hCompositionNode,
                 Rect? clip,
@@ -2027,11 +1837,6 @@ namespace System.Windows.Media.Composition
                 }
             }            
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetClip(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hClip,
@@ -2052,11 +1857,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetRenderOptions(
                 DUCE.ResourceHandle hCompositionNode,
                 MilRenderOptions renderOptions,
@@ -2077,11 +1877,6 @@ namespace System.Windows.Media.Composition
                 }
 }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void RemoveChild(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hChild,
@@ -2102,11 +1897,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void RemoveAllChildren(
                 DUCE.ResourceHandle hCompositionNode,
                 Channel channel)
@@ -2125,11 +1915,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void InsertChildAt(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hChild,
@@ -2153,11 +1938,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetGuidelineCollection(
                 DUCE.ResourceHandle hCompositionNode,
                 DoubleCollection guidelinesX,
@@ -2236,11 +2016,6 @@ namespace System.Windows.Media.Composition
 
         internal static class Viewport3DVisualNode
         {
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetCamera(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hCamera,
@@ -2261,11 +2036,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetViewport(
                 DUCE.ResourceHandle hCompositionNode,
                 Rect viewport,
@@ -2286,11 +2056,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void Set3DChild(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hVisual3D,
@@ -2314,11 +2079,6 @@ namespace System.Windows.Media.Composition
 
         internal static class Visual3DNode
         {
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void RemoveChild(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hChild,
@@ -2339,11 +2099,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void RemoveAllChildren(
                 DUCE.ResourceHandle hCompositionNode,
                 Channel channel)
@@ -2362,11 +2117,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void InsertChildAt(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hChild,
@@ -2390,11 +2140,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetContent(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hContent,
@@ -2415,11 +2160,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal static void SetTransform(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hTransform,
@@ -2446,10 +2186,6 @@ namespace System.Windows.Media.Composition
             // -----------------------------------------------------------------------------------------------------------------------
             // Public imports for composition targets.
             //
-            /// <SecurityNote>
-            ///     Critical: This code calls into unsafe code blocks and initialized hwnd for composition target
-            /// </SecurityNote>
-            [SecurityCritical]
             internal static void HwndInitialize(
                 DUCE.ResourceHandle hCompositionTarget,
                 IntPtr hWnd,
@@ -2538,7 +2274,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            [SecuritySafeCritical]
             internal static void ProcessDpiChanged(
                 DUCE.ResourceHandle hCompositionTarget,
                 DpiScale dpiScale,
@@ -2563,11 +2298,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - 1) The command being sent contains an unmanaged pointer.
-            ///            2) This code accesses an unsafe code block.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal static void PrintInitialize(
                 DUCE.ResourceHandle hCompositionTarget,
                 IntPtr pRenderTarget,
@@ -2596,11 +2326,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetClearColor(
                 DUCE.ResourceHandle hCompositionTarget,
                 Color color,
@@ -2625,11 +2350,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetRenderingMode(
                 DUCE.ResourceHandle hCompositionTarget,
                 MILRTInitializationFlags nRenderingMode,
@@ -2652,11 +2372,6 @@ namespace System.Windows.Media.Composition
             }
 
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void SetRoot(
                 DUCE.ResourceHandle hCompositionTarget,
                 DUCE.ResourceHandle hRoot,
@@ -2679,11 +2394,6 @@ namespace System.Windows.Media.Composition
             }
 
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block.
-            ///               We also pass across a handle to an event, which we get via SafeWaitHandle.DangerousGetHandle.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal static void UpdateWindowSettings(
                 ResourceHandle hCompositionTarget,
                 NativeMethods.RECT windowRect,
@@ -2729,11 +2439,6 @@ namespace System.Windows.Media.Composition
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe: Operation is ok to call. It does not return any pointers and sending a pointer to a channel is safe
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void Invalidate(
                 DUCE.ResourceHandle hCompositionTarget,
                 ref NativeMethods.RECT pRect,
@@ -2764,12 +2469,6 @@ namespace System.Windows.Media.Composition
         /// See <see cref="MediaContext.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> for 
         /// details.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accesses an unsafe code block
-        ///     Safe:     Operation is ok to call, sending a pointer to a channel is safe, 
-        ///               and this does not return any Critical data to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void NotifyPolicyChangeForNonInteractiveMode(
             bool forceRender, 
             Channel channel
@@ -2795,11 +2494,6 @@ namespace System.Windows.Media.Composition
 
         internal static class ETWEvent
         {
-            /// <SecurityNote>
-            ///     Critical: This code accesses an unsafe code block
-            ///     TreatAsSafe:  It does not return any pointers and is safe to call
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static void RaiseEvent(
                 DUCE.ResourceHandle hEtwEvent,
                 UInt32 id,

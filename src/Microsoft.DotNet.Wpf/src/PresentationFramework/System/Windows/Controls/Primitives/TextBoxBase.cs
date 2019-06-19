@@ -131,12 +131,6 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Copy the current selection in the text box to the clipboard
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical - Calls TextEditorCopyPaste.Copy which sets data on the clipboard.
-        ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Copy will
-        ///     check for clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Copy()
         {
             TextEditorCopyPaste.Copy(this.TextEditor, false);
@@ -145,12 +139,6 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Moves the current selection in the textbox to the clipboard
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical - Calls TextEditorCopyPaste.Cut which sets data on the clipboard.
-        ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Cut will
-        ///     check for clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Cut()
         {
             TextEditorCopyPaste.Cut(this.TextEditor, false);
@@ -2188,11 +2176,6 @@ namespace System.Windows.Controls.Primitives
         /// TextBoxBase on which the property is changed
         /// </param>
         /// <param name="e">event args</param>
-        /// <SecurityNote>
-        ///    Critical:This code register command handlers for texteditor related events and commands (OnGotFocus)
-        ///    TreatAsSafe: This just hooks up methods that are internal to this class
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnInputMethodEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TextBoxBase textBox = (TextBoxBase)d;

@@ -2024,10 +2024,6 @@ namespace System.Windows.Xps.Serialization
         }
 
 
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         private static bool EmbeddingAllowed(GlyphTypeface typeface)
         {
             CodeAccessPermission fontReadPermission = typeface.CriticalFileReadPermission;
@@ -2058,10 +2054,6 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Draw a GlyphRun.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - It uses internal permission to get FontUri
-        ///</SecurityNote>
-        [SecurityCritical]
         void IMetroDrawingContext.DrawGlyphRun(Brush foreground, GlyphRun glyphRun)
         {
             if (glyphRun == null)

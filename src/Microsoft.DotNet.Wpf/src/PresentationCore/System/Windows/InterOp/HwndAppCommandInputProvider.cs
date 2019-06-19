@@ -18,10 +18,6 @@ namespace System.Windows.Interop
 {
     internal sealed class HwndAppCommandInputProvider : DispatcherObject, IInputProvider, IDisposable
     {
-        /// <SecurityNote>
-        /// Accesses and store critical data. This class is also critical (_site and _source)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal HwndAppCommandInputProvider( HwndSource source )
         {
             (new UIPermission(PermissionState.Unrestricted)).Assert();
@@ -36,11 +32,6 @@ namespace System.Windows.Interop
             _source = new SecurityCriticalDataClass<HwndSource>(source);
         }
 
-        /// <SecurityNote>
-        /// Critical:This class accesses critical data, _site.
-        /// TreatAsSafe: This class does not expose the critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose( )
         {
             if (_site != null)
@@ -51,12 +42,6 @@ namespace System.Windows.Interop
             _source = null;
         }
 
-        /// <SecurityNote>
-        /// Critical: As this accesses critical data HwndSource
-        /// TreatAsSafe:Information about whether a given input provider services
-        /// a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         bool IInputProvider.ProvidesInputForRootVisual( Visual v )
         {
             Debug.Assert(null != _source);
@@ -65,10 +50,6 @@ namespace System.Windows.Interop
 
         void IInputProvider.NotifyDeactivate() {}
 
-        /// <SecurityNote>
-        /// Critical: As this accesses critical data HwndSource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr FilterMessage( IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled )
         {
             // It is possible to be re-entered during disposal.  Just return.
@@ -143,14 +124,8 @@ namespace System.Windows.Interop
             return inputType;
         }
 
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical. This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource> _source;
 
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical.This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputProviderSite> _site;
     }
 }

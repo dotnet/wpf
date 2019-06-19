@@ -30,13 +30,6 @@ namespace MS.Internal.Security.RightsManagement
     // This object is re-used during the same session which is why the event must be reset after the wait.
     // As a result of calling GC.SuppressFinalize(this) we also need to seal the class. As there is a danger 
     // of subclass introducing it's own Finalizer which will not be called.     
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal sealed class CallbackHandler : IDisposable
     {
         internal CallbackHandler()

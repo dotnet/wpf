@@ -32,10 +32,6 @@ namespace System.Windows.Input
 
         #region Constructors
 
-        ///<SecurityNote> 
-        ///     Critical - calls TextComposition:ctor which is critical ( as it stores InputManager). 
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal DeadCharTextComposition(InputManager inputManager, IInputElement source, string text, TextCompositionAutoComplete autoComplete, InputDevice inputDevice) : base(inputManager, source, text, autoComplete, inputDevice)
         {
         }

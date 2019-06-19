@@ -14,7 +14,7 @@ using System.Collections;           // Hashtable
 using System.Collections.Generic;   // List<T>
 using System.Collections.Specialized; // HybridDictionary
 using System.Runtime.CompilerServices;  // RuntimeHelpers
-using System.Security;              // [SecurityCritical,SecurityTreatAsSafe]
+using System.Security;              // 
 using System.Threading;             // [ThreadStatic]
 using System.Windows;               // WeakEventManager
 using System.Windows.Threading;     // DispatcherObject
@@ -39,13 +39,6 @@ namespace MS.Internal
         /// <summary>
         /// Create a new instance of WeakEventTable.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into Link demanded methods
-        ///         (AppDomain.DomainUnload and AppDomain.ProcessExit) to attach handlers
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///     It simply attaches private call back.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private WeakEventTable()
         {
             WeakEventTableShutDownListener listener = new WeakEventTableShutDownListener(this);
@@ -490,12 +483,6 @@ namespace MS.Internal
 
         private sealed class WeakEventTableShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public WeakEventTableShutDownListener(WeakEventTable target) : base(target)
             {
             }

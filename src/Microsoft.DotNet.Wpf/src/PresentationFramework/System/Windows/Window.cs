@@ -41,12 +41,7 @@ namespace System.Windows
     /// <summary>
     ///
     /// </summary>
-    /// <SecurityNote>
-    /// Critical: In PartialTrust we want to not allow creation or inheritance of window
-    /// PublicOk: This has inheritance demand and constructor is blocked in partial trust
-    /// </SecurityNote>
     [Localizability(LocalizationCategory.Ignore)]
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand,Window=UIPermissionWindow.AllWindows)]
     public class Window : ContentControl, IWindowService
     {
         //---------------------------------------------------
@@ -59,11 +54,6 @@ namespace System.Windows
         /// <summary>
         ///     Initializes the dependency ids of this class
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Calls critical native method RegisterWindowMessage
-        /// TreatAsSafe: The class has inheritance demand and constructor is blocked in partial trust
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static Window()
         {
             HeightProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(new PropertyChangedCallback(_OnHeightChanged)));
@@ -131,13 +121,6 @@ namespace System.Windows
         ///
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: We explicitly demand all window permission currently Window creation is not available in Internet Zone.
-        ///     _ownerHandle and _dialogOwnerHandle fields are initialized when this .ctor gets called.
-        /// PublicOK: The only scenarios where we're currently going to enable creation of Windows is with RootBrowserWindow.
-        ///     This code has a demand.
-        /// </SecurityNote>
-        [SecurityCritical]
         public Window()
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -160,12 +143,6 @@ namespace System.Windows
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - The only scenarios where we're currently going to enable creation of Windows is with RootBrowserWindow.
-        ///     Do not ever call it from anywhere else. This is only for RBW scenario!!!
-        ///     _ownerHandle and _dialogOwnerHandle fields are initialized when this .ctor gets called.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal Window(bool inRbw):base()
         {
             if (inRbw)
@@ -249,11 +226,6 @@ namespace System.Windows
         ///
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///  PublicOK: This API Demands UIPermission with AllWindows access
-        ///  Critical: calls critical code (InternalClose)
-        ///</SecurityNote>
-        [SecurityCritical ]
         public void Close()
         {
             // this call ends up throwing an exception if Close
@@ -272,12 +244,6 @@ namespace System.Windows
         ///     Will throw exception if it's not, otherwise, will kick off the Windows's MoveWindow loop.
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical - as this code performs an elevation via the calls to SendMessage.
-        ///     PublicOk - as there is a demand for all windows permission.
-        ///     We explicitly demand unamnaged code permission - as there's no valid scenario for this in the SEE.
-        ///</SecurityNote>
-        [SecurityCritical]
         public void DragMove()
         {
             // this call ends up throwing an exception if dragmove
@@ -321,13 +287,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: This code causes unmamanged code elevation in the call to GetWindowLong and GetDesktopWindow
-        ///           which has a SUC on it. There is also a call to SetFocus which returns a window handle.
-        ///           It also accesses _dialogOwnerHandle, _dialogPreviousActiveHandle and _ownerHandle.
-        /// PublicOK: There is a demand in the code
-        /// </SecurityNote>
-        [SecurityCritical ]
         public Nullable<bool> ShowDialog()
         {
             // this call ends up throwing an exception if ShowDialog
@@ -545,12 +504,6 @@ namespace System.Windows
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         /// <returns>bool -- indicating whether the window was activated or not</returns>
-        ///<SecurityNote>
-        ///     Critical as this code performs an elevation in the call to SetForegroundWindow.
-        ///     PublicOk - there is a demand in the code. Any caller will require
-        ///                     all window code permissions.
-        ///</SecurityNote>
-        [SecurityCritical]
         public bool Activate()
         {
             // this call ends up throwing an exception if Activate
@@ -653,12 +606,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - This property modifies the way that Shell exposes this window in the taskbar.
-        ///                It's unsafe to set this value in partial trust.
-        /// TreatAsSafe - The VerifyAccessCoercion on the DP for this should have already verified this demand.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnTaskbarItemInfoChanged(DependencyPropertyChangedEventArgs e)
         {
             var oldBar = (TaskbarItemInfo)e.OldValue;
@@ -684,10 +631,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - This accesses and modifies critical objects like _taskbarList and CriticalHandle.
-        ///</SecurityNote>
-        [SecurityCritical]
         private void HandleTaskbarListError(HRESULT hr)
         {
             if (hr.Failed)
@@ -731,12 +674,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - This calls Critical UpdateTaskbar* methods that modify the way that Shell
-        ///                exposes this window in the taskbar.  It's unsafe to set this value in partial trust.
-        /// TreatAsSafe - This is only called as an event handler set in a SecurityCritical context.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnTaskbarItemInfoSubPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // Don't propagate changes from other TaskbarItemInfos.
@@ -895,11 +832,6 @@ namespace System.Windows
         ///     is closed.
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code causes icon value to be set. This in turn causes property invalidation
-        ///               which will access unsafe native methods.
-        ///     PublicOK: There exists a demand , safe to expose
-        /// </SecurityNote>
         public ImageSource Icon
         {
             get
@@ -913,7 +845,6 @@ namespace System.Windows
                 return (ImageSource) GetValue(IconProperty);
             }
 
-            [SecurityCritical]
             set
             {
                 // this call ends up throwing an exception if accessing
@@ -1091,15 +1022,9 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code accesses Handle and calls critical method GetNormalRectLogicalUnits
-        ///     PublicOK: This code only works under RBW code path , this operation is ok since
-        ///     RBW window is bound to the restrictions of its parent window which is the browser
-        /// </SecurityNote>
 
         public Rect RestoreBounds
         {
-            [SecurityCritical ]
             get
             {
                 VerifyContextAndObjectState();
@@ -1257,14 +1182,9 @@ namespace System.Windows
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        ///<SecurityNote>
-        /// Critical - _ownerWindow is accessed, SetOwnerHandle is called.
-        /// PublicOK - get/set protected by Demand's.
-        ///</SecurityNote>
         [DefaultValue(null)]
         public Window Owner
         {
-            [SecurityCritical ]
             get
             {
                 // this call ends up throwing an exception if accessing Owner
@@ -1274,7 +1194,6 @@ namespace System.Windows
                 VerifyContextAndObjectState();
                 return _ownerWindow;
             }
-            [SecurityCritical]
             set
             {
                 // this call ends up throwing an exception if accessing Owner
@@ -1359,13 +1278,8 @@ namespace System.Windows
 
         /// This code checks to see if the owner property is null
         /// True if the window is null , false other wise
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it acceses owner which is critical data
-        ///     TreatAsSafe: Since this exposes no critical data
-        /// </SecurityNote>
         private bool IsOwnerNull
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 return (_ownerWindow == null);
@@ -2163,11 +2077,6 @@ namespace System.Windows
         //
         //---------------------------------------------------
         #region Internal Methods
-        ///<SecurityNote>
-        ///     Critical - calls a method that elevates - CompositionTarget
-        ///     TreatAsSafe - We only use the CompositionTarget to do device to logical unit conversion.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Point DeviceToLogicalUnits(Point ptDeviceUnits)
         {
             Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
@@ -2175,11 +2084,6 @@ namespace System.Windows
             return ptLogicalUnits;
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls a method that elevates - CompositionTarget
-        ///     TreatAsSafe - We only use the CompositionTarget to do logical to device unit conversion.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Point LogicalToDeviceUnits(Point ptLogicalUnits)
         {
             Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
@@ -2236,10 +2140,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="shutdown">Specifies whether the app should shutdown or not</param>
         /// <param name="ignoreCancel">Specifies whether cancelling closing should be ignored </param>
-        ///<SecurityNote>
-        ///     Critical - as this code calls UnsafeSendMessage that has a SUC.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void InternalClose(bool shutdown, bool ignoreCancel)
         {
             VerifyNotClosing();
@@ -2303,10 +2203,6 @@ namespace System.Windows
         // NOTE:
         // We fire Closing and Closed envent even if the hwnd is not
         // created yet i.e. window is not shown.
-        ///<SecurityNote>
-        ///     Critical: Calls critical code: Window.InternalDispose
-        ///</SecurityNote>
-        [SecurityCritical]
         private void CloseWindowBeforeShow()
         {
             InternalDispose();
@@ -2315,14 +2211,8 @@ namespace System.Windows
             OnClosed(EventArgs.Empty);
         }
 
-        ///<SecurityNote>
-        ///     Critical - as this accesses critical data.
-        ///     TreatAsSafe - as this function just tests to see whether _sourceWindow has been created.
-        ///                          Ok to expose publically. Equivalent to is Window visible.
-        ///</SecurityNote>
         internal bool IsSourceWindowNull
         {
-            [ SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 if ( _swh != null )
@@ -2333,14 +2223,8 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - as this accesses critical data.
-        ///     TreatAsSafe - as this function just tests to see whether CompositionTarget is valid.
-        ///                          Ok to expose publically.
-        ///</SecurityNote>
         internal bool IsCompositionTargetInvalid
         {
-            [ SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 if (_swh != null)
@@ -2372,13 +2256,8 @@ namespace System.Windows
         // This is currently exposed just for DRTs.
         // PLEASE NOTE THAT IF YOU ARE CALLING THIS WITHIN AVALON CODE - YOU ARE CALLING A SECURITY CRITICAL METHOD
         // YOU WILL HAVE TO WORK WITH THE SECURITY TEAM TO REVIEW YOUR USAGE
-        ///<SecurityNote>
-        ///      Critical as this calls a critical method.
-        ///      TreatAsSafe - as we've added a demand to the method.
-        ///</SecurityNote>
         internal HwndSource HwndSourceWindow
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -2405,11 +2284,6 @@ namespace System.Windows
         /// <summary>
         ///     can be used by internal derived class
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: It calls critical code: Window.UpdateWindowListsOnClose and it
-        ///     is used to dispose of the native handles which link demands in safe handle
-        ///</SecurityNote>
-        [SecurityCritical]
         private void InternalDispose()
         {
             _disposed = true;
@@ -2507,10 +2381,6 @@ namespace System.Windows
         ///     Create the window
         ///     Virtual so that subclasses ( currently only RootBrowserWindow) - may assert for HwndSource creation.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - calls critical method CreateSourceWindow to create hwnd.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal virtual void CreateSourceWindowDuringShow()
         {
             CreateSourceWindow(true);
@@ -2544,10 +2414,6 @@ namespace System.Windows
         /// </remarks>
         /// <param name="duringShow">Specifies whether this method is called from Window.Show
         /// or WindowInteropHelper.EnsureHandle</param>
-        ///<SecurityNote>
-        ///     Critical - as this method accesses critical data and creates a window which it stores locally
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void CreateSourceWindow(bool duringShow)
         {
             VerifyContextAndObjectState();
@@ -2665,10 +2531,6 @@ namespace System.Windows
             OnSourceInitialized(EventArgs.Empty);
         }
 
-        ///<SecurityNote>
-        /// Critical: Exposes _ownerHandle.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
         {
             HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT);
@@ -2715,12 +2577,6 @@ namespace System.Windows
             requestedHeight = this.Height;
         }
 
-        ///<SecurityNote>
-        ///     Critical - as this method accesses critical data (CriticalHandle) and
-        ///                 resizes/repositions the window
-        ///     It also calls critical method (SetRootVisual)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal virtual void SetupInitialState(double requestedTop, double requestedLeft, double requestedWidth, double requestedHeight)
         {
             // Push the current SizeToContent value to HwndSource after it's created. Initial sync up.
@@ -2926,10 +2782,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - as this method accesses critical method (_swh.RootVisual)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void SetRootVisual()
         {
             //FxCop: ConstructorsShouldNotCallBaseClassVirtualMethods::
@@ -2950,11 +2802,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - as this method accesses critical method SetRootVisual() and pinvoke to update
-        ///     window size/location.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void SetRootVisualAndUpdateSTC()
         {
             SetRootVisual();
@@ -3066,11 +2913,6 @@ namespace System.Windows
         }
 
         // called as a result of title property changing to propagate it to the hwnd
-        /// <SecurityNote>
-        ///     Critical: As this accesses Handle
-        ///     TreatAsSafe: There will be a demand from SetWindowText
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal virtual void UpdateTitle(string title)
         {
             // Adding check for IsCompositionTargetInvalid
@@ -3081,12 +2923,6 @@ namespace System.Windows
         }
 
         // called as a result of Height/MinHeight/MaxHeight and Width/MinWidth/MaxWidth property changing to update the hwnd size
-        /// <SecurityNote>
-        ///     Critical: This code accesses CriticalHandle
-        ///     TreatAsSafe: This code only works under RBW code path , this operation is ok since
-        ///     RBW window is bound to the restrictions of its parent window which is the browser
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateHwndSizeOnWidthHeightChange(double widthLogicalUnits, double heightLogicalUnits)
         {
             if (!_inTrustedSubWindow)
@@ -3175,11 +3011,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - This code is used to block off api in rbw
-        /// TreatAsSafe - This is critical only because we want to track change
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal virtual void VerifyApiSupported()
         {
             // don't do anything here since we allow this API in Window.
@@ -3230,12 +3061,8 @@ namespace System.Windows
         ///     Exposes the hwnd of the window. This property is used by the WindowInteropHandler
         ///     class
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code exposes handle
-        /// </SecurityNote>
         internal IntPtr CriticalHandle
         {
-            [SecurityCritical]
             get
             {
                 VerifyContextAndObjectState();
@@ -3255,13 +3082,8 @@ namespace System.Windows
         ///<remarks>
         ///     This API is currently not available for use in Internet Zone.
         ///</remarks>
-        ///<SecurityNote>
-        /// Critical - accesses _ownerHandle, calls SetOwnerHandle.
-        /// TreatAsSafe - get/set protected by Demand's.
-        ///</SecurityNote>
         internal IntPtr OwnerHandle
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -3269,7 +3091,6 @@ namespace System.Windows
                 VerifyContextAndObjectState();
                 return _ownerHandle;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -3306,10 +3127,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code causes style to be set and acceses a critical resource
-        ///    TreatAsSafe: There exists a demand on set since SET is not safe
-        /// </SecurityNote>
         internal int _Style
         {
             get
@@ -3327,7 +3144,6 @@ namespace System.Windows
                     return _swh.StyleFromHwnd;
                 }
             }
-            [SecurityCritical,SecurityTreatAsSafe]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -3336,10 +3152,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code causes style to be set
-        ///    TreatAsSafe: There exists a demand on set since SET is not safe
-        /// </SecurityNote>
         internal int _StyleEx
         {
             get
@@ -3357,7 +3169,6 @@ namespace System.Windows
                     return _swh.StyleExFromHwnd;
                 }
                 }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -3677,10 +3488,6 @@ namespace System.Windows
         /// Enables/disables all Windows on this thread
         /// </summary>
         /// <param name="state"></param>
-        /// <SecurityNote>
-        ///     Critical: This code calls into IsWindow and EnableWindow
-        /// </SecurityNote>
-        [SecurityCritical]
         private void EnableThreadWindows(bool state)
         {
             Debug.Assert(_threadWindowHandles != null, "_threadWindowHandles must not be null at this point");
@@ -3801,11 +3608,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls a method that elevates - GetCursorPos
-        ///     TreatAsSafe - as there's a demand.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         IntPtr GetCurrentMonitorFromMousePosition()
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -3830,11 +3632,6 @@ namespace System.Windows
         // <param name="left"></param>
         // <param name="top"></param>
         // <param name="currentSize"></param>
-        /// <SecurityNote>
-        ///     Critical: This code accesses handle and calls critical method GetNormalRectDeviceUnits
-        ///     TreatAsSafe: This data is ok to give out
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool CalculateWindowLocation(ref double leftDeviceUnits, ref double topDeviceUnits, Size currentSizeDeviceUnits)
         {
             Debug.Assert(IsSourceWindowNull == false, "_swh should not be null here");
@@ -3943,11 +3740,6 @@ namespace System.Windows
             return (!DoubleUtil.AreClose(inLeft, leftDeviceUnits) || !DoubleUtil.AreClose(inTop, topDeviceUnits));
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls critical method to get mointor handle.
-        ///              We will need to do thread model to determine whether the data this method returns is TreatAsSafe.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static NativeMethods.RECT WorkAreaBoundsForHwnd(IntPtr hwnd)
         {
             IntPtr hMonitor = MonitorFromWindow(hwnd);
@@ -3955,11 +3747,6 @@ namespace System.Windows
             return WorkAreaBoundsForMointor(hMonitor);
         }
 
-        /// <SecurityNote>
-        ///    Critical: Calls critical method to GetMointorInfo. Marshal.SizeOf also has linkdemand.
-        ///              We will need to do thread model to determine whether the data this method returns is TreatAsSafe.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static NativeMethods.RECT WorkAreaBoundsForMointor(IntPtr hMonitor)
         {
             NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
@@ -3970,10 +3757,6 @@ namespace System.Windows
             return monitorInfo.rcWork;
         }
 
-        /// <SecurityNote>
-        ///    Critical: Defense in depth. Exposing of a handle is considered security critical.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr MonitorFromWindow(IntPtr hwnd)
         {
             IntPtr hMonitor = SafeNativeMethods.MonitorFromWindow(new HandleRef(null, hwnd), NativeMethods.MONITOR_DEFAULTTONEAREST);
@@ -3992,11 +3775,6 @@ namespace System.Windows
         /// <param name="currentSizeDeviceUnits">Size of the window, in device units</param>
         /// <param name="leftDeviceUnits">Receives the new left location in device units</param>
         /// <param name="topDeviceUnits">Receives the new top location in device units</param>
-        /// <SecurityNote>
-        ///    Critical: This code calls critical method WorkAreaBoundsForMointor.
-        ///              We will need to do thread model to determine whether the data this method returns is TreatAsSafe.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CalculateCenterScreenPosition(IntPtr hMonitor, Size currentSizeDeviceUnits, ref double leftDeviceUnits, ref double topDeviceUnits)
         {
             NativeMethods.RECT workAreaRectDeviceUnits = WorkAreaBoundsForMointor(hMonitor);
@@ -4046,10 +3824,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls a method that elevates - GetWindowLong, GetWindowPlacement
-        ///</SecurityNote>
-        [SecurityCritical]
         private Rect GetNormalRectDeviceUnits(IntPtr hwndHandle)
         {
             int styleEx = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndHandle), NativeMethods.GWL_EXSTYLE);
@@ -4077,10 +3851,6 @@ namespace System.Windows
             return new Rect(locationDeviceUnits.X, locationDeviceUnits.Y, sizeDeviceUnits.X, sizeDeviceUnits.Y);
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls critical method GetNormalRectDeviceUnits
-        ///</SecurityNote>
-        [SecurityCritical]
         private Rect GetNormalRectLogicalUnits(IntPtr hwndHandle)
         {
             Rect rectDeviceUnits = GetNormalRectDeviceUnits(hwndHandle);
@@ -4160,11 +3930,6 @@ namespace System.Windows
         /// <summary>
         ///     Updates the window icon
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as we perform an elevation - (UnsafeNativeMethods.SendMessage) will have a SUC on it soon.
-        /// TreatAsSafe: This method ok to use on window and does nothing on RBW.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdateIcon()
         {
             // NOTE: Set Window.Icon = null causes NullReferenceException
@@ -4264,10 +4029,6 @@ namespace System.Windows
         ///         IntPtr OwnerHandle {set;}  -- this is used by WindowInteropHelper
         /// </summary>
         /// <param name="ownerHandle">IntPtr of the parent window</param>
-        ///<SecurityNote>
-        /// Critical - sets _ownerHandle to the value got as a param
-        ///</SecurityNote>
-        [SecurityCritical]
         private void SetOwnerHandle(IntPtr ownerHandle)
         {
             // Note:
@@ -4321,11 +4082,6 @@ namespace System.Windows
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: Is used to dispose of the native handles which link demands in safe handle via the call to
-        ///     InternalDispose
-        ///</SecurityNote>
-        [SecurityCritical]
         private void OnSourceWindowDisposed(object sender, EventArgs e)
         {
             if ( _disposed == false)
@@ -4357,10 +4113,6 @@ namespace System.Windows
         /// <param name="lParam"></param>
         /// <param name="handled"></param>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: Calls critical code: Window.WmClose(), Window.ApplyTaskbarItemInfo()
-        ///</SecurityNote>
-        [SecurityCritical]
         private IntPtr WindowFilterMessage( IntPtr hwnd,
             int msg,
             IntPtr wParam,
@@ -4440,12 +4192,6 @@ namespace System.Windows
         /// <returns>
         ///     True if we want to handle the command, false otherwise.
         /// </returns>
-        /// <SecurityNote>
-        /// Be cautious about adding new handlers here.  For Windows 7 taskbar integration we explicitly
-        /// allow WM_COMMAND to pass through the message filter from processes that have privileges different
-        /// from this one so Explorer can post messages back to this window.
-        /// Changes to the WM_COMMANDs that are processed here may require a security review.
-        /// </SecurityNote>
         private bool WmCommand(IntPtr wParam, IntPtr lParam)
         {
             if (NativeMethods.SignedHIWORD(wParam.ToInt32()) == THUMBBUTTON.THBN_CLICKED)
@@ -4551,11 +4297,6 @@ namespace System.Windows
             return ((!cancelled) || (_appShuttingDown) || (_ignoreCancel));
         }
 
-        /// <SecurityNote>
-        /// Critical - This code calls EnableThreadWindows and accesses _dialogPreviousActiveHandle
-        /// TreatAsSafe - There is a demand for unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void DoDialogHide()
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -4626,10 +4367,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical: Calls critical code: Window.InternalClose and Application.CriticalShutdown
-        ///</SecurityNote>
-        [SecurityCritical]
         private void UpdateWindowListsOnClose()
         {
             // Close all owned windows
@@ -4683,10 +4420,6 @@ namespace System.Windows
                 }
             }
 }
-        ///<SecurityNote>
-        ///     Critical: This can be used to dispose a window which is a secure resource
-        ///</SecurityNote>
-        [SecurityCritical]
         private bool  WmDestroy()
         {
             // For WS_CHILD window, WM_SIZE, WM_MOVE (and maybe others) are called
@@ -4915,10 +4648,6 @@ namespace System.Windows
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data, such as _inTrustedSubWindow
-        /// </SecurityNote>
-        [SecurityCritical]
 
         private bool WmMoveChanged()
         {
@@ -5004,10 +4733,6 @@ namespace System.Windows
         }
 
 
-        /// <SecurityNote>
-        ///     Critical:This calls into pointer to structure which is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool WmGetMinMaxInfo( IntPtr lParam )
         {
             NativeMethods.MINMAXINFO mmi = (NativeMethods.MINMAXINFO)UnsafeNativeMethods.PtrToStructure( lParam, typeof(NativeMethods.MINMAXINFO));
@@ -5266,12 +4991,6 @@ namespace System.Windows
             w.OnShowInTaskbarChanged();
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses hwnd
-        ///     TreatAsSafe: This function simply minimizes and maximises that is ok, also this will only
-        ///     work in RBW code path and that is ok since this is bounded to parent
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void OnShowInTaskbarChanged()
         {
             if (!_inTrustedSubWindow)
@@ -5337,11 +5056,6 @@ namespace System.Windows
             w.OnWindowStateChanged((WindowState) e.NewValue);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can cause window to maximize and minimize and used hwnd
-        ///     TreatAsSafe: This has a demand
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void OnWindowStateChanged(WindowState windowState)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -5501,13 +5215,6 @@ namespace System.Windows
             w.OnTopmostChanged((bool) e.NewValue);
         }
 
-        ///<SecurityNote>
-        /// There is an explicit demand here - to enforce not being able to set this DP in Internet Zone.
-        /// this should remanin here until Window spoofing work is done.
-        ///     Critical as this accesses critical data - (CriticalHandle )
-        ///     TreatAsSafe - as there is a demand.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void OnTopmostChanged(bool topmost)
         {
             SecurityHelper.DemandUIWindowPermission(); // Demand UI permission for topmost.
@@ -5578,13 +5285,6 @@ namespace System.Windows
                 visibilityValue ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code causes an elevation to all Window permission and
-        ///               calls into CreateSourceWindow
-        ///     TreatAsSafe: There is a demand for creating the hwnd unless it is under an RBW
-        ///                 code path and if it has been called via the internal constructor chain
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SafeCreateWindowDuringShow()
         {
             //this is true the first time the window is created
@@ -5656,11 +5356,6 @@ namespace System.Windows
         /// update _isVisible and call CreateSourceWindow if
         /// it's the first time window is set to Visibile
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Acceses CriticalHandle
-        ///     TreatAsSafe: Code only creates window in RBW path
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private object ShowHelper(object booleanBox)
         {
             // Setting Visiblilty is async. When this is called from the async callback,
@@ -5826,11 +5521,6 @@ namespace System.Windows
             return nCmd;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates
-        ///     TreatAsSafe: This code is safe to call since it is not configurable and sets a preallowed style
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void SafeStyleSetter()
         {
             (new UIPermission(UIPermissionWindow.AllWindows)).Assert();
@@ -5938,10 +5628,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        /// There is an explicit demand here - to enforce not being able to set this DP in Internet Zone.
-        /// this should remanin here until Window spoofing work is done.
-        ///</SecurityNote>
         private void OnHeightChanged(double height)
         {
             //  Move ValidateLengthForHeightWidth calls from property
@@ -6133,11 +5819,6 @@ namespace System.Windows
 
         // Updates the restore bounds of the hwnd based on BoundsSpecified enum values
         // OR-ing of BoundsSpecified enum is not supported.
-        /// <SecurityNote>
-        ///     Critical: This code accesses CriticalHandle
-        ///     TreatAsSafe:This code is disabled for all windows including RBW in PartialTrust
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void UpdateHwndRestoreBounds(double newValue, BoundsSpecified specifiedRestoreBounds)
         {
             SecurityHelper.DemandUIWindowPermission();
@@ -6215,12 +5896,6 @@ namespace System.Windows
 
         // deltaX = workAreaOriginValue - screenOriginValue (both in virtual co-ods)
         // X(screenAreaCood) = x(workAreaCood) + deltaX
-        /// <SecurityNote>
-        /// Critical: This code acceses CriticalHandle
-        ///     TreatAsSafe: This code only works under RBW code path , this operation is ok since
-        ///     RBW window is bound to the restrictions of its parent window which is the browser
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private Point TransformWorkAreaScreenArea(Point pt, TransformType transformType)
         {
             int deltaX = 0;
@@ -6469,11 +6144,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses Hwnd and can be used to reposition window
-        ///     TreatAsSafe: Will not work on any window in partial trust
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void UpdateHwndPositionOnTopLeftChange(double leftLogicalUnits, double topLogicalUnits)
         {
             Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
@@ -6589,10 +6259,6 @@ namespace System.Windows
         /// <summary>
         ///     Get or create the hidden window used for parenting when ShowInTaskbar == false.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical as this code modifies critical fields and returns an HwndWrapper.
-        ///</SecurityNote>
-        [SecurityCritical]
         private HwndWrapper EnsureHiddenWindow()
         {
             if (_hiddenWindow == null)
@@ -6617,12 +6283,6 @@ namespace System.Windows
         /// <summary>
         ///     sets taskbar status
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical as this code calls critical members.
-        ///     TreatAsSafe as - if ShowInTaskbar == false we demand unmanaged code permission.
-        ///                              if ShowInTaskbar == true this is considered TAS. No new "critical data" created.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void SetTaskbarStatus()
         {
             if (ShowInTaskbar == false) // don't show in taskbar
@@ -6664,19 +6324,11 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls accesses critical object CriticalHandle and calls UnsafeNativeMethods.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnTaskbarRetryTimerTick(object sender, EventArgs e)
         {
             UnsafeNativeMethods.PostMessage(new HandleRef(this, CriticalHandle), WM_APPLYTASKBARITEMINFO, IntPtr.Zero, IntPtr.Zero);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls accesses critical object _taskbarList.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ApplyTaskbarItemInfo()
         {
             if (!Utilities.IsOSWindows7OrNewer)
@@ -6772,10 +6424,6 @@ namespace System.Windows
             HandleTaskbarListError(hr);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT UpdateTaskbarProgressState()
         {
             Debug.Assert(null != _taskbarList);
@@ -6821,10 +6469,6 @@ namespace System.Windows
             return hr;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT UpdateTaskbarProgressValue()
         {
             Debug.Assert(null != _taskbarList);
@@ -6847,10 +6491,6 @@ namespace System.Windows
             return _taskbarList.SetProgressValue(CriticalHandle, intValue, precisionValue);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT UpdateTaskbarOverlay()
         {
             Debug.Assert(null != _taskbarList);
@@ -6876,10 +6516,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT UpdateTaskbarDescription()
         {
             Debug.Assert(null != _taskbarList);
@@ -6896,12 +6532,6 @@ namespace System.Windows
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        ///     TreatAsSafe: This function returns immediately if the ITaskbarList3 handle is invalid.  It would
-        ///         only be created in a critical context.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private HRESULT UpdateTaskbarThumbnailClipping()
         {
             // If TaskbarItemInfo isn't attached and active then there's nothing to do here.
@@ -6957,10 +6587,6 @@ namespace System.Windows
             return _taskbarList.SetThumbnailClip(CriticalHandle, interopRc);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT RegisterTaskbarThumbButtons()
         {
             Debug.Assert(null != _taskbarList);
@@ -6989,10 +6615,6 @@ namespace System.Windows
             return hr;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls methods on native interface ITaskbarList3 and accesses CriticalHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private HRESULT UpdateTaskbarThumbButtons()
         {
             Debug.Assert(null != _taskbarList);
@@ -7130,11 +6752,6 @@ namespace System.Windows
         ///     Currently hides the window and then shows it to make it update. Have to
         ///     find a better way of doing this.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This calls Critical methods (CriticalSetWindowLong, SetWindowPos)
-        ///     TreatAsSafe: This will cause styles to be updated on window. There is no unknown unsafe state that can be set in this call
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void Flush()
         {
             // (A NullReferenceException occurs when animating
@@ -7192,11 +6809,6 @@ namespace System.Windows
             return AllowsTransparency ? new Size(0, 0) : _swh.GetHwndNonClientAreaSizeInMeasureUnits();
         }
 
-        ///<SecurityNote>
-        ///      Critical as this method accesses critical data.
-        ///      TreatAsSafe - this method "eliminates" critical data - ergo considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ClearSourceWindow()
         {
             if (_swh != null)
@@ -7218,11 +6830,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - accesses _ownerHandle and SetOwnerHandle.
-        /// TreatAsSafe - doesn't disclose _ownerHandle; setting parent's handle to IntPtr.Zero is considered a safe operation.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ClearHiddenWindowIfAny()
         {
             // If there is a hiddenWindow and it's the owner of the current one as the result of setting ShowInTaskbar,
@@ -7254,11 +6861,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Ciritical - accesses _inTrustedSubWindow.
-        /// TreatAsSafe - doesn't reveal _inTrustedSubWindow.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void VerifyConsistencyWithShowActivated()
         {
             //
@@ -7381,12 +6983,6 @@ namespace System.Windows
         /// <summary>
         ///     Provides feedback by nudging the window.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Accesses _swh
-        ///     TreatAsSafe - Does not expose protected values. Panning feedback does not translate
-        ///         totalOverpanOffset 1:1 into a window offset. The value is scaled and clamped.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UpdatePanningFeedback(Vector totalOverpanOffset, object originalSource)
         {
             if ((_currentPanningTarget != null) && !_currentPanningTarget.IsAlive)
@@ -7416,12 +7012,6 @@ namespace System.Windows
         /// <summary>
         ///     Returns the window to its original position.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Accesses _swh
-        ///     TreatAsSafe - Restores the window back to its original position, which is safe.
-        ///                   Doesn't expose _swh.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EndPanningFeedback(bool animateBack)
         {
             if (_swh != null)
@@ -7563,10 +7153,6 @@ namespace System.Windows
         // we need this one b/c a owner/parent
         // can be set through the WindowInteropHandler
         // which is different than the owner Window object
-        ///<SecurityNote>
-        /// Critical - handle of the parent window; get/set considered privileged operation
-        ///</SecurityNote>
-        [SecurityCritical]
         private IntPtr              _ownerHandle = IntPtr.Zero;   // no need to dispose this
         private WindowCollection    _ownedWindows;
         private ArrayList           _threadWindowHandles;
@@ -7601,26 +7187,11 @@ namespace System.Windows
         private double              _windowMaxWidthDeviceUnits = Double.PositiveInfinity;
         private double              _windowMaxHeightDeviceUnits = Double.PositiveInfinity;
 
-        ///<SecurityNote>
-        /// Critical - as this data is obtained via an elevation.
-        /// TreatAsSafe - as we've decided that Window position is not directly exploitable.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double              _actualTop = Double.NaN;
 
-        ///<SecurityNote>
-        /// Critical - as this data is obtained via an elevation.
-        /// TreatAsSafe - as we've decided that Window position is not directly exploitable.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double              _actualLeft = Double.NaN;
 
         //Never expose this at any cost
-        /// <SecurityNote>
-        ///     Critical: This is a flag to indicate that this call is under RBW
-        ///                please do not expose it
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool                        _inTrustedSubWindow;
 
         private ImageSource _icon;
@@ -7631,15 +7202,7 @@ namespace System.Windows
         private NativeMethods.IconHandle    _currentSmallIconHandle;
 
         private bool?                       _dialogResult = null;
-        ///<SecurityNote>
-        /// Critical - handle of the owner dialog; get/set considered privileged operation
-        ///</SecurityNote>
-        [SecurityCritical]
         private IntPtr                      _dialogOwnerHandle = IntPtr.Zero;
-        ///<SecurityNote>
-        /// Critical - handle of the active window before the dialog is shown; get/set considered privileged operation
-        ///</SecurityNote>
-        [SecurityCritical]
         private IntPtr                      _dialogPreviousActiveHandle;
         private DispatcherFrame             _dispatcherFrame;
 
@@ -7647,10 +7210,6 @@ namespace System.Windows
 
         // The previous WindowState value before WindowState changes
         private WindowState                 _previousWindowState = WindowState.Normal;
-        ///<SecurityNote>
-        /// Critical - handle of the owner dialog; get/set considered privileged operation
-        ///</SecurityNote>
-        [SecurityCritical]
         private HwndWrapper         _hiddenWindow;
         private EventHandlerList    _events;
 
@@ -7680,34 +7239,18 @@ namespace System.Windows
         #region Windows 7 Taskbar related fields
 
         // Register Window Message used by Shell to notify that the corresponding taskbar button has been added to the taskbar.
-        ///<SecurityNote>
-        /// Critical - This value is obtained in a Critical context (static constructor).
-        ///</SecurityNote>
-        [SecurityCritical]
         private static readonly WindowMessage WM_TASKBARBUTTONCREATED;
 
         // Register Window Message used by Window to signal that we need to apply the taskbar button information again.
-        ///<SecurityNote>
-        /// Critical - This value is obtained in a Critical context (static constructor).
-        ///</SecurityNote>
-        [SecurityCritical]
         private static readonly WindowMessage WM_APPLYTASKBARITEMINFO;
 
         // Magic constant determined by Shell.
         private const int c_MaximumThumbButtons = 7;
 
-        ///<SecurityNote>
-        /// Critical - Handle to a native interface.
-        ///</SecurityNote>
-        [SecurityCritical]
         private ITaskbarList3 _taskbarList;
 
         // When a taskbarList update fails because Explorer is non-responsive, defer further changes for a little while
         // to avoid causing the app to be non-responsive as well.
-        ///<SecurityNote>
-        /// Critical - It's Tick handler is security critical.  It's created in a critical context.
-        ///</SecurityNote>
-        [SecurityCritical]
         private DispatcherTimer _taskbarRetryTimer;
 
         private Size _overlaySize;
@@ -7727,61 +7270,32 @@ namespace System.Windows
 
         #region Private Class
 
-        ///<SecurityNote>
-        ///      This class - is a wrapper around the HwndSource member - stored by the Window
-        ///      All properties/methods on this class are marked as crtical, as by definition this classes purpose is the storage of critical data.
-        ///      Some of the individual members are marked - "TreatAsSafe".
-        ///
-        ///      If you find you need a property on HwndSource to be accessed by the outer Window class
-        ///      Make sure you understand what you're doing from a security perspective.
-        ///
-        ///</SecurityNote>
         internal class SourceWindowHelper
         {
-                ///<SecurityNote>
-                ///     Critical - as this accesses critical data ( _sourceWindow )
-                ///</SecurityNote>
-                [SecurityCritical]
                 internal SourceWindowHelper( HwndSource sourceWindow )
                 {
                     Debug.Assert( sourceWindow != null );
                     _sourceWindow = sourceWindow;
                 }
 
-                ///<SecurityNote>
-                ///     Critical - as this accesses critical data.
-                ///     TreatAsSafe - as this function just tests to see whether _sourceWindow has been created.
-                ///                          Ok to expose publically. Equivalent to is Window visible.
-                ///</SecurityNote>
                 internal bool IsSourceWindowNull
                 {
-                    [ SecurityCritical, SecurityTreatAsSafe ]
                     get
                     {
                         return ( _sourceWindow == null );
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical - as this accesses critical data.
-                ///     TreatAsSafe - as this function just tests to see whether CompositionTarget is valid or not.
-                ///                          Ok to expose publically.
-                ///</SecurityNote>
                 internal bool IsCompositionTargetInvalid
                 {
-                    [ SecurityCritical, SecurityTreatAsSafe ]
                     get
                     {
                         return (CompositionTarget == null);
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this method hands out critical data.
-                ///</SecurityNote>
                 internal IntPtr CriticalHandle
                 {
-                    [ SecurityCritical]
                     get
                     {
                         if (_sourceWindow != null)
@@ -7798,13 +7312,8 @@ namespace System.Windows
                 ///<summary>
                 /// Get the work area bounds for this window - taking multi-mon into account.
                 ///</summary>
-                /// <SecurityNote>
-                ///     Critical: This code accesses CriticalHandle
-                ///     TreatAsSafe: This information is safe to expose. It does not expose the CriticalHandle
-                /// </SecurityNote>
                 internal NativeMethods.RECT WorkAreaBoundsForNearestMonitor
                 {
-                    [SecurityCritical, SecurityTreatAsSafe]
                     get
                     {
                         IntPtr monitor;
@@ -7821,13 +7330,8 @@ namespace System.Windows
 }
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this method accesses critical data.
-                ///     TreatAsSafe - client bounds by themselves is considered safe.
-                ///</SecurityNote>
                 private NativeMethods.RECT ClientBounds
                 {
-                    [SecurityCritical, SecurityTreatAsSafe]
                     get
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
@@ -7837,13 +7341,8 @@ namespace System.Windows
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this method accesses critical data.
-                ///     TreatAsSafe - window bounds by themselves is considered safe.
-                ///</SecurityNote>
                 internal NativeMethods.RECT WindowBounds
                 {
-                    [SecurityCritical, SecurityTreatAsSafe]
                     get
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
@@ -7854,10 +7353,6 @@ namespace System.Windows
                 }
 
 
-                ///<SecurityNote>
-                ///     Critical as this method accesses critical data, _sourceWindow.CriticalHandle.
-                ///</SecurityNote>
-                [SecurityCritical]
                 private NativeMethods.POINT GetWindowScreenLocation(FlowDirection flowDirection)
                 {
                     Debug.Assert(IsSourceWindowNull != true, "IsSourceWindowNull cannot be true here");
@@ -7877,71 +7372,45 @@ namespace System.Windows
                     return pt;
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this method accesses critical data.
-                ///     TreatAsSafe - as setting the auto-size behavior of the window is considered safe.
-                ///</SecurityNote>
                 internal SizeToContent HwndSourceSizeToContent
                 {
-                    [SecurityCritical, SecurityTreatAsSafe]
                     get
                     {
                         return _sourceWindow.SizeToContent;
                     }
 
-                    [SecurityCritical, SecurityTreatAsSafe]
                     set
                     {
                         _sourceWindow.SizeToContent = value;
                     }
                 }
 
-                ///<SecurityNote>
-                ///      Critical as this method accesses critical data.
-                ///      NOT TREAT AS SAFE !
-                ///</SecurityNote>
                 internal Visual RootVisual
                 {
-                    [SecurityCritical]
                     set
                     {
                         _sourceWindow.RootVisual = value;
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical - as this method accesses critical data, _sourceWindow.CriticalHandle,
-                ///              - and calls UnsafeNativeMethod GetActiveWindow()
-                ///     TreatAsSafe - the information we're returning ( this window is active) is deemed safe.
-                ///</SecurityNote>
                 internal bool IsActiveWindow
                 {
-                    [ SecurityCritical, SecurityTreatAsSafe]
                     get
                     {
                         return (_sourceWindow.CriticalHandle == UnsafeNativeMethods.GetActiveWindow());
                     }
                 }
 
-                ///<SecurityNote>
-                ///         Critical as this accesses and hands out critical data.
-                ///      * This is currently exposed for usage in the DRTs only. *
-                ///</SecurityNote>
                 internal HwndSource HwndSourceWindow
                 {
-                    [SecurityCritical]
                     get
                     {
                         return _sourceWindow;
                     }
                 }
 
-                ///<SecurityNote>
-                ///         Critical as this accesses and hands out critical data.
-                ///</SecurityNote>
                 internal HwndTarget CompositionTarget
                 {
-                    [SecurityCritical]
                     get
                     {
                         if (_sourceWindow != null)
@@ -7972,17 +7441,8 @@ namespace System.Windows
                     }
                 }
 
-                ///<SecurityNote>
-                /// Critical as this method calls a method that elevates - GetWindowLong
-                /// TreatAsSafe - this is information about the current window.
-                ///                     this is safe as :
-                ///                             it's innocous information.
-                ///                             if you had permission to create the current window - you should be able to find out what you created it as.
-                ///                             for the browser case - you're not allowed to create the window. The actual styles you'd get would be fixed per OS release, you could guess them anyway.
-                ///</SecurityNote>
                 internal int StyleExFromHwnd
                 {
-                    [SecurityCritical, SecurityTreatAsSafe ]
                     get
                     {
                         // Should never be called when Handle is non-null
@@ -7991,17 +7451,8 @@ namespace System.Windows
                     }
                 }
 
-                ///<SecurityNote>
-                /// Critical as this method calls a method that elevates - GetWindowLong
-                /// TreatAsSafe -this is information about the current window.
-                ///                     this is safe as :
-                ///                             it's innocous information.
-                ///                             if you had permission to create the current window - you should be able to find out what you created it as.
-                ///                             for the browser case - you're not allowed to create the window. The actual styles you'd get would be fixed per OS release, you could guess them anyway.
-                ///</SecurityNote>
                 internal int StyleFromHwnd
                 {
-                    [SecurityCritical, SecurityTreatAsSafe ]
                     get
                     {
                         // Should never be called when Handle is non-null
@@ -8015,11 +7466,6 @@ namespace System.Windows
                 ///     Transform global coords of window location
                 ///     to coords relative to top/left of the window.
                 ///</summary>
-                ///<SecurityNote>
-                ///      Critical as this function accesses critical data (GetWindowScreenLocation).
-                ///      TreatAsSafe - as exposing the coords relative to the Window is considered safe.
-                ///</SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe ]
                 internal NativeMethods.POINT GetPointRelativeToWindow( int x, int y, FlowDirection flowDirection )
                 {
                     NativeMethods.POINT ptWindow = GetWindowScreenLocation(flowDirection);
@@ -8033,11 +7479,6 @@ namespace System.Windows
                 /// <summary>
                 ///     Gets the size from the hwnd
                 /// </summary>
-                ///<SecurityNote>
-                /// Critical as this method accesses critical data.
-                /// TreatAsSafe - as this method returns the Window's current size. Considered safe.
-                ///</SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe]
                 internal Size GetSizeFromHwndInMeasureUnits()
                 {
                     Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull can't be true here");
@@ -8057,11 +7498,6 @@ namespace System.Windows
                 ///     If you're in the middle of changing the window's _style or _styleEx and call this function,
                 ///     you may get inconsistent results.
                 /// </summary>
-                ///<SecurityNote>
-                ///     Critical as this method accesses critical data and performs an elevation
-                ///     TreatAsSafe - as this method returns the Window's current non client area size. Considered safe.
-                ///</SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe]
                 internal Size GetHwndNonClientAreaSizeInMeasureUnits()
                 {
                     Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull can't be true here");
@@ -8083,12 +7519,6 @@ namespace System.Windows
                     return new Size(Math.Max(0.0, pt.X), Math.Max(0.0, pt.Y));
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this function accesses critical data.
-                ///     TreatAsSafe - as this function eliminates the top visual of the window if there is one. Considered safe this is
-                ///                          equivalent to making the window have no content.
-                ///</SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe]
                 internal void ClearRootVisual()
                 {
                     if ( _sourceWindow.RootVisual != null )
@@ -8097,11 +7527,6 @@ namespace System.Windows
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this function accesses critical data.
-                ///     THIS FUNCTION IS NOT TREAT AS SAFE !
-                ///</SecurityNote>
-                [SecurityCritical]
                 internal void AddDisposedHandler( EventHandler theHandler )
                 {
                     if (_sourceWindow != null)
@@ -8110,11 +7535,6 @@ namespace System.Windows
                     }
                 }
 
-                ///<SecurityNote>
-                ///     Critical as this function accesses critical data.
-                ///     THIS FUNCTION IS NOT TREAT AS SAFE !
-                ///</SecurityNote>
-                [SecurityCritical]
                 internal void RemoveDisposedHandler( EventHandler theHandler )
                 {
                     if (_sourceWindow != null)
@@ -8128,12 +7548,6 @@ namespace System.Windows
                 /// </summary>
                 /// <param name="totalOverpanOffset">The amount of over-panning being reported.</param>
                 /// <param name="animate">Whether to animate to the new feedback position.</param>
-                /// <SecurityNote>
-                ///     Critical - Accesses _sourceWindow and _panningFeedback.
-                ///     TreatAsSafe - Does not expose protected values. Panning feedback does not translate
-                ///         totalOverpanOffset 1:1 into a window offset. The value is scaled and clamped.
-                /// </SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe]
                 internal void UpdatePanningFeedback(Vector totalOverpanOffset, bool animate)
                 {
                     if ((_panningFeedback == null) && (_sourceWindow != null))
@@ -8152,11 +7566,6 @@ namespace System.Windows
                 ///     Return the window back to its original position.
                 /// </summary>
                 /// <param name="animateBack">Whether to animate to the original position.</param>
-                /// <SecurityNote>
-                ///     Critical - Accesses _panningFeedback.
-                ///     TreatAsSafe - Does not expose _panningFeedback. Restores the window to its original position, which is safe.
-                /// </SecurityNote>
-                [SecurityCritical, SecurityTreatAsSafe]
                 internal void EndPanningFeedback(bool animateBack)
                 {
                     if (_panningFeedback != null)
@@ -8167,16 +7576,8 @@ namespace System.Windows
                     }
                 }
 
-                [SecurityCritical]
                 private HwndSource _sourceWindow;
 
-                /// <SecurityNote>
-                ///     Allows slightly changing the position of the window.
-                /// </SecurityNote>
-                /// <SecurityNote>
-                ///     Critical - Don't want to expose as defense in depth.
-                /// </SecurityNote>
-                [SecurityCritical]
                 private HwndPanningFeedback _panningFeedback;
         }
 
@@ -8307,13 +7708,8 @@ namespace System.Windows
             /// compatibility measure put in place to ensure that our improvement/fix does not clash with workarounds
             /// that developers might have built into their applications to correct this problem.
             /// </remarks>
-            /// <SecurityNote>
-            ///     Critical - Can call into native methods
-            ///     Safe - Does not return any Critical data back to the caller
-            /// </SecurityNote>
             private bool IsHelperNeeded
             {
-                [SecuritySafeCritical]
                 get
                 {
                     if (CoreAppContextSwitches.DoNotUsePresentationDpiCapabilityTier2OrGreater)
@@ -8348,11 +7744,6 @@ namespace System.Windows
             /// <see cref="LogicalTopLeft"/> lies within that rectangle. If it does, then it updates <see cref="ScreenTopLeft"/>
             /// with the corresponding unscaled monitor-space point.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - Calls into Native methods
-            ///     Safe - Does not return critical resources or handles to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void IdentifyScreenTopLeft()
             {
                 var nullHandle = new HandleRef(null, IntPtr.Zero);
@@ -8389,7 +7780,6 @@ namespace System.Windows
             /// To continue the enumeration, return true.
             /// To stop the enumeration, return false.
             /// </returns>
-            [SecurityCritical]
             private bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, ref NativeMethods.RECT lprcMonitor, IntPtr dwData)
             {
                 // The call the EnumDisplayMonitors set hdc to null

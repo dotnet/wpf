@@ -230,7 +230,6 @@ namespace System.Windows.Markup
         /// as well as a means for serialization to retain that context and an
         /// additional caller-defined context.
         /// </param>
-        //CASRemoval:[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
         protected XamlParseException(
             SerializationInfo info,
             StreamingContext context
@@ -251,15 +250,9 @@ namespace System.Windows.Markup
         /// The destination for this serialization.
         /// </param>
         ///
-        ///<SecurityNote>
-        ///     Critical: calls Exception.GetObjectData which LinkDemands
-        ///</SecurityNote>
-        [SecurityCritical]
 
 #if ! PBTCOMPILER
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 #else
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {

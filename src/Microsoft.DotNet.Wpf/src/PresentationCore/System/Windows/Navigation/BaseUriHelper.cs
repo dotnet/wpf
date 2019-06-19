@@ -51,15 +51,6 @@ namespace System.Windows.Navigation
         private const string _packageApplicationBaseUriEscaped = "application:///";
         private const string _packageSiteOfOriginBaseUriEscaped = "siteoforigin:///";
 
-        /// <SecurityNote>
-        /// Critical: because it sets critical data.
-        ///         Adds SiteOfOriginContainer to PreloadedPackages.
-        /// TreatAsSafe: because it is the static ctor, and the data doesn't go anywhere.
-        ///         SiteOfOriginContainer is a well-known package and allowed to be added
-        ///         to PreloadedPackages. Also, the package is not going to be handed out
-        ///         from this API surface and as such will be protected
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static BaseUriHelper()
         {
             _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
@@ -93,12 +84,6 @@ namespace System.Windows.Navigation
         /// <remarks>
         ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: as it access the BaseUri, which is critcal
-        /// PublicOK: calls GetBaseUriCore that does a demand
-        /// Not available from the Internet zone
-        /// </SecurityNote>
-        [SecurityCritical]
         public static Uri GetBaseUri(DependencyObject element)
         {
             Uri baseUri = GetBaseUriCore(element);
@@ -427,9 +412,6 @@ namespace System.Windows.Navigation
             return uri;
         }
 
-        /// <SecurityNote>
-        /// Critical: as it sets the baseUri
-        /// </SecurityNote>
         static internal Uri BaseUri
         {
             [FriendAccessAllowed]
@@ -438,7 +420,6 @@ namespace System.Windows.Navigation
                 return _baseUri.Value;
             }
             [FriendAccessAllowed]
-            [SecurityCritical]
             set
             {
                 // This setter should only be called from Framework through
@@ -564,11 +545,6 @@ namespace System.Windows.Navigation
         /// <remarks>
         ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: as it access the BaseUri, which is critcal
-        /// TreatAsSafe: since it demands File read write and path dicovery  permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Uri GetBaseUriCore(DependencyObject element)
         {
             Uri baseUri = null;

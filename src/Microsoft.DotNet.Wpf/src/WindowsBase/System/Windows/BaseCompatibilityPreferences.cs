@@ -261,12 +261,6 @@ namespace System.Windows
         /// Contains the setting for whether SignatureMethods should be set to match the strength of the selected
         /// HashAlgorithm.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    Asserts RegistryPermission
-        ///     Safe:        Does not expose critical data
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        [RegistryPermission(SecurityAction.Assert, Read = WpfPackagingKey, Unrestricted = true)]
         private static void SetMatchPackageSignatureMethodToPackagePartDigestMethodFromRegistry()
         {
             try

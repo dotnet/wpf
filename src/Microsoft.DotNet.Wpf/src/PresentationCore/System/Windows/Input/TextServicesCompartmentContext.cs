@@ -54,11 +54,6 @@ namespace System.Windows.Input
         /// <summary>
         ///  Get the compartment of the given input method state.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - retrieves message pump/input manager wrapper class
-        /// TreatAsSafe - returns safe wrapper for property request
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextServicesCompartment GetCompartment(InputMethodStateType statetype)
         {
              for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -79,10 +74,6 @@ namespace System.Windows.Input
         /// <summary>
         ///  Get the thread compartment of the Guid.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - manipulates input manager/message pump
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TextServicesCompartment GetThreadCompartment(Guid guid)
         {
             // No TextServices are installed so that the compartment won't work.
@@ -113,10 +104,6 @@ namespace System.Windows.Input
         /// <summary>
         ///  Get the global compartment of the Guid.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access input manager directly
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TextServicesCompartment GetGlobalCompartment(Guid guid)
         {
             // No TextServices are installed so that the compartment won't work.
@@ -185,10 +172,6 @@ namespace System.Windows.Input
         private Hashtable _globalcompartmentTable;
 
         // cache of the global compartment manager
-        /// <SecurityNote>
-        ///  Critical :  Field for critical type
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ITfCompartmentMgr  _globalcompartmentmanager;
 }
 }

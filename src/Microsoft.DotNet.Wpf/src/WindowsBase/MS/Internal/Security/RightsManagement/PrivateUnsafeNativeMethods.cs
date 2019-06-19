@@ -33,26 +33,8 @@ using MS.Win32;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class PrivateUnsafeNativeMethods.
-    ///     PrivateUnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///      RightsManagementPermission and then call through to the matching member of the Private Static class PrivateUnsafeNativeMethods
-    /// </SecurityNote>
-    /// The partial class only needs to be marked security critical in one of the parts [SecurityCritical]
-    /// Adding [SecurityCritical] note here adds to a compiler error "Duplicate 'SecurityCritical' attribute"
     internal static partial class SafeNativeMethods
     {
-        /// <SecurityNote>
-        ///     Critical:  Suppressing unmanaged code.  Note all code that calls this must be critical
-        ///     The only code that can access this class is in the SafeNativeMethods (as the class 
-        ///     is declared as private within SafeNativeMethods)
-        ///     SafeNativeMethods is responsible for performing appropriate Asserts prior to calling 
-        ///     PrivateUnsafeNativeMethods which in turn is marked with SuppressUnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity] // Blessed 
         private static class UnsafeNativeMethods
         {
             [DllImport(ExternDll.MsDrm, SetLastError = false, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]

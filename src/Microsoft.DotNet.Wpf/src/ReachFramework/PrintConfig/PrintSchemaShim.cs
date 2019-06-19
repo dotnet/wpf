@@ -414,10 +414,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        /// <SecurityNote>
-        /// Critical    - Calls critical WinSpoolPrinterCapabilities methods
-        /// </SecurityNote>
-        [SecurityCritical]
         public static bool PruneFeatures(DevMode inDevMode, WinSpoolPrinterCapabilities capabilities)
         {
             bool featurePruned = false;

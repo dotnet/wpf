@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationProvider", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationTypes", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj", "{152C4B33-3B53-4180-B8BC-7BB0BC91A2ED}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationTypes", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj", "{29C13CF5-AFE9-4D43-8CF0-46361096117F}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Input.Manipulations", "src\Microsoft.DotNet.Wpf\src\System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj", "{B6F41F07-2117-49E0-A2B7-4BC6F586057B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReachFramework", "src\Microsoft.DotNet.Wpf\src\ReachFramework\ReachFramework.csproj", "{17AA6CC2-CAE3-429C-B065-B76B8E14C632}"
@@ -601,6 +603,18 @@ Global
 		{8D2B8BD2-25A5-47FD-B1E8-87E800CA2184}.Release|x64.Build.0 = Release|x64
 		{8D2B8BD2-25A5-47FD-B1E8-87E800CA2184}.Release|x86.ActiveCfg = Release|Any CPU
 		{8D2B8BD2-25A5-47FD-B1E8-87E800CA2184}.Release|x86.Build.0 = Release|Any CPU
+	    {29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|x64.ActiveCfg = Debug|x64
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|x64.Build.0 = Debug|x64
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Debug|x86.Build.0 = Debug|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|x64.ActiveCfg = Release|x64
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|x64.Build.0 = Release|x64
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|x86.ActiveCfg = Release|Any CPU
+		{29C13CF5-AFE9-4D43-8CF0-46361096117F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

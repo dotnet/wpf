@@ -74,6 +74,7 @@
     <ExternalHandCraftedReferenceProjects>
       System.Xaml-ref;
       WindowsBase-ref;
+      UIAutomationTypes-ref;
     </ExternalHandCraftedReferenceProjects>
 
     <InternalHandCraftedReferenceProjects>

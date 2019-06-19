@@ -73,6 +73,7 @@
     -->
     <ExternalHandCraftedReferenceProjects>
       System.Xaml-ref;
+      WindowsBase-ref;
     </ExternalHandCraftedReferenceProjects>
 
     <InternalHandCraftedReferenceProjects>

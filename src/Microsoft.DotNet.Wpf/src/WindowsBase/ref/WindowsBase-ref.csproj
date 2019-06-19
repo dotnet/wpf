@@ -1,40 +1,16 @@
-<Project>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AssemblyName>WindowsBase</AssemblyName>
+    <PackageId>WindowsBase-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <DefineConstants>$(DefineConstants);BASE_NATIVEMETHODS;WINDOWS_BASE</DefineConstants>
     <DefineConstants Condition="'$(WeakEventTelemetry)'=='true'">$(DefineConstants);WeakEventTelemetry</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <ProjectGuid>{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}</ProjectGuid>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-  <PropertyGroup>
-  </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <!-- New Dispatcher stuff  -->
-  <ItemGroup>
-    <!-- Compile Include="System\Windows\Threading\Priority.cs" / -->
-  </ItemGroup>
-  <ItemGroup Condition="'$(WCP_REACH_API)' != ''">
-  </ItemGroup>
-  <!-- ZIP sources -->
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <!-- Right Management sources -->
-  <ItemGroup>
-  </ItemGroup>
-  <!--
-       WindowsBase provides some functionality that is shared with other DLLs.  This
-       functionality comes from generated sources files.  Here we generate two of
-       them early in the build process.  They have no dependencies other than the
-       TXT files they consume and the tools (which are not compiled, simply scripts).
-       The output files are automatically added as source files to the Compile task.
-   -->
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
@@ -86,15 +62,6 @@
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
   </ItemGroup>
-  <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
-       it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
-       doesn’t run before the Build target. -->
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-  <Import Project="$(WpfCodeGenDir)AvTrace\GenTraceSources.targets" />
-  <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
-  <!-- DevDiv Bug 888747: Re-enable AvTrace codegen -->
-  <!-- <Import Project="$(WpfCodeGenDir)DesignTimeTextTemplating.targets" /> -->
 </Project>

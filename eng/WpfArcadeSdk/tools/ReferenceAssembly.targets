@@ -49,15 +49,10 @@
     This should be done only if we're dealing with a reference assembly project and that project is
     meant to be shipped from the particular repository we're building.
   -->
-  <PropertyGroup Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
+  <Target Name="CopyHandCraftedReferenceProjectsToRefDir" 
+          AfterTargets="PrepareForRun"
+          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
                      or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')">
-    <PreparePackageAssetsDependsOn>
-      $(PreparePackageAssetsDependsOn);
-      CopyHandCraftedReferenceProjectsToRefDir
-    </PreparePackageAssetsDependsOn>
-  </PropertyGroup>
-
-  <Target Name="CopyHandCraftedReferenceProjectsToRefDir">
     <Copy SourceFiles="$(TargetPath)"
           DestinationFolder="$(ReferenceAssemblyDir)"
           Condition="!Exists('$(ReferenceAssemblyDir)$(TargetPath)')" />

@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationTypes-ref", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Input.Manipulations", "src\Microsoft.DotNet.Wpf\src\System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj", "{B6F41F07-2117-49E0-A2B7-4BC6F586057B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Input.Manipulations-ref", "src\Microsoft.DotNet.Wpf\src\System.Windows.Input.Manipulations\ref\System.Windows.Input.Manipulations-ref.csproj", "{89FF315B-1200-472B-9CCA-93D51512604B}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReachFramework", "src\Microsoft.DotNet.Wpf\src\ReachFramework\ReachFramework.csproj", "{17AA6CC2-CAE3-429C-B065-B76B8E14C632}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cycle-breakers", "cycle-breakers", "{271ED3B3-976D-4253-85F5-E98CC86993D6}"
@@ -657,6 +659,18 @@ Global
 		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x64.Build.0 = Release|x64
 		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x86.ActiveCfg = Release|Any CPU
 		{38702943-E4E0-4DD8-9301-6BCCB49A759E}.Release|x86.Build.0 = Release|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|x64.ActiveCfg = Debug|x64
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|x64.Build.0 = Debug|x64
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Debug|x86.Build.0 = Debug|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|x64.ActiveCfg = Release|x64
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|x64.Build.0 = Release|x64
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|x86.ActiveCfg = Release|Any CPU
+		{89FF315B-1200-472B-9CCA-93D51512604B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

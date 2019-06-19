@@ -72,12 +72,13 @@
       See: ReferenceAssembly.targets/CopyHandCraftedReferenceProjectsToRefDir
     -->
     <ExternalHandCraftedReferenceProjects>
+      System.Windows.Input.Manipulations-ref;
       System.Xaml-ref;
-      WindowsBase-ref;
       UIAutomationTypes-ref;
       UIAutomationProvider-ref;
       UIAutomationClient-ref;
       UIAutomationClientSideProviders-ref;
+      WindowsBase-ref;
     </ExternalHandCraftedReferenceProjects>
 
     <InternalHandCraftedReferenceProjects>

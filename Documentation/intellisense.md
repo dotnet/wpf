@@ -1,9 +1,9 @@
 # Intellisense XML Incorporation into Ref-Pack
 
 
-Intellisense XML's are produced in `dotnet/dotnet-api-docs` repo. They are currently **not** published to a Nuget package or another easily consumable artefact. Thus, the process of ingestion of these XML files is a manual one at this time. 
+Intellisense XML's are produced in the `dotnet/dotnet-api-docs` repo. They are currently **not** published to a NuGet package or another easily consumable artifact. Thus, the process of ingestion of these XML files is a manual one at this time. 
 
-1. Go to OPS build site at https://ops.microsoft.com/#/sites/Docs/docsets/dotnet-api-docs?tabName=builds and obtain the latest build artefacts
+1. Go to OPS build site at https://ops.microsoft.com/#/sites/Docs/docsets/dotnet-api-docs?tabName=builds and obtain the latest build artifacts
    - Filter by `Build Type = Intellisense`
     - Download latest package (it's a `zip` file)
 2. Extract the zip contents and retain only the contents of `_intellisense\netcore-3.0` subfolder

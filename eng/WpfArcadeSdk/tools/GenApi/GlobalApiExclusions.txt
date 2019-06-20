@@ -14,9 +14,6 @@
 #   System.Windows.Media.Imaging.BitmapEncoder.SealObject
 #   System.Windows.Media.Imaging.BitmapDecoder.SealObject
 
-# All
-
-
 # PresentationCore
 T:System.Windows.Media.Composition.DUCE.Channel
 T:System.Windows.Media.Composition.DUCE.ResourceHandle

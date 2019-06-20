@@ -29,7 +29,7 @@
 
     <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
     <GenAPIAdditionalParameters Condition="'$(GlobalApiExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-api-list "$(GlobalApiExclusionsFile)" --exclude-attributes-list "$(GlobalAttrExclusionsFile)"</GenAPIAdditionalParameters>
-    <GenAPIAdditionalParameters Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-attributes-list "$(GlobalAttrExclusionsFile)"</GenAPIAdditionalParameters>
+    <GenAPIAdditionalParameters Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-attributes "$(GlobalAttrExclusionsFile)"</GenAPIAdditionalParameters>
 
     <!-- 
       GenAPI is run on demand.  Note that making a public API change without the associated reference assembly change will result in an ApiCompat error. 

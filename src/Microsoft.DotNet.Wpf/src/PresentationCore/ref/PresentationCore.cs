@@ -11321,9 +11321,7 @@ namespace System.Windows.Media.Converters
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
-        internal abstract object ConvertFromCore(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, string value);
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
-        internal abstract object ConvertToCore(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType);
     }
     public sealed partial class BoolIListConverter : System.Windows.Media.Converters.BaseIListConverter
     {
@@ -11648,8 +11646,6 @@ namespace System.Windows.Media.Effects
         public static System.Windows.Media.Brush ImplicitInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } }
         public new System.Windows.Media.Effects.Effect Clone() { throw null; }
         public System.Windows.Media.Effects.Effect CloneCurrentValue() { throw null; }
-        internal abstract int GetChannelCountCore();
-        internal abstract System.Windows.Rect GetRenderBounds(System.Windows.Rect contentBounds);
     }
     public sealed partial class EmbossBitmapEffect : System.Windows.Media.Effects.BitmapEffect
     {

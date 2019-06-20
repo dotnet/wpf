@@ -73,6 +73,7 @@
     -->
     <ExternalHandCraftedReferenceProjects>
       PresentationBuildTasks-ref;
+      PresentationCore-ref;
       System.Windows.Input.Manipulations-ref;
       System.Xaml-ref;
       UIAutomationTypes-ref;

@@ -1,10 +1,15 @@
 # NOTE: 
 #   The following commented out removals are due to issues with generating derived classes.
 #   Since automatic generation will add these back, these errors will need to be hand fixed.
-#   Do this by removed the base class function that is not being added to the derived classes.
-#   This is only applicable for internal functions.
+#   Do this by removed the base class member function that is not being added to the derived classes.
+#   This is only applicable for internal member functions.
 # WindowsBase:
 #   System.Windows.AttachedPropertyBrowsableAttribute.IsBrowsable
+# PresentationCore:
+#   System.Windows.Media.Effects.Effect.GetChannelCountCore
+#   System.Windows.Media.Effects.Effect.GetRenderBounds
+#   System.Windows.Media.Converters.BaseIListConverter.ConvertToCore
+#   System.Windows.Media.Converters.BaseIListConverter.ConvertFromCore
 
 # PresentationCore
 T:System.Windows.Media.Composition.DUCE.Channel

@@ -4,19 +4,19 @@ namespace Microsoft.Build.Tasks.Windows
     {
         public FileClassifier() { }
         [Microsoft.Build.Framework.OutputAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] CLREmbeddedResource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
-        public Microsoft.Build.Framework.ITaskItem[] CLRResourceFiles { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] CLREmbeddedResource { get { throw null; } set { } }
+        public Microsoft.Build.Framework.ITaskItem[] CLRResourceFiles { get { throw null; } set { } }
         [Microsoft.Build.Framework.OutputAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] CLRSatelliteEmbeddedResource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] CLRSatelliteEmbeddedResource { get { throw null; } set { } }
         public string Culture { get { throw null; } set { } }
         [Microsoft.Build.Framework.OutputAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] MainEmbeddedFiles { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] MainEmbeddedFiles { get { throw null; } set { } }
         [Microsoft.Build.Framework.RequiredAttribute]
-        public string OutputType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public string OutputType { get { throw null; } set { } }
         [Microsoft.Build.Framework.OutputAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] SatelliteEmbeddedFiles { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] SatelliteEmbeddedFiles { get { throw null; } set { } }
         [Microsoft.Build.Framework.RequiredAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] SourceFiles { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] SourceFiles { get { throw null; } set { } }
         public override bool Execute() { throw null; }
     }
     public sealed partial class GenerateTemporaryTargetAssembly : Microsoft.Build.Utilities.Task
@@ -125,9 +125,9 @@ namespace Microsoft.Build.Tasks.Windows
         public string OutputPath { get { throw null; } set { } }
         [Microsoft.Build.Framework.OutputAttribute]
         [Microsoft.Build.Framework.RequiredAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] OutputResourcesFile { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] OutputResourcesFile { get { throw null; } set { } }
         [Microsoft.Build.Framework.RequiredAttribute]
-        public Microsoft.Build.Framework.ITaskItem[] ResourceFiles { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
+        public Microsoft.Build.Framework.ITaskItem[] ResourceFiles { get { throw null; } set { } }
         public override bool Execute() { throw null; }
     }
     public sealed partial class UidManager : Microsoft.Build.Utilities.Task

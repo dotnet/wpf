@@ -13,7 +13,6 @@ using System.Windows;
 using System.Xaml;
 using System.Security;
 
-[assembly: AllowPartiallyTrustedCallers]
 [assembly: XmlnsDefinition("http://testroot", "")]
 
 public class ClassInRootNamespace

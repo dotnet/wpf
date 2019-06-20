@@ -888,16 +888,6 @@ namespace System.Windows.Xps.Serialization
     {
         [System.Security.SecurityCriticalAttribute]
         protected PackageSerializationManager() { }
-        internal abstract System.Windows.Xps.Serialization.BasePackagingPolicy PackagingPolicy { get; }
-        internal abstract System.Windows.Xps.Packaging.XpsResourcePolicy ResourcePolicy { get; }
-        internal abstract System.Windows.Xps.Serialization.XpsResourceStream AcquireResourceStream(System.Type resourceType);
-        internal abstract System.Windows.Xps.Serialization.XpsResourceStream AcquireResourceStream(System.Type resourceType, string resourceID);
-        internal abstract System.Xml.XmlWriter AcquireXmlWriter(System.Type writerType);
-        internal abstract void AddRelationshipToCurrentPage(System.Uri targetUri, string relationshipName);
-        internal abstract string GetXmlNSForType(System.Type objectType);
-        internal abstract void ReleaseResourceStream(System.Type resourceType);
-        internal abstract void ReleaseResourceStream(System.Type resourceType, string resourceID);
-        internal abstract void ReleaseXmlWriter(System.Type writerType);
         public abstract void SaveAsXaml(object serializedObject);
         void System.IDisposable.Dispose() { }
     }

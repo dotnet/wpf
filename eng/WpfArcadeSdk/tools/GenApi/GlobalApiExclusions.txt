@@ -18,3 +18,6 @@
 T:System.Windows.Media.Composition.DUCE.Channel
 T:System.Windows.Media.Composition.DUCE.ResourceHandle
 T:System.Windows.Media.TextFormatting.TextParagraphCache
+
+// ReachFramework
+T:System.Windows.Xps.Packaging.XpsResourcePolicy

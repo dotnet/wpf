@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AssemblyName>ReachFramework</AssemblyName>
+    <PackageId>ReachFramework-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);0618</NoWarn>
@@ -7,14 +10,8 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
     <NetCoreReference Include="netstandard" />
@@ -47,12 +44,9 @@
     <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
-      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </ProjectReference>
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfCycleBreakersDir)PresentationFramework\PresentationFramework-ReachFramework-impl-cycle.csproj" />

@@ -44,9 +44,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     // current release version suffix and the dll name of PresentationNative are defined in managed code.
     // Hence we wanted to avoid redefining these values in MC++ so as not to increase the maintenance cost 
     // of the code. Moreover, using delegates does not impact perf to justify not using it in this case.
-    /// <SecurityNote>
-    /// Critical    - receives native pointers as parameters.
-    /// </SecurityNote>
     private delegate int CreateTextAnalysisSource(
                                                   WCHAR const*    text,
                                                   UINT32          length,
@@ -58,19 +55,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                                   UINT32          numberSubstitutionMethod,
                                                   void**          ppTextAnalysisSource);
 
-    /// <SecurityNote>
-    /// Critical    - Returns a native pointer.
-    /// </SecurityNote>
     private delegate void* CreateTextAnalysisSink();
 
-    /// <SecurityNote>
-    /// Critical    - receives as parameters and returns native pointers .
-    /// </SecurityNote>
     private delegate void* GetScriptAnalysisList(void*);
 
-    /// <SecurityNote>
-    /// Critical    - receives as parameters and returns native pointers .
-    /// </SecurityNote>
     private delegate void* GetNumberSubstitutionList(void*);
     /// <summary>
     /// This class is responsible for Text Analysis and Shaping.
@@ -80,9 +68,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     {
         private:
         
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             NativeIUnknownWrapper<IDWriteTextAnalyzer>^ _textAnalyzer;
 
             void GetBlankGlyphsForControlCharacters(
@@ -112,9 +97,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 [System::Runtime::InteropServices::Out] array<GlyphOffset>^% glyphOffsets
                 );
 
-            /// <SecurityNote>
-            /// Critical    - recieves native pointers.
-            /// </SecurityNote>
             static void ReleaseItemizationNativeResources(
                 IDWriteFactory**            ppFactory,
                 IDWriteTextAnalyzer**       ppTextAnalyzer,

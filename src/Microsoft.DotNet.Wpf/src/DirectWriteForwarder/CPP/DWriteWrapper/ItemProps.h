@@ -80,15 +80,8 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Applying custom attributes on the constructor implementation
             /// causes a compiler error (a custom attribute may not be used inside a function)
             ///</remarks>
-            ///<SecurityNote>
-            /// Critical    - Asserts to allocate and initialize unmanaged memory.
-            /// TreatAsSafe - Initializes unmanaged memory to known safe state.
-            ///</SecurityNote>
             ItemProps();
 
-            ///<SecurityNote>
-            /// Critical    - Asserts to initialize unmanaged memory.
-            ///</SecurityNote>
             static ItemProps^ Create(
                 void* scriptAnalysis,
                 void* numberSubstitution,

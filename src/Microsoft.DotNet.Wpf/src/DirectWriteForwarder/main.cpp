@@ -67,13 +67,6 @@ public:
     // This enables the CLR to resolve DllImport declarations for functions exported from these libraries.
     // The installation folder is not on the normal search path, so its location is found from the registry.
     //
-    // <SecurityNote>
-    // Critical -- Calls native method LoadLibrary from kernel32.dll.
-    //
-    // TreatAsSafe -- LoadLibrary is being passed a value from a installer-set registry key with a
-    //                known library name, limiting the risk.
-    //
-    // </SecurityNote>
     static void LoadDwrite( )
     {
         // We load dwrite here because it's cleanup logic is different from the other native dlls
@@ -87,10 +80,6 @@ public:
         m_pfnDWriteCreateFactory = pTemp;
     }
     
-    // <SecurityNote>
-    // Critical -- Calls critical FreeLibrary to unload a native library
-    // TreatAsSafe -- A known\trusted handle to dwrite.dll is passed
-    // </SecurityNote>    
      __declspec(noinline) 
     static void UnloadDWrite()
     {
@@ -108,18 +97,11 @@ public:
         }
     }
 
-    /// <SecurityNote>
-    /// Critical: Exposes a pointer to the DWrite method that is used to create factories
-    ///           which can be used to obtain any info about fonts.
-    /// </SecurityNote>
     static void *GetDWriteCreateFactoryFunctionPointer()
     {
         return m_pfnDWriteCreateFactory;
     }
 
-    /// <SecurityNote>
-    /// Critical: Nulls a pointer to the DWrite method that is used to create factories
-    /// </SecurityNote>
     static void ClearDWriteCreateFactoryFunctionPointer()
     {
         m_pfnDWriteCreateFactory = NULL;    
@@ -129,9 +111,6 @@ private:
 
     static System::IntPtr m_hDWrite;
     
-    // <SecurityNote>
-    // Critical -- Field is untyped pointer
-    // </SecurityNote>
     static void *m_pfnDWriteCreateFactory;
 }; 
 }} // namespace MS.Internal
@@ -141,12 +120,6 @@ private class CModuleInitialize
 public:
 
     // Constructor of class CModuleInitialize
-    // <SecurityNote>
-    // Critical -- Calls native methods atexit.
-    //
-    // TreatAsSafe -- The function passed to atexit is trusted.
-    //
-    // </SecurityNote>    
     __declspec(noinline) CModuleInitialize(void (*cleaningUpFunc)())
     {
         IsProcessDpiAware();
@@ -158,11 +131,6 @@ public:
         atexit(cleaningUpFunc);
     }
 
-    /// <SecurityNote>
-    /// Critical: Asserts UnmanagedCode permission to unload the native DLLs.
-    /// Safe    : The libraries to be released are coming from internally 
-    ///           trusted source
-    /// </SecurityNote>
     // Previously we had this as a class dtor but we found out that
     // we can't use a destructor due to an issue with how it's registered to be called on exit:
     // A compiler-generated function calls _atexit_m_appdomain(). But that generated function is transparenct,
@@ -188,10 +156,6 @@ public:
         // MS::Internal::NativeWPFDLLLoader::UnloadDWrite();
     }
 
-    /// <SecurityNote>
-    /// Critical: Exposes a pointer to the DWrite method that is used to create factories
-    ///           which can be used to obtain any info about fonts.
-    /// </SecurityNote>
     void *GetDWriteCreateFactoryFunctionPointer()
     {
         return MS::Internal::NativeWPFDLLLoader::GetDWriteCreateFactoryFunctionPointer();
@@ -205,13 +169,6 @@ private :
     // Security Transparent method which will lead to a security violation where the transparent
     // method will be calling security critical code in this method.
     //
-    // <SecurityNote>
-    // Critical -- Calls native methods SetProcessDPIAware from user32.dll (via our own extern).
-    //
-    // TreatAsSafe -- There's nothing inherently risky about calling SetProcessDPIAware - it simply
-    //                lets the OS know how to treat the visual display of the app.
-    //
-    // </SecurityNote>
     __declspec(noinline) void IsProcessDpiAware( )
     {
         Version  ^osVersion = (Environment::OSVersion)->Version;
@@ -259,10 +216,6 @@ void CleanUp();
 /// which is not properly annotated with security tags.
 /// To work around this issue we create our own static method that is properly annotated.
 /// </summary>
-/// <SecurityNote>
-/// Critical: Contains unverifiable native code.
-/// Safe    : The code is safe and only returns a new object.
-/// </SecurityNote>
 __declspec(noinline) static System::IntPtr CreateCModuleInitialize()
 {
     return System::IntPtr(new CModuleInitialize(CleanUp));
@@ -283,10 +236,6 @@ void CleanUp()
 
 }
 
-/// <SecurityNote>
-/// Critical: Exposes a pointer to the DWrite method that is used to create factories
-///           which can be used to obtain any info about fonts.
-/// </SecurityNote>
 void *GetDWriteCreateFactoryFunctionPointer()
 {
     return (static_cast<CModuleInitialize*>(cmiStartupRunner.ToPointer()))->GetDWriteCreateFactoryFunctionPointer();

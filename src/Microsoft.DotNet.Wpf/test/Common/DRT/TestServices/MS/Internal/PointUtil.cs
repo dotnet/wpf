@@ -19,10 +19,6 @@ namespace MS.Internal
         ///     Convert a point from "client" coordinate space of a window into
         ///     the coordinate space of the root element of the same window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a Point is considered safe. 
-        /// </SecurityNote>
         public static Point ClientToRoot(Point pt, PresentationSource presentationSource)
         {
             // Convert from pixels into measure units.
@@ -40,10 +36,6 @@ namespace MS.Internal
         ///     Convert a point from the coordinate space of a root element of
         ///     a window into the "client" coordinate space of the same window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a point is considered safe. 
-        /// </SecurityNote>
         public static Point RootToClient(Point pt, PresentationSource presentationSource)
         {
             // REVIEW:
@@ -118,11 +110,6 @@ namespace MS.Internal
             return Matrix.Identity;
         }
 
-        /// <SecurityNote>
-        /// SecurityCritical: This code causes eleveation to unmanaged code via call to GetWindowLong and UnsecureGetHandle
-        /// SecurityTreatAsSafe: This data is ok to give out
-        /// validate all code paths that lead to this.
-        /// </SecurityNote>
         /// <summary>
         ///     Convert a point from "client" coordinate space of a window into
         ///     the coordinate space of the screen.
@@ -185,10 +172,6 @@ namespace MS.Internal
         ///     Convert a point from the coordinate space of the screen into
         ///     the "client" coordinate space of a window.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses presentationSource
-        ///    TreatAsSafe: Transforming a Point is considered safe. 
-        /// </SecurityNote>
         internal static Point ScreenToClient(Point ptScreen, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.

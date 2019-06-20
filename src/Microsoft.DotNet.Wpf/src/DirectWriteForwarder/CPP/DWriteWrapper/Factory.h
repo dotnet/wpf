@@ -32,9 +32,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// A pointer to the wrapped DWrite factory object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             IDWriteFactory* _pFactory;
                       
             /// <summary>
@@ -63,19 +60,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// The custom loader used by WPF to load font collections.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - We call Marshal.* with this member variable and we
-            //             assume it is trusted.
-            /// </SecurityNote>
             FontCollectionLoader^ _wpfFontCollectionLoader;
 
             /// <summary>
             /// The custom loader used by WPF to load font files.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - We call Marshal.* with this member variable and we
-            //             assume it is trusted.
-            /// </SecurityNote>
             FontFileLoader^       _wpfFontFileLoader;
 
             IFontSourceFactory^   _fontSourceFactory;
@@ -97,9 +86,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             property IDWriteFactory* DWriteFactoryAddRef
             {
-                /// <SecurityNote>
-                /// Critical - Exposes critical member _pFactory.
-                /// </SecurityNote>
                 IDWriteFactory* get()
                 {
                     _pFactory->AddRef();
@@ -216,12 +202,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                          __out IDWriteFontFile** dwriteFontFile
                                          );
 
-            /// <SecurityNote>
-            /// This is a workaround. 
-            /// DWRITE_MATRIX is flagged as a critical type since it uses some security critical
-            /// attributes from Microsoft.VisualC.dll (MiscellaneousBitsAttribute & DebugInfoInPDBAttribute)
-            /// This should be fixed in Microsoft.VisualC.dll.
-            /// </SecurityNote>
             __declspec(noinline) static DWRITE_MATRIX GetIdentityTransform()
             {
                 DWRITE_MATRIX transform;

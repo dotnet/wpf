@@ -34,9 +34,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// The DWrite font face object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             NativeIUnknownWrapper<IDWriteFontFace>^ _fontFace;
 
             /// <summary>
@@ -59,11 +56,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Constructs a font face object.
             /// </summary>
             /// <param name="fontFace">A pointer to the DWrite font face object.</param>
-            /// <SecurityNote>
-            /// Critical - Receives a native pointer and stores it internally.
-            ///            This whole object is wrapped around the passed in pointer
-            ///            So this ctor assumes safety of the passed in pointer.
-            /// </SecurityNote>
             FontFace(IDWriteFontFace* fontFace);
 
             /// <summary>

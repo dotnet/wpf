@@ -31,9 +31,6 @@ namespace WPFUtils {
 // If the function succeeds, the return value is ERROR_SUCCESS.
 // If the function fails, the return value is a nonzero error code defined in Winerror.h
 //
-// <SecurityNote>
-// Critical -- Calls native methods RegOpenKeyEx, RegQueryValueEx, and RegCloseKey
-// </SecurityNote>
 #if _MANAGED
 #endif
 LONG ReadRegistryString(__in HKEY rootKey, __in LPCWSTR keyName, __in LPCWSTR valueName,

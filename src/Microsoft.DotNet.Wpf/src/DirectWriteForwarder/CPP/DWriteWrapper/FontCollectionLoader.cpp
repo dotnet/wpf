@@ -16,11 +16,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _fontFileLoader              = fontFileLoader;
     }
 
-    /// <SecurityNote>
-    /// Critical - Receives and returns native pointers.
-    ///          - Asserts unmanaged code permissions to call Marshal.* However the call to Marshal is safe
-    ///            because it is called with trusted inputs.
-    /// </SecurityNote>
     [ComVisible(true)]    
     HRESULT FontCollectionLoader::CreateEnumeratorFromKey(
                                                           IntPtr factory,

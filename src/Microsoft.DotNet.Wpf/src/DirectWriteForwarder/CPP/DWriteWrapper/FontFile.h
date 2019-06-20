@@ -24,9 +24,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// A pointer to the DWrite font file object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             NativeIUnknownWrapper<IDWriteFontFile>^ _fontFile;
 
             /// <summary>
@@ -36,9 +33,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// This makes the static method fail NGENing and causes Jitting which affects perf.
             /// If the complier gets fixed then we can remove this scheme and use __uuidof(IDWriteLocalFontFileLoader).
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             static NativePointerWrapper<_GUID>^ _guidForIDWriteLocalFontFileLoader;
 
             /// <summary>

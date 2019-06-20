@@ -25,9 +25,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// A pointer to the wrapped DWrite Localized Strings object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
             NativeIUnknownWrapper<IDWriteLocalizedStrings>^ _localizedStrings;
 
             /// <summary>
@@ -169,10 +166,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 throw gcnew NotSupportedException();
             }
 
-            /// <SecurityNote>
-            /// Critical - Calls critical method to get localized font string
-            /// TreatAsSafe - it is safe to expose the localized strings for the font.
-            /// </SecurityNote>
             __declspec(noinline) virtual bool TryGetValue(
                                                                     CultureInfo^  key,
                                     [Runtime::InteropServices::Out] String^%      value

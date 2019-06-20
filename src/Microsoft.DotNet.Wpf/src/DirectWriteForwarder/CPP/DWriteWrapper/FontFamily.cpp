@@ -7,20 +7,11 @@
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    /// <SecurityNote>
-    /// Critical - Receives a native pointer and stores it internally.
-    ///            This whole object is wrapped around the passed in pointer
-    ///            So this ctor assumes safety of the passed in pointer.
-    /// </SecurityNote>
     FontFamily::FontFamily(IDWriteFontFamily* fontFamily) : FontList(fontFamily)
     {
         _regularFont = nullptr;
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical FontFamilyObject pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
     __declspec(noinline) LocalizedStrings^ FontFamily::FamilyNames::get()
     {
         IDWriteLocalizedStrings* dwriteLocalizedStrings;
@@ -67,10 +58,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return regularFont->DisplayMetrics(emSize, pixelsPerDip);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical FontFamilyObject pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
     __declspec(noinline) Font^ FontFamily::GetFirstMatchingFont(
                                                                FontWeight  weight,
                                                                FontStretch stretch,
@@ -90,10 +77,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return gcnew Font(dwriteFont);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical FontFamilyObject pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
     __declspec(noinline) FontList^ FontFamily::GetMatchingFonts(
                                           FontWeight  weight,
                                           FontStretch stretch,

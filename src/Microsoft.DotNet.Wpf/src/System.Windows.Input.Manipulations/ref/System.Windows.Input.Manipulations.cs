@@ -27,7 +27,6 @@ namespace System.Windows.Input.Manipulations
         public event System.EventHandler<System.Windows.Input.Manipulations.Manipulation2DDeltaEventArgs> Delta { add { } remove { } }
         public void Complete(long timestamp) { }
         public bool Process(long timestamp) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetParameters(System.Windows.Input.Manipulations.InertiaParameters2D parameters) { }
     }
     public sealed partial class InertiaRotationBehavior2D : System.Windows.Input.Manipulations.InertiaParameters2D
@@ -102,7 +101,6 @@ namespace System.Windows.Input.Manipulations
         public event System.EventHandler<System.Windows.Input.Manipulations.Manipulation2DStartedEventArgs> Started { add { } remove { } }
         public void CompleteManipulation(long timestamp) { }
         public void ProcessManipulators(long timestamp, System.Collections.Generic.IEnumerable<System.Windows.Input.Manipulations.Manipulator2D> manipulators) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetParameters(System.Windows.Input.Manipulations.ManipulationParameters2D parameters) { }
     }
     [System.FlagsAttribute]
@@ -126,10 +124,8 @@ namespace System.Windows.Input.Manipulations
         public float LinearVelocityX { get { throw null; } }
         public float LinearVelocityY { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Manipulator2D
     {
-        private int _dummyPrimitive;
         public Manipulator2D(int id, float x, float y) { throw null; }
         public int Id { get { throw null; } set { } }
         public float X { get { throw null; } set { } }

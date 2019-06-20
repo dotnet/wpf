@@ -6,8 +6,6 @@ namespace System.Windows.Automation
         public System.Windows.Automation.AsyncContentLoadedState AsyncContentLoadedState { get { throw null; } }
         public double PercentComplete { get { throw null; } }
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("d8e55844-7043-4edc-979d-593cc6b4775e")]
     public enum AsyncContentLoadedState
     {
         Beginning = 0,
@@ -176,8 +174,6 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty DockPositionProperty;
         public static readonly System.Windows.Automation.AutomationPattern Pattern;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("70d46e77-e3a8-449d-913c-e30eb2afecdb")]
     public enum DockPosition
     {
         Top = 0,
@@ -194,8 +190,6 @@ namespace System.Windows.Automation
         protected ElementNotAvailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotAvailableException(string message) { }
         public ElementNotAvailableException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter=true)]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class ElementNotEnabledException : System.InvalidOperationException
@@ -204,8 +198,6 @@ namespace System.Windows.Automation
         protected ElementNotEnabledException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotEnabledException(string message) { }
         public ElementNotEnabledException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter=true)]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public static partial class ExpandCollapsePatternIdentifiers
@@ -213,8 +205,6 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty ExpandCollapseStateProperty;
         public static readonly System.Windows.Automation.AutomationPattern Pattern;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("76d12d7e-b227-4417-9ce2-42642ffa896a")]
     public enum ExpandCollapseState
     {
         Collapsed = 0,
@@ -258,12 +248,8 @@ namespace System.Windows.Automation
         protected NoClickablePointException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public NoClickablePointException(string message) { }
         public NoClickablePointException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter=true)]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("5F8A77B4-E685-48c1-94D0-8BB6AFA43DF9")]
     public enum OrientationType
     {
         None = 0,
@@ -276,8 +262,6 @@ namespace System.Windows.Automation
         protected ProxyAssemblyNotLoadedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ProxyAssemblyNotLoadedException(string message) { }
         public ProxyAssemblyNotLoadedException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter=true)]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public static partial class RangeValuePatternIdentifiers
@@ -290,16 +274,12 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty SmallChangeProperty;
         public static readonly System.Windows.Automation.AutomationProperty ValueProperty;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("15fdf2e2-9847-41cd-95dd-510612a025ea")]
     public enum RowOrColumnMajor
     {
         RowMajor = 0,
         ColumnMajor = 1,
         Indeterminate = 2,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("bd52d3c7-f990-4c52-9ae3-5c377e9eb772")]
     public enum ScrollAmount
     {
         LargeDecrement = 0,
@@ -347,8 +327,6 @@ namespace System.Windows.Automation
         public int[] GetRuntimeId() { throw null; }
     }
     public delegate void StructureChangedEventHandler(object sender, System.Windows.Automation.StructureChangedEventArgs e);
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("e4cfef41-071d-472c-a65c-c14f59ea81eb")]
     public enum StructureChangeType
     {
         ChildAdded = 0,
@@ -359,8 +337,6 @@ namespace System.Windows.Automation
         ChildrenReordered = 5,
     }
     [System.FlagsAttribute]
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("3d9e3d8f-bfb0-484f-84ab-93ff4280cbc4")]
     public enum SupportedTextSelection
     {
         None = 0,
@@ -374,8 +350,6 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationEvent InputReachedTargetEvent;
         public static readonly System.Windows.Automation.AutomationPattern Pattern;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("fdc8f176-aed2-477a-8c89-5604c66f278d")]
     public enum SynchronizedInputType
     {
         KeyUp = 1,
@@ -441,8 +415,6 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationPattern Pattern;
         public static readonly System.Windows.Automation.AutomationProperty ToggleStateProperty;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("ad7db4af-7166-4478-a402-ad5b77eab2fa")]
     public enum ToggleState
     {
         Off = 0,
@@ -481,8 +453,6 @@ namespace System.Windows.Automation
         public WindowClosedEventArgs(int[] runtimeId) : base (default(System.Windows.Automation.AutomationEvent)) { }
         public int[] GetRuntimeId() { throw null; }
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("65101cc7-7904-408e-87a7-8c6dbd83a18b")]
     public enum WindowInteractionState
     {
         Running = 0,
@@ -503,8 +473,6 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationEvent WindowOpenedEvent;
         public static readonly System.Windows.Automation.AutomationProperty WindowVisualStateProperty;
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("fdc8f176-aed2-477a-8c89-ea04cc5f278d")]
     public enum WindowVisualState
     {
         Normal = 0,
@@ -514,8 +482,6 @@ namespace System.Windows.Automation
 }
 namespace System.Windows.Automation.Text
 {
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("B6C08F15-AA5E-4754-9E4C-AA279D3F36D4")]
     public enum AnimationStyle
     {
         Other = -1,
@@ -527,8 +493,6 @@ namespace System.Windows.Automation.Text
         MarchingRedAnts = 5,
         Shimmer = 6,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("814FAC6C-F8DE-4682-AF5F-37C4F720990C")]
     public enum BulletStyle
     {
         Other = -1,
@@ -539,8 +503,6 @@ namespace System.Windows.Automation.Text
         FilledSquareBullet = 4,
         DashBullet = 5,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("4E33C74B-7848-4f1e-B819-A0D866C2EA1F")]
     public enum CapStyle
     {
         Other = -1,
@@ -553,8 +515,6 @@ namespace System.Windows.Automation.Text
         Titling = 6,
     }
     [System.FlagsAttribute]
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("2E22CC6B-7C34-4002-91AA-E103A09D1027")]
     public enum FlowDirections
     {
         Default = 0,
@@ -562,8 +522,6 @@ namespace System.Windows.Automation.Text
         BottomToTop = 2,
         Vertical = 4,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("1FBE7021-A1E4-4e9b-BE94-2C7DFA59D5DD")]
     public enum HorizontalTextAlignment
     {
         Left = 0,
@@ -572,8 +530,6 @@ namespace System.Windows.Automation.Text
         Justified = 3,
     }
     [System.FlagsAttribute]
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("1F57B37D-CB59-43f4-95E0-7C9E40DB427E")]
     public enum OutlineStyles
     {
         None = 0,
@@ -582,8 +538,6 @@ namespace System.Windows.Automation.Text
         Engraved = 4,
         Embossed = 8,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("909D8633-2941-428e-A549-C752E2FC078C")]
     public enum TextDecorationLineStyle
     {
         Other = -1,
@@ -606,15 +560,11 @@ namespace System.Windows.Automation.Text
         ThickDot = 17,
         ThickLongDash = 18,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("62242CAC-9CD0-4364-813D-4F0A36DD842D")]
     public enum TextPatternRangeEndpoint
     {
         Start = 0,
         End = 1,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-    [System.Runtime.InteropServices.GuidAttribute("A044E5C8-FC20-4747-8CC8-1487F9CBB680")]
     public enum TextUnit
     {
         Character = 0,

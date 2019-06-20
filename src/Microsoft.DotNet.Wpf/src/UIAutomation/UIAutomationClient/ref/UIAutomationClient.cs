@@ -118,11 +118,8 @@ namespace System.Windows.Automation
         public bool TryGetCachedPattern(System.Windows.Automation.AutomationPattern pattern, out object patternObject) { throw null; }
         public bool TryGetClickablePoint(out System.Windows.Point pt) { throw null; }
         public bool TryGetCurrentPattern(System.Windows.Automation.AutomationPattern pattern, out object patternObject) { throw null; }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct AutomationElementInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public string AcceleratorKey { get { throw null; } }
             public string AccessKey { get { throw null; } }
             public string AutomationId { get { throw null; } }
@@ -196,11 +193,8 @@ namespace System.Windows.Automation
         public static void RegisterClientSideProviderAssembly(System.Reflection.AssemblyName assemblyName) { }
         public static void RegisterClientSideProviders(System.Windows.Automation.ClientSideProviderDescription[] clientSideProviderDescription) { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ClientSideProviderDescription
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public ClientSideProviderDescription(System.Windows.Automation.ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className) { throw null; }
         public ClientSideProviderDescription(System.Windows.Automation.ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className, string imageName, System.Windows.Automation.ClientSideProviderMatchIndicator flags) { throw null; }
         public string ClassName { get { throw null; } }
@@ -230,11 +224,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.DockPattern.DockPatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.DockPattern.DockPatternInformation Current { get { throw null; } }
         public void SetDockPosition(System.Windows.Automation.DockPosition dockPosition) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct DockPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public System.Windows.Automation.DockPosition DockPosition { get { throw null; } }
         }
     }
@@ -247,11 +238,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.ExpandCollapsePattern.ExpandCollapsePatternInformation Current { get { throw null; } }
         public void Collapse() { }
         public void Expand() { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ExpandCollapsePatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public System.Windows.Automation.ExpandCollapseState ExpandCollapseState { get { throw null; } }
         }
     }
@@ -266,11 +254,8 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty RowSpanProperty;
         public System.Windows.Automation.GridItemPattern.GridItemPatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.GridItemPattern.GridItemPatternInformation Current { get { throw null; } }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct GridItemPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public int Column { get { throw null; } }
             public int ColumnSpan { get { throw null; } }
             public System.Windows.Automation.AutomationElement ContainingGrid { get { throw null; } }
@@ -287,11 +272,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.GridPattern.GridPatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.GridPattern.GridPatternInformation Current { get { throw null; } }
         public System.Windows.Automation.AutomationElement GetItem(int row, int column) { throw null; }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct GridPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public int ColumnCount { get { throw null; } }
             public int RowCount { get { throw null; } }
         }
@@ -319,11 +301,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.MultipleViewPattern.MultipleViewPatternInformation Current { get { throw null; } }
         public string GetViewName(int viewId) { throw null; }
         public void SetCurrentView(int viewId) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct MultipleViewPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public int CurrentView { get { throw null; } }
             public int[] GetSupportedViews() { throw null; }
         }
@@ -365,11 +344,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.RangeValuePattern.RangeValuePatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.RangeValuePattern.RangeValuePatternInformation Current { get { throw null; } }
         public void SetValue(double value) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct RangeValuePatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool IsReadOnly { get { throw null; } }
             public double LargeChange { get { throw null; } }
             public double Maximum { get { throw null; } }
@@ -401,11 +377,8 @@ namespace System.Windows.Automation
         public void ScrollHorizontal(System.Windows.Automation.ScrollAmount amount) { }
         public void ScrollVertical(System.Windows.Automation.ScrollAmount amount) { }
         public void SetScrollPercent(double horizontalPercent, double verticalPercent) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ScrollPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool HorizontallyScrollable { get { throw null; } }
             public double HorizontalScrollPercent { get { throw null; } }
             public double HorizontalViewSize { get { throw null; } }
@@ -428,11 +401,8 @@ namespace System.Windows.Automation
         public void AddToSelection() { }
         public void RemoveFromSelection() { }
         public void Select() { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct SelectionItemPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool IsSelected { get { throw null; } }
             public System.Windows.Automation.AutomationElement SelectionContainer { get { throw null; } }
         }
@@ -447,11 +417,8 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty SelectionProperty;
         public System.Windows.Automation.SelectionPattern.SelectionPatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.SelectionPattern.SelectionPatternInformation Current { get { throw null; } }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct SelectionPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool CanSelectMultiple { get { throw null; } }
             public bool IsSelectionRequired { get { throw null; } }
             public System.Windows.Automation.AutomationElement[] GetSelection() { throw null; }
@@ -475,11 +442,8 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty RowHeaderItemsProperty;
         public new System.Windows.Automation.TableItemPattern.TableItemPatternInformation Cached { get { throw null; } }
         public new System.Windows.Automation.TableItemPattern.TableItemPatternInformation Current { get { throw null; } }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct TableItemPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public int Column { get { throw null; } }
             public int ColumnSpan { get { throw null; } }
             public System.Windows.Automation.AutomationElement ContainingGrid { get { throw null; } }
@@ -498,11 +462,8 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty RowOrColumnMajorProperty;
         public new System.Windows.Automation.TablePattern.TablePatternInformation Cached { get { throw null; } }
         public new System.Windows.Automation.TablePattern.TablePatternInformation Current { get { throw null; } }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct TablePatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public int ColumnCount { get { throw null; } }
             public int RowCount { get { throw null; } }
             public System.Windows.Automation.RowOrColumnMajor RowOrColumnMajor { get { throw null; } }
@@ -563,11 +524,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.TogglePattern.TogglePatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.TogglePattern.TogglePatternInformation Current { get { throw null; } }
         public void Toggle() { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct TogglePatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public System.Windows.Automation.ToggleState ToggleState { get { throw null; } }
         }
     }
@@ -583,11 +541,8 @@ namespace System.Windows.Automation
         public void Move(double x, double y) { }
         public void Resize(double width, double height) { }
         public void Rotate(double degrees) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct TransformPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool CanMove { get { throw null; } }
             public bool CanResize { get { throw null; } }
             public bool CanRotate { get { throw null; } }
@@ -622,11 +577,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.ValuePattern.ValuePatternInformation Cached { get { throw null; } }
         public System.Windows.Automation.ValuePattern.ValuePatternInformation Current { get { throw null; } }
         public void SetValue(string value) { }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ValuePatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool IsReadOnly { get { throw null; } }
             public string Value { get { throw null; } }
         }
@@ -654,11 +606,8 @@ namespace System.Windows.Automation
         public void Close() { }
         public void SetWindowVisualState(System.Windows.Automation.WindowVisualState state) { }
         public bool WaitForInputIdle(int milliseconds) { throw null; }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct WindowPatternInformation
         {
-            private object _dummy;
-            private int _dummyPrimitive;
             public bool CanMaximize { get { throw null; } }
             public bool CanMinimize { get { throw null; } }
             public bool IsModal { get { throw null; } }

@@ -157,7 +157,7 @@ If you can build directly from source, and want to test your application against
 ```xml
  <PropertyGroup>
     <MicrosoftWindowsDesktopAppVersion>3.0.0-preview5-27619-18</MicrosoftWindowsDesktopAppVersion>
- <PropertyGroup>
+ </PropertyGroup>
  <FrameworkReference Update="Microsoft.WindowsDesktop.App">
     <TargetingPackVersion>$(MicrosoftWindowsDesktopAppVersion)</TargetingPackVersion>
  </FrameworkReference>

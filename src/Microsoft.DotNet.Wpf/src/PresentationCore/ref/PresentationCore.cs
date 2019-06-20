@@ -1,6 +1,5 @@
 namespace System.IO.Packaging
 {
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public static partial class PackageStore
     {
         public static void AddPackage(System.Uri uri, System.IO.Packaging.Package package) { }
@@ -24,14 +23,11 @@ namespace System.IO.Packaging
         public override bool UseDefaultCredentials { get { throw null; } set { } }
         public System.Net.WebRequest GetInnerRequest() { throw null; }
         public override System.IO.Stream GetRequestStream() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override System.Net.WebResponse GetResponse() { throw null; }
     }
     public sealed partial class PackWebRequestFactory : System.Net.IWebRequestCreate
     {
         public PackWebRequestFactory() { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         System.Net.WebRequest System.Net.IWebRequestCreate.Create(System.Uri uri) { throw null; }
     }
     public sealed partial class PackWebResponse : System.Net.WebResponse
@@ -45,8 +41,6 @@ namespace System.IO.Packaging
         public override System.Uri ResponseUri { get { throw null; } }
         public override void Close() { }
         protected override void Dispose(bool disposing) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         public override System.IO.Stream GetResponseStream() { throw null; }
     }
 }
@@ -71,7 +65,6 @@ namespace System.Windows
     }
     public static partial class Clipboard
     {
-        [System.Security.SecurityCriticalAttribute]
         public static void Clear() { }
         public static bool ContainsAudio() { throw null; }
         public static bool ContainsData(string format) { throw null; }
@@ -82,7 +75,6 @@ namespace System.Windows
         public static void Flush() { }
         public static System.IO.Stream GetAudioStream() { throw null; }
         public static object GetData(string format) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.IDataObject GetDataObject() { throw null; }
         public static System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
         public static System.Windows.Media.Imaging.BitmapSource GetImage() { throw null; }
@@ -92,9 +84,7 @@ namespace System.Windows
         public static void SetAudio(byte[] audioBytes) { }
         public static void SetAudio(System.IO.Stream audioStream) { }
         public static void SetData(string format, object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public static void SetDataObject(object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public static void SetDataObject(object data, bool copy) { }
         public static void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public static void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
@@ -443,7 +433,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public sealed partial class DataFormat
@@ -478,7 +467,6 @@ namespace System.Windows
         public static readonly string Xaml;
         public static readonly string XamlPackage;
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
     public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject
@@ -486,15 +474,10 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
         public static readonly System.Windows.RoutedEvent SettingDataEvent;
-        [System.Security.SecurityCriticalAttribute]
         public DataObject() { }
-        [System.Security.SecurityCriticalAttribute]
         public DataObject(object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public DataObject(string format, object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public DataObject(string format, object data, bool autoConvert) { }
-        [System.Security.SecurityCriticalAttribute]
         public DataObject(System.Type format, object data) { }
         public static void AddCopyingHandler(System.Windows.DependencyObject element, System.Windows.DataObjectCopyingEventHandler handler) { }
         public static void AddPastingHandler(System.Windows.DependencyObject element, System.Windows.DataObjectPastingEventHandler handler) { }
@@ -522,35 +505,22 @@ namespace System.Windows
         public static void RemoveSettingDataHandler(System.Windows.DependencyObject element, System.Windows.DataObjectSettingDataEventHandler handler) { }
         public void SetAudio(byte[] audioBytes) { }
         public void SetAudio(System.IO.Stream audioStream) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetData(object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetData(string format, object data) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetData(string format, object data, bool autoConvert) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetData(System.Type format, object data) { }
         public void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public void SetText(string textData) { }
         public void SetText(string textData, System.Windows.TextDataFormat format) { }
-        [System.Security.SecurityCriticalAttribute]
         int System.Runtime.InteropServices.ComTypes.IDataObject.DAdvise(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetc, System.Runtime.InteropServices.ComTypes.ADVF advf, System.Runtime.InteropServices.ComTypes.IAdviseSink pAdvSink, out int pdwConnection) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         void System.Runtime.InteropServices.ComTypes.IDataObject.DUnadvise(int dwConnection) { }
-        [System.Security.SecurityCriticalAttribute]
         int System.Runtime.InteropServices.ComTypes.IDataObject.EnumDAdvise(out System.Runtime.InteropServices.ComTypes.IEnumSTATDATA enumAdvise) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         System.Runtime.InteropServices.ComTypes.IEnumFORMATETC System.Runtime.InteropServices.ComTypes.IDataObject.EnumFormatEtc(System.Runtime.InteropServices.ComTypes.DATADIR dwDirection) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         int System.Runtime.InteropServices.ComTypes.IDataObject.GetCanonicalFormatEtc(ref System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcIn, out System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcOut) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, out System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetDataHere(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { }
-        [System.Security.SecurityCriticalAttribute]
         int System.Runtime.InteropServices.ComTypes.IDataObject.QueryGetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         void System.Runtime.InteropServices.ComTypes.IDataObject.SetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetcIn, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM pmedium, bool fRelease) { }
     }
     public sealed partial class DataObjectCopyingEventArgs : System.Windows.DataObjectEventArgs
@@ -634,7 +604,6 @@ namespace System.Windows
         public static void AddPreviewGiveFeedbackHandler(System.Windows.DependencyObject element, System.Windows.GiveFeedbackEventHandler handler) { }
         public static void AddPreviewQueryContinueDragHandler(System.Windows.DependencyObject element, System.Windows.QueryContinueDragEventHandler handler) { }
         public static void AddQueryContinueDragHandler(System.Windows.DependencyObject element, System.Windows.QueryContinueDragEventHandler handler) { }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.DragDropEffects DoDragDrop(System.Windows.DependencyObject dragSource, object data, System.Windows.DragDropEffects allowedEffects) { throw null; }
         public static void RemoveDragEnterHandler(System.Windows.DependencyObject element, System.Windows.DragEventHandler handler) { }
         public static void RemoveDragLeaveHandler(System.Windows.DependencyObject element, System.Windows.DragEventHandler handler) { }
@@ -717,7 +686,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo cultureInfo, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public static partial class EventManager
@@ -828,7 +796,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public static partial class FontStretches
@@ -864,7 +831,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public static partial class FontStyles
@@ -909,7 +875,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public static partial class FontWeights
@@ -950,7 +915,7 @@ namespace System.Windows
         public void Clear() { }
         public new System.Windows.FreezableCollection<T> Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.FreezableCollection<T> CloneCurrentValue() { throw null; }
+        public new System.Windows.FreezableCollection<T> CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(T value) { throw null; }
         public void CopyTo(T[] array, int index) { }
@@ -1009,41 +974,17 @@ namespace System.Windows
     }
     public partial interface IDataObject
     {
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         object GetData(string format);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         object GetData(string format, bool autoConvert);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         object GetData(System.Type format);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(string format);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(string format, bool autoConvert);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         bool GetDataPresent(System.Type format);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         string[] GetFormats();
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         string[] GetFormats(bool autoConvert);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         void SetData(object data);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         void SetData(string format, object data);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         void SetData(string format, object data, bool autoConvert);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Clipboard=System.Security.Permissions.UIPermissionClipboard.AllClipboard)]
         void SetData(System.Type format, object data);
     }
     public partial interface IInputElement
@@ -1121,7 +1062,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptor, System.Type destinationType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo cultureInfo, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public partial class KeyTimeConverter : System.ComponentModel.TypeConverter
@@ -1130,7 +1070,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type type) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type type) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public enum LineBreakCondition
@@ -1175,7 +1114,6 @@ namespace System.Windows
         Modifiable = 1,
         Inherit = 2,
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Unrestricted=true)]
     public abstract partial class PresentationSource : System.Windows.Threading.DispatcherObject
     {
         protected PresentationSource() { }
@@ -1185,19 +1123,13 @@ namespace System.Windows
         public abstract System.Windows.Media.Visual RootVisual { get; [System.Security.SecurityCriticalAttribute][System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows), System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]set; }
         public event System.EventHandler ContentRendered { add { } remove { } }
         protected void AddSource() { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public static void AddSourceChangedHandler(System.Windows.IInputElement element, System.Windows.SourceChangedEventHandler handler) { }
         protected void ClearContentRenderedListeners() { }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.PresentationSource FromDependencyObject(System.Windows.DependencyObject dependencyObject) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.PresentationSource FromVisual(System.Windows.Media.Visual visual) { throw null; }
         protected abstract System.Windows.Media.CompositionTarget GetCompositionTargetCore();
         protected void RemoveSource() { }
         public static void RemoveSourceChangedHandler(System.Windows.IInputElement e, System.Windows.SourceChangedEventHandler handler) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected void RootChanged(System.Windows.Media.Visual oldRoot, System.Windows.Media.Visual newRoot) { }
     }
     public sealed partial class QueryContinueDragEventArgs : System.Windows.RoutedEventArgs
@@ -1277,9 +1209,7 @@ namespace System.Windows
     }
     public sealed partial class SourceChangedEventArgs : System.Windows.RoutedEventArgs
     {
-        [System.Security.SecurityCriticalAttribute]
         public SourceChangedEventArgs(System.Windows.PresentationSource oldSource, System.Windows.PresentationSource newSource) { }
-        [System.Security.SecurityCriticalAttribute]
         public SourceChangedEventArgs(System.Windows.PresentationSource oldSource, System.Windows.PresentationSource newSource, System.Windows.IInputElement element, System.Windows.IInputElement oldParent) { }
         public System.Windows.IInputElement Element { get { throw null; } }
         public System.Windows.PresentationSource NewSource { [System.Security.SecurityCriticalAttribute]get { throw null; } }
@@ -1294,7 +1224,6 @@ namespace System.Windows
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
         public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) { throw null; }
     }
@@ -1331,7 +1260,7 @@ namespace System.Windows
         public System.Windows.TextDecorationUnit PenOffsetUnit { get { throw null; } set { } }
         public System.Windows.TextDecorationUnit PenThicknessUnit { get { throw null; } set { } }
         public new System.Windows.TextDecoration Clone() { throw null; }
-        public System.Windows.TextDecoration CloneCurrentValue() { throw null; }
+        public new System.Windows.TextDecoration CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.TextDecorationCollectionConverter))]
@@ -1355,7 +1284,7 @@ namespace System.Windows
         public void Clear() { }
         public new System.Windows.TextDecorationCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.TextDecorationCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.TextDecorationCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.TextDecoration value) { throw null; }
         public void CopyTo(System.Windows.TextDecoration[] array, int index) { }
@@ -1396,7 +1325,6 @@ namespace System.Windows
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object input) { throw null; }
         public static new System.Windows.TextDecorationCollection ConvertFromString(string text) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public enum TextDecorationLocation
@@ -2369,8 +2297,6 @@ namespace System.Windows.Automation.Peers
         protected virtual System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetControlledPeersCore() { throw null; }
         public string GetHelpText() { throw null; }
         protected abstract string GetHelpTextCore();
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }
         public string GetItemStatus() { throw null; }
         protected abstract string GetItemStatusCore();
@@ -2459,18 +2385,12 @@ namespace System.Windows.Automation.Peers
     {
         public GenericRootAutomationPeer(System.Windows.UIElement owner) : base (default(System.Windows.UIElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override string GetNameCore() { throw null; }
     }
     public sealed partial class HostedWindowWrapper
     {
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         public HostedWindowWrapper(System.IntPtr hwnd) { }
     }
     public enum PatternInterface
@@ -2541,13 +2461,9 @@ namespace System.Windows.Automation.Peers
         protected override string GetAccessKeyCore() { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetAutomationIdCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
@@ -2811,7 +2727,6 @@ namespace System.Windows.Ink
         public bool IsRecognizerAvailable { get { throw null; } }
         public void Dispose() { }
         public System.Collections.ObjectModel.ReadOnlyCollection<System.Windows.Ink.ApplicationGesture> GetEnabledGestures() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.Collections.ObjectModel.ReadOnlyCollection<System.Windows.Ink.GestureRecognitionResult> Recognize(System.Windows.Ink.StrokeCollection strokes) { throw null; }
         public void SetEnabledGestures(System.Collections.Generic.IEnumerable<System.Windows.Ink.ApplicationGesture> applicationGestures) { }
     }
@@ -3005,7 +2920,6 @@ namespace System.Windows.Input
         public static readonly System.Windows.RoutedEvent AccessKeyPressedEvent;
         public static void AddAccessKeyPressedHandler(System.Windows.DependencyObject element, System.Windows.Input.AccessKeyPressedEventHandler handler) { }
         public static bool IsKeyRegistered(object scope, string key) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static bool ProcessKey(object scope, string key, bool isMultiple) { throw null; }
         public static void Register(string key, System.Windows.IInputElement element) { }
         public static void RemoveAccessKeyPressedHandler(System.Windows.DependencyObject element, System.Windows.Input.AccessKeyPressedEventHandler handler) { }
@@ -3290,8 +3204,6 @@ namespace System.Windows.Input
         int Id { get; }
         event System.EventHandler Updated;
         System.Windows.Point GetPosition(System.Windows.IInputElement relativeTo);
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         void ManipulationEnded(bool cancel);
     }
     [System.FlagsAttribute]
@@ -3348,7 +3260,6 @@ namespace System.Windows.Input
         public static readonly System.Windows.DependencyProperty CommandProperty;
         public static readonly System.Windows.DependencyProperty CommandTargetProperty;
         protected InputBinding() { }
-        [System.Security.SecurityCriticalAttribute]
         public InputBinding(System.Windows.Input.ICommand command, System.Windows.Input.InputGesture gesture) { }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.Input.CommandConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
@@ -3493,8 +3404,6 @@ namespace System.Windows.Input
         public event System.Windows.Input.NotifyInputEventHandler PreNotifyInput { add { } remove { } }
         public event System.Windows.Input.PreProcessInputEventHandler PreProcessInput { add { } remove { } }
         public void PopMenuMode(System.Windows.PresentationSource menuSite) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public bool ProcessInput(System.Windows.Input.InputEventArgs input) { throw null; }
         public void PushMenuMode(System.Windows.PresentationSource menuSite) { }
     }
@@ -3734,8 +3643,6 @@ namespace System.Windows.Input
     }
     public abstract partial class KeyboardDevice : System.Windows.Input.InputDevice
     {
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected KeyboardDevice(System.Windows.Input.InputManager inputManager) { }
         public override System.Windows.PresentationSource ActiveSource { [System.Security.SecurityCriticalAttribute]get { throw null; } }
         public System.Windows.Input.RestoreFocusMode DefaultRestoreFocusMode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute]set { } }
@@ -3743,7 +3650,6 @@ namespace System.Windows.Input
         public System.Windows.Input.ModifierKeys Modifiers { get { throw null; } }
         public override System.Windows.IInputElement Target { get { throw null; } }
         public void ClearFocus() { }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.IInputElement Focus(System.Windows.IInputElement element) { throw null; }
         public System.Windows.Input.KeyStates GetKeyStates(System.Windows.Input.Key key) { throw null; }
         protected abstract System.Windows.Input.KeyStates GetKeyStatesFromSystem(System.Windows.Input.Key key);
@@ -3775,7 +3681,6 @@ namespace System.Windows.Input
     public delegate void KeyboardInputProviderAcquireFocusEventHandler(object sender, System.Windows.Input.KeyboardInputProviderAcquireFocusEventArgs e);
     public partial class KeyEventArgs : System.Windows.Input.KeyboardEventArgs
     {
-        [System.Security.SecurityCriticalAttribute]
         public KeyEventArgs(System.Windows.Input.KeyboardDevice keyboard, System.Windows.PresentationSource inputSource, int timestamp, System.Windows.Input.Key key) : base (default(System.Windows.Input.KeyboardDevice), default(int)) { }
         public System.Windows.Input.Key DeadCharProcessedKey { get { throw null; } }
         public System.Windows.Input.Key ImeProcessedKey { get { throw null; } }
@@ -4020,7 +3925,6 @@ namespace System.Windows.Input
         public static void AddQueryCursorHandler(System.Windows.DependencyObject element, System.Windows.Input.QueryCursorEventHandler handler) { }
         public static bool Capture(System.Windows.IInputElement element) { throw null; }
         public static bool Capture(System.Windows.IInputElement element, System.Windows.Input.CaptureMode captureMode) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static int GetIntermediatePoints(System.Windows.IInputElement relativeTo, System.Windows.Point[] points) { throw null; }
         public static System.Windows.Point GetPosition(System.Windows.IInputElement relativeTo) { throw null; }
         public static void RemoveGotMouseCaptureHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
@@ -4123,19 +4027,13 @@ namespace System.Windows.Input
         public System.Windows.Input.MouseButtonState XButton1 { get { throw null; } }
         public System.Windows.Input.MouseButtonState XButton2 { get { throw null; } }
         public bool Capture(System.Windows.IInputElement element) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public bool Capture(System.Windows.IInputElement element, System.Windows.Input.CaptureMode captureMode) { throw null; }
         protected System.Windows.Input.MouseButtonState GetButtonState(System.Windows.Input.MouseButton mouseButton) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected System.Windows.Point GetClientPosition() { throw null; }
         protected System.Windows.Point GetClientPosition(System.Windows.PresentationSource presentationSource) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Point GetPosition(System.Windows.IInputElement relativeTo) { throw null; }
         protected System.Windows.Point GetScreenPosition() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public bool SetCursor(System.Windows.Input.Cursor cursor) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void Synchronize() { }
         public void UpdateCursor() { }
     }
@@ -4224,15 +4122,9 @@ namespace System.Windows.Input
     public partial class ProcessInputEventArgs : System.Windows.Input.NotifyInputEventArgs
     {
         internal ProcessInputEventArgs() { }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Input.StagingAreaInputItem PeekInput() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Input.StagingAreaInputItem PopInput() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public System.Windows.Input.StagingAreaInputItem PushInput(System.Windows.Input.InputEventArgs input, System.Windows.Input.StagingAreaInputItem promote) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public System.Windows.Input.StagingAreaInputItem PushInput(System.Windows.Input.StagingAreaInputItem input) { throw null; }
     }
     public delegate void ProcessInputEventHandler(object sender, System.Windows.Input.ProcessInputEventArgs e);
@@ -4260,11 +4152,8 @@ namespace System.Windows.Input
         public string Name { get { throw null; } }
         public System.Type OwnerType { get { throw null; } }
         public event System.EventHandler CanExecuteChanged { add { } remove { } }
-        [System.Security.SecurityCriticalAttribute]
         public bool CanExecute(object parameter, System.Windows.IInputElement target) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void Execute(object parameter, System.Windows.IInputElement target) { }
-        [System.Security.SecurityCriticalAttribute]
         bool System.Windows.Input.ICommand.CanExecute(object parameter) { throw null; }
         void System.Windows.Input.ICommand.Execute(object parameter) { }
     }
@@ -4287,8 +4176,6 @@ namespace System.Windows.Input
         internal StagingAreaInputItem() { }
         public System.Windows.Input.InputEventArgs Input { [System.Security.SecurityCriticalAttribute][System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]get { throw null; } }
         public object GetData(object key) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public void SetData(object key, object value) { }
     }
     public static partial class Stylus
@@ -4424,11 +4311,9 @@ namespace System.Windows.Input
         public override System.Windows.IInputElement Target { get { throw null; } }
         public bool Capture(System.Windows.IInputElement element) { throw null; }
         public bool Capture(System.Windows.IInputElement element, System.Windows.Input.CaptureMode captureMode) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Point GetPosition(System.Windows.IInputElement relativeTo) { throw null; }
         public System.Windows.Input.StylusPointCollection GetStylusPoints(System.Windows.IInputElement relativeTo) { throw null; }
         public System.Windows.Input.StylusPointCollection GetStylusPoints(System.Windows.IInputElement relativeTo, System.Windows.Input.StylusPointDescription subsetToReformatTo) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void Synchronize() { }
         public override string ToString() { throw null; }
     }
@@ -4636,7 +4521,6 @@ namespace System.Windows.Input
     public partial class TextComposition : System.Windows.Threading.DispatcherObject
     {
         public TextComposition(System.Windows.Input.InputManager inputManager, System.Windows.IInputElement source, string resultText) { }
-        [System.Security.SecurityCriticalAttribute]
         public TextComposition(System.Windows.Input.InputManager inputManager, System.Windows.IInputElement source, string resultText, System.Windows.Input.TextCompositionAutoComplete autoComplete) { }
         public System.Windows.Input.TextCompositionAutoComplete AutoComplete { get { throw null; } }
         [System.CLSCompliantAttribute(false)]
@@ -4649,8 +4533,6 @@ namespace System.Windows.Input
         public string SystemText { get { throw null; } protected set { } }
         [System.CLSCompliantAttribute(false)]
         public string Text { get { throw null; } protected set { } }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public virtual void Complete() { }
     }
     public enum TextCompositionAutoComplete
@@ -4683,8 +4565,6 @@ namespace System.Windows.Input
         public static void AddTextInputHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
         public static void AddTextInputStartHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
         public static void AddTextInputUpdateHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static bool CompleteComposition(System.Windows.Input.TextComposition composition) { throw null; }
         public static void RemovePreviewTextInputHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
         public static void RemovePreviewTextInputStartHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
@@ -4692,11 +4572,7 @@ namespace System.Windows.Input
         public static void RemoveTextInputHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
         public static void RemoveTextInputStartHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
         public static void RemoveTextInputUpdateHandler(System.Windows.DependencyObject element, System.Windows.Input.TextCompositionEventHandler handler) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static bool StartComposition(System.Windows.Input.TextComposition composition) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static bool UpdateComposition(System.Windows.Input.TextComposition composition) { throw null; }
     }
     public static partial class Touch
@@ -4709,10 +4585,8 @@ namespace System.Windows.Input
         Move = 1,
         Up = 2,
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Unrestricted=true)]
     public abstract partial class TouchDevice : System.Windows.Input.InputDevice, System.Windows.Input.IManipulator
     {
-        [System.Security.SecurityCriticalAttribute]
         protected TouchDevice(int deviceId) { }
         public sealed override System.Windows.PresentationSource ActiveSource { [System.Security.SecurityCriticalAttribute]get { throw null; } }
         public System.Windows.IInputElement Captured { get { throw null; } }
@@ -4732,21 +4606,14 @@ namespace System.Windows.Input
         public abstract System.Windows.Input.TouchPointCollection GetIntermediateTouchPoints(System.Windows.IInputElement relativeTo);
         public abstract System.Windows.Input.TouchPoint GetTouchPoint(System.Windows.IInputElement relativeTo);
         protected virtual void OnCapture(System.Windows.IInputElement element, System.Windows.Input.CaptureMode captureMode) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual void OnManipulationEnded(bool cancel) { }
         protected virtual void OnManipulationStarted() { }
         protected bool ReportDown() { throw null; }
         protected bool ReportMove() { throw null; }
         protected bool ReportUp() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected void SetActiveSource(System.Windows.PresentationSource activeSource) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Synchronize() { }
         System.Windows.Point System.Windows.Input.IManipulator.GetPosition(System.Windows.IInputElement relativeTo) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         void System.Windows.Input.IManipulator.ManipulationEnded(bool cancel) { }
     }
     public partial class TouchEventArgs : System.Windows.Input.InputEventArgs
@@ -4812,7 +4679,6 @@ namespace System.Windows.Input.StylusPlugIns
         public int Timestamp { get { throw null; } }
         public System.Windows.Input.StylusPointCollection GetStylusPoints() { throw null; }
         public void NotifyWhenProcessed(object callbackData) { }
-        [System.Security.SecuritySafeCriticalAttribute]
         public void SetStylusPoints(System.Windows.Input.StylusPointCollection stylusPoints) { }
     }
     public abstract partial class StylusPlugIn
@@ -4855,15 +4721,12 @@ namespace System.Windows.Interop
 {
     public static partial class CursorInteropHelper
     {
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Input.Cursor Create(System.Runtime.InteropServices.SafeHandle cursorHandle) { throw null; }
     }
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
     public partial class D3DImage : System.Windows.Media.ImageSource
     {
         public static readonly System.Windows.DependencyProperty IsFrontBufferAvailableProperty;
         public D3DImage() { }
-        [System.Security.SecurityCriticalAttribute]
         public D3DImage(double dpiX, double dpiY) { }
         public sealed override double Height { get { throw null; } }
         public bool IsFrontBufferAvailable { get { throw null; } }
@@ -4872,25 +4735,19 @@ namespace System.Windows.Interop
         public int PixelWidth { get { throw null; } }
         public sealed override double Width { get { throw null; } }
         public event System.Windows.DependencyPropertyChangedEventHandler IsFrontBufferAvailableChanged { add { } remove { } }
-        [System.Security.SecurityCriticalAttribute]
         public void AddDirtyRect(System.Windows.Int32Rect dirtyRect) { }
         public new System.Windows.Interop.D3DImage Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         public new System.Windows.Interop.D3DImage CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected internal virtual System.Windows.Media.Imaging.BitmapSource CopyBackBuffer() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         ~D3DImage() { }
         protected sealed override bool FreezeCore(bool isChecking) { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
         public void Lock() { }
         public void SetBackBuffer(System.Windows.Interop.D3DResourceType backBufferType, System.IntPtr backBuffer) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetBackBuffer(System.Windows.Interop.D3DResourceType backBufferType, System.IntPtr backBuffer, bool enableSoftwareFallback) { }
         public bool TryLock(System.Windows.Duration timeout) { throw null; }
         public void Unlock() { }
@@ -4901,14 +4758,9 @@ namespace System.Windows.Interop
     }
     public partial class HwndSource : System.Windows.PresentationSource, System.IDisposable, System.Windows.Interop.IKeyboardInputSink, System.Windows.Interop.IWin32Window
     {
-        [System.Security.SecurityCriticalAttribute]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, int width, int height, string name, System.IntPtr parent) { }
-        [System.Security.SecurityCriticalAttribute]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, int width, int height, string name, System.IntPtr parent, bool adjustSizingForNonClientArea) { }
-        [System.Security.SecurityCriticalAttribute]
         public HwndSource(int classStyle, int style, int exStyle, int x, int y, string name, System.IntPtr parent) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public HwndSource(System.Windows.Interop.HwndSourceParameters parameters) { }
         public bool AcquireHwndFocusInMenuMode { get { throw null; } }
         public System.Collections.Generic.IEnumerable<System.Windows.Interop.IKeyboardInputSink> ChildKeyboardInputSinks { get { throw null; } }
@@ -4926,42 +4778,24 @@ namespace System.Windows.Interop
         public event System.EventHandler Disposed { add { } remove { } }
         public event System.Windows.HwndDpiChangedEventHandler DpiChanged { add { } remove { } }
         public event System.EventHandler SizeToContentChanged { add { } remove { } }
-        [System.Security.SecurityCriticalAttribute]
         public void AddHook(System.Windows.Interop.HwndSourceHook hook) { }
         public System.Runtime.InteropServices.HandleRef CreateHandleRef() { throw null; }
         public void Dispose() { }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Interop.HwndSource FromHwnd(System.IntPtr hwnd) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         protected override System.Windows.Media.CompositionTarget GetCompositionTargetCore() { throw null; }
         protected virtual bool HasFocusWithinCore() { throw null; }
-        [System.Security.SecuritySafeCriticalAttribute]
         protected virtual void OnDpiChanged(System.Windows.HwndDpiChangedEventArgs e) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool OnMnemonicCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Unrestricted=true)]
         protected System.Windows.Interop.IKeyboardInputSite RegisterKeyboardInputSinkCore(System.Windows.Interop.IKeyboardInputSink sink) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void RemoveHook(System.Windows.Interop.HwndSourceHook hook) { }
         bool System.Windows.Interop.IKeyboardInputSink.HasFocusWithin() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         bool System.Windows.Interop.IKeyboardInputSink.OnMnemonic(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         System.Windows.Interop.IKeyboardInputSite System.Windows.Interop.IKeyboardInputSink.RegisterKeyboardInputSink(System.Windows.Interop.IKeyboardInputSink sink) { throw null; }
         bool System.Windows.Interop.IKeyboardInputSink.TabInto(System.Windows.Input.TraversalRequest request) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         bool System.Windows.Interop.IKeyboardInputSink.TranslateAccelerator(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         bool System.Windows.Interop.IKeyboardInputSink.TranslateChar(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
         protected virtual bool TabIntoCore(System.Windows.Input.TraversalRequest request) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateAcceleratorCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateCharCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
     }
     public delegate System.IntPtr HwndSourceHook(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled);
@@ -5000,8 +4834,6 @@ namespace System.Windows.Interop
     }
     public partial class HwndTarget : System.Windows.Media.CompositionTarget
     {
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public HwndTarget(System.IntPtr hwnd) { }
         public System.Windows.Media.Color BackgroundColor { get { throw null; } set { } }
         public System.Windows.Interop.RenderMode RenderMode { get { throw null; } [System.Security.SecurityCriticalAttribute][System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]set { } }
@@ -5009,39 +4841,23 @@ namespace System.Windows.Interop
         public override System.Windows.Media.Matrix TransformFromDevice { get { throw null; } }
         public override System.Windows.Media.Matrix TransformToDevice { get { throw null; } }
         public bool UsesPerPixelOpacity { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void Dispose() { }
     }
     public static partial class Imaging
     {
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromHBitmap(System.IntPtr bitmap, System.IntPtr palette, System.Windows.Int32Rect sourceRect, System.Windows.Media.Imaging.BitmapSizeOptions sizeOptions) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromHIcon(System.IntPtr icon, System.Windows.Int32Rect sourceRect, System.Windows.Media.Imaging.BitmapSizeOptions sizeOptions) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromMemorySection(System.IntPtr section, int pixelWidth, int pixelHeight, System.Windows.Media.PixelFormat format, int stride, int offset) { throw null; }
     }
     public sealed partial class InteropBitmap : System.Windows.Media.Imaging.BitmapSource
     {
         internal InteropBitmap() { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Invalidate() { }
-        [System.Security.SecurityCriticalAttribute]
         public void Invalidate(System.Windows.Int32Rect? dirtyRect) { }
     }
     public partial interface IWin32Window
@@ -5078,7 +4894,6 @@ namespace System.Windows.Markup
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
 }
@@ -5179,8 +4994,7 @@ namespace System.Windows.Media
         public System.Windows.Media.Transform RelativeTransform { get { throw null; } set { } }
         public System.Windows.Media.Transform Transform { get { throw null; } set { } }
         public new System.Windows.Media.Brush Clone() { throw null; }
-        public System.Windows.Media.Brush CloneCurrentValue() { throw null; }
-        internal abstract int GetChannelCountCore();
+        public new System.Windows.Media.Brush CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -5349,7 +5163,7 @@ namespace System.Windows.Media
     {
         internal CacheMode() { }
         public new System.Windows.Media.CacheMode Clone() { throw null; }
-        public System.Windows.Media.CacheMode CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.CacheMode CloneCurrentValue() { throw null; }
     }
     public sealed partial class CacheModeConverter : System.ComponentModel.TypeConverter
     {
@@ -5464,17 +5278,12 @@ namespace System.Windows.Media
     }
     public partial class ColorContext
     {
-        [System.Security.SecurityCriticalAttribute]
         public ColorContext(System.Uri profileUri) { }
-        [System.Security.SecurityCriticalAttribute]
         public ColorContext(System.Windows.Media.PixelFormat pixelFormat) { }
         public System.Uri ProfileUri { [System.Security.SecurityCriticalAttribute]get { throw null; } }
         public override bool Equals(object obj) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override int GetHashCode() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.IO.Stream OpenProfileStream() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static bool operator ==(System.Windows.Media.ColorContext context1, System.Windows.Media.ColorContext context2) { throw null; }
         public static bool operator !=(System.Windows.Media.ColorContext context1, System.Windows.Media.ColorContext context2) { throw null; }
     }
@@ -5485,7 +5294,6 @@ namespace System.Windows.Media
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
         public static new object ConvertFromString(string value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public enum ColorInterpolationMode
@@ -5658,7 +5466,6 @@ namespace System.Windows.Media
         public override bool IsEmpty() { throw null; }
         public override bool MayHaveCurves() { throw null; }
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public abstract partial class CompositionTarget : System.Windows.Threading.DispatcherObject, System.IDisposable
     {
         internal CompositionTarget() { }
@@ -5705,7 +5512,7 @@ namespace System.Windows.Media
         public System.Windows.Media.DoubleCollection Dashes { get { throw null; } set { } }
         public double Offset { get { throw null; } set { } }
         public new System.Windows.Media.DashStyle Clone() { throw null; }
-        public System.Windows.Media.DashStyle CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.DashStyle CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
     public static partial class DashStyles
@@ -5733,9 +5540,9 @@ namespace System.Windows.Media
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(double value) { }
         public void Clear() { }
-        public System.Windows.Media.DoubleCollection Clone() { throw null; }
+        public new System.Windows.Media.DoubleCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.DoubleCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.DoubleCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(double value) { throw null; }
         public void CopyTo(double[] array, int index) { }
@@ -5785,7 +5592,7 @@ namespace System.Windows.Media
         internal Drawing() { }
         public System.Windows.Rect Bounds { get { throw null; } }
         public new System.Windows.Media.Drawing Clone() { throw null; }
-        public System.Windows.Media.Drawing CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Drawing CloneCurrentValue() { throw null; }
     }
     public sealed partial class DrawingBrush : System.Windows.Media.TileBrush
     {
@@ -5815,7 +5622,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.DrawingCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.DrawingCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.DrawingCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Drawing value) { throw null; }
         public void CopyTo(System.Windows.Media.Drawing[] array, int index) { }
@@ -6072,9 +5879,9 @@ namespace System.Windows.Media
         public FontFamilyMap() { }
         public System.Windows.Markup.XmlLanguage Language { get { throw null; } set { } }
         public double Scale { get { throw null; } set { } }
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
         public string Target { get { throw null; } set { } }
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
         public string Unicode { get { throw null; } set { } }
     }
     public sealed partial class FontFamilyMapCollection : System.Collections.Generic.ICollection<System.Windows.Media.FontFamilyMap>, System.Collections.Generic.IEnumerable<System.Windows.Media.FontFamilyMap>, System.Collections.Generic.IList<System.Windows.Media.FontFamilyMap>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
@@ -6186,7 +5993,7 @@ namespace System.Windows.Media
         protected GeneralTransform() { }
         public abstract System.Windows.Media.GeneralTransform Inverse { get; }
         public new System.Windows.Media.GeneralTransform Clone() { throw null; }
-        public System.Windows.Media.GeneralTransform CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GeneralTransform CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -6211,7 +6018,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.GeneralTransformCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.GeneralTransformCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GeneralTransformCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.GeneralTransform value) { throw null; }
         public void CopyTo(System.Windows.Media.GeneralTransform[] array, int index) { }
@@ -6270,7 +6077,7 @@ namespace System.Windows.Media
         public static double StandardFlatteningTolerance { get { throw null; } }
         public System.Windows.Media.Transform Transform { get { throw null; } set { } }
         public new System.Windows.Media.Geometry Clone() { throw null; }
-        public System.Windows.Media.Geometry CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Geometry CloneCurrentValue() { throw null; }
         public static System.Windows.Media.PathGeometry Combine(System.Windows.Media.Geometry geometry1, System.Windows.Media.Geometry geometry2, System.Windows.Media.GeometryCombineMode mode, System.Windows.Media.Transform transform) { throw null; }
         public static System.Windows.Media.PathGeometry Combine(System.Windows.Media.Geometry geometry1, System.Windows.Media.Geometry geometry2, System.Windows.Media.GeometryCombineMode mode, System.Windows.Media.Transform transform, double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public bool FillContains(System.Windows.Media.Geometry geometry) { throw null; }
@@ -6280,18 +6087,14 @@ namespace System.Windows.Media
         public System.Windows.Media.IntersectionDetail FillContainsWithDetail(System.Windows.Media.Geometry geometry) { throw null; }
         public virtual System.Windows.Media.IntersectionDetail FillContainsWithDetail(System.Windows.Media.Geometry geometry, double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public double GetArea() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public virtual double GetArea(double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public System.Windows.Media.PathGeometry GetFlattenedPathGeometry() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public virtual System.Windows.Media.PathGeometry GetFlattenedPathGeometry(double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public System.Windows.Media.PathGeometry GetOutlinedPathGeometry() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public virtual System.Windows.Media.PathGeometry GetOutlinedPathGeometry(double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public System.Windows.Rect GetRenderBounds(System.Windows.Media.Pen pen) { throw null; }
         public virtual System.Windows.Rect GetRenderBounds(System.Windows.Media.Pen pen, double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public System.Windows.Media.PathGeometry GetWidenedPathGeometry(System.Windows.Media.Pen pen) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public virtual System.Windows.Media.PathGeometry GetWidenedPathGeometry(System.Windows.Media.Pen pen, double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
         public abstract bool IsEmpty();
         public abstract bool MayHaveCurves();
@@ -6323,7 +6126,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.GeometryCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.GeometryCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GeometryCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Geometry value) { throw null; }
         public void CopyTo(System.Windows.Media.Geometry[] array, int index) { }
@@ -6514,19 +6317,13 @@ namespace System.Windows.Media
         public System.Collections.Generic.IDictionary<System.Globalization.CultureInfo, string> Win32FamilyNames { get { throw null; } }
         public double XHeight { [System.Security.SecurityCriticalAttribute, System.Security.SecurityTreatAsSafeAttribute]get { throw null; } }
         [System.CLSCompliantAttribute(false)]
-        [System.Security.SecurityCriticalAttribute]
         public byte[] ComputeSubset(System.Collections.Generic.ICollection<ushort> glyphs) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override bool Equals(object o) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.IO.Stream GetFontStream() { throw null; }
         [System.CLSCompliantAttribute(false)]
         public System.Windows.Media.Geometry GetGlyphOutline(ushort glyphIndex, double renderingEmSize, double hintingEmSize) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override int GetHashCode() { throw null; }
         void System.ComponentModel.ISupportInitialize.BeginInit() { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         void System.ComponentModel.ISupportInitialize.EndInit() { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("GradientStops")]
@@ -6561,7 +6358,7 @@ namespace System.Windows.Media
         public System.Windows.Media.Color Color { get { throw null; } set { } }
         public double Offset { get { throw null; } set { } }
         public new System.Windows.Media.GradientStop Clone() { throw null; }
-        public System.Windows.Media.GradientStop CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GradientStop CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
@@ -6584,7 +6381,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.GradientStopCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.GradientStopCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GradientStopCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.GradientStop value) { throw null; }
         public void CopyTo(System.Windows.Media.GradientStop[] array, int index) { }
@@ -6630,7 +6427,7 @@ namespace System.Windows.Media
         public System.Windows.Media.DoubleCollection GuidelinesX { get { throw null; } set { } }
         public System.Windows.Media.DoubleCollection GuidelinesY { get { throw null; } set { } }
         public new System.Windows.Media.GuidelineSet Clone() { throw null; }
-        public System.Windows.Media.GuidelineSet CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.GuidelineSet CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
     public enum HitTestFilterBehavior
@@ -6689,7 +6486,7 @@ namespace System.Windows.Media
     public abstract partial class ImageMetadata : System.Windows.Freezable
     {
         internal ImageMetadata() { }
-        public System.Windows.Media.ImageMetadata Clone() { throw null; }
+        public new System.Windows.Media.ImageMetadata Clone() { throw null; }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.ImageSourceConverter))]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
@@ -6701,7 +6498,7 @@ namespace System.Windows.Media
         public abstract System.Windows.Media.ImageMetadata Metadata { get; }
         public abstract double Width { get; }
         public new System.Windows.Media.ImageSource Clone() { throw null; }
-        public System.Windows.Media.ImageSource CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.ImageSource CloneCurrentValue() { throw null; }
         protected static double PixelsToDIPs(double dpi, int pixels) { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
@@ -6712,8 +6509,6 @@ namespace System.Windows.Media
         public ImageSourceConverter() { }
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
@@ -6742,9 +6537,9 @@ namespace System.Windows.Media
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(int value) { }
         public void Clear() { }
-        public System.Windows.Media.Int32Collection Clone() { throw null; }
+        public new System.Windows.Media.Int32Collection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Int32Collection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Int32Collection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(int value) { throw null; }
         public void CopyTo(int[] array, int index) { }
@@ -6940,9 +6735,9 @@ namespace System.Windows.Media
         public void Open(System.Uri source) { }
         public void Pause() { }
         public void Play() { }
-        protected void ReadPreamble() { }
+        protected new void ReadPreamble() { }
         public void Stop() { }
-        protected void WritePreamble() { }
+        protected new void WritePreamble() { }
     }
     public sealed partial class MediaScriptCommandEventArgs : System.EventArgs
     {
@@ -7026,7 +6821,7 @@ namespace System.Windows.Media
         public System.Windows.Media.PathSegmentCollection Segments { get { throw null; } set { } }
         public System.Windows.Point StartPoint { get { throw null; } set { } }
         public new System.Windows.Media.PathFigure Clone() { throw null; }
-        public System.Windows.Media.PathFigure CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.PathFigure CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         public System.Windows.Media.PathFigure GetFlattenedPathFigure() { throw null; }
         public System.Windows.Media.PathFigure GetFlattenedPathFigure(double tolerance, System.Windows.Media.ToleranceType type) { throw null; }
@@ -7054,7 +6849,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.PathFigureCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.PathFigureCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.PathFigureCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.PathFigure value) { throw null; }
         public void CopyTo(System.Windows.Media.PathFigure[] array, int index) { }
@@ -7116,7 +6911,6 @@ namespace System.Windows.Media
         public new System.Windows.Media.PathGeometry CloneCurrentValue() { throw null; }
         public static System.Windows.Media.PathGeometry CreateFromGeometry(System.Windows.Media.Geometry geometry) { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void GetPointAtFractionLength(double progress, out System.Windows.Point point, out System.Windows.Point tangent) { throw null; }
         public override bool IsEmpty() { throw null; }
         public override bool MayHaveCurves() { throw null; }
@@ -7131,7 +6925,7 @@ namespace System.Windows.Media
         public bool IsSmoothJoin { get { throw null; } set { } }
         public bool IsStroked { get { throw null; } set { } }
         public new System.Windows.Media.PathSegment Clone() { throw null; }
-        public System.Windows.Media.PathSegment CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.PathSegment CloneCurrentValue() { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public sealed partial class PathSegmentCollection : System.Windows.Media.Animation.Animatable, System.Collections.Generic.ICollection<System.Windows.Media.PathSegment>, System.Collections.Generic.IEnumerable<System.Windows.Media.PathSegment>, System.Collections.Generic.IList<System.Windows.Media.PathSegment>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
@@ -7151,7 +6945,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.PathSegmentCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.PathSegmentCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.PathSegmentCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.PathSegment value) { throw null; }
         public void CopyTo(System.Windows.Media.PathSegment[] array, int index) { }
@@ -7206,7 +7000,7 @@ namespace System.Windows.Media
         public System.Windows.Media.PenLineCap StartLineCap { get { throw null; } set { } }
         public double Thickness { get { throw null; } set { } }
         public new System.Windows.Media.Pen Clone() { throw null; }
-        public System.Windows.Media.Pen CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Pen CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
     public enum PenDashCap
@@ -7262,7 +7056,6 @@ namespace System.Windows.Media
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object o) { throw null; }
         public new object ConvertFromString(string value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
     public static partial class PixelFormats
@@ -7310,9 +7103,9 @@ namespace System.Windows.Media
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Point value) { }
         public void Clear() { }
-        public System.Windows.Media.PointCollection Clone() { throw null; }
+        public new System.Windows.Media.PointCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.PointCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.PointCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Point value) { throw null; }
         public void CopyTo(System.Windows.Point[] array, int index) { }
@@ -7495,7 +7288,6 @@ namespace System.Windows.Media
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public sealed partial class RotateTransform : System.Windows.Media.Transform
@@ -7576,9 +7368,7 @@ namespace System.Windows.Media
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable source) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable source) { }
-        [System.Security.SecurityCriticalAttribute]
         public override bool IsEmpty() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override bool MayHaveCurves() { throw null; }
         protected override void OnChanged() { }
         public System.Windows.Media.StreamGeometryContext Open() { throw null; }
@@ -7633,7 +7423,7 @@ namespace System.Windows.Media
         public int PositionStart { get { throw null; } set { } }
         public System.Windows.Media.Transform Transform { get { throw null; } set { } }
         public new System.Windows.Media.TextEffect Clone() { throw null; }
-        public System.Windows.Media.TextEffect CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.TextEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
@@ -7654,7 +7444,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.TextEffectCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.TextEffectCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.TextEffectCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.TextEffect value) { throw null; }
         public void CopyTo(System.Windows.Media.TextEffect[] array, int index) { }
@@ -7768,7 +7558,7 @@ namespace System.Windows.Media
         public void Clear() { }
         public new System.Windows.Media.TransformCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.TransformCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.TransformCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Transform value) { throw null; }
         public void CopyTo(System.Windows.Media.Transform[] array, int index) { }
@@ -7871,9 +7661,9 @@ namespace System.Windows.Media
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Vector value) { }
         public void Clear() { }
-        public System.Windows.Media.VectorCollection Clone() { throw null; }
+        public new System.Windows.Media.VectorCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.VectorCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.VectorCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Vector value) { throw null; }
         public void CopyTo(System.Windows.Vector[] array, int index) { }
@@ -8020,7 +7810,6 @@ namespace System.Windows.Media
         public VisualTarget(System.Windows.Media.HostVisual hostVisual) { }
         public override System.Windows.Media.Matrix TransformFromDevice { get { throw null; } }
         public override System.Windows.Media.Matrix TransformToDevice { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void Dispose() { }
     }
     public static partial class VisualTreeHelper
@@ -8062,7 +7851,7 @@ namespace System.Windows.Media.Animation
         public void ApplyAnimationClock(System.Windows.DependencyProperty dp, System.Windows.Media.Animation.AnimationClock clock, System.Windows.Media.Animation.HandoffBehavior handoffBehavior) { }
         public void BeginAnimation(System.Windows.DependencyProperty dp, System.Windows.Media.Animation.AnimationTimeline animation) { }
         public void BeginAnimation(System.Windows.DependencyProperty dp, System.Windows.Media.Animation.AnimationTimeline animation, System.Windows.Media.Animation.HandoffBehavior handoffBehavior) { }
-        public System.Windows.Media.Animation.Animatable Clone() { throw null; }
+        public new System.Windows.Media.Animation.Animatable Clone() { throw null; }
         protected override bool FreezeCore(bool isChecking) { throw null; }
         public object GetAnimationBaseValue(System.Windows.DependencyProperty dp) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -8163,7 +7952,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.BooleanKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.BooleanKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.BooleanKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.BooleanKeyFrame keyFrame) { throw null; }
@@ -8278,7 +8067,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.ByteKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.ByteKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.ByteKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.ByteKeyFrame keyFrame) { throw null; }
@@ -8360,7 +8149,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.CharKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.CharKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.CharKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.CharKeyFrame keyFrame) { throw null; }
@@ -8542,7 +8331,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.ColorKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.ColorKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.ColorKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.ColorKeyFrame keyFrame) { throw null; }
@@ -8653,7 +8442,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.DecimalKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.DecimalKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.DecimalKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.DecimalKeyFrame keyFrame) { throw null; }
@@ -8940,7 +8729,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.DoubleKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.DoubleKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.DoubleKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.DoubleKeyFrame keyFrame) { throw null; }
@@ -9291,7 +9080,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Int16KeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Int16KeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Int16KeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Int16KeyFrame keyFrame) { throw null; }
@@ -9396,7 +9185,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Int32KeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Int32KeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Int32KeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Int32KeyFrame keyFrame) { throw null; }
@@ -9501,7 +9290,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Int64KeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Int64KeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Int64KeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Int64KeyFrame keyFrame) { throw null; }
@@ -9779,7 +9568,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.MatrixKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.MatrixKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.MatrixKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.MatrixKeyFrame keyFrame) { throw null; }
@@ -9860,7 +9649,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.ObjectKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.ObjectKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.ObjectKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.ObjectKeyFrame keyFrame) { throw null; }
@@ -9985,7 +9774,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Point3DKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Point3DKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Point3DKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Point3DKeyFrame keyFrame) { throw null; }
@@ -10102,7 +9891,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.PointKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.PointKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.PointKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.PointKeyFrame keyFrame) { throw null; }
@@ -10229,7 +10018,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.QuaternionKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.QuaternionKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.QuaternionKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.QuaternionKeyFrame keyFrame) { throw null; }
@@ -10340,7 +10129,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.RectKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.RectKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.RectKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.RectKeyFrame keyFrame) { throw null; }
@@ -10389,7 +10178,6 @@ namespace System.Windows.Media.Animation
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Type t) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext td, System.Globalization.CultureInfo cultureInfo, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     public partial class Rotation3DAnimation : System.Windows.Media.Animation.Rotation3DAnimationBase
@@ -10476,7 +10264,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Rotation3DKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Rotation3DKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Rotation3DKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Rotation3DKeyFrame keyFrame) { throw null; }
@@ -10587,7 +10375,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.SingleKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.SingleKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.SingleKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.SingleKeyFrame keyFrame) { throw null; }
@@ -10692,7 +10480,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.SizeKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.SizeKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.SizeKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.SizeKeyFrame keyFrame) { throw null; }
@@ -10957,7 +10745,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.StringKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.StringKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.StringKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.StringKeyFrame keyFrame) { throw null; }
@@ -11016,7 +10804,7 @@ namespace System.Windows.Media.Animation
         public event System.EventHandler RemoveRequested { add { } remove { } }
         protected internal virtual System.Windows.Media.Animation.Clock AllocateClock() { throw null; }
         public new System.Windows.Media.Animation.Timeline Clone() { throw null; }
-        public System.Windows.Media.Animation.Timeline CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Animation.Timeline CloneCurrentValue() { throw null; }
         public System.Windows.Media.Animation.Clock CreateClock() { throw null; }
         public System.Windows.Media.Animation.Clock CreateClock(bool hasControllableRoot) { throw null; }
         protected override bool FreezeCore(bool isChecking) { throw null; }
@@ -11044,7 +10832,7 @@ namespace System.Windows.Media.Animation
         public void Clear() { }
         public new System.Windows.Media.Animation.TimelineCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Animation.TimelineCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Animation.TimelineCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Animation.Timeline value) { throw null; }
         public void CopyTo(System.Windows.Media.Animation.Timeline[] array, int index) { }
@@ -11186,7 +10974,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.Vector3DKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.Vector3DKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.Vector3DKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.Vector3DKeyFrame keyFrame) { throw null; }
@@ -11291,7 +11079,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.VectorKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public System.Windows.Media.Animation.VectorKeyFrameCollection Clone() { throw null; }
+        public new System.Windows.Media.Animation.VectorKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.VectorKeyFrame keyFrame) { throw null; }
@@ -11435,39 +11223,26 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.BevelBitmapEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public abstract partial class BitmapEffect : System.Windows.Media.Animation.Animatable
     {
-        [System.Security.SecuritySafeCriticalAttribute]
         protected BitmapEffect() { }
         public new System.Windows.Media.Effects.BitmapEffect Clone() { throw null; }
-        public System.Windows.Media.Effects.BitmapEffect CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Effects.BitmapEffect CloneCurrentValue() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected static System.Runtime.InteropServices.SafeHandle CreateBitmapEffectOuter() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
         protected abstract System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect();
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
         public System.Windows.Media.Imaging.BitmapSource GetOutput(System.Windows.Media.Effects.BitmapEffectInput input) { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected static void InitializeBitmapEffect(System.Runtime.InteropServices.SafeHandle outerObject, System.Runtime.InteropServices.SafeHandle innerObject) { }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected static void SetValue(System.Runtime.InteropServices.SafeHandle effect, string propertyName, object value) { }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
         protected abstract void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect);
     }
     public sealed partial class BitmapEffectCollection : System.Windows.Media.Animation.Animatable, System.Collections.Generic.ICollection<System.Windows.Media.Effects.BitmapEffect>, System.Collections.Generic.IEnumerable<System.Windows.Media.Effects.BitmapEffect>, System.Collections.Generic.IList<System.Windows.Media.Effects.BitmapEffect>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
@@ -11487,7 +11262,7 @@ namespace System.Windows.Media.Effects
         public void Clear() { }
         public new System.Windows.Media.Effects.BitmapEffectCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Effects.BitmapEffectCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Effects.BitmapEffectCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Effects.BitmapEffect value) { throw null; }
         public void CopyTo(System.Windows.Media.Effects.BitmapEffect[] array, int index) { }
@@ -11530,10 +11305,8 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.BitmapEffectGroup CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
     public sealed partial class BitmapEffectInput : System.Windows.Media.Animation.Animatable
@@ -11548,7 +11321,7 @@ namespace System.Windows.Media.Effects
         public static System.Windows.Media.Imaging.BitmapSource ContextInputSource { get { throw null; } }
         public System.Windows.Media.Imaging.BitmapSource Input { get { throw null; } set { } }
         public new System.Windows.Media.Effects.BitmapEffectInput Clone() { throw null; }
-        public System.Windows.Media.Effects.BitmapEffectInput CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Effects.BitmapEffectInput CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeInput() { throw null; }
@@ -11564,11 +11337,8 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.BlurBitmapEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
     public sealed partial class BlurEffect : System.Windows.Media.Effects.Effect
@@ -11603,11 +11373,8 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.DropShadowBitmapEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
     public sealed partial class DropShadowEffect : System.Windows.Media.Effects.Effect
@@ -11636,16 +11403,14 @@ namespace System.Windows.Media.Effects
         CurvedOut = 2,
         BulgedUp = 3,
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public abstract partial class Effect : System.Windows.Media.Animation.Animatable
     {
-        [System.Security.SecuritySafeCriticalAttribute]
         protected Effect() { }
         protected internal virtual System.Windows.Media.GeneralTransform EffectMapping { get { throw null; } }
         [System.ComponentModel.BrowsableAttribute(false)]
         public static System.Windows.Media.Brush ImplicitInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute]get { throw null; } }
         public new System.Windows.Media.Effects.Effect Clone() { throw null; }
-        public System.Windows.Media.Effects.Effect CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Effects.Effect CloneCurrentValue() { throw null; }
     }
     public sealed partial class EmbossBitmapEffect : System.Windows.Media.Effects.BitmapEffect
     {
@@ -11658,11 +11423,8 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.EmbossBitmapEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
     public enum KernelType
@@ -11685,11 +11447,8 @@ namespace System.Windows.Media.Effects
         public new System.Windows.Media.Effects.OuterGlowBitmapEffect CloneCurrentValue() { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecuritySafeCriticalAttribute]
         protected override System.Runtime.InteropServices.SafeHandle CreateUnmanagedEffect() { throw null; }
         [System.ObsoleteAttribute("BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.")]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void UpdateUnmanagedPropertyState(System.Runtime.InteropServices.SafeHandle unmanagedEffect) { }
     }
     public sealed partial class PixelShader : System.Windows.Media.Animation.Animatable
@@ -11702,7 +11461,7 @@ namespace System.Windows.Media.Effects
         public static event System.EventHandler InvalidPixelShaderEncountered { add { } remove { } }
         public new System.Windows.Media.Effects.PixelShader Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
-        public System.Windows.Media.Effects.PixelShader CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Effects.PixelShader CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
@@ -11803,10 +11562,7 @@ namespace System.Windows.Media.Imaging
         public static System.Windows.Media.Imaging.BitmapDecoder Create(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { throw null; }
         public static System.Windows.Media.Imaging.BitmapDecoder Create(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption, System.Net.Cache.RequestCachePolicy uriCachePolicy) { throw null; }
         public virtual System.Windows.Media.Imaging.InPlaceBitmapMetadataWriter CreateInPlaceBitmapMetadataWriter() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         ~BitmapDecoder() { }
-        internal abstract void SealObject();
         public override string ToString() { throw null; }
     }
     public abstract partial class BitmapEncoder : System.Windows.Threading.DispatcherObject
@@ -11819,13 +11575,8 @@ namespace System.Windows.Media.Imaging
         public virtual System.Windows.Media.Imaging.BitmapPalette Palette { get { throw null; } set { } }
         public virtual System.Windows.Media.Imaging.BitmapSource Preview { get { throw null; } set { } }
         public virtual System.Windows.Media.Imaging.BitmapSource Thumbnail { get { throw null; } set { } }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Media.Imaging.BitmapEncoder Create(System.Guid containerFormat) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
         public virtual void Save(System.IO.Stream stream) { }
-        internal abstract void SealObject();
     }
     public abstract partial class BitmapFrame : System.Windows.Media.Imaging.BitmapSource, System.Windows.Markup.IUriContext
     {
@@ -11885,7 +11636,6 @@ namespace System.Windows.Media.Imaging
     }
     public partial class BitmapMetadata : System.Windows.Media.ImageMetadata, System.Collections.Generic.IEnumerable<string>, System.Collections.IEnumerable
     {
-        [System.Security.SecurityCriticalAttribute]
         public BitmapMetadata(string containerFormat) { }
         public string ApplicationName { get { throw null; } set { } }
         public System.Collections.ObjectModel.ReadOnlyCollection<string> Author { get { throw null; } set { } }
@@ -11905,22 +11655,14 @@ namespace System.Windows.Media.Imaging
         public new System.Windows.Media.Imaging.BitmapMetadata Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
         public bool ContainsQuery(string query) { throw null; }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
         public object GetQuery(string query) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void RemoveQuery(string query) { }
-        [System.Security.SecurityCriticalAttribute]
         public void SetQuery(string query, object value) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         System.Collections.Generic.IEnumerator<string> System.Collections.Generic.IEnumerable<System.String>.GetEnumerator() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class BitmapMetadataBlob
@@ -11931,7 +11673,6 @@ namespace System.Windows.Media.Imaging
     public sealed partial class BitmapPalette : System.Windows.Threading.DispatcherObject
     {
         public BitmapPalette(System.Collections.Generic.IList<System.Windows.Media.Color> colors) { }
-        [System.Security.SecurityCriticalAttribute]
         public BitmapPalette(System.Windows.Media.Imaging.BitmapSource bitmapSource, int maxColorCount) { }
         public System.Collections.Generic.IList<System.Windows.Media.Color> Colors { get { throw null; } }
     }
@@ -11978,8 +11719,6 @@ namespace System.Windows.Media.Imaging
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class BitmapSource : System.Windows.Media.ImageSource
     {
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected BitmapSource() { }
         public virtual double DpiX { get { throw null; } }
         public virtual double DpiY { get { throw null; } }
@@ -11995,25 +11734,15 @@ namespace System.Windows.Media.Imaging
         public virtual event System.EventHandler DownloadCompleted { add { } remove { } }
         public virtual event System.EventHandler<System.Windows.Media.ExceptionEventArgs> DownloadFailed { add { } remove { } }
         public virtual event System.EventHandler<System.Windows.Media.Imaging.DownloadProgressEventArgs> DownloadProgress { add { } remove { } }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected void CheckIfSiteOfOrigin() { }
         public new System.Windows.Media.Imaging.BitmapSource Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         public new System.Windows.Media.Imaging.BitmapSource CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(System.Array pixels, int stride, int offset) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(System.Windows.Int32Rect sourceRect, System.Array pixels, int stride, int offset) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
         public virtual void CopyPixels(System.Windows.Int32Rect sourceRect, System.IntPtr buffer, int bufferSize, int stride) { }
         public static System.Windows.Media.Imaging.BitmapSource Create(int pixelWidth, int pixelHeight, double dpiX, double dpiY, System.Windows.Media.PixelFormat pixelFormat, System.Windows.Media.Imaging.BitmapPalette palette, System.Array pixels, int stride) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static System.Windows.Media.Imaging.BitmapSource Create(int pixelWidth, int pixelHeight, double dpiX, double dpiY, System.Windows.Media.PixelFormat pixelFormat, System.Windows.Media.Imaging.BitmapPalette palette, System.IntPtr buffer, int bufferSize, int stride) { throw null; }
         protected override bool FreezeCore(bool isChecking) { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
@@ -12021,35 +11750,22 @@ namespace System.Windows.Media.Imaging
     }
     public sealed partial class BmpBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public BmpBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public BmpBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class BmpBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public BmpBitmapEncoder() { }
     }
     public sealed partial class CachedBitmap : System.Windows.Media.Imaging.BitmapSource
     {
         public CachedBitmap(System.Windows.Media.Imaging.BitmapSource source, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
         public new System.Windows.Media.Imaging.CachedBitmap Clone() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         public new System.Windows.Media.Imaging.CachedBitmap CloneCurrentValue() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
     }
     public sealed partial class ColorConvertedBitmap : System.Windows.Media.Imaging.BitmapSource, System.ComponentModel.ISupportInitialize
@@ -12070,7 +11786,6 @@ namespace System.Windows.Media.Imaging
         public new System.Windows.Media.Imaging.ColorConvertedBitmap CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void EndInit() { }
         protected override void GetAsFrozenCore(System.Windows.Freezable source) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable source) { }
@@ -12089,7 +11804,6 @@ namespace System.Windows.Media.Imaging
         public new System.Windows.Media.Imaging.CroppedBitmap CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void EndInit() { }
         protected override void GetAsFrozenCore(System.Windows.Freezable source) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable source) { }
@@ -12117,28 +11831,22 @@ namespace System.Windows.Media.Imaging
         public new System.Windows.Media.Imaging.FormatConvertedBitmap CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void EndInit() { }
         protected override void GetAsFrozenCore(System.Windows.Freezable source) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable source) { }
     }
     public sealed partial class GifBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public GifBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public GifBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class GifBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public GifBitmapEncoder() { }
     }
     public sealed partial class IconBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public IconBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public IconBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class InPlaceBitmapMetadataWriter : System.Windows.Media.Imaging.BitmapMetadata
@@ -12150,19 +11858,15 @@ namespace System.Windows.Media.Imaging
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
         public bool TrySave() { throw null; }
     }
     public sealed partial class JpegBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public JpegBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public JpegBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class JpegBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public JpegBitmapEncoder() { }
         public bool FlipHorizontal { get { throw null; } set { } }
         public bool FlipVertical { get { throw null; } set { } }
@@ -12183,14 +11887,11 @@ namespace System.Windows.Media.Imaging
     }
     public sealed partial class PngBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public PngBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public PngBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class PngBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public PngBitmapEncoder() { }
         public System.Windows.Media.Imaging.PngInterlaceOption Interlace { get { throw null; } set { } }
     }
@@ -12202,9 +11903,7 @@ namespace System.Windows.Media.Imaging
     }
     public sealed partial class RenderTargetBitmap : System.Windows.Media.Imaging.BitmapSource
     {
-        [System.Security.SecurityCriticalAttribute]
         public RenderTargetBitmap(int pixelWidth, int pixelHeight, double dpiX, double dpiY, System.Windows.Media.PixelFormat pixelFormat) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Clear() { }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
@@ -12222,14 +11921,11 @@ namespace System.Windows.Media.Imaging
     }
     public sealed partial class TiffBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public TiffBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public TiffBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class TiffBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public TiffBitmapEncoder() { }
         public System.Windows.Media.Imaging.TiffCompressOption Compression { get { throw null; } set { } }
     }
@@ -12257,21 +11953,17 @@ namespace System.Windows.Media.Imaging
         public new System.Windows.Media.Imaging.TransformedBitmap CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void EndInit() { }
         protected override void GetAsFrozenCore(System.Windows.Freezable source) { }
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable source) { }
     }
     public sealed partial class WmpBitmapDecoder : System.Windows.Media.Imaging.BitmapDecoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public WmpBitmapDecoder(System.IO.Stream bitmapStream, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
-        [System.Security.SecurityCriticalAttribute]
         public WmpBitmapDecoder(System.Uri bitmapUri, System.Windows.Media.Imaging.BitmapCreateOptions createOptions, System.Windows.Media.Imaging.BitmapCacheOption cacheOption) { }
     }
     public sealed partial class WmpBitmapEncoder : System.Windows.Media.Imaging.BitmapEncoder
     {
-        [System.Security.SecurityCriticalAttribute]
         public WmpBitmapEncoder() { }
         public byte AlphaDataDiscardLevel { get { throw null; } set { } }
         public byte AlphaQualityLevel { get { throw null; } set { } }
@@ -12294,44 +11986,25 @@ namespace System.Windows.Media.Imaging
     }
     public sealed partial class WriteableBitmap : System.Windows.Media.Imaging.BitmapSource
     {
-        [System.Security.SecurityCriticalAttribute]
         public WriteableBitmap(int pixelWidth, int pixelHeight, double dpiX, double dpiY, System.Windows.Media.PixelFormat pixelFormat, System.Windows.Media.Imaging.BitmapPalette palette) { }
-        [System.Security.SecurityCriticalAttribute]
         public WriteableBitmap(System.Windows.Media.Imaging.BitmapSource source) { }
         public System.IntPtr BackBuffer { [System.Security.SecurityCriticalAttribute]get { throw null; } }
         public int BackBufferStride { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public void AddDirtyRect(System.Windows.Int32Rect dirtyRect) { }
         public new System.Windows.Media.Imaging.WriteableBitmap Clone() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         public new System.Windows.Media.Imaging.WriteableBitmap CloneCurrentValue() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override bool FreezeCore(bool isChecking) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void GetCurrentValueAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
         public void Lock() { }
-        [System.Security.SecurityCriticalAttribute]
         public bool TryLock(System.Windows.Duration timeout) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void Unlock() { }
-        [System.Security.SecurityCriticalAttribute]
         public void WritePixels(System.Windows.Int32Rect sourceRect, System.Array pixels, int stride, int offset) { }
-        [System.Security.SecurityCriticalAttribute]
         public void WritePixels(System.Windows.Int32Rect sourceRect, System.Array sourceBuffer, int sourceBufferStride, int destinationX, int destinationY) { }
-        [System.Security.SecurityCriticalAttribute]
         public void WritePixels(System.Windows.Int32Rect sourceRect, System.IntPtr buffer, int bufferSize, int stride) { }
-        [System.Security.SecurityCriticalAttribute]
         public void WritePixels(System.Windows.Int32Rect sourceRect, System.IntPtr sourceBuffer, int sourceBufferSize, int sourceBufferStride, int destinationX, int destinationY) { }
     }
 }
@@ -12370,7 +12043,7 @@ namespace System.Windows.Media.Media3D
         public static readonly System.Windows.DependencyProperty TransformProperty;
         public System.Windows.Media.Media3D.Transform3D Transform { get { throw null; } set { } }
         public new System.Windows.Media.Media3D.Camera Clone() { throw null; }
-        public System.Windows.Media.Media3D.Camera CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Camera CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -12438,7 +12111,7 @@ namespace System.Windows.Media.Media3D
         internal GeneralTransform3D() { }
         public abstract System.Windows.Media.Media3D.GeneralTransform3D Inverse { get; }
         public new System.Windows.Media.Media3D.GeneralTransform3D Clone() { throw null; }
-        public System.Windows.Media.Media3D.GeneralTransform3D CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.GeneralTransform3D CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -12463,7 +12136,7 @@ namespace System.Windows.Media.Media3D
         public void Clear() { }
         public new System.Windows.Media.Media3D.GeneralTransform3DCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.GeneralTransform3DCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.GeneralTransform3DCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.GeneralTransform3D value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.GeneralTransform3D[] array, int index) { }
@@ -12528,7 +12201,7 @@ namespace System.Windows.Media.Media3D
         internal Geometry3D() { }
         public abstract System.Windows.Media.Media3D.Rect3D Bounds { get; }
         public new System.Windows.Media.Media3D.Geometry3D Clone() { throw null; }
-        public System.Windows.Media.Media3D.Geometry3D CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Geometry3D CloneCurrentValue() { throw null; }
     }
     public sealed partial class GeometryModel3D : System.Windows.Media.Media3D.Model3D
     {
@@ -12561,7 +12234,7 @@ namespace System.Windows.Media.Media3D
     {
         internal Material() { }
         public new System.Windows.Media.Media3D.Material Clone() { throw null; }
-        public System.Windows.Media.Media3D.Material CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Material CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -12583,7 +12256,7 @@ namespace System.Windows.Media.Media3D
         public void Clear() { }
         public new System.Windows.Media.Media3D.MaterialCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.MaterialCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.MaterialCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.Material value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.Material[] array, int index) { }
@@ -12744,7 +12417,7 @@ namespace System.Windows.Media.Media3D
         public System.Windows.Media.Media3D.Rect3D Bounds { get { throw null; } }
         public System.Windows.Media.Media3D.Transform3D Transform { get { throw null; } set { } }
         public new System.Windows.Media.Media3D.Model3D Clone() { throw null; }
-        public System.Windows.Media.Media3D.Model3D CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Model3D CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -12766,7 +12439,7 @@ namespace System.Windows.Media.Media3D
         public void Clear() { }
         public new System.Windows.Media.Media3D.Model3DCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.Model3DCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Model3DCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.Model3D value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.Model3D[] array, int index) { }
@@ -12901,9 +12574,9 @@ namespace System.Windows.Media.Media3D
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Media.Media3D.Point3D value) { }
         public void Clear() { }
-        public System.Windows.Media.Media3D.Point3DCollection Clone() { throw null; }
+        public new System.Windows.Media.Media3D.Point3DCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.Point3DCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Point3DCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.Point3D value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.Point3D[] array, int index) { }
@@ -13191,7 +12864,7 @@ namespace System.Windows.Media.Media3D
         internal Rotation3D() { }
         public static System.Windows.Media.Media3D.Rotation3D Identity { get { throw null; } }
         public new System.Windows.Media.Media3D.Rotation3D Clone() { throw null; }
-        public System.Windows.Media.Media3D.Rotation3D CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Rotation3D CloneCurrentValue() { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
@@ -13317,7 +12990,7 @@ namespace System.Windows.Media.Media3D
         public void Clear() { }
         public new System.Windows.Media.Media3D.Transform3DCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.Transform3DCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Transform3DCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.Transform3D value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.Transform3D[] array, int index) { }
@@ -13442,9 +13115,9 @@ namespace System.Windows.Media.Media3D
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Media.Media3D.Vector3D value) { }
         public void Clear() { }
-        public System.Windows.Media.Media3D.Vector3DCollection Clone() { throw null; }
+        public new System.Windows.Media.Media3D.Vector3DCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable source) { }
-        public System.Windows.Media.Media3D.Vector3DCollection CloneCurrentValue() { throw null; }
+        public new System.Windows.Media.Media3D.Vector3DCollection CloneCurrentValue() { throw null; }
         protected override void CloneCurrentValueCore(System.Windows.Freezable source) { }
         public bool Contains(System.Windows.Media.Media3D.Vector3D value) { throw null; }
         public void CopyTo(System.Windows.Media.Media3D.Vector3D[] array, int index) { }
@@ -13689,7 +13362,6 @@ namespace System.Windows.Media.TextFormatting
         private object _dummy;
         private int _dummyPrimitive;
         [System.CLSCompliantAttribute(false)]
-        [System.Security.SecurityCriticalAttribute]
         public unsafe CharacterBufferRange(char* unsafeCharacterString, int characterLength) { throw null; }
         public CharacterBufferRange(char[] characterArray, int offsetToFirstChar, int characterLength) { throw null; }
         public CharacterBufferRange(string characterString, int offsetToFirstChar, int characterLength) { throw null; }
@@ -13708,7 +13380,6 @@ namespace System.Windows.Media.TextFormatting
         private object _dummy;
         private int _dummyPrimitive;
         [System.CLSCompliantAttribute(false)]
-        [System.Security.SecurityCriticalAttribute]
         public unsafe CharacterBufferReference(char* unsafeCharacterString, int characterLength) { throw null; }
         public CharacterBufferReference(char[] characterArray, int offsetToFirstChar) { throw null; }
         public CharacterBufferReference(string characterString, int offsetToFirstChar) { throw null; }
@@ -13774,7 +13445,6 @@ namespace System.Windows.Media.TextFormatting
     public partial class TextCharacters : System.Windows.Media.TextFormatting.TextRun
     {
         [System.CLSCompliantAttribute(false)]
-        [System.Security.SecurityCriticalAttribute]
         public unsafe TextCharacters(char* unsafeCharacterString, int length, System.Windows.Media.TextFormatting.TextRunProperties textRunProperties) { }
         public TextCharacters(char[] characterArray, int offsetToFirstChar, int length, System.Windows.Media.TextFormatting.TextRunProperties textRunProperties) { }
         public TextCharacters(string characterString, int offsetToFirstChar, int length, System.Windows.Media.TextFormatting.TextRunProperties textRunProperties) { }
@@ -13900,7 +13570,6 @@ namespace System.Windows.Media.TextFormatting
     public sealed partial class TextLineBreak : System.IDisposable
     {
         internal TextLineBreak() { }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Media.TextFormatting.TextLineBreak Clone() { throw null; }
         public void Dispose() { }
         ~TextLineBreak() { }
@@ -14076,7 +13745,6 @@ namespace System.Windows.Navigation
     public static partial class BaseUriHelper
     {
         public static readonly System.Windows.DependencyProperty BaseUriProperty;
-        [System.Security.SecurityCriticalAttribute]
         public static System.Uri GetBaseUri(System.Windows.DependencyObject element) { throw null; }
     }
 }

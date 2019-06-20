@@ -10,6 +10,13 @@
 #   System.Windows.Media.Effects.Effect.GetRenderBounds
 #   System.Windows.Media.Converters.BaseIListConverter.ConvertToCore
 #   System.Windows.Media.Converters.BaseIListConverter.ConvertFromCore
+#   System.Windows.Media.Brush.GetChannelCountCore
+#   System.Windows.Media.Imaging.BitmapEncoder.SealObject
+#   System.Windows.Media.Imaging.BitmapDecoder.SealObject
+
+# All
+T:System.Security.SecurityCritical
+T:System.Security.SecuritySafeCritical
 
 # PresentationCore
 T:System.Windows.Media.Composition.DUCE.Channel

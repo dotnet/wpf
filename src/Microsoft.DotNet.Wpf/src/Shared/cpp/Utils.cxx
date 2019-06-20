@@ -68,6 +68,7 @@ LONG ReadRegistryString(__in HKEY rootKey, __in LPCWSTR keyName, __in LPCWSTR va
 #if _MANAGED
 #endif
 // Warning 4714 (__forceinline function not inlined)
+// is expected here because WPFUtils::GetWPFInstallPath is marked with [SecurityCritical]
 // and tries to inline HRESULT_FROM_WIN32.
 // inlining is prevented when the caller or the callee
 // are marked with any security attribute (critical, safecritical, treatassafecritical).

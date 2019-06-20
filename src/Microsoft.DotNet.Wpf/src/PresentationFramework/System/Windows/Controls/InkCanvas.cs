@@ -92,7 +92,7 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, InkCanvas.DeselectCommand,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                InkCanvasDeselectKey, SRID.InkCanvasDeselectKeyDisplayString);
+                KeyGesture.CreateFromResourceStrings(InkCanvasDeselectKey, SRID.InkCanvasDeselectKeyDisplayString));
 
             //
             //set our clipping
@@ -2559,10 +2559,10 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Cut,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                KeyShiftDelete, SRID.KeyShiftDeleteDisplayString);
+                KeyGesture.CreateFromResourceStrings(KeyShiftDelete, SRID.KeyShiftDeleteDisplayString));
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Copy,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString);
+                KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString));
 
             // Use temp variables to reduce code under elevation
             ExecutedRoutedEventHandler pasteExecuteEventHandler = new ExecutedRoutedEventHandler(_OnCommandExecuted);

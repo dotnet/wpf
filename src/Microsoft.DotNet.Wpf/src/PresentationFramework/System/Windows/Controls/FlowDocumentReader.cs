@@ -1334,7 +1334,7 @@ namespace System.Windows.Controls
 
             // Command: SwitchViewingMode
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), FlowDocumentReader.SwitchViewingModeCommand,
-                executedHandler, canExecuteHandler, KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString);
+                executedHandler, canExecuteHandler, KeyGesture.CreateFromResourceStrings(KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString));
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), ApplicationCommands.Find,

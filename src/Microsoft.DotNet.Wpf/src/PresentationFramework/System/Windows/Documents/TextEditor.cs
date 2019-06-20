@@ -405,8 +405,8 @@ namespace System.Windows.Documents
             // ---------
             if (!readOnly)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(SR.Get(KeyUndo), SR.Get(SRID.KeyUndoDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(KeyAltUndo), SR.Get(SRID.KeyAltUndoDisplayString)));
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), KeyRedo, SRID.KeyRedoDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(KeyUndo, SR.Get(SRID.KeyUndoDisplayString)), KeyGesture.CreateFromResourceStrings(KeyAltUndo, SR.Get(SRID.KeyAltUndoDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), KeyGesture.CreateFromResourceStrings(KeyRedo, SRID.KeyRedoDisplayString));
             }
         }
 

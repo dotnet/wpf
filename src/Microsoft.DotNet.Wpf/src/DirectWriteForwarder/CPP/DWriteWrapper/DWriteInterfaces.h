@@ -38,7 +38,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT ReadFileFragment(
             [Out] const void **fragmentStart,
@@ -54,7 +53,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         void ReleaseFileFragment(
             [In] void *fragmentContext
@@ -76,7 +74,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT GetFileSize(
             [Out/*, MarshalAs(UnmanagedType::U8)*/] UINT64 *fileSize
@@ -95,7 +92,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT GetLastWriteTime(
             [Out/*, MarshalAs(UnmanagedType::U8)*/] UINT64 *lastWriteTime
@@ -128,7 +124,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT CreateStreamFromKey(
             [In] void const* fontFileReferenceKey,
@@ -168,7 +163,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT GetCurrentFontFile(
             /*[Out, MarshalAs(UnmanagedType::Interface)]*/ IDWriteFontFile** fontFile
@@ -201,7 +195,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
         /// <SecurityNote>
         /// Critical    - receives native pointers as parameters.
         /// </SecurityNote>
-        [SecurityCritical]
         [PreserveSig]
         HRESULT CreateEnumeratorFromKey(
             /*[In, MarshalAs(UnmanagedType::Interface)]*/ IntPtr factory,

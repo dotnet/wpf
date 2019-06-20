@@ -12,7 +12,6 @@
 #ifndef MODSBIT_DOT_H_DEFINED
 #define MODSBIT_DOT_H_DEFINED        
 
-[System::Security::SecurityCritical]
 int16 ModSbit( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo,
               TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
               CONST uint8 *puchKeepGlyphList, 

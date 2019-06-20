@@ -39,7 +39,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///            This whole object is wrapped around the passed in pointer
             ///            So this ctor assumes safety of the passed in pointer.
             /// </SecurityNote>
-            [SecurityCritical]
             FontFamily(IDWriteFontFamily* fontFamily);
 
             /// <summary>

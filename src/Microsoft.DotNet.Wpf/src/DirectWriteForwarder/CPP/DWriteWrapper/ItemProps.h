@@ -33,7 +33,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///</remarks>
             property void* NumberSubstitutionNoAddRef
             {
-                [SecurityCritical]
                 void* get();
             }
 
@@ -42,7 +41,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///</remarks>
             property void* ScriptAnalysis
             {
-                [SecurityCritical]
                 void* get();
             }
 
@@ -86,14 +84,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Critical    - Asserts to allocate and initialize unmanaged memory.
             /// TreatAsSafe - Initializes unmanaged memory to known safe state.
             ///</SecurityNote>
-            [SecuritySafeCritical]
-            [SecurityPermission(SecurityAction::Assert, UnmanagedCode = true)]
             ItemProps();
 
             ///<SecurityNote>
             /// Critical    - Asserts to initialize unmanaged memory.
             ///</SecurityNote>
-            [SecurityCritical]
             static ItemProps^ Create(
                 void* scriptAnalysis,
                 void* numberSubstitution,

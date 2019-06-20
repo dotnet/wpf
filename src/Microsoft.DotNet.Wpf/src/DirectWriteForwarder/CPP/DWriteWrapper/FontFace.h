@@ -37,7 +37,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <SecurityNote>
             /// Critical - native pointer.
             /// </SecurityNote>
-            [SecurityCritical]
             NativeIUnknownWrapper<IDWriteFontFace>^ _fontFace;
 
             /// <summary>
@@ -65,7 +64,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///            This whole object is wrapped around the passed in pointer
             ///            So this ctor assumes safety of the passed in pointer.
             /// </SecurityNote>
-            [SecurityCritical]
             FontFace(IDWriteFontFace* fontFace);
 
             /// <summary>
@@ -77,7 +75,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </summary>
             property IDWriteFontFace* DWriteFontFaceNoAddRef
             {
-                [SecurityCritical]
                 IDWriteFontFace* get();
             }
 
@@ -86,7 +83,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </summary>
             property System::IntPtr DWriteFontFaceAddRef
             {
-                [SecurityCritical]
                 System::IntPtr get();
             }
 
@@ -176,14 +172,12 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <param name="pGlyphMetrics">Unsafe pointer to flat array of GlyphMetrics structs for output. Passed as
             /// unsafe to allow optimization by the caller of stack or heap allocation.
             /// The metrics returned are in font design units</param>
-            [SecurityCritical]
             void GetDesignGlyphMetrics(
                 __in_ecount(glyphCount) const UINT16 *pGlyphIndices,
                 UINT32 glyphCount,
                 __out_ecount(glyphCount) GlyphMetrics *pGlyphMetrics
                 );
 
-            [SecurityCritical]
             void GetDisplayGlyphMetrics(
                 __in_ecount(glyphCount) const UINT16 *pGlyphIndices,
                 UINT32 glyphCount,
@@ -207,7 +201,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>Array of nominal glyph indices filled by this function.</returns>
             // "GetGlyphIndices" is defined in WinGDI.h to be "GetGlyphIndicesW" that why we chose
             // "GetArrayOfGlyphIndices"
-            [SecurityCritical]
             void GetArrayOfGlyphIndices(
                 __in_ecount(glyphCount) const UINT32* pCodePoints,
                 UINT32 glyphCount,
@@ -220,7 +213,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <param name="openTypeTableTag">The tag of table to find.</param>
             /// <param name="tableData">The table.</param>
             /// <returns>True if table exists.</returns>
-            [SecurityCritical]
             bool TryGetFontTable(
                                                                         OpenTypeTableTag openTypeTableTag,         
                                 [System::Runtime::InteropServices::Out] array<byte>^%    tableData
@@ -236,7 +228,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// dtor.
             /// </summary>
-            [SecuritySafeCritical]
             ~FontFace();
     };
 

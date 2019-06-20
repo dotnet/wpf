@@ -12,7 +12,6 @@ private ref class GlobalInit
     static bool _isInitialized = false;
 
 public:
-   [System::Security::SecurityCritical, System::Security::SecurityTreatAsSafe]
     static void Init();
 };
 #endif // __GLOBAL_INIT_H

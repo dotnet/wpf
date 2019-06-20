@@ -32,7 +32,6 @@ The described action is taken here to reduce the size of the font file. */
 /* this function will work if a glyf and or loca table already exist in the output */
 /* file or not */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModGlyfLocaAndHead( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                          TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
                          uint8 *puchKeepGlyphList, 

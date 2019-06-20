@@ -45,11 +45,6 @@ namespace MS.Internal
         // If you want to enable trace tags without recompiling. This is a good place to put a break point
         // during start-up.
 
-        [SecurityCritical
-#if DEBUG        
-        ,SecurityTreatAsSafe
-#endif        
-        ]
         static MediaTrace()
         {
             // NodeFlag.Enable();

@@ -17,7 +17,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            This whole object is wrapped around the passed in pointer
     ///            So this ctor assumes safety of the passed in pointer.
     /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     LocalizedStrings::LocalizedStrings(IDWriteLocalizedStrings* localizedStrings)
     {
         _localizedStrings = gcnew NativeIUnknownWrapper<IDWriteLocalizedStrings>(localizedStrings);
@@ -34,7 +33,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Writes to security critical member _localizedStrings.
     /// Safe     - Always writes NULL to _localizedStrings.
     /// </SecurityNote>
-    //[SecuritySafeCritical]
     __declspec(noinline) LocalizedStrings::LocalizedStrings()
     {
         _localizedStrings = nullptr;
@@ -49,7 +47,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _localizedStrings.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::StringsCount::get()
     {
         UINT32 count = (_localizedStrings != nullptr)? _localizedStrings->Value->GetCount() : 0;
@@ -124,7 +121,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _localizedStrings.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) KeyValuePair<CultureInfo^, String^> LocalizedStrings::LocalizedStringsEnumerator::Current::get()
     {
         if (_currentIndex >= _localizedStrings->StringsCount)
@@ -158,8 +154,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            Uses security critical member _localizedStrings.
     /// Safe     - Does not expose any security critical info.
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) bool LocalizedStrings::FindLocaleName(
                                                                                  System::String^ localeName,
                                          [System::Runtime::InteropServices::Out] UINT32%         index
@@ -196,7 +190,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _localizedStrings.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::GetLocaleNameLength(
                                                 UINT32 index
                                                 )
@@ -228,8 +221,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// TreatAsSafe - Caller does not control size of native buffer and buffer is not exposed.
     ///             - Method does not return critical data.
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) System::String^ LocalizedStrings::GetLocaleName(
                                                    UINT32 index
                                                    )
@@ -275,7 +266,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _localizedStrings.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::GetStringLength(
                                             UINT32 index
                                             )
@@ -307,8 +297,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// TreatAsSafe - Caller does not control size of native buffer and buffer is not exposed.
     ///             - Method does not return critical data.
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) System::String^ LocalizedStrings::GetString(
                                                UINT32 index
                                                )

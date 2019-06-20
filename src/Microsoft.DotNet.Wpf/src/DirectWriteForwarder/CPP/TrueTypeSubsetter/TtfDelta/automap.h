@@ -12,11 +12,8 @@
 #ifndef AUTOMAP_DOT_H_DEFINED
 #define AUTOMAP_DOT_H_DEFINED
 
-[System::Security::SecurityCritical]
 int16 TTOAutoMap( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag);
-[System::Security::SecurityCritical]
 int16 MortAutoMap( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag);
-[System::Security::SecurityCritical]
 int16 AppleAutoMap(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag);
 
 #endif /* AUTOMAP_DOT_H_DEFINED */

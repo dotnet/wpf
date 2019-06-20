@@ -17,7 +17,6 @@ using namespace System::Diagnostics;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     [ClassInterface(ClassInterfaceType::None), ComVisible(true)]
-    [SecurityCritical(SecurityCriticalScope::Everything)] 
     private ref class FontFileStream : public IDWriteFontFileStreamMirror
     {  
         private:
@@ -90,7 +89,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// decisions based on the value of the file size (e.g., validation against a persisted file size).
             /// </remarks>
             [ComVisible(true)]
-            [SecurityCritical]
             virtual HRESULT GetFileSize(
                 __out UINT64* fileSize
                 );

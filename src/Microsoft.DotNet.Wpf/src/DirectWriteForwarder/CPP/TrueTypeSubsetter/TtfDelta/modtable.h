@@ -12,25 +12,15 @@
 #ifndef MODTABLE_DOT_H_DEFINED
 #define MODTABLE_DOT_H_DEFINED        
 
-[System::Security::SecurityCritical]
 int16 ModXmtxXhea( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint8 *puchKeepGlyphList, CONST uint16 usGlyphListCount, CONST uint16 usGlyphIndexCount, CONST uint16 usMaxGlyphIndexUsed, BOOL isHmtx, uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 int16 ModLTSH( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint8 *puchKeepGlyphList, CONST uint16 usGlyphListCount, CONST uint16 usGlyphIndexCount, uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 int16 ModHdmx( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint8 *puchKeepGlyphList, CONST uint16 usGlyphListCount, CONST uint16 usGlyphIndexCount, uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 int16 ModHead( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint16 usGlyphListCount, uint32 *pCheckSumAdjustment, uint32 *pulBytesWritten );
-[System::Security::SecurityCritical]
 int16 ModKern( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint8 *puchKeepGlyphList, CONST uint16 usGlyphListCount, CONST uint16 usFormat  , uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 int16 ModMaxP( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 int16 ModName(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint16 usLanguage, CONST uint16 usFormat, uint32 *pulBytesWritten );
-[System::Security::SecurityCritical]
 int16 ModOS2(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint16 usMinChr, uint16 usMaxChr, CONST uint16 usFormat, uint32 *pulBytesWritten );
-[System::Security::SecurityCritical]
 int16 ModPost(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo , CONST uint16 usFormat, uint32 *pulBytesWritten );
-[System::Security::SecurityCritical]
 int16 ModVDMX(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, CONST uint16 usFormat, uint32 *pulBytesWritten );
 
 #endif /* MODTABLE_DOT_H_DEFINED */

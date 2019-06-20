@@ -155,7 +155,6 @@ Thanks,
 /* ---------------------------------------------------------------------- */
 /* Convert an array of codepoints to user space if this is a symbol font  */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 UnicodeToSymbols(
 TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* ttfacc info */
 CONST CHAR_ID *pulKeepCharCodeList, /* list of chars to keep - from client */
@@ -212,7 +211,6 @@ USHORT usHighByte;
 /* Check if resulting glyph table would be empty for current keep list */
 /* and if it is the case, just add first non-empty glyph to the list.  */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 EnsureNonEmptyGlyfTable(
                         TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                         uint8 *puchKeepGlyphList, 
@@ -270,7 +268,6 @@ int16 EnsureNonEmptyGlyfTable(
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 MakeKeepGlyphList(
 TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* ttfacc info */
 CONST uint16 usListType, /* 0 = character list, 1 = glyph list */

@@ -62,7 +62,6 @@ static CONTROL_TABLE Control_Table[TAG_INDEX_COUNT];
 // methods to fail NGEN and be Jitted causing significant startup perf regressions.
 // This method has to be made SecurityCritical so that NGEN can process it!
 // It contains safe code.
-[SecurityCritical, SecurityTreatAsSafe]
 void ControlTableInit::Init()
 {
     if (!_isInitialized)
@@ -133,7 +132,6 @@ void ControlTableInit::Init()
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void ConvertLongTagToString(uint32 ulTag, __in_bcount(5) char *szTag)     /* convert a tag, as it has been read from the font, to a string */
 {
 uint32 ulSwappedTag;
@@ -143,7 +141,6 @@ uint32 ulSwappedTag;
     szTag[4] = '\0';
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void ConvertStringTagToLong(__in_bcount(4) const char *szTag, uint32 *pulTag)
 {
         memcpy((char *)pulTag, szTag, 4); 
@@ -151,7 +148,6 @@ void ConvertStringTagToLong(__in_bcount(4) const char *szTag, uint32 *pulTag)
 }
 /* functions to read font file data ------------------------------------- */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 TTDirectoryEntryOffset( 
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char * szTagName 
@@ -191,7 +187,6 @@ const uint32 *pulTag = (const uint32 *) szTagName;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetTTDirectory( 
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char * szTagName,
@@ -212,7 +207,6 @@ uint32 ulOffset;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 TTTableLength(
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char *  szTagName )
@@ -226,7 +220,6 @@ DIRECTORY Directory;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 TTTableOffset( 
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char * szTagName )
@@ -240,7 +233,6 @@ uint32 TTTableOffset(
 }
 /* this function calculates the checksum of a table already written to the buffer */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 TTTableChecksum(
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char * szTagName,
@@ -270,7 +262,6 @@ uint32 ulLength;
 /* ---------------------------------------------------------------------- */
 /* calcs the new checksum */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 UpdateChecksum( 
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char* szDirTag)
@@ -299,7 +290,6 @@ int16 errCode;
 /* ---------------------------------------------------------------------- */
 /* sets the new length, calcs the new checksum, makes sure offset on long word boundary */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 UpdateDirEntry(
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char *  szDirTag,
@@ -335,7 +325,6 @@ int16 errCode;
 /* ---------------------------------------------------------------------- */
 /* sets the new length, calcs the new checksum, makes sure offset on long word boundary */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 UpdateDirEntryAll(
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
     __in_bcount(4) const char *  szDirTag,
@@ -372,7 +361,6 @@ int16 errCode;
 
 /* ---------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 PRIVATE uint32 GetGeneric( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * puchBuffer, uint16 usTagIndex)
 {
 uint32 ulOffset;
@@ -389,49 +377,42 @@ uint16 usBytesRead;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetHHea( TTFACC_FILEBUFFERINFO * pInputBufferInfo, HHEA *  pHorizHead )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pHorizHead, HHEA_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetVHea( TTFACC_FILEBUFFERINFO * pInputBufferInfo, VHEA * pVertHead )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pVertHead, VHEA_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetHead( TTFACC_FILEBUFFERINFO * pInputBufferInfo, HEAD *  pHead )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pHead, HEAD_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetOS2( TTFACC_FILEBUFFERINFO * pInputBufferInfo, OS2 *pOs2 )      
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pOs2, OS2_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetNEWOS2( TTFACC_FILEBUFFERINFO * pInputBufferInfo, NEWOS2 *pNewOs2 )    
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pNewOs2, NEWOS2_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetVERSION2OS2( TTFACC_FILEBUFFERINFO * pInputBufferInfo, VERSION2OS2 *pVersion2Os2 )     
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pVersion2Os2, VERSION2OS2_INDEX));
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetSmartOS2(TTFACC_FILEBUFFERINFO * pInputBufferInfo, NEWOS2 *pOs2, BOOL *pbNewOS2)
 {
 uint32 ulOffset = 0L;
@@ -455,7 +436,6 @@ uint32 ulLength = 0L;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetSmarterOS2(TTFACC_FILEBUFFERINFO * pInputBufferInfo, MAINOS2 *pOs2)
 {
 uint32 ulOffset = 0L;
@@ -475,7 +455,6 @@ uint32 ulLength = 0L;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetMaxp( TTFACC_FILEBUFFERINFO * pInputBufferInfo, MAXP *  pMaxp )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) pMaxp, MAXP_INDEX));
@@ -483,28 +462,24 @@ uint32 GetMaxp( TTFACC_FILEBUFFERINFO * pInputBufferInfo, MAXP *  pMaxp )
 
 /* ---------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 uint32 GetPost( TTFACC_FILEBUFFERINFO * pInputBufferInfo, POST *  Post )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) Post, POST_INDEX));
 }
         
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetHdmx( TTFACC_FILEBUFFERINFO * pInputBufferInfo, HDMX *  Hdmx )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) Hdmx, HDMX_INDEX));
 }
         
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetLTSH( TTFACC_FILEBUFFERINFO * pInputBufferInfo, LTSH *  Ltsh )
 {
     return(GetGeneric(pInputBufferInfo, (uint8 *) Ltsh, LTSH_INDEX));
 }
 /* ---------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint16 GetUnitsPerEm( TTFACC_FILEBUFFERINFO * pInputBufferInfo )
 {
 /* get true type scaling factor */
@@ -517,7 +492,6 @@ HEAD Head = {0};
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint16 GetNumGlyphs( TTFACC_FILEBUFFERINFO * pInputBufferInfo )
 {
 MAXP MaxP = {0};
@@ -534,7 +508,6 @@ the whole thing out again.  This routine assumes that
 the checkSumAdjustment field was set to 0 and the 'head' 
 table checksum was computed while that was so.  */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void SetFileChecksum( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 ulLength )
 {
 uint32        ulCheckSum;
@@ -566,7 +539,6 @@ uint16 usBytesMoved;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 CopyBlock( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                 uint32 ulTarget,
                 uint32 ulSource,
@@ -604,7 +576,6 @@ account possible overlap between source and target */
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 CopyBlockOver( TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
                      CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                      uint32 ulTarget,
@@ -645,7 +616,6 @@ account possible overlap between source and target */
 /* copy a table from the input buffer to the output buffer to location *pulNewOutOffset */
 /* table should not already exist in the output buffer, it will get written elsewhere */ 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 CopyTableOver(TTFACC_FILEBUFFERINFO *pOutputBufferInfo,
                     CONST_TTFACC_FILEBUFFERINFO *pInputBufferInfo,
                     __in_bcount(4) const char * Tag,
@@ -701,7 +671,6 @@ uint16 usBytesWritten;
     return errCode;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 RoundToLongWord( uint32  ulLength )
 {
     ulLength = (ulLength + 3) & ~3;
@@ -710,7 +679,6 @@ uint32 RoundToLongWord( uint32  ulLength )
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR)
 uint16 ZeroLongWordGap( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                     uint32  ulOffset,
@@ -742,7 +710,6 @@ uint32 usPaddingBytes;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 uint16 ZeroLongWordAlign( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                     uint32  ulOffset, 

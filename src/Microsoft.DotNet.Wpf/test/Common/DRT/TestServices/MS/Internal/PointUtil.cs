@@ -23,7 +23,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a Point is considered safe. 
         /// </SecurityNote>
-        [SecuritySafeCritical]       
         public static Point ClientToRoot(Point pt, PresentationSource presentationSource)
         {
             // Convert from pixels into measure units.
@@ -45,7 +44,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a point is considered safe. 
         /// </SecurityNote>
-        [SecuritySafeCritical]              
         public static Point RootToClient(Point pt, PresentationSource presentationSource)
         {
             // REVIEW:
@@ -129,7 +127,6 @@ namespace MS.Internal
         ///     Convert a point from "client" coordinate space of a window into
         ///     the coordinate space of the screen.
         /// </summary>
-        [SecuritySafeCritical]
         public static Point ClientToScreen(Point ptClient, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.
@@ -192,7 +189,6 @@ namespace MS.Internal
         ///    Critical: This code accesses presentationSource
         ///    TreatAsSafe: Transforming a Point is considered safe. 
         /// </SecurityNote>
-        [SecuritySafeCritical]         
         internal static Point ScreenToClient(Point ptScreen, PresentationSource presentationSource)
         {
             // For now we only know how to use HwndSource.

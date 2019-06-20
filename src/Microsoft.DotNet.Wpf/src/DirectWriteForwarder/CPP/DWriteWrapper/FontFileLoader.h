@@ -16,7 +16,6 @@ using namespace System::Diagnostics;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     [ClassInterface(ClassInterfaceType::None), ComVisible(true)]
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class FontFileLoader : public IDWriteFontFileLoaderMirror
     {
         IFontSourceFactory^         _fontSourceFactory;
@@ -39,7 +38,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         /// Standard HRESULT error code.
         /// </returns>
         [ComVisible(true)]
-        [SecurityCritical]
         virtual HRESULT CreateStreamFromKey(
                                       __in_bcount(fontFileReferenceKeySize) void const* fontFileReferenceKey,
                                       UINT32 fontFileReferenceKeySize,

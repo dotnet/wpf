@@ -19,7 +19,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical    - Calls critical AnalyzeExtendedAndItemize overload
     /// </SecurityNote>
-    [SecurityCritical]
     IList<Span^>^ TextAnalyzer::Itemize(
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
@@ -124,8 +123,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///               the pointer passed to Itemize() is constructed internally so the call 
     ///               to TextItemizer->Itemize() is safe.
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     IList<Span^>^ TextAnalyzer::AnalyzeExtendedAndItemize(
         TextItemizer^ textItemizer, 
         __in_ecount(length) const WCHAR *text, 
@@ -152,7 +149,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical    - Receives pointers, arrays and their bounds as input.
     /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::AnalyzeExtendedCharactersAndDigits(
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
@@ -241,7 +237,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical    - Receives pointers, arrays and their bounds as input.
     /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::GetBlankGlyphsForControlCharacters(
         __in_ecount(textLength)     const WCHAR*     pTextString,
         UINT32                                       textLength,
@@ -297,7 +292,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     }
 
 // Warning 4714 (__forceinline function not inlined)
-// is expected here because TextAnalyzer::GetGlyphs is marked with [SecurityCritical]
 // and tries to inline HRESULT_FROM_WIN32.
 // inlining is prevented when the caller or the callee
 // are marked with any security attribute (critical, safecritical, treatassafecritical).
@@ -315,8 +309,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///                 To new and delete native buffers.
     ///                 To perform unsafe reinterpret_casts
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphs(
         __in_ecount(textLength) const WCHAR*         textString,
         UINT32                                       textLength,
@@ -504,7 +496,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical    - Receives pointers, arrays and their bounds as input.
     /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::GetGlyphPlacementsForControlCharacters(
         __in_ecount(textLength) const WCHAR* pTextString,
         UINT32 textLength,
@@ -590,8 +581,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///                 To allocate and delete temporary native buffers
     ///                 To perform unsafe reinterpret_casts
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphPlacements(
         __in_ecount(textLength) const WCHAR*                         textString,
         __in_ecount(textLength) UINT16 const*                        clusterMap,
@@ -849,8 +838,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            To perform unsafe reinterpret_casts
     ///            To call Marshal.Copy
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphsAndTheirPlacements(
         __in_ecount(textLength) const WCHAR* textString,
         UINT32 textLength,
@@ -972,7 +959,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Calls security critical itemProps->ScriptAnalysis.
     /// Safe     - Does not expose the pointer returned from itemProps->ScriptAnalysis.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) DWRITE_SCRIPT_SHAPES TextAnalyzer::GetScriptShapes(ItemProps^ itemProps)
     {
         return ((DWRITE_SCRIPT_ANALYSIS*)(itemProps->ScriptAnalysis))->shapes;

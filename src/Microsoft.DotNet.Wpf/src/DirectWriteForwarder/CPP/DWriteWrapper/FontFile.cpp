@@ -17,8 +17,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///          - Assigns security critical _guidForIDWriteLocalFontFileLoader
     /// Safe     - The data used to initialize _guidForIDWriteLocalFontFileLoader is const.
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     static FontFile::FontFile()
     {
         System::Guid guid = System::Guid("b2d9f3ec-c9fe-4a11-a2ec-d86208f7c0a2");
@@ -32,7 +30,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            This whole object is wrapped around the passed in pointer
     ///            So this ctor assumes safety of the passed in pointer.
     /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     FontFile::FontFile(IDWriteFontFile* fontFile)
     {
         _fontFile = gcnew NativeIUnknownWrapper<IDWriteFontFile>(fontFile);
@@ -42,7 +39,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Manipulates security critical member _fontFile.
     /// Safe     - Just releases the interface.
     /// </SecurityNote>
-    //[SecuritySafeCritical]
     __declspec(noinline) FontFile::~FontFile()
     {
         if (_fontFile != nullptr)
@@ -56,7 +52,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical _fontFile pointer.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool FontFile::Analyze(
                           [System::Runtime::InteropServices::Out] DWRITE_FONT_FILE_TYPE%  fontFileType,
                           [System::Runtime::InteropServices::Out] DWRITE_FONT_FACE_TYPE%  fontFaceType,
@@ -94,7 +89,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Exposes critical member _fontFile.
     /// </SecurityNote>
-    [SecurityCritical]
     IDWriteFontFile* FontFile::DWriteFontFileNoAddRef::get()
     {
         return _fontFile->Value;
@@ -106,8 +100,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///             - Exposes Font File path which can expose the windows folder location 
     ///               to partial trust apps.
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     System::String^ FontFile::GetUriPath()
     {
         void* fontFileReferenceKey;
@@ -178,8 +170,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Asserts unmanaged code permissions.
     /// Safe     - This function does not perform dangerous operations.
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) void FontFile::ReleaseInterface(IDWriteLocalFontFileLoader** ppInterface)
     {
         if (ppInterface && *ppInterface)

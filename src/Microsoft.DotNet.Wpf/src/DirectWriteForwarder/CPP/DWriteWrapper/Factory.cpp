@@ -19,7 +19,6 @@ typedef HRESULT (WINAPI *DWRITECREATEFACTORY)(DWRITE_FACTORY_TYPE factoryType, R
 /// Critical - Returns a pointer to the DWriteCreateFactory method which
 ///            can be used to access the shared factory.
 /// </SecurityNote>
-[System::Security::SecurityCritical]
 extern void *GetDWriteCreateFactoryFunctionPointer();
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
@@ -27,7 +26,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Calls security critical Factory ctor().
     /// </SecurityNote>
-    [SecurityCritical]
     Factory^ Factory::Create(
                             FactoryType                   factoryType,
                             IFontSourceCollectionFactory^ fontSourceCollectionFactory,
@@ -45,8 +43,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            'System.Runtime.InteropServices.Marshal.Release(System.IntPtr)' but this is ok since they are called for objects that this method create.
     ///            Asserts unmanaged code permissions to call Marshal.*
     /// </SecurityNote>
-    //[SecurityCritical] - tagged in header file
-    //[SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     Factory::Factory(
                     FactoryType                   factoryType,
                     IFontSourceCollectionFactory^ fontSourceCollectionFactory,
@@ -99,7 +95,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            Assigns security critical member _pFactory.
     /// Safe     - Does not expose any critical info.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) void Factory::Initialize(
                                                  FactoryType factoryType
                                                  )
@@ -124,9 +119,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Safe     - Just releases the interface.
     ///          - Marshal is called with trusted inputs.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) bool Factory::ReleaseHandle()
     {
         if (_wpfFontCollectionLoader != nullptr)
@@ -163,7 +156,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Assumes that the user has permissions to access filePathUri.
     /// </SecurityNote>
-    [SecurityCritical]
     __declspec(noinline) FontFile^ Factory::CreateFontFile(
                                      System::Uri^ filePathUri
                                      )
@@ -195,7 +187,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Calls security critical CreateFontFace.
     /// </SecurityNote>
-    [SecurityCritical]
     FontFace^ Factory::CreateFontFace(
                                      System::Uri^ filePathUri,
                                      unsigned int faceIndex
@@ -211,7 +202,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Calls security critical CreateFontFile.
     /// </SecurityNote>
-    [SecurityCritical]
     FontFace^ Factory::CreateFontFace(
                                      System::Uri^    filePathUri,
                                      unsigned int    faceIndex,
@@ -291,7 +281,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical _pFactory pointer.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontCollection^ Factory::GetSystemFontCollection(
                                                     bool checkForUpdates
                                                     )
@@ -319,8 +308,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///          - Asserts Unmanaged code permissions to call Marshal.* But
     ///            Marshal is called with trusted inputs.
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) FontCollection^ Factory::GetFontCollection(System::Uri^ uri)
     {
         System::String^ uriString = uri->AbsoluteUri;
@@ -357,8 +344,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///          - Asserts unmanaged code permissions to call Marshal.* However the call to Marshal is safe
     ///            because it is called with trusted inputs.
     /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT Factory::CreateFontFile(
                                    IDWriteFactory*         factory,
                                    FontFileLoader^         fontFileLoader,
@@ -488,7 +473,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Safe     - It does not expose the pointer it uses.
     ///          - TextAnalyzer ctor() is called with a trusted pointer.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) TextAnalyzer^ Factory::CreateTextAnalyzer()
     {
         IDWriteTextAnalyzer* textAnalyzer = NULL;

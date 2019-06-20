@@ -22,8 +22,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            because it is called with trusted inputs.
     /// </SecurityNote>
     [ComVisible(true)]    
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT FontCollectionLoader::CreateEnumeratorFromKey(
                                                           IntPtr factory,
                                                           __in_bcount(collectionKeySize) void const* collectionKey,

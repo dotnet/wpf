@@ -27,7 +27,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <SecurityNote>
             /// Critical - native pointer.
             /// </SecurityNote>
-            [SecurityCritical]
             NativeIUnknownWrapper<IDWriteFontFile>^ _fontFile;
 
             /// <summary>
@@ -40,7 +39,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <SecurityNote>
             /// Critical - native pointer.
             /// </SecurityNote>
-            [SecurityCritical]
             static NativePointerWrapper<_GUID>^ _guidForIDWriteLocalFontFileLoader;
 
             /// <summary>
@@ -61,7 +59,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Constructs a Font File object.
             /// </summary>
             /// <param name="fontFile">A pointer to the DWrite fontFile object.</param>
-            [SecurityCritical]
             FontFile(IDWriteFontFile* fontFile);
 
             /// <summary>
@@ -75,7 +72,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </summary>
             property IDWriteFontFile* DWriteFontFileNoAddRef
             {
-                [SecurityCritical]
                 IDWriteFontFile* get();
             }
 
@@ -106,13 +102,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Gets the path of this font file.
             /// </summary>
             /// <returns>The path of this font file.</returns>
-            [SecurityCritical]
             System::String^ GetUriPath();
 
             //// <summary>
             /// dtor.
             /// </summary>
-            [SecuritySafeCritical]
             ~FontFile();
     };
 

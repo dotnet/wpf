@@ -13,7 +13,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            This whole object is wrapped around the passed in pointer
     ///            So this ctor assumes safety of the passed in pointer.
     /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     FontFace::FontFace(IDWriteFontFace* fontFace)
     {
         _fontFace = gcnew NativeIUnknownWrapper<IDWriteFontFace>(fontFace);
@@ -23,7 +22,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Manipulates security critical member _fontCollection.
     /// Safe     - Just releases the interface.
     /// </SecurityNote>
-    //[SecuritySafeCritical]
     __declspec(noinline) FontFace::~FontFace()
     {
         if (_fontFace != nullptr)
@@ -40,7 +38,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Exposes the native pointer that this object wraps.
     /// </SecurityNote>
-    [SecurityCritical]
     IDWriteFontFace* FontFace::DWriteFontFaceNoAddRef::get()
     {
         return _fontFace->Value;
@@ -49,7 +46,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Exposes the native pointer that this object wraps.
     /// </SecurityNote>
-    [SecurityCritical]
     System::IntPtr FontFace::DWriteFontFaceAddRef::get()
     {
         _fontFace->Value->AddRef();
@@ -60,7 +56,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontFaceType FontFace::Type::get()
     {
         DWRITE_FONT_FACE_TYPE dwriteFontFaceType = _fontFace->Value->GetType();
@@ -72,7 +67,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontFile^ FontFace::GetFileZero()
     {
         unsigned int numberOfFiles = 0;
@@ -122,7 +116,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) unsigned int FontFace::Index::get()
     {
         unsigned int index = _fontFace->Value->GetIndex();
@@ -134,7 +127,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontSimulations FontFace::SimulationFlags::get()
     {
         DWRITE_FONT_SIMULATIONS dwriteFontSimulations = _fontFace->Value->GetSimulations();
@@ -146,7 +138,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool FontFace::IsSymbolFont::get()
     {
         BOOL isSymbolFont = _fontFace->Value->IsSymbolFont();
@@ -158,7 +149,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontMetrics^ FontFace::Metrics::get()
     {
         if (_fontMetrics == nullptr)
@@ -177,7 +167,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT16 FontFace::GlyphCount::get()
     {
         UINT16 glyphCount = _fontFace->Value->GetGlyphCount();
@@ -190,7 +179,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            Receives a native pointer as an argument.
     ///            Exposes a native pointer to the caller.
     /// </SecurityNote>
-    [SecurityCritical]
     void FontFace::GetDesignGlyphMetrics(
         __in_ecount(glyphCount) const UINT16 *pGlyphIndices,
         UINT32 glyphCount,
@@ -213,7 +201,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            Receives a native pointer as an argument.
     ///            Exposes a native pointer to the caller.
     /// </SecurityNote>
-    [SecurityCritical]
     void FontFace::GetDisplayGlyphMetrics(
         __in_ecount(glyphCount) const UINT16 *pGlyphIndices,
         UINT32 glyphCount,
@@ -243,7 +230,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            Receives a native pointer as an argument.
     ///            Exposes a native pointer to the caller.
     /// </SecurityNote>
-    [SecurityCritical]
     void FontFace::GetArrayOfGlyphIndices(
         __in_ecount(glyphCount) const UINT32* pCodePoints,
         UINT32 glyphCount,
@@ -265,7 +251,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <SecurityNote>
     /// Critical - Exposes the data from a font.
     /// </SecurityNote>
-    [SecurityCritical]
     __declspec(noinline) bool FontFace::TryGetFontTable(
                                                                           OpenTypeTableTag openTypeTableTag,         
                                   [System::Runtime::InteropServices::Out] array<byte>^%    tableData
@@ -305,7 +290,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool FontFace::ReadFontEmbeddingRights([System::Runtime::InteropServices::Out] unsigned short% fsType)
     {
         void* os2Table;

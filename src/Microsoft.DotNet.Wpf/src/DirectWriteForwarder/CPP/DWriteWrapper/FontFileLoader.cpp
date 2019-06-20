@@ -17,8 +17,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            because it is called with trusted inputs.
     /// </SecurityNote>
     [ComVisible(true)]
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT FontFileLoader::CreateStreamFromKey(
                                                 __in_bcount(fontFileReferenceKeySize) void const* fontFileReferenceKey,
                                                 UINT32 fontFileReferenceKeySize,

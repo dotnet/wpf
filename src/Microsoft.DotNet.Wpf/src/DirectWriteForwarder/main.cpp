@@ -49,7 +49,6 @@ using namespace System::Diagnostics;
 //
 
 [DllImport("user32.dll", EntryPoint="SetProcessDPIAware")]
-[SuppressUnmanagedCodeSecurity, SecurityCritical]
 WINUSERAPI
 BOOL
 WINAPI
@@ -75,8 +74,6 @@ public:
     //                known library name, limiting the risk.
     //
     // </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     static void LoadDwrite( )
     {
         // We load dwrite here because it's cleanup logic is different from the other native dlls
@@ -94,7 +91,6 @@ public:
     // Critical -- Calls critical FreeLibrary to unload a native library
     // TreatAsSafe -- A known\trusted handle to dwrite.dll is passed
     // </SecurityNote>    
-    [SecuritySafeCritical]
      __declspec(noinline) 
     static void UnloadDWrite()
     {
@@ -116,7 +112,6 @@ public:
     /// Critical: Exposes a pointer to the DWrite method that is used to create factories
     ///           which can be used to obtain any info about fonts.
     /// </SecurityNote>
-    [SecurityCritical]
     static void *GetDWriteCreateFactoryFunctionPointer()
     {
         return m_pfnDWriteCreateFactory;
@@ -125,7 +120,6 @@ public:
     /// <SecurityNote>
     /// Critical: Nulls a pointer to the DWrite method that is used to create factories
     /// </SecurityNote>
-    [SecurityCritical]
     static void ClearDWriteCreateFactoryFunctionPointer()
     {
         m_pfnDWriteCreateFactory = NULL;    
@@ -138,7 +132,6 @@ private:
     // <SecurityNote>
     // Critical -- Field is untyped pointer
     // </SecurityNote>
-    [SecurityCritical]
     static void *m_pfnDWriteCreateFactory;
 }; 
 }} // namespace MS.Internal
@@ -154,7 +147,6 @@ public:
     // TreatAsSafe -- The function passed to atexit is trusted.
     //
     // </SecurityNote>    
-    [SecuritySafeCritical]
     __declspec(noinline) CModuleInitialize(void (*cleaningUpFunc)())
     {
         IsProcessDpiAware();
@@ -171,8 +163,6 @@ public:
     /// Safe    : The libraries to be released are coming from internally 
     ///           trusted source
     /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     // Previously we had this as a class dtor but we found out that
     // we can't use a destructor due to an issue with how it's registered to be called on exit:
     // A compiler-generated function calls _atexit_m_appdomain(). But that generated function is transparenct,
@@ -202,7 +192,6 @@ public:
     /// Critical: Exposes a pointer to the DWrite method that is used to create factories
     ///           which can be used to obtain any info about fonts.
     /// </SecurityNote>
-    [SecurityCritical]
     void *GetDWriteCreateFactoryFunctionPointer()
     {
         return MS::Internal::NativeWPFDLLLoader::GetDWriteCreateFactoryFunctionPointer();
@@ -223,7 +212,6 @@ private :
     //                lets the OS know how to treat the visual display of the app.
     //
     // </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) void IsProcessDpiAware( )
     {
         Version  ^osVersion = (Environment::OSVersion)->Version;
@@ -275,7 +263,6 @@ void CleanUp();
 /// Critical: Contains unverifiable native code.
 /// Safe    : The code is safe and only returns a new object.
 /// </SecurityNote>
-[SecuritySafeCritical]
 __declspec(noinline) static System::IntPtr CreateCModuleInitialize()
 {
     return System::IntPtr(new CModuleInitialize(CleanUp));
@@ -286,7 +273,6 @@ __declspec(noinline) static System::IntPtr CreateCModuleInitialize()
 // Then the generated method is unsafe, fails NGENing and causes Jitting.
 __declspec(appdomain) static System::IntPtr cmiStartupRunner = CreateCModuleInitialize();
 
-[SecuritySafeCritical]
 void CleanUp()
 {
     CModuleInitialize* pCmiStartupRunner = static_cast<CModuleInitialize*>(cmiStartupRunner.ToPointer());
@@ -301,7 +287,6 @@ void CleanUp()
 /// Critical: Exposes a pointer to the DWrite method that is used to create factories
 ///           which can be used to obtain any info about fonts.
 /// </SecurityNote>
-[SecurityCritical]
 void *GetDWriteCreateFactoryFunctionPointer()
 {
     return (static_cast<CModuleInitialize*>(cmiStartupRunner.ToPointer()))->GetDWriteCreateFactoryFunctionPointer();

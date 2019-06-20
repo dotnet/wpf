@@ -34,22 +34,18 @@ namespace MS.Internal.Drt
     using System.Windows;
     using MS.Win32;
 
-    [SuppressUnmanagedCodeSecurity]
     public static class NativeMethodsSetLastError
     {
 #if WINDOWSFORMSINTEGRATION     // WinFormsIntegration
 
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [DllImport(ExternDll.PresentationNativeDll, EntryPoint="EnableWindowWrapper", SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         public static extern bool EnableWindow(IntPtr hWnd, bool enable);
 
 #elif UIAUTOMATIONCLIENT || UIAUTOMATIONCLIENTSIDEPROVIDERS   // UIAutomation
 
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [DllImport(ExternDll.PresentationNativeDll, EntryPoint="GetWindowLongWrapper", CharSet=CharSet.Auto, SetLastError=true)]
         public static extern Int32 GetWindowLong(IntPtr hWnd, int nIndex );
 
-        [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [DllImport(ExternDll.PresentationNativeDll, EntryPoint="GetWindowLongPtrWrapper", CharSet=CharSet.Auto, SetLastError=true)]
         public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex );
 

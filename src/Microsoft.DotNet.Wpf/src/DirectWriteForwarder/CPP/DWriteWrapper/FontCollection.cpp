@@ -12,7 +12,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///            This whole object is wrapped around the passed in pointer
     ///            So this ctor assumes safety of the passed in pointer.
     /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     FontCollection::FontCollection(IDWriteFontCollection* fontCollection)
     {
         _fontCollection = gcnew NativeIUnknownWrapper<IDWriteFontCollection>(fontCollection);
@@ -23,7 +22,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     ///          - Calls security critical Util::GetPtrToStringChars.
     /// Safe     - Does not expose any security critical info.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool FontCollection::FindFamilyName(
                                                                                System::String^ familyName,
                                        [System::Runtime::InteropServices::Out] unsigned int%   index
@@ -48,7 +46,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontCollection and fontFace->DWriteFontFace.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) Font^ FontCollection::GetFontFromFontFace(FontFace^ fontFace)
     {
         IDWriteFontFace* dwriteFontFace = fontFace->DWriteFontFaceNoAddRef;
@@ -71,7 +68,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontCollection and calls security critical ctor FontFamily.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontFamily^ FontCollection::default::get(unsigned int familyIndex)
     {
         IDWriteFontFamily* dwriteFontFamily = NULL;
@@ -104,7 +100,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// Critical - Uses security critical member _fontCollection.
     /// Safe     - It does not expose the pointer it uses.
     /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) unsigned int FontCollection::FamilyCount::get()
     {    
         UINT32 familyCount = _fontCollection->Value->GetFontFamilyCount();

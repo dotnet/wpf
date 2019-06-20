@@ -91,7 +91,7 @@ namespace System.Windows
         {
             if (format == null)
             {
-                throw new ArgumentNullException("format");
+                throw new ArgumentNullException(nameof(format));
             }
 
             if (format == string.Empty)
@@ -135,7 +135,7 @@ namespace System.Windows
         {
             if (!DataFormats.IsValidTextDataFormat(format))
             {
-                throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
+                throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
             }
 
             return ContainsDataInternal(DataFormats.ConvertToDataFormats(format));
@@ -183,7 +183,7 @@ namespace System.Windows
         {
             if (format == null)
             {
-                throw new ArgumentNullException("format");
+                throw new ArgumentNullException(nameof(format));
             }
 
             if (format == string.Empty)
@@ -236,7 +236,7 @@ namespace System.Windows
         {
             if (!DataFormats.IsValidTextDataFormat(format))
             {
-                throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
+                throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
             }
 
             string text;
@@ -258,7 +258,7 @@ namespace System.Windows
         {
             if (audioBytes == null)
             {
-                throw new ArgumentNullException("audioBytes");
+                throw new ArgumentNullException(nameof(audioBytes));
             }
 
             SetAudio(new MemoryStream(audioBytes));
@@ -271,7 +271,7 @@ namespace System.Windows
         {
             if (audioStream == null)
             {
-                throw new ArgumentNullException("audioStream");
+                throw new ArgumentNullException(nameof(audioStream));
             }
 
             SetDataInternal(DataFormats.WaveAudio, audioStream);
@@ -284,7 +284,7 @@ namespace System.Windows
         {
             if (format == null)
             {
-                throw new ArgumentNullException("format");
+                throw new ArgumentNullException(nameof(format));
             }
 
             if (format == string.Empty)
@@ -294,7 +294,7 @@ namespace System.Windows
 
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             SetDataInternal(format, data);
@@ -307,7 +307,7 @@ namespace System.Windows
         {
             if (fileDropList == null)
             {
-                throw new ArgumentNullException("fileDropList");
+                throw new ArgumentNullException(nameof(fileDropList));
             }
 
             if (fileDropList.Count == 0)
@@ -342,7 +342,7 @@ namespace System.Windows
         {
             if (image == null)
             {
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             }
 
             SetDataInternal(DataFormats.Bitmap, image);
@@ -355,7 +355,7 @@ namespace System.Windows
         {
             if (text == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             SetText(text, TextDataFormat.UnicodeText);
@@ -368,12 +368,12 @@ namespace System.Windows
         {
             if (text == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             if (!DataFormats.IsValidTextDataFormat(format))
             {
-                throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
+                throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
             }
 
             SetDataInternal(DataFormats.ConvertToDataFormats(format), text);
@@ -406,7 +406,7 @@ namespace System.Windows
 
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             bReturn = false;
@@ -459,7 +459,7 @@ namespace System.Windows
 
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             SetDataObject(data, false);
@@ -520,7 +520,7 @@ namespace System.Windows
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             IComDataObject dataObject;

@@ -443,7 +443,6 @@ namespace System.Windows
             }
         }
 
-        [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {
             if (args == null)

@@ -15,8 +15,7 @@
 #   System.Windows.Media.Imaging.BitmapDecoder.SealObject
 
 # All
-T:System.Security.SecurityCritical
-T:System.Security.SecuritySafeCritical
+
 
 # PresentationCore
 T:System.Windows.Media.Composition.DUCE.Channel

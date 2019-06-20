@@ -1,0 +1,7 @@
+T:System.Security.SecurityCritical
+T:System.Security.SecuritySafeCritical
+T:System.Security.SecurityTreatAsSafeAttribute
+T:System.Security.Permissions.UIPermissionAttribute
+T:System.Security.Permissions.SecurityPermissionAttribute
+T:System.Security.Permissions.PermissionSetAttribute
+T:System.Security.Permissions.*

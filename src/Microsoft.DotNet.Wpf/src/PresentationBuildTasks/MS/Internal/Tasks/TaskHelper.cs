@@ -316,29 +316,33 @@ namespace MS.Internal.Tasks
                         }
                     }
                 }
-#if NETFX
+
                 // Check the Global Assembly Cache (GAC) on .NET Framework only.
-                if (bCouldbeChanged)
-                {
-                    IEnumerable<string> gacRoots = GetGacPaths();
-                    if (gacRoots != null)
-                    {
-                        foreach (string gacRoot in gacRoots)
-                        {
-                            if (!String.IsNullOrEmpty(gacRoot) && assemblyPath.StartsWith(gacRoot, StringComparison.OrdinalIgnoreCase) == true)
-                            {
-                                bCouldbeChanged = false;
-                            }
-                        }
-                    }
-                }
-#endif
+                TestGacPaths(assemblyPath, ref bCouldbeChanged);
             }
 
             return bCouldbeChanged;
-
         }
 
+        // PresentationBuildTasks is built for both .NET Core and .NET Framework. 
+        // On .NET Framework, test the Global Assembly Cache (GAC) for changed 
+        // assemblies.  This test is a no-op on .NET Core.
+        private static void TestGacPaths(string assemblyPath, ref bool bCouldbeChanged)
+        {
+#if NETFX
+            IEnumerable<string> gacRoots = GetGacPaths();
+            if (gacRoots != null)
+            {
+                foreach (string gacRoot in gacRoots)
+                {
+                    if (!String.IsNullOrEmpty(gacRoot) && assemblyPath.StartsWith(gacRoot, StringComparison.OrdinalIgnoreCase) == true)
+                    {
+                        bCouldbeChanged = false;
+                    }
+                }
+            }
+#endif 
+        }
 
         internal static string GetWholeExceptionMessage(Exception exception)
         {

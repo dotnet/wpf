@@ -100,9 +100,7 @@ namespace System.ComponentModel
         public abstract object GroupNameFromItem(object item, int level, System.Globalization.CultureInfo culture);
         public virtual bool NamesMatch(object groupName, object itemName) { throw null; }
         protected virtual void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeGroupNames() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeSortDescriptions() { throw null; }
     }
     public partial interface ICollectionView : System.Collections.IEnumerable, System.Collections.Specialized.INotifyCollectionChanged
@@ -222,11 +220,8 @@ namespace System.ComponentModel
         Valid = 8,
         All = 15,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct SortDescription
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public SortDescription(string propertyName, System.ComponentModel.ListSortDirection direction) { throw null; }
         public System.ComponentModel.ListSortDirection Direction { get { throw null; } set { } }
         public bool IsSealed { get { throw null; } }
@@ -323,7 +318,6 @@ namespace System.IO.Packaging
         public string TimeFormat { get { throw null; } }
         public System.Collections.Generic.List<string> GetPartTransformList(System.Uri partName) { throw null; }
         public System.IO.Packaging.VerifyResult Verify() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.SecurityTreatAsSafeAttribute]
         public System.IO.Packaging.VerifyResult Verify(System.Security.Cryptography.X509Certificates.X509Certificate signingCertificate) { throw null; }
     }
@@ -351,10 +345,7 @@ namespace System.IO.Packaging
         public System.IO.Packaging.PackageDigitalSignature Sign(System.Collections.Generic.IEnumerable<System.Uri> parts, System.Security.Cryptography.X509Certificates.X509Certificate certificate) { throw null; }
         public System.IO.Packaging.PackageDigitalSignature Sign(System.Collections.Generic.IEnumerable<System.Uri> parts, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Collections.Generic.IEnumerable<System.IO.Packaging.PackageRelationshipSelector> relationshipSelectors) { throw null; }
         public System.IO.Packaging.PackageDigitalSignature Sign(System.Collections.Generic.IEnumerable<System.Uri> parts, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Collections.Generic.IEnumerable<System.IO.Packaging.PackageRelationshipSelector> relationshipSelectors, string signatureId) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.IO.Packaging.PackageDigitalSignature Sign(System.Collections.Generic.IEnumerable<System.Uri> parts, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Collections.Generic.IEnumerable<System.IO.Packaging.PackageRelationshipSelector> relationshipSelectors, string signatureId, System.Collections.Generic.IEnumerable<System.Security.Cryptography.Xml.DataObject> signatureObjects, System.Collections.Generic.IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static System.Security.Cryptography.X509Certificates.X509ChainStatusFlags VerifyCertificate(System.Security.Cryptography.X509Certificates.X509Certificate certificate) { throw null; }
         public System.IO.Packaging.VerifyResult VerifySignatures(bool exitOnFailure) { throw null; }
     }
@@ -499,7 +490,6 @@ namespace System.Security.RightsManagement
         WindowsPassport = 2,
         Internal = 3,
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class ContentGrant
     {
         public ContentGrant(System.Security.RightsManagement.ContentUser user, System.Security.RightsManagement.ContentRight right) { }
@@ -525,7 +515,6 @@ namespace System.Security.RightsManagement
         DocumentEdit = 11,
         Export = 12,
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class ContentUser
     {
         public ContentUser(string name, System.Security.RightsManagement.AuthenticationType authenticationType) { }
@@ -537,7 +526,6 @@ namespace System.Security.RightsManagement
         public override int GetHashCode() { throw null; }
         public bool IsAuthenticated() { throw null; }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class CryptoProvider : System.IDisposable
     {
         internal CryptoProvider() { }
@@ -552,7 +540,6 @@ namespace System.Security.RightsManagement
         public byte[] Encrypt(byte[] clearText) { throw null; }
         ~CryptoProvider() { }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class LocalizedNameDescriptionPair
     {
         public LocalizedNameDescriptionPair(string name, string description) { }
@@ -561,7 +548,6 @@ namespace System.Security.RightsManagement
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class PublishLicense
     {
         public PublishLicense(string signedPublishLicense) { }
@@ -585,8 +571,6 @@ namespace System.Security.RightsManagement
         public RightsManagementException(string message) { }
         public RightsManagementException(string message, System.Exception innerException) { }
         public System.Security.RightsManagement.RightsManagementFailureCode FailureCode { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Flags=System.Security.Permissions.SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public enum RightsManagementFailureCode
@@ -686,7 +670,6 @@ namespace System.Security.RightsManagement
         OwnerLicenseNotFound = -2147168395,
         Success = 0,
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class SecureEnvironment : System.IDisposable
     {
         internal SecureEnvironment() { }
@@ -700,7 +683,6 @@ namespace System.Security.RightsManagement
         public static bool IsUserActivated(System.Security.RightsManagement.ContentUser user) { throw null; }
         public static void RemoveActivatedUser(System.Security.RightsManagement.ContentUser user) { }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class UnsignedPublishLicense
     {
         public UnsignedPublishLicense() { }
@@ -714,7 +696,6 @@ namespace System.Security.RightsManagement
         public System.Security.RightsManagement.PublishLicense Sign(System.Security.RightsManagement.SecureEnvironment secureEnvironment, out System.Security.RightsManagement.UseLicense authorUseLicense) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     public partial class UseLicense
     {
         public UseLicense(string useLicense) { }
@@ -836,11 +817,8 @@ namespace System.Windows
         public static System.Windows.DependencyPropertyKey RegisterReadOnly(string name, System.Type propertyType, System.Type ownerType, System.Windows.PropertyMetadata typeMetadata, System.Windows.ValidateValueCallback validateValueCallback) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DependencyPropertyChangedEventArgs
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public DependencyPropertyChangedEventArgs(System.Windows.DependencyProperty property, object oldValue, object newValue) { throw null; }
         public object NewValue { get { throw null; } }
         public object OldValue { get { throw null; } }
@@ -900,10 +878,8 @@ namespace System.Windows
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Int32RectConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Converters.Int32RectValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Int32Rect : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Int32Rect(int x, int y, int width, int height) { throw null; }
         public static System.Windows.Int32Rect Empty { get { throw null; } }
         public bool HasArea { get { throw null; } }
@@ -935,10 +911,8 @@ namespace System.Windows
     {
         bool ReceiveWeakEvent(System.Type managerType, object sender, System.EventArgs e);
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct LocalValueEntry
     {
-        private object _dummy;
         public System.Windows.DependencyProperty Property { get { throw null; } }
         public object Value { get { throw null; } }
         public override bool Equals(object obj) { throw null; }
@@ -946,11 +920,8 @@ namespace System.Windows
         public static bool operator ==(System.Windows.LocalValueEntry obj1, System.Windows.LocalValueEntry obj2) { throw null; }
         public static bool operator !=(System.Windows.LocalValueEntry obj1, System.Windows.LocalValueEntry obj2) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct LocalValueEnumerator : System.Collections.IEnumerator
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public int Count { get { throw null; } }
         public System.Windows.LocalValueEntry Current { get { throw null; } }
         object System.Collections.IEnumerator.Current { get { throw null; } }
@@ -961,7 +932,6 @@ namespace System.Windows
         public static bool operator !=(System.Windows.LocalValueEnumerator obj1, System.Windows.LocalValueEnumerator obj2) { throw null; }
         public void Reset() { }
     }
-    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("PresentationFramework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public partial class NameScope : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable, System.Windows.Markup.INameScope, System.Windows.Markup.INameScopeDictionary
     {
         public static readonly System.Windows.DependencyProperty NameScopeProperty;
@@ -991,10 +961,8 @@ namespace System.Windows
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.PointConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Converters.PointValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Point : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Point(double x, double y) { throw null; }
         public double X { get { throw null; } set { } }
         public double Y { get { throw null; } set { } }
@@ -1045,10 +1013,8 @@ namespace System.Windows
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.RectConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Converters.RectValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Rect : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Rect(double x, double y, double width, double height) { throw null; }
         public Rect(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
         public Rect(System.Windows.Point location, System.Windows.Size size) { throw null; }
@@ -1112,10 +1078,8 @@ namespace System.Windows
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.SizeConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Converters.SizeValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Size : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Size(double width, double height) { throw null; }
         public static System.Windows.Size Empty { get { throw null; } }
         public double Height { get { throw null; } set { } }
@@ -1142,28 +1106,20 @@ namespace System.Windows
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-    [System.Security.SecurityCriticalAttribute(System.Security.SecurityCriticalScope.Everything)]
     [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public partial class SplashScreen
     {
-        [System.Security.SecurityCriticalAttribute]
         public SplashScreen(System.Reflection.Assembly resourceAssembly, string resourceName) { }
-        [System.Security.SecurityCriticalAttribute]
         public SplashScreen(string resourceName) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Close(System.TimeSpan fadeoutDuration) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Show(bool autoClose) { }
-        [System.Security.SecurityCriticalAttribute]
         public void Show(bool autoClose, bool topMost) { }
     }
     public delegate bool ValidateValueCallback(object value);
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.VectorConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Converters.VectorValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Vector : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Vector(double x, double y) { throw null; }
         public double Length { get { throw null; } }
         public double LengthSquared { get { throw null; } }
@@ -1621,39 +1577,31 @@ namespace System.Windows.Interop
 {
     public static partial class ComponentDispatcher
     {
-        public static System.Windows.Interop.MSG CurrentKeyboardMessage { [System.Security.SecurityCriticalAttribute]get { throw null; } }
-        public static bool IsThreadModal { [System.Security.SecurityCriticalAttribute]get { throw null; } }
+        public static System.Windows.Interop.MSG CurrentKeyboardMessage { get { throw null; } }
+        public static bool IsThreadModal { get { throw null; } }
         public static event System.EventHandler EnterThreadModal { add { } remove { } }
         public static event System.EventHandler LeaveThreadModal { add { } remove { } }
         public static event System.Windows.Interop.ThreadMessageEventHandler ThreadFilterMessage { add { } remove { } }
         public static event System.EventHandler ThreadIdle { add { } remove { } }
         public static event System.Windows.Interop.ThreadMessageEventHandler ThreadPreprocessMessage { add { } remove { } }
-        [System.Security.SecurityCriticalAttribute]
         public static void PopModal() { }
-        [System.Security.SecurityCriticalAttribute]
         public static void PushModal() { }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void RaiseIdle() { }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static bool RaiseThreadMessage(ref System.Windows.Interop.MSG msg) { throw null; }
     }
     public partial interface IKeyboardInputSink
     {
-        System.Windows.Interop.IKeyboardInputSite KeyboardInputSite { get; [System.Security.SecurityCriticalAttribute][System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]set; }
+        System.Windows.Interop.IKeyboardInputSite KeyboardInputSite { get; [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]set; }
         bool HasFocusWithin();
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool OnMnemonic(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         System.Windows.Interop.IKeyboardInputSite RegisterKeyboardInputSink(System.Windows.Interop.IKeyboardInputSink sink);
         bool TabInto(System.Windows.Input.TraversalRequest request);
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateAccelerator(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateChar(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
     }
@@ -1661,21 +1609,18 @@ namespace System.Windows.Interop
     {
         System.Windows.Interop.IKeyboardInputSink Sink { get; }
         bool OnNoMoreTabStops(System.Windows.Input.TraversalRequest request);
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         void Unregister();
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct MSG
     {
-        private int _dummyPrimitive;
-        public System.IntPtr hwnd { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public System.IntPtr lParam { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public int message { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public int pt_x { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public int pt_y { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public int time { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
-        public System.IntPtr wParam { [System.Security.SecurityCriticalAttribute]get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
+        public System.IntPtr hwnd { get { throw null; } set { } }
+        public System.IntPtr lParam { get { throw null; } set { } }
+        public int message { get { throw null; } set { } }
+        public int pt_x { get { throw null; } set { } }
+        public int pt_y { get { throw null; } set { } }
+        public int time { get { throw null; } set { } }
+        public System.IntPtr wParam { get { throw null; } set { } }
     }
     public delegate void ThreadMessageEventHandler(ref System.Windows.Interop.MSG msg, ref bool handled);
 }
@@ -1692,7 +1637,6 @@ namespace System.Windows.Markup
         public DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions designerSerializationOptions) { }
         public System.Windows.Markup.DesignerSerializationOptions DesignerSerializationOptions { get { throw null; } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract partial class InternalTypeHelper
     {
         protected InternalTypeHelper() { }
@@ -1702,13 +1646,11 @@ namespace System.Windows.Markup
         protected internal abstract object GetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, System.Globalization.CultureInfo culture);
         protected internal abstract void SetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, object value, System.Globalization.CultureInfo culture);
     }
-    [System.ObsoleteAttribute("IReceiveMarkupExtension has been deprecated. This interface is no longer in use.")]
     public partial interface IReceiveMarkupExtension
     {
         void ReceiveMarkupExtension(string property, System.Windows.Markup.MarkupExtension markupExtension, System.IServiceProvider serviceProvider);
     }
     [System.ComponentModel.BrowsableAttribute(false)]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ServiceProviders : System.IServiceProvider
     {
         public ServiceProviders() { }
@@ -1756,10 +1698,8 @@ namespace System.Windows.Media
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.MatrixConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Media.Converters.MatrixValueSerializer))]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct Matrix : System.IFormattable
     {
-        private int _dummyPrimitive;
         public Matrix(double m11, double m12, double m21, double m22, double offsetX, double offsetY) { throw null; }
         public double Determinant { get { throw null; } }
         public bool HasInverse { get { throw null; } }
@@ -1812,7 +1752,6 @@ namespace System.Windows.Media
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-    [System.Runtime.CompilerServices.TypeForwardedFromAttribute("PresentationCore, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b5fc90e7027f67871e773a8fde8938c81dd402ba65b9201d60593e96c492651e889cc13f1415ebb53fac1131ae0bd333c5ee6021672d9718ea31a8aebd0da0072f25d87dba6fc90ffd598ed4da35e44c398c454307e8e33b8426143daec9f596836f97c8f74750e5975c64e2189f45def46b2a2b1247adc3652bf5c308055da9")]
     public enum TextFormattingMode
     {
         Ideal = 0,
@@ -1838,8 +1777,7 @@ namespace System.Windows.Threading
         public static System.Windows.Threading.Dispatcher CurrentDispatcher { get { throw null; } }
         public bool HasShutdownFinished { get { throw null; } }
         public bool HasShutdownStarted { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.Windows.Threading.DispatcherHooks Hooks { [System.Security.SecurityCriticalAttribute][System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]get { throw null; } }
+        public System.Windows.Threading.DispatcherHooks Hooks { [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]get { throw null; } }
         public System.Threading.Thread Thread { get { throw null; } }
         public event System.EventHandler ShutdownFinished { add { } remove { } }
         public event System.EventHandler ShutdownStarted { add { } remove { } }
@@ -1848,72 +1786,52 @@ namespace System.Windows.Threading
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Delegate method, params object[] args) { throw null; }
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Delegate method, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg, params object[] args) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void BeginInvokeShutdown(System.Windows.Threading.DispatcherPriority priority) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool CheckAccess() { throw null; }
         public System.Windows.Threading.DispatcherProcessingDisabled DisableProcessing() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public static void ExitAllFrames() { }
         public static System.Windows.Threading.Dispatcher FromThread(System.Threading.Thread thread) { throw null; }
         public void Invoke(System.Action callback) { }
         public void Invoke(System.Action callback, System.Windows.Threading.DispatcherPriority priority) { }
         public void Invoke(System.Action callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken) { }
-        [System.Security.SecuritySafeCriticalAttribute]
         public void Invoke(System.Action callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken, System.TimeSpan timeout) { }
         public object Invoke(System.Delegate method, params object[] args) { throw null; }
         public object Invoke(System.Delegate method, System.TimeSpan timeout, params object[] args) { throw null; }
         public object Invoke(System.Delegate method, System.TimeSpan timeout, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         public object Invoke(System.Delegate method, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method, object arg, params object[] args) { throw null; }
         public System.Windows.Threading.DispatcherOperation InvokeAsync(System.Action callback) { throw null; }
         public System.Windows.Threading.DispatcherOperation InvokeAsync(System.Action callback, System.Windows.Threading.DispatcherPriority priority) { throw null; }
-        [System.Security.SecuritySafeCriticalAttribute]
         public System.Windows.Threading.DispatcherOperation InvokeAsync(System.Action callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Windows.Threading.DispatcherOperation<TResult> InvokeAsync<TResult>(System.Func<TResult> callback) { throw null; }
         public System.Windows.Threading.DispatcherOperation<TResult> InvokeAsync<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority) { throw null; }
-        [System.Security.SecuritySafeCriticalAttribute]
         public System.Windows.Threading.DispatcherOperation<TResult> InvokeAsync<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public void InvokeShutdown() { }
         public TResult Invoke<TResult>(System.Func<TResult> callback) { throw null; }
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority) { throw null; }
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.Security.SecuritySafeCriticalAttribute]
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken, System.TimeSpan timeout) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void PushFrame(System.Windows.Threading.DispatcherFrame frame) { }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void Run() { }
         public static void ValidatePriority(System.Windows.Threading.DispatcherPriority priority, string parameterName) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess() { }
         public static System.Windows.Threading.DispatcherPriorityAwaitable Yield() { throw null; }
         public static System.Windows.Threading.DispatcherPriorityAwaitable Yield(System.Windows.Threading.DispatcherPriority priority) { throw null; }
@@ -1927,7 +1845,7 @@ namespace System.Windows.Threading
     {
         public DispatcherFrame() { }
         public DispatcherFrame(bool exitWhenRequested) { }
-        public bool Continue { get { throw null; } [System.Security.SecurityCriticalAttribute]set { } }
+        public bool Continue { get { throw null; } set { } }
     }
     public sealed partial class DispatcherHookEventArgs : System.EventArgs
     {
@@ -1949,11 +1867,8 @@ namespace System.Windows.Threading
     public abstract partial class DispatcherObject
     {
         protected DispatcherObject() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public System.Windows.Threading.Dispatcher Dispatcher { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool CheckAccess() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess() { }
     }
     public partial class DispatcherOperation
@@ -1968,11 +1883,9 @@ namespace System.Windows.Threading
         public event System.EventHandler Completed { add { } remove { } }
         public bool Abort() { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { throw null; }
         protected virtual object InvokeDelegateCore() { throw null; }
         public System.Windows.Threading.DispatcherOperationStatus Wait() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         public System.Windows.Threading.DispatcherOperationStatus Wait(System.TimeSpan timeout) { throw null; }
     }
     public delegate object DispatcherOperationCallback(object arg);
@@ -1989,7 +1902,6 @@ namespace System.Windows.Threading
         public new TResult Result { get { throw null; } }
         public new System.Threading.Tasks.Task<TResult> Task { get { throw null; } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { throw null; }
         protected override object InvokeDelegateCore() { throw null; }
     }
@@ -2008,26 +1920,18 @@ namespace System.Windows.Threading
         Normal = 9,
         Send = 10,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DispatcherPriorityAwaitable
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public System.Windows.Threading.DispatcherPriorityAwaiter GetAwaiter() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DispatcherPriorityAwaiter : System.Runtime.CompilerServices.INotifyCompletion
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public bool IsCompleted { get { throw null; } }
         public void GetResult() { }
         public void OnCompleted(System.Action continuation) { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DispatcherProcessingDisabled : System.IDisposable
     {
-        private object _dummy;
         public void Dispose() { }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -2043,8 +1947,6 @@ namespace System.Windows.Threading
         public override void Post(System.Threading.SendOrPostCallback d, object state) { }
         public override void Send(System.Threading.SendOrPostCallback d, object state) { }
         [System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute]
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Flags=System.Security.Permissions.SecurityPermissionFlag.ControlEvidence | System.Security.Permissions.SecurityPermissionFlag.ControlPolicy)]
         public override int Wait(System.IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout) { throw null; }
     }
     public partial class DispatcherTimer

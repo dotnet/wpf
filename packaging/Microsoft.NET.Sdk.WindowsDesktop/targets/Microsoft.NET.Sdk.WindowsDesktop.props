@@ -2,8 +2,8 @@
   <PropertyGroup>
     <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
   </PropertyGroup>
-  
-  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(UseWPF)' == 'true'">
+
+  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(UseWPF)' == 'true' And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
     <ApplicationDefinition Include="App.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
       <Generator>MSBuild:Compile</Generator>
@@ -13,28 +13,36 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
 
-    <None Remove="@(ApplicationDefinition)"
-          Condition="'$(EnableDefaultApplicationDefinition)' != 'false'" />
-
     <Page Include="**/*.xaml"
           Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(ApplicationDefinition)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" >
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <None Remove="@(Page)"
-          Condition="'$(EnableDefaultPageItems)' != 'false'" />
+
+    <!-- 
+      See https://github.com/dotnet/wpf/issues/685
+      Visual Studio would prefer that we remove **/*.xaml instead of 
+      being more precise.
+
+      <None Remove="@(Page)"
+              Condition="'$(EnableDefaultPageItems)' != 'false'" />
+      <None Remove="@(ApplicationDefinition)"
+            Condition="'$(EnableDefaultApplicationDefinition)' != 'false'" />
+    -->
+    <None Remove="**/*.xaml"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And '$(EnableDefaultPageItems)' != 'false'" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(UseWPF)' == 'true' And '$(UseWindowsForms)' == 'true'">
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' == 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(UseWPF)' == 'true' And '$(UseWindowsForms)' != 'true'">
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(UseWPF)' != 'true' And '$(UseWindowsForms)' == 'true'">
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' != 'true') And ('$(UseWindowsForms)' == 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" IsImplicitlyDefined="true" />
   </ItemGroup>
 
@@ -63,7 +71,7 @@
       the private $(_TargetFrameworkVersionWithoutV) property - which will likely remain supported and
       is safe to use here. 
   -->
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(_TargetFrameworkVersionWithoutV)' != ''">
+  <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
     <_WpfCommonNetFxReference Include="WindowsBase" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
     <_WpfCommonNetFxReference Include="PresentationCore" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
     <_WpfCommonNetFxReference Include="PresentationFramework" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
@@ -79,15 +87,15 @@
     <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.5'" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWPF)' == 'true' ">
+  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0') And ('$(UseWPF)' == 'true') ">
     <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' ">
+  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0') And ('$(UseWindowsForms)' == 'true') ">
     <_SDKImplicitReference Include="System.Windows.Forms"/>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(DisableImplicitFrameworkReferences)' != 'true' and '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(UseWindowsForms)' == 'true' And '$(UseWPF)' == 'true' ">
+  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0') And ('$(UseWindowsForms)' == 'true') And ('$(UseWPF)' == 'true') ">
     <_SDKImplicitReference Include="WindowsFormsIntegration"/>
   </ItemGroup>
 </Project>

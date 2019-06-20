@@ -158,9 +158,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        [PrintingPermission(
-         SecurityAction.Demand,
-         Level = PrintingPermissionLevel.DefaultPrinting)]
         public PTProvider(string deviceName, int maxVersion, int clientVersion)
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXPTProviderStart);
@@ -221,9 +218,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        [PrintingPermission(
-         SecurityAction.Demand,
-        Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream GetPrintCapabilities(MemoryStream printTicket)
         {
             VerifyAccess();
@@ -293,9 +287,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        [PrintingPermission(
-         SecurityAction.Demand,
-         Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream MergeAndValidatePrintTicket(MemoryStream basePrintTicket,
                                                         MemoryStream deltaPrintTicket,
                                                         PrintTicketScope scope,
@@ -403,9 +394,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        [PrintingPermission(
-         SecurityAction.Demand,
-         Level = PrintingPermissionLevel.DefaultPrinting)]
         public override MemoryStream ConvertDevModeToPrintTicket(byte[] devMode,
                                                         PrintTicketScope scope)
         {
@@ -470,9 +458,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        [PrintingPermission(
-         SecurityAction.Demand,
-         Level = PrintingPermissionLevel.DefaultPrinting)]
         public override byte[] ConvertPrintTicketToDevMode(MemoryStream printTicket,
                                                   BaseDevModeType baseType,
                                                   PrintTicketScope scope)

@@ -74,6 +74,7 @@
     <ExternalHandCraftedReferenceProjects>
       PresentationBuildTasks-ref;
       PresentationCore-ref;
+      PresentationFramework-ref;
       ReachFramework-ref;
       System.Windows.Input.Manipulations-ref;
       System.Xaml-ref;

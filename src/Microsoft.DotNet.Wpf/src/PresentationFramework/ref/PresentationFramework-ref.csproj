@@ -1,41 +1,18 @@
-<Project>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.SDK">
   <PropertyGroup>
+    <AssemblyName>PresentationFramework</AssemblyName>
+    <PackageId>PresentationFramework-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;COMMONDPS;PRESENTATIONFRAMEWORK_ONLY;PRESENTATIONFRAMEWORK;RIBBON_IN_FRAMEWORK</DefineConstants>
     <DefineConstants Condition="'$(WeakEventTelemetry)'=='true'">$(DefineConstants);WeakEventTelemetry</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <NoWarn>$(NoWarn);0618;1058</NoWarn>
+    <NoWarn>$(NoWarn);0618;1058,3003</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <CollectionTemplate Include="ColumnDefinition.cs">
-      <Pattern>MS\Utility\GridContentElementCollection</Pattern>
-      <Template>MS\Utility\ColumnDefinition</Template>
-    </CollectionTemplate>
-    <CollectionTemplate Include="RowDefinition.cs">
-      <Pattern>MS\Utility\GridContentElementCollection</Pattern>
-      <Template>MS\Utility\RowDefinition</Template>
-    </CollectionTemplate>
-  </ItemGroup>
-  <ItemGroup>
-    <!-- <Compile Include="MS\Internal\AppModel\ApplicationProxyInternal.cs" /> -->
-    <!-- <Compile Include="MS\Internal\AppModel\DeploymentExceptionMapper.cs" /> -->
-    <!-- <Compile Include="MS\Internal\AppModel\IHostService.cs" /> -->
-    <!-- <Compile Include="MS\Internal\AppModel\PresentationAppDomainManager.cs" /> -->
-    <!-- <Compile Include="MS\Internal\AppModel\RootBrowserWindow.cs" />
-    <Compile Include="MS\Internal\AppModel\RootBrowserWindowProxy.cs" />  -->
-    <!-- <Compile Include="MS\Internal\AppModel\XappLauncher.cs" /> -->
-    <!-- <Compile Include="MS\Internal\Utility\SponsorHelper.cs" /> -->
-    <!-- <Compile Include="System\Windows\Automation\Peers\RootBrowserWindowAutomationPeer.cs" /> -->
-  </ItemGroup>
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
@@ -94,18 +71,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfCycleBreakersDir)PresentationUI\PresentationUI-PresentationFramework-impl-cycle.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)ReachFramework\ref\ReachFramework-ref.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
-      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </ProjectReference>
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\ref\UIAutomationProvider-ref.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
@@ -114,16 +88,4 @@
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-  <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
-       it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
-       doesn’t run before the Build target.-->
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-  <!-- This has to come after the import of Sdk.targets, otherwise the CompileDependsOn property will be overwritten. 
-       Once we move these templates to .tt this can be removed. -->
-  <PropertyGroup>
-  </PropertyGroup>
-  <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
-  <!-- DevDiv Bug 888747: Re-enable AvTrace codegen -->
-  <!-- <Import Project="$(WpfCodeGenDir)DesignTimeTextTemplating.targets" /> -->
 </Project>

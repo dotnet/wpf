@@ -1,0 +1,48 @@
+Compat issues with assembly UIAutomationTypes:
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.AsyncContentLoadedState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.AsyncContentLoadedState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.DockPosition' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.DockPosition' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ElementNotAvailableException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ElementNotEnabledException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.ExpandCollapseState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.ExpandCollapseState' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.NoClickablePointException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.OrientationType' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.OrientationType' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ProxyAssemblyNotLoadedException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.RowOrColumnMajor' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.RowOrColumnMajor' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.ScrollAmount' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.ScrollAmount' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.StructureChangeType' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.StructureChangeType' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.SupportedTextSelection' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.SupportedTextSelection' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.SynchronizedInputType' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.SynchronizedInputType' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.ToggleState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.ToggleState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.WindowInteractionState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.WindowInteractionState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.WindowVisualState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.WindowVisualState' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.AnimationStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.AnimationStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.BulletStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.BulletStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.CapStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.CapStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.FlowDirections' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.FlowDirections' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.HorizontalTextAlignment' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.HorizontalTextAlignment' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.OutlineStyles' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.OutlineStyles' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.TextDecorationLineStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.TextDecorationLineStyle' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.TextPatternRangeEndpoint' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.TextPatternRangeEndpoint' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Windows.Automation.Text.TextUnit' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.GuidAttribute' exists on 'System.Windows.Automation.Text.TextUnit' in the contract but not the implementation.
+Total Issues: 46

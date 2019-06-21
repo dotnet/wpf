@@ -199,11 +199,6 @@ namespace System.Windows.Media.Imaging
 
             if (stream == null)
             {
-                if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
-                {
-                    SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-                }
-
                 entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
                 if (uriCachePolicy != null)
                 {

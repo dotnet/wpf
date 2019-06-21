@@ -33,7 +33,6 @@ namespace MS.Internal.Drt
     using System.Globalization;     // CultureInfo
     using System.Security;
     using System.Security.Permissions;
-    using System.Net; // WebPermission.
     using System.ComponentModel;
     using System.Security.Policy;
     using System.Runtime.InteropServices;
@@ -80,64 +79,6 @@ internal static class SecurityHelper
             Uri appBase = null;
             appBase = new Uri(domain.BaseDirectory);
             return( appBase );
-        }
-
-        //This code path is only executed if we are trying to get to http content from https
-        internal static Uri ExtractUriForClickOnceDeployedApp()
-        {
-            // This api returns the location from where an app was deployed. In case of browser hosted apps
-            // there are no elevations and this information is safe to return.
-            // In case of non browserhosted scenarios this will trigger a demand since we do not assert to get
-            // this information in the code below
-            return    SiteOfOriginContainer.SiteOfOriginForClickOnceApp;
-        }
-
-         //This code path is only executed if we are trying to get to http content from https
-        internal static void BlockCrossDomainForHttpsApps(Uri uri)
-        {
-            // if app is HTTPS, no cross domain allowed
-            Uri appDeploymentUri = ExtractUriForClickOnceDeployedApp();
-            if (appDeploymentUri != null && appDeploymentUri.Scheme == Uri.UriSchemeHttps)
-            {
-                // demand
-                if (uri.IsUnc || uri.IsFile)
-                {
-                    (new FileIOPermission(FileIOPermissionAccess.Read, uri.LocalPath)).Demand();
-                }
-                else
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Demand();
-                }
-            }
-        }
-
-        // EnforceUncContentAccessRules implements UNC media & imaging access rules
-        internal static void EnforceUncContentAccessRules(Uri contentUri)
-        {
-            // this should be called only for UNC content
-            Invariant.Assert(contentUri.IsUnc);
-
-            // get app zone and scheme
-            Uri appUri = SecurityHelper.ExtractUriForClickOnceDeployedApp();
-            if( appUri == null )
-            {
-                // we are not in a browser hosted app; we are not in partial trust, so don't block
-                return;
-            }
-
-            // get app's zone
-            int appZone = SecurityHelper.MapUrlToZoneWrapper(appUri);
-
-            // demand if
-            // 1) app comes from Internet or a more untrusted zone, or
-            // 2) app comes from Intranet and scheme is HTTPS
-            bool isInternetOrLessTrustedApp = (appZone >= MS.Win32.NativeMethods.URLZONE_INTERNET);
-            bool isIntranetHttpsApp = (appZone == MS.Win32.NativeMethods.URLZONE_INTRANET && appUri.Scheme == Uri.UriSchemeHttps);
-            if (isInternetOrLessTrustedApp || isIntranetHttpsApp)
-            {
-                // demand appropriate permission - we already know that contentUri is Unc
-                (new FileIOPermission(FileIOPermissionAccess.Read, contentUri.LocalPath)).Demand();
-            }
         }
 
          internal static int MapUrlToZoneWrapper(Uri uri)
@@ -308,25 +249,17 @@ internal static class SecurityHelper
        {
             object value = null;
 
-            new RegistryPermission(RegistryPermissionAccess.Read, baseRegistryKey.Name + @"\" + keyName).Assert();
-            try
+            RegistryKey key = baseRegistryKey.OpenSubKey(keyName);
+            if (key != null)
             {
-                RegistryKey key = baseRegistryKey.OpenSubKey(keyName);
-                if (key != null)
+                using( key )
                 {
-                    using( key )
-                    {
-                        value = key.GetValue(valueName);
-                    }
+                    value = key.GetValue(valueName);
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
 
             return value;
-}
+        }
 #endif // WINDOWS_BASE
 }
 }

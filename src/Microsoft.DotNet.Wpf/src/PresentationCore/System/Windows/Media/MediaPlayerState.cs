@@ -858,48 +858,11 @@ namespace System.Windows.Media
             // Setting a null source effectively disconects the MediaElement.
             if (source != null)
             {
-                // keep whether we asserted permissions or not
-                bool elevated = false;
-
                 // get the base directory of the application; never expose this
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
-
                 // this extracts the URI to open
                 Uri uriToOpen = ResolveUri(source, appBase);
-
-                // access is allowed in the following cases (only 1 & 2 require elevation):
-                // 1) to any HTTPS media if app is NOT coming from HTTPS
-                // 2) to URI in the current directory of the fusion cache
-                // 3) to site of origin media
-                if (SecurityHelper.AreStringTypesEqual(uriToOpen.Scheme, Uri.UriSchemeHttps))
-                {
-                    // target is HTTPS. Then, elevate ONLY if we are NOT coming from HTTPS (=XDomain HTTPS app to HTTPS media disallowed)
-                    Uri appDeploymentUri = SecurityHelper.ExtractUriForClickOnceDeployedApp();
-                    if (!SecurityHelper.AreStringTypesEqual(appDeploymentUri.Scheme, Uri.UriSchemeHttps))
-                    {
-                        new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uriToOpen)).Assert();
-                        elevated = true;
-                    }
-                }
-                else
-                {
-                    // elevate to allow access to media in the app's directory in the fusion cache.
-                    new FileIOPermission(FileIOPermissionAccess.Read, appBase.LocalPath).Assert();// BlessedAssert
-                    elevated = true;
-                }
-
-                // demand permissions. if demands succeds, it means we are in one of the cases above.
-                try
-                {
-                    toOpen  = DemandPermissions(uriToOpen);
-                }
-                finally
-                {
-                    if (elevated)
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
+                toOpen  = DemandPermissions(uriToOpen);
             }
             else
             {
@@ -936,31 +899,8 @@ namespace System.Windows.Media
                 // go here only for files and not for UNC
                 if (absoluteUri.IsFile)
                 {
-                    // Please note this pattern is unique and NEEDS TO EXIST , it prevents
-                    // access to any folder but the one where the app is running from.
-                    // PLEASE DO NOT REMOVE THIS DEMAND AND THE ASSERT IN THE CALLING CODE
                     toOpen = absoluteUri.LocalPath;
-                    (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
                 }
-            }
-            else //Any other zone
-            {
-                // UNC path pointing to a file (We filter for `http://intranet)
-                if (absoluteUri.IsFile && absoluteUri.IsUnc)
-                {
-                    // perform checks for UNC content
-                    SecurityHelper.EnforceUncContentAccessRules(absoluteUri);
-}
-                else // Any other path
-                {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (absoluteUri.Scheme != Uri.UriSchemeHttps)
-                    {
-                        //accessing non https content from an https app is disallowed
-                        SecurityHelper.BlockCrossDomainForHttpsApps(absoluteUri);
-                    }
-}
             }
 
             return toOpen;

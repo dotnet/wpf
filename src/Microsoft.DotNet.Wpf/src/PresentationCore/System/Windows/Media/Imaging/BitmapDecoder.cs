@@ -1248,19 +1248,7 @@ namespace System.Windows.Media.Imaging
             {
                 WebRequest request = null;
 
-                // Block XDomain from apps deployed over HTTPS (For HTTP, LMZ and UNC apps, is ok to access images through HTTPS)
-                SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                // now, we can Assert permissions because we ensured that only apps deployed through non-HTTPS can access XDomain images
-                (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    WebPermission.RevertAssert();
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
             }
@@ -1271,7 +1259,6 @@ namespace System.Windows.Media.Imaging
         {
             WebRequest request = null;
             Stream bitmapStream =  stream;
-            SecurityHelper.BlockCrossDomainForHttpsApps(uri);
             // Download only if this content is not already downloaded or stream is not seekable
             if (bitmapStream == null || !bitmapStream.CanSeek)
             {
@@ -1286,9 +1273,6 @@ namespace System.Windows.Media.Imaging
         private static Stream ProcessUncFiles(Uri uri)
         {
             Stream bitmapStream = null;
-
-            // perform checks for UNC content
-            SecurityHelper.EnforceUncContentAccessRules(uri);
 
             bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
 

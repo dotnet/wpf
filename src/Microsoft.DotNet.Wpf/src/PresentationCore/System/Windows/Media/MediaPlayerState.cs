@@ -877,7 +877,7 @@ namespace System.Windows.Media
                 {
                     // target is HTTPS. Then, elevate ONLY if we are NOT coming from HTTPS (=XDomain HTTPS app to HTTPS media disallowed)
                     Uri appDeploymentUri = SecurityHelper.ExtractUriForClickOnceDeployedApp();
-                    if (!SecurityHelper.AreStringTypesEqual(appDeploymentUri.Scheme, Uri.UriSchemeHttps))
+                    if (appDeploymentUri != null && !SecurityHelper.AreStringTypesEqual(appDeploymentUri.Scheme, Uri.UriSchemeHttps))
                     {
                         new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uriToOpen)).Assert();
                         elevated = true;

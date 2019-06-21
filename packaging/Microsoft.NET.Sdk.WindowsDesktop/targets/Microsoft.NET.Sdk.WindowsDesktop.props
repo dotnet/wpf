@@ -91,15 +91,21 @@
     .NET 4.5+:  PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
                 UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
                 System.Windows.Controls.Ribbon
-                
-     Note:
-       These are WPF specific version lower-bounds. Do not use $(_WindowsDesktopSdkTargetFrameworkVersionFloor) in place of '3.0' below.
+
   -->
   <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 
                         ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    <_WpfCommonNetFxReference Include="WindowsBase" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
-    <_WpfCommonNetFxReference Include="PresentationCore" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
-    <_WpfCommonNetFxReference Include="PresentationFramework" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
+
+    <!--
+      The following 3 _WpfCommonNetFxReference items normally require Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'", since
+      they are supported on .NET Framework 3.0 and above. 
+      
+      This condition is implicitly satisfied by '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' 
+      in the outer ItemGroup
+    -->
+    <_WpfCommonNetFxReference Include="WindowsBase" /> 
+    <_WpfCommonNetFxReference Include="PresentationCore" />
+    <_WpfCommonNetFxReference Include="PresentationFramework" />
 
     <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>

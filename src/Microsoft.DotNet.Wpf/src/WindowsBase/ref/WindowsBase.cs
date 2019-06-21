@@ -100,7 +100,9 @@ namespace System.ComponentModel
         public abstract object GroupNameFromItem(object item, int level, System.Globalization.CultureInfo culture);
         public virtual bool NamesMatch(object groupName, object itemName) { throw null; }
         protected virtual void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeGroupNames() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeSortDescriptions() { throw null; }
     }
     public partial interface ICollectionView : System.Collections.IEnumerable, System.Collections.Specialized.INotifyCollectionChanged
@@ -769,7 +771,6 @@ namespace System.Windows
         public void SetCurrentValue(System.Windows.DependencyProperty dp, object value) { }
         public void SetValue(System.Windows.DependencyProperty dp, object value) { }
         public void SetValue(System.Windows.DependencyPropertyKey key, object value) { }
-        protected internal virtual bool ShouldSerializeProperty(System.Windows.DependencyProperty dp) { throw null; }
     }
     public partial class DependencyObjectType
     {
@@ -862,7 +863,6 @@ namespace System.Windows
         protected System.Windows.Freezable CreateInstance() { throw null; }
         protected abstract System.Windows.Freezable CreateInstanceCore();
         public void Freeze() { }
-        protected internal static bool Freeze(System.Windows.Freezable freezable, bool isChecking) { throw null; }
         protected virtual bool FreezeCore(bool isChecking) { throw null; }
         public System.Windows.Freezable GetAsFrozen() { throw null; }
         protected virtual void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
@@ -1637,21 +1637,18 @@ namespace System.Windows.Markup
         public DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions designerSerializationOptions) { }
         public System.Windows.Markup.DesignerSerializationOptions DesignerSerializationOptions { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract partial class InternalTypeHelper
     {
         protected InternalTypeHelper() { }
-        protected internal abstract void AddEventHandler(System.Reflection.EventInfo eventInfo, object target, System.Delegate handler);
-        protected internal abstract System.Delegate CreateDelegate(System.Type delegateType, object target, string handler);
-        protected internal abstract object CreateInstance(System.Type type, System.Globalization.CultureInfo culture);
-        protected internal abstract object GetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, System.Globalization.CultureInfo culture);
-        protected internal abstract void SetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, object value, System.Globalization.CultureInfo culture);
     }
-    [System.Obsolete("IReceiveMarkupExtension has been deprecated. This interface is no longer in use.")]
+    [System.ObsoleteAttribute("IReceiveMarkupExtension has been deprecated. This interface is no longer in use.")]
     public partial interface IReceiveMarkupExtension
     {
         void ReceiveMarkupExtension(string property, System.Windows.Markup.MarkupExtension markupExtension, System.IServiceProvider serviceProvider);
     }
     [System.ComponentModel.BrowsableAttribute(false)]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ServiceProviders : System.IServiceProvider
     {
         public ServiceProviders() { }
@@ -1778,6 +1775,7 @@ namespace System.Windows.Threading
         public static System.Windows.Threading.Dispatcher CurrentDispatcher { get { throw null; } }
         public bool HasShutdownFinished { get { throw null; } }
         public bool HasShutdownStarted { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public System.Windows.Threading.DispatcherHooks Hooks { [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]get { throw null; } }
         public System.Threading.Thread Thread { get { throw null; } }
         public event System.EventHandler ShutdownFinished { add { } remove { } }
@@ -1787,12 +1785,16 @@ namespace System.Windows.Threading
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Delegate method, params object[] args) { throw null; }
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Delegate method, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Windows.Threading.DispatcherOperation BeginInvoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg, params object[] args) { throw null; }
         public void BeginInvokeShutdown(System.Windows.Threading.DispatcherPriority priority) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool CheckAccess() { throw null; }
         public System.Windows.Threading.DispatcherProcessingDisabled DisableProcessing() { throw null; }
         public static void ExitAllFrames() { }
@@ -1806,16 +1808,22 @@ namespace System.Windows.Threading
         public object Invoke(System.Delegate method, System.TimeSpan timeout, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         public object Invoke(System.Delegate method, System.Windows.Threading.DispatcherPriority priority, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.Delegate method, object arg, params object[] args) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method, object arg) { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object Invoke(System.Windows.Threading.DispatcherPriority priority, System.TimeSpan timeout, System.Delegate method, object arg, params object[] args) { throw null; }
         public System.Windows.Threading.DispatcherOperation InvokeAsync(System.Action callback) { throw null; }
         public System.Windows.Threading.DispatcherOperation InvokeAsync(System.Action callback, System.Windows.Threading.DispatcherPriority priority) { throw null; }
@@ -1833,6 +1841,7 @@ namespace System.Windows.Threading
         [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void Run() { }
         public static void ValidatePriority(System.Windows.Threading.DispatcherPriority priority, string parameterName) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess() { }
         public static System.Windows.Threading.DispatcherPriorityAwaitable Yield() { throw null; }
         public static System.Windows.Threading.DispatcherPriorityAwaitable Yield(System.Windows.Threading.DispatcherPriority priority) { throw null; }
@@ -1868,8 +1877,11 @@ namespace System.Windows.Threading
     public abstract partial class DispatcherObject
     {
         protected DispatcherObject() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public System.Windows.Threading.Dispatcher Dispatcher { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool CheckAccess() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess() { }
     }
     public partial class DispatcherOperation
@@ -1884,6 +1896,7 @@ namespace System.Windows.Threading
         public event System.EventHandler Completed { add { } remove { } }
         public bool Abort() { throw null; }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { throw null; }
         protected virtual object InvokeDelegateCore() { throw null; }
         public System.Windows.Threading.DispatcherOperationStatus Wait() { throw null; }
@@ -1903,6 +1916,7 @@ namespace System.Windows.Threading
         public new TResult Result { get { throw null; } }
         public new System.Threading.Tasks.Task<TResult> Task { get { throw null; } }
         [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { throw null; }
         protected override object InvokeDelegateCore() { throw null; }
     }

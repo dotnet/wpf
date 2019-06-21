@@ -25,7 +25,9 @@ MembersMustExist : Member 'System.Windows.AttachedPropertyBrowsableAttribute.IsB
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableForTypeAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableWhenAttributePresentAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeDescriptionProviderAttribute' exists on 'System.Windows.DependencyObject' in the contract but not the implementation.
+MembersMustExist : Member 'System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Windows.Markup.ValueSerializerAttribute' exists on 'System.Windows.DependencyProperty' in the contract but not the implementation.
+MembersMustExist : Member 'System.Windows.Freezable.Freeze(System.Windows.Freezable, System.Boolean)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.NameScope' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.SplashScreen' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.AmbientAttribute' in the contract but not the implementation.
@@ -45,7 +47,11 @@ CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwarded
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.DictionaryKeyPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IComponentConnector' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.INameScope' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'System.Windows.Markup.InternalTypeHelper' in the contract but not the implementation.
+MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.AddEventHandler(System.Reflection.EventInfo, System.Object, System.Delegate)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.CreateDelegate(System.Type, System.Object, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.CreateInstance(System.Type, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo, System.Object, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo, System.Object, System.Object, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IProvideValueTarget' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IUriContext' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IValueSerializerContext' in the contract but not the implementation.
@@ -59,7 +65,6 @@ CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwarded
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.RootNamespaceAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.RuntimeNamePropertyAttribute' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.RuntimeNamePropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'System.Windows.Markup.ServiceProviders' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.TrimSurroundingWhitespaceAttribute' in the contract but not the implementation.
@@ -83,4 +88,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAtt
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.XmlnsPrefixAttribute' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 84
+Total Issues: 89

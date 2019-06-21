@@ -1,7 +1,7 @@
 namespace System.Windows.Markup
 {
-    [System.Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
     [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
+    [System.ObsoleteAttribute("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
     public partial class AcceptedMarkupExtensionExpressionTypeAttribute : System.Attribute
     {
         public AcceptedMarkupExtensionExpressionTypeAttribute(System.Type type) { }
@@ -123,7 +123,9 @@ namespace System.Windows.Markup
     {
         public MarkupExtensionReturnTypeAttribute() { }
         public MarkupExtensionReturnTypeAttribute(System.Type returnType) { }
+        [System.ObsoleteAttribute("The expressionType argument is not used by the XAML parser. To specify the expected return type, use MarkupExtensionReturnTypeAttribute(Type). To specify custom handling for expression types, use XamlSetMarkupExtensionAttribute.")]
         public MarkupExtensionReturnTypeAttribute(System.Type returnType, System.Type expressionType) { }
+        [System.ObsoleteAttribute("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
         public System.Type ExpressionType { get { throw null; } }
         public System.Type ReturnType { get { throw null; } }
     }

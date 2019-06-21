@@ -39,11 +39,5 @@
                                                         and '$(GenAPIEnabledProjects)'!=''
                                                         and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblySource>
 
-    <!-- TODO:  Remove this, just for initial project seeding. -->
-    <_GenerateReferenceAssemblyProject>false</_GenerateReferenceAssemblyProject>
-    <_GenerateReferenceAssemblyProject Condition="'$(GenerateReferenceAssemblyProject)'=='true'
-                                                and '$(GenAPIEnabledProjects)'!=''
-                                                and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblyProject>
-
   </PropertyGroup>
 </Project>

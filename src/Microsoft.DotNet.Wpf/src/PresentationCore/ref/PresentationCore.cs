@@ -7063,7 +7063,7 @@ namespace System.Windows.Media
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.PointCollectionConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Media.Converters.PointCollectionValueSerializer))]
-    public sealed partial class PointCollection : System.Windows.Freezable, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.IFormattable
+    public sealed partial class PointCollection : System.Windows.Freezable, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.IFormattable, System.Collections.Generic.IList<System.Windows.Point>
     {
         public PointCollection() { }
         public PointCollection(System.Collections.Generic.IEnumerable<System.Windows.Point> collection) { }
@@ -7074,6 +7074,7 @@ namespace System.Windows.Media
         object System.Collections.ICollection.SyncRoot { get { throw null; } }
         bool System.Collections.IList.IsFixedSize { get { throw null; } }
         bool System.Collections.IList.IsReadOnly { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Windows.Point>.IsReadOnly { get { throw null; } }
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Point value) { }
         public void Clear() { }
@@ -7094,6 +7095,7 @@ namespace System.Windows.Media
         public void RemoveAt(int index) { }
         void System.Collections.ICollection.CopyTo(System.Array array, int index) { }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<System.Windows.Point> System.Collections.Generic.IEnumerable<System.Windows.Point>.GetEnumerator() { throw null; }
         int System.Collections.IList.Add(object value) { throw null; }
         bool System.Collections.IList.Contains(object value) { throw null; }
         int System.Collections.IList.IndexOf(object value) { throw null; }
@@ -7102,7 +7104,7 @@ namespace System.Windows.Media
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
-        public partial struct Enumerator : System.Collections.IEnumerator, System.IDisposable
+        public partial struct Enumerator : System.Collections.IEnumerator, System.IDisposable, System.Collections.Generic.IEnumerator<System.Windows.Point>
         {
             public System.Windows.Point Current { get { throw null; } }
             object System.Collections.IEnumerator.Current { get { throw null; } }
@@ -7611,7 +7613,7 @@ namespace System.Windows.Media
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.VectorCollectionConverter))]
     [System.Windows.Markup.ValueSerializerAttribute(typeof(System.Windows.Media.Converters.VectorCollectionValueSerializer))]
-    public sealed partial class VectorCollection : System.Windows.Freezable, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.IFormattable
+    public sealed partial class VectorCollection : System.Windows.Freezable, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.IFormattable, System.Collections.Generic.IList<System.Windows.Vector>
     {
         public VectorCollection() { }
         public VectorCollection(System.Collections.Generic.IEnumerable<System.Windows.Vector> collection) { }
@@ -7622,6 +7624,7 @@ namespace System.Windows.Media
         object System.Collections.ICollection.SyncRoot { get { throw null; } }
         bool System.Collections.IList.IsFixedSize { get { throw null; } }
         bool System.Collections.IList.IsReadOnly { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Windows.Vector>.IsReadOnly { get { throw null; } }
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public void Add(System.Windows.Vector value) { }
         public void Clear() { }
@@ -7642,6 +7645,7 @@ namespace System.Windows.Media
         public void RemoveAt(int index) { }
         void System.Collections.ICollection.CopyTo(System.Array array, int index) { }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<System.Windows.Vector> System.Collections.Generic.IEnumerable<System.Windows.Vector>.GetEnumerator() { throw null; }
         int System.Collections.IList.Add(object value) { throw null; }
         bool System.Collections.IList.Contains(object value) { throw null; }
         int System.Collections.IList.IndexOf(object value) { throw null; }
@@ -7650,7 +7654,7 @@ namespace System.Windows.Media
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(System.IFormatProvider provider) { throw null; }
-        public partial struct Enumerator : System.Collections.IEnumerator, System.IDisposable
+        public partial struct Enumerator : System.Collections.IEnumerator, System.IDisposable, System.Collections.Generic.IEnumerator<System.Windows.Vector>
         {
             public System.Windows.Vector Current { get { throw null; } }
             object System.Collections.IEnumerator.Current { get { throw null; } }

@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: TypeForwardedTo(typeof(System.Windows.Markup.IUriContext))]
 [assembly: TypeForwardedTo(typeof(System.Windows.Media.TextFormattingMode))]
+[assembly: TypeForwardedTo(typeof(System.Windows.Input.ICommand))]
 
 // Namespace information for Xaml
 

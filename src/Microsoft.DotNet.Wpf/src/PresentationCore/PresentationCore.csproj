@@ -549,7 +549,6 @@
     <Compile Include="System\Windows\Input\Command\CommandManager.cs" />
     <Compile Include="System\Windows\Input\Command\ComponentCommands.cs" />
     <Compile Include="System\Windows\Input\Command\ExecutedRoutedEventArgs.cs" />
-    <Compile Include="System\Windows\Input\Command\ICommand.cs" />
     <Compile Include="System\Windows\Input\Command\ICommandSource.cs" />
     <Compile Include="System\Windows\Input\Command\InputBinding.cs" />
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />

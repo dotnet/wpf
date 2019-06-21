@@ -8,7 +8,9 @@
     <Net48CompatNeededProjects>
       PresentationBuildTasks;
       PresentationCore;
+      PresentationCore-ref;
       PresentationFramework;
+      PresentationFramework-ref;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
       PresentationFramework.AeroLite;
@@ -16,17 +18,25 @@
       PresentationFramework.Luna;
       PresentationFramework.Royale;
       ReachFramework;
+      ReachFramework-ref;
       UIAutomationClient;
+      UIAutomationClient-ref;
       UIAutomationClientSideProviders;
+      UIAutomationClientSideProviders-ref;
       UIAutomationProvider;
+      UIAutomationProvider-ref;
       UIAutomationTypes;
+      UIAutomationTypes-ref;
       System.Printing;
       System.Printing-ref;
       System.Windows.Controls.Ribbon;
       System.Windows.Input.Manipulations;
+      System.Windows.Input.Manipulations-ref;
       System.Windows.Presentation;
       System.Xaml;
+      System.Xaml-ref;
       WindowsBase;
+      WindowsBase-ref;
       WindowsFormsIntegration;
     </Net48CompatNeededProjects>
 
@@ -38,7 +48,17 @@
 
     <!-- These assemblies need to be compared against their hand-crafted reference assemblies. -->
     <RefApiCompatNeededProjects>
+      PresentationCore;
+      PresentationFramework;
+      ReachFramework;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
       System.Printing;
+      System.Windows.Input.Manipulations;
+      System.Xaml;
+      WindowsBase;
     </RefApiCompatNeededProjects>
 
     <!-- TODO:  

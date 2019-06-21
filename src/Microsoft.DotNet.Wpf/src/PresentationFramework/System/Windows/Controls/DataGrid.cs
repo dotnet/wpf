@@ -8331,31 +8331,15 @@ namespace System.Windows.Controls
 
             DataObject dataObject;
 
-                (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();
-                try
-                {
-                    dataObject = new DataObject();
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+            dataObject = new DataObject();
 
-                foreach (string format in formats)
-                {
-                        dataObject.CriticalSetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
-                }
+            foreach (string format in formats)
+            {
+                    dataObject.CriticalSetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
+            }
 
-                // This assert is there for an OLE Callback to register CSV type for the clipboard
-                (new SecurityPermission(SecurityPermissionFlag.SerializationFormatter | SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAll();
-                }
+            Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+
         }
 
         /// <summary>

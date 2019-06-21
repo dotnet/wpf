@@ -89,8 +89,6 @@ namespace System.Windows.Controls
         public WebBrowser() 
             : base(new Guid(CLSID.WebBrowser), true )
         {
-            (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
-
             _hostingAdaptor = new WebOCHostingAdaptor(this);
         }
 

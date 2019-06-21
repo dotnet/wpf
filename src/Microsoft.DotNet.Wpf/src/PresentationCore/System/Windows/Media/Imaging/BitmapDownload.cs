@@ -199,41 +199,15 @@ namespace System.Windows.Media.Imaging
 
             if (stream == null)
             {
-                bool fElevate = false;
                 if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
                 {
                     SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain), if it
-                    // does we assert and run the code that requires the assert
-                    if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                                MediaPermissionVideo.NoVideo,
-                                                                MediaPermissionImage.SafeImage))
-                    {
-                        fElevate = true;
-                    }
                 }
 
-                // This is the case where we are accessing an http image from an http site and we have media permission
-                if (fElevate)
+                entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
+                if (uriCachePolicy != null)
                 {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
-                    if (uriCachePolicy != null)
-                    {
-                        entry.webRequest.CachePolicy = uriCachePolicy;
-                    }
-                }
-                finally
-                {
-                    if(fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
+                    entry.webRequest.CachePolicy = uriCachePolicy;
                 }
 
                 entry.webRequest.BeginGetResponse(_responseCallback, entry);

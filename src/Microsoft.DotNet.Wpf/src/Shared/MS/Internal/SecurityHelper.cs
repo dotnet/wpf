@@ -244,57 +244,6 @@ internal static class SecurityHelper
 
 #endif
 
-#if PRESENTATION_CORE
-        internal static void DemandInfrastructurePermission()
-        {
-            if(_infrastructurePermission == null)
-            {
-                _infrastructurePermission = new SecurityPermission( SecurityPermissionFlag.Infrastructure );
-            }
-            _infrastructurePermission.Demand();
-        }
-        static SecurityPermission _infrastructurePermission = null;
-
-#endif
-
-#if PRESENTATION_CORE || REACHFRAMEWORK
-
-        internal static void DemandMediaPermission(MediaPermissionAudio audioPermissionToDemand,
-                                                   MediaPermissionVideo videoPermissionToDemand,
-                                                   MediaPermissionImage imagePermissionToDemand)
-        {
-            // Demand the appropriate permission
-           (new MediaPermission(audioPermissionToDemand,
-                                videoPermissionToDemand,
-                                imagePermissionToDemand )).Demand();
-        }
-
-
-        ///<summary>
-        /// Check whether the call stack has the permissions needed for safe media.
-        ///
-        /// </summary>
-#if REACHFRAMEWORK        
-#else        
-#endif        
-        internal static bool CallerHasMediaPermission(MediaPermissionAudio audioPermissionToDemand,
-                                                      MediaPermissionVideo videoPermissionToDemand,
-                                                      MediaPermissionImage imagePermissionToDemand)
-        {
-            try
-            {
-                (new MediaPermission(audioPermissionToDemand,videoPermissionToDemand,imagePermissionToDemand)).Demand();
-                return true;
-            }
-            catch(SecurityException)
-            {
-                    return false;
-            }
-        }
-#endif
-
-
-
         // don't include this in the compiler - avoid compiler changes when we can.
 #if !PBTCOMPILER
         internal static void DemandUnrestrictedUIPermission()

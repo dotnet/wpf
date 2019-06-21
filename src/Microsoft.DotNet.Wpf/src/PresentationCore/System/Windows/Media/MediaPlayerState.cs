@@ -807,8 +807,6 @@ namespace System.Windows.Media
         /// </summary>
         private void CreateMedia(MediaPlayer mediaPlayer)
         {
-            CheckMediaDisabledFlags();
-
             SafeMILHandle unmanagedProxy = null;
             MediaEventsHelper.CreateMediaEventsHelper(mediaPlayer, out _mediaEventsHelper, out unmanagedProxy);
             try
@@ -818,7 +816,7 @@ namespace System.Windows.Media
                     HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
                             myFactory.FactoryPtr,
                             unmanagedProxy,
-                            SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.AllAudio, MediaPermissionVideo.AllVideo, MediaPermissionImage.NoImage),
+                            true,
                             out _nativeMedia
                             ));
                 }
@@ -913,19 +911,6 @@ namespace System.Windows.Media
             HRESULT.Check(MILMedia.Open(_nativeMedia, toOpen));
         }
 
-        private void CheckMediaDisabledFlags()
-        {
-            if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaAudioOrVideoDisable))
-            {
-                // in case the registry key is '1' then demand
-                //Demand media permission here for Video or Audio
-                // Issue: 1232606 need to fix once clr has the media permissions
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.AllAudio,
-                                                     MediaPermissionVideo.AllVideo,
-                                                     MediaPermissionImage.NoImage);
-            }
-        }
-
         private Uri ResolveUri(Uri uri, Uri appBase)
         {
             if (uri.IsAbsoluteUri)
@@ -965,16 +950,6 @@ namespace System.Windows.Media
                 {
                     // perform checks for UNC content
                     SecurityHelper.EnforceUncContentAccessRules(absoluteUri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                 MediaPermissionVideo.SafeVideo,
-                                                                 MediaPermissionImage.NoImage))
-                    {
-                        // if he does not then we demand web permission to allow access only to site of origin
-                        (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
-                    }
 }
                 else // Any other path
                 {
@@ -984,17 +959,6 @@ namespace System.Windows.Media
                     {
                         //accessing non https content from an https app is disallowed
                         SecurityHelper.BlockCrossDomainForHttpsApps(absoluteUri);
-                        if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                     MediaPermissionVideo.SafeVideo,
-                                                                     MediaPermissionImage.NoImage))
-                        {
-                            // if he does not then we demand web permission to allow access only to site of origin
-                            (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
-                        }
-                    }
-                    else// This is the case where target content is HTTPS
-                    {
-                        (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
                     }
 }
             }

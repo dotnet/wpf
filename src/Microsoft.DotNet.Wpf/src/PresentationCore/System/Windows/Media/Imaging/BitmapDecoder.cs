@@ -1039,20 +1039,6 @@ namespace System.Windows.Media.Imaging
                 isImageDisabled = new SecurityCriticalDataForSet<bool>(SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaImageDisable));
                 isImageDisabledInitialized = true;
             }
-            if (isImageDisabled.Value)
-            {
-                // in case the registry key is '1' then demand MediaPermissionImage.AllImage - not granted in Partial Trust
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.AllImage);
-            }
-            else
-            {
-                // Images are enabled. Then, demand permissions for safe imaging - granted in Partial Trust by default
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.SafeImage);
-            }
         }
 
         internal static SafeMILHandle SetupDecoderFromUriOrStream(
@@ -1089,11 +1075,6 @@ namespace System.Windows.Media.Imaging
             {
                 if (uri.IsAbsoluteUri)
                 {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain)
-                    SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                         MediaPermissionVideo.NoVideo,
-                                                         MediaPermissionImage.SiteOfOriginImage) ;
                     // This code path executes only for pack web requests
                     if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
                     {
@@ -1294,32 +1275,7 @@ namespace System.Windows.Media.Imaging
             // Download only if this content is not already downloaded or stream is not seekable
             if (bitmapStream == null || !bitmapStream.CanSeek)
             {
-                // In this case we first check to see if the consumer has media permissions for
-                // safe media (Site of Origin + Cross domain), if it
-                // does we assert and run the code that requires the assert
-                bool fElevate = false;
-                if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                            MediaPermissionVideo.NoVideo,
-                                                            MediaPermissionImage.SafeImage))
-                {
-                    fElevate = true;
-                }
-
-                if (fElevate)
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    if (fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 // Download only if this content is not already downloaded or stream is not seekable
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
@@ -1334,35 +1290,8 @@ namespace System.Windows.Media.Imaging
             // perform checks for UNC content
             SecurityHelper.EnforceUncContentAccessRules(uri);
 
-            // In this case we first check to see if the consumer has media permissions for
-            // safe media (Site of Origin + Cross domain), if it
-            // does then we assert else we run the code without the assert
-            bool fElevate = false;
-            if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                        MediaPermissionVideo.NoVideo,
-                                                        MediaPermissionImage.SafeImage))
-            {
-                fElevate = true;
-            }
+            bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-            if(fElevate)
-            {
-                // since the code above ensures that safe image permission is granted we
-                // can now do an assert to allow cross domain web request
-                (new FileIOPermission(FileIOPermissionAccess.Read, uri.LocalPath)).Assert(); // BlessedAssert
-            }
-            try
-            {
-                // FileStream does a demand for us, so no need to do a demand
-                bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            }
-            finally
-            {
-                if(fElevate)
-                {
-                    FileIOPermission.RevertAssert();
-                }
-            }
             return bitmapStream;
         }
 

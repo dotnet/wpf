@@ -46,16 +46,11 @@ namespace MS.Internal.Drt
     using System.IO.Packaging;
 #endif
 
-#if WINDOWS_BASE || PRESENTATIONUI
-    using MS.Internal.Permissions;
-#endif
 #if PRESENTATION_CORE
 using MS.Internal.AppModel;
-using MS.Internal.Permissions;
 #endif
 
 #if PRESENTATIONFRAMEWORK_ONLY
-    using MS.Internal.Permissions ;
     using System.Diagnostics;
     using System.Windows;
     using MS.Internal.Utility;      // BindUriHelper

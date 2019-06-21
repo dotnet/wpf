@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
 using System.Security.Permissions;
-using MS.Internal.Permissions;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace MS.Internal.Security.RightsManagement

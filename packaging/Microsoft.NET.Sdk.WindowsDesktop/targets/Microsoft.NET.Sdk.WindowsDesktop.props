@@ -23,7 +23,8 @@
     <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(EnableDefaultItems)' == 'true' And '$(UseWPF)' == 'true' And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And 
+                         ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <ApplicationDefinition Include="App.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
       <Generator>MSBuild:Compile</Generator>
@@ -54,17 +55,22 @@
           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And '$(EnableDefaultPageItems)' != 'false'" />
   </ItemGroup>
 
-  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' == 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true" />
-  </ItemGroup>
+  
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
+                      ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And
+                      ('$(_TargetFrameworkVersionWithoutV)' != '') And
+                      ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
-  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" IsImplicitlyDefined="true" />
-  </ItemGroup>
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' == 'true')"/>
 
-  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(UseWPF)' != 'true') And ('$(UseWindowsForms)' == 'true') And ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" IsImplicitlyDefined="true" />
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' != 'true')"/>
+
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' != 'true') And ('$(UseWindowsForms)' == 'true')"/>
   </ItemGroup>
+  
 
   <!--
     Traditionally, Visual Studio has supplied these references for .NET Framework based
@@ -89,7 +95,8 @@
      Note:
        These are WPF specific version lower-bounds. Do not use $(_WindowsDesktopSdkTargetFrameworkVersionFloor) in place of '3.0' below.
   -->
-  <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 
+                        ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <_WpfCommonNetFxReference Include="WindowsBase" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
     <_WpfCommonNetFxReference Include="PresentationCore" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
     <_WpfCommonNetFxReference Include="PresentationFramework" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'" />
@@ -105,15 +112,16 @@
     <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.5'" />
   </ItemGroup>
 
-  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)') And ('$(UseWPF)' == 'true') ">
-    <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)') And ('$(UseWindowsForms)' == 'true') ">
-    <_SDKImplicitReference Include="System.Windows.Forms"/>
-  </ItemGroup>
-
-  <ItemGroup Condition=" ('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)') And ('$(UseWindowsForms)' == 'true') And ('$(UseWPF)' == 'true') ">
-    <_SDKImplicitReference Include="WindowsFormsIntegration"/>
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And 
+                        ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+    
+    <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)"
+                       Condition="'$(UseWPF)' == 'true'"/>
+    
+    <_SDKImplicitReference Include="System.Windows.Forms"
+                        Condition="('$(UseWindowsForms)' == 'true') " />
+    
+    <_SDKImplicitReference Include="WindowsFormsIntegration"
+                       Condition=" ('$(UseWindowsForms)' == 'true') And ('$(UseWPF)' == 'true') "/>
   </ItemGroup>
 </Project>

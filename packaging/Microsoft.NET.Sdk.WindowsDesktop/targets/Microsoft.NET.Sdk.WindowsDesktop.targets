@@ -1,7 +1,8 @@
 <Project>
   <Import Project="Microsoft.WinFX.targets" />
 
-  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 
+                         ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     
     <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
          as Resource, Content, or None items, then remove them from the Page items. -->
@@ -43,7 +44,7 @@
   --> 
   <Target Name="_WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms"
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-          Condition="'$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+          Condition="('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms" 
                    Condition="'$(UseWpf)' != 'true' And '$(UseWindowsForms)' != 'true'"/>
   </Target>
@@ -56,7 +57,8 @@
   --> 
   <Target Name="_WindowsDesktopFrameworkRequiresVersion30"
         BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-        Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+        Condition="('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And 
+                  ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
 </Project>

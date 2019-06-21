@@ -77,10 +77,10 @@
       ReachFramework-ref;
       System.Windows.Input.Manipulations-ref;
       System.Xaml-ref;
-      UIAutomationTypes-ref;
-      UIAutomationProvider-ref;
       UIAutomationClient-ref;
       UIAutomationClientSideProviders-ref;
+      UIAutomationProvider-ref;
+      UIAutomationTypes-ref;
       WindowsBase-ref;
     </ExternalHandCraftedReferenceProjects>
 
@@ -101,7 +101,9 @@
       DirectWriteForwarder;
       PresentationBuildTasks;
       PresentationCore;
+      PresentationCore-ref;
       PresentationFramework;
+      PresentationFramework-ref;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
       PresentationFramework.AeroLite;
@@ -110,12 +112,19 @@
       PresentationFramework.Royale;
       PresentationUI;
       ReachFramework;
+      ReachFramework-ref;
       System.Printing;
+      System.Printing-ref;
       UIAutomationClient;
+      UIAutomationClient-ref;
       UIAutomationClientsideProviders;
+      UIAutomationClientsideProviders-ref;
       UIAutomationProvider;
+      UIAutomationProvider-ref;
       UIAutomationTypes;
+      UIAutomationTypes-ref;
       WindowsBase;
+      WindowsBase-ref;
       WindowsFormsIntegration;
       PresentationFramework-PresentationUI-api-cycle;
       PresentationFramework-ReachFramework-impl-cycle;
@@ -125,8 +134,6 @@
       ReachFramework-System.Printing-api-cycle;
       System.Printing-PresentationFramework-api-cycle;
       PresentationUI-PresentationFramework-impl-cycle;
-      $(ExternalHandCraftedReferenceProjects);
-      $(InternalHandCraftedReferenceProjects);
     </UseMicrosoftSharedKeyId>
   </PropertyGroup>
 

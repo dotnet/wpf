@@ -548,7 +548,6 @@ namespace MS.Internal.TextFormatting
         /// Critical - this sets the owner of the context
         /// Safe     - this doesn't expose critical info
         /// </SecurityNotes>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextFormatterContext AcquireContext(
             object      owner,
             IntPtr      ploc
@@ -812,13 +811,8 @@ namespace MS.Internal.TextFormatting
         /// Return the TextAnalyzer associated with this TextFormatterImp object.
         /// TextAnalyzer is used in shaping process.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Uses security critical DWriteFactory.Instance.
-        /// Safe     - Does not expose the Factory instance.
-        /// </SecurityNote>
         internal TextAnalyzer TextAnalyzer
         {
-            [SecuritySafeCritical]
             get
             {
                 if (_textAnalyzer == null)

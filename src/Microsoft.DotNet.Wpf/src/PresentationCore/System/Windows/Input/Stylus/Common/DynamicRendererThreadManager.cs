@@ -55,10 +55,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// Add a listener to the given source's event.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: Called only by SecurityCritical code DynamicRendererThreadManager::ctor
-        /// </SecurityNote>
-        [SecurityCritical]
         public static void AddListener(Dispatcher source, IWeakEventListener listener)
         {
             if (source == null)
@@ -107,12 +103,8 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// get the event manager for the current thread
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: Called only by SecurityCritical code DynamicRendererThreadManager::ctor
-        /// </SecurityNote>
         private static DispatcherShutdownStartedEventManager CurrentManager
         {
-            [SecurityCritical]
             get
             {
                 Type managerType = typeof(DispatcherShutdownStartedEventManager);
@@ -174,13 +166,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// Private contructor called by static method so that we can only ever create one of these per thread!
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This code creates a singleton thread that runs it own Dispatcher pump via InkingThreadProc.
-        ///             Called by DynamicRenderer.CreateRealTimeVisuals().
-        ///   TreatAsSafe: Calling this over and over can only create one shared thread with its own dispatcher which is at
-        ///   the most a nuisance.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private DynamicRendererThreadManager()
         {
             // Create the thread
@@ -259,12 +244,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// Handles disposing of internal object data.
         /// </summary>
         /// <param name="disposing">true when freeing managed and unmanaged resources; false if freeing just unmanaged resources.</param>
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical method Dispatcher.CriticalShutdown.
-        ///          Called by Dispose() and Finalizer.
-        /// TreatAsSafe -  No critical data returned or accepted as input.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         void Dispose(bool disposing)
         {
             if(!_disposed)
@@ -322,12 +301,6 @@ namespace System.Windows.Input.StylusPlugIns
             {
             }
 
-            /// <SecurityNote>
-            ///   Critical: This code creates a singleton thread that runs it own Dispatcher pump via InkingThreadProc.
-            ///             Called by DynamicRendererThreadManager constructor.
-            ///   the most a nuisance.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal Dispatcher StartUpAndReturnDispatcher()
             {
                 _startupCompleted = new AutoResetEvent(false);
@@ -343,10 +316,6 @@ namespace System.Windows.Input.StylusPlugIns
                 return _dispatcher;
             }
 
-            /// <SecurityNote>
-            ///   Critical: This code calls into Dispatcher.Run on a given thread
-            /// </SecurityNote>
-            [SecurityCritical]
             public void InkingThreadProc()
             {
                 Thread.CurrentThread.Name = "DynamicRenderer";

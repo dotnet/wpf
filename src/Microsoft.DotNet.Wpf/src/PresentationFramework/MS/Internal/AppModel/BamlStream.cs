@@ -32,12 +32,6 @@ namespace MS.Internal.AppModel
 
         #region Constructor
 
-        /// <SecurityNote>
-        ///     Critical - because it stores the assembly passed in to it the _assembly field that is marked
-        ///                SecurityCriticalDataForSet, and this field is used by the BamlRecordReader to
-        ///                allow legitimate internal types in Partial Trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BamlStream(Stream stream, Assembly assembly)
         {
             _assembly.Value = assembly;

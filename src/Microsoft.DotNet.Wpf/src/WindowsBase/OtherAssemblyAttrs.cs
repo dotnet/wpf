@@ -84,7 +84,16 @@ using System.Windows.Markup;
 [assembly:TypeForwardedTo(typeof(System.IO.Packaging.CompressionOption))] 
 [assembly:TypeForwardedTo(typeof(System.IO.Packaging.EncryptionOption))] 
 [assembly:TypeForwardedTo(typeof(System.IO.Packaging.PackageRelationshipSelector))] 
-[assembly:TypeForwardedTo(typeof(System.IO.Packaging.PackageRelationshipSelectorType))] 
+[assembly:TypeForwardedTo(typeof(System.IO.Packaging.PackageRelationshipSelectorType))]
+
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionAudio))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionVideo))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionImage))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermission))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionAttribute))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermissionLevel))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermission))]
+[assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermissionAttribute))]
 
 // XAML namespace definitions
 [assembly:System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows")]

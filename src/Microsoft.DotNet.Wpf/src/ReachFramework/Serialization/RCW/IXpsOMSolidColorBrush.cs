@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("A06F9F05-3BE9-4763-98A8-094FC672E488"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMSolidColorBrush : IXpsOMBrush
     {
         IXpsOMSolidColorBrush Clone();

@@ -1934,13 +1934,8 @@ namespace System.Windows.Controls
         /// Returns true if the ItemsHost is visually connected to the RootVisual of its PresentationSource.
         /// </summary>
         /// <value></value>
-        /// <SecurityNote>
-        ///     Critical: This code accesses HwndSource from the call PresentationSource.CriticalFromVisual
-        ///     TreatAsSafe: It does not expose the critical data
-        /// </SecurityNote>
         private bool IsItemsHostVisible
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Panel itemsHost = ItemsHost;

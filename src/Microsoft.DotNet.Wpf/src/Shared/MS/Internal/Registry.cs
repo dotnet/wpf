@@ -44,10 +44,6 @@ namespace MS.Internal
             FRAMEWORK_RegKey_FullPath  = @"HKEY_LOCAL_MACHINE\" + FRAMEWORK_RegKey,
             FRAMEWORK_InstallPath_RegValue = "InstallPath";
 
-        /// <SecurityNote>
-        /// Critical: Reads an arbitrary registry key.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static bool ReadLocalMachineBool(string key, string valueName)
         {
             string keyPath = "HKEY_LOCAL_MACHINE\\" + key;

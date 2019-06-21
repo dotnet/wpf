@@ -83,10 +83,6 @@ namespace MS.Internal.AppModel
 
     #region Interfaces
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -104,10 +100,6 @@ namespace MS.Internal.AppModel
     }
 
     /// <summary>Unknown Object Array</summary>
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -120,10 +112,6 @@ namespace MS.Internal.AppModel
         object GetAt([In] uint uiIndex, [In] ref Guid riid);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -143,10 +131,6 @@ namespace MS.Internal.AppModel
         void Clear();
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -157,25 +141,13 @@ namespace MS.Internal.AppModel
         uint GetCount();
         PKEY GetAt(uint iProp);
 
-        /// <SecurityNote>
-        /// Critical: Accepts critical PROPVARIANT argument
-        /// </SecurityNote>
-        [SecurityCritical]
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
 
-        /// <SecurityNote>
-        /// Critical: Accepts critical PROPVARIANT argument
-        /// </SecurityNote>
-        [SecurityCritical]
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
 
         void Commit();
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -270,10 +242,6 @@ namespace MS.Internal.AppModel
             out IntPtr ppidlOut);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -297,10 +265,6 @@ namespace MS.Internal.AppModel
     /// <summary>
     /// Shell Namespace helper 2
     /// </summary>
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -344,10 +308,6 @@ namespace MS.Internal.AppModel
         // Ensures any cached information in this item is up to date, or returns __HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) if the item does not exist.
         void Update(IBindCtx pbc);
 
-        /// <SecurityNote>
-        /// Critical: Accepts critical PROPVARIANT argument
-        /// </SecurityNote>
-        [SecurityCritical]
         void GetProperty(IntPtr key, [In, Out] PROPVARIANT pv);
 
         Guid GetCLSID(IntPtr key);
@@ -367,10 +327,6 @@ namespace MS.Internal.AppModel
         bool GetBool(IntPtr key);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -397,10 +353,6 @@ namespace MS.Internal.AppModel
         object EnumItems();
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown),
@@ -428,10 +380,6 @@ namespace MS.Internal.AppModel
         void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -461,10 +409,6 @@ namespace MS.Internal.AppModel
         HRESULT OnOverwrite(IFileDialog pfd, IShellItem psi, out FDEOR pResponse);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -476,10 +420,6 @@ namespace MS.Internal.AppModel
         HRESULT Show(IntPtr parent);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -540,10 +480,6 @@ namespace MS.Internal.AppModel
         void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -590,10 +526,6 @@ namespace MS.Internal.AppModel
         IShellItemArray GetSelectedItems();
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -648,10 +580,6 @@ namespace MS.Internal.AppModel
     }
 
     // Used to remove items from the automatic destination lists created when apps or the system call SHAddToRecentDocs to report usage of a document.
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -674,10 +602,6 @@ namespace MS.Internal.AppModel
     /// <summary>
     /// Allows an application to retrieve the most recent and frequent documents opened in that app, as reported via SHAddToRecentDocs
     /// </summary>
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -705,10 +629,6 @@ namespace MS.Internal.AppModel
     }
 
     // Custom Destination List
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -741,10 +661,6 @@ namespace MS.Internal.AppModel
     /// <summary>
     /// Provides access to the App User Model ID on objects supporting this value.
     /// </summary>
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -760,10 +676,6 @@ namespace MS.Internal.AppModel
     /// <summary>
     /// Provides access to the ProgID associated with an object 
     /// </summary>
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -776,10 +688,6 @@ namespace MS.Internal.AppModel
         string GetProgID();
     };
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -817,10 +725,6 @@ namespace MS.Internal.AppModel
         void SetActiveAlt(IntPtr hwnd);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -851,16 +755,12 @@ namespace MS.Internal.AppModel
         void MarkFullscreenWindow(IntPtr hwnd, [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
     /// <remarks>
     /// Methods on this interface are marked as PreserveSig because the implementation inconsistently
     /// surfaces errors in Explorer.  Many of these methods are implemented by posting messages
     /// to the desktop window, but if explorer is not running or currently busy then we get back
     /// error codes that must be handled by the caller.
     /// </remarks>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -920,10 +820,6 @@ namespace MS.Internal.AppModel
         HRESULT SetThumbnailClip(IntPtr hwnd, NativeMethods.RefRECT prcClip);
     }
 
-    /// <SecurityNote>
-    /// Critical: Suppresses unmanaged code security.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -973,19 +869,11 @@ namespace MS.Internal.AppModel
     /// </remarks>
     internal static class ShellUtil
     {
-        /// <SecurityNote>
-        ///     Critical: Resolves an opaque interface into a path on the user's machine.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static string GetPathFromShellItem(IShellItem item)
         {
             return item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Resolves an opaque Guid into a path on the user's machine.  Calls critical SHGetFolderPathEx
-        /// </SecurityNote>
-        [SecurityCritical]
         public static string GetPathForKnownFolder(Guid knownFolder)
         {
             if (knownFolder == default(Guid))
@@ -1001,10 +889,6 @@ namespace MS.Internal.AppModel
                 : null;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls SHCreateItemFromParsingName
-        /// </SecurityNote>
-        [SecurityCritical]
         public static IShellItem2 GetShellItemForPath(string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -1033,55 +917,31 @@ namespace MS.Internal.AppModel
 
     internal static class NativeMethods2
     {
-        ///<SecurityNote>
-        ///     Critical - elevates via a SUC.
-        ///</SecurityNote>
         [DllImport(ExternDll.Shell32, EntryPoint = "SHAddToRecentDocs")]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         private static extern void SHAddToRecentDocsString(SHARD uFlags, [MarshalAs(UnmanagedType.LPWStr)] string pv);
 
         // This overload is required.  There's a cast in the Shell code that causes the wrong vtbl to be used
         // if we let the marshaller convert the parameter to an IUnknown.
-        ///<SecurityNote>
-        ///     Critical - elevates via a SUC.
-        ///</SecurityNote>
         [DllImport(ExternDll.Shell32, EntryPoint = "SHAddToRecentDocs")]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         private static extern void SHAddToRecentDocs_ShellLink(SHARD uFlags, IShellLinkW pv);
 
-        ///<SecurityNote>
-        ///     Critical - calls critical SHAddToRecentDocsString.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static void SHAddToRecentDocs(string path)
         {
             SHAddToRecentDocsString(SHARD.PATHW, path);
         }
 
         // Win7 only.
-        ///<SecurityNote>
-        ///     Critical - calls critical SHAddToRecentDocsObj
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static void SHAddToRecentDocs(IShellLinkW shellLink)
         {
             SHAddToRecentDocs_ShellLink(SHARD.LINK, shellLink);
         }
 
         // Vista only
-        ///<SecurityNote>
-        ///     Critical - elevates via a SUC.
-        ///</SecurityNote>
         [DllImport(ExternDll.Shell32)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         internal static extern HRESULT SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IBindCtx pbc, [In] ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out object ppv);
 
         // Vista only.  Also inconsistently doced on MSDN.  It was available in some versions of the SDK, and it mentioned on several pages, but isn't specifically doced.
-        ///<SecurityNote>
-        ///     Critical - elevates via a SUC.
-        ///</SecurityNote>
         [DllImport(ExternDll.Shell32)]
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         internal static extern HRESULT SHGetFolderPathEx([In] ref Guid rfid, KF_FLAG dwFlags, [In, Optional] IntPtr hToken, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszPath, uint cchPath);
 
         /// <summary>

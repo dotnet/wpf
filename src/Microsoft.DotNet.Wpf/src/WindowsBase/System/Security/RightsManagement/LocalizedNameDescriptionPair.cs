@@ -32,18 +32,6 @@ namespace System.Security.RightsManagement
     /// a basic building block for structures that need to express locale specific information about 
     ///  Unsigned Publish Licenses. 
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class exposes access to methods that eventually do one or more of the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class LocalizedNameDescriptionPair
     {
         /// <summary>

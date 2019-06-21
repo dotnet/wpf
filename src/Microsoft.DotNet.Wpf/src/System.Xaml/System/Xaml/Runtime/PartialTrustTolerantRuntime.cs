@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -427,11 +427,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Initializes critical type DynamicMethodRuntime
-        /// Safe: Initializes via safe ctor, and DMR demands at all its safe entry points
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void EnsureElevatedRuntime()
         {
             if (_elevatedRuntime == null)

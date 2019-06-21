@@ -253,11 +253,6 @@ namespace System.Windows.Documents
         /// Copies an embedded UIElement into a ContentContainer.
         /// Returns the next node to examine.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: This function makes a security decision (checks for unmanaged code permission).
-        /// TreatAsSafe: Doesn't call critical code and doesn't expose critical data.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private TextTreeNode CopyObjectNode(TextTreeObjectNode objectNode, out ContentContainer container)
         {
             // XamlWriter.Save demands unmanaged code permission. Since it's not safe to assert 

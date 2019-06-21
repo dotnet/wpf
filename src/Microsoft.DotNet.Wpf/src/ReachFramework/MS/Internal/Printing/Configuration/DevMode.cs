@@ -457,7 +457,6 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>DevMode</returns>
         /// <secritynote>
         /// </secritynote>
-        [SecurityCritical]
         public static DevMode FromIntPtr(IntPtr devModeWPointer)
         {
             if (devModeWPointer == IntPtr.Zero)

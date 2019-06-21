@@ -468,12 +468,6 @@ namespace System.Windows.Input
         /// <param name="points">
         ///     Points relative to the first parameter are returned.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: calls critical method (GetInputProvider) and gets PresentationSource.
-        ///               PublicOK: The PresentationSource and input provider aren't
-        ///               returned or stored.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static int GetIntermediatePoints(IInputElement relativeTo, Point[] points)
         {
             // Security Mitigation: do not give out input state if the device is not active.
@@ -623,13 +617,8 @@ namespace System.Windows.Input
         /// <summary>
         ///     The primary mouse device.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code acceses InputManager which is critical
-        ///     PublicOK: This data is ok to expose
-        /// </SecurityNote>
         public static MouseDevice PrimaryDevice
         {
-            [SecurityCritical]
             get
             {
                 MouseDevice mouseDevice;

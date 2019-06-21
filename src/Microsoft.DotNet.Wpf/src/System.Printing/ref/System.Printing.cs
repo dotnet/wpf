@@ -145,7 +145,6 @@ namespace System.Printing
         protected sealed override void InternalDispose(bool disposing) { }
         public sealed override void Refresh() { }
     }
-    [System.Drawing.Printing.PrintingPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Level=(System.Drawing.Printing.PrintingPermissionLevel)(2))]
     public partial class PrintQueue : System.Printing.PrintSystemObject
     {
         public PrintQueue(System.Printing.PrintServer printServer, string printQueueName) { }

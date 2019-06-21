@@ -171,8 +171,6 @@ namespace MS.Internal.FontCache
         private volatile int _cacheAllocSize = 0;
 
         //Returns a pointer the cache header, without bounds-checking
-        ///<SecurityNote>Critical - accesses cache and returns a pointer</SecurityNote>
-        [SecurityCritical]
         private unsafe CacheHeader* UnsafeGetCacheHeader()
         {
             return (CacheHeader*)(_mfile.PositionPointer);
@@ -180,8 +178,6 @@ namespace MS.Internal.FontCache
 
         //Returns CheckedPointer representing the cache version string.  This is bounded
         //by the start of the cache table.
-        ///<SecurityNote>Critical - calls into critical code.  TreatAsSafe - cache version is ok to give out</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private unsafe CheckedPointer GetVersionPointer()
         {
             //Bounds-checking the buffer is not necessary here since the version is part of the header
@@ -189,8 +185,6 @@ namespace MS.Internal.FontCache
         }
 
         //Returns a pointer to the cache header, assuming the cache has already been initialized
-        ///<SecurityNote>Critical - accesses cache and returns a pointer</SecurityNote>
-        [SecurityCritical]
         private unsafe CacheHeader* GetCacheHeader()
         {
             //Since the header is always in memory, Mapping.Probe() is equivlant
@@ -199,8 +193,6 @@ namespace MS.Internal.FontCache
         }
 
         //Initializes the cache header
-        ///<SecurityNote>Critical - calls UnsafeGetCacheHeader() and modifies the cache</SecurityNote>
-        [SecurityCritical]
         private void InitCacheHeader(int curSize, int maxSize)
         {
             Util.AssertAligned8(curSize);
@@ -221,11 +213,6 @@ namespace MS.Internal.FontCache
         }
 
 
-        /// <SecurityNote>
-        ///         Critical: This code serves as an entry point to unsafe code Also it initializes the server cache filemapping
-        ///         object which should not be null or spoofed
-        ///</SecurityNote>
-        [SecurityCritical]
         internal ElementCacher(FileMapping mfile, bool create, bool shared)
         {
             _mfile = mfile;
@@ -270,38 +257,22 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: Calls into critical code which is unsafe to do string copy
-        ///    TreatAsSafe: Ok to call since this sets version
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void SetVersion()
         {
             Util.StringCopyToCheckedPointer(GetVersionPointer(), _cacheVersionString);
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code calls into _mapping which is a byte *
-        ///     TreatAsSafe: This code is safe to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal bool VersionUpToDate()
         {
             return Util.StringEqual(GetVersionPointer(), _cacheVersionString);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls GetCacheHeader, which returns a pointer
-        ///     TreatAsSafe: get() accessor doesn't change anything and cache is always allocated to include the header
-        /// </SecurityNote>
         internal int MaxCacheSize
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 return GetCacheHeader()->MaxSize;
             }
-            [SecurityCritical]
             set
             {
                 GetCacheHeader()->MaxSize = value;
@@ -309,54 +280,30 @@ namespace MS.Internal.FontCache
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code yieds unverifiable code
-        ///     TreatAsSafe: Get is safe - doesn't change anything
-        /// </SecurityNote>
         internal int CurrentSize
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 return GetCacheHeader()->CurSize;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code yieds unverifiable code
-        ///     TreatAsSafe: This operation is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void SetNew()
         {
             GetCacheHeader()->Marker = 0;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code yieds unverifiable code
-        ///     TreatAsSafe: Marking this as obsolete is a safe operation
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void MarkObsolete()
         {
             GetCacheHeader()->Marker = 1;
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code does unsafe pointer manipulation
-        ///     TreatAsSafe: This information is ok to give out
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal bool IsObsolete()
         {
             return GetCacheHeader()->Marker != 0;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code does unsafe pointer manipulations, and the input parameter may cause spoofing or overrun.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void InitFromCacheImage(CheckedPointer cacheImage)
         {
             if (cacheImage.Size < MinCacheSize ||
@@ -394,10 +341,6 @@ namespace MS.Internal.FontCache
             SetNew();
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code does unsafe pointer manipulations, and the input parameter may cause spoofing or overrun.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void InitFromPreviousCache(ElementCacher oldCache, int newCacheSize)
         {
             // We need to lock the old cache to make sure it's CurrentSize is not updated in the middle of the copy.
@@ -414,13 +357,8 @@ namespace MS.Internal.FontCache
         /// Note: we use _mapping + offset directly instead of this indexer
         /// in cases when CurrentSize property is not set yet
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This code yield unverifiable code which triggers a demand
-        ///               It also returns a pointer.
-        /// </SecurityNote>
         internal unsafe byte* this[int offset]
         {
-            [SecurityCritical]
             get
             {
                 Invariant.Assert(offset != Util.nullOffset);
@@ -433,12 +371,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code yield unverifiable code which triggers a demand
-        /// </SecurityNote>
         internal int this[byte* pointer]
         {
-            [SecurityCritical]
             get
             {
                 long longRes = Mapping.OffsetOf(pointer);
@@ -447,13 +381,6 @@ namespace MS.Internal.FontCache
                 return intRes;
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This code does unsafe pointer manipulation
-        ///     TreatAsSafe: This code returns a checked pointer, getting to the data in it is critical
-        ///     This acts like a container for the critical pointer and is all safe unless one
-        ///     extracts the pointer
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal CheckedPointer GetCheckedPointer(int offset)
         {
             Invariant.Assert(offset != Util.nullOffset && offset <= CurrentSize);
@@ -474,11 +401,6 @@ namespace MS.Internal.FontCache
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: This code yield unverifiable code which triggers a demand
-        ///     TreatAsSafe: This code allocates memory for the cacher and is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal int Alloc(int size)
         {
             Invariant.Assert(size >= 0);
@@ -517,11 +439,6 @@ namespace MS.Internal.FontCache
         /// Thread safe.
         /// Throws FontCacheFullException in case of cache overflow
         /// <returns>Returns whether the element already existed in the cache.</returns>
-        /// <SecurityNote>
-        ///       Critical: This code adds a font cache element to the hashtable
-        ///       TreatAsSafe: This code is safe to expose since it simply adds an element to the cache
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal bool LookupAndAdd(IFontCacheElement e)
         {
             return _hashTable.Lookup(e, true);
@@ -533,23 +450,13 @@ namespace MS.Internal.FontCache
         /// <param name="e"></param>
         /// Thread safe.
         /// <returns>Returns whether the element was found in the cache.</returns>
-        /// <SecurityNote>
-        ///     Critical: This code yields unverifiable code which triggers a demand
-        ///     TreatAsSafe: This information is ok to return
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal bool ReadOnlyLookup(IFontCacheElement e)
         {
             return _hashTable.Lookup(e, false);
         }
 
-        /// <SecurityNote>
-        /// Critical - uses unsafe code blocks, performs pointer manipulation, and calls VirtualQuery() and CheckedPointer constructor
-        /// TreatAsSafe: Returned pointer is guaranteed to fall within the bounds of memory allocated for the cache.
-        /// </SecurityNote>
         internal CheckedPointer Mapping
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -601,10 +508,6 @@ namespace MS.Internal.FontCache
         //Returns the number of bytes available for the current cache
         //starting from the given pointer, which may lie anywhere in the middle
         //of the cache.  ptr need not be aligned on a page boundary.
-        /// <SecurityNote>
-        /// Critical - uses unsafe code blocks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe int GetCacheMemoryRemaining(byte* ptr)
         {
             VirtualQueryClass.MemoryBasicInformation mbi;
@@ -625,10 +528,6 @@ namespace MS.Internal.FontCache
 
     }
 
-    /// <SecurityNote>
-    ///     Critical - calls critical code, communicates with the font cache service, exposes font data.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static class CacheManager
     {
         // Disable Presharp warning about Dispose() not being called on the disposable FileMapping object.

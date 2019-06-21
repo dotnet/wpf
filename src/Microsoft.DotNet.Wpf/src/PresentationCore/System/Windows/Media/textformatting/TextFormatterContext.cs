@@ -56,11 +56,6 @@ namespace System.Windows.Media.TextFormatting
         private static Dictionary<char,bool>        _specialCharacters; // special characters
 
 
-        /// <SecurityNote>
-        /// Critical - as this calls the constructor for  SecurityCriticalDataForSet.
-        /// Safe - as this just initializes it with the default value.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public TextFormatterContext()
         {
             _ploc =  new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
@@ -68,12 +63,6 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions - LoCreateContext, setter for _ploc.Value,
-        /// Safe - as this doesn't take any random parameters that can be passed along
-        ///        and cause random memory to be written to.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Init()
         {
             if(_ploc.Value == System.IntPtr.Zero)
@@ -210,10 +199,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Unclaim the ownership of the context, release it back to the context pool
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this sets exception and owner which are critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void Release()
         {
             this.CallbackException = null;
@@ -224,14 +209,9 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// context's owner
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Owner object is critical
-        /// </SecurityNote>
         internal object Owner
         {
-            [SecurityCritical]
             get { return _callbacks.Owner; }
-            [SecurityCritical]
             set { _callbacks.Owner = value; }
         }
 
@@ -239,14 +219,9 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Exception thrown during LS callback
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Exception and its message are critical
-        /// </SecurityNote>
         internal Exception CallbackException
         {
-            [SecurityCritical]
             get { return _callbacks.Exception; }
-            [SecurityCritical]
             set { _callbacks.Exception = value; }
         }
 
@@ -290,11 +265,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Destroy LS context
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function LoDestroyContext.
-        /// Safe - as this can't be used pass in arbitrary parameters.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Destroy()
         {
             if(_ploc.Value != System.IntPtr.Zero)
@@ -308,11 +278,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Set LS breaking strategy
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls LoSetBreaking which is a Crtical function.
-        /// Safe - as this doesn't take any parameters that are passed on without validation.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetBreaking(BreakStrategies breaking)
         {
             if (_state == State.Uninitialized ||  breaking != _breaking)
@@ -335,12 +300,6 @@ namespace System.Windows.Media.TextFormatting
         //  Line Services managed API
         //
         //
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function LoCreateLine.
-        /// Safe - as this can't be used to pass in arbitrary pointer parameters
-        ///        that can be written to.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal LsErr CreateLine(
             int                 cpFirst,
             int                 lineLength,
@@ -370,12 +329,6 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as it calls into unsafe function LoCreateBreaks
-        /// Safe - as this can't be used to pass in arbitrary pointer parameters
-        ///        that can be written to.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal LsErr CreateBreaks(
             int             cpFirst,
             IntPtr          previousLineBreakRecord,
@@ -399,12 +352,6 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as it calls into unsafe function LoCreateParaBreakingSession
-        /// Safe - as this can't be used to pass in arbitrary pointer parameters
-        ///        that can be written to.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal LsErr CreateParaBreakingSession(
             int             cpFirst,
             int             maxWidth,
@@ -426,11 +373,6 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as this call LoSetDoc which is a Critical function.  It doesn't
-        ///            pass any IntPtrs directly without validation.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetDoc(
             bool            isDisplay,
             bool            isReferencePresentationEqual,
@@ -451,13 +393,6 @@ namespace System.Windows.Media.TextFormatting
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this calls LoSetTabs which is a Critical function.  This
-        ///            is not safe as this takes tabStopCount parameter, a random
-        ///            value of which could cause data to written past the array pointed
-        ///            to by tabStops.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void SetTabs(
             int         incrementalTab,
             LsTbd*      tabStops,

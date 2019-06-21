@@ -38,12 +38,6 @@ namespace System.Windows
         /// <summary>
         ///     Static Constructor for ContentElement
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This hooks up a bunch of thunks which are all critical since they
-        ///     can be used to spoof input
-        ///     TreatAsSafe: Since it does not expose the thunks
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static ContentElement()
         {
             UIElement.RegisterEvents(typeof(ContentElement));

@@ -103,11 +103,6 @@ namespace MS.Internal.Documents
 #endif
         }
 
-        /// <SecurityNote>
-        /// Critical - it elevates to get trace listeners collection.
-        /// TreatAsSafe - it doesn't disclose the information got through elevation. adding a well-known trace listener is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static DocumentsTrace()
         {
 #if DEBUG
@@ -139,11 +134,6 @@ namespace MS.Internal.Documents
 #endif
         }
 
-        ///<SecurityNote>
-        ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
-        ///     TreatAsSafe: ok to enable tracing, and this is debug only
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public DocumentsTrace(string switchName, bool initialState) : this(switchName)
         {
 #if DEBUG
@@ -203,11 +193,6 @@ namespace MS.Internal.Documents
         }
 
 
-        ///<SecurityNote>
-        ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
-        ///     TreatAsSafe: ok to enable tracing, and this is debug only
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         [Conditional("DEBUG")]
         public void Enable()
         {
@@ -216,11 +201,6 @@ namespace MS.Internal.Documents
 #endif
         }
 
-        ///<SecurityNote>
-        ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
-        ///     TreatAsSafe: ok to disable tracing, and this is debug only
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         [Conditional("DEBUG")]
         public void Disable()
         {

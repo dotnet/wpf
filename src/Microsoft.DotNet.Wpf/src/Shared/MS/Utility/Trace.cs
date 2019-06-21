@@ -120,12 +120,6 @@ namespace MS.Utility
         /// Internal operations associated with initializing the event provider and
         /// monitoring the Dispatcher and input components.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical:  This calls critical code in TraceProvider
-        /// TreatAsSafe:  it generates the GUID that is passed into the TraceProvider
-        /// WPF versions prior to 4.0 used provider guid: {a42c77db-874f-422e-9b44-6d89fe2bd3e5}
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static EventTrace()
         {
             Guid providerGuid = new Guid("E13B77A8-14B6-11DE-8069-001B212B5009");
@@ -142,7 +136,6 @@ namespace MS.Utility
             EventProvider.Register(providerGuid);
         }
 
-        [SecurityCritical]
         static bool IsClassicETWRegistryEnabled()
         {
             try

@@ -904,12 +904,6 @@ namespace System.Windows
             ///     by this method was loaded. This Uri is captured for use with <see cref="ResourceDictionaryDiagnostics"/>.
             /// </param>
             /// <returns>The dictionary if found and loaded successfully, null otherwise.</returns>
-            /// <SecurityNote>
-            /// Critical: Asserts XamlLoadPermission.
-            /// Safe: BAML inside an assembly is allowed to access internals in that assembly.
-            ///       We are loading the BAML directly from an assembly, so we know the source.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private ResourceDictionary LoadDictionary(Assembly assembly, string assemblyName, string resourceName, bool isTraceEnabled, out Uri dictionarySourceUri)
             {
                 ResourceDictionary dictionary = null;
@@ -1060,11 +1054,6 @@ namespace System.Windows
         /// the OS would never report back anything other than the System DPI and 96 respectively, and thus we would only ever maintain one entry for those
         /// DpiAwarenessContextValues.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - Creates HwndWrappers and adds hooks.
-        ///     Safe: The _hwndNotify windows are critical and this function is safe to call
-        ///</SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener()
         {
             // Create a new notify window if we haven't already created any corresponding to ProcessDpiAwarenessContextValue for this thread.
@@ -1087,11 +1076,6 @@ namespace System.Windows
         /// created.
         /// </summary>
         /// <param name="dpiContextValue">DPI Awareness Context for which notify-window has to be ensured</param>
-        /// <SecurityNote>
-        ///     Critical: Calls <see cref="CreateResourceChangeListenerWindow(DpiAwarenessContextValue)"/>, which is Critical
-        ///     Safe:   Does not expose any Critical resources to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener(DpiAwarenessContextValue dpiContextValue)
         {
             EnsureResourceChangeListener();
@@ -1118,11 +1102,6 @@ namespace System.Windows
         /// whose characteristics we are trying to match, we are guaranteed that the DPI Scale factor of the newly created HWND
         /// would be identical to that of the reference HWND.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:   Calls into Critical methods
-        ///     Safe: Does not return any Critical resources to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private static void EnsureResourceChangeListener(DpiUtil.HwndDpiInfo hwndDpiInfo)
         {
             EnsureResourceChangeListener();
@@ -1154,11 +1133,6 @@ namespace System.Windows
         /// must only be called by <see cref="EnsureResourceChangeListener"/> or <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/>
         /// </remarks>
         /// <returns><see cref="DpiUtil.HwndDpiInfo"/> of the newly created <see cref="HwndWrapper"/>, which is also a new key added into <see cref="_hwndNotify"/></returns>
-        /// <SecurityNote>
-        ///     Critical:   Creates HWND's and HwndWrapper
-        ///     Safe: Does not return Critical resources directly to the caller
-        /// </SecurityNote>
-        [SecurityCritical]
         private static DpiUtil.HwndDpiInfo CreateResourceChangeListenerWindow(DpiAwarenessContextValue dpiContextValue, int x = 0, int y = 0, [System.Runtime.CompilerServices.CallerMemberName] string callerName = "")
         {
             Debug.Assert(_hwndNotify != null);
@@ -1203,11 +1177,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - Calls dispose on the critical hwnd wrapper.
-        ///     TreatAsSafe: It is safe to dispose the wrapper
-        ///</SecurityNote>
-        [SecuritySafeCritical]
         private static void OnShutdownFinished(object sender, EventArgs args)
         {
             if (_hwndNotify != null && _hwndNotify.Count != 0)
@@ -1354,11 +1323,6 @@ namespace System.Windows
         /// <param name="msg"></param>
         /// <param name="wParam"></param>
         /// <param name="lParam"></param>
-        /// <SecurityNote>
-        ///     Critical - Accesses the critical data.
-        ///                 _hwndNotify
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void InvalidateTabletDevices(WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             
@@ -1383,13 +1347,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls CriticalCurrentSources.
-        ///     TreatAsSafe - invalidation of resources considered ok.
-        ///                   Net effect is an invalidation of tree and reload of BAML from theme files.
-        ///                   Worse that could happen is a DOS attack within the app.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private static void InvalidateResources(bool isSysColorsOrSettingsChange)
         {
             SystemResourcesHaveChanged = true;
@@ -1408,13 +1365,6 @@ namespace System.Windows
                 }
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This code calls into PeekMessage and can be used to spoof theme change messages
-        ///     TreatAsSafe:The call to PeekMessage is safe and no information is exposed. In the case of the
-        ///     messages handled in this function, no data is passed in or out, the only form of attack possible
-        ///     here is DOS by excessive calls to this.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static IntPtr SystemThemeFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg;
@@ -1628,12 +1578,8 @@ namespace System.Windows
         /// re-parent that HWND under the said notify-window), use <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
         /// to obtain a matching (w.r.t. DPI Awareness Context) notify-window.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/> is Critical
-        /// </SecurityNote>
         private static HwndWrapper Hwnd
         {
-            [SecurityCritical]
             get
             {
                 EnsureResourceChangeListener();
@@ -1710,12 +1656,6 @@ namespace System.Windows
         /// susceptible to unexpected (and sometimes ill-defined - note that these notify-windows are zero sized windows) size-change
         /// requests.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: 
-        ///         <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/>, 
-        ///         is Critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static HwndWrapper GetDpiAwarenessCompatibleNotificationWindow(HandleRef hwnd)
         {
             var processDpiAwarenessContextValue = ProcessDpiAwarenessContextValue;
@@ -1759,7 +1699,7 @@ namespace System.Windows
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
         [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
-        [ThreadStatic] [SecurityCritical] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
+        [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();
         private static DTypeMap _themeStyleCache = new DTypeMap(100); // This is based upon the max DType.ID found in MSN scenario

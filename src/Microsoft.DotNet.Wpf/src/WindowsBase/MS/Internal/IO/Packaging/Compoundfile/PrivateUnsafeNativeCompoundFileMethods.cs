@@ -35,12 +35,6 @@ using CultureInfo = System.Globalization.CultureInfo;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
-    // <SecurityNote>
-    //     Critical:  These interfaces and APIs have suppress unamanged code attribute set. 
-    //     It is up to the wrapper class (SafeNativeCompoundFileMethods) to ensure that the only
-    //     calls that can go through must be either done in Full Trust or with CompoundFileIOPermission.
-    // </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static class UnsafeNativeCompoundFileMethods
     {
         /////////////////////////////////////////////////////
@@ -48,7 +42,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /////////////////////////////////////////////////////
 
         [DllImport("ole32.dll")]
-        [SuppressUnmanagedCodeSecurity]
         internal static extern int StgCreateDocfileOnILockBytes(
             UnsafeNativeILockBytes plkbyt,
             int grfMode,
@@ -57,7 +50,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             );
         
         [DllImport("ole32.dll")]
-        [SuppressUnmanagedCodeSecurity]
         internal static extern int StgOpenStorageOnILockBytes(
             UnsafeNativeILockBytes plkbyt,
             UnsafeNativeIStorage pStgPriority, // Most often NULL
@@ -68,7 +60,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             );
 
         [DllImport("ole32.dll")]
-        [SuppressUnmanagedCodeSecurity]
         internal static extern int StgCreateStorageEx(
             [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,     //Pointer to path of compound file to create
             int grfMode,       // Specifies the access mode for opening the storage object
@@ -81,7 +72,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             );
 
         [DllImport("ole32.dll")]
-        [SuppressUnmanagedCodeSecurity]
         internal static extern int StgOpenStorageEx(
             [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,     //Pointer to path of compound file to create
             int grfMode,       // Specifies the access mode for opening the storage object
@@ -94,7 +84,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             );    
 
         [DllImport("ole32.dll")]
-        [SuppressUnmanagedCodeSecurity]
         internal static extern int PropVariantClear(ref PROPVARIANT pvar);
 
         internal class UnsafeLockBytesOnStream : UnsafeNativeILockBytes, IDisposable
@@ -264,7 +253,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [Guid("0000000b-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIStorage
         {
             [PreserveSig]
@@ -337,7 +325,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [Guid("0000000c-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIStream
         {
             // ISequentialStream portion
@@ -359,7 +346,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [ComImport]
         [Guid("0000013A-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIPropertySetStorage
         {
             void Create(
@@ -389,7 +375,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [ComImport]
         [Guid("0000013B-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIEnumSTATPROPSETSTG
         {
             //
@@ -418,7 +403,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [ComImport]
         [Guid("00000138-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIPropertyStorage
         {
             //
@@ -505,7 +489,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [ComImport]
         [Guid("00000139-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIEnumSTATPROPSTG
             {
                 //
@@ -535,7 +518,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [Guid("0000000d-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
-        [SuppressUnmanagedCodeSecurity]
         internal interface UnsafeNativeIEnumSTATSTG
         {
             void Next(

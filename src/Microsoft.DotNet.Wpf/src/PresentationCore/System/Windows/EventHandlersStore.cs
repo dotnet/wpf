@@ -23,7 +23,6 @@ namespace System.Windows
     ///     of handlers for a given 
     ///     EventPrivateKey or RoutedEvent
     /// </remarks>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class EventHandlersStore
     {

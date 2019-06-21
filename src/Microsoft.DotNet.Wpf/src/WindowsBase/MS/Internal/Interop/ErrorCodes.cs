@@ -102,10 +102,6 @@ namespace MS.Internal.Interop
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
         /// <returns>A Win32Error instance with the result of the native GetLastError</returns>
-        /// <SecurityNote>
-        ///     Critical - Calls critical Marshal method GetLastWin32Error.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static Win32Error GetLastError()
         {
             return new Win32Error(Marshal.GetLastWin32Error());
@@ -382,12 +378,6 @@ namespace MS.Internal.Interop
             ThrowIfFailed(null);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls critical Marshal method GetExceptionForHR.
-        ///     TreatAsSafe - Callers can't gain additional information they didn't already have.
-        ///                   This is just throwing an exception.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void ThrowIfFailed(string message)
         {
             Exception e = GetException(message);
@@ -403,12 +393,6 @@ namespace MS.Internal.Interop
             return GetException(null);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls critical Marshal method GetExceptionForHR.
-        ///     TreatAsSafe - Callers can't gain additional information they didn't already have.
-        ///                   This is just getting an exception object.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public Exception GetException(string message)
         {
             if (!Failed)

@@ -90,7 +90,6 @@ namespace Microsoft.Internal.Interop
 
         #region Constructor
 
-        [SecurityCritical]
         static OSVersionHelper()
         {
             IsOsWindows10RS5OrGreater = IsWindows10RS5OrGreater();
@@ -136,97 +135,78 @@ namespace Microsoft.Internal.Interop
 
         #region DLL Imports
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS5OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS3OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10TH2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10TH1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows8Point1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows8OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows7SP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows7OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaSP2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaSP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaOrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP3OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPOrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsServer();

@@ -224,11 +224,6 @@ namespace System.Windows.Navigation
             this.Initialize();
         }
 
-        /// <SecurityNote>
-        ///     The only scenarios where we're currently going to enable creation of Windows is with RootBrowserWindow.
-        ///	    Do not call it outside the scope of the RBW scenario
-        /// </SecurityNote>
-        [SecurityCritical]
         internal NavigationWindow(bool inRbw): base(inRbw)
         {
             this.Initialize();
@@ -433,13 +428,6 @@ namespace System.Windows.Navigation
         /// The plan is to have a property on Window to turn it on and off. EnsureVisual and the ID will be removed when we do that.
         /// This is tracked in task #12401
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code acceses Handle
-        ///     PublicOK: The call to SetWindowThemeAttribute will throw a demand.
-        ///     In the RBW case if WCP_SYSTEM_THEMES_ENABLED is true this call is a NO OP
-        ///     else it will demand
-        /// </SecurityNote>
-        [SecurityCritical]
         public override void OnApplyTemplate()
         {
             VerifyContextAndObjectState( );

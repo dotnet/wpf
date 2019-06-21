@@ -44,14 +44,8 @@ namespace MS.Internal.AppModel
         // We use this to parent our first Window to this window.
         // </summary>
 
-        /// <SecurityNote>
-        ///     Critical: Sub classing this can let you expose windows and break functionality
-        ///     that relies on this data being valid
-        /// </SecurityNote>
         IntPtr HostWindowHandle
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.InheritanceDemand, Unrestricted = true)]
             get;
         }
     }

@@ -79,14 +79,6 @@ namespace MS.Internal
         //
         // Call UrlMon API to get MimeType for a given extension.
         //
-        ///<SecurityNote>
-        ///    SecurityCritical: uses UnsafeNativeMethods FindMimeFromData 
-        ///    SecurityTreatAsSafe: 
-        ///        The information returned is the mime-type associated with 
-        ///        the extension at the end of the Uri
-        ///        Considered safe information to expose. 
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static private ContentType GetMimeTypeFromUrlMon(Uri uriSource)
         {
             ContentType mimeType = ContentType.Empty;

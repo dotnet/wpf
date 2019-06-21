@@ -934,12 +934,12 @@
       </trans-unit>
       <trans-unit id="ListenerDidNotHandleEvent">
         <source>Listener did not handle requested event.</source>
-        <target state="translated">El agente de escucha no controló el evento solicitado.</target>
+        <target state="translated">El cliente de escucha no controló el evento solicitado.</target>
         <note />
       </trans-unit>
       <trans-unit id="ListenerDidNotHandleEventDetail">
         <source>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</source>
-        <target state="translated">El agente de escucha del tipo "{0}" se registró con el administrador de eventos del tipo "{1}", pero luego no controló el evento. El agente de escucha está codificado de manera incorrecta.</target>
+        <target state="translated">El cliente de escucha del tipo "{0}" se registró con el administrador de eventos del tipo "{1}", pero luego no controló el evento. El cliente de escucha está codificado de manera incorrecta.</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalValueEnumerationInvalidated">

@@ -34,14 +34,8 @@ namespace MS.Internal
             get { return _osVersion >= new Version(6, 2); }
         }
         
-        /// <SecurityNote>
-        /// Critical -- calls into an unsafe native method.
-        /// TreatAsSafe -- the call to DwmIsCompositionEnabled simply returns a boolean
-        ///                through an out parameter, it is safe information to expose
-        /// </SecurityNote>
         internal static bool IsCompositionEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (!IsOSVistaOrNewer)
@@ -66,10 +60,6 @@ namespace MS.Internal
             }
         }
         
-        /// <SecurityNote>
-        /// Critical - Suppresses unmanaged code security.  Calls Marshal.ReleaseComObject which has a LinkDemand.
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         internal static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

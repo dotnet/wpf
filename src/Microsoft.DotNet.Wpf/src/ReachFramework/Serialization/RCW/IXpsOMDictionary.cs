@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("897C86B8-8EAF-4AE3-BDDE-56419FCF4236"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMDictionary
     {
         void Append([In] string key, [In] IXpsOMShareable entry);

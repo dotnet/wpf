@@ -409,7 +409,6 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope="member", Target="System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key):System.Int32")]
 
 //don't need assembly-level critical on this assembly
-[module: SuppressMessage("Microsoft.SecurityCritical", "Test002:SecurityCriticalMembersMustExistInCriticalTypesAndAssemblies")]
 
 //Related to ST and SR class:
 [module: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="System.Windows.SR.Get(System.String,System.Object[]):System.String")]

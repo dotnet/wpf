@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("D3E18888-F120-4FEE-8C68-35296EAE91D4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMPage : IXpsOMPart
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

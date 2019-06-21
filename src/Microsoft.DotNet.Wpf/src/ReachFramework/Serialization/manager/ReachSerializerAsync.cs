@@ -139,11 +139,6 @@ namespace System.Windows.Xps.Serialization
             BeginSerializeObject(serializedProperty);
         }
 
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -192,11 +187,6 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -239,11 +229,6 @@ namespace System.Windows.Xps.Serialization
             }
          }
 
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -367,11 +352,6 @@ namespace System.Windows.Xps.Serialization
         /// object stemmed. This could be null if this is the node object
         /// or the object has no parent.
         /// </param>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         SerializableObjectContext
         DiscoverObjectData(

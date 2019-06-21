@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("221D1452-331E-47C6-87E9-6CCEFB9B5BA3"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMCanvas : IXpsOMVisual
     {
         IXpsOMCanvas Clone();

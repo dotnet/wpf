@@ -148,21 +148,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// The Type to convert the value parameter to.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - 1)   Calls GetImageMimeType which is security critical
-        ///
-        ///
-        ///            2)  Calls ReEncodeBitmap which is security critical
-        ///
-        /// TreatAsSafe:
-        ///            1) MimeTypes demands Unrestriced registry access. Presumably
-        ///               to discover registered bitmaps.  Registry information is not passed to caller.
-        ///
-        ///            2) Getting codecinfo data is OK (Direct quote from CodecInfo )
-        ///
-        ///            3) Uses the information to detrmine Bitmap Source type so it can be serialzied into stream with the same type.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public
         override
         object
@@ -375,10 +360,6 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - 1)  Asserts mediaAccessPermission for non site of origin data
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         void
@@ -449,10 +430,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A 32-bit unsigned integer Crc32 value.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical: This code calls an inernal PresentationCore function CriticalCopyPixels
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         UInt32
@@ -481,14 +458,6 @@ namespace System.Windows.Xps.Serialization
         }
 
 
-        /// <SecurityNote>
-        /// Critical - 1)   Asserts to access the registry.  May return path information which
-        ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
-        ///
-        ///            2)   Access unmanaged code, codecs
-        ///
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         static
         string

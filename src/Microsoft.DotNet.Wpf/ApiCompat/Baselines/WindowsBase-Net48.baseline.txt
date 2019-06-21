@@ -11,10 +11,19 @@ MembersMustExist : Member 'System.IO.Packaging.Package..ctor(System.IO.FileAcces
 MembersMustExist : Member 'System.IO.Packaging.PackUriHelper.GetPartUri(System.Uri)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.MediaPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.WebBrowserPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.ContentGrant' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.ContentUser' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.CryptoProvider' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.LocalizedNameDescriptionPair' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.PublishLicense' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.RightsManagement.RightsManagementException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.SecureEnvironment' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.UnsignedPublishLicense' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Security.RightsManagement.UseLicense' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableForTypeAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableWhenAttributePresentAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.SplashScreen' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.AmbientAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ConstructorArgumentAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ContentPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -37,4 +46,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsCompatibleWit
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 38
+Total Issues: 47

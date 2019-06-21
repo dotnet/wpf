@@ -23,13 +23,6 @@ namespace MS.Internal
         {
         }
 
-        ///<SecurityNote> 
-        ///     Critical calls unsecure handle. 
-        ///     This function should only be called by Urlmon. 
-        ///
-        ///     Which is un-managed code - ergo also critical. 
-        ///</SecurityNote> 
-        [SecurityCritical]
         public void GetWindow( /* [out] */ ref IntPtr phwnd)
         {
             phwnd = IntPtr.Zero;
@@ -37,11 +30,6 @@ namespace MS.Internal
             if (Application.Current != null)
             {
                 Window curWindow = Application.Current.MainWindow;
-
-#if NETFX
-                Invariant.Assert( Application.Current.BrowserCallbackServices == null || ( curWindow is RootBrowserWindow )); 
-#endif
-
                 if (curWindow != null)
                 {
                     phwnd = curWindow.CriticalHandle;

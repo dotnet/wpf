@@ -101,9 +101,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Holds the reference to the interaction context
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:   This can be used to fake ineraction input
-        /// </SecurityNote>
         private SecurityCriticalDataForSet<IntPtr> _interactionContext = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
 
         /// <summary>
@@ -168,7 +165,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="stylusDevice"></param>
         /// <param name="configuration"></param>
-        [SecurityCritical]
         internal PointerInteractionEngine(PointerStylusDevice stylusDevice, List<UnsafeNativeMethods.INTERACTION_CONTEXT_CONFIGURATION> configuration = null)
         {
             _stylusDevice = stylusDevice;
@@ -223,10 +219,6 @@ namespace System.Windows.Input.StylusPointer
         /// Destroy native resources
         /// </summary>
         /// <param name="disposing"></param>
-        /// <SecurityNote>
-        /// Critical:  Calls UnsafeNativeMethods.DestroyInteractionContext
-        /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -242,19 +234,11 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls Dispose(bool)
-        /// </SecurityNote>
-        [SecurityCritical]
         ~PointerInteractionEngine()
         {
             Dispose(false);
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls Dispose()
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -270,11 +254,6 @@ namespace System.Windows.Input.StylusPointer
         /// Update the interaction context with the latest pointer input
         /// </summary>
         /// <param name="rsir">The raw stylus input</param>
-        /// <SecurityNote>
-        /// Critical:   Calls UnsafeNativeMethods.BufferPointerPacketsInteractionContext
-        ///                   UnsafeNativeMethods.ProcessBufferedPacketsInteractionContext
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void Update(RawStylusInputReport rsir)
         {
             try
@@ -306,11 +285,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="clientData">Unused, the interaction context pointer</param>
         /// <param name="output">The interaction output</param>
-        /// <SecurityNote>
-        /// Critical:   Calls InteractionDetected callback
-        ///             Can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Callback(IntPtr clientData, ref UnsafeNativeMethods.INTERACTION_CONTEXT_OUTPUT output)
         {
             SystemGesture gesture = SystemGesture.None;
@@ -376,11 +350,6 @@ namespace System.Windows.Input.StylusPointer
         /// <remarks>
         /// Remove this if flicks no longer supported
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical:   Calls InteractionDetected callback
-        ///             Can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void DetectFlick(RawStylusInputReport rsir)
         {
             // Make sure the flick engine has the latest data if applicable.
@@ -413,11 +382,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Detects a hover and forwards it as a system gesture.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:   Calls InteractionDetected callback
-        ///             Can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void DetectHover()
         {
             // Hover only applies to Pen
@@ -512,11 +476,6 @@ namespace System.Windows.Input.StylusPointer
         /// Detect a flick or a drag and send the appropriate gesture.  Flicks always
         /// take precedence over drags as a flick is basically a very fast drag/release.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:   Calls InteractionDetected callback
-        ///             Can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private SystemGesture DetectDragOrFlick(UnsafeNativeMethods.INTERACTION_CONTEXT_OUTPUT output)
         {
             SystemGesture gesture = SystemGesture.None;

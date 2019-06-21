@@ -116,10 +116,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="cbTo"> int - count of bytes of receiving buffer.</param>
         /// <param name="pbFrom"> byte* pointing to the "from" array.</param>
         /// <param name="cbFrom"> int - count of bytes to copy from buffer.</param>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged memory for copying
-        /// </SecurityNote>
-        [SecurityCritical]
         private static unsafe void CopyBytes(
             byte* pbTo,
             int cbTo,
@@ -141,21 +137,11 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void InitVector(Array array, Type type, VarEnum varEnum)
         {
             Init(array,  type, varEnum | VarEnum.VT_VECTOR);
         }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code and structure is overlapping in memory
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(Array array, Type type, VarEnum vt)
         {
             varType = (ushort) vt;
@@ -200,11 +186,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code and structure is overlapping in memory
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(String[] value, bool fAscii)
         {
             varType = (ushort) (fAscii ? VarEnum.VT_LPSTR : VarEnum.VT_LPWSTR);
@@ -264,11 +245,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code and structure is overlapping in memory
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(object value)
         {
             if (value == null)
@@ -475,11 +451,6 @@ namespace System.Windows.Media.Imaging
             }
        }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code and structure is overlapping in memory
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Clear()
        {
             VarEnum vt = (VarEnum) varType;
@@ -538,11 +509,6 @@ namespace System.Windows.Media.Imaging
             vt = VarEnum.VT_EMPTY;
        }
 
-        /// <SecurityNote>
-        /// Critical -Accesses unmanaged code and structure is overlapping in memory
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal object ToObject(object syncObject)
         {
             VarEnum vt = (VarEnum) varType;
@@ -804,13 +770,8 @@ namespace System.Windows.Media.Imaging
             throw new System.NotSupportedException(SR.Get(SRID.Image_PropertyNotSupported));
        }
 
-        /// <SecurityNote>
-        /// Critical - Accesses a structure that contains overlapping data
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
         internal bool RequiresSyncObject
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return (varType == (ushort) VarEnum.VT_UNKNOWN);

@@ -39,12 +39,6 @@ namespace System.Windows.Interop
         IDirect3DSurface9
     }
 
-    /// <SecurityNote>
-    ///     It's possible for a D3DImage to be created where unmanaged code permission is
-    ///     granted and then handed off to a partial trust add-in. We must protect the
-    ///     necessary virtual overrides so base class calls don't bypass the link demand.
-    /// </SecurityNote>
-    [SecurityPermissionAttribute(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
     public class D3DImage : ImageSource, IAppDomainShutdownListener
     {
         static D3DImage()
@@ -66,9 +60,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Default constructor, sets DPI to 96.0
         /// </summary>
-        /// <SecurityNote>
-        ///     The non-default ctor demands so if we stop calling it we need to demand here
-        /// </SecurityNote>
         public D3DImage() : this(96.0, 96.0)
         {
         }
@@ -76,11 +67,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     DPI constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - access critical types (FrontBufferAvailableCallback)
-        ///     PublicOK - class demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         public D3DImage(double dpiX, double dpiY)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -105,7 +91,6 @@ namespace System.Windows.Interop
             AppDomainShutdownMonitor.Add(_listener);
         }
 
-        [SecurityCritical, SecurityTreatAsSafe]
         ~D3DImage()
         {
             if (_pInteropDeviceBitmap != null)
@@ -157,11 +142,6 @@ namespace System.Windows.Interop
         ///                         D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES support.
         ///
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - access critical code, accepts pointer arguments
-        ///     PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetBackBuffer(D3DResourceType backBufferType, IntPtr backBuffer, bool enableSoftwareFallback)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -328,11 +308,6 @@ namespace System.Windows.Interop
         ///     IMPORTANT: After five dirty rects, we will union them all together. This
         ///                means you must have valid data outside of the dirty regions.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - access critical code
-        ///     PublicOK - only deals with managed types, unmanaged call is considered safe
-        /// </SecurityNote>
-        [SecurityCritical]
         public void AddDirtyRect(Int32Rect dirtyRect)
         {
             WritePreamble();
@@ -504,9 +479,6 @@ namespace System.Windows.Interop
         /// Implementation of <see cref="System.Windows.Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
         /// </summary>
         /// <returns>The new Freezable.</returns>
-        /// <SecurityNote>
-        ///     Calls the ctor which demands unmanaged code
-        /// </SecurityNote>
         protected override Freezable CreateInstanceCore()
         {
             return new D3DImage();
@@ -530,10 +502,6 @@ namespace System.Windows.Interop
         ///
         ///     Not sealed to allow subclasses to clone their private data
         /// </summary>
-        /// <SecurityNote>
-        ///     The clone overrides call CloneCommon which calls SetBackBuffer
-        ///     which demands unmanaged code
-        /// </SecurityNote>
         protected override void CloneCore(Freezable sourceFreezable)
         {
             base.CloneCore(sourceFreezable);
@@ -567,11 +535,6 @@ namespace System.Windows.Interop
         ///     user can override this to return something else in the case of the
         ///     device lost, for example.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical: accesses critical code (GetAsSoftwareBitmap)
-        ///     TreatAsSafe: exposes nothing sensitive, demands unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected internal virtual BitmapSource CopyBackBuffer()
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -595,12 +558,6 @@ namespace System.Windows.Interop
             return copy;         
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls SetBackBuffer which demands unmanaged code
-        ///     TreatAsSafe: This code copies the critical pointer which we must
-        ///                  already trust, since SetBackBuffer is critical. It is okay to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CloneCommon(Freezable sourceFreezable)
         {           
             D3DImage source = (D3DImage)sourceFreezable;
@@ -685,12 +642,6 @@ namespace System.Windows.Interop
         ///     Propery changed handler for our read only IsFrontBufferAvailable DP. Calls any
         ///     user added handlers.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code overwrites critical _pUserSurfaceUnsafe
-        ///     TreatAsSafe: This code only overwrites the critical pointer, it does not
-        ///                  access it. It is okay to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void IsFrontBufferAvailablePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Debug.Assert(e.OldValue != e.NewValue);
@@ -728,12 +679,6 @@ namespace System.Windows.Interop
         ///     Sends Present packet to MIL. When MIL receives the packet, it will copy the
         ///     dirty regions to the front buffer and set the event.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls critical SendCommandD3DImagePresent
-        ///     TreatAsSafe: This code does not return any critical data. It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SendPresent(object sender, EventArgs args)
         {
             Debug.Assert(_isDirty);
@@ -845,12 +790,6 @@ namespace System.Windows.Interop
                 );
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data. It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel
@@ -907,7 +846,8 @@ namespace System.Windows.Interop
                 }
             }
         }
-
+
+
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
             if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_D3DIMAGE))
@@ -961,12 +901,6 @@ namespace System.Windows.Interop
         }
 
         // IAppDomainShutdownListener
-        /// <SecurityNote>
-        ///     Critical: This code calls a critical native method.
-        ///     TreatAsSafe: This code does not return any critical data or access the critical pointer
-        ///                  directly, it just passes the trusted pointer to a critical method. It is okay to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         void IAppDomainShutdownListener.NotifyShutdown()
         {
             if (_pInteropDeviceBitmap != null)
@@ -997,10 +931,6 @@ namespace System.Windows.Interop
 
         // Pointer to the user's surface that IS NOT ADDREF'D (hence the unsafe). Used
         // only for cloning purposes. This can be IntPtr.Zero!
-        /// <SecurityNote>
-        /// Critical - pointer to IDirect3DSurface9 unmanaged object that methods are called on.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _pUserSurfaceUnsafe;
 
         // Whether or not the user wanted software fallback for the last back buffer.
@@ -1011,10 +941,6 @@ namespace System.Windows.Interop
         private ManualResetEvent _canWriteEvent;
 
         // Per-instance callback from composition thread plus handlers to notify
-        /// <SecurityNote>
-        /// Critical - Field for critical type
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.InteropDeviceBitmap.FrontBufferAvailableCallback _availableCallback;
         private DependencyPropertyChangedEventHandler _isFrontBufferAvailableChangedHandlers;
         // We'll be adding and removing a lot from CommittingBatch, so create the delegate up front

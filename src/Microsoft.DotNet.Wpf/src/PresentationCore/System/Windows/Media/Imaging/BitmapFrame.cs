@@ -397,10 +397,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Metadata
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access only granted if SiteOfOrigin demanded.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapMetadata _metadata;
 
         /// ColorContexts collection

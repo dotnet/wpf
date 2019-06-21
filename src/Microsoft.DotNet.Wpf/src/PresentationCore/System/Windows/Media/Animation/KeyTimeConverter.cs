@@ -132,11 +132,6 @@ namespace System.Windows
         /// <summary>
         /// 
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for KeyTime, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext typeDescriptorContext, 
             CultureInfo cultureInfo, 

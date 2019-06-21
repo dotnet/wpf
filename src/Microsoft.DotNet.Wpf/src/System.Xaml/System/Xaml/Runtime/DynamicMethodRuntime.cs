@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,10 +27,6 @@ namespace MS.Internal.Xaml.Runtime
     // take ownerType/ownerModule. We assert FullTrust to emit the dynamic methods; after that,
     // no special permissions are needed to invoke the methods.
 
-    /// <SecurityNote>
-    /// Critical: Creates and stores delegates with the ability to access non-public members
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class DynamicMethodRuntime : ClrObjectRuntime
     {
         const BindingFlags BF_AllInstanceMembers = 
@@ -47,20 +43,10 @@ namespace MS.Internal.Xaml.Runtime
         delegate object FactoryDelegate(object[] args);
         delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
 
-        /// <SecurityNote>
-        /// Critical: this is the permission that we demand to allow use of our delegate cache, so
-        ///           shouldn't be changed once we've started creating delegates
-        /// </SecurityNote>
         XamlLoadPermission _xamlLoadPermission;
 
-        /// <SecurityNote>
-        /// Critical: used as the ownerModule of delegates created under full trust
-        /// </SecurityNote>
         Assembly _localAssembly;
 
-        /// <SecurityNote>
-        /// Critical: used as the ownerType of delegates created under full trust
-        /// </SecurityNote>
         Type _localType;
         
         XamlSchemaContext _schemaContext;
@@ -73,10 +59,6 @@ namespace MS.Internal.Xaml.Runtime
         //    we don't have to worry that we're keeping it rooted. If this ever becomes a concern,
         //    we can switch to a ConditionalWeakTable here.
 
-        /// <SecurityNote>
-        /// Critical: all the fields below cache delegates created with the ownerType/ownerAssembly
-        ///           specified in _localAssembly or _localType
-        /// </SecurityNote>
         Dictionary<MethodInfo, PropertyGetDelegate> _propertyGetDelegates;
         Dictionary<MethodInfo, PropertySetDelegate> _propertySetDelegates;
         Dictionary<MethodBase, FactoryDelegate> _factoryDelegates;
@@ -144,10 +126,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Sets critical fields _xamlLoadPermission, _localAssembly, _localType
-        /// </SecurityNote>
-        [SecurityCritical]
         internal DynamicMethodRuntime(XamlRuntimeSettings settings, XamlSchemaContext schemaContext,
             XamlAccessLevel accessLevel)
             : base(settings, true /*isWriter*/)
@@ -163,11 +141,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> ts)
         {
             DemandXamlLoadPermission();
@@ -186,11 +159,6 @@ namespace MS.Internal.Xaml.Runtime
             return (TConverterBase)result;
         }
 
-        /// <SecurityNote>
-        /// Critical: part of a critical class
-        /// Safe: does not access any critical member
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
@@ -212,11 +180,6 @@ namespace MS.Internal.Xaml.Runtime
             return base.CreateFromValue(serviceContext, ts, value, property);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
             DemandXamlLoadPermission();
@@ -231,20 +194,12 @@ namespace MS.Internal.Xaml.Runtime
             return creator.Invoke(delegateType, target, methodName);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object CreateInstanceWithCtor(XamlType xamlType, object[] args)
         {
             DemandXamlLoadPermission();
             return CreateInstanceWithCtor(xamlType.UnderlyingType, args);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// </SecurityNote>
         private object CreateInstanceWithCtor(Type type, object[] args)
         {
             ConstructorInfo ctor = null;
@@ -268,11 +223,6 @@ namespace MS.Internal.Xaml.Runtime
             return factoryDelegate.Invoke(args);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
             DemandXamlLoadPermission();
@@ -287,11 +237,6 @@ namespace MS.Internal.Xaml.Runtime
             return factoryDelegate.Invoke(args);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override object GetValue(XamlMember member, object obj)
         {
             DemandXamlLoadPermission();
@@ -311,11 +256,6 @@ namespace MS.Internal.Xaml.Runtime
             return getterDelegate.Invoke(obj);
         }
 
-        /// <SecurityNote>
-        /// Critical: Creates/accesses non-public accessors
-        /// Safe: Can only access non-publics specified in _xamlLoadPermission, which we demand XamlLoadPermission for
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override void SetValue(XamlMember member, object obj, object value)
         {
             DemandXamlLoadPermission();
@@ -335,9 +275,6 @@ namespace MS.Internal.Xaml.Runtime
             setterDelegate.Invoke(obj, value);
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private DelegateCreator CreateDelegateCreator(Type targetType)
         {
             const BindingFlags helperFlags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
@@ -372,9 +309,6 @@ namespace MS.Internal.Xaml.Runtime
             return (DelegateCreator)dynamicMethod.CreateDelegate(typeof(DelegateCreator));
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private DelegateCreator CreateDelegateCreatorWithoutHelper()
         {
             DynamicMethod dynamicMethod = CreateDynamicMethod("CreateDelegateHelper",
@@ -393,9 +327,6 @@ namespace MS.Internal.Xaml.Runtime
             return (DelegateCreator)dynamicMethod.CreateDelegate(typeof(DelegateCreator));
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private FactoryDelegate CreateFactoryDelegate(ConstructorInfo ctor)
         {
             DynamicMethod dynamicMethod = CreateDynamicMethod(ctor.DeclaringType.Name + "Ctor", 
@@ -410,9 +341,6 @@ namespace MS.Internal.Xaml.Runtime
             return (FactoryDelegate)dynamicMethod.CreateDelegate(typeof(FactoryDelegate));
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private FactoryDelegate CreateFactoryDelegate(MethodInfo factory)
         {
             DynamicMethod dynamicMethod = CreateDynamicMethod(factory.Name + "Factory", 
@@ -429,9 +357,6 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // load arguments from object[] args onto the evaluation stack
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private LocalBuilder[] LoadArguments(ILGenerator ilGenerator, MethodBase method)
         {
             ParameterInfo[] args = method.GetParameters();
@@ -472,9 +397,6 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // update object[] args from any variables passed by ref in LoadArguments
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private void UnloadArguments(ILGenerator ilGenerator, LocalBuilder[] locals)
         {
             if (locals == null)
@@ -497,9 +419,6 @@ namespace MS.Internal.Xaml.Runtime
         // The methods below don't properly handle non-Runtime reflection classes
         
         // Note that CreateGetDelegate fails verification for value types (and probably shouldn't)
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private PropertyGetDelegate CreateGetDelegate(MethodInfo getter)
         {
             DynamicMethod dynamicMethod = CreateDynamicMethod(getter.Name + "Getter", 
@@ -518,9 +437,6 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // Note that CreateSetDelegate fails verification for value types (and probably shouldn't)
-        /// <SecurityNote>
-        /// Critical: Calls critical method CreateDynamicMethod
-        /// </SecurityNote>
         private PropertySetDelegate CreateSetDelegate(MethodInfo setter)
         {
             DynamicMethod dynamicMethod = CreateDynamicMethod(setter.Name + "Setter", 
@@ -542,9 +458,6 @@ namespace MS.Internal.Xaml.Runtime
             return (PropertySetDelegate)dynamicMethod.CreateDelegate(typeof(PropertySetDelegate));
         }
 
-        /// <SecurityNote>
-        /// Critical: Asserts Full Trust. We are relying on our safe caller to have demanded _xamlLoadPermission
-        /// </SecurityNote>
         private DynamicMethod CreateDynamicMethod(string name, Type returnType, params Type[] argTypes)
         {
             // Need to assert FullTrust because DynamicMethod.ctor demands the entire grant set of
@@ -571,9 +484,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: All the SafeCritical entry points rely on this method for their access check.
-        /// </SecurityNote>
         private void DemandXamlLoadPermission()
         {
             // Demands XamlLoadPermission for the XamlAccessLevel that was passed in to
@@ -609,18 +519,12 @@ namespace MS.Internal.Xaml.Runtime
             return declaringType;
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private static void Emit_Call(ILGenerator ilGenerator, MethodInfo method)
         {
             OpCode callType = (method.IsStatic || method.DeclaringType.IsValueType) ? OpCodes.Call : OpCodes.Callvirt;
             ilGenerator.Emit(callType, method);
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private static void Emit_CastTo(ILGenerator ilGenerator, Type toType)
         {
             if (toType.IsValueType)
@@ -633,9 +537,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private static void Emit_BoxIfValueType(ILGenerator ilGenerator, Type type)
         {
             if (type.IsValueType)
@@ -644,9 +545,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private static void Emit_ConstInt(ILGenerator ilGenerator, int value)
         {
             switch (value)
@@ -687,9 +585,6 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
@@ -726,9 +621,6 @@ namespace MS.Internal.Xaml.Runtime
             ilGenerator.Emit(OpCodes.Callvirt, s_InvokeMemberMethod);
         }
 
-        /// <SecurityNote>
-        /// Critical: ILGens into critically created method
-        /// </SecurityNote>
         private void Emit_TypeOf(ILGenerator ilGenerator, Type type)
         {
             ilGenerator.Emit(OpCodes.Ldtoken, type);

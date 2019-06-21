@@ -120,12 +120,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Arrange PTS track.
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical functions: ParaListFromTrack and ArrangeParaList.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void ArrangeTrack(
             PtsContext ptsContext,
             ref PTS.FSTRACKDESCRIPTION trackDesc,
@@ -154,12 +148,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Arrange para list.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function BaseParaClient.Arrange.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void ArrangeParaList(
             PtsContext ptsContext,
             PTS.FSRECT rcTrackContent,
@@ -212,12 +200,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Update PTS track (column) visuals.
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical function ParaListFromTrack.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void UpdateTrackVisuals(
             PtsContext ptsContext,
             VisualCollection visualCollection,
@@ -331,12 +313,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Update viewport for track
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical function ParaListFromTrack.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void UpdateViewportTrack(
             PtsContext ptsContext,
             ref PTS.FSTRACKDESCRIPTION trackDesc,
@@ -394,12 +370,6 @@ namespace MS.Internal.PtsHost
         // Hit tests to the correct IInputElement within the track that the
         // mouse is over.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical function ParaListFromTrack.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IInputElement InputHitTestTrack(
             PtsContext ptsContext,
             PTS.FSPOINT pt,
@@ -472,12 +442,6 @@ namespace MS.Internal.PtsHost
         //      start: int representing start offset of e
         //      length: int representing number of positions occupied by e
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical function ParaListFromTrack.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static List<Rect> GetRectanglesInTrack(
             PtsContext ptsContext,
             ContentElement e,
@@ -581,12 +545,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve section list from page.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryPageSectionList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void SectionListFromPage(
             PtsContext ptsContext,
             IntPtr page,
@@ -606,12 +564,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve track (column) list from subpage.
         // ------------------------------------------------------------------
-        ///<SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQuerySubpageBasicColumnList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void TrackListFromSubpage(
             PtsContext ptsContext,
             IntPtr subpage,
@@ -631,12 +583,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve track (column) list from section.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQuerySectionBasicColumnList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void TrackListFromSection(
             PtsContext ptsContext,
             IntPtr section,
@@ -661,12 +607,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve paragraph list from the track.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryTrackParaList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void ParaListFromTrack(
             PtsContext ptsContext,
             IntPtr track,
@@ -686,12 +626,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve paragraph list from the track.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQuerySubtrackParaList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void ParaListFromSubtrack(
             PtsContext ptsContext,
             IntPtr subtrack,
@@ -711,12 +645,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve simple line list from the full text paragraph.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryLineListSingle,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void LineListSimpleFromTextPara(
             PtsContext ptsContext,
             IntPtr para,
@@ -736,12 +664,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve composite line list from the full text paragraph.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryLineListComposite,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void LineListCompositeFromTextPara(
             PtsContext ptsContext,
             IntPtr para,
@@ -761,12 +683,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve line elements list from the composite line.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryLineCompositeElementList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void LineElementListFromCompositeLine(
             PtsContext ptsContext,
             ref PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc,
@@ -785,12 +701,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve attached object list from the paragraph.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because: 
-        ///     a) calls Critical function PTS.FsQueryAttachedObjectList,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void AttachedObjectListFromParagraph(
             PtsContext ptsContext,
             IntPtr para,
@@ -819,12 +729,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Retrieve TextContentRange from PTS track.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical:
-        ///     a) calls Critical function PTS.FsQueryTrackDetails.
-        ///     b) calls Critical function ParaListFromTrack.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static TextContentRange TextContentRangeFromTrack(
             PtsContext ptsContext,
             IntPtr pfstrack)
@@ -986,10 +890,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Get columns info
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void GetColumnsInfo(
             ColumnPropertiesGroup columnProperties,
             double lineHeight,

@@ -54,7 +54,12 @@
     <ItemGroup>
       <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" />
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\**\$(AssemblyName).dll" />
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll" 
+                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x64'"/>
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
+                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
+
+      <Error Condition="@(ResolvedImplementationAssembly->Count()) &gt; 1" Text="More than one reference assembly was added to ResolvedImplementationAssembly!" />
     </ItemGroup>
   </Target>
 

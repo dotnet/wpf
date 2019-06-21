@@ -22,7 +22,6 @@ namespace System.Windows
     ///     used by ContentElement in the Framework 
     ///     to store Instance EventHandlers
     /// </remarks>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     public struct RoutedEventHandlerInfo
     {
         #region Construction

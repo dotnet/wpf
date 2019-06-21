@@ -163,13 +163,8 @@ namespace System.Windows.Automation.Peers
         /// It returns the ItemAutomationPeer if it exist corresponding to the item otherwise it creates
         /// one and does add the Handle and parent info by calling TrySetParentInfo.
         /// </summary>
-        /// <SecurityNote>
-        /// Security Critical - Calls a Security Critical operation
-        /// SecurityTreatAsSafe - It's being called from this object which is real parent for the item peer.
-        /// </SecurityNote>
         /// <param name="item"></param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];

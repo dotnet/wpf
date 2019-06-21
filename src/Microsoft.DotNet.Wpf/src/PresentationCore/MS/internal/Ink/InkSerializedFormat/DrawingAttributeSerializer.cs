@@ -109,16 +109,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="maximumStreamSize">Maximum size of buffer to read through</param>
         /// <param name="da">The drawing attributes collection to decode into</param>
         /// <returns>Number of bytes read</returns>
-        /// <SecurityNote>
-        ///     Critical - calls the ExtendedPropertySerializer.DecodeAsISF
-        ///                      and Compressor.DecompressPropertyData critical methods
-        ///
-        ///     Called directly by  StrokeCollectionSerializer.DecodeRawISF
-        ///                         StrokeCollectionSerializer.LoadDrawAttrsTable
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads drawing attributes from a memory buffer.
@@ -459,17 +449,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <Summary>
         /// Encodes a DrawingAttriubtesin the ISF stream.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical methods
-        ///         DrawingAttributeSerializer.PersistExtendedProperties
-        ///         DrawingAttributeSerializer.PersistStylusTip
-        ///
-        ///     This directly called by StrokeCollectionSerializer.SerializeDrawingAttrsTable
-        ///     
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///      
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes a DrawingAttriubtesin the ISF stream.
@@ -579,15 +558,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <Summary>
         /// Encodes the ExtendedProperties in the ISF stream.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method ExtendedPropertySerializer.EncodeAsISF
-        ///
-        ///     This directly called by DrawingAttributeSerializer.EncodeAsISF
-        ///     
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///      
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes the ExtendedProperties in the ISF stream.
@@ -625,15 +595,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <Summary>
         /// Encodes the StylusTip in the ISF stream.
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method ExtendedPropertySerializer.EncodeAsISF
-        ///
-        ///     This directly called by DrawingAttributeSerializer.EncodeAsISF
-        ///     
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///      
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes the StylusTip in the ISF stream.

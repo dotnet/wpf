@@ -51,3 +51,5 @@ Solutions configurations are mapped to Project configurations in the following m
 - Note that packaging projects under `nupkg` folder have only one (`AnyCPU`) configuration
 
 ![](images/configurations.png)
+
+

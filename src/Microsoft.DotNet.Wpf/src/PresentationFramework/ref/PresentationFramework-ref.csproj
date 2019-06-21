@@ -13,6 +13,11 @@
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>

@@ -13,6 +13,12 @@
     <Platforms>AnyCPU;x64</Platforms>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSourceDir)PresentationCore\OtherAssemblyAttrs.cs" />
+  </ItemGroup>
+  
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
     <NetCoreReference Include="netstandard" />

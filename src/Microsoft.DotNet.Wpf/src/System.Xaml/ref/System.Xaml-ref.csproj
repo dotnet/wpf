@@ -8,6 +8,12 @@
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSourceDir)System.Xaml\OtherAssemblyAttrs.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="System" />

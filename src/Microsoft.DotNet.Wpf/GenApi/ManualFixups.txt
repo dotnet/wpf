@@ -46,5 +46,5 @@ DesignerSerializationOptionsAttribute (Core, PFramework)
 Non-CLS compliant public API (PFramework)
     Find: ^(\s*public uint MaxPage.*\r\n\s*public uint MinPage.*\r\n)
     Replace: #pragma warning disable 3003\r\n$1#pragma warning restore 3003\r\n
-PointCollection/VectorCollection don't implement IList<T>
+PointCollection/VectorCollection don't implement IList<T> (PCore)
     Implement manually and ensure compile/api-compat errors are gone.

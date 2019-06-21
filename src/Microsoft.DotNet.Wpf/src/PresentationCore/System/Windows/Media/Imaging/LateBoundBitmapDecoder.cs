@@ -164,7 +164,6 @@ namespace System.Windows.Media.Imaging
             {
                 VerifyAccess();
 
-                SecurityHelper.DemandRegistryPermission();
 
                 if (_isDownloading)
                 {

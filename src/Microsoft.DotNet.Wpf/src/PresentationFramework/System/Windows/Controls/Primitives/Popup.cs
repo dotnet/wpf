@@ -3317,10 +3317,6 @@ namespace System.Windows.Controls.Primitives
                     {
                         param.ParentWindow = parent;
                     }
-                    else
-                    {
-                        SecurityHelper.DemandUIWindowPermission();
-                    }
                 }
                 else
                 {

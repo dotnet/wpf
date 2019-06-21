@@ -115,7 +115,6 @@ namespace MS.Win32
 
         public virtual void Dispose()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             DisposeImpl(false);
         }
@@ -141,7 +140,6 @@ namespace MS.Win32
         /// </returns>
         internal IntPtr Attach(IntPtr hwnd)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             if (_bond != Bond.Unattached)
                 throw new InvalidOperationException(SR.Get(SRID.HwndSubclassMultipleAttach));
@@ -169,7 +167,6 @@ namespace MS.Win32
         /// </returns>
         internal bool Detach(bool force)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalDetach(force);
         }
@@ -246,7 +243,6 @@ namespace MS.Win32
         /// </returns>
         internal static void RequestDetach(IntPtr hwnd, IntPtr subclass, bool force)
         {
-            SecurityHelper.DemandUIWindowPermission();
             if(hwnd == IntPtr.Zero)
             {
                 throw new ArgumentNullException("hwnd");

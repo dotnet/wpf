@@ -265,7 +265,6 @@ namespace Microsoft.Win32
                 throw new InvalidOperationException(SR.Get(SRID.CantShowOnDifferentThread));
             }
 
-            SecurityHelper.DemandUIWindowPermission();
         }
 
         #endregion Protected Methods

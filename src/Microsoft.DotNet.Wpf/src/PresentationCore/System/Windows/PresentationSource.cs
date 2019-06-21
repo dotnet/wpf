@@ -92,7 +92,6 @@ namespace System.Windows
         ///</remarks> 
         public static PresentationSource FromVisual(Visual visual)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalFromVisual(visual);
         }
@@ -107,7 +106,6 @@ namespace System.Windows
         ///</remarks> 
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalFromVisual(dependencyObject);
         }
@@ -389,7 +387,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return CriticalCurrentSources;
             }
         }

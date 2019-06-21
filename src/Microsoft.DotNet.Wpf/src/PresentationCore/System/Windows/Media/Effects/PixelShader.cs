@@ -134,7 +134,6 @@ namespace System.Windows.Media.Effects
         /// </summary>
         private void LoadPixelShaderFromStreamIntoMemory(Stream source) 
         {
-            SecurityHelper.DemandUIWindowPermission();
             
             _shaderBytecode = new SecurityCriticalData<byte[]>(null);
             

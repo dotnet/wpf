@@ -52,10 +52,6 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected Effect()
         {
-            // Effects are never allowed in partial trust scenarios.  So demand
-            // UIWindow permission immediately in the ctor and get it
-            // over with.  
-            SecurityHelper.DemandUIWindowPermission();            
         }
 
 

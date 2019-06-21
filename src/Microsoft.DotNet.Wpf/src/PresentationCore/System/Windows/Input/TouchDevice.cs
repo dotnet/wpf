@@ -124,7 +124,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return _activeSource;
             }
         }

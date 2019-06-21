@@ -733,9 +733,6 @@ namespace System.Windows.Interop
 
         private DrawingGroup GetDrawingHelper()
         {
-            // Printing an HWND requires UIPermissionWindow.AllWindows to give out its pixels.
-            SecurityHelper.DemandUIWindowPermission();
-
             DrawingGroup drawingGroup = null;
 
             if(_hwnd.Handle != IntPtr.Zero && UnsafeNativeMethods.IsWindow(_hwnd))

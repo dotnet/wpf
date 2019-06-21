@@ -245,29 +245,6 @@ internal static class SecurityHelper
 #endif
 
 #if PRESENTATION_CORE
-        internal static void DemandRegistryPermission()
-        {
-            if(_unrestrictedRegistryPermission == null)
-            {
-                _unrestrictedRegistryPermission = new RegistryPermission(PermissionState.Unrestricted);
-            }
-            _unrestrictedRegistryPermission.Demand();
-        }
-        static RegistryPermission _unrestrictedRegistryPermission = null;
-#endif // PRESENTATION_CORE
-
-#if !PBTCOMPILER
-        internal static void DemandUIWindowPermission()
-        {
-            if(_allWindowsUIPermission == null)
-            {
-                _allWindowsUIPermission = new UIPermission(UIPermissionWindow.AllWindows);
-            }
-            _allWindowsUIPermission.Demand();
-        }
-        static UIPermission _allWindowsUIPermission = null;
-#endif
-#if PRESENTATION_CORE
         internal static void DemandInfrastructurePermission()
         {
             if(_infrastructurePermission == null)

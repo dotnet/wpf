@@ -68,7 +68,6 @@ namespace System.Windows
         {
             get 
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return _oldSource.Value;
             }
         }
@@ -83,7 +82,6 @@ namespace System.Windows
         {
             get 
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return _newSource.Value;
             }
         }

@@ -3378,7 +3378,6 @@ namespace System.Windows.Input
         {
             add
             {
-                SecurityHelper.DemandUIWindowPermission();
 
                 if (_weakEnterMenuModeHandlers == null)
                     _weakEnterMenuModeHandlers = new WeakReferenceList();

@@ -78,7 +78,6 @@ namespace System.Windows.Interop
             string name,
             IntPtr parent)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters param = new HwndSourceParameters(name);
             param.WindowClassStyle = classStyle;
@@ -138,7 +137,6 @@ namespace System.Windows.Interop
                           IntPtr parent,
                           bool adjustSizingForNonClientArea)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
             parameters.WindowClassStyle = classStyle;
@@ -195,7 +193,6 @@ namespace System.Windows.Interop
             string name,
             IntPtr parent)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
             parameters.WindowClassStyle = classStyle;
@@ -372,7 +369,6 @@ namespace System.Windows.Interop
         ///</remarks>
         public void AddHook(HwndSourceHook hook)
         {
-            SecurityHelper.DemandUIWindowPermission();
             Verify.IsNotNull(hook, "hook");
 
             CheckDisposed(true);
@@ -395,7 +391,6 @@ namespace System.Windows.Interop
         ///</remarks>
         public void RemoveHook(HwndSourceHook hook)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             //this.VerifyAccess();
 
@@ -681,7 +676,6 @@ namespace System.Windows.Interop
         ///</remarks>
         public static HwndSource FromHwnd(IntPtr hwnd)
         {
-            SecurityHelper.DemandUIWindowPermission();
             return CriticalFromHwnd(hwnd);
         }
 
@@ -940,7 +934,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return CriticalHandle;
             }
         }

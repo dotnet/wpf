@@ -13,9 +13,10 @@
 
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
     <Compile Include="$(WpfSourceDir)WindowsBase\OtherAssemblyAttrs.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />

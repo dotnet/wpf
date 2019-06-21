@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
   </ItemGroup>
 
   <ItemGroup>

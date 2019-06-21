@@ -12,6 +12,11 @@
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+  </ItemGroup>
+  
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
     <NetCoreReference Include="netstandard" />

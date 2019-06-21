@@ -6,7 +6,6 @@ namespace System.Printing
         Collated = 1,
         Uncollated = 2,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
     public enum ConflictStatus
     {
         NoConflict = 0,
@@ -381,7 +380,6 @@ namespace System.Printing
         public System.Collections.ObjectModel.Collection<string> CommittedAttributesCollection { get { throw null; } }
         public System.Collections.ObjectModel.Collection<string> FailedAttributesCollection { get { throw null; } }
         public string PrintObjectName { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class PrintingCanceledException : System.Printing.PrintJobException
@@ -401,7 +399,6 @@ namespace System.Printing
         protected PrintingNotSupportedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintingNotSupportedException(string message) { }
         public PrintingNotSupportedException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class PrintJobException : System.Printing.PrintSystemException
@@ -417,7 +414,6 @@ namespace System.Printing
         public int JobId { get { throw null; } }
         public string JobName { get { throw null; } }
         public string PrintQueueName { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class PrintQueueException : System.Printing.PrintSystemException
@@ -430,7 +426,6 @@ namespace System.Printing
         public PrintQueueException(string message) { }
         public PrintQueueException(string message, System.Exception innerException) { }
         public string PrinterName { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class PrintServerException : System.Printing.PrintSystemException
@@ -442,7 +437,6 @@ namespace System.Printing
         public PrintServerException(string message) { }
         public PrintServerException(string message, System.Exception innerException) { }
         public string ServerName { get { throw null; } }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class PrintSystemException : System.SystemException
@@ -454,7 +448,6 @@ namespace System.Printing
         protected PrintSystemException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintSystemException(string message) { }
         public PrintSystemException(string message, System.Exception innerException) { }
-        [System.Security.SecurityCriticalAttribute]
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public sealed partial class PrintTicket : System.ComponentModel.INotifyPropertyChanged
@@ -485,7 +478,6 @@ namespace System.Printing
         public System.IO.MemoryStream GetXmlStream() { throw null; }
         public void SaveTo(System.IO.Stream outStream) { }
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
     public enum PrintTicketScope
     {
         PageScope = 0,
@@ -515,12 +507,8 @@ namespace System.Printing
         DownloadAsNativeTrueTypeFont = 4,
         RenderAsBitmap = 5,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ValidationResult
     {
-        private object _dummy;
-        private int _dummyPrimitive;
         public System.Printing.ConflictStatus ConflictStatus { get { throw null; } }
         public System.Printing.PrintTicket ValidatedPrintTicket { get { throw null; } }
         public override bool Equals(object o) { throw null; }
@@ -531,13 +519,11 @@ namespace System.Printing
 }
 namespace System.Printing.Interop
 {
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
     public enum BaseDevModeType
     {
         UserDefault = 0,
         PrinterDefault = 1,
     }
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
     public sealed partial class PrintTicketConverter : System.IDisposable
     {
         public PrintTicketConverter(string deviceName, int clientPrintSchemaVersion) { }
@@ -712,11 +698,7 @@ namespace System.Windows.Xps.Packaging
         public System.DateTime SigningTime { get { throw null; } }
         public System.IO.Packaging.VerifyResult Verify() { throw null; }
         public System.IO.Packaging.VerifyResult Verify(System.Security.Cryptography.X509Certificates.X509Certificate certificate) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Unrestricted=true)]
         public System.Security.Cryptography.X509Certificates.X509ChainStatusFlags VerifyCertificate() { throw null; }
-        [System.Security.SecurityCriticalAttribute]
-        [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Unrestricted=true)]
         public static System.Security.Cryptography.X509Certificates.X509ChainStatusFlags VerifyCertificate(System.Security.Cryptography.X509Certificates.X509Certificate certificate) { throw null; }
     }
     [System.FlagsAttribute]
@@ -879,14 +861,12 @@ namespace System.Windows.Xps.Serialization
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
-        [System.Security.SecurityCriticalAttribute]
         [System.Security.SecurityTreatAsSafeAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
         public override System.ComponentModel.PropertyDescriptorCollection GetProperties(System.ComponentModel.ITypeDescriptorContext context, object value, System.Attribute[] attributes) { throw null; }
     }
     public abstract partial class PackageSerializationManager : System.IDisposable
     {
-        [System.Security.SecurityCriticalAttribute]
         protected PackageSerializationManager() { }
         public abstract void SaveAsXaml(object serializedObject);
         void System.IDisposable.Dispose() { }

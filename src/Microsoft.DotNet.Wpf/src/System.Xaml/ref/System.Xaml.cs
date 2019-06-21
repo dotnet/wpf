@@ -1,5 +1,6 @@
 namespace System.Windows.Markup
 {
+    [System.Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
     [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
     public partial class AcceptedMarkupExtensionExpressionTypeAttribute : System.Attribute
     {

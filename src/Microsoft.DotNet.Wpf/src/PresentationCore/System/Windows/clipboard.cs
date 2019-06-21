@@ -387,7 +387,6 @@ namespace System.Windows
         /// </remarks>
         public static IDataObject GetDataObject() 
         {
-            SecurityHelper.DemandAllClipboardPermission();
 
             return GetDataObjectInternal();
         }
@@ -455,7 +454,6 @@ namespace System.Windows
         /// </remarks>
         public static void SetDataObject(object data) 
         {
-            SecurityHelper.DemandAllClipboardPermission();
 
             if (data == null)
             {
@@ -480,7 +478,6 @@ namespace System.Windows
         /// </remarks>
         public static void SetDataObject(object data, bool copy)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             CriticalSetDataObject(data,copy);
         }
 
@@ -762,7 +759,6 @@ namespace System.Windows
         /// </summary>
         private static bool ContainsDataInternal(string format)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             bool isFormatAvailable = false;
 
             if (IsDataFormatAutoConvert(format))

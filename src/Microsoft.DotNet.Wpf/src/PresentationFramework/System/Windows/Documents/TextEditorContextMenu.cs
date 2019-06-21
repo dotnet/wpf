@@ -433,13 +433,6 @@ namespace System.Windows.Documents
             // Creates a new instance.
             internal void AddMenuItems(TextEditor textEditor, bool userInitiated)
             {
-                // create a special menu item for paste which only works for user initiated paste
-                // within the confines of partial trust this cannot be done programmatically
-                if (userInitiated == false)
-                {
-                    SecurityHelper.DemandAllClipboardPermission();
-                }
-
                 if (!textEditor.IsReadOnly)
                 {
                     if (AddReconversionItems(textEditor))
@@ -619,12 +612,6 @@ namespace System.Windows.Documents
                 menuItem.Command = ApplicationCommands.Copy;
                 this.Items.Add(menuItem);
 
-                // create a special menu item for paste which only works for user initiated paste
-                // within the confines of partial trust this cannot be done programmatically
-                if (userInitiated == false)
-                {
-                    SecurityHelper.DemandAllClipboardPermission();
-                }
                 menuItem = new EditorMenuItem();
                 menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Paste);
                 menuItem.CommandTarget = textEditor.UiScope;

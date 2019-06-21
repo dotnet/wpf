@@ -61,7 +61,6 @@ namespace System.Windows
         /// </summary>
         public DataObject()
         {
-            SecurityHelper.DemandAllClipboardPermission();
             _innerData = new DataStore();
         }
 
@@ -70,7 +69,6 @@ namespace System.Windows
         /// </summary>
         public DataObject(object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (data == null)
             {
                 throw new ArgumentNullException("data");
@@ -104,7 +102,6 @@ namespace System.Windows
         /// </summary>
         public DataObject(string format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -130,7 +127,6 @@ namespace System.Windows
         /// </summary>
         public DataObject(Type format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -149,7 +145,6 @@ namespace System.Windows
         /// </summary>
         public DataObject(string format, object data, bool autoConvert)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -343,7 +338,6 @@ namespace System.Windows
         /// </summary>
         public void SetData(object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (data == null)
             {
                 throw new ArgumentNullException("data");
@@ -357,7 +351,6 @@ namespace System.Windows
         /// </summary>
         public void SetData(string format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -382,7 +375,6 @@ namespace System.Windows
         /// </summary>
         public void SetData(Type format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -406,7 +398,6 @@ namespace System.Windows
         /// </remarks>
         public void SetData(string format, Object data, bool autoConvert)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (format == null)
             {
                 throw new ArgumentNullException("format");
@@ -858,7 +849,6 @@ namespace System.Windows
         /// </summary>
         void IComDataObject.SetData(ref FORMATETC pFormatetcIn, ref STGMEDIUM pmedium, bool fRelease)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (_innerData is OleConverter)
             {
                 ((OleConverter)_innerData).OleDataObject.SetData(ref pFormatetcIn, ref pmedium, fRelease);
@@ -2573,7 +2563,6 @@ namespace System.Windows
 
             public string[] GetFormats(bool autoConvert)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 IEnumFORMATETC enumFORMATETC;
                 ArrayList formats;
@@ -2697,7 +2686,6 @@ namespace System.Windows
 
             private Object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 Object baseVar;
                 Object original;
@@ -2747,7 +2735,6 @@ namespace System.Windows
 
             private bool GetDataPresent(string format, bool autoConvert, DVASPECT aspect, int index)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 bool baseVar;
 
@@ -3532,12 +3519,7 @@ namespace System.Windows
                                 {
                                     if (DataObject.IsFormatAndDataSerializable(cur[mappedFormatIndex], entries[dataStoreIndex].Data))
                                     {
-                                        // We only call CallerHasSerializationPermission once per method call
-                                        // to avoid the perf hit, and debugging nightmare of m*n exceptions
-                                        // getting thrown on copy
-                                        //
-                                        if (serializationCheckFailedForThisFunction
-                                            || !SecurityHelper.CallerHasSerializationPermission())
+                                        if (serializationCheckFailedForThisFunction)
                                         {
                                             serializationCheckFailedForThisFunction = true;
                                             anySerializationFailure = true;
@@ -3553,21 +3535,6 @@ namespace System.Windows
                         else
                         {
                             bool anySerializationFailure = serializationCheckFailedForThisFunction;
-                            for (int dataStoreIndex = 0;
-                                !anySerializationFailure
-                                  &&
-                                dataStoreIndex < entries.Length;
-                                dataStoreIndex++)
-                            {
-                                if (DataObject.IsFormatAndDataSerializable(baseVar[baseFormatIndex], entries[dataStoreIndex].Data))
-                                {
-                                    if (!SecurityHelper.CallerHasSerializationPermission())
-                                    {
-                                        serializationCheckFailedForThisFunction = true;
-                                        anySerializationFailure = true;
-                                    }
-                                }
-                            }
                             if (!anySerializationFailure)
                             {
                                 formats.Add(baseVar[baseFormatIndex]);

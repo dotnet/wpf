@@ -211,9 +211,6 @@ namespace System.Windows.Documents
         /// </returns>
         internal static bool _DoPaste(TextEditor This, IDataObject dataObject, bool isDragDrop)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            //
-            if (!SecurityHelper.CallerHasAllClipboardPermission()) return false;
 
             Invariant.Assert(dataObject != null);
 
@@ -323,11 +320,6 @@ namespace System.Windows.Documents
                     return;
                 }
             }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
-            }
 
             TextEditorTyping._FlushPendingInputItems(This);
 
@@ -389,11 +381,6 @@ namespace System.Windows.Documents
                     return;
                 }
             }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
-            }
 
             TextEditorTyping._FlushPendingInputItems(This);
 
@@ -429,11 +416,6 @@ namespace System.Windows.Documents
         /// </summary>
         internal static void Paste(TextEditor This)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                return;
-            }
 
             if (This.Selection.IsTableCellRange)
             {
@@ -661,18 +643,10 @@ namespace System.Windows.Documents
 
             try
             {
-                if (SecurityHelper.CallerHasAllClipboardPermission())
-                {
-                    // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
-                    string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
+                // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
+                string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
 
-                    args.CanExecute = formatToApply.Length > 0;
-                }
-                else
-                {
-                    // Simplified version of clipboard sniffing for partial trust
-                    args.CanExecute = Clipboard.IsClipboardPopulated();
-                }
+                args.CanExecute = formatToApply.Length > 0;
             }
             catch (ExternalException)
             {

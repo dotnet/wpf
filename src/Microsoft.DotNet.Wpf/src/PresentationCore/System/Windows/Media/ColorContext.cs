@@ -261,15 +261,12 @@ namespace System.Windows.Media
                 Uri uri = _profileUri.Value;
 
                 //
-                // We don't need to demand permission if the user gave us the uri because the user
-                // already knows the value. If the user didn't give us the value, then the uri has
+                // If the user didn't give us the uri value, then the uri has
                 // to be a file path because we got it from GetStandardColorSpaceProfile
                 //
                 if (_isProfileUriNotFromUser.Value)
                 {
                     Invariant.Assert(uri.IsFile);
-
-                    SecurityHelper.DemandPathDiscovery(uri.LocalPath);
                 }
 
                 return uri;

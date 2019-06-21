@@ -1003,10 +1003,7 @@ namespace System.Windows.Documents
 
                     if (package == null)
                     {
-                        if (SecurityHelper.CheckEnvironmentPermission())
-                        {
-                            package = PackageStore.GetPackage(packageUri);
-                        }
+                        package = PackageStore.GetPackage(packageUri);
                     }
 
                     if (package != null)

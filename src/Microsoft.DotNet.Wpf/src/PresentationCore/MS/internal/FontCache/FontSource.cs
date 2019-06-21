@@ -187,8 +187,6 @@ namespace MS.Internal.FontCache
             {
                 FileMapping fileMapping = new FileMapping();
 
-                DemandFileIOPermission();
-
                 fileMapping.OpenFile(_fontUri.LocalPath);
                 return fileMapping;
             }
@@ -251,8 +249,6 @@ namespace MS.Internal.FontCache
             {
                 FileMapping fileMapping = new FileMapping();
 
-                DemandFileIOPermission();
-
                 fileMapping.OpenFile(_fontUri.LocalPath);
                 fileMapping.Close();
             }
@@ -263,8 +259,6 @@ namespace MS.Internal.FontCache
             if (IsFile)
             {
                 FileMapping fileMapping = new FileMapping();
-
-                DemandFileIOPermission();
 
                 fileMapping.OpenFile(_fontUri.LocalPath);
                 return fileMapping;
@@ -379,18 +373,6 @@ namespace MS.Internal.FontCache
             }
 
             return memoryFont;
-        }
-
-        /// <summary>
-        /// Demand read permissions for all fonts except system ones.
-        /// </summary>
-        private void DemandFileIOPermission()
-        {
-            // Demand FileIORead permission for any non-system fonts.
-            if (!_skipDemand)
-            {
-                SecurityHelper.DemandUriReadPermission(_fontUri);
-            }
         }
 
         /// <summary>

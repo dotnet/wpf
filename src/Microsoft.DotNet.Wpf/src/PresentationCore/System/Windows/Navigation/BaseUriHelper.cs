@@ -555,8 +555,6 @@ namespace System.Windows.Navigation
                 throw new ArgumentNullException("element");
             }
 
-            try
-            {
                 //
                 // Search the tree to find the closest parent which implements
                 // IUriContext or have set value for BaseUri property.
@@ -625,18 +623,6 @@ namespace System.Windows.Navigation
                         }
                     }
                 }
-            }
-            finally
-            {
-                //
-                // Putting the permission demand in finally block can prevent from exposing a bogus
-                // and dangerous uri to the code in upper frame.
-                //
-                if (baseUri != null)
-                {
-                    SecurityHelper.DemandUriDiscoveryPermission(baseUri);
-                }
-            }
 
             return baseUri;
         }

@@ -125,15 +125,7 @@ namespace MS.Internal.FontCache
                             if (_legacyArabicFontCollection == null)
                             {
                                 Uri criticalSxSFontsLocation = new Uri(FamilyCollection.SxSFontsResourcePrefix);
-                                SecurityHelper.CreateUriDiscoveryPermission(criticalSxSFontsLocation).Assert();
-                                try
-                                {
-                                    _legacyArabicFontCollection = DWriteFactory.GetFontCollectionFromFolder(criticalSxSFontsLocation);
-                                }
-                                finally
-                                {
-                                    CodeAccessPermission.RevertAssert();
-                                }
+                                _legacyArabicFontCollection = DWriteFactory.GetFontCollectionFromFolder(criticalSxSFontsLocation);
                             }
                         }
                     }
@@ -312,7 +304,6 @@ namespace MS.Internal.FontCache
         /// <param name="folderUri">Absolute Uri of a folder</param>
         internal static FamilyCollection FromUri(Uri folderUri)
         {
-            SecurityHelper.DemandUriReadPermission(folderUri);
             return new FamilyCollection(folderUri, DWriteFactory.GetFontCollectionFromFolder(folderUri));
         }
 

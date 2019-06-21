@@ -767,16 +767,6 @@ namespace MS.Internal.FontCache
             return ca - cb;
         }
 
-        // Makes sure the caller has path discovery permission for full fileName path.
-        private static void ValidateFileNamePermissions(ref string fileName)
-        {
-            if (!SecurityHelper.CallerHasPathDiscoveryPermission(fileName))
-            {
-                // If the caller didn't have path discovery permission for fileName, we can still give out relative file name.
-                fileName = Path.GetFileName(fileName);
-            }
-        }
-
         /// <summary>
         /// This function performs job similar to CLR's internal __Error.WinIOError function:
         /// it maps win32 errors from file I/O to CLR exceptions and includes string where possible.
@@ -786,8 +776,6 @@ namespace MS.Internal.FontCache
         /// <param name="fileName">File name string.</param>
         internal static void ThrowWin32Exception(int errorCode, string fileName)
         {
-            ValidateFileNamePermissions(ref fileName);
-
             switch (errorCode)
             {
                 case NativeMethods.ERROR_FILE_NOT_FOUND:
@@ -813,7 +801,6 @@ namespace MS.Internal.FontCache
             if (fontSource.IsFile)
             {
                 fileName = fontSource.Uri.LocalPath;
-                ValidateFileNamePermissions(ref fileName);
             }
             else
             {

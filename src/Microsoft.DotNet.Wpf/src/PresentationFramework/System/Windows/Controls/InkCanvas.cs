@@ -1942,12 +1942,6 @@ namespace System.Windows.Controls
                 return false;
             }
 
-            // Check whether the caller has the clipboard permission.
-            if ( !SecurityHelper.CallerHasAllClipboardPermission() )
-            {
-                return false;
-            }
-
             ret = PrivateCanPaste();
 
             return ret;

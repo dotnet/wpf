@@ -103,9 +103,6 @@ namespace System.Windows.Media
             }
 
             Uri typefaceSource = new Uri(uriPath);
-            _fileIOPermObj = new SecurityCriticalDataForSet<CodeAccessPermission>(
-                SecurityHelper.CreateUriReadPermission(typefaceSource)
-                );
            
             _fontFace = new FontFaceLayoutInfo(font);
             // We skip permission demands for FontSource because the above line already demands them for the right callers.
@@ -137,10 +134,6 @@ namespace System.Windows.Media
             int faceIndex;
             Util.SplitFontFaceIndex(typefaceSource, out fontSourceUri, out faceIndex);
 
-            _fileIOPermObj = new SecurityCriticalDataForSet<CodeAccessPermission>(
-                SecurityHelper.CreateUriReadPermission(fontSourceUri)
-                );
-
             // This permission demand is here so that untrusted callers are unable to check for file existence using GlyphTypeface ctor.
             // Sensitive font data is protected by demands as the user tries to access it.
             DemandPermissionsForFontInformation();
@@ -166,7 +159,6 @@ namespace System.Windows.Media
                 {
                     try
                     {
-                        SecurityHelper.DemandUriDiscoveryPermission(typefaceSource);
                         throw new System.IO.FileFormatException(typefaceSource);
                     }
                     catch(SecurityException)
@@ -293,32 +285,6 @@ namespace System.Windows.Media
             return FontSource.GetStream();
         }
 
-        /// <summary>
-        /// Exposed to allow printing code to access GetFontStream() in partial trust
-        /// </summary>
-        [FriendAccessAllowed]
-        internal CodeAccessPermission CriticalFileReadPermission
-        {
-            get
-            {
-                CheckInitialized();
-                return _fileIOPermObj.Value;
-            }
-        }
-
-        /// <summary>
-        /// Exposed to allow printing code to access FontUri in partial trust
-        /// </summary>
-        [FriendAccessAllowed]
-        internal CodeAccessPermission CriticalUriDiscoveryPermission
-        {
-            get
-            {
-                CheckInitialized();
-                return SecurityHelper.CreateUriDiscoveryPermission(_originalUri.Value);
-            }
-        }
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -341,7 +307,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                SecurityHelper.DemandUriDiscoveryPermission(_originalUri.Value);
                 return _originalUri.Value;
             }
             set

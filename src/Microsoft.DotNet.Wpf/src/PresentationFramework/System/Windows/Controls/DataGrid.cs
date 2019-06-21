@@ -8330,12 +8330,7 @@ namespace System.Windows.Controls
             DataGridClipboardHelper.GetClipboardContentForHtml(dataGridStringBuilders[DataFormats.Html]);
 
             DataObject dataObject;
-            bool hasPerms = SecurityHelper.CallerHasAllClipboardPermission() && SecurityHelper.CallerHasSerializationPermission();
 
-            // Copy unconditionally in full trust.
-            // Only copy in partial trust if user initiated.
-            if (hasPerms ||  args.UserInitiated )
-            {
                 (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();
                 try
                 {
@@ -8361,7 +8356,6 @@ namespace System.Windows.Controls
                 {
                     SecurityPermission.RevertAll();
                 }
-            }
         }
 
         /// <summary>

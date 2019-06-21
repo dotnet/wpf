@@ -91,46 +91,34 @@ namespace MS.Internal.Controls
                         _parent.NavigatingToAboutBlank = false;
                     }
 
-                    // Site locking for top level WebOC navigation
-                    // "about:blank is not enabled in partial trust publicly. 
-                    // We enable it internally to navigate to null. 
-                    if ((!_parent.NavigatingToAboutBlank) &&
-                        !SecurityHelper.CallerHasWebPermission(source) &&
-                        !IsAllowedScriptScheme(source))
+                    // When source set to null or navigating to stream/string, we navigate to "about:blank"
+                    // internally. Make sure we pass null in the event args. 
+                    if (_parent.NavigatingToAboutBlank)
                     {
-                        cancelRequested = true;
+                        source = null;
                     }
-                    else
+
+                    NavigatingCancelEventArgs e = new NavigatingCancelEventArgs(source,
+                                                null, null, null, NavigationMode.New, null, null, true);
+
+                    // Launching a navigation from the Navigating event handler causes reentrancy.
+                    // For more info, see WebBrowser.LastNavigation. This is a point of possible reentrancy. Whenever
+                    // a new navigation is started during the call to the Navigating event handler, we need to cancel
+                    // out the current navigation.
+                    Guid lastNavigation = _parent.LastNavigation;
+
+                    // Fire navigating event. Events are only fired for top level navigation. 
+                    _parent.OnNavigating(e);
+
+                    // Launching a navigation from the Navigating event handler causes reentrancy.
+                    // For more info, see WebBrowser.LastNavigation. If _lastNavigation has changed during the call to
+                    // the event handlers for Navigating, we know a new navigation has been initialized.
+                    if (_parent.LastNavigation != lastNavigation)
                     {
-                        // When source set to null or navigating to stream/string, we navigate to "about:blank"
-                        // internally. Make sure we pass null in the event args. 
-                        if (_parent.NavigatingToAboutBlank)
-                        {
-                            source = null;
-                        }
-
-                        NavigatingCancelEventArgs e = new NavigatingCancelEventArgs(source,
-                                                  null, null, null, NavigationMode.New, null, null, true);
-
-                        // Launching a navigation from the Navigating event handler causes reentrancy.
-                        // For more info, see WebBrowser.LastNavigation. This is a point of possible reentrancy. Whenever
-                        // a new navigation is started during the call to the Navigating event handler, we need to cancel
-                        // out the current navigation.
-                        Guid lastNavigation = _parent.LastNavigation;
-
-                        // Fire navigating event. Events are only fired for top level navigation. 
-                        _parent.OnNavigating(e);
-
-                        // Launching a navigation from the Navigating event handler causes reentrancy.
-                        // For more info, see WebBrowser.LastNavigation. If _lastNavigation has changed during the call to
-                        // the event handlers for Navigating, we know a new navigation has been initialized.
-                        if (_parent.LastNavigation != lastNavigation)
-                        {
-                            newNavigationInitiated = true;
-                        }
-
-                        cancelRequested = e.Cancel;
+                        newNavigationInitiated = true;
                     }
+
+                    cancelRequested = e.Cancel;
                 }
             }
             // We disable this to suppress FXCop warning since in this case we really want to catch all exceptions

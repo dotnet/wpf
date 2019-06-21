@@ -896,15 +896,8 @@ namespace System.Windows.Documents
 
                     if (fe != null && ((fe is Path) || (fe is Canvas) || (fe is Glyphs) || (fe is FixedPage)))
                     {
-                        if (FixedPage.CanNavigateToUri(navigateUri))
-                        {
-                            SetUpNavigationEventHandlers(element);
-                            fe.Cursor = Cursors.Hand;
-                        }
-                        else
-                        {
-                            fe.Cursor = Cursors.No;
-                        }
+                        SetUpNavigationEventHandlers(element);
+                        fe.Cursor = Cursors.Hand;
                     }
                     else
                     {

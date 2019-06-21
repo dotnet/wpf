@@ -44,7 +44,6 @@ namespace System.Windows.Documents.Serialization
         /// </remarks>
         public SerializerProvider()
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerDescriptor sd = null;
 
@@ -85,7 +84,6 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public static void RegisterSerializer(SerializerDescriptor serializerDescriptor, bool overwrite)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             if (serializerDescriptor == null)
             {
@@ -115,7 +113,6 @@ namespace System.Windows.Documents.Serialization
         /// </remarks>
         public static void UnregisterSerializer(SerializerDescriptor serializerDescriptor)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             if (serializerDescriptor == null)
             {
@@ -144,7 +141,6 @@ namespace System.Windows.Documents.Serialization
         /// </remarks>
         public SerializerWriter CreateSerializerWriter(SerializerDescriptor serializerDescriptor, Stream stream)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerWriter serializerWriter = null;
 
@@ -221,7 +217,6 @@ namespace System.Windows.Documents.Serialization
         [SuppressMessage("Microsoft.Security", "CA2116:AptcaMethodsShouldOnlyCallAptcaMethods")]
         private SerializerDescriptor CreateSystemSerializerDescriptor()
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerDescriptor serializerDescriptor = null;
 

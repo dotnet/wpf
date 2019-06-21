@@ -286,31 +286,6 @@ namespace System.Windows.Controls
             // (In IE 7 it is blocked by turning on the DOCHOSTUIFLAG.ENABLE_REDIRECT_NOTIFICATION flag so that  
             // the additional BeforeNavigate2 event is fired for server side redirect.)
 
-            // If it is our internal navigation to blank for navigating to null or load stream, 
-            // or before any navigation has happened, Source will be null. 
-            Uri currentSource = Source;
-            if (currentSource != null)
-            {
-                SecurityHelper.DemandWebPermission(currentSource);
-            }
-            // Unfortunately, IWebBrowser2::CurrentURL does not always give us the full truth. It is not updated
-            // when the browser navigates to an error page. Then, supposedly, it points to the "intended 
-            // destination". (But on canceled navigation the previous URL may stay.) We don't want to allow 
-            // running script from the built-in error pages as they are privileged. 
-            // See http://support.microsoft.com/kb/272095. Contrary to what the KB article 
-            // suggests, document.location.href is not good either. But document.URL seems to be.
-            if (htmlDocument != null)
-            {
-                string innerURL = htmlDocument.GetUrl();
-                // Again, in the special case we've deliberately navigated to about:blank we don't want to 
-                // demand. But NavigatingToAboutBlank may not be true anymore, so it's not used as a condition.
-                // In that case the two URL properties should match. If not, we'll demand to be safe.
-                if (string.CompareOrdinal(innerURL, AxIWebBrowser2.LocationURL) != 0)
-                {
-                    SecurityHelper.DemandWebPermission(new Uri(innerURL, UriKind.Absolute));
-                }
-            }
-
             object retVal = null;            
             if (scriptObjectEx != null)
             {
@@ -644,17 +619,7 @@ namespace System.Windows.Controls
         /// </remarks>
         internal override System.Windows.Media.DrawingGroup GetDrawing()
         {
-            // SecurityHelper.DemandWebPermission(_source.Value); // _source is null by now...
-
-            (new UIPermission(UIPermissionWindow.AllWindows)).Assert(); // Blessed assert
-            try
-            {
-                return base.GetDrawing();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            return base.GetDrawing();
         }
 
         /// <summary>
@@ -932,30 +897,6 @@ namespace System.Windows.Controls
             if (PackUriHelper.IsPackUri(source))
             {
                 source = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(source);
-            }
-
-            // Block popup window. We attempted to use the default popup Manager to block pup-up windows, 
-            // by passing the BrowserNavConstants.NewWindowsManaged flag to WebBrowser
-            // But it did not work. New browser windows still can be opened with "_blank" in Internet zone.
-            // So demand unrestricted WebPermission until we figure out a better solution. 
-            if (!string.IsNullOrEmpty((string)targetFrameName))
-            {
-                (new System.Net.WebPermission(PermissionState.Unrestricted)).Demand();
-            }
-            else
-            {
-                // site locking. 
-                // Note: navigation to "about:blank" is not enabled in partial trust. If we are navigating to 
-                // "about:blank" internally as a result of setting source to null or navigating to stream/string,
-                // do not demand WebPermission.
-                if (!NavigatingToAboutBlank)
-                {
-                    // we currently demand for both top level and subframe navigations.
-                    // If we allow sub frames to navigate out of site of origin programmtically, we must block cross domain communication 
-                    // of all kinds, so demand when additional headers and postData are set for sub frame navigation. 
-                    // The headers can be used to spoof referer headers.   
-                    SecurityHelper.DemandWebPermission(source);
-                }
             }
 
             // figure out why BrowserNavConstants.NewWindowsManaged does not work.

@@ -1309,7 +1309,6 @@ namespace System.Windows.Media.Imaging
                 uri = ToString();
             }
 
-            SecurityHelper.DemandMediaAccessPermission(uri);
         }
 
         /// Returns the decoder's CLSID

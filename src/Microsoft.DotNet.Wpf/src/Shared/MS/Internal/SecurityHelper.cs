@@ -261,22 +261,14 @@ internal static class SecurityHelper
             System.Windows.MessageBoxImage image
             )
         {
-            (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-            try
+            // if we have a known parent window set, let's use it when alerting the user.
+            if (parent != null)
             {
-                // if we have a known parent window set, let's use it when alerting the user.
-                if (parent != null)
-                {
-                    System.Windows.MessageBox.Show(parent, text, title, buttons, image);
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show(text, title, buttons, image);
-                }
+                System.Windows.MessageBox.Show(parent, text, title, buttons, image);
             }
-            finally
+            else
             {
-                SecurityPermission.RevertAssert();
+                System.Windows.MessageBox.Show(text, title, buttons, image);
             }
         }
         /// <summary>
@@ -294,131 +286,10 @@ internal static class SecurityHelper
             System.Windows.MessageBoxImage image
             )
         {
-            (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-            try
-            {
-                // NOTE: the last param must always be MessageBoxOptions.None for this to be considered TreatAsSafe
-                System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
-            }
-            finally
-            {
-                SecurityPermission.RevertAssert();
-            }
+            // NOTE: the last param must always be MessageBoxOptions.None for this to be considered TreatAsSafe
+            System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
         }
 #endif
-
-
-#if PRESENTATION_CORE || REACHFRAMEWORK
-        internal static void DemandMediaAccessPermission(String uri)
-        {
-            CodeAccessPermission casPermission= SecurityHelper.CreateMediaAccessPermission(uri);
-            if(casPermission != null)
-            {
-                casPermission.Demand();
-            }
-        }
-#endif
-
-#if PRESENTATION_CORE || REACHFRAMEWORK
-        internal
-        static
-        CodeAccessPermission
-        CreateMediaAccessPermission(String uri)
-        {
-            CodeAccessPermission codeAccessPermission = null;
-            if (uri != null)
-            {
-                // do a Case invariant dotnet culture specific string compare
-                if (String.Compare(SafeSecurityHelper.IMAGE, uri, true/*Ignore case*/, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS ) == 0)
-                {
-                    codeAccessPermission = new MediaPermission(MediaPermissionAudio.NoAudio,
-                                                               MediaPermissionVideo.NoVideo,
-                                                               MediaPermissionImage.AllImage);
-                }
-                else
-                {
-                    // we allow access to pack: bits so assuming scheme is not pack: we demand
-                    if (String.Compare((System.Windows.Navigation.BaseUriHelper.GetResolvedUri(System.Windows.Navigation.BaseUriHelper.BaseUri, new Uri(uri, UriKind.RelativeOrAbsolute))).Scheme,
-                                       PackUriHelper.UriSchemePack, true /* ignore case */,
-                                       System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS) != 0)
-                    {
-                        // Creating a URI is fine it is going the other way that is risky
-                        if(!SecurityHelper.CallerHasWebPermission(new Uri(uri,UriKind.RelativeOrAbsolute)))
-                        {
-                            codeAccessPermission = new MediaPermission(MediaPermissionAudio.NoAudio,
-                                                                       MediaPermissionVideo.NoVideo,
-                                                                       MediaPermissionImage.AllImage);
-                        }
-
-                    }
-                }
-            }
-            else
-            {
-                codeAccessPermission = new MediaPermission(MediaPermissionAudio.NoAudio,
-                                                           MediaPermissionVideo.NoVideo,
-                                                           MediaPermissionImage.AllImage);
-            }
-            return codeAccessPermission;
-        }
-
-        ///<summary>
-        ///   Check caller has web-permission. for a given Uri.
-        /// </summary>
-#if REACHFRAMEWORK        
-#else        
-#endif        
-        internal static bool CallerHasWebPermission( Uri uri )
-        {
-            try
-            {
-                SecurityHelper.DemandWebPermission(uri);
-                return true;
-            }
-            catch ( SecurityException )
-            {
-                return false ;
-            }
-        }
-
-        internal static void DemandWebPermission( Uri uri )
-        {
-            // We do this first as a security measure since the call below
-            // checks for derivatives. Please note we need to extract the
-            // string to call into WebPermission anyways, the only thing that
-            // doing this early gains us is a defense in depth measure. The call
-            // is required nevertheless.
-            string finalUri = BindUriHelper.UriToString( uri );
-
-            if (uri.IsFile)
-            {
-                // If the scheme is file: demand file io
-                string toOpen = uri.LocalPath;
-                (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
-            }
-            else
-            {
-                // else demand web permissions
-                new WebPermission(NetworkAccess.Connect, finalUri).Demand();
-            }
-        }
-
-#endif //PRESENTATIONCORE||REACHFRAMEWORK
-
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || REACHFRAMEWORK
-        /// <summary>
-        /// By default none of the plug-in serializer code must succeed for partially trusted callers
-        /// </summary>
-        internal static void DemandPlugInSerializerPermissions()
-        {
-            if(_plugInSerializerPermissions == null)
-            {
-                _plugInSerializerPermissions = new PermissionSet(PermissionState.Unrestricted);
-            }
-            _plugInSerializerPermissions.Demand();
-        }
-        static PermissionSet _plugInSerializerPermissions = null;
-#endif //PRESENTATIONFRAMEWORK
 
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
 

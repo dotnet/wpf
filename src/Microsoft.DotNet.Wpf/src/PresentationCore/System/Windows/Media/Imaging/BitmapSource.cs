@@ -783,7 +783,6 @@ namespace System.Windows.Media.Imaging
                 uri = ConvertToString(null, null);
             }
 
-            SecurityHelper.DemandMediaAccessPermission(uri);
         }
 
         /// <summary>

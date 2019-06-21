@@ -237,8 +237,6 @@ namespace System.Windows.Threading
         /// </remarks>
         public void BeginInvokeShutdown(DispatcherPriority priority) // NOTE: should be Priority
         {
-            // We didn't want to enable quitting in the SEE
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             BeginInvoke(priority, new ShutdownCallback(ShutdownCallbackInternal));
         }
@@ -251,8 +249,6 @@ namespace System.Windows.Threading
         /// </remarks>
         public void InvokeShutdown()
         {
-            // We didn't want to enable quitting in the SEE
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             CriticalInvokeShutdown();
         }
@@ -350,8 +346,6 @@ namespace System.Windows.Threading
         /// </remarks>
         public static void ExitAllFrames()
         {
-            // We didn't want to enable exiting all frames in the SEE
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
             if(dispatcher._frameDepth > 0)

@@ -283,7 +283,6 @@ namespace System.Windows.Input
         /// </param>
         internal InputProviderSite RegisterInputProvider(IInputProvider inputProvider)
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 //             VerifyAccess();
 
 
@@ -309,7 +308,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 return UnsecureInputProviders;
             }
         }

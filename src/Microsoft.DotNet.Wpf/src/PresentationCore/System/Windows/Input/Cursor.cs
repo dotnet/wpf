@@ -180,8 +180,6 @@ namespace System.Windows.Input
 
         private void LoadFromFile(string fileName)
         {
-            SecurityHelper.DemandFileIOReadPermission(fileName);
-
             // Load a Custom Cursor
             _cursorHandle = UnsafeNativeMethods.LoadImageCursor(IntPtr.Zero,
                                                                 fileName,

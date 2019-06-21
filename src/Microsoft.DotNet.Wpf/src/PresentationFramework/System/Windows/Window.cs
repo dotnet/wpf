@@ -288,7 +288,6 @@ namespace System.Windows
             // this call ends up throwing an exception if ShowDialog
             // is not allowed
             VerifyApiSupported();
-            SecurityHelper.DemandUnrestrictedUIPermission();
             VerifyContextAndObjectState();
             VerifyCanShow();
             VerifyNotClosing();

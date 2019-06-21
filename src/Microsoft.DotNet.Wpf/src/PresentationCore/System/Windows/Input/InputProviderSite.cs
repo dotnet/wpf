@@ -34,7 +34,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 return CriticalInputManager;
             }
         }

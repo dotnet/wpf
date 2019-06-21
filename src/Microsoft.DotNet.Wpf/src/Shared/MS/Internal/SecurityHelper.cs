@@ -244,59 +244,7 @@ internal static class SecurityHelper
 
 #endif
 
-        // don't include this in the compiler - avoid compiler changes when we can.
-#if !PBTCOMPILER
-        internal static void DemandUnrestrictedUIPermission()
-        {
-            if(_unrestrictedUIPermission == null)
-            {
-                _unrestrictedUIPermission = new UIPermission(PermissionState.Unrestricted);
-            }
-            _unrestrictedUIPermission.Demand();
-        }
-        static UIPermission _unrestrictedUIPermission = null;
-#endif
-
-#if PRESENTATION_CORE
-        internal static void DemandFileIOReadPermission(string fileName)
-        {
-            new FileIOPermission(FileIOPermissionAccess.Read, fileName).Demand();
-        }
-#endif
-
-#if NEVER
-        internal static void DemandFileDialogSavePermission()
-        {
-            if(_fileDialogSavePermission == null)
-            {
-                _fileDialogSavePermission = new FileDialogPermission(FileDialogPermissionAccess.Save);
-            }
-            _fileDialogSavePermission.Demand();
-        }
-        static FileDialogPermission _fileDialogSavePermission = null;
-#endif
-
 #if PRESENTATIONFRAMEWORK
-
-        internal static void DemandUnrestrictedFileIOPermission()
-        {
-            if(_unrestrictedFileIOPermission == null)
-            {
-                _unrestrictedFileIOPermission = new FileIOPermission(PermissionState.Unrestricted);
-            }
-            _unrestrictedFileIOPermission.Demand();
-        }
-        static FileIOPermission _unrestrictedFileIOPermission = null;
-
-        internal static void DemandFileDialogOpenPermission()
-        {
-            if(_fileDialogOpenPermission == null)
-            {
-                _fileDialogOpenPermission = new FileDialogPermission(FileDialogPermissionAccess.Open);
-            }
-            _fileDialogOpenPermission.Demand();
-        }
-        static FileDialogPermission _fileDialogOpenPermission = null;
 
         /// <summary>
         /// A helper method to do the necessary work to display a standard MessageBox.  This method performs

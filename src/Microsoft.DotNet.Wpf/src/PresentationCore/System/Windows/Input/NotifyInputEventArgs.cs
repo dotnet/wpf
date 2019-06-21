@@ -48,7 +48,6 @@ namespace System.Windows.Input
         {
             get 
             {
-                SecurityHelper.DemandUnrestrictedUIPermission(); 
                 return _inputManager;
             }
         }

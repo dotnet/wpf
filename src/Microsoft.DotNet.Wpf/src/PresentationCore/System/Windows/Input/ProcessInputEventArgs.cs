@@ -100,7 +100,6 @@ namespace System.Windows.Input
         /// </remarks>        
         public StagingAreaInputItem PopInput()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             
             if(!_allowAccessToStagingArea)
             {
@@ -122,7 +121,6 @@ namespace System.Windows.Input
         /// </remarks>
         public StagingAreaInputItem PeekInput()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             if(!_allowAccessToStagingArea)
             {

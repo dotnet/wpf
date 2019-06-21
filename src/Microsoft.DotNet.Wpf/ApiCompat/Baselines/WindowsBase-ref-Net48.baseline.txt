@@ -47,7 +47,6 @@ CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwarded
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.INameScope' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'System.Windows.Markup.InternalTypeHelper' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IProvideValueTarget' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'System.Windows.Markup.IReceiveMarkupExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IUriContext' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IValueSerializerContext' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IXamlTypeResolver' in the contract but not the implementation.
@@ -84,4 +83,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAtt
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.XmlnsPrefixAttribute' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 85
+Total Issues: 84

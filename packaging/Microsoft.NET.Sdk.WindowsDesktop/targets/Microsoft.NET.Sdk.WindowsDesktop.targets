@@ -1,8 +1,7 @@
 <Project>
   <Import Project="Microsoft.WinFX.targets" />
-  
-  <!-- $(TargetFrameworkIdentifier) can be '.NETCoreApp' or '.NETFramework' -->
-  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
+
+  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     
     <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
          as Resource, Content, or None items, then remove them from the Page items. -->
@@ -16,7 +15,7 @@
   <Target Name="CheckForDuplicatePageItems" 
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform;CoreCompile"
           DependsOnTargets="CheckForDuplicateItems"
-          Condition="('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '3.0')">
+          Condition="('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
     <CheckForDuplicateItems
       Items="@(Page)"
@@ -44,8 +43,9 @@
   --> 
   <Target Name="_WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms"
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-          Condition="'$(UseWpf)' != 'true' And '$(UseWindowsForms)' != 'true'">
-    <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms" />
+          Condition="'$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+    <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms" 
+                   Condition="'$(UseWpf)' != 'true' And '$(UseWindowsForms)' != 'true'"/>
   </Target>
 
     <!-- 
@@ -56,7 +56,7 @@
   --> 
   <Target Name="_WindowsDesktopFrameworkRequiresVersion30"
         BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-        Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' &lt; '3.0'">
+        Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
 </Project>

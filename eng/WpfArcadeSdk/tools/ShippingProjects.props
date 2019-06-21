@@ -72,7 +72,6 @@
       See: ReferenceAssembly.targets/CopyHandCraftedReferenceProjectsToRefDir
     -->
     <ExternalHandCraftedReferenceProjects>
-      PresentationBuildTasks-ref;
       PresentationCore-ref;
       PresentationFramework-ref;
       ReachFramework-ref;

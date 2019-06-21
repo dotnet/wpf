@@ -64,9 +64,6 @@
   <ItemGroup>
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
-    <!--<ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
-      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </ProjectReference>-->
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\ref\System.Windows.Input.Manipulations-ref.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj" />

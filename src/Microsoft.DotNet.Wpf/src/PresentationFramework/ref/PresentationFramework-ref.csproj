@@ -70,7 +70,6 @@
     <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfCycleBreakersDir)PresentationUI\PresentationUI-PresentationFramework-impl-cycle.csproj" />
     <ProjectReference Include="$(WpfSourceDir)ReachFramework\ref\ReachFramework-ref.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj" />
   </ItemGroup>

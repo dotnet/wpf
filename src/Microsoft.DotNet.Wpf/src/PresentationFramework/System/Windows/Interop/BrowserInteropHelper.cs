@@ -46,7 +46,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 object oleClientSite = null;
 

@@ -2527,7 +2527,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.FullPrimaryScreenWidth])
@@ -2551,7 +2550,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.FullPrimaryScreenHeight])
@@ -2715,7 +2713,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximizedPrimaryScreenWidth])
@@ -2739,7 +2736,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximizedPrimaryScreenHeight])
@@ -2763,7 +2759,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximumWindowTrackWidth])
@@ -2787,7 +2782,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximumWindowTrackHeight])
@@ -2891,7 +2885,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowWidth])
@@ -2915,7 +2908,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowHeight])
@@ -2939,7 +2931,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimizedWindowWidth])
@@ -2963,7 +2954,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimizedWindowHeight])
@@ -3027,7 +3017,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowTrackWidth])
@@ -3051,7 +3040,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowTrackHeight])
@@ -3116,7 +3104,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.WindowCaptionButtonWidth])
@@ -3281,7 +3268,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenWidth])
@@ -3305,7 +3291,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenHeight])
@@ -3370,7 +3355,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.WindowCaptionHeight])
@@ -3395,7 +3379,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.KanjiWindowHeight])
@@ -3419,7 +3402,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MenuBarHeight])
@@ -3463,7 +3445,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsImmEnabled])
@@ -3488,7 +3469,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsMediaCenter])
@@ -3532,7 +3512,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsMiddleEastEnabled])
@@ -3596,7 +3575,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsPenWindows])
@@ -3620,7 +3598,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsRemotelyControlled])
@@ -3644,7 +3621,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsRemoteSession])
@@ -3668,7 +3644,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.ShowSounds])
@@ -3692,7 +3667,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsSlowMachine])
@@ -3716,7 +3690,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.SwapButtons])
@@ -3740,7 +3713,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsTabletPC])
@@ -3764,7 +3736,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenLeft])
@@ -3788,7 +3759,6 @@ namespace System.Windows
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenTop])

@@ -97,7 +97,6 @@ namespace System.Windows.Media.Imaging
             int stride
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             return new CachedBitmap(
                         pixelWidth, pixelHeight,

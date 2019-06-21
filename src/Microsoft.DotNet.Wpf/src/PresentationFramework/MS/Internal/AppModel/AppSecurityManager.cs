@@ -58,7 +58,6 @@ namespace MS.Internal.AppModel
             launched = SafeLaunchBrowserOnlyIfPossible(originatingUri, destinationUri, fIsTopLevel);
             if (launched == LaunchResult.NotLaunched)
             {
-                SecurityHelper.DemandUnmanagedCode();
                 UnsafeLaunchBrowser(destinationUri);
             }
         }

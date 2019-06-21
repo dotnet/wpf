@@ -41,7 +41,6 @@ namespace System.Windows.Interop
         /// </summary>
         private InteropBitmap() : base(true)
         {
-            SecurityHelper.DemandUnmanagedCode();
         }
 
         /// <summary>
@@ -87,7 +86,6 @@ namespace System.Windows.Interop
         internal InteropBitmap(IntPtr hicon, Int32Rect sourceRect, BitmapSizeOptions sizeOptions)
             : base(true) // Use virtuals
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             _bitmapInit.BeginInit();
 
@@ -128,7 +126,6 @@ namespace System.Windows.Interop
             int offset)
             : base(true) // Use virtuals
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             _bitmapInit.BeginInit();
             if (pixelWidth <= 0)
@@ -284,7 +281,6 @@ namespace System.Windows.Interop
         /// </summary>
         public void Invalidate(Int32Rect? dirtyRect)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             // A null dirty rect indicates the entire bitmap should be
             // invalidated, while a value indicates that only a dirty rect

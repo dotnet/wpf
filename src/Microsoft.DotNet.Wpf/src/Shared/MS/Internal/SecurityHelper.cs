@@ -72,22 +72,6 @@ using MS.Internal.AppModel;
 
 internal static class SecurityHelper
     {
-#if !PBTCOMPILER
-#if REACHFRAMEWORK
-#else        
-#endif        
-
-        internal static void DemandUnmanagedCode()
-        {
-            if(_unmanagedCodePermission == null)
-            {
-                _unmanagedCodePermission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-            }
-            _unmanagedCodePermission.Demand();
-        }
-        static SecurityPermission _unmanagedCodePermission = null;
-#endif  //  !PBTCOMPILER
-
 #if PRESENTATIONFRAMEWORK
 
         internal static void ThrowExceptionIfSettingTrueInPartialTrust(ref bool value)

@@ -123,7 +123,6 @@ namespace System.Windows
         /// </remarks>
         public Window()
         {
-            SecurityHelper.DemandUnmanagedCode();
             _inTrustedSubWindow = false;
             Initialize();
         }
@@ -152,7 +151,6 @@ namespace System.Windows
             else
             {
                 _inTrustedSubWindow = false;
-                SecurityHelper.DemandUnmanagedCode();
             }
             Initialize();
 }
@@ -3610,7 +3608,6 @@ namespace System.Windows
 
         IntPtr GetCurrentMonitorFromMousePosition()
         {
-            SecurityHelper.DemandUnmanagedCode();
             // center on the screen on which the mouse is on
             NativeMethods.POINT pt = new NativeMethods.POINT();
 
@@ -4299,7 +4296,6 @@ namespace System.Windows
 
         private void DoDialogHide()
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             Debug.Assert(_showingAsDialog == true, "_showingAsDialog must be true when DoDialogHide is called");
 

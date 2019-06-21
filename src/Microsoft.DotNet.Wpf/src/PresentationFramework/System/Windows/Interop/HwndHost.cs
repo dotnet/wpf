@@ -79,7 +79,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 return CriticalHandle;
             }
@@ -93,7 +92,6 @@ namespace System.Windows.Interop
         {
             add
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 if(_hooks == null)
                 {
@@ -105,7 +103,6 @@ namespace System.Windows.Interop
 
             remove
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 if(_hooks != null)
                 {
@@ -854,7 +851,6 @@ namespace System.Windows.Interop
         {
             if ( ! _fTrusted.Value )
             {
-                SecurityHelper.DemandUnmanagedCode();
             }
         }
 

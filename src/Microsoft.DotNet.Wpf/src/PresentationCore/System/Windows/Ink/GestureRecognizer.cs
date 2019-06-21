@@ -149,12 +149,6 @@ namespace System.Windows.Ink
         /// <remarks>Callers must have UnmanagedCode permission to call this API.</remarks>
         public ReadOnlyCollection<GestureRecognitionResult> Recognize(StrokeCollection strokes)
         {
-            //
-            // due to possible exploits in the Tablet PC Gesture recognizer's Recognize method, 
-            // we demand unmanaged code.
-            //
-            SecurityHelper.DemandUnmanagedCode();
-
             return RecognizeImpl(strokes);
         }
 

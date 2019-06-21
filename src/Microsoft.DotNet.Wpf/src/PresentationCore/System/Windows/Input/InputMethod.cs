@@ -1696,7 +1696,6 @@ namespace System.Windows.Input
         /// </summary> 
         private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
-            SecurityHelper.DemandUnmanagedCode();
             // Get the profile info structre of the current active keyboard TIP.
             tf_profile = GetCurrentKeybordTipProfile();
 

@@ -274,7 +274,6 @@ namespace MS.Internal.AppModel
         
         private bool ExecuteDirectApplication()
         {
-            SecurityHelper.DemandUnmanagedCode();
             _runApplication = false;
             
             try
@@ -1010,7 +1009,6 @@ namespace MS.Internal.AppModel
         {
             bool frameworkActivated = false;
             
-            SecurityHelper.DemandUnmanagedCode();
 
             // Order matters newer OS versions should be tested before older OS versions
             if (OperatingSystemVersionCheck.IsVersionOrLater(OperatingSystemVersion.Windows8))

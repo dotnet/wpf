@@ -1253,21 +1253,6 @@ namespace System.Windows.Media.Imaging
             string decoderMimeTypes;
             clsId = GetCLSIDFromDecoder(decoderHandle, out decoderMimeTypes);
 
-            // If the mime type of the file does not match the associated decoder,
-            // and if we are in a Partial trust scenario, throw!
-            if ((mimeType != String.Empty) &&
-                (decoderMimeTypes.IndexOf(mimeType, StringComparison.OrdinalIgnoreCase) == -1))
-            {
-                try
-                {
-                    SecurityHelper.DemandUnmanagedCode();
-                }
-                catch(SecurityException)
-                {
-                    throw new ArgumentException(SR.Get(SRID.Image_ContentTypeDoesNotMatchDecoder));
-                }
-            }
-
             return decoderHandle;
         }
 

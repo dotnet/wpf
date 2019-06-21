@@ -1967,7 +1967,6 @@ namespace System.Windows.Interop
         ///</remarks>
         protected virtual bool TranslateAcceleratorCore(ref MSG msg, ModifierKeys modifiers)
         {
-            SecurityHelper.DemandUnmanagedCode();
 //             VerifyAccess();
 
             return CriticalTranslateAccelerator(ref msg, modifiers);
@@ -2033,13 +2032,11 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 return _keyboardInputSite;
             }
 
             set
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 _keyboardInputSite = value;
             }
@@ -2069,7 +2066,6 @@ namespace System.Windows.Interop
         protected virtual bool OnMnemonicCore(ref MSG msg, ModifierKeys modifiers)
         {
 //             VerifyAccess();
-            SecurityHelper.DemandUnmanagedCode();
             switch((WindowMessage)msg.message)
             {
                 case WindowMessage.WM_SYSCHAR:
@@ -2160,7 +2156,6 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual bool TranslateCharCore(ref MSG msg, ModifierKeys modifiers)
         {
-            SecurityHelper.DemandUnmanagedCode();
             if(HasFocus || IsInExclusiveMenuMode)
                 return false;
 

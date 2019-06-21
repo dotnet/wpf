@@ -497,7 +497,6 @@ namespace System.Windows.Controls
             {
                 VerifyAccess();
 
-                SecurityHelper.DemandUnmanagedCode();
 
                 return AxIWebBrowser2.Document;
             }

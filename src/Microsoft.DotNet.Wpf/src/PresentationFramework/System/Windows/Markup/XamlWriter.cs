@@ -52,10 +52,7 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static string Save(object obj)
-        {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
+        {            
             // Validate input arguments
             if (obj == null)
             {
@@ -93,10 +90,7 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, TextWriter writer)
-        {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
+        {            
             // Validate input arguments
             if (obj == null)
             {
@@ -127,10 +121,7 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, Stream stream)
-        {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
+        {            
             // Validate input arguments
             if (obj == null)
             {
@@ -163,10 +154,7 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, XmlWriter xmlWriter)
-        {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
+        {            
             // Validate input arguments
             if (obj == null)
             {
@@ -202,10 +190,7 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, XamlDesignerSerializationManager manager)
-        {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
+        {            
             // Validate input arguments
             if (obj == null)
             {

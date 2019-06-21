@@ -531,7 +531,6 @@ namespace System.Windows
             }
             else if (data is IComDataObject)
             {
-                SecurityHelper.DemandUnmanagedCode();
                 dataObject = (IComDataObject)data;
             }
             else

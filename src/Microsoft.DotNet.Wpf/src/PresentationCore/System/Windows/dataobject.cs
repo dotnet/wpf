@@ -1187,7 +1187,6 @@ namespace System.Windows
         /// </summary>
         internal static void Win32DeleteObject(HandleRef handleDC)
         {
-            SecurityHelper.DemandUnmanagedCode();
             UnsafeNativeMethods.DeleteObject(handleDC);
         }
 
@@ -1409,7 +1408,6 @@ namespace System.Windows
 
         private IntPtr GetCompatibleBitmap(object data)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             IntPtr hBitmap;
             IntPtr hBitmapNew;
@@ -2267,7 +2265,6 @@ namespace System.Windows
                 // Data is BitmapSource, but have the mismatched System.Drawing.Bitmap format
                 if (autoConvert)
                 {
-                    SecurityHelper.DemandUnmanagedCode();
 
                     // Convert data from BitmapSource to SystemDrawingBitmap
                     bitmapData = SystemDrawingHelper.GetBitmap(data);
@@ -2672,7 +2669,6 @@ namespace System.Windows
             {
                 get
                 {
-                    SecurityHelper.DemandUnmanagedCode();
                     return _innerData;
                 }
             }

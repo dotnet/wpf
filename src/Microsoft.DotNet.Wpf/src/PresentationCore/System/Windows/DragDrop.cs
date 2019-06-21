@@ -379,9 +379,6 @@ namespace System.Windows
         {
             DataObject dataObject;
 
-            // Demand the unmanaged code permission to initiate DragDrop operation.
-            SecurityHelper.DemandUnmanagedCode();
-
             if (dragSource == null)
             {
                 throw new ArgumentNullException("dragSource");

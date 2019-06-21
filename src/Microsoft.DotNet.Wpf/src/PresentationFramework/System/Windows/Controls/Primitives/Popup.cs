@@ -3203,9 +3203,6 @@ namespace System.Windows.Controls.Primitives
 
             internal void SetHitTestable(bool hitTestable)
             {
-                // demands unmanaged code permission. it's risky to take this demand out.
-                if (! IsChildPopup)
-                    SecurityHelper.DemandUnmanagedCode();
 
                 // get the window handle
                 IntPtr handle = Handle;

@@ -128,7 +128,6 @@ namespace MS.Win32
 
         private static void HookUpDefWindowProc(IntPtr hwnd)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
 #if LOGGING
             LogFinishHWND(hwnd, "Core HookUpDWP");
@@ -197,7 +196,6 @@ namespace MS.Win32
 
         private static IntPtr GetUser32ProcAddress(string export)
         {
-            SecurityHelper.DemandUnmanagedCode();
             IntPtr hModule = UnsafeNativeMethods.GetModuleHandle(ExternDll.User32);
 
 

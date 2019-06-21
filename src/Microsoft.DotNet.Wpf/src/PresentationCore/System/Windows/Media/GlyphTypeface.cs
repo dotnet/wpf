@@ -251,7 +251,6 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public byte[] ComputeSubset(ICollection<ushort> glyphs)
         {
-            SecurityHelper.DemandUnmanagedCode();
             DemandPermissionsForFontInformation();
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
 

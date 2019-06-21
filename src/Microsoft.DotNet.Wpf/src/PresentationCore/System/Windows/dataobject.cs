@@ -2890,17 +2890,14 @@ namespace System.Windows
                     }
                     else if (IsFormatEqual(format, DataFormats.FileDrop))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = (object)ReadFileListFromHandle(hglobal);
                     }
                     else if (IsFormatEqual(format, DataFormats.FileName))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = new string[] { ReadStringFromHandle(hglobal, false) };
                     }
                     else if (IsFormatEqual(format, DataFormats.FileNameW))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
                     }
                     else if (IsFormatEqual(format, typeof(BitmapSource).FullName))

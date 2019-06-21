@@ -75,42 +75,10 @@ internal static class SecurityHelper
 
 #if PRESENTATION_CORE
 
-        ///<summary>
-        /// Check to see if the caller is fully trusted.
-        ///</summary>
-        /// <returns>true if call stack has unrestricted permission</returns>
-        internal static bool IsFullTrustCaller()
-        {
-            try
-            {
-                if (_fullTrustPermissionSet == null)
-                {
-                    _fullTrustPermissionSet = new PermissionSet(PermissionState.Unrestricted);
-                }
-                _fullTrustPermissionSet.Demand();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        static PermissionSet _fullTrustPermissionSet = null;
-
-
         internal static Uri GetBaseDirectory(AppDomain domain)
         {
             Uri appBase = null;
-            new FileIOPermission(PermissionState.Unrestricted).Assert();// BlessedAssert
-            try
-            {
-                appBase = new Uri(domain.BaseDirectory);
-            }
-            finally
-            {
-                FileIOPermission.RevertAssert();
-            }
+            appBase = new Uri(domain.BaseDirectory);
             return( appBase );
         }
 
@@ -211,48 +179,9 @@ internal static class SecurityHelper
               return targetZone;
         }
 
-        internal static void DemandFilePathDiscoveryWriteRead()
-        {
-            FileIOPermission permobj = new FileIOPermission(PermissionState.None);
-            permobj.AllFiles = FileIOPermissionAccess.Write|FileIOPermissionAccess.Read |FileIOPermissionAccess.PathDiscovery;
-            permobj.Demand();
-        }
-
         internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
         {
-            PermissionSet permissionSetAppDomain = new PermissionSet(PermissionState.Unrestricted);
-
-            // Ensure we remove the FileIO read permission to site of origin.
-            // We choose to use unrestricted here because it does not matter
-            // matter which specific variant of Fileio/Web permission we use
-            // since we are using an overload to check and remove permission
-            // that works on type. There is not a way to remove some
-            // part of a permission, although we could remove this and add
-            // back the delta if the existing permission set had more than the ones
-            // we care about but it is really the path we are targeting here since
-            // that is what causes the delta and hence we are removing it all together.
-            Uri siteOfOrigin = SiteOfOriginContainer.SiteOfOrigin;
-            CodeAccessPermission siteOfOriginReadPermission =  null;
-            if (siteOfOrigin.Scheme == Uri.UriSchemeFile)
-            {
-                siteOfOriginReadPermission = new FileIOPermission(PermissionState.Unrestricted);
-            }
-            else if (siteOfOrigin.Scheme == Uri.UriSchemeHttp)
-            {
-                siteOfOriginReadPermission = new WebPermission(PermissionState.Unrestricted);
-            }
-
-            if (siteOfOriginReadPermission != null)
-            {
-                if (permissionSetAppDomain.GetPermission(siteOfOriginReadPermission.GetType()) != null)
-                {
-                    permissionSetAppDomain.RemovePermission(siteOfOriginReadPermission.GetType());
-                    // Failing on a ReadOnlyPermissionSet here? 
-                    // (Ctrl+X to cut text in RichTextBox
-                    // in an XBAP throws InvalidOperationException)
-                }
-            }
-            return permissionSetAppDomain;
+            return new PermissionSet(PermissionState.Unrestricted);
         }
 
 #endif

@@ -690,14 +690,6 @@ namespace System.Windows
                     // whatever is more secure
                     return  true;
                 }
-
-                //extract permission set for the current appdomain which is target
-                PermissionSet permissionSetDestination = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-                //Compare permissions sets
-                if (!permissionSetDestination.IsSubsetOf(permissionSetSource))
-                {
-                    retVal = true; // in case target is not subset of source revert to unicode or text
-                }
             }
             return retVal;
         }

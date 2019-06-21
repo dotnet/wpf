@@ -109,16 +109,23 @@ namespace System.Windows.Input.StylusPlugIns
                 }
                 catch (Exception e)
                 {
-                    // this code running in Stylus Input thread
-                    // and the developer will re-write the method with their code
-                    // If they throw any exceptions careless, that the thread will break and the application crash and the application will stop responding touch
-                    // But we should not ignore the exception, and we can re-throw it in the main thread
-                    // Why we should use InvokeAsync to replace Invoke? Because maybe some friend will make the main thread wait for the code above
+                    // This code is running on the Stylus Input thread 
+                    // and has the chance to call out into app code. 
+                    // If the app code throws an exception that is not caught, 
+                    // then the app will crash 
+                    // and the application will stop responding the touch. 
+                    // We don't want to ignore all exceptions, 
+                    // so we catch the exception and 
+                    // dispatch it to the main thread, 
+                    // allowing developers to handle it inside the handler 
+                    // for the `Application.DispatcherUnhandledException` event.
                     _pic.Element.Dispatcher.InvokeAsync(() =>
                     {
                         System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
                     },
-                        // Why we should use `Send` priority? Maybe the main thread is busy that the developer can not find the exception timely
+                        // Why we should use `Send` priority? 
+                        // Maybe the main thread is busy 
+                        // that the developer can not find the exception timely
                         DispatcherPriority.Send);
                 }
             }

@@ -238,26 +238,7 @@ namespace MS.Internal.AppModel
                 //
                 // For a - we will say there is no cross-domain check.     
                 //     b - we'll assume InternetZone, and use Source. 
-
-                bool fTrusted = SecurityHelper.CheckUnmanagedCodePermission();
-
-                if (fTrusted)
-                {
-                    return LaunchResult.Launched;
-                }
-                else
-                {
-                    //
-                    //  If we didn't get a SourceUri, we'll assume internet zone. 
-                    //  And use Source for the uri of origin. 
-                    //  
-                    //  This isn't quite right - but the sourceUri is only used to show a message to the user. 
-                    //  Worse case is confusing user experience. ( this uri is not used in the elevation determination). 
-                    //
-
-                    sourceZone = NativeMethods.URLZONE_INTERNET;
-                    sourceUri = originatingUri;
-                }
+                return LaunchResult.Launched;
             }
 
             // <Notes from Trident>

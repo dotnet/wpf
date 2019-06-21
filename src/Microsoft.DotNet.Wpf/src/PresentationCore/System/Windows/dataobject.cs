@@ -760,29 +760,21 @@ namespace System.Windows
                 }
                 else if ( ( formatetc.tymed & TYMED.TYMED_ISTREAM ) != 0 )
                 {
-                    // Checking for the unmanaged code permission.
-                    if ( SecurityHelper.CheckUnmanagedCodePermission() )
-                    {
-                        medium.tymed = TYMED.TYMED_ISTREAM;
+                    medium.tymed = TYMED.TYMED_ISTREAM;
 
-                        IStream istream = null;
-                        hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
-                        if ( NativeMethods.Succeeded(hr) )
+                    IStream istream = null;
+                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
+                    if ( NativeMethods.Succeeded(hr) )
+                    {
+                        medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
+                        Marshal.ReleaseComObject(istream);
+
+                        hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+
+                        if ( NativeMethods.Failed(hr) )
                         {
-                            medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
-                            Marshal.ReleaseComObject(istream);
-
-                            hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
-
-                            if ( NativeMethods.Failed(hr) )
-                            {
-                                Marshal.Release(medium.unionmember);
-                            }
+                            Marshal.Release(medium.unionmember);
                         }
-                    }
-                    else
-                    {
-                        hr = NativeMethods.E_FAIL;
                     }
                 }
                 else
@@ -1286,25 +1278,13 @@ namespace System.Windows
                 || IsFormatEqual(format, DataFormats.StringFormat))
             {
                 string[] arrayFormats;
-                // we do this to block copy of the string synonym in partial trust because that
-                // requires elevations. This is more of a resource issue than anything else at this point.
-                // We might consider doing this in V2.
-                // Also we want to avoid making the serialization code non transparent.
-                if (SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    arrayFormats = new string[] {
-                                        DataFormats.Text,
-                                        DataFormats.UnicodeText,
-                                        DataFormats.StringFormat,
-                                        };
-                }
-                else
-                {
-                    arrayFormats = new string[] {
-                                        DataFormats.Text,
-                                        DataFormats.UnicodeText,
-                                        };
-                }
+
+                arrayFormats = new string[] {
+                                    DataFormats.Text,
+                                    DataFormats.UnicodeText,
+                                    DataFormats.StringFormat,
+                                    };
+
                 return arrayFormats;
             }
 

@@ -157,10 +157,7 @@ namespace System.Windows.Documents
             // Returns true if drag is in progress
             internal bool SourceOnMouseMove(Point mouseMovePoint)
             {
-                // Not allow the initiating DragDrop operation without the unmanaged code permission.
-                // We chose to use this over clipboard because this was causing issues in LocalIntranet
-                // which has similar restrictions as internet but has clipboard permission
-                if (!_dragStarted || !SecurityHelper.CheckUnmanagedCodePermission())
+                if (!_dragStarted)
                 {
                     return false; // false means that drag is not involved at all - selection extension should continue
                 }

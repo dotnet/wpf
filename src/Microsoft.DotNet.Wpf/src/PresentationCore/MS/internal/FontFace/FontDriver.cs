@@ -258,8 +258,6 @@ namespace MS.Internal.FontFace
         /// </summary>
         internal byte[] ComputeFontSubset(ICollection<ushort> glyphs)
         {
-            SecurityHelper.DemandUnmanagedCode();
-
             int fileSize = _fileStream.Size;
             unsafe
             {

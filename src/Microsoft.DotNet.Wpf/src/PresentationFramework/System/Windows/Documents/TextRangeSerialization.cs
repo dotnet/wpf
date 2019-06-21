@@ -1063,19 +1063,6 @@ namespace System.Windows.Documents
         /// </summary>
         private static void WriteComplexProperties(XmlWriter xmlWriter, DependencyObject complexProperties, Type elementType)
         {
-            if (!SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                // In partial trust, we cannot serialize any complex properties because
-                // XamlWriter.Save demands UnmanagedCodePermission.
-                //
-                // If we're in PT, drop the properties.
-                //
-                // If you're here debugging a lost complex property, consider adding
-                // code to DPTypeDescriptorContext to convert the complex property
-                // into a non-complex property, or consider modifying XamlWriter.Save.
-                return;
-            }
-
             LocalValueEnumerator properties = complexProperties.GetLocalValueEnumerator();
 
             properties.Reset();

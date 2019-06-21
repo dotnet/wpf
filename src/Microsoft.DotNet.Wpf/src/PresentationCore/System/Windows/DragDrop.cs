@@ -464,7 +464,7 @@ namespace System.Windows
         /// </param>
         internal static void RegisterDropTarget(IntPtr windowHandle)
         {
-            if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
+            if (windowHandle != IntPtr.Zero)
             {
                 // Create OleDragSource and call Ole DoDragDrop for starting DragDrop.
                 OleDropTarget oleDropTarget = new OleDropTarget(windowHandle);
@@ -485,7 +485,7 @@ namespace System.Windows
         /// </param>        
         internal static void RevokeDropTarget(IntPtr windowHandle)
         {
-            if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
+            if (windowHandle != IntPtr.Zero)
             {
                 // Call OLE RevokeDragDrop to revoke the droppable target window.
                 OleServicesContext.CurrentOleServicesContext.OleRevokeDragDrop(

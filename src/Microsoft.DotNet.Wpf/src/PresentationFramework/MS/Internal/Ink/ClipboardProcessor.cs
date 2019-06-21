@@ -323,15 +323,6 @@ namespace MS.Internal.Ink
         /// <returns>True if the copy is succeeded</returns>
         private bool CopySelectionInXAML(IDataObject dataObject, StrokeCollection strokes, List<UIElement> elements, Matrix transform, Size size)
         {
-            //NOTE: after meeting with the partial trust team, we have 
-            //collectively decided to only allow copy / cut of XAML if the caller
-            //has unmanagedcode permission, else we silently ignore the XAML
-            if (!SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                return false;
-            }
-            else
-            {
                 InkCanvas inkCanvas = new InkCanvas();
 
                 // NOTICE-2005/12/06-WAYNEZEN,
@@ -397,7 +388,6 @@ namespace MS.Internal.Ink
                 }
 
                 return inkCanvas != null;
-            }
         }
 
         private void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)

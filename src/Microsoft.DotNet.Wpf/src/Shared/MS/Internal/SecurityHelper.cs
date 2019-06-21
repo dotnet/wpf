@@ -76,19 +76,6 @@ internal static class SecurityHelper
 #if REACHFRAMEWORK
 #else        
 #endif        
-        internal static bool CheckUnmanagedCodePermission()
-        {
-            try
-            {
-                SecurityHelper.DemandUnmanagedCode();
-            }
-            catch(SecurityException )
-            {
-                return false ;
-            }
-
-            return true;
-        }
 
         internal static void DemandUnmanagedCode()
         {
@@ -105,11 +92,7 @@ internal static class SecurityHelper
 
         internal static void ThrowExceptionIfSettingTrueInPartialTrust(ref bool value)
         {
-            if (value == true && !SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                value = false;
-                throw new SecurityException(SR.Get(SRID.SecurityExceptionForSettingSandboxExternalToTrue));
-            }
+
         }
 
         internal static void DemandWebBrowserPermission()

@@ -7,6 +7,7 @@ MembersMustExist : Member 'System.Windows.DependencyProperty System.Windows.Fram
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.AddLogicalChild(System.Object)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.DefaultStyleKey.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.DefaultStyleKey.set(System.Object)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.FrameworkContentElement.GetUIParentCore()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.OnStyleChanged(System.Windows.Style, System.Windows.Style)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkContentElement.RemoveLogicalChild(System.Object)' does not exist in the implementation but it does exist in the contract.
@@ -15,10 +16,13 @@ MembersMustExist : Member 'System.Windows.FrameworkElement.AddLogicalChild(Syste
 MembersMustExist : Member 'System.Windows.FrameworkElement.DefaultStyleKey.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.DefaultStyleKey.set(System.Object)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.GetTemplateChild(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.FrameworkElement.GetUIParentCore()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.InheritanceBehavior.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.InheritanceBehavior.set(System.Windows.InheritanceBehavior)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.FrameworkElement.OnRenderSizeChanged(System.Windows.SizeChangedInfo)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.OnStyleChanged(System.Windows.Style, System.Windows.Style)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.FrameworkElement.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.ParentLayoutInvalidated(System.Windows.UIElement)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.RemoveLogicalChild(System.Object)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkTemplate.SetTargetTypeInternal(System.Type)' does not exist in the implementation but it does exist in the contract.
@@ -29,6 +33,8 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplatePartAttribute' do
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplateVisualStateAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ThemeInfoAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 MembersMustExist : Member 'System.Windows.Window.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Window.OnVisualChildrenChanged(System.Windows.DependencyObject, System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Window.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.Annotation' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.AnnotationResource' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocator' in the contract but not the implementation.
@@ -42,8 +48,10 @@ MembersMustExist : Member 'System.Windows.Automation.Peers.TreeViewItemAutomatio
 MembersMustExist : Member 'System.Windows.Controls.AccessText.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.AdornedElementPlaceholder.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ComboBox.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.ComboBox.HasEffectiveKeyboardFocus.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ContentControl.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ContextMenu.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.ContextMenu.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Control.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.DataGrid.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.DataGrid.OnColumnDisplayIndexChanged(System.Windows.Controls.DataGridColumnEventArgs)' does not exist in the implementation but it does exist in the contract.
@@ -64,26 +72,35 @@ MembersMustExist : Member 'System.Windows.Controls.DataGridHyperlinkColumn.Refre
 MembersMustExist : Member 'System.Windows.Controls.DataGridRow.OnColumnsChanged(System.Collections.ObjectModel.ObservableCollection<System.Windows.Controls.DataGridColumn>, System.Collections.Specialized.NotifyCollectionChangedEventArgs)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.DataGridTemplateColumn.RefreshCellContent(System.Windows.FrameworkElement, System.String)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.DataGridTextColumn.RefreshCellContent(System.Windows.FrameworkElement, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.DatePicker.HasEffectiveKeyboardFocus.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Decorator.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.FlowDocumentReader.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.FlowDocumentScrollViewer.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Grid.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Grid.OnVisualChildrenChanged(System.Windows.DependencyObject, System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.GridSplitter.OnRenderSizeChanged(System.Windows.SizeChangedInfo)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.GridView.ClearItem(System.Windows.Controls.ListViewItem)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.GridView.DefaultStyleKey.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.GridView.GetAutomationPeer(System.Windows.Controls.ListView)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.GridView.ItemContainerDefaultStyleKey.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.GridView.PrepareItem(System.Windows.Controls.ListViewItem)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.GridViewColumnHeader.OnRenderSizeChanged(System.Windows.SizeChangedInfo)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.GridViewColumnHeader.ShouldSerializeProperty(System.Windows.DependencyProperty)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.HeaderedContentControl.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.HeaderedItemsControl.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.InkCanvas.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ItemsControl.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ListBox.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.ListBoxItem.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.MenuItem.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.MenuItem.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Page.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Page.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Panel.HasLogicalOrientation.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Panel.InternalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Panel.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Panel.LogicalOrientation.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Panel.OnVisualChildrenChanged(System.Windows.DependencyObject, System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Controls.PrintDialogException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 MembersMustExist : Member 'System.Windows.Controls.RadioButton.OnToggle()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.RichTextBox.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
@@ -95,7 +112,9 @@ MembersMustExist : Member 'System.Windows.Controls.StackPanel.LogicalOrientation
 MembersMustExist : Member 'System.Windows.Controls.TextBlock.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.TextBox.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ToolBarTray.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.ToolTip.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.TreeView.HandlesScrolling.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.TreeViewItem.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ViewBase.ClearItem(System.Windows.Controls.ListViewItem)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ViewBase.DefaultStyleKey.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.ViewBase.GetAutomationPeer(System.Windows.Controls.ListView)' does not exist in the implementation but it does exist in the contract.
@@ -107,10 +126,13 @@ MembersMustExist : Member 'System.Windows.Controls.VirtualizingStackPanel.BringI
 MembersMustExist : Member 'System.Windows.Controls.VirtualizingStackPanel.HasLogicalOrientation.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.VirtualizingStackPanel.LogicalOrientation.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.BulletDecorator.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Primitives.ButtonBase.OnRenderSizeChanged(System.Windows.SizeChangedInfo)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.DataGridCellsPresenter.OnColumnsChanged(System.Collections.ObjectModel.ObservableCollection<System.Windows.Controls.DataGridColumn>, System.Collections.Specialized.NotifyCollectionChangedEventArgs)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Primitives.DataGridDetailsPresenter.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.DocumentViewerBase.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.GridViewRowPresenterBase.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.GridViewRowPresenterBase.OnColumnPropertyChanged(System.Windows.Controls.GridViewColumn, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Primitives.Popup.GetUIParentCore()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.Popup.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Controls.Primitives.ToggleButton.OnToggle()' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueConversionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -120,7 +142,11 @@ MembersMustExist : Member 'System.Windows.Documents.AdornerLayer.LogicalChildren
 MembersMustExist : Member 'System.Windows.Documents.FixedDocument.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.FixedDocumentSequence.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.FixedPage.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Documents.FixedPage.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.FlowDocument.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Documents.Hyperlink.OnKeyDown(System.Windows.Input.KeyEventArgs)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Documents.Hyperlink.OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Documents.Hyperlink.OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.PageContent.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.Table.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.TextElement.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
@@ -135,4 +161,4 @@ CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute'
 CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.Shell.JumpList' in the contract but not the implementation.
-Total Issues: 136
+Total Issues: 162

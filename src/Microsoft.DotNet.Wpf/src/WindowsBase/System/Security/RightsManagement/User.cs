@@ -38,7 +38,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public ContentUser(string name, AuthenticationType authenticationType)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (name == null)
             {
@@ -79,7 +78,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _authenticationType;
             }
@@ -92,7 +90,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _name;
             }
@@ -107,7 +104,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public bool IsAuthenticated()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             // we can only have activated Windows or Passport users 
             // undefined authentication type can only be used for building a UnsignedPublishLicense  
@@ -130,7 +126,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override bool Equals(object obj)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (obj == null)
                 return false;   // Standard behavior.
@@ -155,7 +150,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_anyoneUser == null)
                 {
@@ -175,7 +169,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_ownerUser == null)
                 {
@@ -190,7 +183,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override int GetHashCode()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (!hashCalcIsDone)
             {

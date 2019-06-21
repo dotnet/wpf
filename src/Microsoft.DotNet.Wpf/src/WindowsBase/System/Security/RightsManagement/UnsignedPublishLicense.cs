@@ -40,7 +40,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             _grantCollection = new Collection<ContentGrant>();
             _contentId = Guid.NewGuid();
@@ -52,7 +51,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense(string publishLicenseTemplate) :this ()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (publishLicenseTemplate == null)
             {   
@@ -85,7 +83,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public PublishLicense Sign(SecureEnvironment secureEnvironment, out UseLicense authorUseLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (secureEnvironment == null)
             {
@@ -137,13 +134,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _owner; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 _owner = value; 
             }
@@ -157,13 +152,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoName; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
                 
                 _referralInfoName = value; 
             }
@@ -177,13 +170,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoUri; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 _referralInfoUri = value; 
             }
@@ -197,13 +188,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _contentId; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 // Guid is a value type, so it can never be null; therefore, there is no nreed to check this
                 _contentId = value;
@@ -217,7 +206,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _grantCollection; 
             }
@@ -231,7 +219,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_localizedNameDescriptionDictionary == null)
                 {
@@ -248,7 +235,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         override public string ToString()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             using(IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue, 
@@ -324,7 +310,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_applicationSpecificDataDictionary == null)
                 {

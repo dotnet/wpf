@@ -1086,17 +1086,7 @@ namespace System.Windows.Documents
 
         private static void DoUserInitiatedNavigation(object sender)
         {
-            CodeAccessPermission perm = SecurityHelper.CreateUserInitiatedNavigationPermission();
-            perm.Assert();
-
-            try
-            {
                 DispatchNavigation(sender);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
         }
 
         private static void DoNonUserInitiatedNavigation(object sender)

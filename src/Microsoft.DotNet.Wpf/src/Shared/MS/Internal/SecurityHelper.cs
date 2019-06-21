@@ -150,20 +150,6 @@ internal static class SecurityHelper
         }
         static WebBrowserPermission _webBrowserPermission;
 
-
-        ///<summary>
-        /// Check to see if we have User initiated navigation permission.
-        ///</summary>
-        /// <returns>true if call stack has UserInitiatedNavigation permission</returns>
-        internal static bool CallerHasUserInitiatedNavigationPermission() { return true; }
-
-
-        ///<summary>
-        /// Create a UserInitiatedNavigation permission.
-        /// Separate helper exists to make it easy to change what the permission is.
-        ///</summary>
-        internal static CodeAccessPermission CreateUserInitiatedNavigationPermission() { return default(CodeAccessPermission); }
-
         /// <summary>
         /// Demands for permissions needed to construct the PrintDialog in
         /// full trust mode and/or access full trust properties from dialog.
@@ -573,26 +559,6 @@ internal static class SecurityHelper
 
 
 #if WINDOWS_BASE
-        internal static void DemandRightsManagementPermission()
-        {
-            if(_rightsManagementPermission == null)
-            {
-                _rightsManagementPermission = new RightsManagementPermission();
-            }
-            _rightsManagementPermission.Demand();
-        }
-        static RightsManagementPermission _rightsManagementPermission = null;
-
-        internal static void DemandCompoundFileIOPermission()
-        {
-            if(_compoundFileIOPermission == null)
-            {
-                _compoundFileIOPermission = new CompoundFileIOPermission();
-            }
-            _compoundFileIOPermission.Demand();
-        }
-        static CompoundFileIOPermission _compoundFileIOPermission = null;
-
         internal static void DemandPathDiscovery(string path)
         {
             FileIOPermission permobj = new FileIOPermission(PermissionState.None);

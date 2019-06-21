@@ -89,17 +89,7 @@ namespace System.Windows.Controls
         public WebBrowser() 
             : base(new Guid(CLSID.WebBrowser), true )
         {
-            // Check whether feature is disabled
-            if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.WebBrowserDisable))
-            {
-                // in case the registry key is '1' then demand unrestricted WebBrowserPermission to create it
-                SecurityHelperPF.DemandWebBrowserPermission();
-            }
-            else
-            {
-                // Feature is enabled - demand Safe level to create this object, granted in Partial Trust by default
-                (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
-            }
+            (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
 
             _hostingAdaptor = new WebOCHostingAdaptor(this);
         }

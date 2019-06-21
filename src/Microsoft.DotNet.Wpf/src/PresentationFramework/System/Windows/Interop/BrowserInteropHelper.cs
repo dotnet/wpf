@@ -240,17 +240,7 @@ namespace System.Windows.Interop
                 _isScriptInteropDisabled.Value = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
             }
 
-            // Similar approach as with WebBrowser.cs.
-            if (_isScriptInteropDisabled.Value.Value)
-            {
-                // Feature is disabled - demand unrestricted WebBrowserPermission to hand out the script object.
-                MS.Internal.PresentationFramework.SecurityHelper.DemandWebBrowserPermission();
-            }
-            else
-            {
-                // Feature is enabled - demand Safe level to hand out the script object, granted in Partial Trust by default.
-                (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
-            }
+            (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
         }
 
         private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;

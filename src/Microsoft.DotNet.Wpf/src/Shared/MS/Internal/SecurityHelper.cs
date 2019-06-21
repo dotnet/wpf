@@ -72,69 +72,6 @@ using MS.Internal.AppModel;
 
 internal static class SecurityHelper
     {
-#if PRESENTATIONFRAMEWORK
-
-        internal static void ThrowExceptionIfSettingTrueInPartialTrust(ref bool value)
-        {
-
-        }
-
-        internal static void DemandWebBrowserPermission()
-        {
-            CachedWebBrowserPermission.Demand();
-        }
-
-        internal static WebBrowserPermission CachedWebBrowserPermission
-        {
-            get
-            {
-                if (_webBrowserPermission == null)
-                {
-                    _webBrowserPermission = new WebBrowserPermission(PermissionState.Unrestricted);
-                }
-                return _webBrowserPermission;
-            }
-        }
-        static WebBrowserPermission _webBrowserPermission;
-
-        /// <summary>
-        /// Demands for permissions needed to construct the PrintDialog in
-        /// full trust mode and/or access full trust properties from dialog.
-        /// </summary>
-        internal static void DemandPrintDialogPermissions()
-        {
-            if(_defaultPrintingPermission == null)
-            {
-                _defaultPrintingPermission = SystemDrawingHelper.NewDefaultPrintingPermission();
-            }
-            _defaultPrintingPermission.Demand();
-        }
-        static CodeAccessPermission _defaultPrintingPermission = null;
-
-        ///<summary>
-        /// Check to see if we have Reflection permission to create types and access members.
-        ///</summary>
-        /// <returns>true if call stack has Reflection permission</returns>
-        internal static bool CallerHasMemberAccessReflectionPermission()
-        {
-            try
-            {
-                if (_reflectionPermission == null)
-                {
-                    _reflectionPermission = new ReflectionPermission(ReflectionPermissionFlag.MemberAccess);
-                }
-                _reflectionPermission.Demand();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        static ReflectionPermission _reflectionPermission = null;
-
-#endif
 
 #if PRESENTATION_CORE
 

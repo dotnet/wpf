@@ -46,7 +46,6 @@ namespace System.Windows.Controls
         PrintDialog(
             )
         {
-            _dialogInvoked = false;
 
             _printQueue = null;
             _printTicket = null;
@@ -207,7 +206,6 @@ namespace System.Windows.Controls
         {
             get
             {
-                SecurityHelper.DemandPrintDialogPermissions();
 
                 if (_printQueue == null)
                 {
@@ -218,7 +216,6 @@ namespace System.Windows.Controls
             }
             set
             {
-                SecurityHelper.DemandPrintDialogPermissions();
 
                 _printQueue = value;
             }
@@ -231,7 +228,6 @@ namespace System.Windows.Controls
         {
             get
             {
-                SecurityHelper.DemandPrintDialogPermissions();
 
                 if (_printTicket == null)
                 {
@@ -242,7 +238,6 @@ namespace System.Windows.Controls
             }
             set
             {
-                SecurityHelper.DemandPrintDialogPermissions();
 
                 _printTicket = value;
             }
@@ -303,10 +298,6 @@ namespace System.Windows.Controls
         Nullable<bool>
         ShowDialog()
         {
-            //
-            // Reset this flag as we have not displayed the dialog yet.
-            //
-            _dialogInvoked = false;
 
             Win32PrintDialog dlg = new Win32PrintDialog();
 
@@ -338,7 +329,6 @@ namespace System.Windows.Controls
                 _printQueue = dlg.PrintQueue;
                 _pageRange = dlg.PageRange;
                 _pageRangeSelection = dlg.PageRangeSelection;
-                _dialogInvoked = true;
             }
 
             return (dialogResult == MS.Internal.Printing.NativeMethods.PD_RESULT_PRINT);
@@ -373,7 +363,6 @@ namespace System.Windows.Controls
             _printableAreaHeight            = 0;
             _isPrintableAreaWidthUpdated    = false;
             _isPrintableAreaHeightUpdated   = false;
-            _dialogInvoked                  = false;
         }
 
 
@@ -406,7 +395,6 @@ namespace System.Windows.Controls
             _printableAreaHeight = 0;
             _isPrintableAreaWidthUpdated = false;
             _isPrintableAreaHeightUpdated = false;
-            _dialogInvoked = false;
         }
 
         #endregion Public methods
@@ -596,24 +584,6 @@ namespace System.Windows.Controls
             ref PrintTicket printTicket
             )
         {
-            if (_dialogInvoked == false)
-            {
-                //
-                // If the dialog has not been invoked then the user needs printing permissions.
-                // If the demand succeeds then they can print.  If the demand fails, then we
-                // tell them that the print dialog must be displayed first by throwing a dialog
-                // exception.
-                //
-                try
-                {
-                    SecurityHelper.DemandPrintDialogPermissions();
-                }
-                catch (SecurityException)
-                {
-                    throw new PrintDialogException(SR.Get(SRID.PartialTrustPrintDialogMustBeInvoked));
-                }
-            }
-
             //
             // If the default print queue and print ticket have not already
             // been selected then update them now since we need them.
@@ -650,9 +620,6 @@ namespace System.Windows.Controls
 
         private
         PrintQueue                  _printQueue;
-
-        private
-        bool                        _dialogInvoked;
 
         private
         PageRangeSelection          _pageRangeSelection;

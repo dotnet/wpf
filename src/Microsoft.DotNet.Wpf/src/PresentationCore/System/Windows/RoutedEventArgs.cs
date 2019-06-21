@@ -348,7 +348,7 @@ namespace System.Windows
             {
                 if (_flags [UserInitiatedIndex])
                 {
-                    return SecurityHelper.CallerHasUserInitiatedRoutedEventPermission();
+                    return true;
                 }
                 return false;
             }

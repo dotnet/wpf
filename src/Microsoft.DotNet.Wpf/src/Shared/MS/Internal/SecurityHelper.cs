@@ -106,21 +106,6 @@ internal static class SecurityHelper
         static SecurityPermission _unmanagedCodePermission = null;
 #endif  //  !PBTCOMPILER
 
-#if PRESENTATION_CORE
-
-        ///<summary>
-        /// Create a UserInitiatedRoutedEvent permission.
-        /// Separate helper exists to make it easy to change what the permission is.
-        ///</summary>
-        internal static CodeAccessPermission CreateUserInitiatedRoutedEventPermission() { return default(CodeAccessPermission); }
-
-        ///<summary>
-        /// Check whether the call stack has the permissions needed for UserInitiated RoutedEvents.
-        /// </summary>
-        internal static bool CallerHasUserInitiatedRoutedEventPermission() { return true; }
-
-#endif // PRESENTATION_CORE
-
 #if PRESENTATIONFRAMEWORK
 
         internal static void ThrowExceptionIfSettingTrueInPartialTrust(ref bool value)

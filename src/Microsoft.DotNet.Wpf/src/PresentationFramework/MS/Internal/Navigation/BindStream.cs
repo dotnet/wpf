@@ -11,9 +11,6 @@
 
 using System;
 using System.IO;
-#if NETFX
-using System.Runtime.Remoting;
-#endif
 using System.Security; // SecurityCritical attribute
 using System.Security.Permissions;
 using MS.Internal.AppModel;
@@ -219,24 +216,6 @@ namespace MS.Internal.Navigation
             }
         }
 
-#if NETFX
-        /// <summary>
-        /// Overridden CreateObjRef method
-        /// </summary>
-        /// <param name="requestedType"></param>
-        /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalByRefObject.CreateObjRef which LinkDemands
-        ///</SecurityNote> 
-        [SecurityCritical]
-        public override ObjRef CreateObjRef(
-            Type requestedType
-            )
-        {
-            return _stream.CreateObjRef(requestedType);
-        }
-#endif
-
         /// <summary>
         /// Overridden EndRead method
         /// </summary>
@@ -313,10 +292,6 @@ namespace MS.Internal.Navigation
         /// Overridden InitializeLifetimeService method
         /// </summary>
         /// <returns></returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalByRefObject.InitializeLifetimeService which LinkDemands
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object InitializeLifetimeService()
         {
             return _stream.InitializeLifetimeService();

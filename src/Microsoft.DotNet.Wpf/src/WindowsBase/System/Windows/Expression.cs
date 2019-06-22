@@ -11,7 +11,6 @@ namespace System.Windows
     /// <summary>
     ///     Modes for expressions
     /// </summary>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     internal enum ExpressionMode
     {
         /// <summary>
@@ -73,7 +72,6 @@ namespace System.Windows
     ///
     ///     An Expression can be set per-instance per-property via SetValue.
     /// </remarks>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [TypeConverter(typeof(ExpressionConverter))]
     public class Expression
     {

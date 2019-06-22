@@ -118,7 +118,6 @@
     <Compile Include="MS\Internal\AppModel\ComGuids.cs" />
     <Compile Include="MS\Internal\AppModel\ContentFilePart.cs" />
     <!-- <Compile Include="MS\Internal\AppModel\DeploymentExceptionMapper.cs" /> -->
-    <Compile Include="MS\Internal\AppModel\IBrowserCallbackServices.cs" />
     <Compile Include="MS\Internal\AppModel\IBrowserHostServices.cs" />
     <Compile Include="MS\Internal\AppModel\IconHelper.cs" />
     <Compile Include="MS\Internal\AppModel\IContentContainer.cs" />
@@ -1136,7 +1135,6 @@
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
-    <Compile Include="System\Windows\Interop\DocobjHost.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />

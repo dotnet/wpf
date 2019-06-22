@@ -65,8 +65,8 @@ using System.Collections;           // Hashtable
 using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
-using System.Security;              // [SecuritySafeCritical]
-using System.Security.Permissions;  // [ReflectionPermission]
+using System.Security;              // 
+using System.Security.Permissions;  // 
 using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList

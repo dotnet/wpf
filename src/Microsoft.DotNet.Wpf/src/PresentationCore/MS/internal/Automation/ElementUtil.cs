@@ -162,13 +162,6 @@ namespace MS.Internal.Automation
         }
 
         // Get element at given point (screen coords)
-        ///<SecurityNote> 
-        ///     Critical    - accepts critical data. Hwnd was created under an elevation. 
-        ///                 - calls HwndSource.CriticalFromHwnd to get the HwndSource for this  visual
-        ///     TreatAsSafe - returning an element is considered safe. 
-        ///                 - the hwndSource is not exposed.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static Visual GetElementFromPoint( IntPtr hwnd, Visual root, Point pointScreen )
         {
             HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);

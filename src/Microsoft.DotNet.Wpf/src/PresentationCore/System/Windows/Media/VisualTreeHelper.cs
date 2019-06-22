@@ -510,7 +510,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="visual"></param>
         /// <param name="dc"></param>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         static public void Walk(Visual visual, DrawingContext dc)
         {
             VisualTreeFlattener flattener = new VisualTreeFlattener(dc);

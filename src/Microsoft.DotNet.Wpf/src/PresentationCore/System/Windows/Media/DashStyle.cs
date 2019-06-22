@@ -75,11 +75,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns the dashes information.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Returns a pointer and manipulates unsafe code.This data
-        ///     is safe to expose, it is the pointer manipulation that makes it risky.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetDashData(MIL_PEN_DATA* pData, out double[] dashArray)
         {
             DoubleCollection vDashes = Dashes;

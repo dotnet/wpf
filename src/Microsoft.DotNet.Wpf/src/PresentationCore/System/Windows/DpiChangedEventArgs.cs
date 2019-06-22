@@ -43,10 +43,6 @@ namespace System.Windows
         /// <param name="lParam">
         /// A pointer to a RECT structure that provides the size and position of the suggested window, scaled for the new DPI.
         /// </param>    
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical function *PtrToStructure*
-        /// </SecurityNote>
-        [SecurityCritical]
         [Obsolete]
         internal HwndDpiChangedEventArgs(double oldDpiX, double oldDpiY, double newDpiX, double newDpiY, IntPtr lParam) : base(false)
         {

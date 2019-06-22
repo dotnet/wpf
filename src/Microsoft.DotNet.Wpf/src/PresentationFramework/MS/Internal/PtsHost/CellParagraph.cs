@@ -53,10 +53,6 @@ namespace MS.Internal.PtsHost
         /// <param name="ppfscell">Cell para client</param>
         /// <param name="pfsbrkcellOut">Break record for the current cell</param>
         /// <param name="dvrUsed">Ised vertical space</param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function CellParaClient.FormatCellFinite.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatCellFinite(
             TableParaClient tableParaClient,        // IN:  
             IntPtr pfsbrkcellIn,                    // IN:  not NULL if cell broken from previous page/column

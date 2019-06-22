@@ -9,10 +9,6 @@ using System.Security.Permissions;
 
 namespace MS.Win32.Penimc
 {
-    /// <SecurityNote>
-    ///     Critical: This elevates to unmanaged code permission.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
     ComImport,
     Guid("75C6AAEE-2BA4-4008-B523-4F1E033FF049"),
@@ -27,10 +23,6 @@ namespace MS.Win32.Penimc
         void GetLastSystemEventData(out int evt, out int modifier, out int character, out int x, out int y, out int stylusMode, out int buttonState);
     }
 
-    /// <SecurityNote>
-    ///     Critical: This elevates to unmanaged code permission.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
     ComImport,
     Guid("CEB1EF24-BB4E-498B-9DF7-12887ED0EB24"),
@@ -58,10 +50,6 @@ namespace MS.Win32.Penimc
         void GetPacketButtonInfo(int iButton, out Guid guid);
     }
 
-    /// <SecurityNote>
-    ///     Critical: This elevates to unmanaged code permission.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     [
     ComImport,
     Guid(PimcConstants.IPimcManager3IID),

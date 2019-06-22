@@ -340,10 +340,6 @@ namespace System.Windows.Input
         /// </remarks>
         /// <param name="targetElement">UIElement/ContentElement to be scanned for input and command bindings</param>
         /// <param name="inputEventArgs">InputEventArgs to be matched against for gestures</param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input and cause elevations for Userinitiated paste
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void TranslateInput(IInputElement targetElement, InputEventArgs inputEventArgs)
         {
             if ((targetElement == null) || (inputEventArgs == null))
@@ -502,11 +498,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - accesses critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information, does not modify)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ExecuteCommand(RoutedCommand routedCommand, object parameter, IInputElement target, InputEventArgs inputEventArgs)
         {
             return routedCommand.ExecuteCore(parameter, target, inputEventArgs.UserInitiated);
@@ -576,11 +567,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - creates critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ExecuteCommandBinding(object sender, ExecutedRoutedEventArgs e, CommandBinding commandBinding)
         {
             // Asserting a permission in the case that the command was user initiated
@@ -768,11 +754,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - creates critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void TransferEvent(IInputElement newSource, ExecutedRoutedEventArgs e)
         {
             RoutedCommand command = e.Command as RoutedCommand;

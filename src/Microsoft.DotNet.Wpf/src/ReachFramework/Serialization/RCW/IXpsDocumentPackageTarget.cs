@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("3B0B6D38-53AD-41DA-B212-D37637A6714E"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsDocumentPackageTarget
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

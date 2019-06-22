@@ -20,11 +20,6 @@ using System;
 
 namespace MS.Internal.Shaping
 {
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal struct ContextualLookupRecords
     {
         private const int offsetSequenceIndex = 0;
@@ -183,11 +178,6 @@ namespace MS.Internal.Shaping
         private ushort recordCount;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal struct GlyphChainingSubtable
     {
         private const int offsetFormat            = 0;
@@ -222,11 +212,6 @@ namespace MS.Internal.Shaping
         }
 
         #region GlyphChainingSubtable private classes
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]
         private class SubRuleSet
         {
             private const int offsetRuleCount = 0;
@@ -250,11 +235,6 @@ namespace MS.Internal.Shaping
             private int offset;
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]        
         private class SubRule
         {
             private const int sizeCount     = 2;
@@ -490,11 +470,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]        
     internal struct ClassChainingSubtable
     {
         private const int offsetFormat            = 0;
@@ -556,11 +531,6 @@ namespace MS.Internal.Shaping
         }
 
         #region ClassBasedChain private classes
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]            
         private class SubClassSet
         {
             private const int offsetRuleCount = 0;
@@ -583,11 +553,6 @@ namespace MS.Internal.Shaping
             private int offset;
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]            
         private class SubClassRule
         {
             private const int sizeCount = 2;
@@ -848,11 +813,6 @@ namespace MS.Internal.Shaping
         private int offset;
 }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]        
     internal struct CoverageChainingSubtable //ChainingContext,Format3
     {
         // Future enhancement: Remove offsets from class members. Like ClassChaining does.
@@ -1128,11 +1088,6 @@ namespace MS.Internal.Shaping
     }
     
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ChainingSubtable
     {
         private const int offsetFormat = 0;
@@ -1270,11 +1225,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct GlyphContextSubtable
     {
         private const int offsetFormat            = 0;
@@ -1308,11 +1258,6 @@ namespace MS.Internal.Shaping
         }
 
         #region GlyphContextSubtable private classes
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]         
         private class SubRuleSet
         {
             private const int offsetRuleCount = 0;
@@ -1336,11 +1281,6 @@ namespace MS.Internal.Shaping
             private int offset;
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]            
         private class SubRule
         {
             private const int offsetGlyphCount = 0;
@@ -1515,11 +1455,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]        
     internal struct ClassContextSubtable //Context, Format2
     {
         private const int offsetFormat            = 0;
@@ -1561,11 +1496,6 @@ namespace MS.Internal.Shaping
 
         #region ClassBasedContext private classes
         
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]    
         private class SubClassSet
         {
             private const int offsetRuleCount = 0;
@@ -1588,11 +1518,6 @@ namespace MS.Internal.Shaping
             private int offset;
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this class is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]            
         private class SubClassRule
         {
             private const int offsetGlyphCount = 0;
@@ -1779,11 +1704,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct CoverageContextSubtable
     {
         private const int offsetFormat = 0;
@@ -1916,11 +1836,6 @@ namespace MS.Internal.Shaping
     }
     
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ContextSubtable
     {
         private const int offsetFormat = 0;
@@ -2044,11 +1959,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]        
     internal struct ReverseChainingSubtable
     {
         private const int offsetFormat = 0;

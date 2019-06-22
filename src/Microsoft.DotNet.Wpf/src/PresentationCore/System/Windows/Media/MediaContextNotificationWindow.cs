@@ -44,11 +44,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Initializes static variables for this class.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical        - Sets the SecurityCritical static variables holding the message ids; calls RegisterWindowMessage.
-        /// TreatAsSafe     - The message ids are not exposed; no external parameters are taken in.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static MediaContextNotificationWindow()
         {
             s_channelNotifyMessage = UnsafeNativeMethods.RegisterWindowMessage("MilChannelNotify");
@@ -66,11 +61,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Sets the owner MediaContext and creates the notification window.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Creates an HwndWrapper and adds a hook.
-        ///     TreatAsSafe: Critical data is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal MediaContextNotificationWindow(MediaContext ownerMediaContext)
         {
             // Remember the pointer to the owner MediaContext that we'll forward the broadcasts to.
@@ -107,11 +97,6 @@ namespace System.Windows.Media
             WpfDllVerifier.VerifyWpfDllSet();
         }
 
-        ///<SecurityNote>
-        ///     Critical - Calls dispose on the critical hwnd wrapper.
-        ///     TreatAsSafe: It is safe to dispose the wrapper
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             if (!_isDisposed)
@@ -151,15 +136,6 @@ namespace System.Windows.Media
         /// <param name="channel">
         /// The channel from which we want notifications.
         /// </param>
-        /// <securitynote>
-        /// Critical        - Calls a critical channel method.
-        /// TreatAsSafe     - We are associated with the window handle that we
-        ///                   are passing to the channel, so somebody already
-        ///                   decided that it's OK for us to interact with that
-        ///                   window. We also registered a window message so
-        ///                   that we can avoid collisions with other messages.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetAsChannelNotificationWindow()
         {
             if (_isDisposed)
@@ -173,11 +149,6 @@ namespace System.Windows.Media
         /// <summary>
         /// If any of the interesting broadcast messages is seen, forward them to the owner MediaContext.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls into unmanaged code, uses sensitive HWND data
-        ///     TreatAsSafe: No sensitive information is disclosed. It's safe to "attach" the window to the DWM. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IntPtr MessageFilter(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (_isDisposed)
@@ -211,19 +182,11 @@ namespace System.Windows.Media
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         private static extern int MilContent_AttachToHwnd(
             IntPtr hwnd
             );
 
-        /// <SecurityNote>
-        ///     Critical: This code causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         private static extern int MilContent_DetachFromHwnd(
             IntPtr hwnd
@@ -234,12 +197,6 @@ namespace System.Windows.Media
         /// in case we are elevated. Failure is non-fatal and on down-level
         /// platforms this call will result in a no-op.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -- Calls unsafe native methods GetModuleHandle and GetProcAddress.
-        ///             Manually elevates unmanaged code permissions to pinvoke through
-        ///             a function pointer.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ChangeWindowMessageFilter(WindowMessage message, uint flag)
         {
             // Find the address of ChangeWindowMessageFilter in user32.dll.
@@ -299,10 +256,6 @@ namespace System.Windows.Media
         private SecurityCriticalDataClass<HwndWrapper> _hwndNotification;
 
         // The message filter hook for the top-level hidden window.
-        /// <SecurityNote>
-        /// Critical - Field for Critical type
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook _hwndNotificationHook;
 
         // The window message used to announce a channel notification.

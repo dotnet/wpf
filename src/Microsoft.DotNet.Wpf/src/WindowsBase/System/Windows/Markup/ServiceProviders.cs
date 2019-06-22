@@ -23,7 +23,6 @@ namespace System.Windows.Markup
     /// Proivde a implementation for IServiceProvider and method to add services
     /// </summary>
     /// <internalonly>Restrict public access until M8.2</internalonly>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ComponentModel.Browsable(false)]
     public class ServiceProviders : IServiceProvider

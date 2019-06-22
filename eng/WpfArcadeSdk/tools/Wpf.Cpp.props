@@ -96,13 +96,15 @@
       There is also a corresponding section (also commented out) in Wpf.Cpp.targets.
       
       msvcurt-c1xx should reference a blob hosted in azure storage that contains
-      msvcurt[d]_netcore.lib and c1xx.dll 
+      msvcurt[d]_netcore.lib and c1xx.dll (and optionally, c2.dll)
     -->
-    <!-- <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd> --> 
-    <!-- Also update in global.json -->
-    <!--<MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>-->
-    <!--<MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>-->
-    <!--<MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>-->
+    <!-- Start optional section -->
+    <!-- Also in global.json -->
+    <MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>
+    <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd>  
+    <MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>
+    <MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>
+    <!-- End optional section -->
   </PropertyGroup>
   
   <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">

@@ -3184,7 +3184,7 @@
       </trans-unit>
       <trans-unit id="Timing_CanSlipOnlyOnSimpleTimelines">
         <source>CanSlip is supported only on timelines without AutoReverse, AccelerationRatio, or DecelerationRatio.</source>
-        <target state="translated">Somente há suporte para CanSlip em linhas do tempo sem AutoReverse, AccelerationRatio ou  DecelerationRatio.</target>
+        <target state="translated">Somente há suporte para CanSlip em linhas do tempo sem AutoReverse, AccelerationRatio ou DecelerationRatio.</target>
         <note />
       </trans-unit>
       <trans-unit id="Timing_ChildMustBeTimeline">

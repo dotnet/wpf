@@ -1,14 +1,27 @@
 <Project>
+  
+  <PropertyGroup>
+    <EnsureReferenceAssemblyPrerequisitesDependsOn>
+      $(EnsureReferenceAssemblyPrerequisitesDependsOn);
+      EnsureReferenceDestination;
+      CopyIntellisenseXmls
+    </EnsureReferenceAssemblyPrerequisitesDependsOn>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <CoreBuildDependsOn>
-      EnsureReferenceDestination;
+      EnsureReferenceAssemblyPrerequisites;
       $(CoreBuildDependsOn)
     </CoreBuildDependsOn>
     <ResolveReferencesDependsOn>
-      EnsureReferenceDestination;
+      EnsureReferenceAssemblyPrerequisites;
       $(ResolveReferencesDependsOn)
     </ResolveReferencesDependsOn>
   </PropertyGroup>
+  
+  <Target Name="EnsureReferenceAssemblyPrerequisites"
+          DependsOnTargets="$(EnsureReferenceAssemblyPrerequisitesDependsOn)" />
+  
   <Target Name="EnsureReferenceDestination" >
     <!-- Create and export properties used in Reference assembly generation                       -->
     <!--                                                                                          -->
@@ -42,6 +55,34 @@
     <PropertyGroup>
       <TargetRefPath>@(RefAssemblies)</TargetRefPath>
     </PropertyGroup>
+  </Target>
+
+  <Target Name="CopyIntellisenseXmls" 
+          Condition="'$(ProduceReferenceAssembly)' == 'true'"
+          Outputs="@(IntermediateRefAssembly->'$(ReferenceAssemblyDir)%(FileName).xml')">
+    <PropertyGroup>
+      <!-- Also in global.json -->
+      <DotNetApiDocsNetCoreApp30>0.0.0.1</DotNetApiDocsNetCoreApp30>
+      <IntellisenseXmlDir>$(RepositoryToolsDir)native\bin\dotnet-api-docs_netcoreapp3.0\$(DotNetApiDocsNetCoreApp30)\_intellisense\netcore-3.0\</IntellisenseXmlDir>
+    </PropertyGroup>
+    
+    <Error Condition="!Exists('$(IntellisenseXmlDir)')"
+           Text="Intellisense Xml sources not found: IntellisenseXmlDir=$(IntellisenseXmlDir)" />
+
+    <!-- 
+      EnsureReferenceDestination guarantees that there is exactly 1 ref assembly 
+    -->
+    <PropertyGroup>
+      <IntellisenseXmlFile>@(IntermediateRefAssembly->'$(IntellisenseXmlDir)%(FileName).xml')</IntellisenseXmlFile>
+    </PropertyGroup>
+
+    <Message Condition="!Exists('$(IntellisenseXmlFile)')"
+             Text="$(IntellisenseXmlFile) is missing" />
+    
+    <Copy SourceFiles="$(IntellisenseXmlFile)"
+          Condition="Exists('$(IntellisenseXmlFile)')"
+          DestinationFolder="$(ReferenceAssemblyDir)"          
+          SkipUnchangedFiles="true"/>
   </Target>
 
   <!-- 

@@ -56,13 +56,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Arrange paragraph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsQueryFloaterDetails
-        /// Safe - The IntPtr parameters passed to PTS.FsQueryFloaterDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The textdetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnArrange()
         {
             base.OnArrange();

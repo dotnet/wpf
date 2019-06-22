@@ -226,12 +226,6 @@ namespace System.Windows
         /// <param name="dp"></param>
         /// <param name="metadata"></param>
         /// <param name="entry">EffectiveValueEntry computed by base</param>
-        /// <SecurityNote>
-        ///     Putting an InheritanceDemand as a defense-in-depth measure,
-        ///     as this provides a hook to the property system that we don't
-        ///     want exposed under PartialTrust.
-        /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,
@@ -413,10 +407,6 @@ namespace System.Windows
         ///     <see cref="RoutedEventArgs"/> for the event to
         ///     be raised
         /// </param>
-        ///<SecurityNote>
-        ///     By default clears the user initiated bit.
-        ///     To guard against "replay" attacks.
-        ///</SecurityNote>
         public void RaiseEvent(RoutedEventArgs e)
         {
             // VerifyAccess();
@@ -434,10 +424,6 @@ namespace System.Windows
         ///     "Trusted" internal flavor of RaiseEvent.
         ///     Used to set the User-initated RaiseEvent.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
             if (args == null)
@@ -457,10 +443,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
         [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {

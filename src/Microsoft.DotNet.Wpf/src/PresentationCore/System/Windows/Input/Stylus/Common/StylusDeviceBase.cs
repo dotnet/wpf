@@ -112,9 +112,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - accesses critical data (_inputSource) and returns it.
-        /// </SecurityNote>
         internal abstract PresentationSource CriticalActiveSource { get; }
 
         /// <summary>
@@ -214,10 +211,6 @@ namespace System.Windows.Input
 
         internal abstract int DoubleTapDeltaY { get; }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical method StylusLogic.CurrentlStylusLogic.
-        /// TreatAsSafe: Takes no input and returns safe data (double tap info - time delta for double tap).
-        /// </SecurityNote>
         internal abstract int DoubleTapDeltaTime { get; }
 
         internal abstract Point GetMouseScreenPosition(MouseDevice mouseDevice);

@@ -27,11 +27,6 @@ namespace System.Windows.Input
     /// </summary>
     public abstract class KeyboardDevice : InputDevice
     {
-        /// <SecurityNote>
-        ///     Critical: This code creates critical data(_tsfManager,_textcompositionManager) and stores critical data (inputManager)
-        ///     TreatAsSafe: Although it creates critical data there are demand on the critical data and the constructor is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected KeyboardDevice(InputManager inputManager)
         {
             _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -97,14 +92,9 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical - accesses critical data ( _activeSource)
-        /// PublicOK - there is a demand.
-        ///</SecurityNote>
 
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical  ]
             get
             {
                 SecurityHelper.DemandUnrestrictedUIPermission();
@@ -150,12 +140,6 @@ namespace System.Windows.Input
         /// <param name="element">
         ///     The element to focus the keyboard on.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code accesses _activeSource.Value.
-        ///     PublicOK: Moving focus within an app is safe and this does not expose
-        ///               the critical data.
-        /// </SecurityNote>
-        [SecurityCritical]
         public IInputElement Focus(IInputElement element)
         {
             DependencyObject oFocus = null;
@@ -184,13 +168,6 @@ namespace System.Windows.Input
 
             return (IInputElement) _focus;
         }
-        /// <SecurityNote>
-        ///     Critical: This code calls into PresentationSource. which is not safe to expose.
-        ///     Additonally it retrieves the keyboard input provider
-        ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
-        ///     the critical data.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void Focus(DependencyObject focus, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             // Make sure that the element is valid for receiving focus.
@@ -311,12 +288,8 @@ namespace System.Windows.Input
             return GetKeyStatesFromSystem(key);
         }
 
-        /// <SecurityNote>
-        ///     Critical:This entity is not safe to give out
-        /// </SecurityNote>
         internal TextServicesManager TextServicesManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
                SecurityHelper.DemandUnrestrictedUIPermission();
@@ -325,12 +298,8 @@ namespace System.Windows.Input
         }
 
 
-       /// <SecurityNote>
-       ///     Critical:This entity is not safe to give out
-       /// </SecurityNote>
        internal TextCompositionManager TextCompositionManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
                SecurityHelper.DemandUnrestrictedUIPermission();
@@ -338,12 +307,6 @@ namespace System.Windows.Input
            }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (inputManager) and
-        ///               causes a change of focus.
-        ///     TreatAsSafe:This code is safe to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void TryChangeFocus(DependencyObject newFocus, IKeyboardInputProvider keyboardInputProvider, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             bool changeFocus = true;
@@ -448,12 +411,6 @@ namespace System.Windows.Input
                 }
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (inputManager,_TsfManager,_inputManager) and
-        ///               is not OK to expose
-        ///     TreatAsSafe: This changes focus within an app
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ChangeFocus(DependencyObject focus, int timestamp)
         {
             DependencyObject o = null;
@@ -647,12 +604,6 @@ namespace System.Windows.Input
         ///         - still visible
         ///         - still in the tree
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical:    accesses critical data ( _activeSource)
-        ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
-        ///                  the critical data.
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private object ReevaluateFocusCallback(object arg)
         {
             _reevaluateFocusOperation = null;
@@ -742,10 +693,6 @@ namespace System.Windows.Input
             return null;
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -756,12 +703,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used for input spoofing,
-        ///               It also stores critical data InputSource
-        ///               accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -885,12 +826,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - calls critical functions PushInput, KeyEventArgs.UnsafeInputSource
-        ///                and KeyEventArgs ctor.
-        ///                accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // PreviewKeyDown --> KeyDown
@@ -1066,10 +1001,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses the StagingInput
-        /// </SecurityNote>
-        [SecurityCritical]
         private RawKeyboardInputReport ExtractRawKeyboardInputReport(NotifyInputEventArgs e, RoutedEvent Event)
         {
             RawKeyboardInputReport keyboardInput = null;
@@ -1123,13 +1054,8 @@ namespace System.Windows.Input
             return wasDisconnected;
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses critical data (_inputSource)
-        ///     TreatAsSafe: doesn't expose critical data, just returns true/false.
-        /// </SecurityNote>
         internal bool IsActive
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _activeSource != null && _activeSource.Value != null;
@@ -1184,17 +1110,9 @@ namespace System.Windows.Input
             private readonly bool _isExtended;
         }
 
-        /// <SecurityNote>
-        ///     This data is risky to give out since it is got under an elevation
-        ///     and can be used for risky operations
-        /// </SecurityNote>
         // TextCompositionManager handles KeyDown -> Unicode conversion.
         private SecurityCriticalData<TextCompositionManager> _textcompositionManager;
         // TextServicesManager handles KeyDown -> IME composition conversion.
-        /// <SecurityNote>
-        ///     This data is risky to give out since it is got under an elevation
-        ///     and can be used for risky operations
-        /// </SecurityNote>
         private SecurityCriticalDataClass<TextServicesManager> _TsfManager;
 }
 }

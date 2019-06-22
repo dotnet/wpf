@@ -194,8 +194,6 @@
     <Compile Include="System\IO\Packaging\RightsManagementInformation.cs" />
     <Compile Include="System\IO\Packaging\PackageDigitalSignature.cs" />
     <Compile Include="System\IO\Packaging\PackageDigitalSignatureManager.cs" />
-    <Compile Include="System\Security\Permissions\WebBrowserPermission.cs" />
-    <Compile Include="System\Security\Permissions\MediaPermission.cs" />
     <Compile Include="System\Windows\AccessibilitySwitches.cs" />
     <Compile Include="System\Windows\AttachedPropertyBrowsableAttribute.cs" />
     <Compile Include="System\Windows\AttachedPropertyBrowsableForTypeAttribute.cs" />

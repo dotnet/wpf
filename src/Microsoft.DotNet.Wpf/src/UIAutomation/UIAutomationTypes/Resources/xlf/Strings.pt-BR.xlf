@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="pt-BR" original="../Strings.resx">
     <body>
@@ -74,12 +74,12 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeHyperlink">
         <source>hyperlink</source>
-        <target state="translated">hiperlink</target>
+        <target state="translated">hyperlink</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeImage">
         <source>image</source>
-        <target state="translated">imagem</target>
+        <target state="translated">image</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeListItem">
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeSpinner">
         <source>spinner</source>
-        <target state="translated">cata-vento</target>
+        <target state="translated">controle giratório</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeSplitButton">
@@ -194,7 +194,7 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeTreeView">
         <source>tree view</source>
-        <target state="translated">modo de exibição de árvore</target>
+        <target state="translated">exibição em árvore</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeTreeViewItem">

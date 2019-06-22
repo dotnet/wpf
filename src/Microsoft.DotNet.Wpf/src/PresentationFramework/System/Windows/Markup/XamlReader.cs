@@ -927,14 +927,6 @@ namespace System.Windows.Markup
         /// <param name="closeStream">True if stream should be closed by the
         ///    parser after parsing is complete.  False if the stream should be left open</param>
         /// <returns>object root generated after baml parsed</returns>
-        /// <SecurityNote>
-        ///     Critical - because it asserts XamlLoadPermission, which is demanded by ObjectWriter to
-        ///                allow legitimate internal types in Partial Trust.
-        ///     Safe - because it gets this value from the stream if it implements an internal IStreamInfo
-        ///            interface and IStreamInfo.Assembly is set by the ResourceContainer code that is
-        ///            SecurityCritical, but treated as safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object LoadBaml(
             Stream stream,
             ParserContext parserContext,

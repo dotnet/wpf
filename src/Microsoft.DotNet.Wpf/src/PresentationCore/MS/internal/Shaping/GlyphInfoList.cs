@@ -75,10 +75,6 @@ namespace MS.Internal.Shaping
         /// <summary>
         /// Set glyph run length (use with care)
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetLength(int length)
         {
             _glyphs.Length = length;

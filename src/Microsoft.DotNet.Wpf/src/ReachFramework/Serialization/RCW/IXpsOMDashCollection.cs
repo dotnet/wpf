@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("081613F4-74EB-48F2-83B3-37A9CE2D7DC6"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMDashCollection
     {
         void Append([In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_DASH")] ref XPS_DASH dash);

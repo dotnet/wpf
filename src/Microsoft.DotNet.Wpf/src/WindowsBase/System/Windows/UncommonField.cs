@@ -13,7 +13,6 @@ namespace System.Windows
     /// <summary>
     ///
     /// </summary>
-    //CASRemoval:[StrongNameIdentityPermissionAttribute(SecurityAction.InheritanceDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [FriendAccessAllowed] // Built into Base, used by Core and Framework
     internal class UncommonField<T>
     {

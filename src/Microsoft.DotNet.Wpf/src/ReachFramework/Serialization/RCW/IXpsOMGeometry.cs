@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("64FCF3D7-4D58-44BA-AD73-A13AF6492072"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMGeometry : IXpsOMShareable
     {
         IXpsOMGeometry Clone();

@@ -79,15 +79,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// Internal method called by StylusDevice to prevent two copies
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses InputReport.InputSource
-        ///    TreatAsSafe: The method only gets a transform from PresentationSource and returns StylusPointCollection.
-        ///                 Those operations are considered safe. 
-        ///                 This method is called by:
-        ///                                 RawStylusInput.GetStylusPoints
-        ///                                 StylusDevice.UpdateEventStylusPoints(RawStylusInputReport, Boolean)
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal StylusPointCollection GetStylusPoints(GeneralTransform transform)
         {
             if (_stylusPoints == null)
@@ -115,11 +106,6 @@ namespace System.Windows.Input.StylusPlugIns
         ///     Callers must have Unmanaged code permission to call this API.
         /// </remarks>
         /// <param name="stylusPoints">stylusPoints</param>
-        /// <SecurityNote>
-        ///     Critical : Callers must have Unmanaged code permission to call this API.
-        ///     Safe     : Demands unmanaged code permission
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void SetStylusPoints(StylusPointCollection stylusPoints)
         {
             // To modify the points we require Unmanaged code permission.

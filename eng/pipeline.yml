@@ -50,7 +50,7 @@ jobs:
         - name: _PlatformArgs
           value: /p:Platform=$(_Platform)
         - name: _TestHelixAgentPool
-          value: 'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ServerRS5.Open'
+          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
         - name: _HelixStagingDir
           value: $(BUILD.STAGINGDIRECTORY)\helix\functests
         - name: _HelixSource
@@ -59,6 +59,8 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
+        - name: _HelixPublicBuildPipeline  # Run Helix tests when building in the open, do not repeat when building and publishign again using the internal build-pipeline
+          value: true
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -97,7 +99,9 @@ jobs:
           - name: _HelixCreator
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
-            value: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ServerRS5'
+            value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+          - name: _HelixPublicBuildPipeline
+            value: false
       strategy:
         matrix:
           Build_Debug_x86:
@@ -152,4 +156,4 @@ jobs:
           HelixAccessToken: $(_HelixToken)              # only defined for internal CI
           Creator: $(_HelixCreator)
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release')) # on helix machine (with real signing)
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true')) # on helix machine (with real signing) when running on the public build pipeline

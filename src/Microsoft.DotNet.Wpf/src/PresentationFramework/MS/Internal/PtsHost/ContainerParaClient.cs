@@ -44,14 +44,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Arrange paragraph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails,
-        ///            and some PtsHelper functions
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnArrange()
         {
             base.OnArrange();
@@ -94,13 +86,6 @@ namespace MS.Internal.PtsHost
         /// <param name="pt">
         /// Point which gives location of Hit test
         /// </param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails,
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override IInputElement InputHitTest(PTS.FSPOINT pt)
         {
             IInputElement ie = null;
@@ -145,13 +130,6 @@ namespace MS.Internal.PtsHost
         /// <param name="length">
         /// int representing number of positions occupied by e.
         /// </param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails,
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override List<Rect> GetRectangles(ContentElement e, int start, int length)
         {
             List<Rect> rectangles = new List<Rect>();
@@ -198,13 +176,6 @@ namespace MS.Internal.PtsHost
         /// <param name="fskupdInherited">
         /// Inherited update info
         /// </param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails,
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void ValidateVisual(PTS.FSKUPDATE fskupdInherited)
         {
             // Query paragraph details
@@ -246,14 +217,6 @@ namespace MS.Internal.PtsHost
         /// <param name="viewport">
         /// Fsrect with viewport info
         /// </param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails,
-        ///            and PtsHelper.ParaListFromSubtrack.
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateViewport(ref PTS.FSRECT viewport)
         {
             // Query paragraph details
@@ -300,13 +263,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Return TextContentRange for the content of the paragraph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override TextContentRange GetTextContentRange()
         {
             TextElement elementOwner = this.Paragraph.Element as TextElement;
@@ -365,13 +321,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Returns a new colleciton of ParagraphResults for the contained paragraphs.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ReadOnlyCollection<ParagraphResult> GetChildrenParagraphResults(out bool hasTextContent)
         {
 #if TEXTPANELLAYOUTDEBUG
@@ -426,13 +375,6 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Returns baseline for first text line
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubtrackDetails
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubtrackDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subtrackDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override int GetFirstTextLineBaseline()
         {
             PTS.FSSUBTRACKDETAILS subtrackDetails;

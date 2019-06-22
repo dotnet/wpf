@@ -40,11 +40,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Construct a formatted run
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this method has unsafe blocks, calls Critical methods (Instance, etc.)
-        /// Safe     - it doesn't expose any critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public FormattedTextSymbols(
             GlyphingCache glyphingCache,
             TextRun       textSymbols,

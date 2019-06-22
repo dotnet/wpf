@@ -51,7 +51,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// A reference to the main logic for the pointer stack
         /// </summary>
-        [SecurityCritical]
         private PointerLogic _pointerLogic;
 
         /// <summary>
@@ -113,11 +112,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="tabletDevice">The TabletDevice that owns this</param>
         /// <param name="cursorInfo">The cursor info for this stylus device</param>
-        /// <SecurityNote>
-        ///     Critical:   Accesses StylusLogic.GetCurrentStylusLogicAs
-        ///                          PointerInteractionEngine constructor
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PointerStylusDevice(PointerTabletDevice tabletDevice, UnsafeNativeMethods.POINTER_DEVICE_CURSOR_INFO cursorInfo)
         {
             _cursorInfo = cursorInfo;
@@ -160,10 +154,6 @@ namespace System.Windows.Input.StylusPointer
         /// Eagerly dispose any resources
         /// </summary>
         /// <param name="disposing">If this is a dispose or finalize call</param>
-        /// <SecurityNote>
-        /// Critical:  Calls PointerInteractionEngine.Dispose()
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -198,13 +188,8 @@ namespace System.Windows.Input.StylusPointer
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - accesses critical data ( _inputSource)
-        ///     internalOK - This is internal in an internal class
-        /// </SecurityNote>
         internal override PresentationSource ActiveSource
         {
-            [SecurityCritical]
             get
             {
                 return _inputSource.Value;
@@ -219,7 +204,6 @@ namespace System.Windows.Input.StylusPointer
 
         internal HwndPointerInputProvider CurrentPointerProvider
         {
-            [SecurityCritical]
             get;
             private set;
         }
@@ -358,12 +342,8 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - accesses critical data (_inputSource) and returns it.
-        /// </SecurityNote>
         internal override PresentationSource CriticalActiveSource
         {
-            [SecurityCritical]
             get
             {
                 if (_inputSource != null)
@@ -530,13 +510,8 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical method StylusLogic.CurrentlStylusLogic.
-        /// TreatAsSafe: Takes no input and returns safe data (double tap info - time delta for double tap).
-        /// </SecurityNote>
         internal override int DoubleTapDeltaTime
         {
-            [SecurityTreatAsSafe]
             get
             {
                 return PointerTabletDevice.DoubleTapDeltaTime;
@@ -653,13 +628,6 @@ namespace System.Windows.Input.StylusPointer
         ///     to the current state (typically due to layout changes without Stylus changes).  
         ///     Has the same behavior as MouseDevice.Synchronize().
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - accesses SecurityCritical Data _inputSource.Value and _stylusLogic.
-        ///              - calls SecurityCritical code HwndSource.CriticalHandle, 
-        ///                StylusLogic.GetStylusPenContextForHwnd and 
-        ///                StylusLogic.InputManagerProcessInputEventsArgs (which can be used to spoof input).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void Synchronize()
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
@@ -758,11 +726,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         ///     Calculates the position of the stylus relative to a particular element.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - accesses critical data _inputSource.Value
-        ///     Safe - Does not expose critical data
-        ///</SecurityNote>
-        [SecuritySafeCritical]
         internal override Point GetPosition(IInputElement relativeTo)
         {
             VerifyAccess();
@@ -830,13 +793,6 @@ namespace System.Windows.Input.StylusPointer
         ///     This is the hook where the Input system (via the MouseDevice) can call back into
         ///     the Stylus system when we are processing Stylus events instead of Mouse events
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical:   References SecurityCriticalData _stylusLogic.
-        /// TreatAsSafe: Takes no securityCriticalInput and returns safe data (MouseButtonState).
-        ///                Called by MouseDevice for StylusDevice promoted mouse events to query
-        ///                the mouse button state that should be reported.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override MouseButtonState GetMouseButtonState(MouseButton mouseButton, MouseDevice mouseDevice)
         {
             return mouseDevice.GetButtonStateFromSystem(mouseButton);
@@ -853,7 +809,6 @@ namespace System.Windows.Input.StylusPointer
         /// <param name="inputSource">The PresentationSource where this message originated</param>
         /// <param name="pointerData">The aggregated pointer data retrieved from the WM_POINTER stack</param>
         /// <param name="rsir">The raw stylus input generated from the pointer data</param>
-        [SecurityCritical]
         internal void Update(HwndPointerInputProvider provider, PresentationSource inputSource,
             PointerData pointerData, RawStylusInputReport rsir)
         {
@@ -895,10 +850,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Triggers firing of all gestures detected in the interaction engine
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Calls PointerInteractionEngine.Update
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateInteractions(RawStylusInputReport rsir)
         {
             _interactionEngine.Update(rsir);
@@ -909,7 +860,6 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="clientData">Unused</param>
         /// <param name="originalReport">The gesture report generate by the engine</param>
-        [SecurityCritical]
         private void HandleInteraction(object clientData, RawStylusSystemGestureInputReport originalReport)
         {
             RawStylusSystemGestureInputReport report = new RawStylusSystemGestureInputReport(
@@ -971,12 +921,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Takes into account capture mode and hit testing to find the current stylusover.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: - Uses security critical data (inputSource)
-        ///                - TreatAsSafe boundry at ChangeStylusCapture
-        ///                - called by ChangeStylusCapture
-        /// </SecurityNote>
-        [SecurityCritical]
         internal IInputElement FindTarget(PresentationSource inputSource, Point position)
         {
             IInputElement stylusOver = null;
@@ -1062,11 +1006,6 @@ namespace System.Windows.Input.StylusPointer
             return stylusOver;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCriticalData _stylusLogic.
-        ///     TreatAsSafe: This code does not expose the PresentationSource and simply changes the stylus over element
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void ChangeStylusOver(IInputElement stylusOver)
         {
             // We are not syncing the OverSourceChanged event
@@ -1094,14 +1033,6 @@ namespace System.Windows.Input.StylusPointer
             _pointerLogic.UpdateOverProperty(this, _stylusOver);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical code (PresentationSource.CriticalFromVisual, 
-        ///                StylusLogic.GetPenContextsFromHwndand and StylusLogic.InputManagerProcessInputEventArgs).
-        ///               Accesses SecurityCriticalData (_stylusLogic).
-        ///     TreatAsSafe: This operation is ok to expose since stylus capture is ok. Even if you get the
-        ///               source changed events you cannot get to the sources themselves
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void ChangeStylusCapture(IInputElement stylusCapture, CaptureMode captureMode, int timestamp)
         {
             // if the capture changed...
@@ -1200,10 +1131,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Creates a new set of stylus points based on the latest raw input report
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Operates on raw input data
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride)
         {
             if (report.RawStylusInput != null && report.RawStylusInput.StylusPointsModified)
@@ -1230,11 +1157,6 @@ namespace System.Windows.Input.StylusPointer
         ///     Returns the transform for converting from tablet to element
         ///     relative coordinates.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses critical member _inputSource
-        ///     Safe:       Transorm data is not critical
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal GeneralTransform GetTabletToElementTransform(IInputElement relativeTo)
         {
             GeneralTransformGroup group = new GeneralTransformGroup();

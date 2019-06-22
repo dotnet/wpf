@@ -916,10 +916,6 @@ namespace MS.Internal.TextFormatting
         /// Client to get a IEnumerable&lt;IndexedGlyphRun&gt; to enumerate GlyphRuns
         /// within in a line
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, accepts pointer parameters, unsafe code
-        /// </SecurityNote>
-        [SecurityCritical]
         public override IEnumerable<IndexedGlyphRun> GetIndexedGlyphRuns()
         {
             List<IndexedGlyphRun> indexedGlyphRuns = new List<IndexedGlyphRun>(_runs.Length);
@@ -1748,11 +1744,6 @@ namespace MS.Internal.TextFormatting
         /// Draw a simple run
         /// </summary>
         /// <returns>drawing bounding box</returns>
-        /// <SecurityNote>
-        /// Critical - as this calls critical function ComputeUnshapedGlyphRun.
-        /// Safe - as this just draws text and returns a rect.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Rect Draw(
             DrawingContext      drawingContext,
             double              x,

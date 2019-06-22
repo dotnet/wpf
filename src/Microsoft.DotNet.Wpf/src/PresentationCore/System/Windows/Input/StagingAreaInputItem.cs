@@ -54,17 +54,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Defense In Depth - even if this leaks out, we demand here.
-        ///     Critical - Performs a Link Demand. The reason these methods are marked critical 
-        ///                is that security transparent code should not be responsible for verifying 
-        ///                the security of an operation, and therefore should not be protected from partial 
-        ///                trust callers with LinkDemands.
-        /// </SecurityNote>
         public InputEventArgs Input
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                
             get {return _input;}
         }
 
@@ -96,15 +87,6 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Defense In Depth - even if this leaks out, we demand here.
-        ///     Critical - Performs a Link Demand. The reason these methods are marked critical 
-        ///                is that security transparent code should not be responsible for verifying 
-        ///                the security of an operation, and therefore should not be protected from partial 
-        ///                trust callers with LinkDemands.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]                
         public void SetData(object key, object value)
         {
             _dictionary[key] = value;

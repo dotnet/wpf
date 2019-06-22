@@ -33,10 +33,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Use this constructor if the handle exists at construction time.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: The ctor of the base class requires SecurityPermission
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ColorTransformHandle()
             : base(true)
         {
@@ -45,22 +41,12 @@ namespace System.Windows.Media
         /// <summary>
         /// Use this constructor if the handle exists at construction time.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: The ctor of the base class requires SecurityPermission
-        ///              This code calls SetHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ColorTransformHandle(IntPtr profile)
             : base(true)
         {
             SetHandle(profile);
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, not treat as safe because you must
-        ///            validate that handle is a valid color transform handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethods.Mscms.DeleteColorTransform(handle);
@@ -83,10 +69,6 @@ namespace System.Windows.Media
 
         /// Creates an ICM Profile Transform
         /// Retrieves a standard color space profile
-        /// <SecurityNote>
-        /// SecurityCritical: Calls unmanaged code, accepts SafeHandles as input.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void CreateTransform(SafeProfileHandle sourceProfile, SafeProfileHandle destinationProfile)
         {
             if (sourceProfile == null || sourceProfile.IsInvalid)
@@ -138,10 +120,6 @@ namespace System.Windows.Media
 
         /// Translates the colors
         /// Retrieves a standard color space profile
-        /// <SecurityNote>
-        /// SecurityCritical: Calls unmanaged code, accepts IntPtr/unverified data.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void TranslateColors(IntPtr paInputColors, UInt32 numColors, UInt32 inputColorType, IntPtr paOutputColors, UInt32 outputColorType)
         {
             if (_transformHandle == null || _transformHandle.IsInvalid)

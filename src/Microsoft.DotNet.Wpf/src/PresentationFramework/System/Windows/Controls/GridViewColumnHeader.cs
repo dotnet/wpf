@@ -6,7 +6,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;       // SafeHandle
-using System.Security;                      // [SecurityCritical]
+using System.Security;                      // 
 using System.Security.Permissions; 
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // ButtonBase
@@ -740,19 +740,6 @@ namespace System.Windows.Controls
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Asserts permissions required to call Cursor constructor in partial trust
-        /// TreatAsSafe - Can only be used to create one of two specific cursors (which are embedded resources within assembly). 
-        /// The following Permissions are required to invoke Cursor.LoadFromStream method which writes stream to a temporary file and loads the Cursor from that file.
-        /// The Environment permission is safe because even if the caller sets the %TEMP% variable to a critical location 
-        /// before executing the method, the caller does not choose the filename that is written to. 
-        /// Additionally the temp filename algorithm tries to avoid name collisions. 
-        /// Therefore it is reasonably unlikely that the caller can use this method to overwrite a critical file.
-        /// The FileIO write permission is safe because from the above justification the file being written to is reasonably safe.
-        /// The Unmanaged code permission is safe because it is used for a safe p-invoke to load a cursor from a file 
-        /// (the bytes read are never exposed to the caller)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Cursor GetCursor(int cursorID)
         {
             Invariant.Assert(cursorID == c_SPLIT || cursorID == c_SPLITOPEN, "incorrect cursor type");

@@ -814,7 +814,7 @@
       </trans-unit>
       <trans-unit id="Effect_Shader20SamplerRegisterLimit">
         <source>Pixel Shader Model 2.0 requires sampler constants to be in registers [0-3].</source>
-        <target state="translated">Pixel Shader Model 2.0  wymaga, aby stałe przykładów znajdowały się w rejestrach [0-3].</target>
+        <target state="translated">Pixel Shader Model 2.0 wymaga, aby stałe przykładów znajdowały się w rejestrach [0-3].</target>
         <note />
       </trans-unit>
       <trans-unit id="Effect_Shader30BoolConstantRegisterLimit">

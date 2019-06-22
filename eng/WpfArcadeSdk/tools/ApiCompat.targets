@@ -54,8 +54,10 @@
       <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-ref.baseline.txt</ApiCompatBaseline>
     </PropertyGroup>
     <ItemGroup>
+      <!-- If the runtime assembly project is C++/CLI, we want to use the bin output.  In C# builds we're too early and need the intermediate output. -->
       <ResolvedMatchingContract Remove="@(ResolvedMatchingContract)"/>
-      <ResolvedMatchingContract Include="$(IntermediateOutputPath)$(AssemblyName).dll" />
+      <ResolvedMatchingContract Include="$(IntermediateOutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'!='true'"/>
+      <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'=='true'" />
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
       <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
       <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"

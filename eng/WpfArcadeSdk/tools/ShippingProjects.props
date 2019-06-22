@@ -85,7 +85,16 @@
     </ExternalHandCraftedReferenceProjects>
 
     <InternalHandCraftedReferenceProjects>
+      PresentationFramework.Aero-ref;
+      PresentationFramework.Aero2-ref;
+      PresentationFramework.AeroLite-ref;
+      PresentationFramework.Classic-ref;
+      PresentationFramework.Luna-ref;
+      PresentationFramework.Royale-ref;
       System.Printing-ref;
+      System.Windows.Controls.Ribbon-ref;
+      System.Windows.Presentation-ref;
+      WindowsFormsIntegration-ref;
     </InternalHandCraftedReferenceProjects>
 
     <HelperProjects>
@@ -105,11 +114,17 @@
       PresentationFramework;
       PresentationFramework-ref;
       PresentationFramework.Aero;
+      PresentationFramework.Aero-ref;
       PresentationFramework.Aero2;
+      PresentationFramework.Aero2-ref;
       PresentationFramework.AeroLite;
+      PresentationFramework.AeroLite-ref;
       PresentationFramework.Classic;
+      PresentationFramework.Classic-ref;
       PresentationFramework.Luna;
+      PresentationFramework.Luna-ref;
       PresentationFramework.Royale;
+      PresentationFramework.Royale-ref;
       PresentationUI;
       ReachFramework;
       ReachFramework-ref;
@@ -126,6 +141,7 @@
       WindowsBase;
       WindowsBase-ref;
       WindowsFormsIntegration;
+      WindowsFormsIntegration-ref;
       PresentationFramework-PresentationUI-api-cycle;
       PresentationFramework-ReachFramework-impl-cycle;
       PresentationFramework-System.Printing-api-cycle;

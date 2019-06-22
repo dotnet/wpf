@@ -9,24 +9,24 @@
       PresentationBuildTasks;
       PresentationCore-ref;
       PresentationFramework-ref;
-      PresentationFramework.Aero;
-      PresentationFramework.Aero2;
-      PresentationFramework.AeroLite;
-      PresentationFramework.Classic;
-      PresentationFramework.Luna;
-      PresentationFramework.Royale;
+      PresentationFramework.Aero-ref;
+      PresentationFramework.Aero2-ref;
+      PresentationFramework.AeroLite-ref;
+      PresentationFramework.Classic-ref;
+      PresentationFramework.Luna-ref;
+      PresentationFramework.Royale-ref;
       ReachFramework-ref;
       UIAutomationClient-ref;
       UIAutomationClientSideProviders-ref;
       UIAutomationProvider-ref;
       UIAutomationTypes-ref;
       System.Printing-ref;
-      System.Windows.Controls.Ribbon;
+      System.Windows.Controls.Ribbon-ref;
       System.Windows.Input.Manipulations-ref;
-      System.Windows.Presentation;
+      System.Windows.Presentation-ref;
       System.Xaml-ref;
       WindowsBase-ref;
-      WindowsFormsIntegration;
+      WindowsFormsIntegration-ref;
     </Net48CompatNeededProjects>
 
     <!-- 
@@ -35,21 +35,31 @@
     -->
     <Net48RefAssembliesDir>$(RepositoryToolsDir)native\bin\net-framework-48-ref-assemblies\$(NetFramework48RefAssembliesVersion)\</Net48RefAssembliesDir>
 
+    <!-- Ignore anything we explicitly told GenAPI to remove from reference assemblies. -->
     <ApiCompatExcludeAttributeList>$(WpfArcadeSdkRoot)tools\GenApi\GlobalAttrExclusions.txt</ApiCompatExcludeAttributeList>
     
     <!-- These assemblies need to be compared against their hand-crafted reference assemblies. -->
     <RefApiCompatNeededProjects>
       PresentationCore;
       PresentationFramework;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
       ReachFramework;
       UIAutomationClient;
       UIAutomationClientSideProviders;
       UIAutomationProvider;
       UIAutomationTypes;
       System.Printing;
+      System.Windows.Controls.Ribbon;
       System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
       System.Xaml;
       WindowsBase;
+      WindowsFormsIntegration;
     </RefApiCompatNeededProjects>
 
     <!-- TODO:  

@@ -26,7 +26,6 @@ MembersMustExist : Member 'System.Windows.FrameworkElement.OnVisualParentChanged
 MembersMustExist : Member 'System.Windows.FrameworkElement.ParentLayoutInvalidated(System.Windows.UIElement)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkElement.RemoveLogicalChild(System.Object)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.FrameworkTemplate.SetTargetTypeInternal(System.Type)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.NameScope' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ResourceReferenceKeyNotFoundException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.StyleTypedPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplatePartAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -35,10 +34,6 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ThemeInfoAttribute' does 
 MembersMustExist : Member 'System.Windows.Window.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Window.OnVisualChildrenChanged(System.Windows.DependencyObject, System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Window.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.Annotation' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.AnnotationResource' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocator' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocatorGroup' in the contract but not the implementation.
 MembersMustExist : Member 'System.Windows.Automation.Peers.ContentTextAutomationPeer.GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer, System.Windows.Documents.ITextPointer)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Automation.Peers.ItemsControlAutomationPeer.FindOrCreateItemAutomationPeer(System.Object)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Automation.Peers.ListViewAutomationPeer.ViewAutomationPeer.get()' does not exist in the implementation but it does exist in the contract.
@@ -137,7 +132,6 @@ MembersMustExist : Member 'System.Windows.Controls.Primitives.Popup.LogicalChild
 MembersMustExist : Member 'System.Windows.Controls.Primitives.ToggleButton.OnToggle()' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueConversionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueUnavailableException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.Diagnostics.DebuggerDisplayAttribute' exists on 'System.Windows.Diagnostics.ResourceDictionaryInfo' in the contract but not the implementation.
 MembersMustExist : Member 'System.Windows.Documents.AdornerLayer.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.FixedDocument.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.FixedDocumentSequence.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
@@ -151,14 +145,7 @@ MembersMustExist : Member 'System.Windows.Documents.PageContent.LogicalChildren.
 MembersMustExist : Member 'System.Windows.Documents.Table.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Documents.TextElement.LogicalChildren.get()' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Documents.TextElementEditingBehaviorAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.ArrayExtension' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.IProvideValueTarget' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Diagnostics.DebuggerDisplayAttribute' exists on 'System.Windows.Markup.NamespaceMapEntry' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.NullExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.Shell.JumpList' in the contract but not the implementation.
-Total Issues: 162
+Total Issues: 149

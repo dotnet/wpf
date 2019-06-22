@@ -1,0 +1,12 @@
+Compat issues with assembly ReachFramework:
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.AcquireXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.AddRelationshipToCurrentPage(System.Uri, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.GetXmlNSForType(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.PackagingPolicy.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ResourcePolicy.get()' does not exist in the implementation but it does exist in the contract.
+Total Issues: 10

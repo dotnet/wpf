@@ -75,7 +75,7 @@ MembersMustExist : Member 'System.Windows.ContentElement.OnTouchEnter(System.Win
 MembersMustExist : Member 'System.Windows.ContentElement.OnTouchLeave(System.Windows.Input.TouchEventArgs)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.ContentElement.OnTouchMove(System.Windows.Input.TouchEventArgs)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.ContentElement.OnTouchUp(System.Windows.Input.TouchEventArgs)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.LocalizabilityAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotChangeAttribute : Attribute 'System.AttributeUsageAttribute' on 'System.Windows.LocalizabilityAttribute' changed from '[AttributeUsageAttribute(412, AllowMultiple=false, Inherited=true)]' in the contract to '[AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Struct, AllowMultiple=false, Inherited=true)]' in the implementation.
 MembersMustExist : Member 'System.Windows.UIElement.GetUIParentCore()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.UIElement.HasEffectiveKeyboardFocus.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.UIElement.OnRenderSizeChanged(System.Windows.SizeChangedInfo)' does not exist in the implementation but it does exist in the contract.
@@ -166,7 +166,6 @@ MembersMustExist : Member 'System.Windows.Media.Brush.GetChannelCore(System.Int3
 MembersMustExist : Member 'System.Windows.Media.Brush.GetChannelCountCore()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Brush.GetHandleCore(System.Windows.Media.Composition.DUCE.Channel)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Brush.ReleaseOnChannelCore(System.Windows.Media.Composition.DUCE.Channel)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.InvalidWmpVersionException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 MembersMustExist : Member 'System.Windows.Media.MediaClock..ctor(System.Windows.Media.MediaTimeline)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.MediaTimeline.AllocateClock()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Visual.OnVisualChildrenChanged(System.Windows.DependencyObject, System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
@@ -206,7 +205,6 @@ MembersMustExist : Member 'System.Windows.Media.Visual.VisualXSnappingGuidelines
 MembersMustExist : Member 'System.Windows.Media.Visual.VisualYSnappingGuidelines.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Visual.VisualYSnappingGuidelines.set(System.Windows.Media.DoubleCollection)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Animation.AnimationClock..ctor(System.Windows.Media.Animation.AnimationTimeline)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.Animation.AnimationException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 MembersMustExist : Member 'System.Windows.Media.Animation.AnimationTimeline.AllocateClock()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Animation.Clock..ctor(System.Windows.Media.Animation.Timeline)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.Animation.ClockGroup..ctor(System.Windows.Media.Animation.TimelineGroup)' does not exist in the implementation but it does exist in the contract.
@@ -229,5 +227,5 @@ MembersMustExist : Member 'System.Windows.Media.Media3D.Visual3D.OnVisualChildre
 MembersMustExist : Member 'System.Windows.Media.Media3D.Visual3D.OnVisualParentChanged(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.TextFormatting.TextFormatter.CreateParagraphCache(System.Windows.Media.TextFormatting.TextSource, System.Int32, System.Double, System.Windows.Media.TextFormatting.TextParagraphProperties, System.Windows.Media.TextFormatting.TextLineBreak, System.Windows.Media.TextFormatting.TextRunCache)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.TextFormatting.TextFormatter.RecreateLine(System.Windows.Media.TextFormatting.TextSource, System.Int32, System.Int32, System.Double, System.Windows.Media.TextFormatting.TextParagraphProperties, System.Windows.Media.TextFormatting.TextLineBreak, System.Windows.Media.TextFormatting.TextRunCache)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Resources.AssemblyAssociatedContentFileAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 231
+CannotChangeAttribute : Attribute 'System.AttributeUsageAttribute' on 'System.Windows.Resources.AssemblyAssociatedContentFileAttribute' changed from '[AttributeUsageAttribute(1, AllowMultiple=true)]' in the contract to '[AttributeUsageAttribute(AttributeTargets.Assembly, AllowMultiple=true)]' in the implementation.
+Total Issues: 229

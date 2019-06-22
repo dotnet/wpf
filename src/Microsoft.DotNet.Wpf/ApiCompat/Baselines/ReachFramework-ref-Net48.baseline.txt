@@ -1,5 +1,4 @@
 Compat issues with assembly ReachFramework:
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Printing.ConflictStatus' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintCommitAttributesException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintingCanceledException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintingNotSupportedException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
@@ -7,10 +6,6 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintJobException' does 
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintQueueException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintServerException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintSystemException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Printing.PrintTicketScope' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Printing.ValidationResult' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Printing.Interop.BaseDevModeType' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.ComVisibleAttribute' exists on 'System.Printing.Interop.PrintTicketConverter' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsPackagingException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsSerializationException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
@@ -24,4 +19,4 @@ MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerialization
 MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Xps.Serialization.PackageSerializationManager.ResourcePolicy.get()' does not exist in the implementation but it does exist in the contract.
-Total Issues: 25
+Total Issues: 20

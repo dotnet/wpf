@@ -112,8 +112,7 @@ installed, we can then simply reference those local binaries directly from the p
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\ref\netcoreapp3.0\*.dll" Private="false" />
-    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0\*.dll" />
+    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0\*.dll" />
     <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\$(RuntimeIdentifier)\*.dll" />
   </ItemGroup>
 ```
@@ -157,10 +156,12 @@ If you can build directly from source, and want to test your application against
 ```xml
  <PropertyGroup>
     <MicrosoftWindowsDesktopAppVersion>3.0.0-preview5-27619-18</MicrosoftWindowsDesktopAppVersion>
- <PropertyGroup>
- <FrameworkReference Update="Microsoft.WindowsDesktop.App">
-    <TargetingPackVersion>$(MicrosoftWindowsDesktopAppVersion)</TargetingPackVersion>
- </FrameworkReference>
+ </PropertyGroup>
+ <ItemGroup>
+   <FrameworkReference Update="Microsoft.WindowsDesktop.App">
+      <TargetingPackVersion>$(MicrosoftWindowsDesktopAppVersion)</TargetingPackVersion>
+   </FrameworkReference>
+ </ItemGroup>
 ```
 
 If you don't have the ability to build from source, you can update the *.runtimeconfig.json file located next to the executable to pick up your version:

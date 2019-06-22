@@ -692,11 +692,8 @@ namespace System.Windows
 
             Uri resolvedUri = BindUriHelper.GetResolvedUri(BaseUriHelper.SiteOfOriginBaseUri, uriRemote);
 
-            // Using PackUriHelper.ValidateAndGetPackUriComponents internal method
-            // to get Package and Part Uri in one step
-            Uri packageUri;
-            Uri partUri;
-            MS.Internal.IO.Packaging.PackUriHelper.ValidateAndGetPackUriComponents(resolvedUri, out packageUri, out partUri);
+            Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
+            Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
 
             //
             // SiteOfOriginContainer must have been added into the package cache, the code should just
@@ -2012,12 +2009,9 @@ namespace System.Windows
             Uri packAppUri = BaseUriHelper.PackAppBaseUri;
             Uri resolvedUri = BindUriHelper.GetResolvedUri(packAppUri, uri);
 
-            // Using PackUriHelper.ValidateAndGetPackUriComponents internal method
-            // to get Package and Part Uri in one step
-            Uri packageUri;
-            Uri partUri;
-            MS.Internal.IO.Packaging.PackUriHelper.ValidateAndGetPackUriComponents(resolvedUri, out packageUri, out partUri);
-
+            Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
+            Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
+            
             //
             // ResourceContainer must have been added into the package cache, the code should just
             // take use of that ResourceContainer instance, instead of creating a new instance here.

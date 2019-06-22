@@ -89,8 +89,6 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            System.Diagnostics.Debugger.Launch();
-
             bool retValue = true;
 
             // Verification

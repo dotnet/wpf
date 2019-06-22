@@ -7,9 +7,7 @@
     <!-- These assemblies need to be compared against the equivalent .NET Framework 4.8 assemblies. -->
     <Net48CompatNeededProjects>
       PresentationBuildTasks;
-      PresentationCore;
       PresentationCore-ref;
-      PresentationFramework;
       PresentationFramework-ref;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
@@ -17,25 +15,16 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      ReachFramework;
       ReachFramework-ref;
-      UIAutomationClient;
       UIAutomationClient-ref;
-      UIAutomationClientSideProviders;
       UIAutomationClientSideProviders-ref;
-      UIAutomationProvider;
       UIAutomationProvider-ref;
-      UIAutomationTypes;
       UIAutomationTypes-ref;
-      System.Printing;
       System.Printing-ref;
       System.Windows.Controls.Ribbon;
-      System.Windows.Input.Manipulations;
       System.Windows.Input.Manipulations-ref;
       System.Windows.Presentation;
-      System.Xaml;
       System.Xaml-ref;
-      WindowsBase;
       WindowsBase-ref;
       WindowsFormsIntegration;
     </Net48CompatNeededProjects>
@@ -46,6 +35,8 @@
     -->
     <Net48RefAssembliesDir>$(RepositoryToolsDir)native\bin\net-framework-48-ref-assemblies\$(NetFramework48RefAssembliesVersion)\</Net48RefAssembliesDir>
 
+    <ApiCompatExcludeAttributeList>$(WpfArcadeSdkRoot)tools\GenApi\GlobalAttrExclusions.txt</ApiCompatExcludeAttributeList>
+    
     <!-- These assemblies need to be compared against their hand-crafted reference assemblies. -->
     <RefApiCompatNeededProjects>
       PresentationCore;

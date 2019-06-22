@@ -1,12 +1,13 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" 
-                      Version="$(MicrosoftDotNetWpfGitHubVersion)" 
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)"
+                      Version="$(MicrosoftDotNetWpfGitHubVersion)"
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'"/>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
+                                 And $(TargetFramework.StartsWith('netcoreapp3')) 
+                                 And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'"/>
   </ItemGroup>
-
   <ItemGroup>
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />

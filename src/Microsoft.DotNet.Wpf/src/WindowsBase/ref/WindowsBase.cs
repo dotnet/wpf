@@ -320,7 +320,6 @@ namespace System.IO.Packaging
         public string TimeFormat { get { throw null; } }
         public System.Collections.Generic.List<string> GetPartTransformList(System.Uri partName) { throw null; }
         public System.IO.Packaging.VerifyResult Verify() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         public System.IO.Packaging.VerifyResult Verify(System.Security.Cryptography.X509Certificates.X509Certificate signingCertificate) { throw null; }
     }
     public sealed partial class PackageDigitalSignatureManager
@@ -402,85 +401,6 @@ namespace System.IO.Packaging
         InvalidCertificate = 3,
         ReferenceNotFound = 4,
         NotSigned = 5,
-    }
-}
-namespace System.Security.Permissions
-{
-    public sealed partial class MediaPermission : System.Security.CodeAccessPermission, System.Security.Permissions.IUnrestrictedPermission
-    {
-        public MediaPermission() { }
-        public MediaPermission(System.Security.Permissions.MediaPermissionAudio permissionAudio) { }
-        public MediaPermission(System.Security.Permissions.MediaPermissionAudio permissionAudio, System.Security.Permissions.MediaPermissionVideo permissionVideo, System.Security.Permissions.MediaPermissionImage permissionImage) { }
-        public MediaPermission(System.Security.Permissions.MediaPermissionImage permissionImage) { }
-        public MediaPermission(System.Security.Permissions.MediaPermissionVideo permissionVideo) { }
-        public MediaPermission(System.Security.Permissions.PermissionState state) { }
-        public System.Security.Permissions.MediaPermissionAudio Audio { get { throw null; } }
-        public System.Security.Permissions.MediaPermissionImage Image { get { throw null; } }
-        public System.Security.Permissions.MediaPermissionVideo Video { get { throw null; } }
-        public override System.Security.IPermission Copy() { throw null; }
-        public override void FromXml(System.Security.SecurityElement securityElement) { }
-        public override System.Security.IPermission Intersect(System.Security.IPermission target) { throw null; }
-        public override bool IsSubsetOf(System.Security.IPermission target) { throw null; }
-        public bool IsUnrestricted() { throw null; }
-        public override System.Security.SecurityElement ToXml() { throw null; }
-        public override System.Security.IPermission Union(System.Security.IPermission target) { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Constructor | System.AttributeTargets.Method | System.AttributeTargets.Struct, AllowMultiple=true, Inherited=false)]
-    public sealed partial class MediaPermissionAttribute : System.Security.Permissions.CodeAccessSecurityAttribute
-    {
-        public MediaPermissionAttribute(System.Security.Permissions.SecurityAction action) : base (default(System.Security.Permissions.SecurityAction)) { }
-        public System.Security.Permissions.MediaPermissionAudio Audio { get { throw null; } set { } }
-        public System.Security.Permissions.MediaPermissionImage Image { get { throw null; } set { } }
-        public System.Security.Permissions.MediaPermissionVideo Video { get { throw null; } set { } }
-        public override System.Security.IPermission CreatePermission() { throw null; }
-    }
-    public enum MediaPermissionAudio
-    {
-        NoAudio = 0,
-        SiteOfOriginAudio = 1,
-        SafeAudio = 2,
-        AllAudio = 3,
-    }
-    public enum MediaPermissionImage
-    {
-        NoImage = 0,
-        SiteOfOriginImage = 1,
-        SafeImage = 2,
-        AllImage = 3,
-    }
-    public enum MediaPermissionVideo
-    {
-        NoVideo = 0,
-        SiteOfOriginVideo = 1,
-        SafeVideo = 2,
-        AllVideo = 3,
-    }
-    public sealed partial class WebBrowserPermission : System.Security.CodeAccessPermission, System.Security.Permissions.IUnrestrictedPermission
-    {
-        public WebBrowserPermission() { }
-        public WebBrowserPermission(System.Security.Permissions.PermissionState state) { }
-        public WebBrowserPermission(System.Security.Permissions.WebBrowserPermissionLevel webBrowserPermissionLevel) { }
-        public System.Security.Permissions.WebBrowserPermissionLevel Level { get { throw null; } set { } }
-        public override System.Security.IPermission Copy() { throw null; }
-        public override void FromXml(System.Security.SecurityElement securityElement) { }
-        public override System.Security.IPermission Intersect(System.Security.IPermission target) { throw null; }
-        public override bool IsSubsetOf(System.Security.IPermission target) { throw null; }
-        public bool IsUnrestricted() { throw null; }
-        public override System.Security.SecurityElement ToXml() { throw null; }
-        public override System.Security.IPermission Union(System.Security.IPermission target) { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Constructor | System.AttributeTargets.Method | System.AttributeTargets.Struct, AllowMultiple=true, Inherited=false)]
-    public sealed partial class WebBrowserPermissionAttribute : System.Security.Permissions.CodeAccessSecurityAttribute
-    {
-        public WebBrowserPermissionAttribute(System.Security.Permissions.SecurityAction action) : base (default(System.Security.Permissions.SecurityAction)) { }
-        public System.Security.Permissions.WebBrowserPermissionLevel Level { get { throw null; } set { } }
-        public override System.Security.IPermission CreatePermission() { throw null; }
-    }
-    public enum WebBrowserPermissionLevel
-    {
-        None = 0,
-        Safe = 1,
-        Unrestricted = 2,
     }
 }
 namespace System.Security.RightsManagement
@@ -1106,7 +1026,6 @@ namespace System.Windows
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public partial class SplashScreen
     {
         public SplashScreen(System.Reflection.Assembly resourceAssembly, string resourceName) { }
@@ -1586,30 +1505,23 @@ namespace System.Windows.Interop
         public static event System.Windows.Interop.ThreadMessageEventHandler ThreadPreprocessMessage { add { } remove { } }
         public static void PopModal() { }
         public static void PushModal() { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void RaiseIdle() { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static bool RaiseThreadMessage(ref System.Windows.Interop.MSG msg) { throw null; }
     }
     public partial interface IKeyboardInputSink
     {
-        System.Windows.Interop.IKeyboardInputSite KeyboardInputSite { get; [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]set; }
+        System.Windows.Interop.IKeyboardInputSite KeyboardInputSite { get; set; }
         bool HasFocusWithin();
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool OnMnemonic(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         System.Windows.Interop.IKeyboardInputSite RegisterKeyboardInputSink(System.Windows.Interop.IKeyboardInputSink sink);
         bool TabInto(System.Windows.Input.TraversalRequest request);
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateAccelerator(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateChar(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers);
     }
     public partial interface IKeyboardInputSite
     {
         System.Windows.Interop.IKeyboardInputSink Sink { get; }
         bool OnNoMoreTabStops(System.Windows.Input.TraversalRequest request);
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         void Unregister();
     }
     public partial struct MSG
@@ -1776,7 +1688,7 @@ namespace System.Windows.Threading
         public bool HasShutdownFinished { get { throw null; } }
         public bool HasShutdownStarted { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.Windows.Threading.DispatcherHooks Hooks { [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]get { throw null; } }
+        public System.Windows.Threading.DispatcherHooks Hooks { get { throw null; } }
         public System.Threading.Thread Thread { get { throw null; } }
         public event System.EventHandler ShutdownFinished { add { } remove { } }
         public event System.EventHandler ShutdownStarted { add { } remove { } }
@@ -1836,9 +1748,7 @@ namespace System.Windows.Threading
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority) { throw null; }
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken) { throw null; }
         public TResult Invoke<TResult>(System.Func<TResult> callback, System.Windows.Threading.DispatcherPriority priority, System.Threading.CancellationToken cancellationToken, System.TimeSpan timeout) { throw null; }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void PushFrame(System.Windows.Threading.DispatcherFrame frame) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public static void Run() { }
         public static void ValidatePriority(System.Windows.Threading.DispatcherPriority priority, string parameterName) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

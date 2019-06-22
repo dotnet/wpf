@@ -1017,36 +1017,6 @@ namespace System.Xaml
         public System.Xaml.XamlXmlWriterSettings Copy() { throw null; }
     }
 }
-namespace System.Xaml.Permissions
-{
-    public partial class XamlAccessLevel
-    {
-        internal XamlAccessLevel() { }
-        public System.Reflection.AssemblyName AssemblyAccessToAssemblyName { get { throw null; } }
-        public string PrivateAccessToTypeName { get { throw null; } }
-        public static System.Xaml.Permissions.XamlAccessLevel AssemblyAccessTo(System.Reflection.Assembly assembly) { throw null; }
-        public static System.Xaml.Permissions.XamlAccessLevel AssemblyAccessTo(System.Reflection.AssemblyName assemblyName) { throw null; }
-        public static System.Xaml.Permissions.XamlAccessLevel PrivateAccessTo(string assemblyQualifiedTypeName) { throw null; }
-        public static System.Xaml.Permissions.XamlAccessLevel PrivateAccessTo(System.Type type) { throw null; }
-    }
-    public sealed partial class XamlLoadPermission : System.Security.CodeAccessPermission, System.Security.Permissions.IUnrestrictedPermission
-    {
-        public XamlLoadPermission(System.Collections.Generic.IEnumerable<System.Xaml.Permissions.XamlAccessLevel> allowedAccess) { }
-        public XamlLoadPermission(System.Security.Permissions.PermissionState state) { }
-        public XamlLoadPermission(System.Xaml.Permissions.XamlAccessLevel allowedAccess) { }
-        public System.Collections.Generic.IList<System.Xaml.Permissions.XamlAccessLevel> AllowedAccess { get { throw null; } }
-        public override System.Security.IPermission Copy() { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override void FromXml(System.Security.SecurityElement elem) { }
-        public override int GetHashCode() { throw null; }
-        public bool Includes(System.Xaml.Permissions.XamlAccessLevel requestedAccess) { throw null; }
-        public override System.Security.IPermission Intersect(System.Security.IPermission target) { throw null; }
-        public override bool IsSubsetOf(System.Security.IPermission target) { throw null; }
-        public bool IsUnrestricted() { throw null; }
-        public override System.Security.SecurityElement ToXml() { throw null; }
-        public override System.Security.IPermission Union(System.Security.IPermission other) { throw null; }
-    }
-}
 namespace System.Xaml.Schema
 {
     [System.FlagsAttribute]

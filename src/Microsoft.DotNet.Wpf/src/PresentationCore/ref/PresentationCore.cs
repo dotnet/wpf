@@ -4850,6 +4850,9 @@ namespace System.Windows.Markup
         void AddChild(object value);
         void AddText(string text);
     }
+    internal interface IAddChildInternal : IAddChild
+    {
+    }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.XmlLanguageConverter))]
     public partial class XmlLanguage
     {

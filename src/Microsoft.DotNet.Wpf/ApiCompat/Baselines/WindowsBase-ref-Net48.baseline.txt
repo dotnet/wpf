@@ -8,17 +8,13 @@ TypesMustExist : Type 'System.Collections.Specialized.NotifyCollectionChangedEve
 CannotRemoveBaseTypeOrInterface : Type 'System.ComponentModel.PropertyFilterAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.IO.FileFormatException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 MembersMustExist : Member 'System.IO.Packaging.Package..ctor(System.IO.FileAccess, System.Boolean)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'System.IO.Packaging.PackUriHelper.GetPartUri(System.Uri)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.MediaPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.WebBrowserPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.RightsManagement.RightsManagementException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-MembersMustExist : Member 'System.Windows.AttachedPropertyBrowsableAttribute.IsBrowsable(System.Windows.DependencyObject, System.Windows.DependencyProperty)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableForTypeAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableWhenAttributePresentAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-MembersMustExist : Member 'System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Windows.Markup.ValueSerializerAttribute' exists on 'System.Windows.DependencyProperty' in the contract but not the implementation.
-MembersMustExist : Member 'System.Windows.Freezable.Freeze(System.Windows.Freezable, System.Boolean)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.AmbientAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ConstructorArgumentAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ContentPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -26,11 +22,6 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ContentWrapperAttr
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.DependsOnAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.DesignerSerializationOptionsAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.DictionaryKeyPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.AddEventHandler(System.Reflection.EventInfo, System.Object, System.Delegate)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.CreateDelegate(System.Type, System.Object, System.String)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.CreateInstance(System.Type, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo, System.Object, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'System.Windows.Markup.InternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo, System.Object, System.Object, System.Globalization.CultureInfo)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.MarkupExtensionReturnTypeAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.NameScopePropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.RootNamespaceAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
@@ -47,4 +38,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsCompatibleWit
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 48
+Total Issues: 39

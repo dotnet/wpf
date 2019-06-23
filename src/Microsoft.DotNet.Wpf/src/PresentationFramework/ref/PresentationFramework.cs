@@ -1,11 +1,9 @@
 namespace Microsoft.Win32
 {
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public abstract partial class CommonDialog
     {
         protected CommonDialog() { }
         public object Tag { get { throw null; } set { } }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual void CheckPermissionsToShowDialog() { }
         protected virtual System.IntPtr HookProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam) { throw null; }
         public abstract void Reset();
@@ -15,7 +13,6 @@ namespace Microsoft.Win32
     }
     public abstract partial class FileDialog : Microsoft.Win32.CommonDialog
     {
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected FileDialog() { }
         public bool AddExtension { get { throw null; } set { } }
         public virtual bool CheckFileExists { get { throw null; } set { } }
@@ -35,7 +32,6 @@ namespace Microsoft.Win32
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
         public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.IntPtr HookProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam) { throw null; }
         protected void OnFileOk(System.ComponentModel.CancelEventArgs e) { }
         public override void Reset() { }
@@ -75,7 +71,6 @@ namespace Microsoft.Win32
         public bool Multiselect { get { throw null; } set { } }
         public bool ReadOnlyChecked { get { throw null; } set { } }
         public bool ShowReadOnly { get { throw null; } set { } }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void CheckPermissionsToShowDialog() { }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }
@@ -161,6 +156,7 @@ namespace System.Windows
         public bool IncludeDescendants { get { throw null; } set { } }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        internal override bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp) { throw null; }
     }
     public enum BaseValueSource
     {
@@ -454,6 +450,7 @@ namespace System.Windows
         public static readonly System.Windows.DependencyProperty ContextMenuProperty;
         public static readonly System.Windows.DependencyProperty CursorProperty;
         public static readonly System.Windows.DependencyProperty DataContextProperty;
+        protected internal static readonly System.Windows.DependencyProperty DefaultStyleKeyProperty;
         public static readonly System.Windows.DependencyProperty FocusVisualStyleProperty;
         public static readonly System.Windows.DependencyProperty ForceCursorProperty;
         public static readonly System.Windows.DependencyProperty InputScopeProperty;
@@ -476,6 +473,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public object DataContext { get { throw null; } set { } }
+        protected internal object DefaultStyleKey { get { throw null; } set { } }
         public System.Windows.Style FocusVisualStyle { get { throw null; } set { } }
         public bool ForceCursor { get { throw null; } set { } }
         public System.Windows.Input.InputScope InputScope { get { throw null; } set { } }
@@ -483,6 +481,7 @@ namespace System.Windows
         public bool IsInitialized { get { throw null; } }
         public bool IsLoaded { get { throw null; } }
         public System.Windows.Markup.XmlLanguage Language { get { throw null; } set { } }
+        protected internal virtual System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.MergablePropertyAttribute(false)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public string Name { get { throw null; } set { } }
@@ -507,6 +506,7 @@ namespace System.Windows
         public event System.Windows.Controls.ToolTipEventHandler ToolTipClosing { add { } remove { } }
         public event System.Windows.Controls.ToolTipEventHandler ToolTipOpening { add { } remove { } }
         public event System.Windows.RoutedEventHandler Unloaded { add { } remove { } }
+        protected internal void AddLogicalChild(object child) { }
         public virtual void BeginInit() { }
         public void BeginStoryboard(System.Windows.Media.Animation.Storyboard storyboard) { }
         public void BeginStoryboard(System.Windows.Media.Animation.Storyboard storyboard, System.Windows.Media.Animation.HandoffBehavior handoffBehavior) { }
@@ -516,16 +516,19 @@ namespace System.Windows
         public object FindName(string name) { throw null; }
         public object FindResource(object resourceKey) { throw null; }
         public System.Windows.Data.BindingExpression GetBindingExpression(System.Windows.DependencyProperty dp) { throw null; }
+        protected internal override System.Windows.DependencyObject GetUIParentCore() { throw null; }
         public sealed override bool MoveFocus(System.Windows.Input.TraversalRequest request) { throw null; }
         protected virtual void OnContextMenuClosing(System.Windows.Controls.ContextMenuEventArgs e) { }
         protected virtual void OnContextMenuOpening(System.Windows.Controls.ContextMenuEventArgs e) { }
         protected override void OnGotFocus(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnInitialized(System.EventArgs e) { }
         protected override void OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) { }
+        protected internal virtual void OnStyleChanged(System.Windows.Style oldStyle, System.Windows.Style newStyle) { }
         protected virtual void OnToolTipClosing(System.Windows.Controls.ToolTipEventArgs e) { }
         protected virtual void OnToolTipOpening(System.Windows.Controls.ToolTipEventArgs e) { }
         public sealed override System.Windows.DependencyObject PredictFocus(System.Windows.Input.FocusNavigationDirection direction) { throw null; }
         public void RegisterName(string name, object scopedElement) { }
+        protected internal void RemoveLogicalChild(object child) { }
         public System.Windows.Data.BindingExpression SetBinding(System.Windows.DependencyProperty dp, string path) { throw null; }
         public System.Windows.Data.BindingExpressionBase SetBinding(System.Windows.DependencyProperty dp, System.Windows.Data.BindingBase binding) { throw null; }
         public void SetResourceReference(System.Windows.DependencyProperty dp, object name) { }
@@ -552,6 +555,7 @@ namespace System.Windows
         public static readonly System.Windows.DependencyProperty ContextMenuProperty;
         public static readonly System.Windows.DependencyProperty CursorProperty;
         public static readonly System.Windows.DependencyProperty DataContextProperty;
+        protected internal static readonly System.Windows.DependencyProperty DefaultStyleKeyProperty;
         public static readonly System.Windows.DependencyProperty FlowDirectionProperty;
         public static readonly System.Windows.DependencyProperty FocusVisualStyleProperty;
         public static readonly System.Windows.DependencyProperty ForceCursorProperty;
@@ -590,6 +594,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public object DataContext { get { throw null; } set { } }
+        protected internal object DefaultStyleKey { get { throw null; } set { } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None)]
         public System.Windows.FlowDirection FlowDirection { get { throw null; } set { } }
         public System.Windows.Style FocusVisualStyle { get { throw null; } set { } }
@@ -598,12 +603,14 @@ namespace System.Windows
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double Height { get { throw null; } set { } }
         public System.Windows.HorizontalAlignment HorizontalAlignment { get { throw null; } set { } }
+        protected internal System.Windows.InheritanceBehavior InheritanceBehavior { get { throw null; } set { } }
         public System.Windows.Input.InputScope InputScope { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public bool IsInitialized { get { throw null; } }
         public bool IsLoaded { get { throw null; } }
         public System.Windows.Markup.XmlLanguage Language { get { throw null; } set { } }
         public System.Windows.Media.Transform LayoutTransform { get { throw null; } set { } }
+        protected internal virtual System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Thickness Margin { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
@@ -654,6 +661,7 @@ namespace System.Windows
         public event System.Windows.Controls.ToolTipEventHandler ToolTipClosing { add { } remove { } }
         public event System.Windows.Controls.ToolTipEventHandler ToolTipOpening { add { } remove { } }
         public event System.Windows.RoutedEventHandler Unloaded { add { } remove { } }
+        protected internal void AddLogicalChild(object child) { }
         public bool ApplyTemplate() { throw null; }
         protected sealed override void ArrangeCore(System.Windows.Rect finalRect) { }
         protected virtual System.Windows.Size ArrangeOverride(System.Windows.Size finalSize) { throw null; }
@@ -669,6 +677,8 @@ namespace System.Windows
         public System.Windows.Data.BindingExpression GetBindingExpression(System.Windows.DependencyProperty dp) { throw null; }
         public static System.Windows.FlowDirection GetFlowDirection(System.Windows.DependencyObject element) { throw null; }
         protected override System.Windows.Media.Geometry GetLayoutClip(System.Windows.Size layoutSlotSize) { throw null; }
+        protected internal System.Windows.DependencyObject GetTemplateChild(string childName) { throw null; }
+        protected internal override System.Windows.DependencyObject GetUIParentCore() { throw null; }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
         protected sealed override System.Windows.Size MeasureCore(System.Windows.Size availableSize) { throw null; }
         protected virtual System.Windows.Size MeasureOverride(System.Windows.Size availableSize) { throw null; }
@@ -679,10 +689,15 @@ namespace System.Windows
         protected override void OnGotFocus(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnInitialized(System.EventArgs e) { }
         protected override void OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) { }
+        protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo) { }
+        protected internal virtual void OnStyleChanged(System.Windows.Style oldStyle, System.Windows.Style newStyle) { }
         protected virtual void OnToolTipClosing(System.Windows.Controls.ToolTipEventArgs e) { }
         protected virtual void OnToolTipOpening(System.Windows.Controls.ToolTipEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
+        protected internal virtual void ParentLayoutInvalidated(System.Windows.UIElement child) { }
         public sealed override System.Windows.DependencyObject PredictFocus(System.Windows.Input.FocusNavigationDirection direction) { throw null; }
         public void RegisterName(string name, object scopedElement) { }
+        protected internal void RemoveLogicalChild(object child) { }
         public System.Windows.Data.BindingExpression SetBinding(System.Windows.DependencyProperty dp, string path) { throw null; }
         public System.Windows.Data.BindingExpressionBase SetBinding(System.Windows.DependencyProperty dp, System.Windows.Data.BindingBase binding) { throw null; }
         public static void SetFlowDirection(System.Windows.DependencyObject element, System.Windows.FlowDirection value) { }
@@ -1939,7 +1954,6 @@ namespace System.Windows
         public string To { get { throw null; } set { } }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public partial class Window : System.Windows.Controls.ContentControl
     {
         public static readonly System.Windows.DependencyProperty AllowsTransparencyProperty;
@@ -1966,6 +1980,7 @@ namespace System.Windows
         public bool IsActive { get { throw null; } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]
         public double Left { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.WindowCollection OwnedWindows { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Window Owner { get { throw null; } set { } }
@@ -2012,6 +2027,8 @@ namespace System.Windows
         protected override void OnManipulationBoundaryFeedback(System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e) { }
         protected virtual void OnSourceInitialized(System.EventArgs e) { }
         protected virtual void OnStateChanged(System.EventArgs e) { }
+        protected internal override void OnVisualChildrenChanged(System.Windows.DependencyObject visualAdded, System.Windows.DependencyObject visualRemoved) { }
+        protected internal sealed override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
         public void Show() { }
         public bool? ShowDialog() { throw null; }
     }
@@ -2555,11 +2572,9 @@ namespace System.Windows.Automation.Peers
     {
         public DocumentAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
         protected override bool IsControlElementCore() { throw null; }
@@ -2806,7 +2821,7 @@ namespace System.Windows.Automation.Peers
         protected ItemsControlAutomationPeer(System.Windows.Controls.ItemsControl owner) : base (default(System.Windows.FrameworkElement)) { }
         protected virtual bool IsVirtualized { get { throw null; } }
         protected abstract System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item);
-        [System.Security.SecurityTreatAsSafeAttribute]
+        protected internal virtual System.Windows.Automation.Peers.ItemAutomationPeer FindOrCreateItemAutomationPeer(object item) { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.IItemContainerProvider.FindItemByProperty(System.Windows.Automation.Provider.IRawElementProviderSimple startAfter, int propertyId, object value) { throw null; }
@@ -2850,6 +2865,7 @@ namespace System.Windows.Automation.Peers
     public partial class ListViewAutomationPeer : System.Windows.Automation.Peers.ListBoxAutomationPeer
     {
         public ListViewAutomationPeer(System.Windows.Controls.ListView owner) : base (default(System.Windows.Controls.ListBox)) { }
+        protected internal System.Windows.Automation.Peers.IViewAutomationPeer ViewAutomationPeer { get { throw null; } set { } }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
@@ -3098,10 +3114,8 @@ namespace System.Windows.Automation.Peers
     public partial class TextElementAutomationPeer : System.Windows.Automation.Peers.ContentTextAutomationPeer
     {
         public TextElementAutomationPeer(System.Windows.Documents.TextElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
     }
@@ -3169,7 +3183,7 @@ namespace System.Windows.Automation.Peers
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.ISelectionItemProvider.SelectionContainer { get { throw null; } }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
+        protected internal override System.Windows.Automation.Peers.ItemAutomationPeer FindOrCreateItemAutomationPeer(object item) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -3197,10 +3211,8 @@ namespace System.Windows.Automation.Peers
     {
         public WindowAutomationPeer(System.Windows.Window owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override string GetNameCore() { throw null; }
     }
 }
@@ -3262,6 +3274,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double LineHeight { get { throw null; } set { } }
         public System.Windows.LineStackingStrategy LineStackingStrategy { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute("")]
         public string Text { get { throw null; } set { } }
         public System.Windows.TextAlignment TextAlignment { get { throw null; } set { } }
@@ -3288,6 +3301,7 @@ namespace System.Windows.Controls
         public System.Windows.UIElement AdornedElement { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(null)]
         public virtual System.Windows.UIElement Child { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeBounds) { throw null; }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
@@ -3553,6 +3567,8 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty StaysOpenOnEditProperty;
         public static readonly System.Windows.DependencyProperty TextProperty;
         public ComboBox() { }
+        protected internal override bool HandlesScrolling { get { throw null; } }
+        protected internal override bool HasEffectiveKeyboardFocus { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.BrowsableAttribute(false)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
@@ -3621,6 +3637,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BrowsableAttribute(false)]
         [System.ComponentModel.ReadOnlyAttribute(true)]
         public bool HasContent { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected virtual void AddChild(object value) { }
         protected virtual void AddText(string text) { }
         protected virtual void OnContentChanged(object oldContent, object newContent) { }
@@ -3677,6 +3694,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BindableAttribute(false)]
         [System.ComponentModel.CategoryAttribute("Layout")]
         public System.Windows.Controls.Primitives.CustomPopupPlacementCallback CustomPopupPlacementCallback { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         public bool HasDropShadow { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Layout")]
@@ -3712,6 +3730,7 @@ namespace System.Windows.Controls
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected override void OnKeyUp(System.Windows.Input.KeyEventArgs e) { }
         protected virtual void OnOpened(System.Windows.RoutedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
     }
     public sealed partial class ContextMenuEventArgs : System.Windows.RoutedEventArgs
@@ -3819,6 +3838,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
         public System.Windows.Media.Brush Foreground { get { throw null; } set { } }
+        protected internal virtual bool HandlesScrolling { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Layout")]
         public System.Windows.HorizontalAlignment HorizontalContentAlignment { get { throw null; } set { } }
@@ -3947,6 +3967,7 @@ namespace System.Windows.Controls
         public static System.Windows.ComponentResourceKey FocusBorderBrushKey { get { throw null; } }
         public int FrozenColumnCount { get { throw null; } set { } }
         public System.Windows.Controls.DataGridGridLinesVisibility GridLinesVisibility { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         public System.Windows.Controls.DataGridHeadersVisibility HeadersVisibility { get { throw null; } set { } }
         public static System.Windows.Data.IValueConverter HeadersVisibilityConverter { get { throw null; } }
         public System.Windows.Media.Brush HorizontalGridLinesBrush { get { throw null; } set { } }
@@ -4026,6 +4047,12 @@ namespace System.Windows.Controls
         protected virtual void OnCanExecuteCopy(System.Windows.Input.CanExecuteRoutedEventArgs args) { }
         protected virtual void OnCanExecuteDelete(System.Windows.Input.CanExecuteRoutedEventArgs e) { }
         protected virtual void OnCellEditEnding(System.Windows.Controls.DataGridCellEditEndingEventArgs e) { }
+        protected internal virtual void OnColumnDisplayIndexChanged(System.Windows.Controls.DataGridColumnEventArgs e) { }
+        protected internal virtual void OnColumnHeaderDragCompleted(System.Windows.Controls.Primitives.DragCompletedEventArgs e) { }
+        protected internal virtual void OnColumnHeaderDragDelta(System.Windows.Controls.Primitives.DragDeltaEventArgs e) { }
+        protected internal virtual void OnColumnHeaderDragStarted(System.Windows.Controls.Primitives.DragStartedEventArgs e) { }
+        protected internal virtual void OnColumnReordered(System.Windows.Controls.DataGridColumnEventArgs e) { }
+        protected internal virtual void OnColumnReordering(System.Windows.Controls.DataGridColumnReorderingEventArgs e) { }
         protected override void OnContextMenuOpening(System.Windows.Controls.ContextMenuEventArgs e) { }
         protected virtual void OnCopyingRowClipboardContent(System.Windows.Controls.DataGridRowClipboardEventArgs args) { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
@@ -4033,7 +4060,6 @@ namespace System.Windows.Controls
         protected virtual void OnExecutedBeginEdit(System.Windows.Input.ExecutedRoutedEventArgs e) { }
         protected virtual void OnExecutedCancelEdit(System.Windows.Input.ExecutedRoutedEventArgs e) { }
         protected virtual void OnExecutedCommitEdit(System.Windows.Input.ExecutedRoutedEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual void OnExecutedCopy(System.Windows.Input.ExecutedRoutedEventArgs args) { }
         protected virtual void OnExecutedDelete(System.Windows.Input.ExecutedRoutedEventArgs e) { }
         protected virtual void OnInitializingNewItem(System.Windows.Controls.InitializingNewItemEventArgs e) { }
@@ -4044,6 +4070,8 @@ namespace System.Windows.Controls
         protected virtual void OnLoadingRow(System.Windows.Controls.DataGridRowEventArgs e) { }
         protected virtual void OnLoadingRowDetails(System.Windows.Controls.DataGridRowDetailsEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
+        protected internal virtual void OnPreparingCellForEdit(System.Windows.Controls.DataGridPreparingCellForEditEventArgs e) { }
+        protected internal virtual void OnRowDetailsVisibilityChanged(System.Windows.Controls.DataGridRowDetailsEventArgs e) { }
         protected virtual void OnRowEditEnding(System.Windows.Controls.DataGridRowEditEndingEventArgs e) { }
         protected virtual void OnSelectedCellsChanged(System.Windows.Controls.SelectedCellsChangedEventArgs e) { }
         protected override void OnSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e) { }
@@ -4087,6 +4115,7 @@ namespace System.Windows.Controls
         public System.Windows.Style ElementStyle { get { throw null; } set { } }
         protected virtual void OnBindingChanged(System.Windows.Data.BindingBase oldBinding, System.Windows.Data.BindingBase newBinding) { }
         protected override bool OnCoerceIsReadOnly(bool baseValue) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public partial class DataGridCell : System.Windows.Controls.ContentControl
     {
@@ -4147,6 +4176,7 @@ namespace System.Windows.Controls
     {
         public DataGridCellsPanel() { }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
+        protected internal override void BringIndexIntoView(int index) { }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected override void OnClearChildren() { }
         protected override void OnIsItemsHostChanged(bool oldIsItemsHost, bool newIsItemsHost) { }
@@ -4162,6 +4192,7 @@ namespace System.Windows.Controls
         protected override System.Windows.FrameworkElement GenerateEditingElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected override System.Windows.FrameworkElement GenerateElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected override object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public partial struct DataGridClipboardCellContent
     {
@@ -4210,6 +4241,7 @@ namespace System.Windows.Controls
         public bool CanUserSort { get { throw null; } set { } }
         public System.Windows.Style CellStyle { get { throw null; } set { } }
         public virtual System.Windows.Data.BindingBase ClipboardContentBinding { get { throw null; } set { } }
+        protected internal System.Windows.Controls.DataGrid DataGridOwner { get { throw null; } }
         public int DisplayIndex { get { throw null; } set { } }
         public System.Windows.Style DragIndicatorStyle { get { throw null; } set { } }
         public object Header { get { throw null; } set { } }
@@ -4239,6 +4271,7 @@ namespace System.Windows.Controls
         public virtual object OnCopyingCellClipboardContent(object item) { throw null; }
         public virtual void OnPastingCellClipboardContent(object item, object cellContent) { }
         protected virtual object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs) { throw null; }
+        protected internal virtual void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public partial class DataGridColumnEventArgs : System.EventArgs
     {
@@ -4281,6 +4314,7 @@ namespace System.Windows.Controls
         protected virtual void OnSelectedValueBindingChanged(System.Windows.Data.BindingBase oldBinding, System.Windows.Data.BindingBase newBinding) { }
         protected virtual void OnTextBindingChanged(System.Windows.Data.BindingBase oldBinding, System.Windows.Data.BindingBase newBinding) { }
         protected override object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public enum DataGridEditAction
     {
@@ -4321,6 +4355,7 @@ namespace System.Windows.Controls
         protected override System.Windows.FrameworkElement GenerateElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected virtual void OnContentBindingChanged(System.Windows.Data.BindingBase oldBinding, System.Windows.Data.BindingBase newBinding) { }
         protected override object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.DataGridLengthConverter))]
     public partial struct DataGridLength : System.IEquatable<System.Windows.Controls.DataGridLength>
@@ -4412,6 +4447,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeBounds) { throw null; }
         public int GetIndex() { throw null; }
         public static System.Windows.Controls.DataGridRow GetRowContainingElement(System.Windows.FrameworkElement element) { throw null; }
+        protected internal virtual void OnColumnsChanged(System.Collections.ObjectModel.ObservableCollection<System.Windows.Controls.DataGridColumn> columns, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnHeaderChanged(object oldHeader, object newHeader) { }
         protected virtual void OnItemChanged(object oldItem, object newItem) { }
@@ -4484,6 +4520,7 @@ namespace System.Windows.Controls
         public System.Windows.Controls.DataTemplateSelector CellTemplateSelector { get { throw null; } set { } }
         protected override System.Windows.FrameworkElement GenerateEditingElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected override System.Windows.FrameworkElement GenerateElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public partial class DataGridTextColumn : System.Windows.Controls.DataGridBoundColumn
     {
@@ -4507,6 +4544,7 @@ namespace System.Windows.Controls
         protected override System.Windows.FrameworkElement GenerateEditingElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected override System.Windows.FrameworkElement GenerateElement(System.Windows.Controls.DataGridCell cell, object dataItem) { throw null; }
         protected override object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs) { throw null; }
+        protected internal override void RefreshCellContent(System.Windows.FrameworkElement element, string propertyName) { }
     }
     public partial class DataTemplateSelector
     {
@@ -4537,6 +4575,7 @@ namespace System.Windows.Controls
         public System.DateTime? DisplayDateEnd { get { throw null; } set { } }
         public System.DateTime? DisplayDateStart { get { throw null; } set { } }
         public System.DayOfWeek FirstDayOfWeek { get { throw null; } set { } }
+        protected internal override bool HasEffectiveKeyboardFocus { get { throw null; } }
         public bool IsDropDownOpen { get { throw null; } set { } }
         public bool IsTodayHighlighted { get { throw null; } set { } }
         public System.DateTime? SelectedDate { get { throw null; } set { } }
@@ -4573,6 +4612,7 @@ namespace System.Windows.Controls
         public Decorator() { }
         [System.ComponentModel.DefaultValueAttribute(null)]
         public virtual System.Windows.UIElement Child { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
@@ -4665,7 +4705,6 @@ namespace System.Windows.Controls
         protected override void OnBringIntoView(System.Windows.DependencyObject element, System.Windows.Rect rect, int pageNumber) { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnDecreaseZoomCommand() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnDocumentChanged() { }
         protected virtual void OnFindCommand() { }
         protected override void OnFirstPageCommand() { }
@@ -4769,7 +4808,6 @@ namespace System.Windows.Controls
         protected override void OnFirstPageCommand() { }
         protected override void OnGoToPageCommand(int pageNumber) { }
         protected virtual void OnIncreaseZoomCommand() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected override void OnLastPageCommand() { }
         protected override void OnMouseWheel(System.Windows.Input.MouseWheelEventArgs e) { }
@@ -4819,6 +4857,7 @@ namespace System.Windows.Controls
         public bool IsScrollViewEnabled { get { throw null; } set { } }
         public bool IsSelectionActive { get { throw null; } }
         public bool IsTwoPageViewEnabled { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public double MaxZoom { get { throw null; } set { } }
         public double MinZoom { get { throw null; } set { } }
         public int PageCount { get { throw null; } }
@@ -4843,7 +4882,6 @@ namespace System.Windows.Controls
         protected virtual void OnIncreaseZoomCommand() { }
         protected override void OnInitialized(System.EventArgs e) { }
         protected override void OnIsKeyboardFocusWithinChanged(System.Windows.DependencyPropertyChangedEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected virtual void OnPrintCommand() { }
         protected virtual void OnPrintCompleted() { }
@@ -4890,6 +4928,7 @@ namespace System.Windows.Controls
         public bool IsSelectionActive { get { throw null; } }
         public bool IsSelectionEnabled { get { throw null; } set { } }
         public bool IsToolBarVisible { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public double MaxZoom { get { throw null; } set { } }
         public double MinZoom { get { throw null; } set { } }
         public System.Windows.Documents.TextSelection Selection { get { throw null; } }
@@ -4909,7 +4948,6 @@ namespace System.Windows.Controls
         protected virtual void OnDecreaseZoomCommand() { }
         protected virtual void OnFindCommand() { }
         protected virtual void OnIncreaseZoomCommand() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected override void OnMouseWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected virtual void OnPrintCommand() { }
@@ -4985,6 +5023,7 @@ namespace System.Windows.Controls
         public Grid() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
         public bool ShowGridLines { get { throw null; } set { } }
@@ -5001,6 +5040,7 @@ namespace System.Windows.Controls
         public static int GetRowSpan(System.Windows.UIElement element) { throw null; }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
+        protected internal override void OnVisualChildrenChanged(System.Windows.DependencyObject visualAdded, System.Windows.DependencyObject visualRemoved) { }
         public static void SetColumn(System.Windows.UIElement element, int value) { }
         public static void SetColumnSpan(System.Windows.UIElement element, int value) { }
         public static void SetIsSharedSizeScope(System.Windows.UIElement element, bool value) { }
@@ -5045,6 +5085,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected override void OnLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e) { }
+        protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Columns")]
     [System.Windows.StyleTypedPropertyAttribute(Property="ColumnHeaderContainerStyle", StyleTargetType=typeof(System.Windows.Controls.GridViewColumnHeader))]
@@ -5069,12 +5110,17 @@ namespace System.Windows.Controls
         public object ColumnHeaderToolTip { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.GridViewColumnCollection Columns { get { throw null; } }
+        protected internal override object DefaultStyleKey { get { throw null; } }
         public static System.Windows.ResourceKey GridViewItemContainerStyleKey { get { throw null; } }
         public static System.Windows.ResourceKey GridViewScrollViewerStyleKey { get { throw null; } }
         public static System.Windows.ResourceKey GridViewStyleKey { get { throw null; } }
+        protected internal override object ItemContainerDefaultStyleKey { get { throw null; } }
         protected virtual void AddChild(object column) { }
         protected virtual void AddText(string text) { }
+        protected internal override void ClearItem(System.Windows.Controls.ListViewItem item) { }
+        protected internal override System.Windows.Automation.Peers.IViewAutomationPeer GetAutomationPeer(System.Windows.Controls.ListView parent) { throw null; }
         public static System.Windows.Controls.GridViewColumnCollection GetColumnCollection(System.Windows.DependencyObject element) { throw null; }
+        protected internal override void PrepareItem(System.Windows.Controls.ListViewItem item) { }
         public static void SetColumnCollection(System.Windows.DependencyObject element, System.Windows.Controls.GridViewColumnCollection collection) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool ShouldSerializeColumnCollection(System.Windows.DependencyObject obj) { throw null; }
@@ -5144,6 +5190,8 @@ namespace System.Windows.Controls
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
+        protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo) { }
+        protected internal override bool ShouldSerializeProperty(System.Windows.DependencyProperty dp) { throw null; }
     }
     public enum GridViewColumnHeaderRole
     {
@@ -5263,6 +5311,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Content")]
         public System.Windows.Controls.DataTemplateSelector HeaderTemplateSelector { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected virtual void OnHeaderChanged(object oldHeader, object newHeader) { }
         protected virtual void OnHeaderStringFormatChanged(string oldHeaderStringFormat, string newHeaderStringFormat) { }
         protected virtual void OnHeaderTemplateChanged(System.Windows.DataTemplate oldHeaderTemplate, System.Windows.DataTemplate newHeaderTemplate) { }
@@ -5290,6 +5339,7 @@ namespace System.Windows.Controls
         public System.Windows.DataTemplate HeaderTemplate { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         public System.Windows.Controls.DataTemplateSelector HeaderTemplateSelector { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected virtual void OnHeaderChanged(object oldHeader, object newHeader) { }
         protected virtual void OnHeaderStringFormatChanged(string oldHeaderStringFormat, string newHeaderStringFormat) { }
         protected virtual void OnHeaderTemplateChanged(System.Windows.DataTemplate oldHeaderTemplate, System.Windows.DataTemplate newHeaderTemplate) { }
@@ -5401,6 +5451,7 @@ namespace System.Windows.Controls
         protected System.Windows.Controls.InkPresenter InkPresenter { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool IsGestureRecognizerAvailable { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public bool MoveEnabled { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Collections.Generic.IEnumerable<System.Windows.Controls.InkCanvasClipboardFormat> PreferredPasteFormats { get { throw null; } set { } }
@@ -5756,6 +5807,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.Controls.DataTemplateSelector ItemTemplateSelector { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected virtual void AddChild(object value) { }
         protected virtual void AddText(string text) { }
         public override void BeginInit() { }
@@ -5830,6 +5882,7 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty SelectionModeProperty;
         public ListBox() { }
         protected object AnchorItem { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
@@ -5867,6 +5920,7 @@ namespace System.Windows.Controls
         protected override void OnMouseRightButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnSelected(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnUnselected(System.Windows.RoutedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
     [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.ListViewItem))]
     public partial class ListView : System.Windows.Controls.ListBox
@@ -5959,7 +6013,6 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnInitialized(System.EventArgs e) { }
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnTextInput(System.Windows.Input.TextCompositionEventArgs e) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
     }
@@ -6001,6 +6054,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Action")]
         public System.Windows.IInputElement CommandTarget { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         public object Icon { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
@@ -6052,7 +6106,6 @@ namespace System.Windows.Controls
         protected override void OnAccessKey(System.Windows.Input.AccessKeyEventArgs e) { }
         public override void OnApplyTemplate() { }
         protected virtual void OnChecked(System.Windows.RoutedEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual void OnClick() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnGotKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e) { }
@@ -6062,18 +6115,15 @@ namespace System.Windows.Controls
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e) { }
         protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnMouseRightButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnMouseRightButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnSubmenuClosed(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnSubmenuOpened(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnUnchecked(System.Windows.RoutedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
         protected override bool ShouldApplyItemContainerStyle(System.Windows.DependencyObject container, object item) { throw null; }
     }
@@ -6135,6 +6185,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.CategoryAttribute("Appearance")]
         public System.Windows.Media.Brush Foreground { get { throw null; } set { } }
         public bool KeepAlive { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Navigation.NavigationService NavigationService { get { throw null; } }
         public bool ShowsNavigationUI { get { throw null; } set { } }
         public System.Windows.Controls.ControlTemplate Template { get { throw null; } set { } }
@@ -6146,6 +6197,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeBounds) { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected virtual void OnTemplateChanged(System.Windows.Controls.ControlTemplate oldTemplate, System.Windows.Controls.ControlTemplate newTemplate) { }
+        protected internal sealed override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeShowsNavigationUI() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -6190,10 +6242,14 @@ namespace System.Windows.Controls
         public System.Windows.Media.Brush Background { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.UIElementCollection Children { get { throw null; } }
+        protected internal virtual bool HasLogicalOrientation { get { throw null; } }
         public bool HasLogicalOrientationPublic { get { throw null; } }
+        protected internal System.Windows.Controls.UIElementCollection InternalChildren { get { throw null; } }
         [System.ComponentModel.BindableAttribute(false)]
         [System.ComponentModel.CategoryAttribute("Behavior")]
         public bool IsItemsHost { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
+        protected internal virtual System.Windows.Controls.Orientation LogicalOrientation { get { throw null; } }
         public System.Windows.Controls.Orientation LogicalOrientationPublic { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected virtual System.Windows.Controls.UIElementCollection CreateUIElementCollection(System.Windows.FrameworkElement logicalParent) { throw null; }
@@ -6201,6 +6257,7 @@ namespace System.Windows.Controls
         public static int GetZIndex(System.Windows.UIElement element) { throw null; }
         protected virtual void OnIsItemsHostChanged(bool oldIsItemsHost, bool newIsItemsHost) { }
         protected override void OnRender(System.Windows.Media.DrawingContext dc) { }
+        protected internal override void OnVisualChildrenChanged(System.Windows.DependencyObject visualAdded, System.Windows.DependencyObject visualRemoved) { }
         public static void SetZIndex(System.Windows.UIElement element, int value) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeChildren() { throw null; }
@@ -6273,10 +6330,8 @@ namespace System.Windows.Controls
     {
         public PrintDialog() { }
         public bool CurrentPageEnabled { get { throw null; } set { } }
-#pragma warning disable 3003
         public uint MaxPage { get { throw null; } set { } }
         public uint MinPage { get { throw null; } set { } }
-#pragma warning restore 3003
         public System.Windows.Controls.PageRange PageRange { get { throw null; } set { } }
         public System.Windows.Controls.PageRangeSelection PageRangeSelection { get { throw null; } set { } }
         public double PrintableAreaHeight { get { throw null; } }
@@ -6323,6 +6378,7 @@ namespace System.Windows.Controls
         protected override void OnAccessKey(System.Windows.Input.AccessKeyEventArgs e) { }
         protected override void OnChecked(System.Windows.RoutedEventArgs e) { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
+        protected internal override void OnToggle() { }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Inherit)]
     [System.Windows.Markup.ContentPropertyAttribute("Document")]
@@ -6335,6 +6391,7 @@ namespace System.Windows.Controls
         public System.Windows.Documents.TextPointer CaretPosition { get { throw null; } set { } }
         public System.Windows.Documents.FlowDocument Document { get { throw null; } set { } }
         public bool IsDocumentEnabled { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Documents.TextSelection Selection { get { throw null; } }
         public System.Windows.Documents.TextPointer GetNextSpellingErrorPosition(System.Windows.Documents.TextPointer position, System.Windows.Documents.LogicalDirection direction) { throw null; }
         public System.Windows.Documents.TextPointer GetPositionFromPoint(System.Windows.Point point, bool snapToText) { throw null; }
@@ -6499,6 +6556,7 @@ namespace System.Windows.Controls
         public double ExtentHeight { get { throw null; } }
         [System.ComponentModel.CategoryAttribute("Layout")]
         public double ExtentWidth { get { throw null; } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         public double HorizontalOffset { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
@@ -6509,6 +6567,7 @@ namespace System.Windows.Controls
         public double PanningRatio { get { throw null; } set { } }
         public double ScrollableHeight { get { throw null; } }
         public double ScrollableWidth { get { throw null; } }
+        protected internal System.Windows.Controls.Primitives.IScrollInfo ScrollInfo { get { throw null; } set { } }
         public double VerticalOffset { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
@@ -6738,8 +6797,10 @@ namespace System.Windows.Controls
         public bool CanVerticallyScroll { get { throw null; } set { } }
         public double ExtentHeight { get { throw null; } }
         public double ExtentWidth { get { throw null; } }
+        protected internal override bool HasLogicalOrientation { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public double HorizontalOffset { get { throw null; } }
+        protected internal override System.Windows.Controls.Orientation LogicalOrientation { get { throw null; } }
         public System.Windows.Controls.Orientation Orientation { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.Controls.ScrollViewer ScrollOwner { get { throw null; } set { } }
@@ -6883,7 +6944,7 @@ namespace System.Windows.Controls
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Text)]
     [System.Windows.Markup.ContentPropertyAttribute("Inlines")]
-    public partial class TextBlock : System.Windows.FrameworkElement, System.IServiceProvider, System.Windows.IContentHost, System.Windows.Markup.IAddChild
+    public partial class TextBlock : System.Windows.FrameworkElement, System.IServiceProvider, System.Windows.IContentHost, System.Windows.Markup.IAddChild, System.Windows.Markup.IAddChildInternal
     {
         public static readonly System.Windows.DependencyProperty BackgroundProperty;
         public static readonly System.Windows.DependencyProperty BaselineOffsetProperty;
@@ -6927,6 +6988,7 @@ namespace System.Windows.Controls
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double LineHeight { get { throw null; } set { } }
         public System.Windows.LineStackingStrategy LineStackingStrategy { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Thickness Padding { get { throw null; } set { } }
         System.Collections.Generic.IEnumerator<System.Windows.IInputElement> System.Windows.IContentHost.HostedElements { get { throw null; } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Text)]
@@ -7002,6 +7064,7 @@ namespace System.Windows.Controls
         public System.Windows.Controls.CharacterCasing CharacterCasing { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public int LineCount { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(0)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public int MaxLength { get { throw null; } set { } }
@@ -7125,6 +7188,7 @@ namespace System.Windows.Controls
         public ToolBarTray() { }
         public System.Windows.Media.Brush Background { get { throw null; } set { } }
         public bool IsLocked { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Controls.Orientation Orientation { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Collections.ObjectModel.Collection<System.Windows.Controls.ToolBar> ToolBars { get { throw null; } }
@@ -7190,6 +7254,7 @@ namespace System.Windows.Controls
         protected override void OnContentChanged(object oldContent, object newContent) { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnOpened(System.Windows.RoutedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
     public sealed partial class ToolTipEventArgs : System.Windows.RoutedEventArgs
     {
@@ -7267,6 +7332,7 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty SelectedValuePathProperty;
         public static readonly System.Windows.DependencyProperty SelectedValueProperty;
         public TreeView() { }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
@@ -7338,6 +7404,7 @@ namespace System.Windows.Controls
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnSelected(System.Windows.RoutedEventArgs e) { }
         protected virtual void OnUnselected(System.Windows.RoutedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
     public partial class UIElementCollection : System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
     {
@@ -7459,6 +7526,11 @@ namespace System.Windows.Controls
     public abstract partial class ViewBase : System.Windows.DependencyObject
     {
         protected ViewBase() { }
+        protected internal virtual object DefaultStyleKey { get { throw null; } }
+        protected internal virtual object ItemContainerDefaultStyleKey { get { throw null; } }
+        protected internal virtual void ClearItem(System.Windows.Controls.ListViewItem item) { }
+        protected internal virtual System.Windows.Automation.Peers.IViewAutomationPeer GetAutomationPeer(System.Windows.Controls.ListView parent) { throw null; }
+        protected internal virtual void PrepareItem(System.Windows.Controls.ListViewItem item) { }
     }
     public partial class Viewbox : System.Windows.Controls.Decorator
     {
@@ -7466,6 +7538,7 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty StretchProperty;
         public Viewbox() { }
         public override System.Windows.UIElement Child { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Media.Stretch Stretch { get { throw null; } set { } }
         public System.Windows.Controls.StretchDirection StretchDirection { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
@@ -7537,6 +7610,7 @@ namespace System.Windows.Controls
         protected virtual bool CanHierarchicallyScrollAndVirtualizeCore { get { throw null; } }
         public System.Windows.Controls.Primitives.IItemContainerGenerator ItemContainerGenerator { get { throw null; } }
         protected void AddInternalChild(System.Windows.UIElement child) { }
+        protected internal virtual void BringIndexIntoView(int index) { }
         public void BringIndexIntoViewPublic(int index) { }
         public static System.Windows.Controls.VirtualizationCacheLength GetCacheLength(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Controls.VirtualizationCacheLengthUnit GetCacheLengthUnit(System.Windows.DependencyObject element) { throw null; }
@@ -7575,8 +7649,10 @@ namespace System.Windows.Controls
         public bool CanVerticallyScroll { get { throw null; } set { } }
         public double ExtentHeight { get { throw null; } }
         public double ExtentWidth { get { throw null; } }
+        protected internal override bool HasLogicalOrientation { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public double HorizontalOffset { get { throw null; } }
+        protected internal override System.Windows.Controls.Orientation LogicalOrientation { get { throw null; } }
         public System.Windows.Controls.Orientation Orientation { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.Controls.ScrollViewer ScrollOwner { get { throw null; } set { } }
@@ -7586,6 +7662,7 @@ namespace System.Windows.Controls
         public double ViewportWidth { get { throw null; } }
         public static void AddCleanUpVirtualizedItemHandler(System.Windows.DependencyObject element, System.Windows.Controls.CleanUpVirtualizedItemEventHandler handler) { }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
+        protected internal override void BringIndexIntoView(int index) { }
         protected override double GetItemOffsetCore(System.Windows.UIElement child) { throw null; }
         public virtual void LineDown() { }
         public virtual void LineLeft() { }
@@ -7635,7 +7712,6 @@ namespace System.Windows.Controls
         public void Refresh() { }
         public void Refresh(bool noCache) { }
         protected override bool TabIntoCore(System.Windows.Input.TraversalRequest request) { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override bool TranslateAcceleratorCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
     }
     public partial class WrapPanel : System.Windows.Controls.Panel
@@ -7667,6 +7743,7 @@ namespace System.Windows.Controls.Primitives
         public BulletDecorator() { }
         public System.Windows.Media.Brush Background { get { throw null; } set { } }
         public System.Windows.UIElement Bullet { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
@@ -7717,6 +7794,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
+        protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo) { }
     }
     public sealed partial class CalendarButton : System.Windows.Controls.Button
     {
@@ -7779,6 +7857,7 @@ namespace System.Windows.Controls.Primitives
         protected override bool IsItemItsOwnContainerOverride(object item) { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size availableSize) { throw null; }
         public override void OnApplyTemplate() { }
+        protected internal virtual void OnColumnsChanged(System.Collections.ObjectModel.ObservableCollection<System.Windows.Controls.DataGridColumn> columns, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) { }
         protected virtual void OnItemChanged(object oldItem, object newItem) { }
         protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
@@ -7834,6 +7913,7 @@ namespace System.Windows.Controls.Primitives
         protected override System.Windows.Size MeasureOverride(System.Windows.Size availableSize) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
     [System.Windows.TemplatePartAttribute(Name="PART_BottomHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
     [System.Windows.TemplatePartAttribute(Name="PART_TopHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
@@ -7910,6 +7990,7 @@ namespace System.Windows.Controls.Primitives
         public virtual bool CanGoToNextPage { get { throw null; } }
         public virtual bool CanGoToPreviousPage { get { throw null; } }
         public System.Windows.Documents.IDocumentPaginatorSource Document { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public virtual int MasterPageNumber { get { throw null; } }
         public int PageCount { get { throw null; } }
         [System.CLSCompliantAttribute(false)]
@@ -7999,6 +8080,7 @@ namespace System.Windows.Controls.Primitives
         public static readonly System.Windows.DependencyProperty ColumnsProperty;
         protected GridViewRowPresenterBase() { }
         public System.Windows.Controls.GridViewColumnCollection Columns { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
         bool System.Windows.IWeakEventListener.ReceiveWeakEvent(System.Type managerType, object sender, System.EventArgs args) { throw null; }
@@ -8160,6 +8242,7 @@ namespace System.Windows.Controls.Primitives
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
         public bool IsOpen { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Layout")]
         public System.Windows.Controls.Primitives.PlacementMode Placement { get { throw null; } set { } }
@@ -8183,6 +8266,7 @@ namespace System.Windows.Controls.Primitives
         public event System.EventHandler Closed { add { } remove { } }
         public event System.EventHandler Opened { add { } remove { } }
         public static void CreateRootPopup(System.Windows.Controls.Primitives.Popup popup, System.Windows.UIElement child) { }
+        protected internal override System.Windows.DependencyObject GetUIParentCore() { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size availableSize) { throw null; }
         protected virtual void OnClosed(System.EventArgs e) { }
         protected virtual void OnOpened(System.EventArgs e) { }
@@ -8626,6 +8710,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnClick() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnIndeterminate(System.Windows.RoutedEventArgs e) { }
+        protected internal virtual void OnToggle() { }
         protected virtual void OnUnchecked(System.Windows.RoutedEventArgs e) { }
         public override string ToString() { throw null; }
     }
@@ -9411,7 +9496,7 @@ namespace System.Windows.Data
         void System.ComponentModel.ISupportInitialize.EndInit() { }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
-    public partial class XmlNamespaceMappingCollection : System.Xml.XmlNamespaceManager, System.Collections.Generic.ICollection<System.Windows.Data.XmlNamespaceMapping>, System.Collections.Generic.IEnumerable<System.Windows.Data.XmlNamespaceMapping>, System.Collections.IEnumerable, System.Windows.Markup.IAddChild
+    public partial class XmlNamespaceMappingCollection : System.Xml.XmlNamespaceManager, System.Collections.Generic.ICollection<System.Windows.Data.XmlNamespaceMapping>, System.Collections.Generic.IEnumerable<System.Windows.Data.XmlNamespaceMapping>, System.Collections.IEnumerable, System.Windows.Markup.IAddChild, System.Windows.Markup.IAddChildInternal
     {
         public XmlNamespaceMappingCollection() : base (default(System.Xml.XmlNameTable)) { }
         public int Count { get { throw null; } }
@@ -9496,6 +9581,7 @@ namespace System.Windows.Documents
     public partial class AdornerLayer : System.Windows.FrameworkElement
     {
         internal AdornerLayer() { }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         public void Add(System.Windows.Documents.Adorner adorner) { }
         public System.Windows.Media.AdornerHitTestResult AdornerHitTest(System.Windows.Point point) { throw null; }
@@ -9697,11 +9783,12 @@ namespace System.Windows.Documents
         public System.Windows.WrapDirection WrapDirection { get { throw null; } set { } }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Pages")]
-    public partial class FixedDocument : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
+    public partial class FixedDocument : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
     {
         public static readonly System.Windows.DependencyProperty PrintTicketProperty;
         public FixedDocument() { }
         public System.Windows.Documents.DocumentPaginator DocumentPaginator { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.PageContentCollection Pages { get { throw null; } }
         public object PrintTicket { get { throw null; } set { } }
@@ -9712,11 +9799,12 @@ namespace System.Windows.Documents
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("References")]
-    public partial class FixedDocumentSequence : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
+    public partial class FixedDocumentSequence : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
     {
         public static readonly System.Windows.DependencyProperty PrintTicketProperty;
         public FixedDocumentSequence() { }
         public System.Windows.Documents.DocumentPaginator DocumentPaginator { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public object PrintTicket { get { throw null; } set { } }
         [System.CLSCompliantAttribute(false)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
@@ -9728,7 +9816,7 @@ namespace System.Windows.Documents
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Children")]
-    public sealed partial class FixedPage : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
+    public sealed partial class FixedPage : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
     {
         public static readonly System.Windows.DependencyProperty BackgroundProperty;
         public static readonly System.Windows.DependencyProperty BleedBoxProperty;
@@ -9745,6 +9833,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.UIElementCollection Children { get { throw null; } }
         public System.Windows.Rect ContentBox { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public object PrintTicket { get { throw null; } set { } }
         System.Uri System.Windows.Markup.IUriContext.BaseUri { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
@@ -9768,6 +9857,7 @@ namespace System.Windows.Documents
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnPreviewMouseWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected override void OnRender(System.Windows.Media.DrawingContext dc) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
         public static void SetBottom(System.Windows.UIElement element, double length) { }
         public static void SetLeft(System.Windows.UIElement element, double length) { }
         public static void SetNavigateUri(System.Windows.UIElement element, System.Uri uri) { }
@@ -9851,6 +9941,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double LineHeight { get { throw null; } set { } }
         public System.Windows.LineStackingStrategy LineStackingStrategy { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double MaxPageHeight { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
@@ -9890,7 +9981,6 @@ namespace System.Windows.Documents
         public int CompositionOffset { get { throw null; } }
         public int ResultLength { get { throw null; } }
         public int ResultOffset { get { throw null; } }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         public override void Complete() { }
     }
     public sealed partial class GetPageRootCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
@@ -9936,7 +10026,6 @@ namespace System.Windows.Documents
         public System.Windows.Media.GlyphRun ToGlyphRun() { throw null; }
     }
     [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable=false, IsTypographicOnly=false)]
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Unrestricted=true)]
     public partial class Hyperlink : System.Windows.Documents.Span, System.Windows.Input.ICommandSource, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.RoutedEvent ClickEvent;
@@ -9976,6 +10065,9 @@ namespace System.Windows.Documents
         public void DoClick() { }
         protected virtual void OnClick() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
+        protected internal override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
+        protected internal override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
+        protected internal override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
     }
     [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable=true, IsTypographicOnly=true)]
     public abstract partial class Inline : System.Windows.Documents.TextElement
@@ -10098,7 +10190,7 @@ namespace System.Windows.Documents
         Forward = 1,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Child")]
-    public sealed partial class PageContent : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
+    public sealed partial class PageContent : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
     {
         public static readonly System.Windows.DependencyProperty SourceProperty;
         public PageContent() { }
@@ -10106,6 +10198,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.FixedPage Child { get { throw null; } set { } }
         public System.Windows.Documents.LinkTargetCollection LinkTargets { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Uri Source { get { throw null; } set { } }
         System.Uri System.Windows.Markup.IUriContext.BaseUri { get { throw null; } set { } }
         public event System.Windows.Documents.GetPageRootCompletedEventHandler GetPageRootCompleted { add { } remove { } }
@@ -10194,6 +10287,7 @@ namespace System.Windows.Documents
         public double CellSpacing { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.TableColumnCollection Columns { get { throw null; } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.TableRowGroupCollection RowGroups { get { throw null; } }
         public override void BeginInit() { }
@@ -10432,6 +10526,7 @@ namespace System.Windows.Documents
         public System.Windows.FontStyle FontStyle { get { throw null; } set { } }
         public System.Windows.FontWeight FontWeight { get { throw null; } set { } }
         public System.Windows.Media.Brush Foreground { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Media.TextEffectCollection TextEffects { get { throw null; } set { } }
         public System.Windows.Documents.Typography Typography { get { throw null; } }
         public static System.Windows.Media.FontFamily GetFontFamily(System.Windows.DependencyObject element) { throw null; }
@@ -11104,15 +11199,9 @@ namespace System.Windows.Interop
     public static partial class BrowserInteropHelper
     {
         public static object ClientSite { get { throw null; } }
-        public static dynamic HostScript { [System.Security.SecurityTreatAsSafeAttribute]get { throw null; } }
+        public static dynamic HostScript { get { throw null; } }
         public static bool IsBrowserHosted { get { throw null; } }
         public static System.Uri Source { get { throw null; } }
-    }
-    public sealed partial class DocObjHost : System.MarshalByRefObject, System.IServiceProvider
-    {
-        public DocObjHost() { }
-        public override object InitializeLifetimeService() { throw null; }
-        object System.IServiceProvider.GetService(System.Type serviceType) { throw null; }
     }
     public sealed partial class DynamicScriptObject : System.Dynamic.DynamicObject
     {
@@ -11136,23 +11225,16 @@ namespace System.Windows.Interop
         protected abstract System.Runtime.InteropServices.HandleRef BuildWindowCore(System.Runtime.InteropServices.HandleRef hwndParent);
         protected abstract void DestroyWindowCore(System.Runtime.InteropServices.HandleRef hwnd);
         public void Dispose() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual void Dispose(bool disposing) { }
         ~HwndHost() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected virtual bool HasFocusWithinCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnDpiChanged(System.Windows.DpiScale oldDpi, System.Windows.DpiScale newDpi) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override void OnKeyUp(System.Windows.Input.KeyEventArgs e) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool OnMnemonicCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
         protected virtual void OnWindowPositionChanged(System.Windows.Rect rcBoundingBox) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual System.Windows.Interop.IKeyboardInputSite RegisterKeyboardInputSinkCore(System.Windows.Interop.IKeyboardInputSink sink) { throw null; }
         bool System.Windows.Interop.IKeyboardInputSink.HasFocusWithin() { throw null; }
         bool System.Windows.Interop.IKeyboardInputSink.OnMnemonic(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
@@ -11161,9 +11243,7 @@ namespace System.Windows.Interop
         bool System.Windows.Interop.IKeyboardInputSink.TranslateAccelerator(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
         bool System.Windows.Interop.IKeyboardInputSink.TranslateChar(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
         protected virtual bool TabIntoCore(System.Windows.Input.TraversalRequest request) { throw null; }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateAcceleratorCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateCharCore(ref System.Windows.Interop.MSG msg, System.Windows.Input.ModifierKeys modifiers) { throw null; }
         public void UpdateWindowPos() { }
         protected virtual System.IntPtr WndProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled) { throw null; }
@@ -12204,34 +12284,22 @@ namespace System.Windows.Shell
         public System.Collections.Generic.IList<System.Windows.Shell.JumpItem> RemovedItems { get { throw null; } }
     }
     [System.Windows.Markup.ContentPropertyAttribute("JumpItems")]
-    [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
     public sealed partial class JumpList : System.ComponentModel.ISupportInitialize
     {
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public JumpList() { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public JumpList(System.Collections.Generic.IEnumerable<System.Windows.Shell.JumpItem> items, bool showFrequent, bool showRecent) { }
         public System.Collections.Generic.List<System.Windows.Shell.JumpItem> JumpItems { get { throw null; } }
-        public bool ShowFrequentCategory { [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]get { throw null; } [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]set { } }
-        public bool ShowRecentCategory { [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]get { throw null; } [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]set { } }
+        public bool ShowFrequentCategory { get { throw null; } set { } }
+        public bool ShowRecentCategory { get { throw null; } set { } }
         public event System.EventHandler<System.Windows.Shell.JumpItemsRejectedEventArgs> JumpItemsRejected { add { } remove { } }
         public event System.EventHandler<System.Windows.Shell.JumpItemsRemovedEventArgs> JumpItemsRemovedByUser { add { } remove { } }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public static void AddToRecentCategory(string itemPath) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public static void AddToRecentCategory(System.Windows.Shell.JumpPath jumpPath) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public static void AddToRecentCategory(System.Windows.Shell.JumpTask jumpTask) { }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public void Apply() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public void BeginInit() { }
-        [System.Security.SecurityTreatAsSafeAttribute]
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public void EndInit() { }
         public static System.Windows.Shell.JumpList GetJumpList(System.Windows.Application application) { throw null; }
-        [System.Security.Permissions.UIPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, Window=System.Security.Permissions.UIPermissionWindow.AllWindows)]
         public static void SetJumpList(System.Windows.Application application, System.Windows.Shell.JumpList value) { }
     }
     public partial class JumpPath : System.Windows.Shell.JumpItem

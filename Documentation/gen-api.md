@@ -5,6 +5,26 @@ WPF assemblies make extensive use of the [InternalsVisibleToAttribute](https://d
 
 Using GenAPI allows us to strip out internals, removing the dangling references from our reference assemblies.
 
+## [GenApi.props](/eng/WpfArcadeSdk/tools/GenApi.props)
+Contains various properties related to GenAPI runs and configurations.
+* `GenAPIEnabledProjects`
+  * The set of projects to run GenAPI on
+* `GlobalApiExclusionsFile`
+  * A file that specifies API surface area to exclude from code generation (see [GlobalApiExclusions.txt](/eng/WpfArcadeSdk/tools/GenApi/GlobalApiExclusions.txt))
+* `GlobalAttrExclusionsFile`
+  * A file that specifies Attributes to exclude from code generation (see [GlobalApiExclusions.txt](/eng/WpfArcadeSdk/tools/GenApi/GlobalAttrExclusions.txt))
+* `GenAPIAdditionalParameters`
+  * Parameters to GenAPI built up from local configuration
+* _GenerateReferenceAssemblySource
+  * A private parameter used to enable GenAPI targets
+## [GenApi.targets](/eng/WpfArcadeSdk/tools/)
+Contains targets and properties related to GenAPI runs
+* `GenAPITargetDir`
+  * The directory where GenAPI will generate code
+* `GenAPITargetPath`
+  * The full path to the file GenAPI will generate
+* `EnsureGenAPITargetDirectory`
+  * Creates the directory specified by `GenAPITargetDir` if it does not exist
 ## Using GenAPI in WPF
 GenAPI is run only on-demand.  In the event that a change to a runtime assembly creates new public surface area, a developer will see an [ApiCompat](api-compat.md) error between the reference assembly and the runtime assembly.  In order to address this, the developer must run GenAPI to generate new reference assembly code.
 ### Running GenAPI

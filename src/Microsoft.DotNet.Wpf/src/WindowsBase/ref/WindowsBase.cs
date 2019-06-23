@@ -640,6 +640,7 @@ namespace System.Windows
     public abstract partial class AttachedPropertyBrowsableAttribute : System.Attribute
     {
         protected AttachedPropertyBrowsableAttribute() { }
+        internal abstract bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp);
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=true)]
     public sealed partial class AttachedPropertyBrowsableForTypeAttribute : System.Windows.AttachedPropertyBrowsableAttribute
@@ -649,6 +650,7 @@ namespace System.Windows
         public override object TypeId { get { throw null; } }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        internal override bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=false)]
     public sealed partial class AttachedPropertyBrowsableWhenAttributePresentAttribute : System.Windows.AttachedPropertyBrowsableAttribute
@@ -657,6 +659,7 @@ namespace System.Windows
         public System.Type AttributeType { get { throw null; } }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        internal override bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp) { throw null; }
     }
     public static partial class BaseCompatibilityPreferences
     {
@@ -691,6 +694,7 @@ namespace System.Windows
         public void SetCurrentValue(System.Windows.DependencyProperty dp, object value) { }
         public void SetValue(System.Windows.DependencyProperty dp, object value) { }
         public void SetValue(System.Windows.DependencyPropertyKey key, object value) { }
+        protected internal virtual bool ShouldSerializeProperty(System.Windows.DependencyProperty dp) { throw null; }
     }
     public partial class DependencyObjectType
     {
@@ -783,6 +787,7 @@ namespace System.Windows
         protected System.Windows.Freezable CreateInstance() { throw null; }
         protected abstract System.Windows.Freezable CreateInstanceCore();
         public void Freeze() { }
+        protected internal static bool Freeze(System.Windows.Freezable freezable, bool isChecking) { throw null; }
         protected virtual bool FreezeCore(bool isChecking) { throw null; }
         public System.Windows.Freezable GetAsFrozen() { throw null; }
         protected virtual void GetAsFrozenCore(System.Windows.Freezable sourceFreezable) { }
@@ -1553,6 +1558,11 @@ namespace System.Windows.Markup
     public abstract partial class InternalTypeHelper
     {
         protected InternalTypeHelper() { }
+        protected internal abstract void AddEventHandler(System.Reflection.EventInfo eventInfo, object target, System.Delegate handler);
+        protected internal abstract System.Delegate CreateDelegate(System.Type delegateType, object target, string handler);
+        protected internal abstract object CreateInstance(System.Type type, System.Globalization.CultureInfo culture);
+        protected internal abstract object GetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, System.Globalization.CultureInfo culture);
+        protected internal abstract void SetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, object value, System.Globalization.CultureInfo culture);
     }
     [System.ObsoleteAttribute("IReceiveMarkupExtension has been deprecated. This interface is no longer in use.")]
     public partial interface IReceiveMarkupExtension

@@ -12,7 +12,7 @@ Contains various properties related to GenAPI runs and configurations.
 * `GlobalApiExclusionsFile`
   * A file that specifies API surface area to exclude from code generation (see [GlobalApiExclusions.txt](/eng/WpfArcadeSdk/tools/GenApi/GlobalApiExclusions.txt))
 * `GlobalAttrExclusionsFile`
-  * A file that specifies Attributes to exclude from code generation (see [GlobalApiExclusions.txt](/eng/WpfArcadeSdk/tools/GenApi/GlobalAttrExclusions.txt))
+  * A file that specifies Attributes to exclude from code generation (see [GlobalAttrExclusions.txt](/eng/WpfArcadeSdk/tools/GenApi/GlobalAttrExclusions.txt))
 * `GenAPIAdditionalParameters`
   * Parameters to GenAPI built up from local configuration
 * _GenerateReferenceAssemblySource

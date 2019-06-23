@@ -17,7 +17,7 @@ Contains various properties related to GenAPI runs and configurations.
   * Parameters to GenAPI built up from local configuration
 * _GenerateReferenceAssemblySource
   * A private parameter used to enable GenAPI targets
-## [GenApi.targets](/eng/WpfArcadeSdk/tools/)
+## [GenApi.targets](/eng/WpfArcadeSdk/tools/GenApi.targets)
 Contains targets and properties related to GenAPI runs
 * `GenAPITargetDir`
   * The directory where GenAPI will generate code

@@ -325,7 +325,6 @@
     <Compile Include="System\Windows\Markup\StreamPartReader.cs" />
     <Compile Include="System\Windows\Markup\XmlPartReader.cs" />
   </ItemGroup>
-  <!-- ZIP sources -->
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\IO\Compression\DeflateZLib\ZLibNative.cs">
       <Link>Common\System\IO\Compression\DeflateZLib\ZLibNative.cs</Link>

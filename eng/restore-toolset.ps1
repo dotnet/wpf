@@ -108,6 +108,11 @@ function InstallCustomWPFGitHooksFromLocalToolsPath {
 }
 
 InitializeWpfCustomToolset
-InstallCustomWPFGitHooksFromLocalToolsPath 
+
+if (!$ci)
+{
+    InstallCustomWPFGitHooksFromLocalToolsPath 
+}
+
 . $PsScriptRoot\common\init-tools-native.ps1 -InstallDirectory $PSScriptRoot\..\.tools\native -GlobalJsonFile $PSScriptRoot\..\global.json
 

@@ -95,7 +95,6 @@
     <ParameterGroup>
       <RepoRoot ParameterType="System.String" Required="true" />
       <WpfArcadeSdkToolsDir ParameterType="System.String" Required="true" />
-      <Result ParameterType="System.Boolean" Output="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System" />

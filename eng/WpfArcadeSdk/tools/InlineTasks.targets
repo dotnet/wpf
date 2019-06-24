@@ -81,4 +81,60 @@
       </Code>
     </Task>
   </UsingTask>
+
+  <!-- Installs WPF pre-commit git hook to protect generated files -->
+  <Target Name="InstallWPFPreCommitGitHook"> 
+      <Message Text="InstallWPFPreCommitGitHook: WPF repo root: $(RepoRoot)" />
+      <Message Text="InstallWPFPreCommitGitHook: WPF Arcade SDK tools root: $(WpfArcadeSdkToolsDir)" />
+      <InstallWPFPreCommitGitHook RepoRoot="$(RepoRoot)" WpfArcadeSdkToolsDir="$(WpfArcadeSdkToolsDir)" /> 
+  </Target>
+
+  <UsingTask TaskName="InstallWPFPreCommitGitHook"
+               TaskFactory="$(TaskFactoryToUse)"
+               AssemblyFile="$(TaskFactoryAssemblyToUse)">
+    <ParameterGroup>
+      <RepoRoot ParameterType="System.String" Required="true" />
+      <WpfArcadeSdkToolsDir ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            string WPFPreCommitGitHookSource = Path.Combine(WpfArcadeSdkToolsDir, @"pre-commit.githook");
+            string WPFPreCommitGitHookDest = Path.Combine(RepoRoot, @".git\hooks\pre-commit");
+            Log.LogMessage($"InstallWPFPreCommitGitHook: WPFPreCommitGitHookSource: {WPFPreCommitGitHookSource}");
+            Log.LogMessage($"InstallWPFPreCommitGitHook: WPFPreCommitGitHookDest: {WPFPreCommitGitHookDest}");
+
+            try
+            {
+                Log.LogMessage("InstallWPFPreCommitGitHook: Detecting pre-comit git hook...");
+
+                // Verify the payload file exists
+                if (!File.Exists(WPFPreCommitGitHookSource))
+                {
+                    throw new Exception($"InstallWPFPreCommitGitHook: {WPFPreCommitGitHookSource} file does not exit.");
+                }
+
+                // Install pre-commit hook if it has not been installed
+                if (!File.Exists(WPFPreCommitGitHookDest))
+                {
+                    Log.LogMessage("InstallWPFPreCommitGitHook: Installing pre-comit git hook...");
+                    File.Copy(WPFPreCommitGitHookSource, WPFPreCommitGitHookDest);
+                }
+                else
+                {
+                    Log.LogMessage("InstallWPFPreCommitGitHook: pre-comit git hook already installed.");
+                } 
+            }
+            catch (Exception e)
+            {
+                Log.LogErrorFromException(e);
+                throw e;
+            }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
 </Project>

@@ -73,12 +73,9 @@ namespace System.Windows.Documents
                 XpsSchema schema = XpsSchema.GetSchema(mimeType);
                 Uri uri = pc.BaseUri;
 
-                // Using PackUriHelper.ValidateAndGetPackUriComponents internal method 
-                // to get Package and Part Uri in one step
-                Uri packageUri;
-                Uri partUri;
-                InternalPackUriHelper.ValidateAndGetPackUriComponents(uri, out packageUri, out partUri);
-                             
+                Uri packageUri = PackUriHelper.GetPackageUri(uri);
+                Uri partUri = PackUriHelper.GetPartUri(uri);
+
                 Package package = PreloadedPackages.GetPackage(packageUri);
 
                 Uri parentPackageUri = null;

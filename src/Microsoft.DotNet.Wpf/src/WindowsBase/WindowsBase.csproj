@@ -119,16 +119,13 @@
     <Compile Include="MS\Internal\IO\Packaging\Certificate.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeflateEmulationStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompressEmulationStream.cs" />
-    <Compile Include="MS\Internal\IO\Packaging\CompressStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CustomSignedXml.cs" />
     <Compile Include="MS\Internal\IO\Packaging\IgnoreFlushAndCloseStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\InternalRelationshipCollection.cs" />
     <Compile Include="MS\Internal\IO\Packaging\OlePropertyStructs.cs" />
     <Compile Include="MS\Internal\IO\Packaging\PartManifestEntry.cs" />
-    <Compile Include="MS\Internal\IO\Packaging\PieceNameHelper.cs" />
     <Compile Include="MS\Internal\IO\Packaging\PackUriHelper.cs" />
     <Compile Include="MS\Internal\IO\Packaging\StorageBasedPackageProperties.cs" />
-    <Compile Include="MS\Internal\IO\Packaging\streamingZipPartStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\XmlDigitalSignatureProcessor.cs" />
     <Compile Include="MS\Internal\IO\Packaging\XmlSignatureManifest.cs" />
     <Compile Include="MS\Internal\IO\Packaging\XmlSignatureProperties.cs" />
@@ -327,36 +324,6 @@
     <Compile Include="System\Windows\Markup\SequencePartEditor.cs" />
     <Compile Include="System\Windows\Markup\StreamPartReader.cs" />
     <Compile Include="System\Windows\Markup\XmlPartReader.cs" />
-  </ItemGroup>
-  <!-- ZIP sources -->
-  <ItemGroup>
-    <Compile Include="MS\Internal\IO\Zip\Crc32.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipArchive.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipFileInfo.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipFileInfoCollection.cs" />
-    <Compile Include="MS\Internal\IO\Zip\CompressionMethodEnum.cs" />
-    <Compile Include="MS\Internal\IO\Zip\DeflateOptionEnum.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOBlockManager.cs" />
-    <Compile Include="MS\Internal\IO\Zip\IZipIOBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ProgressiveCrcCalculatingStream.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOEndOfCentralDirectoryBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOCentralDirectoryBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOCentralDirectoryFileHeader.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOCentralDirectoryDigitalSignature.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOZip64EndOfCentralDirectoryBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOZip64EndOfCentralDirectoryLocatorBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOLocalFileBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOLocalFileHeader.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOLocalFileDataDescriptor.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIORawDataFileBlock.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOFileItemStream.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOModeEnforcingStream.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOVersionNeededToExtract.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOExtraField.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOExtraFieldElement.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOExtraFieldPaddingElement.cs" />
-    <Compile Include="MS\Internal\IO\Zip\ZipIOExtraFieldZip64Element.cs" />
-    <Compile Include="MS\Internal\IO\Zip\WriteTimeStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\IO\Compression\DeflateZLib\ZLibNative.cs">

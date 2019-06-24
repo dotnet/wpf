@@ -203,7 +203,7 @@ namespace MS.Internal.IO.Packaging
 
             // Make sure streamUri is in the correct form; getting partUri from it will do all necessary checks for error
             //    conditions; We also have to make sure that it has a part name
-            Uri partUri = PackUriHelper.GetPartUri(streamUri);
+            Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri);
             if (partUri == null)
             {
                 throw new InvalidOperationException(SR.Get(SRID.InvalidPartName));

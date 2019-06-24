@@ -25,8 +25,6 @@ using MS.Internal.PresentationFramework;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
-
 namespace MS.Internal.AppModel
 {
     // !!!! Note: Those methods are registered as MimeObjectFactory.StreamToObjectFactoryDelegate. The caller expects the 

@@ -122,8 +122,3 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Scope = "member", Target = "System.Xaml.ReflectionHelper.#LoadAssemblyHelper(System.String,System.String)")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#ResolveAssembly(System.String)", Justification = "Need to support load of assemblies from GAC by short name.")]
 #endregion
-
-#region Microsoft.Security Suppressions
-[module: SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Scope = "member", Target = "MS.Internal.Xaml.Runtime.DynamicMethodRuntime.#.ctor(MS.Internal.Xaml.Runtime.XamlRuntimeSettings,System.Xaml.XamlSchemaContext,System.Xaml.Permissions.XamlAccessLevel)", Justification = "Reviewed by Microsoft.")]
-[module: SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts", Scope = "member", Target = "MS.Internal.Utility.PerfServiceProxy.#InitializeGetId()", Justification = "Doesn't make sense with security transparency system. Reviewed by Microsoft")]
-#endregion

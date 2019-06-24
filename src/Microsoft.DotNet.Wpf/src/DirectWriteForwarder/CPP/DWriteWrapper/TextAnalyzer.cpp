@@ -276,19 +276,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-// Warning 4714 (__forceinline function not inlined)
-// and tries to inline HRESULT_FROM_WIN32.
-// inlining is prevented when the caller or the callee
-// are marked with any security attribute (critical, safecritical, treatassafecritical).
-// This is over conservative and misses inlining opportunities occasionaly,
-// but currently there is no way of determining accurately the transparency level of a function
-// in the native compiler since there are no public APIs provided by CLR at the moment.
-// Replicating CLR transparency rules on the native side is not ideal either.
-// The solution chosen is to allow inlining only when there is clear evidence
-// for the caller and the callee to be transparent.
-#pragma warning (push)
-#pragma warning (disable : 4714)
-
     void TextAnalyzer::GetGlyphs(
         __in_ecount(textLength) const WCHAR*         textString,
         UINT32                                       textLength,
@@ -470,8 +457,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             }
         }
     }
-
-#pragma warning (pop)
 
     void TextAnalyzer::GetGlyphPlacementsForControlCharacters(
         __in_ecount(textLength) const WCHAR* pTextString,

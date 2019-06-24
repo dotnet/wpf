@@ -65,22 +65,6 @@ LONG ReadRegistryString(__in HKEY rootKey, __in LPCWSTR keyName, __in LPCWSTR va
     return result;
 }
 
-#if _MANAGED
-#endif
-// Warning 4714 (__forceinline function not inlined)
-// is expected here because WPFUtils::GetWPFInstallPath is marked with [SecurityCritical]
-// and tries to inline HRESULT_FROM_WIN32.
-// inlining is prevented when the caller or the callee
-// are marked with any security attribute (critical, safecritical, treatassafecritical).
-// This is over conservative and misses inlining opportunities occasionaly,
-// but currently there is no way of determining accurately the transparency level of a function
-// in the native compiler since there are no public APIs provided by CLR at the moment.
-// Replicating CLR transparency rules on the native side is not ideal either.
-// The solution chosen is to allow inlining only when there is clear evidence
-// for the caller and the callee to be transparent.
-#pragma warning (push)
-#pragma warning (disable : 4714)
-
 HRESULT GetWPFInstallPath(__out_ecount(cchMaxPath) LPWSTR pszPath, size_t cchMaxPath)
 {
     HRESULT hr = S_OK;
@@ -156,6 +140,5 @@ HRESULT GetWPFInstallPath(__out_ecount(cchMaxPath) LPWSTR pszPath, size_t cchMax
 
     return hr;
 }
-#pragma warning (pop)
 
 }//namespace

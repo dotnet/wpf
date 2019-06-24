@@ -13,6 +13,14 @@
   </PropertyGroup>
 
   <!-- 
+    Local markup compilation uses $(InternalMarkupCompilation) instead of $(UseWpf). Suppress the 
+    corresponding SDK warning. 
+  -->
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);NETSDK1106</MSBuildWarningsAsMessages>
+  </PropertyGroup>
+
+  <!-- 
     We will use Microsoft.NET.Sdk.WindowsDesktop targets directly when local PresentationBuildTasks is not available
     We do not need to import Microsoft.NET.Sdk.WindowsDesktop.props from the Sdk - this only provides us with 
     WPF references and Page, ApplicationDefinition globbing functionality - neither of which is used by our projects. 

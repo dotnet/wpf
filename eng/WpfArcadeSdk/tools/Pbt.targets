@@ -90,7 +90,14 @@
   -->
   <Import Project="$(WpfSourceDir)PresentationBuildTasks\Microsoft.WinFX.targets" 
           Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)') "/>
-  
+
+  <!-- 
+    _WindowsDesktopSdkTargetFrameworkVersionFloor is defined in Microsoft.NET.WindowDesktop.props. 
+    This needs to be defined before Microsoft.NET.Sdk.WindowsDesktop.targets is imported. 
+  -->
+  <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') ">
+    <_WindowsDesktopSdkTargetFrameworkVersionFloor Condition="'$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' == ''">3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+  </PropertyGroup>
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
           Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"
           Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') "/>

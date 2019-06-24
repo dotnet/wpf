@@ -119,12 +119,6 @@ internal static class SecurityHelper
               curSecMgr = null;
               return targetZone;
         }
-
-        internal static PermissionSet ExtractAppDomainPermissionSetMinusSiteOfOrigin()
-        {
-            return new PermissionSet(PermissionState.Unrestricted);
-        }
-
 #endif
 
 

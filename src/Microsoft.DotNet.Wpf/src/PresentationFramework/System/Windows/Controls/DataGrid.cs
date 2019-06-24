@@ -8334,7 +8334,7 @@ namespace System.Windows.Controls
 
             foreach (string format in formats)
             {
-                    dataObject.CriticalSetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
+                dataObject.SetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
             }
 
             Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);

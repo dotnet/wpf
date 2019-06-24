@@ -109,14 +109,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.Text, textString);
+                    ((DataObject)dataObject).SetData(DataFormats.Text, textString, false);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.UnicodeText, textString);
+                    ((DataObject)dataObject).SetData(DataFormats.UnicodeText, textString, false);
                 }
             }
 
@@ -173,15 +173,7 @@ namespace System.Windows.Documents
                     if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Xaml))
                     {
                         // Place Xaml data onto the dataobject using safe setter
-                        CriticalSetDataWrapper(dataObject, DataFormats.Xaml, xamlText);
-
-                        // The dataobject itself must hold an information about permission set
-                        // of the source appdomain. Set it there:
-
-                        // Package permission set for the current appdomain
-                        PermissionSet psCurrentAppDomain = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-                        string permissionSetCurrentAppDomain = psCurrentAppDomain.ToString();
-                        CriticalSetDataWrapper(dataObject, DataFormats.ApplicationTrust, permissionSetCurrentAppDomain);
+                        ((DataObject)dataObject).SetData(DataFormats.Xaml, xamlText, false);
                     }
                 }
             }
@@ -716,22 +708,6 @@ namespace System.Windows.Documents
             //  Provide an implementation for this command
         }
 
-        /// <summary>
-        ///     This code is used to call into an internal overload to set data which circumvents the demand for
-        ///     all clipboard permission. Although this is not the cleanest we prefer to cast it to DataObject
-        ///     and call the critical overload to reduce the scope of the code that gets called here.
-        ///     This saves us one high level assert.
-        /// </summary>
-        /// <param name="dataObjectValue"></param>
-        /// <param name="format"></param>
-        /// <param name="content"></param>
-        private static void CriticalSetDataWrapper(IDataObject dataObjectValue, string format, string content)
-        {
-            if (dataObjectValue is DataObject)
-            {
-                ((DataObject)dataObjectValue).CriticalSetData(format, content, format == DataFormats.ApplicationTrust ? /*autoConvert:*/false : true);
-            }
-        }
 
         /// <summary>
         /// Paste the content data(Text, Unicode, Xaml and Rtf) to the current text selection

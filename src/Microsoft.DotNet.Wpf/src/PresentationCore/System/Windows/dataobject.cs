@@ -396,6 +396,7 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
         /// </remarks>
+        [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
             if (format == null)
@@ -408,7 +409,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
             }
 
-            CriticalSetData(format, data, autoConvert);
+            _innerData.SetData(format, data, autoConvert);
         }
 
 
@@ -1326,18 +1327,6 @@ namespace System.Windows
         #region Private Methods
 
 
-        /// <param name="format"></param>
-        /// <param name="data"></param>
-        /// <param name="autoConvert"></param>
-        [FriendAccessAllowed]
-        internal void CriticalSetData(string format, Object data, bool autoConvert)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-            _innerData.SetData(format, data, autoConvert);
-        }
 
         /// <summary>
         /// Behaves like IComDataObject.GetData and IComDataObject.GetDataHere,
@@ -2164,28 +2153,12 @@ namespace System.Windows
         private static bool IsFormatAndDataSerializable(string format, object data)
         {
             return
-                (IsFormatNotSupportedInPartialTrust(format))
-                 &&
-                 (IsFormatEqual(format, DataFormats.Serializable)
+                 IsFormatEqual(format, DataFormats.Serializable)
                   || data is ISerializable
-                  || (data != null && data.GetType().IsSerializable));
+                  || (data != null && data.GetType().IsSerializable);
         }
 
-        /// <summary>
-        ///     This code is used to determine whether any of the formats in the list here are supported in partial trust.
-        ///     By adding an entry here we are letting consumers set and get data for this format in partial trust.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private static bool IsFormatNotSupportedInPartialTrust(string format)
-        {
-            return (!IsFormatEqual(format, DataFormats.Text)
-                    && !IsFormatEqual(format, DataFormats.OemText)
-                    && !IsFormatEqual(format, DataFormats.UnicodeText)
-                    && !IsFormatEqual(format, DataFormats.CommaSeparatedValue)
-                    && !IsFormatEqual(format, DataFormats.Xaml)
-                    && !IsFormatEqual(format, DataFormats.ApplicationTrust));
-        }
+
         /// <summary>
         /// Return true if the format string are equal(Case-senstive).
         /// </summary>

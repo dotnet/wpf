@@ -98,16 +98,7 @@ namespace MS.Internal.Ink
 
             // Set the data object as XML format.
             dataObject.SetData(DataFormats.Xaml, xmlData.ToString());
-
-            //
-            //  we need to copy the permission set on the clipboard for 
-            //  the Clipboard class methods.  See security note for details.
-            //
-            PermissionSet permSet = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-            string setString = permSet.ToString();
-            Debug.Assert(setString.Length > 0);
-            dataObject.SetData(DataFormats.ApplicationTrust, setString);
-}
+        }
 
         // Retrieves the Xaml from the IDataObject and instantiate the elements based on the Xaml
         protected override void DoPaste(IDataObject dataObject)

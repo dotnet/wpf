@@ -51,7 +51,6 @@ namespace System.Windows.Media.Imaging
 
         static BitmapDecoder()
         {
-            isImageDisabledInitialized = false;
         }
         /// <summary>
         /// Default constructor
@@ -266,9 +265,6 @@ namespace System.Windows.Media.Imaging
             Stream uriStream = null;
             UnmanagedMemoryStream unmanagedMemoryStream = null;
             SafeFileHandle safeFilehandle = null;
-
-            // check to ensure that images are allowed in partial trust
-            DemandIfImageBlocked();
 
             if (uri != null)
             {
@@ -664,9 +660,6 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltInDecoder();
 
-                // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-                CheckIfSiteOfOrigin();
-
                 if (!_isMetadataCached)
                 {
                     IntPtr /* IWICMetadataQueryReader */ metadata = IntPtr.Zero;
@@ -897,9 +890,6 @@ namespace System.Windows.Media.Imaging
 
             CheckOriginalWritable();
 
-            // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-            CheckIfSiteOfOrigin();
-
             return InPlaceBitmapMetadataWriter.CreateFromDecoder(_decoderHandle, _syncObject);
         }
 
@@ -1031,15 +1021,6 @@ namespace System.Windows.Media.Imaging
         #endregion
 
         #region Internal/Private Methods
-        private static void DemandIfImageBlocked()
-        {
-            if(!isImageDisabledInitialized)
-            {
-                // a performance optimization to ensure we hit the registry only once in the lifetime of the application
-                isImageDisabled = new SecurityCriticalDataForSet<bool>(SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaImageDisable));
-                isImageDisabledInitialized = true;
-            }
-        }
 
         internal static SafeMILHandle SetupDecoderFromUriOrStream(
             Uri uri,
@@ -1056,8 +1037,6 @@ namespace System.Windows.Media.Imaging
             IntPtr decoder = IntPtr.Zero;
             System.IO.Stream bitmapStream = null;
             string mimeType = String.Empty;
-            // check to ensure that images are allowed in partial trust NOP in full trust
-            DemandIfImageBlocked();
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1275,22 +1254,6 @@ namespace System.Windows.Media.Imaging
 
 
             return new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        }
-
-        void CheckIfSiteOfOrigin()
-        {
-            string uri = null;
-
-            if (CanConvertToString())
-            {
-                // This call returns the URI either as an absolute URI which the user
-                // passed in, in the first place or as the string "image"
-                // we only allow this code to succeed in the case of Uri and if it is site of
-                // origin or pack:. In all other conditions we fail
-
-                uri = ToString();
-            }
-
         }
 
         /// Returns the decoder's CLSID
@@ -1728,11 +1691,6 @@ namespace System.Windows.Media.Imaging
 
         /// SyncObject
         private object _syncObject = new Object();
-
-        // this is data that we cache as a performance optimization. It is ok to do so since we do not want to
-        // handle this key change in the lifetime of this app.
-        private static SecurityCriticalDataForSet<bool> isImageDisabled;
-        private static bool isImageDisabledInitialized;
 
         // For UnmanagedMemoryStream we want to make sure that buffer
         // its pointing to is not getting release until decoder is alive

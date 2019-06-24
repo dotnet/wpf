@@ -371,7 +371,6 @@ namespace System.Windows.Xps.Serialization
             // construction and its uri is still null
             //
 
-            // DevDiv bug 213320
             // If bitmapSource is indexed, has a color palette and transparency (e.g. transparent GIF)
             // PNG conversion may lose color or transparency or both information
             // To avoid this we convert all paletted bitmapSources to the 32 bit per pixel bgra format

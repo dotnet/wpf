@@ -325,7 +325,6 @@ namespace MS.Internal.Ink
         {
                 InkCanvas inkCanvas = new InkCanvas();
 
-                // NOTICE-2005/12/06-WAYNEZEN,
                 // We already transform the Strokes in CopySelectedData.
                 if (strokes.Count != 0)
                 {

@@ -164,7 +164,7 @@ namespace System.Windows.Documents
             {
                 // It's a default null, so spin up a temporary ContextMenu now.
                 contextMenu = new EditorContextMenu();
-                ((EditorContextMenu)contextMenu).AddMenuItems(This, e.UserInitiated);
+                ((EditorContextMenu)contextMenu).AddMenuItems(This);
             }
             contextMenu.Placement = PlacementMode.RelativePoint;
             contextMenu.PlacementTarget = This.UiScope;
@@ -431,7 +431,7 @@ namespace System.Windows.Documents
         {
             // Initialize the context menu.
             // Creates a new instance.
-            internal void AddMenuItems(TextEditor textEditor, bool userInitiated)
+            internal void AddMenuItems(TextEditor textEditor)
             {
                 if (!textEditor.IsReadOnly)
                 {
@@ -445,7 +445,7 @@ namespace System.Windows.Documents
                 {
                     AddSeparator();
                 }
-                AddClipboardItems(textEditor, userInitiated);
+                AddClipboardItems(textEditor);
             }
             // Finalizer release the candidate list if it remains.
             ~EditorContextMenu()
@@ -596,7 +596,7 @@ namespace System.Windows.Documents
 
             // Appends clipboard related items.
             // Returns false if no items are added.
-            private bool AddClipboardItems(TextEditor textEditor, bool userInitiated)
+            private bool AddClipboardItems(TextEditor textEditor)
             {
                 MenuItem menuItem;
 

@@ -2026,11 +2026,7 @@ namespace System.Windows.Xps.Serialization
 
         private static bool EmbeddingAllowed(GlyphTypeface typeface)
         {
-            FontEmbeddingRight embeddingRights = FontEmbeddingRight.Installable;
-
-            embeddingRights = typeface.EmbeddingRights;
-
-            return (XpsFontSubsetter.DetermineEmbeddingAction(embeddingRights) != FontEmbeddingAction.ImageOnlyFont);
+            return (XpsFontSubsetter.DetermineEmbeddingAction(typeface.EmbeddingRights) != FontEmbeddingAction.ImageOnlyFont);
         }
 
         /// <summary>

@@ -136,15 +136,13 @@ namespace System.Windows.Xps.Serialization
             GlyphRun        glyphRun
             )
         {
-            FontEmbeddingRight embeddingRights = FontEmbeddingRight.RestrictedLicense;
+            FontEmbeddingRight embeddingRights = glyphRun.GlyphTypeface.EmbeddingRights;
             if (null == glyphRun)
             {
                 throw new ArgumentNullException("glyphRun");
             }
 
             Uri fontUri = null;
-
-            embeddingRights  = glyphRun.GlyphTypeface.EmbeddingRights;
 
             if (DetermineEmbeddingAction(embeddingRights) ==
                     FontEmbeddingAction.ImageOnlyFont)
@@ -272,11 +270,7 @@ namespace System.Windows.Xps.Serialization
         FontEmbeddingAction
         DetermineEmbeddingAction(GlyphTypeface glyphTypeface)
         {
-            FontEmbeddingRight fsType = FontEmbeddingRight.RestrictedLicense;
-
-            fsType = glyphTypeface.EmbeddingRights;
-
-            return DetermineEmbeddingAction(fsType);
+            return DetermineEmbeddingAction(glyphTypeface.EmbeddingRights);
         }
         /// <summary> 
         /// Determines Embedding action based
@@ -327,11 +321,7 @@ namespace System.Windows.Xps.Serialization
         bool
         IsRestrictedFont(GlyphTypeface glyphTypeface)
         {
-            FontEmbeddingRight fsType = FontEmbeddingRight.RestrictedLicense;
-
-            fsType = glyphTypeface.EmbeddingRights;
-
-            return IsRestrictedFont(fsType);
+            return IsRestrictedFont(glyphTypeface.EmbeddingRights);
         }
         /// <summary> 
         /// Determines Embedding action based
@@ -420,9 +410,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             FEMCacheItem manager = null;
-            Uri fontUri;
-
-            fontUri = glyphTypeface.FontUri;
+            Uri fontUri = glyphTypeface.FontUri;
 
             if (!_fontEmbeddingManagerCache.TryGetValue(fontUri, out manager))
             {
@@ -621,9 +609,7 @@ namespace System.Windows.Xps.Serialization
             Stream stream
             )
         {
-            byte[] fontData;
-
-            fontData = _glyphTypeface.ComputeSubset(glyphs);
+            byte[] fontData = _glyphTypeface.ComputeSubset(glyphs);
             
             Guid guid = ParseGuidFromUri(_fontResourceStream.Uri);
             ObfuscateData(fontData, guid);

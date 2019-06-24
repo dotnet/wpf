@@ -210,11 +210,8 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         /// <remarks>
         ///     Creates the Xps default serializer
-        ///
-        ///     This method currently requires full trust to run.
         /// </remarks>
         /// <returns>SerializerDescriptor for new serializer</returns>
-        [SuppressMessage("Microsoft.Security", "CA2116:AptcaMethodsShouldOnlyCallAptcaMethods")]
         private SerializerDescriptor CreateSystemSerializerDescriptor()
         {
 

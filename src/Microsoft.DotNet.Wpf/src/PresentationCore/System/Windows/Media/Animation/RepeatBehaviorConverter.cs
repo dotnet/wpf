@@ -108,11 +108,6 @@ namespace System.Windows.Media.Animation
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for RepeatBehavior, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext context, 
             CultureInfo cultureInfo, 

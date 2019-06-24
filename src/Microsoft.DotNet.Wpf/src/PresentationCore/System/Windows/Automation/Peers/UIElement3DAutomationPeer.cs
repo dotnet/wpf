@@ -187,12 +187,6 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool ComputeBoundingRectangle(out Rect rect)
         {
             rect = Rect.Empty;

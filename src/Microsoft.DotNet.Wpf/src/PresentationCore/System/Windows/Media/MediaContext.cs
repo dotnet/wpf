@@ -278,13 +278,6 @@ namespace System.Windows.Media
         /// Called by a message processor to notify us that our asynchronous
         /// channel has outstanding messages that need to be pumped.
         /// </summary>
-        /// <securitynote>
-        /// Critical    - Calls a critical method: PeekNextMessage.
-        /// TreatAsSafe - Retrieving and processing a message from the back
-        ///               channel is safe -- the channel is owned by this
-        ///               media context.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void NotifySyncChannelMessage(DUCE.Channel channel)
         {
             // empty the channel messages.
@@ -315,13 +308,6 @@ namespace System.Windows.Media
         /// Called by a message processor to notify us that our asynchronous
         /// channel has outstanding messages that need to be pumped.
         /// </summary>
-        /// <securitynote>
-        /// Critical    - Calls a critical method: PeekNextMessage.
-        /// TreatAsSafe - Retrieving and processing a message from the back
-        ///               channel is safe -- the channel is owned by this
-        ///               media context.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void NotifyChannelMessage()
         {
             // Since a notification message may sit in the queue while we
@@ -542,12 +528,6 @@ namespace System.Windows.Media
         /// Asks the composition engine to retrieve the current hardware tier.
         /// This tier will be sent back via NotifyChannelMessage.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RequestTier(DUCE.Channel channel)
         {
             unsafe
@@ -1298,11 +1278,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Start interlocked presentation mode and resquest
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnterInterlockedPresentation()
         {
             if (!InterlockIsEnabled)
@@ -1337,11 +1312,6 @@ namespace System.Windows.Media
         /// Leaves interlocked presentation mode and cleans up state so we can
         /// continue to present in non-interlocked mode.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LeaveInterlockedPresentation()
         {
             bool interlockDisabled = (_interlockState == InterlockState.Disabled);
@@ -1456,14 +1426,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Disposes the MediaContext.
         /// </summary>
-        /// <securitynote>
-        /// Critical - Shuts down the queue item promoter, effectively disabling rendering
-        ///            when animation smoothing is turned on.
-        /// TreatAsSafe - At the time the media context object gets disposed, no rendering
-        ///               is supposed to be happening anymore, so it is safe to shut down
-        ///               the queue item promoter.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public virtual void Dispose()
         {
             Debug.Assert(CheckAccess());
@@ -1577,13 +1539,6 @@ namespace System.Windows.Media
         /// Removes the ICompositionTarget from this MediaContext.
         /// </summary>
         /// <param name="iv">ICompositionTarget to unregister.</param>
-        /// <securitynote>
-        /// Critical    - Calls a security critical method: SetNotificationWindow.
-        /// TreatAsSafe - It is ok for the MediaContext to call SetNotificationWindow on
-        ///               the channel because the MediaContext owns the channel. In addition
-        ///               no user data is passed along.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UnregisterICompositionTargetInternal(ICompositionTarget iv)
         {
             Debug.Assert(iv != null);
@@ -1834,11 +1789,6 @@ namespace System.Windows.Media
         /// <summary>
         /// The ol' RenderQueueItem.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Since it calls to InputManager.UnsecureCurrent
-        ///     TreatAsSafe: Since it does not expose the InputManager
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void RenderMessageHandlerCore(
             object resizedCompositionTarget /* can be null if we are not resizing*/
             )
@@ -2269,12 +2219,6 @@ namespace System.Windows.Media
         /// Asks the composition engine to notify us once the frame we are
         /// submitted has been presented to the screen.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RequestPresentedNotification(DUCE.Channel channel, long estimatedFrameTime)
         {
             Debug.Assert(InterlockIsEnabled,
@@ -2299,16 +2243,6 @@ namespace System.Windows.Media
         /// <remarks>
         /// Wait for the rendering loop to finish any pending instructions.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical    - Calls one of two critical methods: WaitForNextMessage
-        ///               or MilComposition_SyncFlush.
-        /// TreatAsSafe - Net effect is to wait until render completes. Waiting
-        ///               is safe because we only block the thread if we know
-        ///               we are waiting for a message. Flushing the channel is
-        ///               safe because we own the channel and we know there
-        ///               aren't unfinished batches at this point.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CompleteRender()
         {
             // for now just bail if we are not connected.
@@ -2672,12 +2606,6 @@ namespace System.Windows.Media
         /// Tells the composition engine that we want to receive asynchronous
         /// notifications on this channel.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RegisterForNotifications(DUCE.Channel channel)
         {
             DUCE.MILCMD_PARTITION_REGISTERFORNOTIFICATIONS registerCmd;

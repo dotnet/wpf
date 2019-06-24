@@ -522,12 +522,6 @@ namespace System.Windows.Media
         /// <summary>
         /// MarshalToDUCE - Marshalling code to the DUCE
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:Calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Channels are safe to call with bad data.
-        ///    They do not affect windows cross process or cross app domain
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void MarshalToDUCE(DUCE.Channel channel)
         {
             Debug.Assert(_duceResource.IsOnChannel(channel));
@@ -1119,12 +1113,6 @@ namespace System.Windows.Media
         /// DrawingContextWalk - Iterates this renderdata and call out to methods on the
         /// provided DrawingContext, passing the current values to their parameters.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:This code calls into unsafe code
-        ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-        ///     Channels can deal with bad pointers.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void DrawingContextWalk(DrawingContextWalker ctx)
         {
             // We shouldn't have any dependent resources if _curOffset is 0
@@ -1465,12 +1453,6 @@ namespace System.Windows.Media
         /// BaseValueDrawingContextWalk - Iterates this renderdata and call out to methods on the
         /// provided DrawingContext, passing base values and animations to their parameters.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:This code calls into unsafe code
-        ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-        ///     Channels can deal with bad pointers.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void BaseValueDrawingContextWalk(DrawingContextWalker ctx)
         {
             // We shouldn't have any dependent resources if _curOffset is 0

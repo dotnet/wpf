@@ -32,12 +32,6 @@ namespace MS.Win32
 {
     internal static class ManagedWndProcTracker
     {
-        /// <SecurityNote>
-        ///     Critical: This code calls into Link demanded methods to attach handlers
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///     It simply attaches private call back.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static ManagedWndProcTracker()
         {
             // Listen for ProcessExit so we can detach ourselves when the CLR shuts down
@@ -45,10 +39,6 @@ namespace MS.Win32
             ManagedWndProcTrackerShutDownListener listener = new ManagedWndProcTrackerShutDownListener();
         }
 
-        /// <SecurityNote>
-        ///     Critical: Uses critical member _hwndList
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void TrackHwndSubclass(HwndSubclass subclass, IntPtr hwnd)
         {
             lock (_hwndList)
@@ -66,10 +56,6 @@ namespace MS.Win32
 #endif
         }
 
-        /// <SecurityNote>
-        ///     Critical: Uses critical member _hwndList
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void UnhookHwndSubclass(HwndSubclass subclass)
         {
             // if exiting the AppDomain, ignore this call.  This avoids changing
@@ -83,12 +69,6 @@ namespace MS.Win32
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical performs an elevation to call HookUpDefWindowProc.
-        ///     TreatAsSafe - net effect of this is to remove our already registered WndProc's on domain shutdown.
-        ///                          safe - as you had to elevate to add these already. Removing them is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnAppDomainProcessExit()
         {
             // AppDomain is exiting -- if anyone tries to call back into managed code
@@ -146,11 +126,6 @@ namespace MS.Win32
 }
         }
 
-        /// <SecurityNote>
-        ///  TreatAsSafe:  Demands for unmanaged code
-        ///  Critical: Elevates by calling an unverifieds UnsafeNativeMethod call
-        ///</SecurityNote>
-        [SecurityTreatAsSafe, SecurityCritical]
         private static void HookUpDefWindowProc(IntPtr hwnd)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -220,11 +195,6 @@ namespace MS.Win32
             }
         }
 
-        ///<SecurityNote>
-        ///  SecurityCritical: elevates via a call to unsafe native methods
-        ///  SecurityTreatAsSafe: Demands unmgd code permission via SecurityHelper
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static IntPtr GetUser32ProcAddress(string export)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -240,12 +210,6 @@ namespace MS.Win32
 
         private sealed class ManagedWndProcTrackerShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public ManagedWndProcTrackerShutDownListener()
                 : base(null, ShutDownEvents.AppDomain)
             {
@@ -304,10 +268,6 @@ namespace MS.Win32
         private static IntPtr _cachedDefWindowProcA = IntPtr.Zero;
         private static IntPtr _cachedDefWindowProcW = IntPtr.Zero;
 
-        ///<SecurityNote>
-        ///     Critical - used as input to unsafe calls
-        ///</SecurityNote>
-        [SecurityCritical]
         private static Hashtable _hwndList = new Hashtable(10);
         private static bool _exiting = false;
     }

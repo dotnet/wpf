@@ -96,18 +96,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="signer">certificate to use (ignores any embedded cert)</param>
         /// <returns>true if the data stream has not been altered since it was signed</returns>
-        /// <SecurityNote>
-        ///     Critical - 1) Elevate to unrestricted to work around a feature in the .NET XML libraries.
-        ///              - 2) We are calling GenerateDigestValueNode which is SecurityCritical due to the Transform parameter.
-        ///     TreatAsSafe - 1) This is to work around a feature in the Xml layer.  The assert makes it possible for the XML
-        ///                      layer to perform a transform on the data "under the covers".
-        ///                      (http://bugcheck/default.asp?URL=/bugs/SQLBUDefectTracking/392346.asp)
-        ///                   2) The one parameter of concern (Transform) is trusted.  The reasoning is that we get the
-        ///                      instance from trusted sources.  The Transform is obtained from a trusted method
-        ///                      (DigitalSignatureProcessor.StringToTranform) that only creates built-in .NET Transform
-        ///                      instances which are safe XML Transforms.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool Verify(X509Certificate2 signer)
         {
             Invariant.Assert(signer != null);
@@ -437,11 +425,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="transformName">name of the single transform to use - may be null</param>
         /// <param name="hashAlgorithm">hash algorithm to use</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - We are calling the TransformXml method which is Critical due to the Transform parameter.
-        ///     TreatAsSafe - It is safe because we are creating only built-in Transform instances.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static String GenerateDigestValue(
             Stream s,
             String transformName,
@@ -462,11 +445,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="transforms">transforms to apply - may be null and list may contain empty strings</param>
         /// <param name="s">stream to hash</param>
         /// <param name="hashAlgorithm">algorithm to use</param>
-        /// <SecurityNote>
-        ///     Critical - We are calling the TransformXml method which is Critical due to the Transform parameter.
-        ///     TreatAsSafe - It is safe because we are creating only built-in Transform instances.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static String GenerateDigestValue(
             Stream s,
             List<String> transforms,
@@ -577,20 +555,12 @@ namespace MS.Internal.IO.Packaging
             return algorithm;
         }
 
-        /// <SecurityNote>
-        ///     Critical - We are marking this function critical since we want to know the types
-        ///                of Transform instances that are being created.  If new types of transforms
-        ///                are created in this method other than build-in .NET ones, then we should
-        ///                probably know about it.
-        ///     TreatAsSafe - It is safe because we are creating only built-in Transform instances.
-        /// </SecurityNote>
         /// <remarks> 
         /// IMPORTANT NOTE:
         /// 1. In the XmlDigitalSignatureProcessor.IsValidXmlCanonicalizationTransform method, 
         /// we have similar logic regarding these two transforms.So both these methods must be updated
         /// in sync.
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static Transform StringToTransform(String transformName)
         {
             Invariant.Assert(transformName != null);
@@ -754,14 +724,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="embedCertificate">true if caller wants certificate embedded in the signature itself</param>
         /// <param name="objectReferences">references</param>
         /// <param name="signatureObjects">objects to sign</param>
-        /// <SecurityNote>
-        ///     Critical - Elevating for unrestricted permissions to call into .NET XML code.  This is due to a feature in
-        ///                the CLR code (http://bugcheck/default.asp?URL=/bugs/SQLBUDefectTracking/392346.asp).
-        ///     TreatAsSafe - The elevation is causing a transform of data at the CLR level.  The transforms being used
-        ///                   are built in .NET XML transforms.  Since we using built in .NET transforms the transform on
-        ///                   the XML data is not a security threat.  The only data we supply is data from the package.    
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private PackageDigitalSignature Sign(
             IEnumerable<Uri>                            parts,
             IEnumerable<System.IO.Packaging.PackageRelationshipSelector>    relationshipSelectors,
@@ -1008,16 +970,6 @@ namespace MS.Internal.IO.Packaging
             return hashAlgorithm.ComputeHash(s);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Elevates for FULL unrestricted permissions due to a feature in the XmlDocument class.
-        ///                The XmlDocument class demands for unrestricted permissions when setting the XmlResolver.
-        ///                This permission is overboard but we are really only transforming the stream from one form
-        ///                to another via a supplied Transform instance.  Callers should ensure the Transform is
-        ///                trusted.
-        ///                NOTE:  This elevation is due to the feature in the CLR XML code that demands for "full trust".
-        ///                       (http://bugcheck/default.asp?URL=/bugs/SQLBUDefectTracking/392346.asp)
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Stream TransformXml(Transform xForm, Object source)
         {
             (new PermissionSet(PermissionState.Unrestricted)).Assert();  // Blessed

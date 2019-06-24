@@ -31,7 +31,6 @@ namespace System.Windows.Documents
     /// <summary>
     /// Implements a Hyperlink element
     /// </summary>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Unrestricted = true)]
     [TextElementEditingBehaviorAttribute(IsMergeable = false, IsTypographicOnly = false)]
     public class Hyperlink : Span, ICommandSource, IUriContext
     {
@@ -344,11 +343,6 @@ namespace System.Windows.Documents
         /// <param name="d">Element to coerce NavigateUri for.</param>
         /// <param name="value">New value for NavigateUri.</param>
         /// <returns>Coerced value.</returns>
-        /// <SecurityNote>
-        /// Critical: Implements part of the anti-spoofing feature.
-        /// TreatAsSafe: This method changes no state and returns no protected info.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object CoerceNavigateUri(DependencyObject d, object value)
         {
             //
@@ -510,10 +504,6 @@ namespace System.Windows.Documents
         /// up since OnNavigateUriChanged isn't ever called. However, we want to have the
         /// sequence of commands and Click event triggered even in this case for Hyperlink.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - Calls critical static OnMouseLeftButtonUp.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected internal override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
@@ -529,9 +519,6 @@ namespace System.Windows.Documents
         /// <remarks>
         /// We keep one per thread in case multiple threads would be involved in the spoofing attack.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical for set - Changing the cached URI can open up for spoofing attacks.
-        /// </SecurityNote>
         [ThreadStatic]
         private static SecurityCriticalDataForSet<Uri> s_cachedNavigateUri;
 
@@ -544,10 +531,6 @@ namespace System.Windows.Documents
         /// <remarks>
         /// We keep one per thread in case multiple threads would be involved in the spoofing attack.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical for set - Changing the identification code will make the element vulnerable
-        ///                        for spoofing.
-        /// </SecurityNote>
         [ThreadStatic]
         private static SecurityCriticalDataForSet<int?> s_criticalNavigateUriProtectee;
 
@@ -556,10 +539,6 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="d">Hyperlink object for which the target URI is to be cached.</param>
         /// <param name="targetUri">Target URI the user expects to be navigate to.</param>
-        /// <SecurityNote>
-        ///     Critical - Sets the cached URI that prevents spoofing attacks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void CacheNavigateUri(DependencyObject d, Uri targetUri)
         {
             //
@@ -576,12 +555,6 @@ namespace System.Windows.Documents
         /// <param name="sourceElement">Source for the RequestNavigateEventArgs.</param>
         /// <param name="targetUri">URI to navigate to.</param>
         /// <param name="targetWindow">Target window for the RequestNavigateEventArgs.</param>
-        /// <SecurityNote>
-        ///     Critical - Implements the anti-spoofing mechanism and clears the anti-spoofing cache after navigation took place.
-        ///     TreatAsSafe - Navigation is considered safe; if the target is a browser window the UserInitiatedNavigationPermission will be demanded.
-        ///                   Only if navigation took place, the anti-spoofing cache will be cleared.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void NavigateToUri(IInputElement sourceElement, Uri targetUri, string targetWindow)
         {
             Debug.Assert(targetUri != null);
@@ -632,12 +605,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Updates the status bar to reflect the current NavigateUri.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Sets the cached URI (CacheNavigateUri) and s_criticalNavigateUriProtectee
-        ///                which prevent spoofing attacks.
-        ///                Calls the critical RequestSetStatusBarEventArgs ctor.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void UpdateStatusBar(object sender)
         {
             IInputElement element = (IInputElement)sender;
@@ -672,14 +639,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Clears the status bar.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Clears the cached URI and s_criticalNavigateUriProtectee which prevent
-        ///                spoofing attacks.
-        ///                Note: Upstream spoofing should be prevented (e.g. OnMouseLeave) because
-        ///                      clearing the identification code in s_criticalNavigateUriProtectee
-        ///                      will disable spoofing detection.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ClearStatusBarAndCachedUri(object sender)
         {
             IInputElement element = (IInputElement)sender;
@@ -735,10 +694,6 @@ namespace System.Windows.Documents
         /// <remarks>
         /// This method is kept for backward compatibility.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - Calls into static critical OnKeyDown method.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected internal override void OnKeyDown(KeyEventArgs e)
         {
             if (!e.Handled && e.Key == Key.Enter)
@@ -865,14 +820,8 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
 
-        /// <SecurityNote>
-        /// Critical: Sets s_shouldPreventUriSpoofing.
-        /// Not TreatAsSafe just to help prevent the remote possibility of calling this under elevation
-        /// from framework code, since the result of the Demand is cached.
-        /// </SecurityNote>
         static bool ShouldPreventUriSpoofing
         {
-            [SecurityCritical]
             get
             {
                 if (!s_shouldPreventUriSpoofing.Value.HasValue)
@@ -970,12 +919,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Hooks up event handlers that are responsible to set up anti-spoofing mitigations
-        ///                and event handlers that are critical because of the risk for replay attacks.
-        ///     TreatAsSafe - We're hooking up event handlers for trusted events from the input system.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void SetUpNavigationEventHandlers(IInputElement element)
         {
             //
@@ -1014,10 +957,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// This is the method that responds to the KeyDown event.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls DoUserInitiatedNavigation. We also want to protect against replay attacks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (!e.Handled && e.Key == Key.Enter)
@@ -1085,11 +1024,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// This is the method that responds to the MouseLeftButtonUpEvent event.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls DoUserInitiatedNavigation. We also want to protect against replay attacks
-        ///                and can't assume the IsHyperlinkPressed DP hasn't been tampered with.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             IInputElement element = (IInputElement)sender;
@@ -1127,10 +1061,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Fire the event to change the status bar.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls UpdateStatusBar to set the cached URI that prevents spoofing attacks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseEnter(object sender, MouseEventArgs e)
         {
             UpdateStatusBar(sender);
@@ -1139,10 +1069,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Set the status bar text back to empty
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls ClearStatusBarAndCachedUri to clear the cached URI that prevents spoofing attacks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnMouseLeave(object sender, MouseEventArgs e)
         {
             IInputElement ee = (IInputElement)sender;
@@ -1158,10 +1084,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Asserts UserInitatedNavigationPermission.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void DoUserInitiatedNavigation(object sender)
         {
             CodeAccessPermission perm = SecurityHelper.CreateUserInitiatedNavigationPermission();
@@ -1177,11 +1099,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Sets the cached URI that prevents spoofing attacks.
-        ///     TreatAsSafe - We don't prevent spoofing in non user-initiated scenarios.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void DoNonUserInitiatedNavigation(object sender)
         {
             CacheNavigateUri((DependencyObject)sender, null);

@@ -798,11 +798,6 @@ namespace System.Windows.Controls
         /// This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Handled) { return; }
@@ -1339,7 +1334,7 @@ namespace System.Windows.Controls
 
             // Command: SwitchViewingMode
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), FlowDocumentReader.SwitchViewingModeCommand,
-                executedHandler, canExecuteHandler, KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString);
+                executedHandler, canExecuteHandler, KeyGesture.CreateFromResourceStrings(KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString));
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), ApplicationCommands.Find,

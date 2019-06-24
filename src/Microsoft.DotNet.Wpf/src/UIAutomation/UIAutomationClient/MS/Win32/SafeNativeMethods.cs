@@ -17,7 +17,6 @@ using System.Text;
 namespace MS.Win32
 {
     // This class *MUST* be internal for security purposes
-    //CASRemoval:[SuppressUnmanagedCodeSecurity]
     internal static class SafeNativeMethods
     {
         //

@@ -39,11 +39,6 @@ namespace System.Windows.Interop
     {
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Indirectly sets critical resources
-        /// TreatAsSafe - No inputs, does not touch any critical data with external input.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private InteropBitmap() : base(true)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -57,10 +52,6 @@ namespace System.Windows.Interop
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
         /// <param name="alphaOptions"></param>
-        /// <SecurityNote>
-        /// Critical - access unsafe code, accepts handle parameters
-        /// </SecurityNote>
-        [SecurityCritical]
         internal InteropBitmap(IntPtr hbitmap, IntPtr hpalette, Int32Rect sourceRect, BitmapSizeOptions sizeOptions, WICBitmapAlphaChannelOption alphaOptions)
             : base(true) // Use virtuals
         {
@@ -93,11 +84,6 @@ namespace System.Windows.Interop
         /// <param name="hicon"></param>
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
-        /// <SecurityNote>
-        /// Critical - access unmanaged objects/resources, accepts unmanaged handle as argument
-        /// TreatAsSafe - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal InteropBitmap(IntPtr hicon, Int32Rect sourceRect, BitmapSizeOptions sizeOptions)
             : base(true) // Use virtuals
         {
@@ -133,11 +119,6 @@ namespace System.Windows.Interop
         /// <param name="format"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        /// <SecurityNote>
-        /// Critical - access unmanaged objects/resources, accepts unmanaged handle as argument
-        /// TreatAsSafe - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal InteropBitmap(
             IntPtr section,
             int pixelWidth,
@@ -186,11 +167,6 @@ namespace System.Windows.Interop
         /// Implementation of <see cref="System.Windows.Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
         /// </summary>
         /// <returns>The new Freezable.</returns>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Freezable CreateInstanceCore()
         {
             return new InteropBitmap();
@@ -200,10 +176,6 @@ namespace System.Windows.Interop
         /// Common Copy method used to implement CloneCore() and CloneCurrentValueCore(),
         /// GetAsFrozenCore(), and GetCurrentValueAsFrozenCore().
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged objects
-        /// </SecurityNote>
-        [SecurityCritical]
         private void CopyCommon(InteropBitmap sourceBitmapSource)
         {
             // Avoid Animatable requesting resource updates for invalidations that occur during construction
@@ -220,11 +192,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCore(Freezable sourceFreezable)
         {
             InteropBitmap sourceBitmapSource = (InteropBitmap)sourceFreezable;
@@ -237,11 +204,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCurrentValueCore(Freezable)">Freezable.CloneCurrentValueCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             InteropBitmap sourceBitmapSource = (InteropBitmap)sourceFreezable;
@@ -255,11 +217,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetAsFrozenCore(Freezable)">Freezable.GetAsFrozenCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces GetAsFrozen of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
             InteropBitmap sourceBitmapSource = (InteropBitmap)sourceFreezable;
@@ -273,11 +230,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetCurrentValueAsFrozenCore(Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces GetCurrentValueAsFrozen of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
             InteropBitmap sourceBitmapSource = (InteropBitmap)sourceFreezable;
@@ -290,10 +242,6 @@ namespace System.Windows.Interop
         ///
         /// Create from WICBitmapSource
         ///
-        /// <SecurityNote>
-        /// Critical - calls unmanaged objects
-        /// </SecurityNote>
-        [SecurityCritical]
         private void InitFromWICSource(
                     SafeMILHandle wicSource
                     )
@@ -326,11 +274,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Invalidates the bitmap source.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Invalidate()
         {
             Invalidate(null);
@@ -339,11 +282,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Invalidates the bitmap source.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Invalidate(Int32Rect? dirtyRect)
         {
             SecurityHelper.DemandUnmanagedCode();
@@ -428,10 +366,6 @@ namespace System.Windows.Interop
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - access unmanaged objects/resources
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             BitmapSourceSafeMILHandle wicClipper = null;
@@ -520,10 +454,6 @@ namespace System.Windows.Interop
             UpdateCachedSettings();
         }
 
-        /// <SecurityNote>
-        /// Critical - unmanaged resource - not safe to hand out
-        /// </SecurityNote>
-        [SecurityCritical]
         private BitmapSourceSafeMILHandle /* IWICBitmapSource */ _unmanagedSource = null;
 
         private Int32Rect _sourceRect = Int32Rect.Empty;

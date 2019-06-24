@@ -36,11 +36,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Hooked up to the manipulation processor and inertia processor's started event.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCrticial: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationStarted event, which does not need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnManipulationStarted(object sender, Manipulation2DStartedEventArgs e)
         {
             PushEvent(new ManipulationStartedEventArgs(
@@ -53,11 +48,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Hooked up to the manipulation processor and inertia processor's delta event.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCrticial: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationDelta event, which does not need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnManipulationDelta(object sender, Manipulation2DDeltaEventArgs e)
         {
             var deltaArguments = new ManipulationDeltaEventArgs(
@@ -76,11 +66,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Hooked up to the manipulation processor's completed event.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationInertiaStartingEventArgs event, which doesn't need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnManipulationCompleted(object sender, Manipulation2DCompletedEventArgs e)
         {
             // Manipulation portion completed.
@@ -115,11 +100,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Hooked up to the inertia processor's completed event.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationInertiaStarting event, which doesn't need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnInertiaCompleted(object sender, Manipulation2DCompletedEventArgs e)
         {
             // Inertia portion completed.
@@ -154,11 +134,6 @@ namespace System.Windows.Input
             _inertiaProcessor = null;
         }
 
-        /// <SecurityNote>
-        ///     SecurityCritical: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationCompleted event, which doesn't need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseManipulationCompleted(ManipulationCompletedEventArgs e)
         {
             PushEvent(e);
@@ -326,11 +301,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Prepares and raises a manipulation event.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Adds an input event to a list that will eventually be added to the InputManager queue.
-        ///               Accesses _generatedEvent.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PushEvent(InputEventArgs e)
         {
             // We only expect to generate one event at a time and should never need a queue.
@@ -341,11 +311,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Pushes generated events to the inertia input provider.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: ProcessManipulationInput. Accesses _generatedEvent.
-        ///     TreatAsSafe: OK to send manipulation and inertia events.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void PushEventsToDevice()
         {
             if (_generatedEvent != null)
@@ -360,11 +325,6 @@ namespace System.Windows.Input
         ///     Raises ManipulationBoundaryFeedback to allow handlers to provide feedback that manipulation has hit an edge.
         /// </summary>
         /// <param name="unusedManipulation">The total unused manipulation.</param>
-        /// <SecurityNote>
-        ///     SecurityCrticial: Calls PushEvent.
-        ///     TreatAsSafe: Pushes a ManipulationBoundaryFeedbackEventArgs event, which does not need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RaiseBoundaryFeedback(ManipulationDelta unusedManipulation, bool requestedComplete)
         {
             bool hasUnusedManipulation = (unusedManipulation != null);
@@ -458,11 +418,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls ProcessManipulationInput.
-        ///     TreatAsSafe - Creates the event being raised itself, an event that is not considered critical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private ManipulationStartingEventArgs RaiseStarting()
         {
             ManipulationStartingEventArgs starting = new ManipulationStartingEventArgs(_manipulationDevice, Environment.TickCount);
@@ -607,11 +562,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls PresentationSource.CriticalFromVisual.
-        ///     TreatAsSafe - Does not expose PresentationSource itself.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetContainer(IInputElement newContainer)
         {
             // unsubscribe from LayoutUpdated
@@ -773,10 +723,6 @@ namespace System.Windows.Input
         // the delta values so that they are relative to the Started event.
         private ManipulationDelta _lastManipulationBeforeInertia;
 
-        /// <SecurityNote>
-        ///     Critical: This event is sent to the input manager queue -- possible spoofing vector.
-        /// </SecurityNote>
-        [SecurityCritical]
         private InputEventArgs _generatedEvent;
 
         private DispatcherTimer _inertiaTimer;

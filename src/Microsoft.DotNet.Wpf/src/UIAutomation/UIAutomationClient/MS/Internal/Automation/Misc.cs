@@ -419,7 +419,6 @@ namespace MS.Internal.Automation
             return result;
         }
 
-        [SecurityCritical]
         internal static int GetWindowLong(NativeMethods.HWND hWnd, int nIndex)
         {
             int iResult = 0;
@@ -495,7 +494,6 @@ namespace MS.Internal.Automation
             return result;
         }
 
-        [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
         internal static int TryMsgWaitForMultipleObjects(SafeWaitHandle handle, bool waitAll, int milliseconds, int wakeMask, ref int lastWin32Error)
         {
             int terminationEvent;

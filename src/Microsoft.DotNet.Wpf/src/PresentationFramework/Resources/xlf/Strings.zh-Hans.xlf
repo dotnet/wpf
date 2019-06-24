@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
         <source>Cannot get window handle for control '{0}'. Windowless ActiveX controls are not supported.</source>
@@ -809,7 +809,7 @@
       </trans-unit>
       <trans-unit id="CollectionAddEventMissingItem">
         <source>After a CollectionChange.Add event, Items collection does not contain the added item '{0}'.\n This could happen if the event sender supplied incorrect information in CollectionChangedEventArgs.</source>
-        <target state="translated">在 CollectionChange.Add 事件之后，项集合不包含添加项“{0}”。\n如果事件发送者在 CollectionChangedEventArgs 中提供了错误的信息，则可能会发生这种情况。</target>
+        <target state="translated">在 CollectionChange.Add 事件之后，项集合不包含添加项“{0}”。\n如果事件发送方在 CollectionChangedEventArgs 中提供了错误的信息，则可能会发生这种情况。</target>
         <note />
       </trans-unit>
       <trans-unit id="CollectionChangeIndexOutOfRange">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... 还有 {0} 个实例 ...)</target>
+        <target state="translated">(...还有 {0} 个实例...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">

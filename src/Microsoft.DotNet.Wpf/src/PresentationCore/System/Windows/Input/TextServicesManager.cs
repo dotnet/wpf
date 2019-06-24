@@ -30,11 +30,6 @@ namespace System.Windows.Input
         //------------------------------------------------------
 
         #region Constructors
-        ///<SecurityNote> 
-        /// Critical - Calls a critical method - PreProcessInput
-        /// TreatAsSafe - Ok for us to register an event handler. Handler itself is critical. 
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextServicesManager(InputManager inputManager)
         {
             _inputManager = inputManager;
@@ -120,10 +115,6 @@ namespace System.Windows.Input
         #region Private Methods
  
         // Marks interesting KeyDown events as ImeInput.
-        /// <SecurityNote>
-        /// Critical - directly pushes keys into the input stack
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             TextServicesContext context;
@@ -170,10 +161,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - directly pushes keys into the input stack
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             TextServicesContext context;
@@ -227,10 +214,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - directly pushes keys into the input stack
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool TextServicesKeystroke(TextServicesContext context, KeyEventArgs keyArgs, bool test)
         {
             TextServicesContext.KeyOp keyop;
@@ -300,10 +283,6 @@ namespace System.Windows.Input
 
         #region Private Fields
 
-        ///<SecurityNote> 
-        ///     Critical - required elevations to create. 
-        ///</SecurityNote> 
-        [SecurityCritical] 
         private readonly InputManager _inputManager;
 
         #endregion Private Fields

@@ -480,15 +480,9 @@ namespace System.Windows.Automation.Peers
         /// It returns the CellItemAutomationPeer if it exist corresponding to the item otherwise it creates
         /// one and adds the Handle and parent info by calling AddParentInfo.
         /// </summary>
-        /// <SecurityNote>
-        /// Security Critical - Calls a Security Critical operation AddParentInfo which adds parent peer and provides
-        ///                     security critical Hwnd value for this peer created asynchronously.
-        /// SecurityTreatAsSafe - It's being called from this object which is real parent for the item peer.
-        /// </SecurityNote>
         /// <param name="column"></param>
         /// <param name="addParentInfo">only required when creating peers for virtualized cells</param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         private DataGridCellItemAutomationPeer GetOrCreateCellItemPeer(DataGridColumn column, bool addParentInfo)
         {
             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client

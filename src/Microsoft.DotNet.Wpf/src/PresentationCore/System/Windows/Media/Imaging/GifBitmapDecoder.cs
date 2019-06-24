@@ -42,11 +42,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapUri">Uri to decode</param>
         /// <param name="createOptions">Bitmap Create Options</param>
         /// <param name="cacheOption">Bitmap Caching Option</param>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// PublicOK - inputs verified or safe
-        /// </SecurityNote>
-        [SecurityCritical ]
         public GifBitmapDecoder(
             Uri bitmapUri,
             BitmapCreateOptions createOptions,
@@ -61,11 +56,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapStream">Stream to decode</param>
         /// <param name="createOptions">Bitmap Create Options</param>
         /// <param name="cacheOption">Bitmap Caching Option</param>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// PublicOK - inputs verified or safe
-        /// </SecurityNote>
-        [SecurityCritical ]
         public GifBitmapDecoder(
             Stream bitmapStream,
             BitmapCreateOptions createOptions,
@@ -77,11 +67,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Uses a SafeFileHandle, which is a SecurityCritical type (in v4).
-        ///     Calls SecurityCritical base class constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal GifBitmapDecoder(
             SafeMILHandle decoderHandle,
             BitmapDecoder decoder,

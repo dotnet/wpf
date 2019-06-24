@@ -86,7 +86,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For ControlTemplate, this is the styleTargetType.
         ///   For DataTemplate, this is the DataTemplateKey containing the DataType.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             object     key = null;

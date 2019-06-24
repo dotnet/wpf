@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="pl" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
@@ -174,7 +174,7 @@
       </trans-unit>
       <trans-unit id="AssemblyIdNegative">
         <source>An internal error was encountered parsing BAML content: assemblyId should be negative.</source>
-        <target state="translated">Wystąpił błąd wewnętrzny podczas analizowania zawartości BAML: właściwość assemblyId powinna  mieć wartość ujemną.</target>
+        <target state="translated">Wystąpił błąd wewnętrzny podczas analizowania zawartości BAML: właściwość assemblyId powinna mieć wartość ujemną.</target>
         <note />
       </trans-unit>
       <trans-unit id="AssemblyIdOutOfSequence">
@@ -809,7 +809,7 @@
       </trans-unit>
       <trans-unit id="CollectionAddEventMissingItem">
         <source>After a CollectionChange.Add event, Items collection does not contain the added item '{0}'.\n This could happen if the event sender supplied incorrect information in CollectionChangedEventArgs.</source>
-        <target state="translated">Po zdarzeniu CollectionChange.Add kolekcja Items nie zawiera dodanego elementu „{0}”.\n Mogło się tak zdarzyć, jeśli źródło zdarzenia dostarczyło nieprawidłowe informacje w elemencie CollectionChangedEventArgs.</target>
+        <target state="translated">Po zdarzeniu CollectionChange.Add kolekcja Items nie zawiera dodanego elementu „{0}”.\n Mogło się tak zdarzyć, jeśli nadawca zdarzenia dostarczył nieprawidłowe informacje w elemencie CollectionChangedEventArgs.</target>
         <note />
       </trans-unit>
       <trans-unit id="CollectionChangeIndexOutOfRange">
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="needs-review-translation">   (... {0} więcej wystąpień ...)</target>
+        <target state="translated">(... pozostałe wystąpienia: {0} ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -3944,7 +3944,7 @@
       </trans-unit>
       <trans-unit id="ParserEventDelegateTypeNotAccessible">
         <source>Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.</source>
-        <target state="translated">Nie można uzyskać dostępu do typu delegata „{0}” dla zdarzenia „{1}”. „\{0\}” ma nieprawidłowy poziom dostępu lub jego zestaw nie zezwala na dostęp.</target>
+        <target state="translated">Nie można uzyskać dostępu do typu delegata „{0}” dla zdarzenia „{1}”. „{0}” ma nieprawidłowy poziom dostępu lub jego zestaw nie zezwala na dostęp.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserFailFindType">
@@ -5784,7 +5784,7 @@
       </trans-unit>
       <trans-unit id="TextSchema_ChildTypeIsInvalid">
         <source>'{1}' type element is not valid at this position as a child of type '{0}'.</source>
-        <target state="translated">W tym miejscu element typu „{1}” jest nieprawidłowy jako element podrzędny typu „\{0\}”.</target>
+        <target state="translated">W tym miejscu element typu „{1}” jest nieprawidłowy jako element podrzędny typu „{0}”.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextSchema_IllegalElement">

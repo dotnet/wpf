@@ -26,10 +26,6 @@ namespace System.Windows.Input
         // Only we can make these.  Note that we cache and reuse instances.
         internal NotifyInputEventArgs() {}
         
-        ///<SecurityNote> 
-        ///     Critical - InputManager passed in is critical data. 
-        ///</SecurityNote> 
-        [SecurityCritical] 
         internal virtual void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _input = input;
@@ -48,13 +44,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical - input manager is critical 
-        ///     PublicOK - there's a demand. 
-        ///</SecurityNote> 
         public InputManager InputManager 
         {
-            [SecurityCritical ] 
             get 
             {
                 SecurityHelper.DemandUnrestrictedUIPermission(); 
@@ -66,12 +57,8 @@ namespace System.Windows.Input
         ///     The input manager processing the input event.
         ///     *** FOR INTERNAL USE ONLY **** 
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - input manager is critical 
-        ///</SecurityNote> 
         internal InputManager UnsecureInputManager 
         {
-            [SecurityCritical] 
             get 
             {
                 return _inputManager;
@@ -80,10 +67,6 @@ namespace System.Windows.Input
         
         private StagingAreaInputItem _input;
 
-        ///<SecurityNote> 
-        ///     Critical data as InputManager ctor is critical. 
-        ///</SecurityNote> 
-        [SecurityCritical] 
         private InputManager _inputManager;
 }
 

@@ -34,11 +34,6 @@ namespace MS.Internal.AppModel
         private static int s_systemBitDepth;
 
         /// Lazy init of static fields.  Call this at the beginning of any external entrypoint.
-        /// <SecurityNote>
-        ///     Critical:       Calls GetDC, ReleaseDC and GetDeviceCaps that are marked SecurityCritical
-        ///     TreatAsSafe:    These set local static fields that aren't directly exposed outside this class.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSystemMetrics()
         {
             if (s_systemBitDepth == 0)
@@ -77,12 +72,7 @@ namespace MS.Internal.AppModel
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to unmanaged Code permission
-        /// TreatAsSafe: There is a demand here
-        /// </SecurityNote>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static void GetDefaultIconHandles(out NativeMethods.IconHandle largeIconHandle, out NativeMethods.IconHandle smallIconHandle)
         {
             largeIconHandle = null;
@@ -97,11 +87,6 @@ namespace MS.Internal.AppModel
             int extractedCount = UnsafeNativeMethods.ExtractIconEx(iconModuleFile, 0, out largeIconHandle, out smallIconHandle, 1);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Since it calls CreateIconHandleFromImageSource
-        ///     TAS:      Since it creates icons with known h/w i.e. IconWidth/Height or SmallIconWidth/Height
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public static void GetIconHandlesFromImageSource(ImageSource image, out NativeMethods.IconHandle largeIconHandle, out NativeMethods.IconHandle smallIconHandle)
         {
             EnsureSystemMetrics();
@@ -109,11 +94,7 @@ namespace MS.Internal.AppModel
             smallIconHandle = CreateIconHandleFromImageSource(image, s_smallIconSize);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Since it calls CreateIconHandleFromBitmapFrame
-        /// </SecurityNote>
         /// <returns>A new HICON based on the image source</returns>
-        [SecurityCritical]
         public static NativeMethods.IconHandle CreateIconHandleFromImageSource(ImageSource image, Size size)
         {
             EnsureSystemMetrics();
@@ -187,15 +168,9 @@ namespace MS.Internal.AppModel
             return bmp;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Since it calls CreateIconCursor which is SecurityCritical.  CreateIconCursor is SecurityCritical b/c
-        ///               it creates bitmaps with the input w/h etc.  That width/height is passed by this method using 
-        ///               sourceBitmapFrame.Pixel[Width/Height] and is not guarded.
-        /// </SecurityNote>
         /// <returns></returns>
         //
         //  Creates and HICON from a bitmap frame
-        [SecurityCritical]
         private static NativeMethods.IconHandle CreateIconHandleFromBitmapFrame(BitmapFrame sourceBitmapFrame)
         {
             Invariant.Assert(sourceBitmapFrame != null, "sourceBitmapFrame cannot be null here");
@@ -223,10 +198,6 @@ namespace MS.Internal.AppModel
 
         // Also used by PenCursorManager
         // Creates a 32 bit per pixel Icon or cursor.  This code is moved from framework\ms\internal\ink\pencursormanager.cs
-        /// <SecurityNote>
-        ///     Critical: Critical as this code create a DIB section and writes data to it
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static NativeMethods.IconHandle CreateIconCursor(
             byte[] colorArray,
             int width,

@@ -11,8 +11,6 @@ namespace System.Windows.Xps.Serialization.RCW
 {
     [Guid("0C733A30-2A1C-11CE-ADE5-00AA0044773D"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface ISequentialStream
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

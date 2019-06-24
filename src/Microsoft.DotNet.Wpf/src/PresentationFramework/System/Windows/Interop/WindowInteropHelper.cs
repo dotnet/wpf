@@ -60,13 +60,8 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        ///   PublicOK: There is a demand , this API not available in internet zone
-        /// </SecurityNote>
         public IntPtr Handle
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -74,12 +69,8 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        /// </SecurityNote>
         internal IntPtr CriticalHandle
         {
-            [SecurityCritical]
             get
             {
                 Invariant.Assert(_window != null, "Cannot be null since we verify in the constructor");
@@ -93,20 +84,14 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Exposes a handle
-        ///   PublicOK: There is a demand , this API not available in internet zone
-        /// </SecurityNote>
         public IntPtr Owner
         {
-            [SecurityCritical]
             get
             {
                 SecurityHelper.DemandUIWindowPermission();
                 Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
                 return _window.OwnerHandle;
             }
-            [SecurityCritical]
             set
             {
                 SecurityHelper.DemandUIWindowPermission();
@@ -128,11 +113,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Create the hwnd of the Window if the hwnd is not created yet.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: Create and exposes the window handle.
-        ///   PublicOK: We demand UIPermission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public IntPtr EnsureHandle()
         {
             SecurityHelper.DemandUIWindowPermission();

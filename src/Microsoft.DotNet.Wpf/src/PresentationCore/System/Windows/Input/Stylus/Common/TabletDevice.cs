@@ -65,16 +65,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - accesses critical data (InputSource on StylusDevice)
-        /// PublicOK - there is a demand.
-        ///               this is safe as: 
-        ///                     there is a demand for the UI permissions in the code
-        /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical]
-            [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
             get
             {
                 VerifyAccess();

@@ -42,20 +42,13 @@ namespace MS.Internal.Shaping
             _length = arrayLength;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accepts pointers and manipulates
-        ///     them without validation.Critical for set only
-        ///     TreatAsSafe: The method does proper bound check.
-        /// </SecurityNote>
         public ushort this[int index]
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
                 return _storage[_index + index];
             }
-            [SecurityCritical,SecurityTreatAsSafe]
             set
             {
                 Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
@@ -66,14 +59,9 @@ namespace MS.Internal.Shaping
         /// <summary>
         /// Length of current sublist
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accepts pointers and manipulates
-        ///     them without validation, critical only for set
-        /// </SecurityNote>
         public int Length
         {
             get { return _length; }
-            [SecurityCritical]
             set { _length = value; }
         }
 
@@ -288,23 +276,11 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal unsafe class UnsafeUshortArray : UshortBuffer
     {
-        /// <SecurityNote>
-        ///     Critical:Holds reference to a pointer
-        /// </SecurityNote>
-        [SecurityCritical]
         private ushort*     _array;
 
-        /// <SecurityNote>
-        ///     Critical:Can be used to cause a buffer overrun
-        /// </SecurityNote>
         private SecurityCriticalDataForSet<int>         _arrayLength;
 
 
-        /// <SecurityNote>
-        ///     Critical: This code probes into checked pointer. 
-        ///     Safe    : The pointer is validated at probing.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
         {            
             _array = array.Probe(0, arrayLength);
@@ -312,20 +288,13 @@ namespace MS.Internal.Shaping
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code accepts pointers and manipulates
-        ///     them without validation.Critical for set only
-        ///     Safe    : Setter does propery bound check.
-        /// </SecurityNote>
         public override ushort this[int index]
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 Invariant.Assert(index >= 0 && index < _arrayLength.Value);
                 return _array[index];
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 Invariant.Assert(index >= 0 && index < _arrayLength.Value);

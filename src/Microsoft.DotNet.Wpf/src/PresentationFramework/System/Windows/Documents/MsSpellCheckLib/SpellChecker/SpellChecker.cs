@@ -56,11 +56,6 @@ namespace System.Windows.Documents
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - Calls into COM
-            ///     Safe: Does not expose any Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private bool Init(bool shouldSuppressCOMExceptions = true)
             {
                 _speller.Value = SpellCheckerFactory.CreateSpellChecker(_languageTag, shouldSuppressCOMExceptions);
@@ -89,11 +84,6 @@ namespace System.Windows.Documents
 
             #region Suggest
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             public List<string> SuggestImpl(string word)
             {
                 IEnumString suggestions = _speller.Value.Suggest(word);
@@ -126,11 +116,6 @@ namespace System.Windows.Documents
 
             #region Add 
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void AddImpl(string word)
             {
                 _speller.Value.Add(word);
@@ -158,11 +143,6 @@ namespace System.Windows.Documents
 
             #region Ignore 
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void IgnoreImpl(string word)
             {
                 _speller.Value.Ignore(word);
@@ -189,11 +169,6 @@ namespace System.Windows.Documents
 
             #region AutoCorrect
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void AutoCorrectImpl(string from, string to)
             {
                 _speller.Value.AutoCorrect(from, to);
@@ -216,11 +191,6 @@ namespace System.Windows.Documents
 
             #region GetOptionValue 
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private byte GetOptionValueImpl(string optionId)
             {
                 return _speller.Value.GetOptionValue(optionId);
@@ -248,11 +218,6 @@ namespace System.Windows.Documents
 
             #region GetOptionIds
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private List<string> GetOptionIdsImpl()
             {
                 IEnumString optionIds = _speller.Value.OptionIds;
@@ -281,11 +246,6 @@ namespace System.Windows.Documents
 
             #region GetId
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private string GetIdImpl()
             {
                 return _speller.Value.Id;
@@ -311,13 +271,8 @@ namespace System.Windows.Documents
 
             #endregion // GetId
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
             #region GetLocalizedName
 
-            [SecuritySafeCritical]
             private string GetLocalizedNameImpl()
             {
                 return _speller.Value.LocalizedName;
@@ -345,11 +300,6 @@ namespace System.Windows.Documents
 
             #region GetOptionDescription
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private OptionDescription GetOptionDescriptionImpl(string optionId)
             {
                 IOptionDescription iod = _speller.Value.GetOptionDescription(optionId);
@@ -378,11 +328,6 @@ namespace System.Windows.Documents
 
             #region Check 
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private List<SpellingError> CheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.Check(text);
@@ -411,11 +356,6 @@ namespace System.Windows.Documents
 
             #region ComprehensiveCheck
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             public List<SpellingError> ComprehensiveCheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
@@ -444,11 +384,6 @@ namespace System.Windows.Documents
 
             #region Add/Remove SpellCheckerChanged support
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private uint? add_SpellCheckerChangedImpl(ISpellCheckerChangedEventHandler handler)
             {
                 return (handler != null) ? (uint?)null : _speller.Value.add_SpellCheckerChanged(handler);
@@ -472,11 +407,6 @@ namespace System.Windows.Documents
                 return _disposed ? null : addSpellCheckerChangedImplWithRetries(handler, suppressCOMExceptions);
             }
 
-            /// <SecurityNote>
-            ///     Critical: Calls into COM
-            ///     Safe: Does not expose Critical resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void remove_SpellCheckerChangedImpl(uint eventCookie)
             {
                 _speller.Value.remove_SpellCheckerChanged(eventCookie);
@@ -572,11 +502,6 @@ namespace System.Windows.Documents
 
             #region IDisposable Support
 
-            /// <SecurityNote>
-            /// Critical - Calls into Marshal.ReleaseComObject
-            /// Safe - Does not expose any Critical resources to the caller.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             protected virtual void Dispose(bool disposing)
             {

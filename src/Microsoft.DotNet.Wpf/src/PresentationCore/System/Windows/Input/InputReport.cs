@@ -40,11 +40,6 @@ namespace System.Windows.Input
         /// <param name="timestamp">
         ///     The time when the input occured.
         /// </param>
-        /// <SecurityNote>
-        ///     This handles critical data in the form of PresentationSource but there are demands on the
-        ///     critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
             if (inputSource == null)
@@ -61,14 +56,8 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the type of input source that reported input.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This element is treated as critical and is not ok to expose.
-        ///     A link demand exists but that in itself is not adequate to safeguard this.
-        ///     The critical exists to expose users.
-        /// </SecurityNote>
         public PresentationSource InputSource 
         { 
-            [SecurityCritical]
             get 
             {
                 return _inputSource.Value;

@@ -1741,7 +1741,7 @@ namespace MS.Internal.Data
             bool result = false;
             object item = GetItem(Length - 1);
 
-            if (item != null && AssemblyHelper.IsLoaded(UncommonAssembly.System_Data))
+            if (item != null && AssemblyHelper.IsLoaded(UncommonAssembly.System_Data_Common))
             {
                 result = DetermineWhetherDBNullIsValid(item);
             }

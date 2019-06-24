@@ -77,16 +77,16 @@ namespace System.Windows.Documents
             EventManager.RegisterClassHandler(controlType, Mouse.MouseLeaveEvent, new MouseEventHandler(OnMouseLeave), true /* handledEventsToo */);
 
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.CorrectionList   , new ExecutedRoutedEventHandler(OnCorrectionList)       , new CanExecuteRoutedEventHandler(OnQueryStatusCorrectionList)       , SRID.KeyCorrectionList,   SRID.KeyCorrectionListDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleInsert         , new ExecutedRoutedEventHandler(OnToggleInsert)         , onQueryStatusNYI                  , KeyToggleInsert,     SRID.KeyToggleInsertDisplayString           );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Delete               , new ExecutedRoutedEventHandler(OnDelete)               , onQueryStatusNYI                  , KeyDelete,           SRID.KeyDeleteDisplayString                 );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteNextWord       , new ExecutedRoutedEventHandler(OnDeleteNextWord)       , onQueryStatusNYI                  , KeyDeleteNextWord,   SRID.KeyDeleteNextWordDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeletePreviousWord   , new ExecutedRoutedEventHandler(OnDeletePreviousWord)   , onQueryStatusNYI                  , KeyDeletePreviousWord, SRID.KeyDeletePreviousWordDisplayString   );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterParagraphBreak  , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyEnterParagraphBreak, SRID.KeyEnterParagraphBreakDisplayString );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterLineBreak       , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyEnterLineBreak,   SRID.KeyEnterLineBreakDisplayString         );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabForward           , new ExecutedRoutedEventHandler(OnTabForward)           , new CanExecuteRoutedEventHandler(OnQueryStatusTabForward)           , KeyTabForward,       SRID.KeyTabForwardDisplayString             );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabBackward          , new ExecutedRoutedEventHandler(OnTabBackward)          , new CanExecuteRoutedEventHandler(OnQueryStatusTabBackward)          , KeyTabBackward,      SRID.KeyTabBackwardDisplayString            );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Space                , onSpace                                                , onQueryStatusNYI                  , KeySpace,            SRID.KeySpaceDisplayString                  );
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ShiftSpace           , onSpace                                                , onQueryStatusNYI                  , KeyShiftSpace,       SRID.KeyShiftSpaceDisplayString             );
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleInsert         , new ExecutedRoutedEventHandler(OnToggleInsert)         , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyToggleInsert,     SRID.KeyToggleInsertDisplayString           ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Delete               , new ExecutedRoutedEventHandler(OnDelete)               , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyDelete,           SRID.KeyDeleteDisplayString                 ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteNextWord       , new ExecutedRoutedEventHandler(OnDeleteNextWord)       , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyDeleteNextWord,   SRID.KeyDeleteNextWordDisplayString         ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeletePreviousWord   , new ExecutedRoutedEventHandler(OnDeletePreviousWord)   , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyDeletePreviousWord, SRID.KeyDeletePreviousWordDisplayString   ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterParagraphBreak  , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyGesture.CreateFromResourceStrings(KeyEnterParagraphBreak, SRID.KeyEnterParagraphBreakDisplayString ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterLineBreak       , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyGesture.CreateFromResourceStrings(KeyEnterLineBreak,   SRID.KeyEnterLineBreakDisplayString         ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabForward           , new ExecutedRoutedEventHandler(OnTabForward)           , new CanExecuteRoutedEventHandler(OnQueryStatusTabForward)           , KeyGesture.CreateFromResourceStrings(KeyTabForward,       SRID.KeyTabForwardDisplayString             ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabBackward          , new ExecutedRoutedEventHandler(OnTabBackward)          , new CanExecuteRoutedEventHandler(OnQueryStatusTabBackward)          , KeyGesture.CreateFromResourceStrings(KeyTabBackward,      SRID.KeyTabBackwardDisplayString            ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Space                , onSpace                                                , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeySpace,            SRID.KeySpaceDisplayString                  ));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ShiftSpace           , onSpace                                                , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyShiftSpace,       SRID.KeyShiftSpaceDisplayString             ));
 
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Backspace            , new ExecutedRoutedEventHandler(OnBackspace)            , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyBackspace,        SR.Get(SRID.KeyBackspaceDisplayString)),   KeyGesture.CreateFromResourceStrings(KeyShiftBackspace, SR.Get(SRID.KeyShiftBackspaceDisplayString)) );
         }
@@ -474,16 +474,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// ToggleInsert command handler
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code toggles the state of the insert key and in doing so touches Cicero code which is critical 
-        ///               (StartTrasitoryExtension and StopTransitoryExtension). It also calls 
-        ///               PresentationSource.[Add/Remove]SourceChangedHandler which are critical.
-        ///    TreatAsSafe: This code can do no harm and any state change can be reversed by hitting toggle again. 
-        ///               This code merely registers an internal handler to the PresentationSource.SourceChanged event. 
-        ///               The operation performed on the handler isnt something that external code cant already do today 
-        ///               by firing the EditingCommands.ToggleInsert command and is safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnToggleInsert(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -1627,11 +1617,6 @@ namespace System.Windows.Documents
         // win32 message queue for processing.
         // Avalon doesn't keep a separate queue for input events.  Instead
         // it interleaves work items with the win32 input queue.
-        /// <SecurityNote>
-        ///     Critical - Calls PeekMessage, and accesses the root window
-        ///     TreatAsSafe - The information it returns is safe to return.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static bool IsMouseInputPending(TextEditor This)
         {
             bool mouseInputPending = false;

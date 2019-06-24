@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("EDB59622-61A2-42C3-BACE-ACF2286C06BF"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMGradientBrush : IXpsOMBrush
     {
         XPS_COLOR_INTERPOLATION GetColorInterpolationMode();

@@ -963,7 +963,6 @@ namespace System.Windows.Input
             return handled;
         }
 
-        [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         private void RaiseProcessInputEventHandlers(ProcessInputEventHandler postProcessInput, ProcessInputEventArgs processInputEventArgs)
         {
             processInputEventArgs.StagingItem.Input.MarkAsUserInitiated();

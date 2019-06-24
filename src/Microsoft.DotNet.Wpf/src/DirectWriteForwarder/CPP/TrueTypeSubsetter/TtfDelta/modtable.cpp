@@ -54,7 +54,6 @@ This function may do one of many things.
 
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModXmtxXhea( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                   TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                   CONST uint8 *puchKeepGlyphList, 
@@ -256,7 +255,6 @@ const char * xhea_tag;
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModMaxP( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
               TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
               uint32 *pulNewOutOffset)
@@ -300,7 +298,6 @@ uint16 usBytesWritten;
 /* NOTE: This function will work fine even if the OS/2 table becomes updated. 
    The version value is preserved, and the length of the table is not modified */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModOS2( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
              uint16 usMinChr, 
              uint16 usMaxChr,
@@ -362,7 +359,6 @@ int16 errCode = NO_ERROR;
 /* this function changes all Post tables to format 3.0 for space savings */
 /* ------------------------------------------------------------------- */
 #define POST_FORMAT_3 0x0030000
-[System::Security::SecurityCritical]
 int16 ModPost( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
               TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
               CONST uint16 usFormat,
@@ -420,7 +416,6 @@ overwriting data we already have */
 
 /* ------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 int16 ModName( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
               TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
               CONST uint16 usLanguage,
@@ -493,7 +488,6 @@ TTFACC_FILEBUFFERINFO NameTableBufferInfo; /* needed by WriteNameRecords */
 }
         
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 AdjustKernFormat0(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                         CONST uint8 *puchKeepGlyphList, 
                         CONST uint16 usGlyphListCount, 
@@ -568,7 +562,6 @@ int16 errCode;
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModKern(  CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
               CONST uint8 *puchKeepGlyphList, 
               CONST uint16 usGlyphListCount,
@@ -653,7 +646,6 @@ int16 errCode = NO_ERROR;
 /* clear out any unused glyphs. Calculate new maxWidth value for each device record */
 /* assumes that hhea table has been updated with info for the modified hmtx table */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModHdmx( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
               CONST uint8 *puchKeepGlyphList, 
               CONST uint16 usGlyphListCount,
@@ -782,7 +774,6 @@ uint32 ulOutSizeDeviceRecord;
 /* ------------------------------------------------------------------- */
 /* Zero out any unused glyphs */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModLTSH(  CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
               CONST uint8 *puchKeepGlyphList, 
               CONST uint16 usGlyphListCount,
@@ -862,7 +853,6 @@ uint16 usBytesWritten;
 /* Greatest Common Denominator */
 /* recursive !! */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint16 GCD (uint16 u, uint16 v)
 {
     if (v == 0) 
@@ -871,7 +861,6 @@ PRIVATE uint16 GCD (uint16 u, uint16 v)
         return GCD(v, (uint16) (u % v));
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void ReduceRatio(uint16 *px, uint16 *py)
 {
 uint16 gcd; 
@@ -901,7 +890,6 @@ struct groupoffsetrecordkeeper    /* housekeeping structure */
 };
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 InitGroupOffsetArray(PGROUPOFFSETRECORDKEEPER pKeeper, 
                                   uint16 usRecordCount)
 {
@@ -913,7 +901,6 @@ PRIVATE int16 InitGroupOffsetArray(PGROUPOFFSETRECORDKEEPER pKeeper,
     return NO_ERROR;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void FreeGroupOffsetArray(PGROUPOFFSETRECORDKEEPER pKeeper)
 {
     Mem_Free(pKeeper->pGroupOffsetArray);
@@ -922,7 +909,6 @@ PRIVATE void FreeGroupOffsetArray(PGROUPOFFSETRECORDKEEPER pKeeper)
     pKeeper->usNextArrayIndex = 0;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 RecordGroupOffset(PGROUPOFFSETRECORDKEEPER pKeeper, 
                                 uint16 usOldGroupOffset,
                                 uint16 usNewGroupOffset)
@@ -937,7 +923,6 @@ PRIVATE int16 RecordGroupOffset(PGROUPOFFSETRECORDKEEPER pKeeper,
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint16 LookupGroupOffset(PGROUPOFFSETRECORDKEEPER pKeeper, 
                                 uint16 usOldGroupOffset)
 {
@@ -958,7 +943,6 @@ uint16 i;
 /* need to remove 4:3 ratio and 0:0 ration (if a 1:1 already exists) */
 /* don't have to copy the data over from the inputbuffer, as this function reads directly from there */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModVDMX(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
               TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
               CONST uint16 usFormat,

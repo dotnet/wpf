@@ -416,18 +416,12 @@ namespace System.Windows.Xps.Serialization
         internal
         int
         JobIdentifier
-        {
-            [System.Drawing.Printing.PrintingPermission(
-             System.Security.Permissions.SecurityAction.Demand,
-             Level = System.Drawing.Printing.PrintingPermissionLevel.DefaultPrinting)]                    
+        {                
             set
             {
                 _jobIdentifier = value;
             }
-
-            [System.Drawing.Printing.PrintingPermission(
-             System.Security.Permissions.SecurityAction.Demand,
-             Level = System.Drawing.Printing.PrintingPermissionLevel.DefaultPrinting)]                    
+                    
             get
             {
                 return _jobIdentifier;

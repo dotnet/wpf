@@ -23,7 +23,6 @@ typedef void *(*CFP_REALLOCPROC)(void *, size_t);
 typedef void (*CFP_FREEPROC)(void *);
 #endif
 
-[System::Security::SecurityCritical]
 short TTCOffsetTableOffset(CONST unsigned char * puchSrcBuffer,
             CONST unsigned long ulSrcBufferSize,
             CONST unsigned short usTTCIndex,
@@ -31,7 +30,6 @@ short TTCOffsetTableOffset(CONST unsigned char * puchSrcBuffer,
 
 
 /* return codes defined in ttferror.h */
-[System::Security::SecurityCritical]
 short SubsetTTF(CONST unsigned char * puchSrcBuffer,
           unsigned char * puchDestBuffer,
         CONST unsigned long ulBufferSize,
@@ -44,7 +42,6 @@ short SubsetTTF(CONST unsigned char * puchSrcBuffer,
         CONST unsigned short usTTCIndex);
 
 /* return codes defined in ttferror.h */
-[System::Security::SecurityCritical]
 short CreateDeltaTTF(CONST unsigned char * puchSrcBuffer,
             CONST unsigned long ulSrcBufferSize,
               unsigned char ** ppuchDestBuffer,
@@ -61,7 +58,6 @@ short CreateDeltaTTF(CONST unsigned char * puchSrcBuffer,
             CFP_FREEPROC lpfnFree,
             unsigned long ulOffsetTableOffset,  
             void * lpvReserved);
-[System::Security::SecurityCritical]
 short CreateDeltaTTFEx(CONST unsigned char * puchSrcBuffer,
             CONST unsigned long ulSrcBufferSize,
               unsigned char ** ppuchDestBuffer,

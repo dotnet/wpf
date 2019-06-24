@@ -34,12 +34,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Contructs a FontFamily object.
             /// </summary>
             /// <param name="fontFamily">The DWrite font family object that this class wraps.</param>
-            /// <SecurityNote>
-            /// Critical - Receives a native pointer and stores it internally.
-            ///            This whole object is wrapped around the passed in pointer
-            ///            So this ctor assumes safety of the passed in pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             FontFamily(IDWriteFontFamily* fontFamily);
 
             /// <summary>

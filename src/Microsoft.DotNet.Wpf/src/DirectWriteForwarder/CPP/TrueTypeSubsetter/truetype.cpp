@@ -60,7 +60,6 @@ using MS::Internal::TtfDelta::CreateDeltaTTF;
 
 namespace MS { namespace Internal {
 
-[System::Security::SecurityCritical]
 array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int fileSize, System::Uri ^ sourceUri, int directoryOffset, array<System::UInt16> ^ glyphArray)
 {
     uint8 * puchDestBuffer = NULL;

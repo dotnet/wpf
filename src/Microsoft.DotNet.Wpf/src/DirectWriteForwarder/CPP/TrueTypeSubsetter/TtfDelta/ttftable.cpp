@@ -30,7 +30,6 @@
 #include "ttfdcnfg.h"
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingTagCompare( CONST void *arg1, CONST void *arg2 )
 {
     if (((DIRECTORY *)(arg1))->tag == ((DIRECTORY *)(arg2))->tag) /* they're the same */
@@ -40,7 +39,6 @@ PRIVATE int CRTCB AscendingTagCompare( CONST void *arg1, CONST void *arg2 )
     return 1;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingOffsetCompare( CONST void *arg1, CONST void *arg2 )
 {
     if (((DIRECTORY *)(arg1))->offset == ((DIRECTORY *)(arg2))->offset) /* they're the same */
@@ -54,7 +52,6 @@ PRIVATE int CRTCB AscendingOffsetCompare( CONST void *arg1, CONST void *arg2 )
 /* this routine sorts an array of directory entries by tag value using
   a qsort */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void SortByTag( DIRECTORY * aDirectory,
                 uint16      usnDirs )
 {
@@ -67,7 +64,6 @@ void SortByTag( DIRECTORY * aDirectory,
 /* this routine sorts an array of directory entries by offset value using
   a qsort */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void SortByOffset( DIRECTORY * aDirectory,
                     uint16      usnDirs )
 {
@@ -83,7 +79,6 @@ it sets the tag to something unrecognizable so it will be
 filtered out by the compress tables operation at the end
 of program execution. */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void MarkTableForDeletion( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, __in_bcount(4) const char *  szDirTag )
                    
 {
@@ -110,7 +105,6 @@ uint16 usBytesMoved;
 } /* MarkTableForDeletion() */
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 FindCmapSubtable( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                         uint16   usDesiredPlatform,
                         uint16   usDesiredEncodingID, 
@@ -199,7 +193,6 @@ uint32 ulFoundOffset;
 } /* FindCmapSubtable() */
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint16 GuessNumCmapGlyphIds( uint16 usnSegments,
                              FORMAT4_SEGMENTS *  Format4Segments )
 {
@@ -241,7 +234,6 @@ uint16         usMaxGlyphIdIdx;
  /* ---------------------------------------------------------------------- */
 /* special case, need to read long or short repeatedly into long buffer */
 /* buffer must have been allocated large enough for the number of glyphs */
-[System::Security::SecurityCritical]
 uint32 GetLoca( TTFACC_FILEBUFFERINFO               *pInputBufferInfo, 
                      __out_ecount(ulAllocedCount) uint32 *pulLoca, 
                      __range(1, USHORT_MAX + 1)     uint32  ulAllocedCount
@@ -282,7 +274,6 @@ uint32 ulBytesRead;
     }
     return( ulOffset );
 }
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB CompareSegments(const void *elem1, const void *elem2)
 {
 
@@ -296,7 +287,6 @@ PRIVATE int CRTCB CompareSegments(const void *elem1, const void *elem2)
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint16 GetGlyphIdx( uint16 usCharCode,
                     FORMAT4_SEGMENTS * Format4Segments,
                     uint16 usnSegments,
@@ -339,7 +329,6 @@ FORMAT4_SEGMENTS KeySegment;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 GetGlyphIdx12( uint32 ulCharCode,
                     FORMAT12_GROUPS * pFormat12Groups,
                     uint32 ulnGroups )
@@ -361,19 +350,16 @@ uint32 ulGlyphIdx = INVALID_GLYPH_INDEX_LONG;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeCmapFormat4Ids( GLYPH_ID *GlyphId )
 {
     Mem_Free( GlyphId );
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeCmapFormat4Segs( FORMAT4_SEGMENTS *Format4Segments)
 {
     Mem_Free( Format4Segments );
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeCmapFormat4( FORMAT4_SEGMENTS *Format4Segments,
                  GLYPH_ID *GlyphId )
 {
@@ -382,7 +368,6 @@ void FreeCmapFormat4( FORMAT4_SEGMENTS *Format4Segments,
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4Ids( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint16 usSegCount,
                          FORMAT4_SEGMENTS * Format4Segments,
                          GLYPH_ID ** ppGlyphId,
@@ -432,7 +417,6 @@ int16 errCode;
 } /* ReadAllocCmapFormat4Ids() */
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4Segs( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint16 usSegCount,
                           FORMAT4_SEGMENTS ** Format4Segments, 
                           uint32 ulOffset,
@@ -517,7 +501,6 @@ uint32 ulBytesRead;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadCmapLength( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                         CMAP_SUBHEADER_GEN * pCmapSubHeader,
                         uint32  ulStartOffset,
@@ -586,7 +569,6 @@ int16 ReadCmapLength( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                       CONST uint16 usPlatform,
                       CONST uint16 usEncoding,
@@ -647,14 +629,12 @@ CMAP_SUBHEADER_GEN CmapSubHeader;
 
 } /* ReadAllocCmapFormat4() */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeCmapFormat6( uint16 *  glyphIndexArray)
 {
     Mem_Free( glyphIndexArray );
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat6( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                       CONST uint16 usPlatform,
                       CONST uint16 usEncoding,
@@ -695,7 +675,6 @@ int16 errCode;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadCmapFormat0( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                       CONST uint16 usPlatform,
                       CONST uint16 usEncoding,
@@ -729,7 +708,6 @@ int16 errCode;
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat12( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                       uint32 ulSubOffset,
                       CMAP_FORMAT12 * pCmapFormat12,
@@ -780,7 +758,6 @@ int16 errCode;
 
 } /* ReadAllocCmapFormat12() */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeCmapFormat12Groups( FORMAT12_GROUPS *pFormat12Groups)
 {
     Mem_Free( pFormat12Groups );
@@ -788,7 +765,6 @@ void FreeCmapFormat12Groups( FORMAT12_GROUPS *pFormat12Groups)
 
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 GetGlyphHeader( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                      uint16 GlyfIdx,
                      uint16 usIdxToLocFmt,
@@ -847,7 +823,6 @@ int16 errCode;
 /* It is possible that this function could run out of stack */
 /* if the font defines a VERY deep component tree. */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 GetComponentGlyphList( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                             uint16 usCompositeGlyphIdx,
                             uint16 * pusnGlyphs,
@@ -932,7 +907,6 @@ int16 errCode;
 /* ------------------------------------------------------------------- */
 /* support for Cmap Modifying and merging */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingCodeCompare( CONST void *arg1, CONST void *arg2 )
 {
     if (((PCHAR_GLYPH_MAP_LIST)(arg1))->usCharCode == ((PCHAR_GLYPH_MAP_LIST)(arg2))->usCharCode) /* they're the same */
@@ -943,7 +917,6 @@ PRIVATE int CRTCB AscendingCodeCompare( CONST void *arg1, CONST void *arg2 )
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void SortCodeList( PCHAR_GLYPH_MAP_LIST pCharGlyphMapList,
                           uint16 *pusnCharMapListLength )
 {
@@ -971,7 +944,6 @@ uint16 i, j;
     *pusnCharMapListLength = i+1;   /* the last good i value */
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingCodeCompareEx( CONST void *arg1, CONST void *arg2 )
 {
     if (((PCHAR_GLYPH_MAP_LIST_EX)(arg1))->ulCharCode == ((PCHAR_GLYPH_MAP_LIST_EX)(arg2))->ulCharCode) /* they're the same */
@@ -981,7 +953,6 @@ PRIVATE int CRTCB AscendingCodeCompareEx( CONST void *arg1, CONST void *arg2 )
     return 1;
 }
 
-[System::Security::SecurityCritical]
 PRIVATE void SortCodeListEx( PCHAR_GLYPH_MAP_LIST_EX pCharGlyphMapList,
                           uint32 *pulnCharMapListLength )
 {
@@ -1008,14 +979,12 @@ uint32 i, j;
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeFormat4CharCodes(PCHAR_GLYPH_MAP_LIST pusCharCodeList)
 {
     Mem_Free(pusCharCodeList);
 }
 /* ---------------------------------------------------------------------- */
 /* create a list of character codes to keep, based on the glyph list */
-[System::Security::SecurityCritical]
 int16 ReadAllocFormat4CharGlyphMapList(TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                                 CONST uint16 usPlatform,
                                 CONST uint16 usEncoding,
@@ -1121,14 +1090,12 @@ int16 errCode = NO_ERROR;
 
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeFormat12CharCodes(PCHAR_GLYPH_MAP_LIST_EX pulCharCodeList)
 {
     Mem_Free(pulCharCodeList);
 }
 /* ---------------------------------------------------------------------- */
 /* create a list of character codes to keep, based on the glyph list */
-[System::Security::SecurityCritical]
 int16 ReadAllocFormat12CharGlyphMapList(TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                                 uint32 ulOffset,
                                 uint8 *puchKeepGlyphList, /* glyphs to keep - boolean */
@@ -1206,7 +1173,6 @@ int16 errCode = NO_ERROR;
 
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint32 Format4CmapLength( uint16 usnSegments,
                     uint16 usnGlyphIdxs )
 {
@@ -1218,7 +1184,6 @@ PRIVATE uint32 Format4CmapLength( uint16 usnSegments,
 based on a list of character codes and corresponding glyph 
 indexes.  */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void ComputeFormat4CmapData( 
             CMAP_FORMAT4 * pCmapFormat4, /* to be set by this routine */
             FORMAT4_SEGMENTS * NewFormat4Segments, /* to be set by this routine */
@@ -1329,7 +1294,6 @@ reconstructed around the missing glyphs.  It assumes that there
 is already enough space allocated to hold the new format 4 
 subtable. */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 WriteOutFormat4CmapData( 
                TTFACC_FILEBUFFERINFO * pOutputBufferInfo,         
                CMAP_FORMAT4 *pCmapFormat4,  /* created by ComputeNewFormat4Data */
@@ -1392,7 +1356,6 @@ uint32 ulOffset;
 based on a list of character codes and corresponding glyph 
 indexes.  */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void ComputeFormat12CmapData( CMAP_FORMAT12 * pCmapFormat12, /* to be set by this routine */
                             FORMAT12_GROUPS * NewFormat12Groups, /* to be set by this routine */
                             uint32 * pulnGroups,            /* count of NewFormat12Groups - returned */
@@ -1439,7 +1402,6 @@ reconstructed around the missing glyphs.  It assumes that there
 is already enough space allocated to hold the new format 12 
 subtable. */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 WriteOutFormat12CmapData( 
                TTFACC_FILEBUFFERINFO * pOutputBufferInfo,         
                CMAP_FORMAT12 *pCmapFormat12,        /* created by ComputeNewFormat12Data */
@@ -1484,7 +1446,6 @@ uint32 ulOffset;
 /* will point to the allocated array and the *pNameRecordCount value will be set to the number of */
 /* records in the array. */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ReadAllocNameRecords(TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                            PNAMERECORD *ppNameRecordArray, /* allocated by this function */
                            uint16 *pNameRecordCount, /* number of records in array */
@@ -1547,7 +1508,6 @@ uint16 i;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 uint32 CalcMaxNameTableLength(PNAMERECORD pNameRecordArray, 
                               uint16 NameRecordCount)
 {
@@ -1586,7 +1546,6 @@ struct namerecordstrings
     uint16 usNameRecordStringCharIndex; /* index into string referenced by StringIndex of where this string starts */
 };
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB DescendingStringLengthCompare( CONST void *arg1, CONST void *arg2 )
 {
     if (((NAMERECORDSTRINGS *)(arg1))->usNameRecordStringLength == ((NAMERECORDSTRINGS *)(arg2))->usNameRecordStringLength) /* they're the same */
@@ -1596,7 +1555,6 @@ PRIVATE int CRTCB DescendingStringLengthCompare( CONST void *arg1, CONST void *a
     return -1;  
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingRecordIndexCompare( CONST void *arg1, CONST void *arg2 )
 {
     if (((NAMERECORDSTRINGS *)(arg1))->usNameRecordIndex == ((NAMERECORDSTRINGS *)(arg2))->usNameRecordIndex) /* they're the same */
@@ -1608,7 +1566,6 @@ PRIVATE int CRTCB AscendingRecordIndexCompare( CONST void *arg1, CONST void *arg
 
 /* ---------------------------------------------------------------------- */
 /* sort largest first */
-[System::Security::SecurityCritical]
 PRIVATE void SortNameRecordsByStringLength(NAMERECORDSTRINGS *pNameRecordStrings,uint16 NameRecordCount)
 {
     if (pNameRecordStrings == NULL || NameRecordCount == 0)
@@ -1619,7 +1576,6 @@ PRIVATE void SortNameRecordsByStringLength(NAMERECORDSTRINGS *pNameRecordStrings
 }
 /* ---------------------------------------------------------------------- */
 /* sorts by index */
-[System::Security::SecurityCritical]
 PRIVATE void SortNameRecordsByNameRecordIndex(NAMERECORDSTRINGS *pNameRecordStrings,uint16 NameRecordCount)
 {
     if (pNameRecordStrings == NULL || NameRecordCount == 0)
@@ -1630,7 +1586,6 @@ PRIVATE void SortNameRecordsByNameRecordIndex(NAMERECORDSTRINGS *pNameRecordStri
 }
 /* ---------------------------------------------------------------------- */
 /* sorts by platformID, then encodingID, then languageID, then nameID */
-[System::Security::SecurityCritical]
 PRIVATE int CRTCB AscendingNameRecordCompare( CONST void *arg1, CONST void *arg2 )
 {
 
@@ -1669,7 +1624,6 @@ PRIVATE int CRTCB AscendingNameRecordCompare( CONST void *arg1, CONST void *arg2
 /* To get a maximum size for the buffer to pass in, call CalcMaxNameTableLength. This will return the size of an unoptimized */
 /* name table. */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 WriteNameRecords(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, /* bufferInfo for a NAME table, not a TrueType file */
                        PNAMERECORD pNameRecordArray, 
                        uint16 NameRecordCount,
@@ -1823,7 +1777,6 @@ char *pStr1, *pStr2; /* temps to point to either new or old string from PNAMEREC
 /* have been allocated with the same function as was handed to the ReadAllocNameRecords function */
 /* or something compatible with the lpfnFree function */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void FreeNameRecords(PNAMERECORD pNameRecordArray, uint16 NameRecordCount, CFP_FREEPROC lfpnFree)
 {
 uint16 i;
@@ -1844,7 +1797,6 @@ uint16 i;
 /* next three functions only used by Name Wizard and Embedding .dll, not by CreateFontPackage */
 /* or MergeFontPackage */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 InsertTable(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, __in_bcount(4) const char *  szTag, uint8 * puchTableBuffer, uint32 ulTableBufferLength)
 {
 uint32 ulTableOffset;
@@ -2061,7 +2013,6 @@ int32 lCopySize;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 WriteNameTable(TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
                      PNAMERECORD pNameRecordArray,  /* internal representation of NameRecord - from ttftable.h */
                      uint16 NameRecordCount,
@@ -2095,7 +2046,6 @@ TTFACC_FILEBUFFERINFO NameTableBufferInfo; /* needed by WriteNameRecords */
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 WriteSmartOS2Table(TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
                          MAINOS2 * pOS2)  
 {
@@ -2163,7 +2113,6 @@ BOOL bWritten = FALSE;
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 CompressTables( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 * pulBytesWritten )
 {
 /* this routine compresses the tables present in a font file by removing

@@ -6,10 +6,6 @@
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    ///<SecurityNote>
-    /// Critical    - Exposes a native pointer.
-    ///</SecurityNote>
-    [SecurityCritical]
     void* ItemProps::ScriptAnalysis::get()
     {
         if (_scriptAnalysis != nullptr)
@@ -22,10 +18,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    ///<SecurityNote>
-    /// Critical    - Exposes a native pointer.
-    ///</SecurityNote>
-    [SecurityCritical]
     void* ItemProps::NumberSubstitutionNoAddRef::get()
     {
         return _numberSubstitution->Value;
@@ -61,10 +53,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return _isLatin;
     }
 
-    ///<SecurityNote>
-    /// Critical    - Asserts to allocate and initialize unmanaged memory.
-    /// TreatAsSafe - Initializes unmanaged memory to known safe state.
-    ///</SecurityNote>
     ItemProps::ItemProps()
     {
         _digitCulture           = nullptr;
@@ -79,11 +67,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
           
     }
 
-    ///<SecurityNote>
-    /// Critical    - Sets members to arbitrary native pointers that are later read by treat as safe methods.
-    ///</SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode = true)] 
     ItemProps^ ItemProps::Create(
         void* scriptAnalysis,
         void* numberSubstitution,
@@ -121,12 +104,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return result;
     }
 
-    ///<SecurityNote>
-    /// Critical - Asserts to read unmanaged memory.
-    /// Safe     - Reads from a safe location.
-    ///</SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode = true)] 
     __declspec(noinline) bool ItemProps::CanShapeTogether(ItemProps^ other)
     {
         // Check whether 2 ItemProps have the same attributes that impact shaping so

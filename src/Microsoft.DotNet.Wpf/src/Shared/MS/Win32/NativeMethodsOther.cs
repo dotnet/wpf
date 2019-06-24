@@ -573,7 +573,6 @@ namespace MS.Win32
             }
         }
 
-		[HostProtection(SecurityAction.LinkDemand, MayLeakOnAbort=true)]
 		internal sealed class SafeLocalMemHandle : SafeHandleZeroOrMinusOneIsInvalid
 		{
 		    public SafeLocalMemHandle() : base(true)

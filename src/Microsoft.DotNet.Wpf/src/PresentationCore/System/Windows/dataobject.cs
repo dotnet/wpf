@@ -3534,8 +3534,7 @@ namespace System.Windows
                         }
                         else
                         {
-                            bool anySerializationFailure = serializationCheckFailedForThisFunction;
-                            if (!anySerializationFailure)
+                             if (!serializationCheckFailedForThisFunction)
                             {
                                 formats.Add(baseVar[baseFormatIndex]);
                             }

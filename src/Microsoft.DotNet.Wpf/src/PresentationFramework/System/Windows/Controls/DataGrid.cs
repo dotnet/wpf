@@ -8329,9 +8329,8 @@ namespace System.Windows.Controls
 
             DataGridClipboardHelper.GetClipboardContentForHtml(dataGridStringBuilders[DataFormats.Html]);
 
-            DataObject dataObject;
+            DataObject dataObject = new DataObject();
 
-            dataObject = new DataObject();
 
             foreach (string format in formats)
             {

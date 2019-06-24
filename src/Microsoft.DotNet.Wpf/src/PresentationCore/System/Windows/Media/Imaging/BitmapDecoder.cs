@@ -1272,11 +1272,9 @@ namespace System.Windows.Media.Imaging
 
         private static Stream ProcessUncFiles(Uri uri)
         {
-            Stream bitmapStream = null;
 
-            bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-            return bitmapStream;
+            return new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         void CheckIfSiteOfOrigin()

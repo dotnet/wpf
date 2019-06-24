@@ -136,11 +136,12 @@ namespace System.Windows.Xps.Serialization
             GlyphRun        glyphRun
             )
         {
-            FontEmbeddingRight embeddingRights = glyphRun.GlyphTypeface.EmbeddingRights;
             if (null == glyphRun)
             {
                 throw new ArgumentNullException("glyphRun");
             }
+
+            FontEmbeddingRight embeddingRights = glyphRun.GlyphTypeface.EmbeddingRights;
 
             Uri fontUri = null;
 

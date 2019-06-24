@@ -255,9 +255,8 @@ namespace System.Windows.Documents
         /// </summary>
         private TextTreeNode CopyObjectNode(TextTreeObjectNode objectNode, out ContentContainer container)
         {
-            string xml;
 
-            xml = XamlWriter.Save(objectNode.EmbeddedElement);
+            string xml = XamlWriter.Save(objectNode.EmbeddedElement);
 
             container = new ObjectContentContainer(xml, objectNode.EmbeddedElement);
 

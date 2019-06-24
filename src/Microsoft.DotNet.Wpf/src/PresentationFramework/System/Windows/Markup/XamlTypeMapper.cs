@@ -2762,8 +2762,7 @@ namespace System.Windows.Markup
 
         internal static object CreateInternalInstance(ParserContext pc, Type type)
         {
-            object instance = null;
-            instance = Activator.CreateInstance(type,
+            object instance = Activator.CreateInstance(type,
                                                 BindingFlags.Public |
                                                 BindingFlags.NonPublic |
                                                 BindingFlags.Instance |

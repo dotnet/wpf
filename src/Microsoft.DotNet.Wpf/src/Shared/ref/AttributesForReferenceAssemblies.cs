@@ -3,8 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 //
+// This file specifies various assembly level attributes.
 //
 
 using System.Runtime.CompilerServices;
 
-[assembly:TypeForwardedTo(typeof(System.Windows.Input.ICommand))]
+[assembly: ReferenceAssembly]

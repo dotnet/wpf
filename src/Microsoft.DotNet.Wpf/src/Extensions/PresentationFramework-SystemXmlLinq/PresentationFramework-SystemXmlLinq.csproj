@@ -4,7 +4,6 @@
     <Platforms>AnyCPU;x64</Platforms>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly> 
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="SystemXmlLinqExtension.cs" />

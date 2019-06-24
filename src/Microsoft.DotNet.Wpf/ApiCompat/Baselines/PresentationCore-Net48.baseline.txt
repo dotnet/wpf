@@ -1,8 +1,0 @@
-Compat issues with assembly PresentationCore:
-CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.IO.Packaging.PackageStore' in the contract but not the implementation.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.LocalizabilityAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.TypeForwardedFromAttribute' exists on 'System.Windows.Input.ICommand' in the contract but not the implementation.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.InvalidWmpVersionException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.Animation.AnimationException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Resources.AssemblyAssociatedContentFileAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 6

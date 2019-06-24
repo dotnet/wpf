@@ -549,7 +549,6 @@
     <Compile Include="System\Windows\Input\Command\CommandManager.cs" />
     <Compile Include="System\Windows\Input\Command\ComponentCommands.cs" />
     <Compile Include="System\Windows\Input\Command\ExecutedRoutedEventArgs.cs" />
-    <Compile Include="System\Windows\Input\Command\ICommand.cs" />
     <Compile Include="System\Windows\Input\Command\ICommandSource.cs" />
     <Compile Include="System\Windows\Input\Command\InputBinding.cs" />
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
@@ -1423,6 +1422,9 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <!-- 

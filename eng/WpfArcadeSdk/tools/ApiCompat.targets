@@ -1,12 +1,12 @@
 <Project>
 
   <!-- For full documentation of this file see: https://github.com/dotnet/wpf/blob/master/Documentation/api-compat.md -->
-  
+
   <!-- Only enable API Compat against .NET Framework 4.8 when needed for some building assembly -->
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)'==''">
     <RunNetFrameworkApiCompat>false</RunNetFrameworkApiCompat>
     <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededProjects)'!='' 
-                                          and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName)'))
+                                          and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName);'))
                                           and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
@@ -14,7 +14,7 @@
   <PropertyGroup Condition="'$(RunRefApiCompat)'==''">
     <RunRefApiCompat>false</RunRefApiCompat>
     <RunRefApiCompat Condition="'$(RefApiCompatNeededProjects)'!=''
-                                 and $(RefApiCompatNeededProjects.Contains('$(MSBuildProjectName)'))
+                                 and $(RefApiCompatNeededProjects.Contains('$(MSBuildProjectName);'))
                                  and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunRefApiCompat>
   </PropertyGroup>
 
@@ -36,8 +36,10 @@
       <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-Net48.baseline.txt</ApiCompatBaseline>
     </PropertyGroup>
     <ItemGroup>
+      <ResolvedMatchingContract Remove="@(ResolvedMatchingContract)"/>
       <ResolvedMatchingContract Include="$(Net48RefAssembliesDir)$(AssemblyName).dll" />
 
+      <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
       <!-- If building a hand-crafted ref assembly, compare against the current output.  Otherwise, use the ref directory (compiler generated ref). -->
       <ResolvedImplementationAssembly Include="$(IntermediateOutputPath)$(AssemblyName).dll" Condition="!Exists('$(IntermediateOutputPath)ref\$(AssemblyName).dll')" />
       <ResolvedImplementationAssembly Include="$(IntermediateOutputPath)ref\$(AssemblyName).dll" Condition="Exists('$(IntermediateOutputPath)ref\$(AssemblyName).dll')" />
@@ -52,12 +54,19 @@
       <ApiCompatBaseline>$(WpfApiCompatBaselineDir)$(MSBuildProjectName)-ref.baseline.txt</ApiCompatBaseline>
     </PropertyGroup>
     <ItemGroup>
-      <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" />
+      <!-- If the runtime assembly project is C++/CLI, we want to use the bin output.  In C# builds we're too early and need the intermediate output. -->
+      <ResolvedMatchingContract Remove="@(ResolvedMatchingContract)"/>
+      <ResolvedMatchingContract Include="$(IntermediateOutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'!='true'"/>
+      <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'=='true'" />
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll" 
-                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x64'"/>
+      <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"
+                                     Condition="'$(WpfRuntimeIdentifier)'=='win-x64'"/>
       <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
                                       Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
+      <!-- If building a single project, Platform is used in win-x86.  Below handles this case. -->
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"
+                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86' and @(ResolvedImplementationAssembly->Count()) == 0"/>
 
       <Error Condition="@(ResolvedImplementationAssembly->Count()) &gt; 1" Text="More than one reference assembly was added to ResolvedImplementationAssembly!" />
     </ItemGroup>
@@ -82,6 +91,7 @@
     <_ApiCompatCommand Condition="'$(MSBuildRuntimeType)' != 'core' and '$(OS)' != 'Windows_NT'">mono --runtime=v4.0.30319 "$(_ApiCompatPath)"</_ApiCompatCommand>
 
     <_ApiCompatSemaphoreFile>$(MSBuildThisFileName).semaphore</_ApiCompatSemaphoreFile>
+    <_RefApiCompatSemaphoreFile>$(MSBuildThisFileName)-ref.semaphore</_RefApiCompatSemaphoreFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RunNetFrameworkApiCompat)' == 'true' or '$(RunRefApiCompat)'=='true'">
@@ -99,7 +109,7 @@
         When running targets for hand-crafted ref assemblies, the lib project type determines how the target should run.
         When building Managed C++ we need to run post-link, when building C# we run post-compilation.
     -->
-    <TargetsTriggeredByCompilation Condition="'$(RunNetFrameworkApiCompat)' == 'true'  and '$(ManagedCxx)'=='true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForRef</TargetsTriggeredByCompilation>
+    <TargetsTriggeredByCompilation Condition="'$(RunRefApiCompat)' == 'true' and '$(ManagedCxx)'!='true'">$(TargetsTriggeredByCompilation);WpfValidateApiCompatForRef</TargetsTriggeredByCompilation>
     <AfterLinkTargets Condition="'$(RunRefApiCompat)' == 'true' and '$(ManagedCxx)'=='true'">$(AfterLibTargets);WpfValidateApiCompatForRef</AfterLinkTargets>
   </PropertyGroup>
 
@@ -139,7 +149,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-      <ApiCompatArgs>$(ApiCompatArgs) "@(ResolvedMatchingContract)"</ApiCompatArgs>
+      <ApiCompatArgs>"@(ResolvedMatchingContract)"</ApiCompatArgs>
       <ApiCompatArgs>$(ApiCompatArgs) --contract-depends "@(_ContractDependencyDirectories, ','),"</ApiCompatArgs>
       <ApiCompatArgs Condition="'$(ApiCompatExcludeAttributeList)' != ''">$(ApiCompatArgs) --exclude-attributes "$(ApiCompatExcludeAttributeList)"</ApiCompatArgs>
       <ApiCompatArgs Condition="'$(ApiCompatEnforceOptionalRules)' == 'true'">$(ApiCompatArgs) --enforce-optional-rules</ApiCompatArgs>
@@ -196,7 +206,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-      <ApiCompatArgs>$(ApiCompatArgs) "@(ResolvedMatchingContract)"</ApiCompatArgs>
+      <ApiCompatArgs>"@(ResolvedMatchingContract)"</ApiCompatArgs>
       <ApiCompatArgs>$(ApiCompatArgs) --contract-depends "@(_ContractDependencyDirectories, ','),"</ApiCompatArgs>
       <ApiCompatArgs Condition="'$(ApiCompatExcludeAttributeList)' != ''">$(ApiCompatArgs) --exclude-attributes "$(ApiCompatExcludeAttributeList)"</ApiCompatArgs>
       <ApiCompatArgs Condition="'$(ApiCompatEnforceOptionalRules)' == 'true'">$(ApiCompatArgs) --enforce-optional-rules</ApiCompatArgs>
@@ -206,7 +216,7 @@
       <ApiCompatBaselineAll Condition="'$(BaselineAllAPICompatError)' == 'true'">&gt; $(ApiCompatBaseline)</ApiCompatBaselineAll>
       <ApiCompatExitCode>0</ApiCompatExitCode>
 
-      <ApiCompatResponseFile>$(IntermediateOutputPath)apicompat.rsp</ApiCompatResponseFile>
+      <ApiCompatResponseFile>$(IntermediateOutputPath)refapicompat.rsp</ApiCompatResponseFile>
     </PropertyGroup>
 
     <MakeDir Directories="$(IntermediateOutputPath)" />
@@ -223,7 +233,7 @@
       To force incremental builds to show failures again we are invalidating
       one compile input.
     -->
-    <Touch Condition="'$(ApiCompatExitCode)' != '0'" Files="$(IntermediateOutputPath)$(_ApiCompatSemaphoreFile)" AlwaysCreate="true">
+    <Touch Condition="'$(ApiCompatExitCode)' != '0'" Files="$(IntermediateOutputPath)$(_RefApiCompatSemaphoreFile)" AlwaysCreate="true">
       <Output TaskParameter="TouchedFiles" ItemName="FileWrites" />
     </Touch>
     <Error Condition="'$(ApiCompatExitCode)' != '0'" Text="ApiCompat failed for '$(TargetPath)'" />

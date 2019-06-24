@@ -10,7 +10,8 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using System.IO; // Stream            
+using System.IO; // Stream   
+using MS.Internal.Text;
 
 namespace System.Windows.Documents
 {
@@ -35,7 +36,7 @@ namespace System.Windows.Documents
             _rtfBytes = rtfBytes;
 
             _currentCodePage = CultureInfo.CurrentCulture.TextInfo.ANSICodePage;
-            _currentEncoding = Encoding.GetEncoding(_currentCodePage);
+            _currentEncoding = InternalEncoding.GetEncoding(_currentCodePage);
         }
 
         #endregion Constructors
@@ -300,7 +301,7 @@ namespace System.Windows.Documents
                 if (_currentCodePage != value)
                 {
                     _currentCodePage = value;
-                    _currentEncoding = Encoding.GetEncoding(_currentCodePage);
+                    _currentEncoding = InternalEncoding.GetEncoding(_currentCodePage);
                 }
             }
         }

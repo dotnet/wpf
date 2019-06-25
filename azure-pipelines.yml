@@ -33,7 +33,7 @@ trigger:
     # - arcade
   paths:
     exclude:
-    -Documentation/*
+    - Documentation/*
 
 pr:
   autoCancel: true

@@ -140,6 +140,8 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
         displayName: Windows Build / Publish
+        # This condition should be kept in sync with the condition for 'Run DRTs' step 
+        condition: or(ne(variables['_ContinuousIntegrationTestsOnlyPipeline'], 'true'), and(eq(variables['_ContinuousIntegrationTestsOnlyPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
       # Run DRTs
       - powershell: eng\common\cibuild.cmd
@@ -157,4 +159,5 @@ jobs:
           HelixAccessToken: $(_HelixToken)              # only defined for internal CI
           Creator: $(_HelixCreator)
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true'), ne(variables['_ContinuousIntegrationTestsEnabled'], 'false')) # on helix machine (with real signing) when running on the public build pipeline
+        # This condition should be kept in sync with the condition for cibuild.cmd step
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')) # on helix machine (with real signing) when running on the public build pipeline

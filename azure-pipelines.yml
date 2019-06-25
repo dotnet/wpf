@@ -17,7 +17,7 @@ variables:
 # This is set in the pipeline directly 
 # When set to false, CI tests will not be enabled in builds. 
 #
-# _ContinuousIntegrationTestsEnabled: true
+# _ContinuousIntegrationTestsEnabled: false
 
 # Setting batch to true, triggers one build at a time.
 # if there is a push while a build in progress, it will wait,

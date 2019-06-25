@@ -47,8 +47,8 @@
           CopyToOutputDirectory="PreserveNewest"/>
 
     <_wpfProjectsNotWindowsBaseNotNative Include="@(WpfProjectPath)" Exclude="WindowsBase;PresentationNative_cor3;WpfGfx_cor3;PenImc_cor3" />
-    <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBase)" />
-    <_wpfNativeProjects Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBaseNotNative)" />
+    <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBaseNotNative);PresentationNative_cor3;WpfGfx_cor3;PenImc_cor3" />
+    <_wpfNativeProjects Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsNotWindowsBaseNotNative);WindowsBase" />
 
     <!-- 
     Do not include WindowsBase. There is a bug in the SDK that will prevent proper deps.json generation when WindowsBase.csproj

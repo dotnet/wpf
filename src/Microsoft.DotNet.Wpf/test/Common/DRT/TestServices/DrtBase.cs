@@ -456,8 +456,14 @@ namespace DRT
                         break;
 
                     case "wait":
-                        Console.WriteLine("Attach debugger now.  Press return to continue.");
-                        Console.ReadLine();
+                    {
+                        Console.WriteLine($"Waiting for debugger to attach to {Process.GetCurrentProcess().ProcessName}.exe");
+                        while (!Debugger.IsAttached)
+                        {
+                            Thread.Sleep(1000);
+                        }
+                        Debugger.Break();
+                    }
                         break;
 
                     case "quietasserts":

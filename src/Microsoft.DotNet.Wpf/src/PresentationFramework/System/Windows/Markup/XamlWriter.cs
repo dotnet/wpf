@@ -19,7 +19,6 @@ using System.Windows.Threading;
 
 using MS.Utility;
 using System.Security;
-using System.Security.Policy;
 using System.Text;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;

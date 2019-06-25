@@ -33,7 +33,6 @@ namespace MS.Internal.Drt
     using System.Globalization;     // CultureInfo
     using System.Security;
     using System.ComponentModel;
-    using System.Security.Policy;
     using System.Runtime.InteropServices;
     using Microsoft.Win32;
     using System.Diagnostics.CodeAnalysis;

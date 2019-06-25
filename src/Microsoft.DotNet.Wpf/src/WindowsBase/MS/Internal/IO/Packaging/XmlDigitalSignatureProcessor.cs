@@ -725,7 +725,10 @@ namespace MS.Internal.IO.Packaging
             IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences)
         {
             // don't overwrite
-            Debug.Assert(SignaturePart.GetStream().Length == 0, "Logic Error: Can't sign when signature already exists");
+            using (Stream stream = SignaturePart.GetStream())
+            {
+                Debug.Assert(stream.Length == 0, "Logic Error: Can't sign when signature already exists");
+            }
 
             // grab hash algorithm as this may change in the future
             _hashAlgorithmName = _manager.HashAlgorithm;

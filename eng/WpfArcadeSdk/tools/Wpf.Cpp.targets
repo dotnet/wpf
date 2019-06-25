@@ -249,8 +249,8 @@ using namespace System::Runtime::Versioning;
       <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
         <Text>
           <![CDATA[
-  <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
+   <ItemGroup>
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
   </ItemGroup>
   ]]>
         </Text>
@@ -288,7 +288,7 @@ using namespace System::Runtime::Versioning;
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
+      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Github'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"

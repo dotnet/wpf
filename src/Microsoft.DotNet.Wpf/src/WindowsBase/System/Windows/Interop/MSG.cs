@@ -71,7 +71,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _hwnd = value;   
             }
 }
@@ -87,7 +86,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _message = value;   
             }
 }
@@ -106,7 +104,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _wParam = value;   
             }
 }
@@ -125,7 +122,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _lParam = value;   
             }
 }
@@ -141,7 +137,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _time = value;   
             }
 }
@@ -160,7 +155,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _pt_x = value;   
             }
 }
@@ -178,7 +172,6 @@ namespace System.Windows.Interop
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _pt_y = value;   
             }
 }

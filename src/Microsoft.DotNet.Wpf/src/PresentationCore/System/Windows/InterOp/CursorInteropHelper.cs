@@ -43,7 +43,6 @@ namespace System.Windows.Interop
         ///</remarks>
         public static Cursor Create(SafeHandle cursorHandle)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalCreate(cursorHandle);
         }

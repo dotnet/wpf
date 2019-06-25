@@ -101,9 +101,6 @@ namespace System.Windows
                     }
                 }
 
-                // In the most cases the default formats return earlier. If we got here
-                // then this is an attempt to register a new format which is not ok in partial trust.
-                SecurityHelper.DemandUnmanagedCode();
                 // Reigster the this format string.
                 formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
 

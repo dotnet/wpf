@@ -362,11 +362,6 @@ namespace System.Windows.Markup.Primitives
         
         private bool TryGetConstructorInfoArguments(object instance, out ParameterInfo[] parameters, out ICollection arguments)
         {        
-            // InstanceDescriptor and ConstructorInfo are protected from use in partial trust by a link demand
-            // Accessing it from a non private method defeats this protection so we trigger a full demand
-            // for Unmanaged Code which we consider an equivalent privilage level to full trust
-            MS.Internal.SecurityHelper.DemandUnmanagedCode();                                
-            
             // Detect if the instance should be constructed using constructor parameters by
             // seeing if it can be converted to an instance descriptor that uses a constructor.
             TypeConverter converter = TypeDescriptor.GetConverter(instance);

@@ -50,7 +50,6 @@ namespace System.Windows.Media.Effects
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
-            SecurityHelper.DemandUIWindowPermission();
         }
     }
 }

@@ -39,7 +39,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense(string useLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (useLicense == null)
             {
@@ -83,7 +82,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _owner;
             }
@@ -96,7 +94,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _contentId;
             }
@@ -107,7 +104,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override string ToString()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             return _serializedUseLicense;
         }
@@ -118,7 +114,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public CryptoProvider Bind (SecureEnvironment secureEnvironment)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (secureEnvironment == null)
             {
@@ -144,7 +139,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _applicationSpecificDataDictionary;
             }
@@ -155,7 +149,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override bool Equals(object x)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (x == null)
                 return false;   // Standard behavior.
@@ -173,7 +166,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override int GetHashCode()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             return _serializedUseLicense.GetHashCode();
         }

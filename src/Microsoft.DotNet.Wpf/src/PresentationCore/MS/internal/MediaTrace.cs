@@ -65,12 +65,6 @@ namespace MS.Internal
             // QueueItems.Enable();
             Statistics.Enable();
 
-#if !DEBUG
-            // if somehow this code gets enabled in retail. Do a demand. 
-            //
-            SecurityHelper.DemandUnmanagedCode(); 
-#endif
-
 #if DEBUG
             //
             // We are asserting on startup path. Very bad from a perf perspective.  

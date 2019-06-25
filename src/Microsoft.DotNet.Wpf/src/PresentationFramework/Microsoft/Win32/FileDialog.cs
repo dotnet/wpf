@@ -94,7 +94,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public override void Reset()
         {
-            SecurityHelper.DemandUnrestrictedFileIOPermission();
 
             Initialize();
         }
@@ -149,7 +148,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(OPTION_ADDEXTENSION, value);
             }
@@ -178,7 +176,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(NativeMethods.OFN_FILEMUSTEXIST, value);
             }
@@ -201,7 +198,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(NativeMethods.OFN_PATHMUSTEXIST, value);
             }
@@ -261,7 +257,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(NativeMethods.OFN_NODEREFERENCELINKS, !value);
             }
@@ -340,12 +335,10 @@ namespace Microsoft.Win32
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
                 return CriticalFileName;
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 // Allow users to set a filename to stored in _fileNames.
                 // If null is passed in, we clear the entire list.
@@ -375,7 +368,6 @@ namespace Microsoft.Win32
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 // FileNamesInternal is a property we use to clone
                 // the string array before returning it.
@@ -487,7 +479,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 _initialDirectory.Value = value;
             }
@@ -511,7 +502,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(NativeMethods.OFN_NOCHANGEDIR, value);
             }
@@ -534,7 +524,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 _title.Value = value;
             }
@@ -559,7 +548,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUnrestrictedFileIOPermission();
 
                 SetOption(NativeMethods.OFN_NOVALIDATE, !value);
             }

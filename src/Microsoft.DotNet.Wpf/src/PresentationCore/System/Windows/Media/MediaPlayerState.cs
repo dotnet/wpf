@@ -807,8 +807,6 @@ namespace System.Windows.Media
         /// </summary>
         private void CreateMedia(MediaPlayer mediaPlayer)
         {
-            CheckMediaDisabledFlags();
-
             SafeMILHandle unmanagedProxy = null;
             MediaEventsHelper.CreateMediaEventsHelper(mediaPlayer, out _mediaEventsHelper, out unmanagedProxy);
             try
@@ -818,7 +816,7 @@ namespace System.Windows.Media
                     HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
                             myFactory.FactoryPtr,
                             unmanagedProxy,
-                            SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.AllAudio, MediaPermissionVideo.AllVideo, MediaPermissionImage.NoImage),
+                            true,
                             out _nativeMedia
                             ));
                 }
@@ -860,48 +858,11 @@ namespace System.Windows.Media
             // Setting a null source effectively disconects the MediaElement.
             if (source != null)
             {
-                // keep whether we asserted permissions or not
-                bool elevated = false;
-
                 // get the base directory of the application; never expose this
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
-
                 // this extracts the URI to open
                 Uri uriToOpen = ResolveUri(source, appBase);
-
-                // access is allowed in the following cases (only 1 & 2 require elevation):
-                // 1) to any HTTPS media if app is NOT coming from HTTPS
-                // 2) to URI in the current directory of the fusion cache
-                // 3) to site of origin media
-                if (SecurityHelper.AreStringTypesEqual(uriToOpen.Scheme, Uri.UriSchemeHttps))
-                {
-                    // target is HTTPS. Then, elevate ONLY if we are NOT coming from HTTPS (=XDomain HTTPS app to HTTPS media disallowed)
-                    Uri appDeploymentUri = SecurityHelper.ExtractUriForClickOnceDeployedApp();
-                    if (!SecurityHelper.AreStringTypesEqual(appDeploymentUri.Scheme, Uri.UriSchemeHttps))
-                    {
-                        new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uriToOpen)).Assert();
-                        elevated = true;
-                    }
-                }
-                else
-                {
-                    // elevate to allow access to media in the app's directory in the fusion cache.
-                    new FileIOPermission(FileIOPermissionAccess.Read, appBase.LocalPath).Assert();// BlessedAssert
-                    elevated = true;
-                }
-
-                // demand permissions. if demands succeds, it means we are in one of the cases above.
-                try
-                {
-                    toOpen  = DemandPermissions(uriToOpen);
-                }
-                finally
-                {
-                    if (elevated)
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
+                toOpen  = DemandPermissions(uriToOpen);
             }
             else
             {
@@ -911,19 +872,6 @@ namespace System.Windows.Media
             // We pass in exact same URI for which we demanded permissions so that we can be sure
             // there is no discrepancy between the two.
             HRESULT.Check(MILMedia.Open(_nativeMedia, toOpen));
-        }
-
-        private void CheckMediaDisabledFlags()
-        {
-            if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaAudioOrVideoDisable))
-            {
-                // in case the registry key is '1' then demand
-                //Demand media permission here for Video or Audio
-                // Issue: 1232606 need to fix once clr has the media permissions
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.AllAudio,
-                                                     MediaPermissionVideo.AllVideo,
-                                                     MediaPermissionImage.NoImage);
-            }
         }
 
         private Uri ResolveUri(Uri uri, Uri appBase)
@@ -951,52 +899,8 @@ namespace System.Windows.Media
                 // go here only for files and not for UNC
                 if (absoluteUri.IsFile)
                 {
-                    // Please note this pattern is unique and NEEDS TO EXIST , it prevents
-                    // access to any folder but the one where the app is running from.
-                    // PLEASE DO NOT REMOVE THIS DEMAND AND THE ASSERT IN THE CALLING CODE
                     toOpen = absoluteUri.LocalPath;
-                    (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
                 }
-            }
-            else //Any other zone
-            {
-                // UNC path pointing to a file (We filter for `http://intranet)
-                if (absoluteUri.IsFile && absoluteUri.IsUnc)
-                {
-                    // perform checks for UNC content
-                    SecurityHelper.EnforceUncContentAccessRules(absoluteUri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                 MediaPermissionVideo.SafeVideo,
-                                                                 MediaPermissionImage.NoImage))
-                    {
-                        // if he does not then we demand web permission to allow access only to site of origin
-                        (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
-                    }
-}
-                else // Any other path
-                {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (absoluteUri.Scheme != Uri.UriSchemeHttps)
-                    {
-                        //accessing non https content from an https app is disallowed
-                        SecurityHelper.BlockCrossDomainForHttpsApps(absoluteUri);
-                        if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                     MediaPermissionVideo.SafeVideo,
-                                                                     MediaPermissionImage.NoImage))
-                        {
-                            // if he does not then we demand web permission to allow access only to site of origin
-                            (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
-                        }
-                    }
-                    else// This is the case where target content is HTTPS
-                    {
-                        (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
-                    }
-}
             }
 
             return toOpen;

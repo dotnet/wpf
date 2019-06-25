@@ -109,9 +109,6 @@ static class CookieHandler
         Justification="It's okay now. Be careful on change.")]
     internal static string GetCookie(Uri uri, bool throwIfNoCookie)
     {
-        // Always demand in order to prevent any cross-domain information leak.
-        SecurityHelper.DemandWebPermission(uri);
-
         UInt32 size = 0;
         string uriString = BindUriHelper.UriToString(uri);
         if (UnsafeNativeMethods.InternetGetCookieEx(uriString, null, null, ref size, 0, IntPtr.Zero))
@@ -134,8 +131,6 @@ static class CookieHandler
     [FriendAccessAllowed] // called by PF.Application.SetCookie()
     internal static bool SetCookie(Uri uri, string cookieData)
     {
-        SecurityHelper.DemandWebPermission(uri);
-
         return SetCookieUnsafe(uri, cookieData, null);
     }
 

@@ -81,7 +81,6 @@ namespace MS.Internal.ReachFramework
             Type destinationType
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             string bitmapName = "bitmap" + m_bitmapId;
 

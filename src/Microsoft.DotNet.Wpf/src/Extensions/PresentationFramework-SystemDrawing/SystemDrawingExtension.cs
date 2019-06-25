@@ -191,27 +191,11 @@ namespace MS.Internal
             formatConverter.DestinationFormat = System.Windows.Media.PixelFormats.Bgr32;
             formatConverter.EndInit();
 
-            CodeAccessPermission mediaAccessPermission = SecurityHelper.CreateMediaAccessPermission(null);
-
-            if (mediaAccessPermission != null)
-            {
-                mediaAccessPermission.Assert(); //BlessedAssert
-            }
-            try
-            {
-                formatConverter.CopyPixels(
-                            new Int32Rect(0, 0, imageWidth, imageHeight),
-                            bmData.Scan0,
-                            bmData.Stride * (bmData.Height - 1) + (bmData.Width * 4),
-                            bmData.Stride);
-            }
-            finally
-            {
-                if (mediaAccessPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
+            formatConverter.CopyPixels(
+                        new Int32Rect(0, 0, imageWidth, imageHeight),
+                        bmData.Scan0,
+                        bmData.Stride * (bmData.Height - 1) + (bmData.Width * 4),
+                        bmData.Stride);
 
             bitmapFinal.UnlockBits(bmData);
 

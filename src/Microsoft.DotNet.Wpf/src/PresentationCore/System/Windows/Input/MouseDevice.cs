@@ -214,7 +214,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 if (_inputSource != null)
                 {
                     return _inputSource.Value;

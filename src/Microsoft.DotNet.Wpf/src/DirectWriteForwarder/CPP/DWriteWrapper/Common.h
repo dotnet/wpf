@@ -85,14 +85,7 @@ private:
             System::Exception^ e = System::Runtime::InteropServices::Marshal::GetExceptionForHR(hr);
             if (dynamic_cast<System::Net::WebException^>(e) != nullptr)                
             {
-                if (IsFullTrustCaller())
-                {
-                    throw e;//rethrow original exception for full trust case.
-                }
-                else
-                {
-                    throw gcnew System::Net::WebException();// throw sanitized exception
-                }
+                throw e;
             }
         }
     }

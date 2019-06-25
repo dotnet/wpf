@@ -79,7 +79,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 return CriticalHandle;
             }
@@ -93,7 +92,6 @@ namespace System.Windows.Interop
         {
             add
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 if(_hooks == null)
                 {
@@ -105,7 +103,6 @@ namespace System.Windows.Interop
 
             remove
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 if(_hooks != null)
                 {
@@ -736,9 +733,6 @@ namespace System.Windows.Interop
 
         private DrawingGroup GetDrawingHelper()
         {
-            // Printing an HWND requires UIPermissionWindow.AllWindows to give out its pixels.
-            SecurityHelper.DemandUIWindowPermission();
-
             DrawingGroup drawingGroup = null;
 
             if(_hwnd.Handle != IntPtr.Zero && UnsafeNativeMethods.IsWindow(_hwnd))
@@ -854,7 +848,6 @@ namespace System.Windows.Interop
         {
             if ( ! _fTrusted.Value )
             {
-                SecurityHelper.DemandUnmanagedCode();
             }
         }
 

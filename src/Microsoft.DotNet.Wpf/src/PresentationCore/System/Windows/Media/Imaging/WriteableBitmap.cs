@@ -374,7 +374,6 @@ namespace System.Windows.Media.Imaging
             int       destinationY
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
             WritePreamble();
 
             WritePixelsImpl(sourceRect,
@@ -455,7 +454,6 @@ namespace System.Windows.Media.Imaging
             int stride
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
             WritePreamble();
 
             if (bufferSize < 1)
@@ -1465,7 +1463,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 ReadPreamble();
 
                 return _backBuffer;

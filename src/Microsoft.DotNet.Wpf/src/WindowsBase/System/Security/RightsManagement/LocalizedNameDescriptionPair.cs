@@ -39,7 +39,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public LocalizedNameDescriptionPair(string name, string description)
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             if (name == null)
             {
@@ -62,7 +61,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _name;
             }
@@ -75,7 +73,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _description;
             }
@@ -86,7 +83,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override bool Equals(object obj)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if ((obj == null) || (obj.GetType() != GetType()))
             {
@@ -109,7 +105,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override int GetHashCode()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             return Name.GetHashCode()  ^  Description.GetHashCode();
         }

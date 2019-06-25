@@ -156,7 +156,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 VerifyAccess();
                 StylusDevice stylusDevice = Stylus.CurrentStylusDevice;
                 if (stylusDevice == null)

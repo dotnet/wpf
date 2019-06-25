@@ -164,21 +164,6 @@ namespace System.Windows.Documents
             }
         }
 
-        private bool HasRubberBandCopyPermissions()
-        {
-            try
-            {
-                (new SecurityPermission(SecurityPermissionFlag.SerializationFormatter | SecurityPermissionFlag.UnmanagedCode)).Demand();
-                CodeAccessPermission mediaAccessPermission = SecurityHelper.CreateMediaAccessPermission(null);
-                mediaAccessPermission.Demand();
-                return true;
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-        }
-
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (HasSelection && _selectionRect.Width > 0 && _selectionRect.Height > 0)
@@ -188,58 +173,16 @@ namespace System.Windows.Documents
                 string textString = GetText();
                 object bmp = null;
 
-                bool supportImageCopy = false;
+                bmp = SystemDrawingHelper.GetBitmapFromBitmapSource(GetImage());
 
-                if (_scope is DocumentGrid && ((DocumentGrid)_scope).DocumentViewerOwner is DocumentApplicationDocumentViewer)
+                dataObject = new DataObject();
+                // Order of data is irrelevant, the pasting application will determine format
+                dataObject.SetData(DataFormats.Text, textString, true);
+                dataObject.SetData(DataFormats.UnicodeText, textString, true);
+                if (bmp != null)
                 {
-                    // This is XPSViewer, make sure it is user initiated
-                    if (!e.UserInitiated && !HasRubberBandCopyPermissions())
-                    {
-                        return;
-                    }
-                    supportImageCopy = true;
+                    dataObject.SetData(DataFormats.Bitmap, bmp, true);
                 }
-                else
-                {
-                    //Outside of XPSViewer, support image copy in full trust only
-                    supportImageCopy = HasRubberBandCopyPermissions();
-                }
-
-                if (supportImageCopy)
-                {
-                    bmp = SystemDrawingHelper.GetBitmapFromBitmapSource(GetImage());
-                }
-
-                (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-                try
-                {
-                    dataObject = new DataObject();
-                    // Order of data is irrelevant, the pasting application will determine format
-                    dataObject.SetData(DataFormats.Text, textString, true);
-                    dataObject.SetData(DataFormats.UnicodeText, textString, true);
-                    if (bmp != null)
-                    {
-                        dataObject.SetData(DataFormats.Bitmap, bmp, true);
-                    }
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
-
-
-                PermissionSet ps = new PermissionSet(PermissionState.None);
-                ps.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter));
-                ps.AddPermission(new UIPermission(UIPermissionClipboard.AllClipboard));
-                ps.AddPermission(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode));
-
-                if (supportImageCopy)
-                {
-                    CodeAccessPermission mediaAccessPermission = SecurityHelper.CreateMediaAccessPermission(null);
-                    ps.AddPermission(mediaAccessPermission);
-                }
-
-                ps.Assert(); // BlessedAssert
 
                 try
                 {
@@ -249,10 +192,6 @@ namespace System.Windows.Documents
                 {
                     // Clipboard is failed to set the data object.
                     return;
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
                 }
             }
         }

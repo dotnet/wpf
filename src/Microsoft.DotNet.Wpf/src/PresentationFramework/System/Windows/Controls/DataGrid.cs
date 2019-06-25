@@ -8329,39 +8329,16 @@ namespace System.Windows.Controls
 
             DataGridClipboardHelper.GetClipboardContentForHtml(dataGridStringBuilders[DataFormats.Html]);
 
-            DataObject dataObject;
-            bool hasPerms = SecurityHelper.CallerHasAllClipboardPermission() && SecurityHelper.CallerHasSerializationPermission();
+            DataObject dataObject = new DataObject();
 
-            // Copy unconditionally in full trust.
-            // Only copy in partial trust if user initiated.
-            if (hasPerms ||  args.UserInitiated )
+
+            foreach (string format in formats)
             {
-                (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();
-                try
-                {
-                    dataObject = new DataObject();
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
-
-                foreach (string format in formats)
-                {
-                        dataObject.CriticalSetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
-                }
-
-                // This assert is there for an OLE Callback to register CSV type for the clipboard
-                (new SecurityPermission(SecurityPermissionFlag.SerializationFormatter | SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAll();
-                }
+                dataObject.SetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
             }
+
+            Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+
         }
 
         /// <summary>

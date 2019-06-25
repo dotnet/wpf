@@ -272,7 +272,6 @@ namespace System.Windows
         /// <param name="exitCode">returned to the Application.Run() method. Typically this will be returned to the OS</param>
         public void Shutdown(int exitCode)
         {
-            SecurityHelper.DemandUIWindowPermission();
             CriticalShutdown(exitCode);
         }
         internal void CriticalShutdown(int exitCode)
@@ -2131,7 +2130,6 @@ namespace System.Windows
             }
             else
             {
-                SecurityHelper.DemandUnmanagedCode();
                 refInt = IntPtr.Zero;
 
                 // we have handled the event DefWndProc will not be called for this msg

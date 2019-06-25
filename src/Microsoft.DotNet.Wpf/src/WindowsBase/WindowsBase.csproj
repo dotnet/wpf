@@ -41,7 +41,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\CompoundFile\ContainerFlags.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\PackagingUtilities.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\Permissions\InternalPermissions.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\ReaderWriterLockSlimWrapper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\ReaderWriterLockWrapper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Utility\DpiAwarenessContext\DpiAwarenessContextHandle.cs" />
@@ -137,10 +136,6 @@
     <Compile Include="MS\Internal\KnownBoxes.cs" />
     <Compile Include="MS\Internal\NamedObject.cs" />
     <Compile Include="MS\Internal\ObservableCollectionDefaultValueFactory.cs" />
-    <Compile Include="MS\Internal\Permissions\CompoundFileIOPermission.cs" />
-    <Compile Include="MS\Internal\Permissions\RightsManagementPermission.cs" />
-    <Compile Include="MS\Internal\Permissions\UserInitiatedRoutedEventPermission.cs" />
-    <Compile Include="MS\Internal\Permissions\UserInitiatedRoutedEventPermissionAttribute.cs" />
     <Compile Include="MS\Internal\PlatformCulture.cs" />
     <Compile Include="MS\Internal\Security\AttachmentService.cs" />
     <Compile Include="MS\Internal\ShutDownListener.cs" />

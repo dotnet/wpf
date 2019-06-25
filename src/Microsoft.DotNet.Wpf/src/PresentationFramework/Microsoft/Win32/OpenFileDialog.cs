@@ -73,8 +73,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream OpenFile()
         {
-            SecurityHelper.DemandFileDialogOpenPermission();
-
             string filename = null;
 
             // FileNamesInternal never returns null.
@@ -119,8 +117,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream[] OpenFiles()
         {
-            SecurityHelper.DemandFileDialogOpenPermission();
-
             // Cache FileNamesInternal to avoid perf issues as per
             // FxCop #CA1817
             String[] cachedFileNames = FileNamesInternal;
@@ -171,7 +167,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public override void Reset()
         {
-            SecurityHelper.DemandUnrestrictedFileIOPermission();
 
             // it is VERY important that the base.reset() call remain here
             // and be located at the top of this function.
@@ -283,17 +278,7 @@ namespace Microsoft.Win32
         /// </summary>
         protected override void CheckPermissionsToShowDialog()
         {
-            SecurityHelper.DemandFileDialogOpenPermission();
-
-            new UIPermission(UIPermissionWindow.AllWindows).Assert();
-            try
-            {
-                base.CheckPermissionsToShowDialog();
-            }
-            finally
-            {
-                SecurityPermission.RevertAssert();
-            }
+            base.CheckPermissionsToShowDialog();
         }
 
         #endregion Protected Methods

@@ -66,7 +66,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -91,7 +90,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -138,7 +136,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -185,7 +182,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -232,7 +228,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -279,7 +274,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -326,7 +320,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -373,7 +366,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -420,7 +412,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -467,7 +458,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -492,7 +482,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -517,7 +506,6 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 

@@ -64,7 +64,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return CriticalHandle;
             }
         }
@@ -88,13 +87,11 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
                 return _window.OwnerHandle;
             }
             set
             {
-                SecurityHelper.DemandUIWindowPermission();
                 Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
                 // error checking done in Window
                 _window.OwnerHandle = value;
@@ -115,7 +112,6 @@ namespace System.Windows.Interop
         /// </summary>
         public IntPtr EnsureHandle()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             if (CriticalHandle == IntPtr.Zero)
             {

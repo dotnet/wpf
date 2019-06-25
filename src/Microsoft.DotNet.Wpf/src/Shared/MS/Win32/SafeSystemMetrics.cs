@@ -44,7 +44,6 @@ namespace MS.Win32
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();                
 
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CXVIRTUALSCREEN);
             }
@@ -57,7 +56,6 @@ namespace MS.Win32
         {
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 return UnsafeNativeMethods.GetSystemMetrics(SM.CYVIRTUALSCREEN);
             }
         }

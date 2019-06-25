@@ -780,7 +780,6 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         public void GetACPFromPoint(int viewCookie, ref UnsafeNativeMethods.POINT tsfPoint, UnsafeNativeMethods.GetPositionFromPointFlags flags, out int positionCP)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             PresentationSource source;
             IWin32Window win32Window;
@@ -2371,7 +2370,6 @@ namespace System.Windows.Documents
         // Insert InkInteropObject at the position.
         private void InsertEmbeddedAtPosition(TextPointer position, IComDataObject data, out UnsafeNativeMethods.TS_TEXTCHANGE change)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             ITextContainer container;
             // Get enhanced metafile handle from IOleDataObject.

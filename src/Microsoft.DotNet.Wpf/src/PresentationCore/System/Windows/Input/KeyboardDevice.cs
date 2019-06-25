@@ -97,7 +97,6 @@ namespace System.Windows.Input
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 //VerifyAccess();
                 if (_activeSource != null)
@@ -292,7 +291,6 @@ namespace System.Windows.Input
         {
            get
            {
-               SecurityHelper.DemandUnrestrictedUIPermission();
                return _TsfManager.Value;
            }
         }
@@ -302,7 +300,6 @@ namespace System.Windows.Input
         {
            get
            {
-               SecurityHelper.DemandUnrestrictedUIPermission();
                return _textcompositionManager.Value;
            }
         }

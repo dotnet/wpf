@@ -71,9 +71,7 @@ namespace System.Windows.Navigation
             get { return (bool) GetValue(SandboxExternalContentProperty); }
             set
             {
-                // This feature is disabled in partial trust due to a P3P violation
                 bool fSandBox = (bool)value;
-                SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
                 SetValue(SandboxExternalContentProperty, fSandBox);
             }
         }
@@ -87,9 +85,7 @@ namespace System.Windows.Navigation
         {
             NavigationWindow window = (NavigationWindow)d;
 
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)e.NewValue;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             if (fSandBox && !(bool)e.OldValue)
             {
                 window.NavigationService.Refresh();
@@ -99,9 +95,7 @@ namespace System.Windows.Navigation
 
         private static object CoerceSandBoxExternalContentValue(DependencyObject d, object value)
         {
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)value;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             return fSandBox;
         }
 

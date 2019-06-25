@@ -109,14 +109,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.Text, textString);
+                    dataObject.SetData(DataFormats.Text, textString, false);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.UnicodeText, textString);
+                    dataObject.SetData(DataFormats.UnicodeText, textString, false);
                 }
             }
 
@@ -124,14 +124,6 @@ namespace System.Windows.Documents
             // We do this only if our content is rich
             if (This.AcceptsRichContent)
             {
-                // This ensures that in the confines of partial trust RTF is not enabled.
-                // We use unmanaged code permission over clipboard permission since
-                // the latter is available in intranet zone and this is something that will
-                // fail in intranet too.
-                if (SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    // In FullTrust we allow all rich formats on the clipboard
-
                     Stream wpfContainerMemory = null;
                     // null wpfContainerMemory on entry means that container is optional
                     // and will be not created when there is no images in the range.
@@ -158,7 +150,6 @@ namespace System.Windows.Documents
                                 dataObject.SetData(DataFormats.Rtf, rtfText, true);
                             }
                         }
-                    }
 
                     // Add a CF_BITMAP if we have only one image selected.
                     Image image = This.Selection.GetUIElementSelected() as Image;
@@ -182,15 +173,7 @@ namespace System.Windows.Documents
                     if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Xaml))
                     {
                         // Place Xaml data onto the dataobject using safe setter
-                        CriticalSetDataWrapper(dataObject, DataFormats.Xaml, xamlText);
-
-                        // The dataobject itself must hold an information about permission set
-                        // of the source appdomain. Set it there:
-
-                        // Package permission set for the current appdomain
-                        PermissionSet psCurrentAppDomain = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-                        string permissionSetCurrentAppDomain = psCurrentAppDomain.ToString();
-                        CriticalSetDataWrapper(dataObject, DataFormats.ApplicationTrust, permissionSetCurrentAppDomain);
+                        dataObject.SetData(DataFormats.Xaml, xamlText, false);
                     }
                 }
             }
@@ -220,9 +203,6 @@ namespace System.Windows.Documents
         /// </returns>
         internal static bool _DoPaste(TextEditor This, IDataObject dataObject, bool isDragDrop)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            //
-            if (!SecurityHelper.CallerHasAllClipboardPermission()) return false;
 
             Invariant.Assert(dataObject != null);
 
@@ -277,13 +257,10 @@ namespace System.Windows.Documents
         {
             string formatToApply;
 
-            // Currently we won't allow DataFormats.Xaml on the partial trust.
             // GetDataPresent(DataFormats.Xaml)have a chance to register Xaml format
             // by calling the unmanaged code which is RegisterClipboardFormat.
 
-            bool hasUnmanagedCodePermission = SecurityHelper.CheckUnmanagedCodePermission();
-
-            if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject.GetDataPresent(DataFormats.XamlPackage))
+            if (This.AcceptsRichContent && dataObject.GetDataPresent(DataFormats.XamlPackage))
             {
                 formatToApply = DataFormats.XamlPackage;
             }
@@ -291,7 +268,7 @@ namespace System.Windows.Documents
             {
                 formatToApply = DataFormats.Xaml;
             }
-            else if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject.GetDataPresent(DataFormats.Rtf))
+            else if (This.AcceptsRichContent && dataObject.GetDataPresent(DataFormats.Rtf))
             {
                 formatToApply = DataFormats.Rtf;
             }
@@ -303,7 +280,7 @@ namespace System.Windows.Documents
             {
                 formatToApply = DataFormats.Text;
             }
-            else if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject is DataObject && ((DataObject)dataObject).ContainsImage())
+            else if (This.AcceptsRichContent && dataObject is DataObject && ((DataObject)dataObject).ContainsImage())
             {
                 formatToApply = DataFormats.Bitmap;
             }
@@ -334,11 +311,6 @@ namespace System.Windows.Documents
                 {
                     return;
                 }
-            }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
             }
 
             TextEditorTyping._FlushPendingInputItems(This);
@@ -401,11 +373,6 @@ namespace System.Windows.Documents
                     return;
                 }
             }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
-            }
 
             TextEditorTyping._FlushPendingInputItems(This);
 
@@ -441,11 +408,6 @@ namespace System.Windows.Documents
         /// </summary>
         internal static void Paste(TextEditor This)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                return;
-            }
 
             if (This.Selection.IsTableCellRange)
             {
@@ -673,18 +635,10 @@ namespace System.Windows.Documents
 
             try
             {
-                if (SecurityHelper.CallerHasAllClipboardPermission())
-                {
-                    // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
-                    string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
+                // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
+                string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
 
-                    args.CanExecute = formatToApply.Length > 0;
-                }
-                else
-                {
-                    // Simplified version of clipboard sniffing for partial trust
-                    args.CanExecute = Clipboard.IsClipboardPopulated();
-                }
+                args.CanExecute = formatToApply.Length > 0;
             }
             catch (ExternalException)
             {
@@ -754,22 +708,6 @@ namespace System.Windows.Documents
             //  Provide an implementation for this command
         }
 
-        /// <summary>
-        ///     This code is used to call into an internal overload to set data which circumvents the demand for
-        ///     all clipboard permission. Although this is not the cleanest we prefer to cast it to DataObject
-        ///     and call the critical overload to reduce the scope of the code that gets called here.
-        ///     This saves us one high level assert.
-        /// </summary>
-        /// <param name="dataObjectValue"></param>
-        /// <param name="format"></param>
-        /// <param name="content"></param>
-        private static void CriticalSetDataWrapper(IDataObject dataObjectValue, string format, string content)
-        {
-            if (dataObjectValue is DataObject)
-            {
-                ((DataObject)dataObjectValue).CriticalSetData(format, content, format == DataFormats.ApplicationTrust ? /*autoConvert:*/false : true);
-            }
-        }
 
         /// <summary>
         /// Paste the content data(Text, Unicode, Xaml and Rtf) to the current text selection
@@ -790,12 +728,9 @@ namespace System.Windows.Documents
             // CF_BITMAP - pasting a single image.
             if (formatToApply == DataFormats.Bitmap && dataObjectToApply is DataObject)
             {
-                // This demand is present to explicitly disable RTF independant of any
-                // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && This.Selection is TextSelection &&
-                    SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent && This.Selection is TextSelection)
                 {
                     System.Windows.Media.Imaging.BitmapSource bitmapSource = GetPasteData(dataObjectToApply, DataFormats.Bitmap) as System.Windows.Media.Imaging.BitmapSource;
 
@@ -814,12 +749,9 @@ namespace System.Windows.Documents
 
             if (formatToApply == DataFormats.XamlPackage)
             {
-                // This demand is present to explicitly disable RTF independant of any
-                // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && This.Selection is TextSelection &&
-                    SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent && This.Selection is TextSelection)
                 {
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.XamlPackage);
 
@@ -845,7 +777,7 @@ namespace System.Windows.Documents
                 {
                     formatToApply = DataFormats.Xaml;
                 }
-                else if (SecurityHelper.CheckUnmanagedCodePermission() && dataObjectToApply.GetDataPresent(DataFormats.Rtf))
+                else if (dataObjectToApply.GetDataPresent(DataFormats.Rtf))
                 {
                     formatToApply = DataFormats.Rtf;
                 }
@@ -873,7 +805,7 @@ namespace System.Windows.Documents
 
                 // Fall to Rtf:
                 dataObjectToApply = dataObject; // go back to source data object
-                if (SecurityHelper.CheckUnmanagedCodePermission() && dataObjectToApply.GetDataPresent(DataFormats.Rtf))
+                if (dataObjectToApply.GetDataPresent(DataFormats.Rtf))
                 {
                     formatToApply = DataFormats.Rtf;
                 }
@@ -893,7 +825,7 @@ namespace System.Windows.Documents
                 // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent)
                 {
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.Rtf);
 

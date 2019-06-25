@@ -222,7 +222,6 @@ namespace System.Windows.Interop
         /// <returns>Count of points if succeeded , -1 if error</returns>
         int IMouseInputProvider.GetIntermediatePoints(IInputElement relativeTo, Point[] points)
         {
-            SecurityHelper.DemandUnmanagedCode();
             int cpt = -1;
 
             try

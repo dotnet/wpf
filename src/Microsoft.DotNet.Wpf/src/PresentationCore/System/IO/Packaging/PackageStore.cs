@@ -68,7 +68,6 @@ namespace System.IO.Packaging
                 if (_packages != null && _packages.Contains(uri))
                 {
                     package = (Package) _packages[uri];
-                    DemandSecurityPermissionIfCustomPackage(package);
                 }
                 
                 return package;
@@ -87,10 +86,6 @@ namespace System.IO.Packaging
         /// </remarks>
         public static void AddPackage(Uri uri, Package package)
         {
-            // Allow well known platform Package to be added into PackageStore under Partial Trust.
-            // Otherwise, demand Environment Permission to make sure only Full Trust app can add a custom Package
-            DemandSecurityPermissionIfCustomPackage(package);
-
             ValidatePackageUri(uri);
 
             // There are well-known package types that are only for internal use (for resource loading)
@@ -144,8 +139,6 @@ namespace System.IO.Packaging
             {
                 if (_packages != null)
                 {
-                    DemandSecurityPermissionIfCustomPackage((Package) _packages[uri]);
-
                     // If the key doesn't exist, it is no op
                     _packages.Remove(uri);
                 }
@@ -166,17 +159,6 @@ namespace System.IO.Packaging
             if (!uri.IsAbsoluteUri)
             {
                 throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
-            }
-        }
-
-        private static void DemandSecurityPermissionIfCustomPackage(Package package)
-        {
-            // Although ZipPackage is sealed and cannot be subclassed, we shouldn't depend on
-            //  the "sealedness" of ZipPackage. Checking the object type is more reliable way
-            //  than using "as" or "is" operator.
-            if (package != null && package.GetType() != typeof(ZipPackage))
-            {
-                SecurityHelper.DemandEnvironmentPermission();
             }
         }
         

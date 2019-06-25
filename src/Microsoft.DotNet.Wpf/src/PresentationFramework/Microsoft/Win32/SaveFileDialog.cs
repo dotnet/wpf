@@ -73,7 +73,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream OpenFile()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             // Extract the first filename from the FileNamesInternal list.
             // We can do this safely because FileNamesInternal never returns
@@ -107,7 +106,6 @@ namespace Microsoft.Win32
         /// </Remarks>
         public override void Reset()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             // it is VERY important that the base.reset() call remain here
             // and be located at the top of this function.
@@ -150,7 +148,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUIWindowPermission();
 
                 SetOption(NativeMethods.OFN_CREATEPROMPT, value);
             }
@@ -175,7 +172,6 @@ namespace Microsoft.Win32
             }
             set
             {
-                SecurityHelper.DemandUIWindowPermission();
 
                 SetOption(NativeMethods.OFN_OVERWRITEPROMPT, value);
             }
@@ -355,7 +351,6 @@ namespace Microsoft.Win32
 
         internal override IFileDialog CreateVistaDialog()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             new SecurityPermission(PermissionState.Unrestricted).Assert();
 

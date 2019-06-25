@@ -97,7 +97,6 @@ namespace System.Windows.Media.Imaging
             int stride
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             return new CachedBitmap(
                         pixelWidth, pixelHeight,
@@ -784,7 +783,6 @@ namespace System.Windows.Media.Imaging
                 uri = ConvertToString(null, null);
             }
 
-            SecurityHelper.DemandMediaAccessPermission(uri);
         }
 
         /// <summary>

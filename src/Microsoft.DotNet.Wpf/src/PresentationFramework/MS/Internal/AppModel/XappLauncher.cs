@@ -111,7 +111,6 @@ namespace MS.Internal.AppModel
                 MainWindow.CommandBindings.Add(new CommandBinding(NavigationCommands.Refresh, new ExecutedRoutedEventHandler(OnCommandRefresh)));
             }
 
-            SecurityHelper.DemandUIWindowPermission();
             NavigationWindow navWin = GetAppWindow();
             Invariant.Assert(navWin != null, "A RootBrowserWindow should have been created.");
             while (navWin.CanGoBack)
@@ -274,7 +273,6 @@ namespace MS.Internal.AppModel
         
         private bool ExecuteDirectApplication()
         {
-            SecurityHelper.DemandUnmanagedCode();
             _runApplication = false;
             
             try
@@ -570,7 +568,6 @@ namespace MS.Internal.AppModel
         /// </remarks>
         private void DoDownloadUI()
         {
-            SecurityHelper.DemandUIWindowPermission();
             // ASSUMES ALREADY IN CORRECT CONTEXT
 
             // Note: The custom progress page support was provided for Media Center. Since MC has
@@ -613,7 +610,6 @@ namespace MS.Internal.AppModel
 
         private void HandleError(Exception exception, string logFilePath, Uri supportUri, string requiredWpfVersion)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             ClearAsynchronousOperationStatus();
 
@@ -713,7 +709,6 @@ namespace MS.Internal.AppModel
 
         private void HandleCancel()
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             // After _runApplication is set to true, we no longer allow canceling deployment.
             if (_cancelHandled || _runApplication)
@@ -785,7 +780,6 @@ namespace MS.Internal.AppModel
                 return null;
             Debug.Assert(!_canceled);
 
-            SecurityHelper.DemandUIWindowPermission();
 
             if (_progressPage != null)
             {
@@ -952,7 +946,6 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 RootBrowserWindow rbw = (RootBrowserWindow)GetAppWindow();
                 Invariant.Assert(rbw != null, "Should have instantiated RBW if it wasn't already there");
                 rbw.ShowsNavigationUI = false; // not needed and not RightToLeft-enabled in this context
@@ -1010,7 +1003,6 @@ namespace MS.Internal.AppModel
         {
             bool frameworkActivated = false;
             
-            SecurityHelper.DemandUnmanagedCode();
 
             // Order matters newer OS versions should be tested before older OS versions
             if (OperatingSystemVersionCheck.IsVersionOrLater(OperatingSystemVersion.Windows8))

@@ -255,21 +255,10 @@ namespace System.Windows.Documents
         /// </summary>
         private TextTreeNode CopyObjectNode(TextTreeObjectNode objectNode, out ContentContainer container)
         {
-            // XamlWriter.Save demands unmanaged code permission. Since it's not safe to assert 
-            // here as custom type converters and value serializers can potentially execute 
-            // arbitrary code, we block the call to XamlWriter.Save in partial trust.
-            if (SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                string xml;
 
-                xml = XamlWriter.Save(objectNode.EmbeddedElement);
+            string xml = XamlWriter.Save(objectNode.EmbeddedElement);
 
-                container = new ObjectContentContainer(xml, objectNode.EmbeddedElement);
-            }
-            else
-            {
-                container = new ObjectContentContainer(null, null);
-            }
+            container = new ObjectContentContainer(xml, objectNode.EmbeddedElement);
 
             return (TextTreeNode)objectNode.GetNextNode();
         }

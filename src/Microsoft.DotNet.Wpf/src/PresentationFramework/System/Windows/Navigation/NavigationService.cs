@@ -2967,11 +2967,6 @@ namespace System.Windows.Navigation
                 NavigateInfo navigateInfo = navState as NavigateInfo;
 
                 bool sandBoxContent = SandboxExternalContent && (! BaseUriHelper.IsPackApplicationUri(destinationUri)) && MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(contentType);
-                // this code path is disabled in partial trust because it currently violates P3P
-                if (sandBoxContent == true && !SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    sandBoxContent = false;
-                }
 
                 // BindStream overrides Read() and calls icc.OnNavigationProgress every 1k byte read
                 BindStream bindStream = new BindStream(s, contentLength, cleanSource, (IContentContainer)this, Dispatcher.CurrentDispatcher);

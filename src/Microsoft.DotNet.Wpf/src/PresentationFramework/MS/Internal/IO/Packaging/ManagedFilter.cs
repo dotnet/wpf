@@ -117,7 +117,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         internal ManagedPropSpec(PROPSPEC propSpec)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             // Assign to properties rather than fields to ensure consistency through side-effects.
             switch ((PropSpecType)propSpec.propType)

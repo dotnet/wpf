@@ -192,7 +192,6 @@ namespace System.Windows
         //      .NET Core               -> Allow    (compat with 4.5RTM)
 #if NETFX && !NETCOREAPP
         private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter =
-                !MS.Internal.SecurityHelper.IsFullTrustCaller() ? HandleBindingOptions.Throw :
                 BinaryCompatibility.AppWasBuiltForFramework != TargetFrameworkId.NetFramework ? HandleBindingOptions.Disallow :
                 BinaryCompatibility.AppWasBuiltForVersion == 40500 ? HandleBindingOptions.Allow :
                 /* else */  HandleBindingOptions.Throw;

@@ -69,7 +69,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
                 return data.IsThreadModal;
             }
@@ -85,7 +84,6 @@ namespace System.Windows.Interop
         {
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
             }
         }
@@ -118,7 +116,6 @@ namespace System.Windows.Interop
         /// </remarks>
         public static void PushModal()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             CriticalPushModal();
         }
 
@@ -139,7 +136,6 @@ namespace System.Windows.Interop
         /// </remarks>
         public static void PopModal()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             CriticalPopModal();
         }
 
@@ -191,11 +187,9 @@ namespace System.Windows.Interop
         public static event EventHandler ThreadIdle
         {
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle += value;
             }
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle -= value;
             }
         }
@@ -211,11 +205,9 @@ namespace System.Windows.Interop
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage += value;
             }
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage -= value;
             }
         }
@@ -267,11 +259,9 @@ namespace System.Windows.Interop
         public static event EventHandler EnterThreadModal
         {
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal += value;
             }
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal -= value;
             }
         }
@@ -287,11 +277,9 @@ namespace System.Windows.Interop
         {
             add
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal += value;
             }
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;
             }
         }

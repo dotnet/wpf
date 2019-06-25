@@ -51,7 +51,6 @@ namespace System.Windows.Media.Imaging
 
         static BitmapDecoder()
         {
-            isImageDisabledInitialized = false;
         }
         /// <summary>
         /// Default constructor
@@ -266,9 +265,6 @@ namespace System.Windows.Media.Imaging
             Stream uriStream = null;
             UnmanagedMemoryStream unmanagedMemoryStream = null;
             SafeFileHandle safeFilehandle = null;
-
-            // check to ensure that images are allowed in partial trust
-            DemandIfImageBlocked();
 
             if (uri != null)
             {
@@ -664,9 +660,6 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltInDecoder();
 
-                // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-                CheckIfSiteOfOrigin();
-
                 if (!_isMetadataCached)
                 {
                     IntPtr /* IWICMetadataQueryReader */ metadata = IntPtr.Zero;
@@ -897,9 +890,6 @@ namespace System.Windows.Media.Imaging
 
             CheckOriginalWritable();
 
-            // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-            CheckIfSiteOfOrigin();
-
             return InPlaceBitmapMetadataWriter.CreateFromDecoder(_decoderHandle, _syncObject);
         }
 
@@ -1031,29 +1021,6 @@ namespace System.Windows.Media.Imaging
         #endregion
 
         #region Internal/Private Methods
-        private static void DemandIfImageBlocked()
-        {
-            if(!isImageDisabledInitialized)
-            {
-                // a performance optimization to ensure we hit the registry only once in the lifetime of the application
-                isImageDisabled = new SecurityCriticalDataForSet<bool>(SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaImageDisable));
-                isImageDisabledInitialized = true;
-            }
-            if (isImageDisabled.Value)
-            {
-                // in case the registry key is '1' then demand MediaPermissionImage.AllImage - not granted in Partial Trust
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.AllImage);
-            }
-            else
-            {
-                // Images are enabled. Then, demand permissions for safe imaging - granted in Partial Trust by default
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.SafeImage);
-            }
-        }
 
         internal static SafeMILHandle SetupDecoderFromUriOrStream(
             Uri uri,
@@ -1070,8 +1037,6 @@ namespace System.Windows.Media.Imaging
             IntPtr decoder = IntPtr.Zero;
             System.IO.Stream bitmapStream = null;
             string mimeType = String.Empty;
-            // check to ensure that images are allowed in partial trust NOP in full trust
-            DemandIfImageBlocked();
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1089,11 +1054,6 @@ namespace System.Windows.Media.Imaging
             {
                 if (uri.IsAbsoluteUri)
                 {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain)
-                    SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                         MediaPermissionVideo.NoVideo,
-                                                         MediaPermissionImage.SiteOfOriginImage) ;
                     // This code path executes only for pack web requests
                     if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
                     {
@@ -1253,21 +1213,6 @@ namespace System.Windows.Media.Imaging
             string decoderMimeTypes;
             clsId = GetCLSIDFromDecoder(decoderHandle, out decoderMimeTypes);
 
-            // If the mime type of the file does not match the associated decoder,
-            // and if we are in a Partial trust scenario, throw!
-            if ((mimeType != String.Empty) &&
-                (decoderMimeTypes.IndexOf(mimeType, StringComparison.OrdinalIgnoreCase) == -1))
-            {
-                try
-                {
-                    SecurityHelper.DemandUnmanagedCode();
-                }
-                catch(SecurityException)
-                {
-                    throw new ArgumentException(SR.Get(SRID.Image_ContentTypeDoesNotMatchDecoder));
-                }
-            }
-
             return decoderHandle;
         }
 
@@ -1282,19 +1227,7 @@ namespace System.Windows.Media.Imaging
             {
                 WebRequest request = null;
 
-                // Block XDomain from apps deployed over HTTPS (For HTTP, LMZ and UNC apps, is ok to access images through HTTPS)
-                SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                // now, we can Assert permissions because we ensured that only apps deployed through non-HTTPS can access XDomain images
-                (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    WebPermission.RevertAssert();
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
             }
@@ -1305,36 +1238,10 @@ namespace System.Windows.Media.Imaging
         {
             WebRequest request = null;
             Stream bitmapStream =  stream;
-            SecurityHelper.BlockCrossDomainForHttpsApps(uri);
             // Download only if this content is not already downloaded or stream is not seekable
             if (bitmapStream == null || !bitmapStream.CanSeek)
             {
-                // In this case we first check to see if the consumer has media permissions for
-                // safe media (Site of Origin + Cross domain), if it
-                // does we assert and run the code that requires the assert
-                bool fElevate = false;
-                if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                            MediaPermissionVideo.NoVideo,
-                                                            MediaPermissionImage.SafeImage))
-                {
-                    fElevate = true;
-                }
-
-                if (fElevate)
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    if (fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 // Download only if this content is not already downloaded or stream is not seekable
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
@@ -1344,58 +1251,9 @@ namespace System.Windows.Media.Imaging
 
         private static Stream ProcessUncFiles(Uri uri)
         {
-            Stream bitmapStream = null;
 
-            // perform checks for UNC content
-            SecurityHelper.EnforceUncContentAccessRules(uri);
 
-            // In this case we first check to see if the consumer has media permissions for
-            // safe media (Site of Origin + Cross domain), if it
-            // does then we assert else we run the code without the assert
-            bool fElevate = false;
-            if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                        MediaPermissionVideo.NoVideo,
-                                                        MediaPermissionImage.SafeImage))
-            {
-                fElevate = true;
-            }
-
-            if(fElevate)
-            {
-                // since the code above ensures that safe image permission is granted we
-                // can now do an assert to allow cross domain web request
-                (new FileIOPermission(FileIOPermissionAccess.Read, uri.LocalPath)).Assert(); // BlessedAssert
-            }
-            try
-            {
-                // FileStream does a demand for us, so no need to do a demand
-                bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            }
-            finally
-            {
-                if(fElevate)
-                {
-                    FileIOPermission.RevertAssert();
-                }
-            }
-            return bitmapStream;
-        }
-
-        void CheckIfSiteOfOrigin()
-        {
-            string uri = null;
-
-            if (CanConvertToString())
-            {
-                // This call returns the URI either as an absolute URI which the user
-                // passed in, in the first place or as the string "image"
-                // we only allow this code to succeed in the case of Uri and if it is site of
-                // origin or pack:. In all other conditions we fail
-
-                uri = ToString();
-            }
-
-            SecurityHelper.DemandMediaAccessPermission(uri);
+            return new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         /// Returns the decoder's CLSID
@@ -1833,11 +1691,6 @@ namespace System.Windows.Media.Imaging
 
         /// SyncObject
         private object _syncObject = new Object();
-
-        // this is data that we cache as a performance optimization. It is ok to do so since we do not want to
-        // handle this key change in the lifetime of this app.
-        private static SecurityCriticalDataForSet<bool> isImageDisabled;
-        private static bool isImageDisabledInitialized;
 
         // For UnmanagedMemoryStream we want to make sure that buffer
         // its pointing to is not getting release until decoder is alive

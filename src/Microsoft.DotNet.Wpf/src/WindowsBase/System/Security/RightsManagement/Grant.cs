@@ -40,7 +40,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public ContentGrant(ContentUser user, ContentRight right, DateTime validFrom, DateTime validUntil)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             // Add validation here 
 
             if (user == null)
@@ -86,7 +85,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();            
                 return _user;
             }
         }
@@ -98,7 +96,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();            
                 return _right;
             }
         }
@@ -110,7 +107,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _validFrom; 
             }
@@ -123,7 +119,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _validUntil; 
             }

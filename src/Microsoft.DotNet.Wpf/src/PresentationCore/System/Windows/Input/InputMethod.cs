@@ -663,7 +663,6 @@ namespace System.Windows.Input
 
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 Debug.Assert(value != InputMethodState.DoNotCare);
 
@@ -742,7 +741,6 @@ namespace System.Windows.Input
 
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.SpeechMode);
@@ -1547,7 +1545,6 @@ namespace System.Windows.Input
         /// </summary> 
         private bool _ShowConfigureUI(UIElement element, bool fShow)
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             bool bCanShown = false;
             IntPtr hkl = SafeNativeMethods.GetKeyboardLayout(0);
@@ -1601,7 +1598,6 @@ namespace System.Windows.Input
         /// </summary> 
         private bool _ShowRegisterWordUI(UIElement element, bool fShow, string strRegister)
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             bool bCanShown = false;
             IntPtr hkl = SafeNativeMethods.GetKeyboardLayout(0);
@@ -1696,7 +1692,6 @@ namespace System.Windows.Input
         /// </summary> 
         private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
-            SecurityHelper.DemandUnmanagedCode();
             // Get the profile info structre of the current active keyboard TIP.
             tf_profile = GetCurrentKeybordTipProfile();
 

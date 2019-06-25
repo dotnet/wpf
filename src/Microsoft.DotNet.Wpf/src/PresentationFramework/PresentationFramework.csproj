@@ -313,7 +313,6 @@
     <Compile Include="MS\Internal\MatchedTextInfo.cs" />
     <Compile Include="MS\Internal\Navigation\BindStream.cs" />
     <Compile Include="MS\Internal\Navigation\JournalEntryStack.cs" />
-    <Compile Include="MS\Internal\Permissions\UserInitiatedNavigationPermission.cs" />
     <Compile Include="MS\Internal\PrePostDescendentsWalker.cs" />
     <Compile Include="MS\Internal\Printing\NativeMethods.cs" />
     <Compile Include="MS\Internal\Printing\PrintDlgExMarshaler.cs" />

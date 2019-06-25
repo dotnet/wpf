@@ -43,7 +43,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public PublishLicense(string signedPublishLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if (signedPublishLicense == null)
             {
@@ -93,7 +92,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense DecryptUnsignedPublishLicense(CryptoProvider cryptoProvider )
         {
-            SecurityHelper.DemandRightsManagementPermission();
             
             if (cryptoProvider == null)
             {
@@ -113,7 +111,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoName; 
             }
@@ -129,7 +126,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoUri; 
             }
@@ -142,7 +138,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _contentId;
             }
@@ -155,7 +150,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _useLicenseAcquisitionUriFromPublishLicense;
             }
@@ -166,7 +160,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override string ToString()
         {
-            SecurityHelper.DemandRightsManagementPermission();
             
             return _serializedPublishLicense;
         }        
@@ -176,7 +169,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicense(SecureEnvironment secureEnvironment)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             
             if (secureEnvironment == null)
             {
@@ -199,7 +191,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicenseNoUI(SecureEnvironment secureEnvironment)
         {
-            SecurityHelper.DemandRightsManagementPermission();
                     
             if (secureEnvironment == null)
             {

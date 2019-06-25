@@ -69,7 +69,6 @@ namespace System.Windows.Interop
         /// </summary>
         public D3DImage(double dpiX, double dpiY)
         {
-            SecurityHelper.DemandUnmanagedCode();
             
             if (dpiX < 0)
             {
@@ -144,7 +143,6 @@ namespace System.Windows.Interop
         /// </summary>
         public void SetBackBuffer(D3DResourceType backBufferType, IntPtr backBuffer, bool enableSoftwareFallback)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             WritePreamble();
             
@@ -537,7 +535,6 @@ namespace System.Windows.Interop
         /// </Summary>
         protected internal virtual BitmapSource CopyBackBuffer()
         {
-            SecurityHelper.DemandUnmanagedCode();
             
             BitmapSource copy = null;
             

@@ -9,8 +9,6 @@
 
 using System;
 using System.IO;
-
-using System.Net; // WebPermission. 
 using System.Security;
 using System.Windows;
 using System.Windows.Markup;

@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Security;
-using System.Security.Permissions;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xaml.Permissions;
@@ -34,7 +33,6 @@ namespace MS.Internal.Xaml.Runtime
         const BindingFlags BF_AllStaticMembers = 
             BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
-        static PermissionSet s_FullTrustPermission;
         static MethodInfo s_GetTypeFromHandleMethod;
         static MethodInfo s_InvokeMemberMethod;
 
@@ -446,27 +444,13 @@ namespace MS.Internal.Xaml.Runtime
 
         private DynamicMethod CreateDynamicMethod(string name, Type returnType, params Type[] argTypes)
         {
-            // Need to assert FullTrust because DynamicMethod.ctor demands the entire grant set of
-            // the target assembly, which may be FullTrust
-            if (s_FullTrustPermission == null)
+            if (_localType != null)
             {
-                s_FullTrustPermission = new PermissionSet(PermissionState.Unrestricted);
+                return new DynamicMethod(name, returnType, argTypes, _localType);
             }
-            s_FullTrustPermission.Assert();
-            try
+            else
             {
-                if (_localType != null)
-                {
-                    return new DynamicMethod(name, returnType, argTypes, _localType);
-                }
-                else
-                {
-                    return new DynamicMethod(name, returnType, argTypes, _localAssembly.ManifestModule);
-                }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
+                return new DynamicMethod(name, returnType, argTypes, _localAssembly.ManifestModule);
             }
         }
 

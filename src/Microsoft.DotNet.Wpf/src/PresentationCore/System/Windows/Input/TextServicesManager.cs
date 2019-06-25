@@ -17,7 +17,6 @@ using MS.Win32;
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Input
 {

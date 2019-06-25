@@ -12,7 +12,6 @@ namespace MS.Internal.AppModel
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using MS.Win32;
     using MS.Internal.Interop;

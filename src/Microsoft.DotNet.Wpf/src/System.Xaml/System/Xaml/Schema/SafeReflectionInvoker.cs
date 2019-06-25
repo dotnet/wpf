@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Xaml.Schema
 {
@@ -30,39 +29,6 @@ namespace System.Xaml.Schema
 
         private static bool UseDynamicAssembly()
         {
-            // Use the dynamic assembly technique as soon as any call occurs in partial-trust
-            // (and thereafter).
-            if (!s_UseDynamicAssembly)
-            {
-                bool useDynamicAssembly = false;
-
-                try
-                {
-                    PermissionSet fullTrustPermissionSet = new PermissionSet(PermissionState.Unrestricted);
-                    fullTrustPermissionSet.Demand();
-                }
-                catch (SecurityException)
-                {
-                    useDynamicAssembly = true;
-                }
-
-                // the first time we're called in partial-trust, we have to emit the dynamic methods.
-                if (useDynamicAssembly)
-                {
-                    // multiple threads can reach this point more or less simultaneously.
-                    // Ensure that exactly one of them creates the assembly, and that
-                    // the assembly is ready for use by all of them before they proceed.
-                    lock(lockObject)
-                    {
-                        if (!s_UseDynamicAssembly)
-                        {
-                            CreateDynamicAssembly();
-                            s_UseDynamicAssembly = true;
-                        }
-                    }
-                }
-            }
-
             return s_UseDynamicAssembly;
         }
 
@@ -70,10 +36,8 @@ namespace System.Xaml.Schema
                                                     System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
         private static void CreateDynamicAssembly()
         {
-            // 1. Assert permissions demanded by the DynamicMethod ctor.
-            new SecurityPermission(SecurityPermissionFlag.ControlEvidence).Assert(); // BlessedAssert
 
-            // 2. Create the transparent methods, each wrapping a call to a reflection method,
+            // 1. Create the transparent methods, each wrapping a call to a reflection method,
             //    and cache a delegate to each method.
             Type[] parameterTypes;      // signature of the reflection method
             Type[] wrappedParameterTypes; // signature of the wrapping method (when different)
@@ -81,7 +45,7 @@ namespace System.Xaml.Schema
             DynamicMethod method;       // wrapping method
             ILGenerator il;             // wrapping method's generator
 
-            // 2a. Delegate.CreateDelegate( Type, Type, String )
+            // 1a. Delegate.CreateDelegate( Type, Type, String )
             parameterTypes = new Type[] { typeof(Type), typeof(Type), typeof(String) };
             mi = typeof(Delegate).GetMethod("CreateDelegate", parameterTypes);
 
@@ -99,7 +63,7 @@ namespace System.Xaml.Schema
 
             s_CreateDelegate1 = (CreateDelegate1Delegate)method.CreateDelegate(typeof(CreateDelegate1Delegate));
 
-            // 2b. Delegate.CreateDelegate( Type, Object, String )
+            // 1b. Delegate.CreateDelegate( Type, Object, String )
             parameterTypes = new Type[] { typeof(Type), typeof(Object), typeof(String) };
             mi = typeof(Delegate).GetMethod("CreateDelegate", parameterTypes);
 
@@ -117,7 +81,7 @@ namespace System.Xaml.Schema
 
             s_CreateDelegate2 = (CreateDelegate2Delegate)method.CreateDelegate(typeof(CreateDelegate2Delegate));
 
-            // 2c. Activator.CreateInstance( Type, Object[] )
+            // 1c. Activator.CreateInstance( Type, Object[] )
             parameterTypes = new Type[] { typeof(Type), typeof(Object[]) };
             mi = typeof(Activator).GetMethod("CreateInstance", parameterTypes);
 
@@ -133,7 +97,7 @@ namespace System.Xaml.Schema
 
             s_CreateInstance = (CreateInstanceDelegate)method.CreateDelegate(typeof(CreateInstanceDelegate));
 
-            // 2d. MethodInfo.Invoke(object, args)
+            // 1d. MethodInfo.Invoke(object, args)
             parameterTypes = new Type[] { typeof(Object), typeof(Object[]) };
             wrappedParameterTypes = new Type[] { typeof(MethodInfo), typeof(Object), typeof(Object[]) };
             mi = typeof(MethodInfo).GetMethod("Invoke", parameterTypes);
@@ -153,9 +117,6 @@ namespace System.Xaml.Schema
             s_InvokeMethod = (InvokeMethodDelegate)method.CreateDelegate(typeof(InvokeMethodDelegate));
         }
 #endif
-
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        private static ReflectionPermission s_reflectionMemberAccess;
 
         static readonly Assembly SystemXaml = typeof(SafeReflectionInvoker).Assembly;
 
@@ -227,18 +188,6 @@ namespace System.Xaml.Schema
         {
             return Activator.CreateInstance(type, arguments);
         }
-
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
-        internal static void DemandMemberAccessPermission()
-        {
-            if (s_reflectionMemberAccess == null)
-            {
-                s_reflectionMemberAccess = new ReflectionPermission(ReflectionPermissionFlag.MemberAccess);
-            }
-            s_reflectionMemberAccess.Demand();
-        }
-        // ^^^^^----- End of unused members.  -----^^^^^
 
         internal static object InvokeMethod(MethodInfo method, object instance, object[] args)
         {

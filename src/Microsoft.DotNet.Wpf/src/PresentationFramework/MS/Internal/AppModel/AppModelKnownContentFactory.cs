@@ -12,7 +12,6 @@ using System.IO;
 
 using System.Net; // WebPermission. 
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;

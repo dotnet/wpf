@@ -17,12 +17,6 @@ namespace System.Windows
     [TypeConverter(typeof(DeferrableContentConverter))]
     public class DeferrableContent
     {
-        internal XamlLoadPermission LoadPermission
-        {
-            get;
-            private set;
-        }
-
         internal Stream Stream
         {
             get;
@@ -43,13 +37,6 @@ namespace System.Windows
             object rootObject)
         {
             ObjectWriterParentSettings = objectWriterFactory.GetParentSettings();
-            if (ObjectWriterParentSettings.AccessLevel != null)
-            {
-                XamlLoadPermission loadPermission = 
-                    new XamlLoadPermission(ObjectWriterParentSettings.AccessLevel);
-                loadPermission.Demand();
-                this.LoadPermission = loadPermission;
-            }
             bool assemblyTargetsFramework2 = false;
             // The local assembly can be null if it is not specified in the XamlReaderSettings.
             if (schemaContext.LocalAssembly != null)

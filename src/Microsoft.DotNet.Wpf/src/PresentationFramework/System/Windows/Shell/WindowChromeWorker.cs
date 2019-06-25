@@ -15,7 +15,6 @@ namespace Microsoft.Windows.Shell
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Threading;
     using System.Windows;
     using System.Windows.Interop;

@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;

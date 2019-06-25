@@ -24,7 +24,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Reach.Packaging;
 using System.Windows.Documents;

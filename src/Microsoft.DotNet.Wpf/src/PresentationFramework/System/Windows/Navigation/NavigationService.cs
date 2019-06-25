@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Cache;
@@ -2902,23 +2901,9 @@ namespace System.Windows.Navigation
                 {
                     response = WpfWebRequestHelper.EndGetResponse(_request, ar);
                 }
-                catch (WebException we)
+                catch
                 {
-                    // this codepath enables top-level navigation to UNC content. Unlike HttpWebRequest, FileWebRequest throws on EndGetResponse()
-                    LaunchResult launched = LaunchResult.NotLaunched;
-                    SecurityException se = we.GetBaseException() as SecurityException;
-
-                    // delegate to the browser only if 1) navigating to UNC and 2) reason for which we couldn't get the stream is no grants
-                    if (_request.RequestUri.IsUnc && _request.RequestUri.IsFile && se != null && se.PermissionType == typeof(FileIOPermission))
-                    {
-                        launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, _request.RequestUri, IsTopLevelContainer);
-                    }
-
-                    if (launched == LaunchResult.NotLaunched)
-                        throw;
-
-                    // we successfully delegated navigation to the browser; return
-                    return;
+                    throw;
                 }
 
                 // response object will be closed at approrpiate time when it is not used anymore later.

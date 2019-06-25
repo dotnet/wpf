@@ -17,7 +17,6 @@
 using System;
 using System.Runtime.ConstrainedExecution;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Threading;
 using MS.Internal.WindowsBase;

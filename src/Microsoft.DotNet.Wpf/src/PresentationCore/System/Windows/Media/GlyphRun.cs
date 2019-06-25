@@ -38,7 +38,6 @@ using MS.Internal.TextFormatting;
 using MS.Internal.Text.TextInterface;
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Interop;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;

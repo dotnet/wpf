@@ -29,7 +29,6 @@ using MS.Utility;
 using MS.Internal.Utility;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls.Primitives
 {

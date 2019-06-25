@@ -26,7 +26,6 @@ using System.Windows.Interop;
 using System.Windows.Documents;
 using MS.Internal.Documents;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
@@ -2345,15 +2344,7 @@ namespace System.Windows.Documents
             milPointBottomRight = compositionTarget.TransformToDevice.Transform(milPointBottomRight);
 
             IntPtr hwnd = IntPtr.Zero;
-            new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert
-            try
-            {
-                hwnd = win32Window.Handle;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            hwnd = win32Window.Handle;
 
             // Transform to screen coords.
             clientPoint = new NativeMethods.POINT();
@@ -3031,15 +3022,7 @@ namespace System.Windows.Documents
 
                 if (win32Window != null)
                 {
-                    (new UIPermission(UIPermissionWindow.AllWindows)).Assert();//BlessedAssert
-                    try
-                    {
-                        hwnd = win32Window.Handle;
-                    }
-                    finally
-                    {
-                        UIPermission.RevertAssert();
-                    }
+                    hwnd = win32Window.Handle;
                 }
             }
             return hwnd;

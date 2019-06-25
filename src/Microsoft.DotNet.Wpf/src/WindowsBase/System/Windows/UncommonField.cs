@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Security.Permissions;
 
 using MS.Internal.WindowsBase;  // for FriendAccessAllowed
 

@@ -24,7 +24,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
@@ -331,42 +330,29 @@ namespace MS.Internal.Ink.GestureRecognition
             //     http://blogs.msdn.com/junfeng/archive/2004/07/14/181932.aspx. Then we don't have to unload the existing
             //     mshwgst.dll.
             String path = null;
-            System.Security.PermissionSet permissionSet = new PermissionSet(null);
-            permissionSet.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read,
-                                                        System.Security.AccessControl.AccessControlActions.View,
-                                                        GestureRecognizerFullPath));
-            permissionSet.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-            permissionSet.Assert();  // BlessedAssert:
-            try
+            RegistryKey regkey = Registry.LocalMachine;
+            RegistryKey recognizerKey = regkey.OpenSubKey(GestureRecognizerPath);
+            if (recognizerKey != null)
             {
-                RegistryKey regkey = Registry.LocalMachine;
-                RegistryKey recognizerKey = regkey.OpenSubKey(GestureRecognizerPath);
-                if (recognizerKey != null)
+                try
                 {
-                    try
+                    // Try to read the recognizer path subkey
+                    path = recognizerKey.GetValue(GestureRecognizerValueName) as string;
+                    if (path == null)
                     {
-                        // Try to read the recognizer path subkey
-                        path = recognizerKey.GetValue(GestureRecognizerValueName) as string;
-                        if (path == null)
-                        {
-                            return false;
-                        } 
-                    }
-                    finally
-                    {
-                        recognizerKey.Close();
-                    }
+                        return false;
+                    } 
                 }
-                else
+                finally
                 {
-                    // we couldn't find the path in the registry
-                    // no key to close
-                    return false;
+                    recognizerKey.Close();
                 }
             }
-            finally
+            else
             {
-                CodeAccessPermission.RevertAssert();
+                // we couldn't find the path in the registry
+                // no key to close
+                return false;
             }
  
             if (path != null)

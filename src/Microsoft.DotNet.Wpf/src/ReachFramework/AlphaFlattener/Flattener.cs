@@ -18,7 +18,6 @@ using System.Windows.Xps.Serialization;
 using System.Printing;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -964,15 +963,6 @@ namespace Microsoft.Internal.AlphaFlattener
 
         static bool HasUnmanagedCodePermission()
         {
-            try
-            {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
-            }
-            catch(SecurityException )
-            {
-                return false ;
-            }
-
             return true;
         }
 

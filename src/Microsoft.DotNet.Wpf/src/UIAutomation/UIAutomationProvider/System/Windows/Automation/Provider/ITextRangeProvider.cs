@@ -8,7 +8,6 @@ using System;
 using System.Collections;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation.Provider

@@ -26,7 +26,6 @@ using MS.Internal.PresentationCore;
 using MS.Internal.Interop;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
@@ -216,17 +215,7 @@ namespace System.Windows.Media
                     functionAddress,
                     typeof(ChangeWindowMessageFilterNative)) as ChangeWindowMessageFilterNative;
 
-                // In order to call the function we need unmanaged code access,
-                // because the function is native code.
-                (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    function(message, flag);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                function(message, flag);
             }
         }
 

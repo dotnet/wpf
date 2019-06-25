@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32.Penimc;
 

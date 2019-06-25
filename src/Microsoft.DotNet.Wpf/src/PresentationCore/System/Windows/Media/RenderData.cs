@@ -28,7 +28,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Media
 {

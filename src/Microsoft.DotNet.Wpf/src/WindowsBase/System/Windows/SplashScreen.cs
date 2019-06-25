@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Interop;

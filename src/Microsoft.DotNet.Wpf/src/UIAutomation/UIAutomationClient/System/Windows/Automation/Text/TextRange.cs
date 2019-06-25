@@ -15,7 +15,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 

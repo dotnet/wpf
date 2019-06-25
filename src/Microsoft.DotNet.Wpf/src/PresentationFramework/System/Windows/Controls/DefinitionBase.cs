@@ -21,7 +21,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Threading;
 

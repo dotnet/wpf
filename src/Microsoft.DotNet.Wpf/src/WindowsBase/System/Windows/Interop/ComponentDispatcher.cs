@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32;
 using MS.Internal.WindowsBase;

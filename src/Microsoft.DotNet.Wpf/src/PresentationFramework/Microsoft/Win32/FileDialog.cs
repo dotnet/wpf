@@ -34,7 +34,6 @@ namespace Microsoft.Win32
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using System.Threading;
     using System.Windows;
@@ -1110,26 +1109,8 @@ namespace Microsoft.Win32
             // PromptUserIfAppropriate is OFN_FILEMUSTEXIST.
             if (GetOption(NativeMethods.OFN_FILEMUSTEXIST))
             {
-                try
-                {
-                    // File.Exists requires a full path, so we call GetFullPath on
-                    // the filename before checking if it exists.
-                    (new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, fileName)).Assert();
-                    try
-                    {
-                        string tempPath = Path.GetFullPath(fileName);
-                        fileExists = File.Exists(tempPath);
-                    }
-                    finally
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
-                // FileIOPermission constructor will throw on invalid paths.
-                catch (PathTooLongException)
-                {
-                    fileExists = false;
-                }
+                string tempPath = Path.GetFullPath(fileName);
+                fileExists = File.Exists(tempPath);
 
                 if (!fileExists)
                 {

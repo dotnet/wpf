@@ -7,7 +7,6 @@ using System.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Security;                       // CAS
-using System.Security.Permissions;           // Registry permissions
 using System.Runtime.ConstrainedExecution;
 using System.Windows;                        // BaseCompatibilityPreferences
 

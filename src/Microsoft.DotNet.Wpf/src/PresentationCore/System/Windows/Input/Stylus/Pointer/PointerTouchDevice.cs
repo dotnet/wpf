@@ -6,7 +6,6 @@
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;

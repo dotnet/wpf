@@ -19,7 +19,6 @@ using System.IO.Packaging;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Permissions;
 using System.Security ;
 using System.Windows.Markup;
 

@@ -19,7 +19,6 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;

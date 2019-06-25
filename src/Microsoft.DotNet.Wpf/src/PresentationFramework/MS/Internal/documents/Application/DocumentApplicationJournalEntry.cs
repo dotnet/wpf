@@ -10,7 +10,6 @@
 using System;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;

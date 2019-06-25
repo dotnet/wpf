@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 using MS.Win32;
@@ -50,9 +49,6 @@ namespace MS.Internal.AppModel
 
         public CustomCredentialPolicy()
         {
-            _environmentPermissionSet = new PermissionSet(null);
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERDOMAIN"));
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERNAME"));
         }
 
         static internal void EnsureCustomCredentialPolicy()
@@ -63,23 +59,15 @@ namespace MS.Internal.AppModel
                 {
                     if (!_initialized)
                     {
-                        new SecurityPermission(SecurityPermissionFlag.ControlPolicy).Assert();  // BlessedAssert: 
-                        try
+                        // We should allow an application to set its own credential policy, if it has permssion to.
+                        // We do not want to overwrite the application's setting. 
+                        // Check whether it is already set before setting it. 
+                        // The default of this property is null. It demands ControlPolicy permission to be set.
+                        if (AuthenticationManager.CredentialPolicy == null)
                         {
-                            // We should allow an application to set its own credential policy, if it has permssion to.
-                            // We do not want to overwrite the application's setting. 
-                            // Check whether it is already set before setting it. 
-                            // The default of this property is null. It demands ControlPolicy permission to be set.
-                            if (AuthenticationManager.CredentialPolicy == null)
-                            {
-                                AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
-                            }
-                            _initialized = true;
+                            AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
                         }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
+                        _initialized = true;
                     }
                 }
             }
@@ -108,15 +96,7 @@ namespace MS.Internal.AppModel
 
         private bool IsDefaultCredentials(NetworkCredential credential)
         {
-            _environmentPermissionSet.Assert();  // BlessedAssert: 
-            try
-            {
-                return credential == CredentialCache.DefaultCredentials;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            return credential == CredentialCache.DefaultCredentials;
         }
 
         internal static SecurityZone MapUrlToZone(Uri uri)
@@ -170,7 +150,5 @@ namespace MS.Internal.AppModel
         private static object _lockObj;
 
         private static bool _initialized;
-
-        PermissionSet _environmentPermissionSet;
     }
 }

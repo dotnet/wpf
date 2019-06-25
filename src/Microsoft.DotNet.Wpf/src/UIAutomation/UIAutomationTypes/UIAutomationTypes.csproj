@@ -97,7 +97,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
   </ItemGroup>
 
 </Project>

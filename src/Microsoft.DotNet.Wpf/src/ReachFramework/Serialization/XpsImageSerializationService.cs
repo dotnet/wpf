@@ -15,7 +15,6 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Xps.Packaging;
 
 using MS.Internal;
@@ -62,15 +61,7 @@ namespace System.Windows.Xps.Serialization
 
                 if (codecInfo != null)
                 {
-                    (new RegistryPermission(PermissionState.Unrestricted)).Assert();
-                    try
-                    {
-                        encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
-                    }
-                    finally
-                    {
-                        RegistryPermission.RevertAssert();
-                    }
+                    encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
 
                     // Avoid GIF encoder which does not save transparency well
                     if ( !( encoder is JpegBitmapEncoder || 
@@ -140,15 +131,7 @@ namespace System.Windows.Xps.Serialization
             
             if (codecInfo != null)
             {
-                (new RegistryPermission(PermissionState.Unrestricted)).Assert();
-                try
-                {
-                    imageMimeType = codecInfo.MimeTypes;
-                }
-                finally
-                {
-                    RegistryPermission.RevertAssert();
-                }
+                imageMimeType = codecInfo.MimeTypes;
             }
             int start = 0;
             int comma = imageMimeType.IndexOf(',', start);

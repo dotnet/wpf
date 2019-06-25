@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;              // SecurityCritical, TreatAsSafe
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;
 using System.ComponentModel;
@@ -45,9 +44,6 @@ namespace System.Windows.Input
 
             if (gesture == null)
                 throw new ArgumentNullException("gesture");
-
-            // Check before assignment to avoid continuation
-            CheckSecureCommand(command, gesture);
 
             Command = command;
             _gesture = gesture;
@@ -89,8 +85,6 @@ namespace System.Windows.Input
         /// </summary>
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            InputBinding inputBinding = (InputBinding)d;
-            inputBinding.CheckSecureCommand((ICommand)e.NewValue, inputBinding.Gesture);
         }
 
         /// <summary>
@@ -156,10 +150,6 @@ namespace System.Windows.Input
 
                 lock (_dataLock)
                 {
-                    // Check before assignment to avoid continuation
-                    //
-                    CheckSecureCommand(Command, value);
-
                     _gesture = value;
                 }
                 WritePostscript();
@@ -171,22 +161,6 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
-
-        void CheckSecureCommand(ICommand command, InputGesture gesture)
-        {
-            // In v3.5, only ApplicationCommands.Paste was treated as ISecureCommand,
-            // causing the below demand to fail if a binding for it was created. As
-            // there's no provable security vulnerability and for backwards compat
-            // reasons, we special-case Cut and Copy not to be subject to this check
-            // even though they have been promoted to ISecureCommand in v4.0.
-            ISecureCommand secure = command as ISecureCommand;
-            if (   secure != null
-                && command != ApplicationCommands.Cut
-                && command != ApplicationCommands.Copy)
-            {
-                secure.UserInitiatedPermission.Demand();
-            }
-        }
 
         #region Freezable
 

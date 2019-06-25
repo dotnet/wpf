@@ -14,7 +14,6 @@ namespace System.Windows.Controls.Primitives
     using System.ComponentModel; // DefaultValue
 
     using System.Security;
-    using System.Security.Permissions;
 
     using System.Windows.Automation; // TextPattern
     using System.Windows.Automation.Provider; // AutomationProvider

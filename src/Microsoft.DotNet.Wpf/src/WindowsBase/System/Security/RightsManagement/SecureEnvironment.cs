@@ -22,7 +22,6 @@ using MS.Internal.Security.RightsManagement;
 using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
 using MS.Internal;
 using MS.Internal.WindowsBase;
-using System.Security.Permissions;
 
 namespace System.Security.RightsManagement 
 {

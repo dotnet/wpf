@@ -22,7 +22,6 @@ using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Security.Permissions;
 using System.Security;
 using System.Threading;
 

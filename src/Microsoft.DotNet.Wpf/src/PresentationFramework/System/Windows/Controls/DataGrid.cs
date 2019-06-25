@@ -10,7 +10,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;

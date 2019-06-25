@@ -16,7 +16,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.AppModel;
 using System.Windows;
 using System.Windows.Navigation;
@@ -127,15 +126,7 @@ namespace MS.Internal.AppModel
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
-                            new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).Assert();
-                            try
-                            {
-                                this.Formatter.Serialize(byteStream, currentValue);
-                            }
-                            finally
-                            {
-                                SecurityPermission.RevertAssert();
-                            }
+                            this.Formatter.Serialize(byteStream, currentValue);
                             
                             bytes = byteStream.ToArray();
                             // Dispose the stream
@@ -247,7 +238,6 @@ namespace MS.Internal.AppModel
                     {
                         try
                         {
-                            new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).Demand(); // prevent any journal metadata de-serialization in partial trust
                             newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
                         }
                         catch (SecurityException)

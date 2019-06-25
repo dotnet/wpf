@@ -10,7 +10,6 @@
 //
 
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Globalization;
 using System.Windows.Threading;

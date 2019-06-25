@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;

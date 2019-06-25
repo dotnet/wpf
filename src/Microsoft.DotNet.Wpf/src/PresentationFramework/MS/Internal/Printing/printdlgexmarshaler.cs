@@ -9,7 +9,6 @@ using System.Printing.Interop;
 using System.Printing;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Controls;
 
 namespace MS.Internal.Printing
@@ -332,31 +331,23 @@ namespace MS.Internal.Printing
                     PrintQueueIndexedProperty.QueueAttributes
                 };
 
-                SystemDrawingHelper.NewDefaultPrintingPermission().Assert();  //BlessedAssert
-                try
+                //
+                // Get the PrintQueue instance for the printer
+                //
+                using (LocalPrintServer server = new LocalPrintServer())
                 {
-                    //
-                    // Get the PrintQueue instance for the printer
-                    //
-                    using (LocalPrintServer server = new LocalPrintServer())
+                    foreach (PrintQueue queue in server.GetPrintQueues(props, types))
                     {
-                        foreach (PrintQueue queue in server.GetPrintQueues(props, types))
+                        if (printerName.Equals(queue.FullName, StringComparison.OrdinalIgnoreCase))
                         {
-                            if (printerName.Equals(queue.FullName, StringComparison.OrdinalIgnoreCase))
-                            {
-                                printQueue = queue;
-                                break;
-                            }
+                            printQueue = queue;
+                            break;
                         }
                     }
-                    if (printQueue != null)
-                    {
-                        printQueue.InPartialTrust = true;
-                    }
                 }
-                finally
+                if (printQueue != null)
                 {
-                    CodeAccessPermission.RevertAssert();
+                    printQueue.InPartialTrust = true;
                 }
 
                 return printQueue;
@@ -403,22 +394,14 @@ namespace MS.Internal.Printing
                     }
                 }
 
-                SystemDrawingHelper.NewDefaultPrintingPermission().Assert(); //BlessedAssert
-                try
+                //
+                // Convert the devmode data to a PrintTicket object
+                //
+                using (PrintTicketConverter ptConverter = new PrintTicketConverter(
+                            printQueueName,
+                            PrintTicketConverter.MaxPrintSchemaVersion))
                 {
-                    //
-                    // Convert the devmode data to a PrintTicket object
-                    //
-                    using (PrintTicketConverter ptConverter = new PrintTicketConverter(
-                                printQueueName,
-                                PrintTicketConverter.MaxPrintSchemaVersion))
-                    {
-                        printTicket = ptConverter.ConvertDevModeToPrintTicket(devModeData);
-                    }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
+                    printTicket = ptConverter.ConvertDevModeToPrintTicket(devModeData);
                 }
 
                 return printTicket;
@@ -835,24 +818,16 @@ namespace MS.Internal.Printing
             {
                 byte[] devModeData = null;
 
-                SystemDrawingHelper.NewDefaultPrintingPermission().Assert();  //BlessedAssert
-                try
+                //
+                // Convert the PrintTicket object to a DEVMODE
+                //
+                using (PrintTicketConverter ptConverter = new PrintTicketConverter(
+                            printerName,
+                            PrintTicketConverter.MaxPrintSchemaVersion))
                 {
-                    //
-                    // Convert the PrintTicket object to a DEVMODE
-                    //
-                    using (PrintTicketConverter ptConverter = new PrintTicketConverter(
-                                printerName,
-                                PrintTicketConverter.MaxPrintSchemaVersion))
-                    {
-                        devModeData = ptConverter.ConvertPrintTicketToDevMode(
-                            printTicket,
-                            BaseDevModeType.UserDefault);
-                    }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
+                    devModeData = ptConverter.ConvertPrintTicketToDevMode(
+                        printTicket,
+                        BaseDevModeType.UserDefault);
                 }
 
                 //

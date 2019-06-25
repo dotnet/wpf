@@ -20,7 +20,6 @@ using System.Windows;                                   // For Exception strings
 using System.Text;                                      // for StringBuilder
 using System.Diagnostics;                               // for Assert
 using System.Security;                                  // for SecurityCritical tag
-using System.Security.Permissions;                      // for LinkDemand
 using System.Security.Cryptography.Xml;                 // for SignedXml
 using System.Security.Cryptography.X509Certificates;    // for X509Certificate
 using MS.Internal.IO.Packaging;                         // for internal helpers

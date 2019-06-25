@@ -43,8 +43,6 @@ namespace MS.Internal.Xaml.Runtime
         delegate object FactoryDelegate(object[] args);
         delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
 
-        XamlLoadPermission _xamlLoadPermission;
-
         Assembly _localAssembly;
 
         Type _localType;
@@ -133,7 +131,6 @@ namespace MS.Internal.Xaml.Runtime
             Debug.Assert(schemaContext != null);
             Debug.Assert(accessLevel != null);
             _schemaContext = schemaContext;
-            _xamlLoadPermission = new XamlLoadPermission(accessLevel);
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
             if (accessLevel.PrivateAccessToTypeName != null)
             {
@@ -143,8 +140,6 @@ namespace MS.Internal.Xaml.Runtime
 
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> ts)
         {
-            DemandXamlLoadPermission();
-
             Type clrType = ts.ConverterType;
             if (clrType == null)
             {
@@ -182,8 +177,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
-            DemandXamlLoadPermission();
-
             DelegateCreator creator;
             Type targetType = target.GetType();
             if (!DelegateCreators.TryGetValue(targetType, out creator))
@@ -196,7 +189,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object CreateInstanceWithCtor(XamlType xamlType, object[] args)
         {
-            DemandXamlLoadPermission();
             return CreateInstanceWithCtor(xamlType.UnderlyingType, args);
         }
 
@@ -225,8 +217,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo factory = GetFactoryMethod(type, methodName, args, BF_AllStaticMembers);
             FactoryDelegate factoryDelegate;
             if (!FactoryDelegates.TryGetValue(factory, out factoryDelegate))
@@ -239,8 +229,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object GetValue(XamlMember member, object obj)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo getter = member.Invoker.UnderlyingGetter;
             if (getter == null)
             {
@@ -258,8 +246,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override void SetValue(XamlMember member, object obj, object value)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo setter = member.Invoker.UnderlyingSetter;
             if (setter == null)
             {
@@ -482,14 +468,6 @@ namespace MS.Internal.Xaml.Runtime
             {
                 CodeAccessPermission.RevertAssert();
             }
-        }
-
-        private void DemandXamlLoadPermission()
-        {
-            // Demands XamlLoadPermission for the XamlAccessLevel that was passed in to
-            // XamlObjectWriter.Settings. This specifies the assembly or type that we will ILGen
-            // dynamic methods into in CreateDynamicMethod.
-            _xamlLoadPermission.Demand();
         }
 
         private Type GetTargetType(MethodInfo instanceMethod)

@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Markup;
 using System.Xaml.MS.Impl;

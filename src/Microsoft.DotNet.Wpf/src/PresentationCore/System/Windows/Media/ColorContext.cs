@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Resources;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;

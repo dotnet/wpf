@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Windows.Threading;
     using System.Threading;
     using System.Security;
-    using System.Security.Permissions;
     using System.IO;
     using MS.Win32;
     using System.Windows.Controls;

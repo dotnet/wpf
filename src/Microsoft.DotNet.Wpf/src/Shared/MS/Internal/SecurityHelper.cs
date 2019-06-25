@@ -32,7 +32,6 @@ namespace MS.Internal.Drt
     using System;
     using System.Globalization;     // CultureInfo
     using System.Security;
-    using System.Security.Permissions;
     using System.ComponentModel;
     using System.Security.Policy;
     using System.Runtime.InteropServices;

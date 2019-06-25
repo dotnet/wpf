@@ -15,7 +15,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Security.Permissions;
 using MS.Win32.Penimc;
 using MS.Win32;
 

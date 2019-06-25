@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.KnownBoxes;
 
 

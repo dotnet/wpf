@@ -12,7 +12,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections;
@@ -27,8 +26,6 @@ namespace System.Windows.Input
     [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     internal class SecureUICommand : RoutedUICommand, ISecureCommand
     {
-        readonly PermissionSet _userInitiated;
-
         /// <summary>
         /// Creates a new secure command, requiring the specified permissions. Used to delay initialization of Text and InputGestureCollection to time of first use.
         /// </summary>
@@ -39,22 +36,6 @@ namespace System.Windows.Input
         internal SecureUICommand(PermissionSet userInitiated, string name, Type ownerType, byte commandId)
             : base(name, ownerType, commandId)
         {
-            _userInitiated = userInitiated;
-        }
-
-
-        /// <summary>
-        /// Permission required to modify bindings for this
-        /// command, and the permission to assert when
-        /// the command is invoked in a user interactive
-        /// (trusted) fashion.
-        /// </summary>
-        public PermissionSet UserInitiatedPermission
-        {
-            get
-            {
-                return _userInitiated;
-            }
         }
     }
  }

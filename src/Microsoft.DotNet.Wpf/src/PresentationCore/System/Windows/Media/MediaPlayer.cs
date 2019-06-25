@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.ComponentModel;
 using MS.Internal;

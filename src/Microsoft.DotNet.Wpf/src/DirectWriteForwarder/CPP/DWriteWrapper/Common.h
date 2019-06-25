@@ -8,7 +8,6 @@
 #include "precomp.hxx"
 
 using namespace System::Security;
-using namespace System::Security::Permissions;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface { namespace Native
 {    
@@ -95,27 +94,8 @@ private:
     /// </summary>
     static bool IsFullTrustCaller()
     {
-#ifndef _CLR_NETCORE
-        try
-        {
-            if (_fullTrustPermissionSet == nullptr)
-            {
-                _fullTrustPermissionSet = gcnew PermissionSet(PermissionState::Unrestricted);
-            }
-            _fullTrustPermissionSet->Demand();
-        }
-        catch (SecurityException^)
-        {
-            return false;
-        }
-#endif
         return true;
     }
-
-#ifndef _CLR_NETCORE
-private:
-    static PermissionSet^ _fullTrustPermissionSet = nullptr;
-#endif 
 };
 
 #define ConvertHresultToException(hr, msg) Native::Util::ConvertHresultToException(hr)

@@ -18,7 +18,6 @@ using System.Windows.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

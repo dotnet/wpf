@@ -26,7 +26,6 @@ using System.Windows.Navigation;
 using System.Deployment.Application;
 #endif
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
@@ -274,27 +273,9 @@ namespace MS.Internal.AppModel
             ApplicationIdentity ident = null;
             string codeBase = null;
 
-            SecurityPermission p1 = new SecurityPermission(SecurityPermissionFlag.ControlDomainPolicy);
-            p1.Assert();
-            try
-            {
-                ident = currentDomain.ApplicationIdentity; // ControlDomainPolicy
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            ident = currentDomain.ApplicationIdentity; // ControlDomainPolicy
             
-            SecurityPermission p2 = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-            p2.Assert();
-            try
-            {
-                codeBase = ident.CodeBase; // Unmanaged Code permission
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            codeBase = ident.CodeBase; // Unmanaged Code permission
 
             return new Uri(new Uri(codeBase), new Uri(".", UriKind.Relative));
         }

@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using MS.Win32;
 

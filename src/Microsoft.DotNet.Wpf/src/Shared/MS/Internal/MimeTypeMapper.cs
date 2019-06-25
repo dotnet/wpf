@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Text; 
 #if PRESENTATION_CORE
 using MS.Internal.PresentationCore;  // for FriendAccessAllowed and BindUriHelper.UriToString

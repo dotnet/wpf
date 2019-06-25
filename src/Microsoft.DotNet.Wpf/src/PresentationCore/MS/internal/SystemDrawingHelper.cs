@@ -92,20 +92,6 @@ namespace MS.Internal
             return (extensions != null) ? extensions.GetCommentFromGifStream(stream) : null;
         }
 
-        // return a new safe-printing permission
-        internal static CodeAccessPermission NewSafePrintingPermission()
-        {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.NewSafePrintingPermission() : null;
-        }
-
-        // return a new default-printing permission
-        internal static CodeAccessPermission NewDefaultPrintingPermission()
-        {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.NewDefaultPrintingPermission() : null;
-        }
-
         // write a metafile stream to the output stream in PNG format
         internal static void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream)
         {

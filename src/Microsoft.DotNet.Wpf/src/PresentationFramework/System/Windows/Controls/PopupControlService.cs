@@ -20,7 +20,6 @@ using System.Windows.Media.Media3D;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls
 {

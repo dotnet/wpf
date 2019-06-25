@@ -18,7 +18,6 @@
 using System;
 using System.IO;                        // for Path class
 using System.Security;
-using System.Security.Permissions;      // for Infrastructure permission
 using System.Diagnostics;
 using System.Windows;                   // For Exception strings - SRID
 using System.Collections.Generic;       // For IEqualityComparer<>
@@ -129,18 +128,8 @@ namespace MS.Internal.IO.Packaging
             // indicate that we want "basic" parsing
             if (!UriParser.IsKnownScheme(System.IO.Packaging.PackUriHelper.UriSchemePack))
             {
-                try
-                {
-                    SecurityPermission permobj = new SecurityPermission(SecurityPermissionFlag.Infrastructure);
-                    permobj.Assert(); //BlessedAssert:
-
-                    // Indicate that we want a default hierarchical parser with a registry based authority
-                    UriParser.Register(new GenericUriParser(GenericUriParserOptions.GenericAuthority), System.IO.Packaging.PackUriHelper.UriSchemePack, -1);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                // Indicate that we want a default hierarchical parser with a registry based authority
+                UriParser.Register(new GenericUriParser(GenericUriParserOptions.GenericAuthority), System.IO.Packaging.PackUriHelper.UriSchemePack, -1);
             }
         }
 

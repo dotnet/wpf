@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;

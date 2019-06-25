@@ -5,7 +5,6 @@
 #include "FontFile.h"
 #include "DWriteTypeConverter.h"
 
-using namespace System::Security::Permissions;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {

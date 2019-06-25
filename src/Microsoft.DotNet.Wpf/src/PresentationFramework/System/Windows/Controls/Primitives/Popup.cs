@@ -12,7 +12,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
@@ -2745,18 +2744,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     // Get a handle to the bitmap
                     NativeMethods.BITMAP bm = new NativeMethods.BITMAP();
-                    int resultOfGetObject=0;
-
-
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); //Blessed Assert
-                    try
-                    {
-                        resultOfGetObject = UnsafeNativeMethods.GetObject(iconInfo.hbmMask.MakeHandleRef(null), Marshal.SizeOf(typeof(NativeMethods.BITMAP)), bm);
-                    }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    int resultOfGetObject =  UnsafeNativeMethods.GetObject(iconInfo.hbmMask.MakeHandleRef(null), Marshal.SizeOf(typeof(NativeMethods.BITMAP)), bm);
 
                     if (resultOfGetObject != 0)
                     {
@@ -3330,16 +3318,8 @@ namespace System.Windows.Controls.Primitives
                 // create popup's window object
                 HwndSource newWindow = new HwndSource(param);
 
-                new UIPermission(UIPermissionWindow.AllWindows).Assert(); //BlessedAssert
-                try
-                {
-                    // add hook to the popup's window
-                    newWindow.AddHook(hook);
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                // add hook to the popup's window
+                newWindow.AddHook(hook);
 
                 // initialize the private critical window object
                 _window = new SecurityCriticalDataClass<HwndSource>(newWindow);
@@ -3461,18 +3441,9 @@ namespace System.Windows.Controls.Primitives
                 {
                     hwnd.AutoResized -=  onAutoResizedEventHandler ;
                     hwnd.DpiChanged -= onDpiChagnedEventHandler;
-
-                    new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert:
-                    try
-                    {
-                        hwnd.RemoveHook(hook);
-                        hwnd.RootVisual = null;
-                        hwnd.Dispose();
-                    }
-                    finally
-                    {
-                        UIPermission.RevertAssert();
-                    }
+                    hwnd.RemoveHook(hook);
+                    hwnd.RootVisual = null;
+                    hwnd.Dispose();
                 }
             }
 

@@ -8,7 +8,6 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -225,7 +224,6 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         public HostedWindowWrapper(IntPtr hwnd)
         {
-            (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Demand();
             _hwnd = hwnd;
         }
 

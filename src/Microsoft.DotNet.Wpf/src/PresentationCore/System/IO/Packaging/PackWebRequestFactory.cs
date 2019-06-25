@@ -19,7 +19,6 @@ using System.Diagnostics;               // for Assert
 using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 
 namespace System.IO.Packaging

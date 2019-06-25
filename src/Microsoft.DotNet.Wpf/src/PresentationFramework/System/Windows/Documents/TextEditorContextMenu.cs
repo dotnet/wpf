@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Windows.Threading;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using MS.Win32;
     using System.Windows.Interop;
 
@@ -303,15 +302,7 @@ namespace System.Windows.Documents
             if (window != null)
             {
                 IntPtr hwnd = IntPtr.Zero;
-                new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert
-                try
-                {
-                    hwnd = window.Handle;
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                hwnd = window.Handle;
 
                 NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
                 SafeNativeMethods.GetClientRect(new HandleRef(null, hwnd), ref rc);

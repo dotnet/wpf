@@ -19,7 +19,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Automation.Provider;
 using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using MS.Internal;
 using MS.Win32;

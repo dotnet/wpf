@@ -23,7 +23,6 @@ using Microsoft.Win32.SafeHandles;
 using System.Windows;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 

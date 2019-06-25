@@ -17,7 +17,6 @@ using MS.Win32;
 #endif
 
 using System.Security;
-using System.Security.Permissions;
 // The functionality in this class is shared across framework and core. The functionality in core
 // is a subset of the functionality in framework, so rather than create a dependency from core to
 // framework we have choses to duplicate this chunk of  code.

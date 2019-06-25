@@ -7,7 +7,6 @@ namespace System.Windows
 {
     using System;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Input;
     using System.Windows.Interop;
     using Standard;

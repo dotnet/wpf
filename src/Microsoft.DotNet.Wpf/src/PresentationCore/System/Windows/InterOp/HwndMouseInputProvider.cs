@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;                        // SecurityHelper
@@ -24,15 +23,7 @@ namespace System.Windows.Interop
     {
         internal HwndMouseInputProvider(HwndSource source)
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed Assert for InputManager.Current.RegisterInputProvider
-            {
-                 _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-            }
-            finally
-            {
-                 UIPermission.RevertAssert();
-            }
+            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
 
             _source = new SecurityCriticalDataClass<HwndSource>(source);
 

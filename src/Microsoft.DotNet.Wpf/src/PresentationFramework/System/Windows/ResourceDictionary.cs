@@ -1119,7 +1119,6 @@ namespace System.Windows
                 if (_reader == null)
                 {
                     _reader = reader;
-                    _xamlLoadPermission = deferrableContent.LoadPermission;
                     SetKeys(keys, deferrableContent.ServiceProvider);
                 }
                 else
@@ -1383,26 +1382,9 @@ namespace System.Windows
                 return null;
 
             Uri baseUri = (_rootElement is IUriContext) ? ((IUriContext)_rootElement).BaseUri : _baseUri;
-            if (_xamlLoadPermission != null)
-            {
-                _xamlLoadPermission.Assert();
-                try
-                {
-                    return WpfXamlLoader.LoadDeferredContent(
-                        xamlReader, _objectWriterFactory, false /*skipJournaledProperites*/,
-                        _rootElement, _objectWriterSettings, baseUri);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            else
-            {
-                return WpfXamlLoader.LoadDeferredContent(
-                        xamlReader, _objectWriterFactory, false /*skipJournaledProperites*/,
-                        _rootElement, _objectWriterSettings, baseUri);
-            }
+            return WpfXamlLoader.LoadDeferredContent(
+                    xamlReader, _objectWriterFactory, false /*skipJournaledProperites*/,
+                    _rootElement, _objectWriterSettings, baseUri);
         }
 
         // Moved "Lookup()" from 3.5 BamlRecordReader to 4.0 ResourceDictionary
@@ -2471,7 +2453,6 @@ namespace System.Windows
         {
             _reader.Close();
             _reader = null;
-            _xamlLoadPermission = null;
         }
 
         private void CopyDeferredContentFrom(ResourceDictionary loadedRD)
@@ -2484,7 +2465,6 @@ namespace System.Windows
             _objectWriterSettings = loadedRD._objectWriterSettings;
             _rootElement = loadedRD._rootElement;
             _reader = loadedRD._reader;
-            _xamlLoadPermission = loadedRD._xamlLoadPermission;
             _numDefer = loadedRD._numDefer;
             _deferredLocationList = loadedRD._deferredLocationList;
         }
@@ -2609,11 +2589,6 @@ namespace System.Windows
         private IXamlObjectWriterFactory _objectWriterFactory;
         private XamlObjectWriterSettings _objectWriterSettings;
 
-        private XamlLoadPermission _xamlLoadPermission;
-
-        /// <summary>
-        /// Critical: _xamlLoadPermission needs to be updated whenever this field is updated.
-        /// </summary>
         private Baml2006Reader _reader;
 
         #endregion Data

@@ -18,7 +18,6 @@ using MS.Win32;
 using System.Diagnostics;
 using System.Windows.Media.Composition;
 using System.Security;
-using System.Security.Permissions;
 
 using DllImport=MS.Internal.PresentationCore.DllImport;
 

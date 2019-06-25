@@ -18,7 +18,6 @@ using System.Runtime.CompilerServices;
 using MS.Internal.ReachFramework;
 
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 

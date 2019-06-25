@@ -19,7 +19,6 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.PresentationFramework;                   // SecurityHelper
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Documents
 {
@@ -240,7 +239,6 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            SecurityPermission secperm = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
             TextStore textstore = (TextStore)arg;
 
             // We don't have to release Dispatcher.
@@ -265,15 +263,7 @@ namespace System.Windows.Documents
                 Marshal.ReleaseComObject(context);
             }
 
-            secperm.Assert();
-            try
-            {
-                textstore.DocumentManager.Pop(UnsafeNativeMethods.PopFlags.TF_POPF_ALL);
-            }
-            finally
-            {
-                SecurityPermission.RevertAssert();
-            }
+            textstore.DocumentManager.Pop(UnsafeNativeMethods.PopFlags.TF_POPF_ALL);
             Marshal.ReleaseComObject(textstore.DocumentManager);
             textstore.DocumentManager = null;
 

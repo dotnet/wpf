@@ -4180,13 +4180,7 @@ namespace MS.Win32 {
                 }
 
                 #if DEBUG
-                new EnvironmentPermission(PermissionState.Unrestricted).Assert();
-                try {
-                    callStack = Environment.StackTrace;
-                }
-                finally {
-                    System.Security.CodeAccessPermission.RevertAssert();
-                }
+                callStack = Environment.StackTrace;
                 #endif
             }
 

@@ -14,7 +14,6 @@ namespace Standard
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using Microsoft.Win32.SafeHandles;
 

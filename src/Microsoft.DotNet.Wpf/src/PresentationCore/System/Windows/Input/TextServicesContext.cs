@@ -13,7 +13,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Collections;
 using MS.Utility;

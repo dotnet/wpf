@@ -8,7 +8,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using MS.Internal.Automation;

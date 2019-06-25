@@ -18,7 +18,6 @@
 --*/
 using System;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;

@@ -6,7 +6,6 @@ using System;
 using System.Collections;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Windows.Media;
 using System.Runtime.InteropServices;

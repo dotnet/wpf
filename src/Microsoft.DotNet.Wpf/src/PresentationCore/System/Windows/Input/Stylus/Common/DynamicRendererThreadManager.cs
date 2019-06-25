@@ -21,7 +21,6 @@ using System.Threading;
 using System.Windows.Threading;
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 
 namespace System.Windows.Input.StylusPlugIns

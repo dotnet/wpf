@@ -28,7 +28,6 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal;
 using MS.Internal.AppModel;

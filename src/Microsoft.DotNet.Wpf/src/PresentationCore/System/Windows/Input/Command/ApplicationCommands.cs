@@ -236,32 +236,6 @@ namespace System.Windows.Input
         //------------------------------------------------------
 #region Private Methods
 
-        private static PermissionSet GetRequiredPermissions(CommandId commandId)
-        {
-            PermissionSet permissions;
-
-            switch (commandId)
-            {
-                // In .NET v4.0, we made clipboard access in partial trust on par with IE's
-                // security model for the internet zone where all clipboard accesses are secured.
-                // The AllClipboard permission requested here reflects this. Notice Cut and Copy
-                // operations would only need OwnClipboard which is added to the permission set
-                // in the Internet zone. To be more restrictive, given IE's raised security bar,
-                // we use AllClipboard.
-                case CommandId.Cut:
-                case CommandId.Copy:
-                case CommandId.Paste:
-                    permissions = new PermissionSet(PermissionState.None);
-                    permissions.AddPermission(new UIPermission(UIPermissionClipboard.AllClipboard));
-                    break;
-                default:
-                    permissions = null;
-                    break;
-            }
-
-            return permissions;
-        }
-
 
         private static string GetPropertyName(CommandId commandId)
         {
@@ -475,7 +449,7 @@ namespace System.Windows.Input
                         RoutedUICommand newCommand = CommandLibraryHelper.CreateUICommand(
                             GetPropertyName(idCommand),
                             typeof(ApplicationCommands), (byte)idCommand,
-                            GetRequiredPermissions(idCommand));
+                            new PermissionSet(PermissionState.Unrestricted));
 
                         _internalCommands[(int)idCommand] = newCommand;
                     }

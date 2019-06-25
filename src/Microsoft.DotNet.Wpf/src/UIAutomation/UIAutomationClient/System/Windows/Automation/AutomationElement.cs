@@ -8,7 +8,6 @@ using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -1045,7 +1044,6 @@ namespace System.Windows.Automation
         {
             get
             {
-                //CASRemoval:AutomationPermission.Demand(AutomationPermissionFlag.Read);
                 return DrillForPointOrFocus(false, new Point(0, 0), CacheRequest.CurrentUiaCacheRequest);
             }
         }

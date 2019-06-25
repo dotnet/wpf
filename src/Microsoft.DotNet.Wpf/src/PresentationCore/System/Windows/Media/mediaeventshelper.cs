@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;

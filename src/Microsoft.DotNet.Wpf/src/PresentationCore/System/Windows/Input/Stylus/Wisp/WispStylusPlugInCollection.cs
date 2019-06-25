@@ -12,7 +12,6 @@ using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Windows.Input.StylusPlugIns;
 using System.Security;
-using System.Security.Permissions;
 
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

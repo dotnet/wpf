@@ -967,22 +967,7 @@ namespace System.Windows
         {
             System.Xaml.XamlReader templateReader = _templateHolder.PlayXaml();
             Debug.Assert(templateReader != null, "PlayXaml returned null");
-            if (_templateHolder.LoadPermission != null)
-            {
-                _templateHolder.LoadPermission.Assert();
-                try
-                {
-                    LoadTemplateXaml(templateReader, objectWriter);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            else
-            {
-                LoadTemplateXaml(templateReader, objectWriter);
-            }
+            LoadTemplateXaml(templateReader, objectWriter);
         }
 
         private void LoadTemplateXaml(System.Xaml.XamlReader templateReader, XamlObjectWriter currentWriter)

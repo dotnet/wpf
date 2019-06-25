@@ -11,7 +11,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 
 
 namespace MS.Internal.FontFace

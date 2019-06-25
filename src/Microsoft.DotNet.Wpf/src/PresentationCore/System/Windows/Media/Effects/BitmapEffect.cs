@@ -22,7 +22,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Security;
 using MS.Internal.PresentationCore;
-using System.Security.Permissions;
 
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

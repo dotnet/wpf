@@ -10,7 +10,6 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 using MS.Internal;
 

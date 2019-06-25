@@ -17,7 +17,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Collections.Specialized;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -572,17 +571,7 @@ namespace System.Windows
         [FriendAccessAllowed]
         internal static bool IsClipboardPopulated()
         {
-            bool isPopulated = false;
-            (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-            try
-            {
-                isPopulated = (GetDataObjectInternal() != null);
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
-            return isPopulated;
+            return (GetDataObjectInternal() != null);
         }
 
         #endregion Internal Methods

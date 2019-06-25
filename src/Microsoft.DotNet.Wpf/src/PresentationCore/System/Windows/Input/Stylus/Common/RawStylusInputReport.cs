@@ -9,7 +9,6 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Input.StylusPlugIns;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Internal;
 

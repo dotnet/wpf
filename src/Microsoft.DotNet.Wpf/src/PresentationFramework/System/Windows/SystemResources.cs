@@ -17,7 +17,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using System.Text;
 using MS.Utility;
@@ -971,23 +970,7 @@ namespace System.Windows
 
                     System.Xaml.XamlObjectWriter writer = new System.Xaml.XamlObjectWriter(bamlReader.SchemaContext, owSettings);
 
-                    if (owSettings.AccessLevel != null)
-                    {
-                        XamlLoadPermission loadPermission = new XamlLoadPermission(owSettings.AccessLevel);
-                        loadPermission.Assert();
-                        try
-                        {
-                            System.Xaml.XamlServices.Transform(bamlReader, writer);
-                        }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
-                    }
-                    else
-                    {
-                        System.Xaml.XamlServices.Transform(bamlReader, writer);
-                    }
+                    System.Xaml.XamlServices.Transform(bamlReader, writer);
 
                     dictionary = (ResourceDictionary)writer.Result;
 

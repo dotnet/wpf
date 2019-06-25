@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 
 namespace MS.Internal.Commands
 {

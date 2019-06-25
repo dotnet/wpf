@@ -15,7 +15,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

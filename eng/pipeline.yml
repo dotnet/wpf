@@ -157,4 +157,4 @@ jobs:
           HelixAccessToken: $(_HelixToken)              # only defined for internal CI
           Creator: $(_HelixCreator)
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true')) # on helix machine (with real signing) when running on the public build pipeline
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_HelixPublicBuildPipeline'], 'true'), ne(variables['_ContinuousIntegrationTestsEnabled'], 'false')) # on helix machine (with real signing) when running on the public build pipeline

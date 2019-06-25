@@ -26,6 +26,7 @@ jobs:
 
     jobs:
     - job: Windows_NT
+      timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool: ${{ parameters.agentPool }}
       variables:
         # needed for signing

@@ -152,14 +152,7 @@ namespace System.Windows.Media
                 // FileFormatException will be thrown!
                 if (fontFaceDWrite == null)
                 {
-                    try
-                    {
-                        throw new System.IO.FileFormatException(typefaceSource);
-                    }
-                    catch(SecurityException)
-                    {
-                        throw new System.IO.FileFormatException();
-                    }                    
+                    throw new System.IO.FileFormatException(typefaceSource);             
                 }
                 _font = fontCollection.GetFontFromFontFace(fontFaceDWrite);
             }

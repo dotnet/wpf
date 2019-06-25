@@ -236,14 +236,7 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
-                        try
-                        {
-                            newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
-                        }
-                        catch (SecurityException)
-                        {
-                            newValue = DependencyProperty.UnsetValue;
-                        }
+                        newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
                     }
                     element.SetValue(dp, newValue);
                 }

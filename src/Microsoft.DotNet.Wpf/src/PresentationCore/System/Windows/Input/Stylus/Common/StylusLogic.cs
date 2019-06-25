@@ -300,7 +300,7 @@ namespace System.Windows.Input
                 {
                     result = ((int)(Registry.CurrentUser.OpenSubKey(WpfPointerKey, RegistryKeyPermissionCheck.ReadSubTree)?.GetValue(WpfPointerValue, 0) ?? 0)) == 1;
                 }
-                catch (Exception e) when (e is SecurityException || e is IOException)
+                catch (Exception e) when (e is IOException)
                 {
                     // No permission to access registry or someone 
                     // changed the key type to REG_SZ/REG_EXPAND_SZ/REG_MULTI_SZ.

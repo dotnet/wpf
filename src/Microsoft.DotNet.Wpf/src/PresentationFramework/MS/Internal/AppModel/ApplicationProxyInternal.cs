@@ -770,16 +770,8 @@ namespace MS.Internal.AppModel
                     
                     case BrowserJournalHeader:
                     {
-                        try
-                        {
-                            BinaryFormatter formatter = new BinaryFormatter();
-                            deserialized = formatter.Deserialize(inputStream);
-                        }
-                        catch (SecurityException)
-                        {
-                            deserialized = null;
-                        }
-                        
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        deserialized = formatter.Deserialize(inputStream);
                         break;
                     }
                     

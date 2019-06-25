@@ -2798,30 +2798,6 @@ namespace System.Windows.Navigation
                 if (launched == LaunchResult.NotLaunched)
                     throw;
             }
-            catch (SecurityException e)
-            {
-                LaunchResult launched = LaunchResult.NotLaunched;
-
-                // the scenario this code is enabling is navigation to Uri's outside of the app
-                // for top-level.
-                // So for example at an express app at domain http://www.example.com
-                // click on a hyperlink to http://www.msn.com
-                // We will get a security exception on the attempt to access msn.
-                // So we delegate back to the top-level browser.
-                //
-                // IMPORTANT: Creating a WebRequest for a file:// URI doesn't fail here if the URI is outside
-                // the site of origin. Instead, WebRequest.EndGetResponse() will throw SecurityException.
-                // There is a similar case for such URIs there.
-                // Callers of this method should not assume that the application has access to the given URI.
-
-                if (e.PermissionType == typeof(System.Net.WebPermission))
-                {
-                    launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, resolvedDestinationUri, IsTopLevelContainer);
-                }
-
-                if (launched == LaunchResult.NotLaunched)
-                    throw;
-            }
 
             bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
             WpfWebRequestHelper.ConfigCachePolicy(request, isRefresh);

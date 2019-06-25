@@ -14,7 +14,6 @@ using System.Windows;                          // for SR
 using System.Security.Cryptography.Xml;
 using MS.Internal.WindowsBase;
 using Microsoft.Win32;                          // for Registry and RegistryKey classes
-using System.Security;                          // for SecurityException
 using System.Globalization;                     // for CultureInfo
 
 namespace MS.Internal.IO.Packaging
@@ -209,27 +208,20 @@ namespace MS.Internal.IO.Packaging
         private static long GetNetFxSecurityRegistryValue(string regValueName, long defaultValue)
         {
 
-            try
+            using (RegistryKey securityRegKey = Registry.LocalMachine.OpenSubKey(_NetFxSecurityKey, false))
             {
-                using (RegistryKey securityRegKey = Registry.LocalMachine.OpenSubKey(_NetFxSecurityKey, false))
+                if (securityRegKey != null)
                 {
-                    if (securityRegKey != null)
+                    object regValue = securityRegKey.GetValue(regValueName);
+                    if (regValue != null)
                     {
-                        object regValue = securityRegKey.GetValue(regValueName);
-                        if (regValue != null)
+                        RegistryValueKind valueKind = securityRegKey.GetValueKind(regValueName);
+                        if (valueKind == RegistryValueKind.DWord || valueKind == RegistryValueKind.QWord)
                         {
-                            RegistryValueKind valueKind = securityRegKey.GetValueKind(regValueName);
-                            if (valueKind == RegistryValueKind.DWord || valueKind == RegistryValueKind.QWord)
-                            {
-                                return Convert.ToInt64(regValue, CultureInfo.InvariantCulture);
-                            }
+                            return Convert.ToInt64(regValue, CultureInfo.InvariantCulture);
                         }
                     }
                 }
-            }
-            catch (SecurityException)
-            {
-                // we could not open the key - that's fine, we can proceed with the default value
             }
 
             return defaultValue;

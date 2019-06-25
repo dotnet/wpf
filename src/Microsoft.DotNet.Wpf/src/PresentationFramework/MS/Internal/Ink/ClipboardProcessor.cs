@@ -345,25 +345,13 @@ namespace MS.Internal.Ink
                         //      1. Presist the elements to Xaml 
                         //      2. Load the xaml to create the new instances of the elements.
                         //      3. Add the new instances to the new container.
-                        string xml;
+                        string xml = XamlWriter.Save(elements[i]);
 
-                        try
-                        {
-                            xml = XamlWriter.Save(elements[i]);
+                        UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
+                        ((IAddChild)inkCanvas).AddChild(newElement);
 
-                            UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
-                            ((IAddChild)inkCanvas).AddChild(newElement);
-
-                            // Now we tranform the element.
-                            inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
-                        }
-                        catch (SecurityException)
-                        {
-                            // If we hit a SecurityException under the PartialTrust, we should just stop generating
-                            // the containing InkCanvas.
-                            inkCanvas = null;
-                            break;
-                        }
+                        // Now we tranform the element.
+                        inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
                     }
                 }
 

@@ -484,7 +484,7 @@ namespace System.Windows.Documents
 
                 return new Tuple<string, string>(ietfLanguageTag, lexiconPrivateCopyPath);
             }
-            catch (Exception e) when ((e is SecurityException) || (e is ArgumentException) || !fileCopied)
+            catch (Exception e) when ((e is ArgumentException) || !fileCopied)
             {
                 // IUserDictionariesRegistrar.RegisterUserDictionary can
                 // throw ArgumentException on failure. Cleanup the temp file if

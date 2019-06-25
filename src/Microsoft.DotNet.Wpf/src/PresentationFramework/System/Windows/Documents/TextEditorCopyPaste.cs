@@ -109,14 +109,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    ((DataObject)dataObject).SetData(DataFormats.Text, textString, false);
+                    dataObject.SetData(DataFormats.Text, textString, false);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    ((DataObject)dataObject).SetData(DataFormats.UnicodeText, textString, false);
+                    dataObject.SetData(DataFormats.UnicodeText, textString, false);
                 }
             }
 
@@ -173,7 +173,7 @@ namespace System.Windows.Documents
                     if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Xaml))
                     {
                         // Place Xaml data onto the dataobject using safe setter
-                        ((DataObject)dataObject).SetData(DataFormats.Xaml, xamlText, false);
+                        dataObject.SetData(DataFormats.Xaml, xamlText, false);
                     }
                 }
             }

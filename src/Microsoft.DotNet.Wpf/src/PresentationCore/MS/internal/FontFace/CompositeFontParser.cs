@@ -203,7 +203,7 @@ namespace MS.Internal.FontFace
             {
                 FailNotWellFormed(x);
             }
-            catch (XmlSyntaxException x)
+            catch (Exception x) when(string.Equals(x.GetType().FullName, "System.Security.XmlSyntaxException", StringComparison.OrdinalIgnoreCase))
             {
                 FailNotWellFormed(x);
             }

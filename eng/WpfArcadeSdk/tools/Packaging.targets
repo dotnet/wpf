@@ -372,12 +372,9 @@ $(PreparePackageAssetsDependsOn):
         Ensure that SourceRevisionId is obtained if it has not already been read in 
         Reuse tasks from Microsoft.Build.Tasks.Git.targets
     --> 
-    <Microsoft.Build.Tasks.Git.LocateRepository Directory="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
-      <Output TaskParameter="Id" PropertyName="_GitRepositoryRoot" />
-    </Microsoft.Build.Tasks.Git.LocateRepository>
-    <Microsoft.Build.Tasks.Git.GetSourceRevisionId Root="$(_GitRepositoryRoot)" Condition="'$(SourceRevisionId)' == ''">
+    <Microsoft.Build.Tasks.Git.LocateRepository Path="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
       <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
-    </Microsoft.Build.Tasks.Git.GetSourceRevisionId>
+    </Microsoft.Build.Tasks.Git.LocateRepository>
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
       <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />

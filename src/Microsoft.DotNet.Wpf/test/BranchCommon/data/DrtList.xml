@@ -35,4 +35,8 @@ Rundrtlist
       <SupportFile>XamlTestClasses.FriendWithoutKey.dll</SupportFile>
     </SupportFiles>
   </Drt>
+  <Drt Executable="DrtPackageCoreProperties.exe" Architecture="all" OS="all" Team="DigitalDocuments" />
+  <Drt Executable="DrtInterleavedPackage.exe" Architecture="all" OS="all" Team="DigitalDocuments" />
+  <Drt Executable="DrtPackagingApis.exe" Architecture="all" OS="all" Team="DigitalDocuments" />
+  <Drt Executable="DrtPackScheme.exe" Architecture="all" OS="all" Team="DigitalDocuments" />
 </Drts>

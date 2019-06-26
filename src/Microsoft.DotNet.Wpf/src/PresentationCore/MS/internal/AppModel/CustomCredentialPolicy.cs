@@ -47,10 +47,6 @@ namespace MS.Internal.AppModel
             _initialized = false;
         }
 
-        public CustomCredentialPolicy()
-        {
-        }
-
         static internal void EnsureCustomCredentialPolicy()
         {
             if (!_initialized)

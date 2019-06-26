@@ -2798,6 +2798,10 @@ namespace System.Windows.Navigation
                 if (launched == LaunchResult.NotLaunched)
                     throw;
             }
+            catch (SecurityException)
+            {
+                throw;
+            }
 
             bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
             WpfWebRequestHelper.ConfigCachePolicy(request, isRefresh);

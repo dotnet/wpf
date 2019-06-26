@@ -1109,8 +1109,18 @@ namespace Microsoft.Win32
             // PromptUserIfAppropriate is OFN_FILEMUSTEXIST.
             if (GetOption(NativeMethods.OFN_FILEMUSTEXIST))
             {
-                string tempPath = Path.GetFullPath(fileName);
-                fileExists = File.Exists(tempPath);
+                try
+                {
+                    // File.Exists requires a full path, so we call GetFullPath on	
+                    // the filename before checking if it exists.
+                    string tempPath = Path.GetFullPath(fileName);
+                    fileExists = File.Exists(tempPath);
+                }
+                // FileIOPermission constructor will throw on invalid paths.	
+                catch (PathTooLongException)
+                {
+                    fileExists = false;
+                }
 
                 if (!fileExists)
                 {

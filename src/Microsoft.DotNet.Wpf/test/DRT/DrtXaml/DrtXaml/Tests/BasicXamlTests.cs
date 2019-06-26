@@ -590,12 +590,12 @@ xmlns:x = 'http://schemas.microsoft.com/winfx/2006/xaml'>
         [TestXaml]
         const string CollectionInit = @"<Canvas xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>
 <Polygon Name='Polygon'><Polygon.Points>
-        15,10 50,30 50,25 45,20
-        45,15 50,10 55,10 60,15
-        60,20 55,25 55,30 60,30
-        75,45 60,55 72,45 60,35
-        55,60 70,95 53.5,65 
-        35,95 50,60 45,35 15,10</Polygon.Points>
+        15,10 50,30 50,25 45,20
+        45,15 50,10 55,10 60,15
+        60,20 55,25 55,30 60,30
+        75,45 60,55 72,45 60,35
+        55,60 70,95 53.5,65 
+        35,95 50,60 45,35 15,10</Polygon.Points>
 </Polygon>
 </Canvas>";
 

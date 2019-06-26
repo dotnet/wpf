@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>

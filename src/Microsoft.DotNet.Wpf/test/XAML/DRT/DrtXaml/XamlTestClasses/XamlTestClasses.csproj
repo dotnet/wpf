@@ -1,20 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <AssemblyName>XamlTestClasses</AssemblyName>
     <RootNamespace>XamlTestClasses</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
+    <ProjectGuid>{ECBF640C-AA96-46E2-B168-0018D4AF5074}</ProjectGuid>
   </PropertyGroup>
-  
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>DrtXaml.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />
-    <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj" />
+    <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj">
+      <Project>{8FC99185-DAE3-47AC-8DD0-617A3ECA8599}</Project>
+      <Name>XamlTestClasses.FriendWithoutKey</Name>
+    </ProjectReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>

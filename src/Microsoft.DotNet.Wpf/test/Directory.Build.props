@@ -4,7 +4,6 @@
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
-    <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
     <SignAssembly>false</SignAssembly>
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>

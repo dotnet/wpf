@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
@@ -8,25 +8,21 @@
     <StartupObject>DrtXaml.XamlDrt</StartupObject>
     <CreateTestPayload>true</CreateTestPayload>
   </PropertyGroup>
-
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
     <IsIntegrationTestProject>false</IsIntegrationTestProject>
   </PropertyGroup>
-  
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\DRT\TestServices\TestServices.csproj" />
+    <ProjectReference Include="$(WpfDrtCommonDir)TestServices\TestServices.csproj" />
     <ProjectReference Include="..\BamlAvoidXmlTest\BamlAvoidXmlTest.csproj" />
     <ProjectReference Include="..\BamlTestClasses40\BamlTestClasses40.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj" />
     <ProjectReference Include="..\XamlTestClasses\XamlTestClasses.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <!-- This ensures that .json, .pdb, .deps.json, .runtimeconfig.json, .runtimeconfig.dev.json files that are related to referenced projects, will -->
     <!-- be copied over to the output folder when the build is completed. -->

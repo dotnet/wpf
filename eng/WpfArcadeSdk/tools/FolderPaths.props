@@ -1,10 +1,15 @@
 <Project>
   <PropertyGroup>
+    <!-- Source related paths -->
     <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
     <WpfApiCompatBaselineDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\ApiCompat\Baselines\</WpfApiCompatBaselineDir>
     <WpfSourceDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\</WpfSourceDir>
     <WpfGraphicsPath>$(WpfSourceDir)WpfGfx\</WpfGraphicsPath>
     <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>
     <WpfPresentationNativeDir>$(WpfSourceDir)PresentationNative\</WpfPresentationNativeDir>
+    
+    <!-- Test related paths -->
+    <WpfTestsDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\test\</WpfTestsDir>   
+    <WpfDrtCommonDir>$(WpfTestsDir)Common\DRT\</WpfDrtCommonDir>
   </PropertyGroup>
 </Project>

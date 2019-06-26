@@ -8,7 +8,6 @@ namespace MS.Win32 {
     using Accessibility;
     using System.Runtime.InteropServices;
     using System;
-    using System.Security.Permissions;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -4176,13 +4175,7 @@ namespace MS.Win32 {
                 }
 
                 #if DEBUG
-                new EnvironmentPermission(PermissionState.Unrestricted).Assert();
-                try {
-                    callStack = Environment.StackTrace;
-                }
-                finally {
-                    System.Security.CodeAccessPermission.RevertAssert();
-                }
+                callStack = Environment.StackTrace;
                 #endif
             }
 

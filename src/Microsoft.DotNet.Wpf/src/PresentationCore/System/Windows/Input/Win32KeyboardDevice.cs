@@ -5,7 +5,6 @@
 using System.Collections;
 using System.Windows;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Windows.Media;

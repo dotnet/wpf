@@ -129,10 +129,6 @@ namespace System.Xaml
                     {
                         a = null;
                     }
-                    catch (System.Security.SecurityException)
-                    {
-                        a = null;
-                    }
                 }
             }
 

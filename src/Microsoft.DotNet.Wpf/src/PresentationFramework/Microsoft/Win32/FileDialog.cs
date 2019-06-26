@@ -34,7 +34,6 @@ namespace Microsoft.Win32
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using System.Threading;
     using System.Windows;
@@ -1112,20 +1111,12 @@ namespace Microsoft.Win32
             {
                 try
                 {
-                    // File.Exists requires a full path, so we call GetFullPath on
+                    // File.Exists requires a full path, so we call GetFullPath on	
                     // the filename before checking if it exists.
-                    (new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, fileName)).Assert();
-                    try
-                    {
-                        string tempPath = Path.GetFullPath(fileName);
-                        fileExists = File.Exists(tempPath);
-                    }
-                    finally
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
+                    string tempPath = Path.GetFullPath(fileName);
+                    fileExists = File.Exists(tempPath);
                 }
-                // FileIOPermission constructor will throw on invalid paths.
+                // FileIOPermission constructor will throw on invalid paths.	
                 catch (PathTooLongException)
                 {
                     fileExists = false;

@@ -13,7 +13,6 @@ namespace MS.Internal.Interop
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
 
     /// <summary>
     /// Wrapper for common Win32 status codes.

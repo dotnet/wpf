@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.ComponentModel;
 using System.Threading.Tasks;

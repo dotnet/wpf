@@ -8,7 +8,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 

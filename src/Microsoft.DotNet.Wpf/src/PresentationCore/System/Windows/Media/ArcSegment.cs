@@ -19,7 +19,6 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Security;
-using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Windows;

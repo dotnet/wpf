@@ -17,7 +17,6 @@ using MS.Internal;
 using MS.Win32;
 using MS.Utility;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;

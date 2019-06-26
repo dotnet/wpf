@@ -22,7 +22,6 @@ using System.Windows.Media.Composition;
 
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Media
 {

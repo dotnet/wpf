@@ -26,7 +26,6 @@ namespace System.Windows
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Interop;
     using System.Windows.Media.Imaging;
     using System.Text;
@@ -3281,52 +3280,18 @@ namespace System.Windows
 
             private int QueryGetDataInner(ref FORMATETC formatetc)
             {
-                int hr;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-
-                try
-                {
-                    hr = _innerData.QueryGetData(ref formatetc);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
-
-                return hr;
+                return _innerData.QueryGetData(ref formatetc);
             }
 
             private void GetDataInner(ref FORMATETC formatetc, out STGMEDIUM medium)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-                try
-                {
-                        _innerData.GetData(ref formatetc, out medium);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                _innerData.GetData(ref formatetc, out medium);
             }
 
             private IEnumFORMATETC EnumFormatEtcInner(DATADIR dwDirection)
             {
-                IEnumFORMATETC enumFORMATETC;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-
-                try
-                {
-                    enumFORMATETC = _innerData.EnumFormatEtc(dwDirection);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
-
-                return enumFORMATETC;
-}
+                return _innerData.EnumFormatEtc(dwDirection);
+            }
 
             /// <summary>
             ///     Get the bitmap from the handle of bitmap(Hbitmap).

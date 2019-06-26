@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -569,28 +568,7 @@ namespace System.Windows.Input
 
         private static bool ExecuteCommandBinding(object sender, ExecutedRoutedEventArgs e, CommandBinding commandBinding)
         {
-            // Asserting a permission in the case that the command was user initiated
-            // and the command is a secure command. We can do this safely because at
-            // the time the binding was setup, we demanded the permission.
-            ISecureCommand secureCommand = e.Command as ISecureCommand;
-            bool elevate = e.UserInitiated && (secureCommand != null) && (secureCommand.UserInitiatedPermission != null);
-
-            if (elevate)
-            {
-                secureCommand.UserInitiatedPermission.Assert(); //BlessedAssert
-            }
-            try
-            {
-                commandBinding.OnExecuted(sender, e);
-            }
-            finally
-            {
-                if (elevate)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-
+            commandBinding.OnExecuted(sender, e);
             return e.Handled;
         }
 

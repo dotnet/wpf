@@ -4,7 +4,6 @@
 
 using System.Windows.Media; 
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using MS.Win32;

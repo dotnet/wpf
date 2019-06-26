@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;

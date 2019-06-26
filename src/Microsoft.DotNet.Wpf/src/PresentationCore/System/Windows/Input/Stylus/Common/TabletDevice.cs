@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using System.Windows.Media;

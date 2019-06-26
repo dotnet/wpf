@@ -16,7 +16,6 @@ using System;
 using System.Windows.Documents;
 using System.IO.Packaging;
 using System.Security;                                  // for SecurityCritical tag
-using System.Security.Permissions;                      // for LinkDemand
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;

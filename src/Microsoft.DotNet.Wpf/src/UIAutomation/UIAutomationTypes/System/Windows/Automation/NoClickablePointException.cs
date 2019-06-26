@@ -8,7 +8,6 @@ using System.Windows.Automation;
 using System;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

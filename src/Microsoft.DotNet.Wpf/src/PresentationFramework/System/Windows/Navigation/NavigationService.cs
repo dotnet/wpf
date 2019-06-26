@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Cache;
@@ -2799,29 +2798,9 @@ namespace System.Windows.Navigation
                 if (launched == LaunchResult.NotLaunched)
                     throw;
             }
-            catch (SecurityException e)
+            catch (SecurityException)
             {
-                LaunchResult launched = LaunchResult.NotLaunched;
-
-                // the scenario this code is enabling is navigation to Uri's outside of the app
-                // for top-level.
-                // So for example at an express app at domain http://www.example.com
-                // click on a hyperlink to http://www.msn.com
-                // We will get a security exception on the attempt to access msn.
-                // So we delegate back to the top-level browser.
-                //
-                // IMPORTANT: Creating a WebRequest for a file:// URI doesn't fail here if the URI is outside
-                // the site of origin. Instead, WebRequest.EndGetResponse() will throw SecurityException.
-                // There is a similar case for such URIs there.
-                // Callers of this method should not assume that the application has access to the given URI.
-
-                if (e.PermissionType == typeof(System.Net.WebPermission))
-                {
-                    launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, resolvedDestinationUri, IsTopLevelContainer);
-                }
-
-                if (launched == LaunchResult.NotLaunched)
-                    throw;
+                throw;
             }
 
             bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
@@ -2902,23 +2881,9 @@ namespace System.Windows.Navigation
                 {
                     response = WpfWebRequestHelper.EndGetResponse(_request, ar);
                 }
-                catch (WebException we)
+                catch
                 {
-                    // this codepath enables top-level navigation to UNC content. Unlike HttpWebRequest, FileWebRequest throws on EndGetResponse()
-                    LaunchResult launched = LaunchResult.NotLaunched;
-                    SecurityException se = we.GetBaseException() as SecurityException;
-
-                    // delegate to the browser only if 1) navigating to UNC and 2) reason for which we couldn't get the stream is no grants
-                    if (_request.RequestUri.IsUnc && _request.RequestUri.IsFile && se != null && se.PermissionType == typeof(FileIOPermission))
-                    {
-                        launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, _request.RequestUri, IsTopLevelContainer);
-                    }
-
-                    if (launched == LaunchResult.NotLaunched)
-                        throw;
-
-                    // we successfully delegated navigation to the browser; return
-                    return;
+                    throw;
                 }
 
                 // response object will be closed at approrpiate time when it is not used anymore later.

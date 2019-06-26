@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using MS.Win32;
 using System.Security; 
-using System.Security.Permissions; 
 using System.Windows.Controls.Primitives; //PopupRoot
 using MS.Internal.Utility ;
 using MS.Internal.AppModel; //RootBrowserWindow
@@ -1051,15 +1050,7 @@ namespace System.Windows.Controls
 
             internal virtual object CreateWebOC()
             {
-                (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    return Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.WebBrowser)));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.WebBrowser)));
             }
 
             internal virtual object CreateEventSink()

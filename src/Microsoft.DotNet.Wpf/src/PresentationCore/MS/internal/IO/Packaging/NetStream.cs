@@ -45,7 +45,6 @@ using System.Threading;
 using System.Collections;               // for IComparer
 using System.Diagnostics;               // for Debug.Assert
 using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.Security.Permissions;      // for FileIOPermission
 using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
 using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
@@ -601,16 +600,7 @@ namespace MS.Internal.IO.Packaging
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
                                                                _tempFileMutex);
 
-                // Local assert to allow Proxy get/set under partial trust
-                new WebPermission(PermissionState.Unrestricted).Assert();   // Blessed
-                try
-                {
-                    _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-                }
-                finally
-                {
-                    WebPermission.RevertAssert();
-                }
+                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
 
                 _byteRangeDownloader.Credentials = _originalRequest.Credentials;
                 _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.Collections;
 using System.Windows;

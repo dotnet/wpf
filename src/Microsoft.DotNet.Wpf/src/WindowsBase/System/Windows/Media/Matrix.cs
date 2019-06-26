@@ -18,7 +18,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 // IMPORTANT
 //

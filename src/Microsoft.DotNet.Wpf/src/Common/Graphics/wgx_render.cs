@@ -10,7 +10,6 @@ using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 

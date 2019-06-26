@@ -22,7 +22,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.ReachFramework;
 using System.Windows.Markup;
 using MS.Internal.IO.Packaging;
@@ -440,18 +439,7 @@ namespace System.Windows.Xps.Serialization
             // To determine the mime-type of the image we just grab
             // the first one supported by this encoder and use that.
             //
-            PermissionSet permissions = new PermissionSet(null);
-            permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode));
-            permissions.AddPermission(new RegistryPermission(PermissionState.Unrestricted));
-            permissions.Assert();
-            try
-            {
-                mimetypes = encoder.CodecInfo.MimeTypes;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            mimetypes = encoder.CodecInfo.MimeTypes;
             int comma = mimetypes.IndexOf(',');
             if (comma != -1)
             {

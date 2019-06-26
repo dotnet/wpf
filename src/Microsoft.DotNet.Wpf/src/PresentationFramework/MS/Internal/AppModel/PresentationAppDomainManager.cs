@@ -16,7 +16,6 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.Remoting;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.Policy;
 using System.Runtime.Hosting;
 using System.Text;
@@ -234,18 +233,10 @@ namespace System.Windows.Interop
             }
             bool returnAppDomain = false;
 
-            try
+            if (AppDomain.CurrentDomain.ActivationContext != null &&
+                AppDomain.CurrentDomain.ActivationContext.Identity.ToString().Equals(actCtx.Identity.ToString()))
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert:
-                if (AppDomain.CurrentDomain.ActivationContext != null &&
-                    AppDomain.CurrentDomain.ActivationContext.Identity.ToString().Equals(actCtx.Identity.ToString()))
-                {
-                    returnAppDomain = true;
-                }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
+                returnAppDomain = true;
             }
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_ApplicationActivatorCreateInstanceEnd);

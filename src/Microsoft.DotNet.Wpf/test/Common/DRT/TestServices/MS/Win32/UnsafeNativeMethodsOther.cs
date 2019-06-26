@@ -13,7 +13,6 @@ namespace MS.Win32
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
     using System;
-    using System.Security.Permissions;
     using System.Collections;
     using System.IO;
     using System.Text;
@@ -391,15 +390,7 @@ namespace MS.Win32
 
             protected override bool ReleaseHandle()
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                try
-                {
-                    return CloseHandleNoThrow(new HandleRef(null, handle));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return CloseHandleNoThrow(new HandleRef(null, handle));
             }
         }
         internal sealed class SafeViewOfFileHandle : SafeHandleZeroOrMinusOneIsInvalid
@@ -417,15 +408,7 @@ namespace MS.Win32
 
             override protected bool ReleaseHandle()
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                try
-                {
-                    return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
             }
         }
 

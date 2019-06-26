@@ -326,49 +326,36 @@ namespace System.Xaml.Schema
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
-#if PARTIALTRUST
-                        !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted() ? ThreeValuedBool.True : ThreeValuedBool.False;
-#else
                         ThreeValuedBool.False;
-#endif
                 }
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
                 }
 
-                try
+                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                // Look up public ctors only, for equivalence with Activator.CreateInstance
+                ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
+                if (tConstInfo == null)
                 {
-                    Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
-                    // Look up public ctors only, for equivalence with Activator.CreateInstance
-                    ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                    if (tConstInfo == null)
-                    {
-                        // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                        throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
-                    }
-                    if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
-                        (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
-                        (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
-                    {
-                        // We don't want to bypass security checks for a critical or demanding ctor,
-                        // so just treat it as if it were non-public
-                        type._isPublic = ThreeValuedBool.False;
-                        return false;
-                    }
-                    IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
-                    // This requires Reflection Permission
-                    Action<object> ctorDelegate = ctorDelegate =
-                        (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
-                    type._constructorDelegate = ctorDelegate;
-                    return true;
-
+                    // Throwing MissingMethodException for equivalence with Activator.CreateInstance
+                    throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
                 }
-                catch (SecurityException)
+                if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
+                    (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
+                    (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
                 {
-                    s_securityFailureWithCtorDelegate = ThreeValuedBool.True;
+                    // We don't want to bypass security checks for a critical or demanding ctor,
+                    // so just treat it as if it were non-public
+                    type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
+                IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
+                // This requires Reflection Permission
+                Action<object> ctorDelegate = ctorDelegate =
+                    (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
+                type._constructorDelegate = ctorDelegate;
+                return true;
             }
         }
 

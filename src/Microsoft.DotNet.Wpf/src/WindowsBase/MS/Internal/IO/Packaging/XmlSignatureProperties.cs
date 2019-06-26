@@ -22,7 +22,6 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Permissions;
 using System.Xml;
 using System.IO;
 using System.Windows;

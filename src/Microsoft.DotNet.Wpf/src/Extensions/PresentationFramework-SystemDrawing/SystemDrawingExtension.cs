@@ -123,18 +123,6 @@ namespace MS.Internal
             return new MemoryStream(piComment.Value);
         }
 
-        // return a new safe-printing permission
-        internal override CodeAccessPermission NewSafePrintingPermission()
-        {
-            return new PrintingPermission(PrintingPermissionLevel.SafePrinting);
-        }
-
-        // return a new default-printing permission
-        internal override CodeAccessPermission NewDefaultPrintingPermission()
-        {
-            return new PrintingPermission(PrintingPermissionLevel.DefaultPrinting);
-        }
-
         // write a metafile stream to the output stream in PNG format
         internal override void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream)
         {

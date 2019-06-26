@@ -20,7 +20,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Media.Composition;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using MS.Internal;
 using MS.Internal.Automation;
@@ -1458,26 +1457,7 @@ namespace System.Windows.Interop
                 // it's guaranteed to be a connected one (it's initialized as root already)
                 IRawElementProviderSimple el = ElementProxy.StaticWrap(peer, peer);
 
-                // The assert here is considered OK
-                // as we're assuming the WM_GETOBJECT is coming only from a PostMessage of an Hwnd.
-                // to do the post message - you needed to have Unmanaged code permission
-                //
-
-                PermissionSet unpackPermissionSet = new PermissionSet(PermissionState.None);
-                // below permissions needed to unpack an object.
-                unpackPermissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter | SecurityPermissionFlag.UnmanagedCode | SecurityPermissionFlag.RemotingConfiguration));
-                unpackPermissionSet.AddPermission(new System.Net.DnsPermission(PermissionState.Unrestricted));
-                unpackPermissionSet.AddPermission(new System.Net.SocketPermission(PermissionState.Unrestricted));
-
-                unpackPermissionSet.Assert();
-                try
-                {
-                    return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAll();
-                }
+                return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
             }
 #pragma warning disable 56500
             catch (Exception e)

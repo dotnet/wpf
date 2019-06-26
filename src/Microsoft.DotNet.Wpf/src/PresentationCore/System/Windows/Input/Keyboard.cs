@@ -8,7 +8,6 @@ using System;
 using System.Windows;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Input
 {

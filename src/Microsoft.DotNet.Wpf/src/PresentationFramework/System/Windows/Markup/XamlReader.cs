@@ -19,8 +19,6 @@ using System.Reflection;
 
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
-using System.Security.Policy;
 using System.Text;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -1003,16 +1001,7 @@ namespace System.Windows.Markup
                 if (internalTypeHelper != null)
                 {
                     XamlAccessLevel accessLevel = XamlAccessLevel.AssemblyAccessTo(streamInfo.Assembly);
-                    XamlLoadPermission loadPermission = new XamlLoadPermission(accessLevel);
-                    loadPermission.Assert();
-                    try
-                    {
-                        root = WpfXamlLoader.LoadBaml(reader, parserContext.SkipJournaledProperties, parent, accessLevel, parserContext.BaseUri);
-                    }
-                    finally
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
+                    root = WpfXamlLoader.LoadBaml(reader, parserContext.SkipJournaledProperties, parent, accessLevel, parserContext.BaseUri);
                 }
                 else
                 {

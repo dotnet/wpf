@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows;

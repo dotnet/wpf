@@ -25,7 +25,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security;
-using System.Security.Permissions;
 
 
 namespace MS.Internal.WindowsRuntime

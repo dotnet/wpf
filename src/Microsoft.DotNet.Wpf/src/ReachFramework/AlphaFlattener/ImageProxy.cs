@@ -13,7 +13,6 @@ using System.Windows.Media;            // for Geometry, Brush, ImageSource. Pres
 using System.Windows.Media.Imaging;
 
 using System.Security;
-using System.Security.Permissions;
 //using System.Drawing.Printing;
 
 namespace Microsoft.Internal.AlphaFlattener

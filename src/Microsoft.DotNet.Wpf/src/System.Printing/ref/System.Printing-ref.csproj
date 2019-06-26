@@ -55,7 +55,4 @@
     <ProjectReference Include="$(WpfCycleBreakersDir)ReachFramework\ReachFramework-System.Printing-api-cycle.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
-  </ItemGroup>
 </Project>

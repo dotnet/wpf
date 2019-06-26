@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -324,17 +323,29 @@ namespace System.Xaml
             }
 
             RegistryKey featureKey;
-            //Assert for read access to HKLM\Software\Microsoft\Windows\Avalon
-            RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read,"HKEY_LOCAL_MACHINE\\"+RegistryKeys.WPF_Features);//BlessedAssert
-            regPerm.Assert();//BlessedAssert
-            try
+            object obj = null;
+            bool keyValue = false;
+            // open the key and read the value
+            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
+            if (featureKey != null)
             {
-                object obj = null;
-                bool keyValue = false;
-                // open the key and read the value
-                featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
-                if (featureKey != null)
+                // If key exists and value is 1 return true else false
+                obj = featureKey.GetValue(regValue);
+                keyValue = obj is int && ((int)obj == 1);
+                if (keyValue)
                 {
+                    fResult = true;
+                }
+
+                // special case for audio and video since they can be orred
+                // this is in the condition that audio is enabled since that is
+                // the path that MediaAudioVideoDisable defaults to
+                // This is purely to optimize perf on the number of calls to assert
+                // in the media or audio scenario.
+
+                if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
+                {
+                    regValue = RegistryKeys.value_MediaVideoDisallow;
                     // If key exists and value is 1 return true else false
                     obj = featureKey.GetValue(regValue);
                     keyValue = obj is int && ((int)obj == 1);
@@ -342,29 +353,7 @@ namespace System.Xaml
                     {
                         fResult = true;
                     }
-
-                    // special case for audio and video since they can be orred
-                    // this is in the condition that audio is enabled since that is
-                    // the path that MediaAudioVideoDisable defaults to
-                    // This is purely to optimize perf on the number of calls to assert
-                    // in the media or audio scenario.
-
-                    if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
-                    {
-                        regValue = RegistryKeys.value_MediaVideoDisallow;
-                        // If key exists and value is 1 return true else false
-                        obj = featureKey.GetValue(regValue);
-                        keyValue = obj is int && ((int)obj == 1);
-                        if (keyValue)
-                        {
-                            fResult = true;
-                        }
-                    }
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
             return fResult;
         }
@@ -379,19 +368,7 @@ namespace System.Xaml
         /// </summary>
         static internal CultureInfo GetCultureInfoByIetfLanguageTag(string languageTag)
         {
-            CultureInfo culture = null;
-
-            RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read, RegistryKeys.HKLM_IetfLanguage);//BlessedAssert
-            regPerm.Assert();//BlessedAssert
-            try
-            {
-                culture = CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
-            }
-            finally
-            {
-                 RegistryPermission.RevertAssert();
-            }
-            return culture;
+            return CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
         }
 #endif //PRESENTATIONCORE
 

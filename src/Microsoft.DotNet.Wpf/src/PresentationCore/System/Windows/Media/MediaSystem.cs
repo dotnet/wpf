@@ -22,7 +22,6 @@ using MS.Internal;
 using MS.Internal.FontCache;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
@@ -113,28 +112,13 @@ namespace System.Windows.Media
         private static void ReadAnimationSmoothingSetting()
         {
 #if PRERELEASE
-            // Acquire permissions to read the one key we care about from the registry
-            RegistryPermission permission = new RegistryPermission(
-                RegistryPermissionAccess.Read,
-                System.Security.AccessControl.AccessControlActions.View,
-                @"HKEY_LOCAL_MACHINE\Software\Microsoft\Avalon.Graphics");
-            
-            permission.Assert();
-
-            try
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Avalon.Graphics");
+            if (key != null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Avalon.Graphics");
-                if (key != null)
-                {
-                    object keyValue = key.GetValue("AnimationSmoothing");
+                object keyValue = key.GetValue("AnimationSmoothing");
 
-                    // The Regkey now turns off AnimationSmoothing
-                    s_animationSmoothing = !(keyValue is int && ((int)keyValue) == 0);
-                }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
+                // The Regkey now turns off AnimationSmoothing
+                s_animationSmoothing = !(keyValue is int && ((int)keyValue) == 0);
             }
 #endif
         }

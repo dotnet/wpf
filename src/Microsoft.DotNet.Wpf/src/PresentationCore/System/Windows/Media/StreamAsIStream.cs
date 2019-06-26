@@ -7,7 +7,6 @@
 
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using System;
 using MS.Internal;
 using MS.Win32;

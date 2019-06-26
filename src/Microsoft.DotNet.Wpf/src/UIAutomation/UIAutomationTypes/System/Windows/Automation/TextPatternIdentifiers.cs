@@ -6,7 +6,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using MS.Internal.Automation;
 

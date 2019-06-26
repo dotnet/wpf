@@ -6,7 +6,6 @@
 
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System;
 using System.IO;
 

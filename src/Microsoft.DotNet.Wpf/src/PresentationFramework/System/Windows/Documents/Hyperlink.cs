@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
@@ -826,15 +825,7 @@ namespace System.Windows.Documents
             {
                 if (!s_shouldPreventUriSpoofing.Value.HasValue)
                 {
-                    try
-                    {
-                        (new System.Net.WebPermission(PermissionState.Unrestricted)).Demand();
-                        s_shouldPreventUriSpoofing.Value = false;
-                    }
-                    catch (SecurityException)
-                    {
-                        s_shouldPreventUriSpoofing.Value = true;
-                    }
+                    s_shouldPreventUriSpoofing.Value = false;
                 }
                 return (bool)s_shouldPreventUriSpoofing.Value;
             }

@@ -27,7 +27,6 @@ namespace MS.Internal.Printing.Configuration
     using System.Printing.Interop;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Xps.Serialization;
     using System.Xml;
     using MS.Utility;
@@ -511,36 +510,26 @@ namespace MS.Internal.Printing.Configuration
             DocumentPropertiesFlags flags = biDirectional ? (DocumentPropertiesFlags.DM_IN_BUFFER | DocumentPropertiesFlags.DM_OUT_BUFFER) : DocumentPropertiesFlags.DM_IN_BUFFER;
             SafeMemoryHandle outPtr = SafeMemoryHandle.Null;
 
-            // Assert Unmanaged code - to allocate a native buffer for DocumentPropertiesW
-            //                       - and read from\write to that buffer
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-            try
+            using (SafeMemoryHandle buffer = SafeMemoryHandle.Create(devModeBytes.Length))
             {
-                using (SafeMemoryHandle buffer = SafeMemoryHandle.Create(devModeBytes.Length))
+                buffer.CopyFromArray(devModeBytes, 0, devModeBytes.Length);
+
+                if (biDirectional)
                 {
-                    buffer.CopyFromArray(devModeBytes, 0, devModeBytes.Length);
-
-                    if (biDirectional)
-                    {
-                        outPtr = buffer;
-                    }
-
-                    result = UnsafeNativeMethods.DocumentPropertiesW(new HandleRef(this, IntPtr.Zero), this._deviceHandle, this._deviceName, outPtr, buffer, flags);
-                    
-                    if (result < 0)
-                    {
-                        throw new Win32Exception();
-                    }
-
-                    if (!outPtr.IsInvalid)
-                    {
-                        outPtr.CopyToArray(devModeBytes, 0, devModeBytes.Length);
-                    }
+                    outPtr = buffer;
                 }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
+
+                result = UnsafeNativeMethods.DocumentPropertiesW(new HandleRef(this, IntPtr.Zero), this._deviceHandle, this._deviceName, outPtr, buffer, flags);
+                    
+                if (result < 0)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (!outPtr.IsInvalid)
+                {
+                    outPtr.CopyToArray(devModeBytes, 0, devModeBytes.Length);
+                }
             }
         }
 

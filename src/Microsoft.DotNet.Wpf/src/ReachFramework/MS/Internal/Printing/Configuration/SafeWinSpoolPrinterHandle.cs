@@ -10,7 +10,6 @@ namespace MS.Internal.Printing.Configuration
     using System.Drawing.Printing;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
 
     /// <summary>
     ///     Represents a printer handle used in spooler API's like OpenPrinter

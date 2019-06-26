@@ -15,7 +15,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.RightsManagement;
 using System.Windows;
 using MS.Internal.WindowsBase;

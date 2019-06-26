@@ -11,7 +11,6 @@ using System.Windows.Input.StylusPointer;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // *NativeMethods
@@ -2092,23 +2091,15 @@ namespace System.Windows.Input
                 IntPtr hwndHit = IntPtr.Zero ;
                 HwndSource sourceHit = null ;
 
-                // Hit-test for a window.
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert:
-                try
-                {
-                    // Find the HWND under the point.
-                    hwndHit = UnsafeNativeMethods.WindowFromPoint((int)ptScreen.X, (int)ptScreen.Y);
+                // Find the HWND under the point.
+                hwndHit = UnsafeNativeMethods.WindowFromPoint((int)ptScreen.X, (int)ptScreen.Y);
 
-                    // Make sure the window is enabled!
-                    if (!SafeNativeMethods.IsWindowEnabled(new HandleRef(null, hwndHit)))
-                    {
-                        hwndHit = IntPtr.Zero;
-                    }
-                }
-                finally
+                // Make sure the window is enabled!
+                if (!SafeNativeMethods.IsWindowEnabled(new HandleRef(null, hwndHit)))
                 {
-                    CodeAccessPermission.RevertAssert();
+                    hwndHit = IntPtr.Zero;
                 }
+
                 if (hwndHit != IntPtr.Zero)
                 {
                     // See if this is one of our windows.

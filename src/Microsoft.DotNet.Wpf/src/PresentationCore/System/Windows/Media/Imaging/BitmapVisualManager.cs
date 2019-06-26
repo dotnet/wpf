@@ -15,7 +15,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;

@@ -15,7 +15,6 @@ namespace System.Windows.Documents
     using MS.Win32;
     using System.Globalization;
     using System.Security;
-    using System.Security.Permissions;
     using System.IO;
     using System.Collections.Generic;
     using System.Windows.Controls;
@@ -327,16 +326,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override object LoadDictionary(Uri item, string trustedFolder)
         {
-            // Assert neccessary security to load trusted files.
-            new FileIOPermission(FileIOPermissionAccess.Read, trustedFolder).Assert();
-            try
-            {
-                return LoadDictionary(item.LocalPath);
-            }
-            finally
-            {
-                FileIOPermission.RevertAssert();
-            }
+            return LoadDictionary(item.LocalPath);
         }
 
         /// <summary>
@@ -972,8 +962,6 @@ namespace System.Windows.Documents
 
             try
             {
-                FileIOPermission fileIOPermission = new FileIOPermission(FileIOPermissionAccess.Read, lexiconFilePath);
-                fileIOPermission.Demand();
                 hasDemand = true;
 
                 lexicon = NLGSpellerInterop.CreateLexicon();

@@ -13,7 +13,6 @@ namespace MS.Internal.Documents
     using System.Diagnostics;
     using System.Reflection;
     using System.Security;
-    using System.Security.Permissions;
     using MS.Internal.PresentationFramework; // SecurityHelper
 
     internal sealed class DocumentsTrace
@@ -111,15 +110,7 @@ namespace MS.Internal.Documents
 
             // get the listeners collection
             TraceListenerCollection listeners = null;
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-            try
-            {
-                listeners = System.Diagnostics.Trace.Listeners;
-            }
-            finally
-            {
-                SecurityPermission.RevertAssert();
-            }
+            listeners = System.Diagnostics.Trace.Listeners;
 
             // add the console listener
             listeners.Add( consoleListener );

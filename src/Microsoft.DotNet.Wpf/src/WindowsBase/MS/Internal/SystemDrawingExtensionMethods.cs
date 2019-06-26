@@ -46,12 +46,6 @@ namespace MS.Internal
         // return a stream for the ExifUserComment in the given Gif
         internal abstract Stream GetCommentFromGifStream(Stream stream);
 
-        // return a new safe-printing permission
-        internal abstract CodeAccessPermission NewSafePrintingPermission();
-
-        // return a new default-printing permission
-        internal abstract CodeAccessPermission NewDefaultPrintingPermission();
-
         // write a metafile stream to the output stream in PNG format
         internal abstract void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream);
 

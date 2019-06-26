@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
@@ -73,15 +72,7 @@ namespace System.Windows.Interop
         /// <param name="source">The source to handle messages for</param>
         internal HwndPointerInputProvider(HwndSource source)
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed Assert for InputManager.Current.RegisterInputProvider
-            {
-                _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
 
             _source = new SecurityCriticalDataClass<HwndSource>(source);
             _pointerLogic = new SecurityCriticalDataClass<PointerLogic>(StylusLogic.GetCurrentStylusLogicAs<PointerLogic>());

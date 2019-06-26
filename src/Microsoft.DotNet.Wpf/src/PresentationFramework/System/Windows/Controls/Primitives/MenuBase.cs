@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Security;
-using System.Security.Permissions;
 using System;
 
 namespace System.Windows.Controls.Primitives

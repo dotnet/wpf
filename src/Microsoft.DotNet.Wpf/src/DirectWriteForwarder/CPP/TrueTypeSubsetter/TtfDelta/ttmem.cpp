@@ -21,7 +21,6 @@
 #include "fsassert.h"
 
 using namespace System::Security;
-using namespace System::Security::Permissions;
 
 void * Mem_Alloc(size_t size)
 {

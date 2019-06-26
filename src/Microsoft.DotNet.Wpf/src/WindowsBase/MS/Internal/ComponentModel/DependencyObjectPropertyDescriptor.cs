@@ -12,7 +12,6 @@ namespace MS.Internal.ComponentModel
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Security.Permissions;
     using System.Windows;
     using System.Security;
     using MS.Internal.WindowsBase;

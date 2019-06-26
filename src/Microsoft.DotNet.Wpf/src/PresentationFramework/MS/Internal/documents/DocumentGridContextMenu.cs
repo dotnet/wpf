@@ -18,7 +18,6 @@ namespace MS.Internal.Documents
     using System.Runtime.InteropServices;
     using System.Security;
     using MS.Internal.Documents;
-    using System.Security.Permissions;
     using MS.Win32;
     using System.Windows.Interop;
 

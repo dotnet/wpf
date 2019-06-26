@@ -22,7 +22,6 @@ using System.Diagnostics.CodeAnalysis;
 #endregion
 
 #region Microsoft.Performance suppressions
-[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.Xaml.Schema.SafeReflectionInvoker.#DemandMemberAccessPermission()", Justification = "Retained per servicing policy.")]
 [assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "MS.Internal.Xaml.Context.ObjectWriterFrame")]
 
 // Need this public Ctor Override that takes an InnerExcepetion.

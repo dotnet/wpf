@@ -25,7 +25,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using System.Security;
-using System.Security.Permissions;
 using System.Xaml;
 
 namespace System.Windows.Diagnostics

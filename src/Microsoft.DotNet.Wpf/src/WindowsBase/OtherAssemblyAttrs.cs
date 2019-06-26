@@ -11,7 +11,6 @@ using MS.Internal.WindowsBase;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
-using System.Security.Permissions;
 using System.Security;
 using System.Windows.Markup;
 

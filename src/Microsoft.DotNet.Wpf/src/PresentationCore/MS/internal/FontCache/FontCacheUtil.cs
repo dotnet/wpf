@@ -19,7 +19,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -322,18 +321,7 @@ namespace MS.Internal.FontCache
 
         static Util()
         {
-            string s;
-            //this code elevates to get access to the windir directory
-            EnvironmentPermission environmentPermission = new EnvironmentPermission(EnvironmentPermissionAccess.Read, "Windir");
-            environmentPermission.Assert(); //Blessed Assert
-            try
-            {
-                s = Environment.GetEnvironmentVariable(WinDir) + @"\Fonts\";
-            }
-            finally
-            {
-                EnvironmentPermission.RevertAssert();
-            }
+            string s = Environment.GetEnvironmentVariable(WinDir) + @"\Fonts\";
 
             _windowsFontsLocalPath = s.ToUpperInvariant();
 
@@ -897,18 +885,7 @@ namespace MS.Internal.FontCache
 
 #pragma warning restore 6523
 
-                    // Initialize() method demands UnmanagedCode permission, and OpenFile() is already marked as critical.
-
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); //Blessed Assert
-
-                    try
-                    {
-                        Initialize((byte*)_viewHandle.Memory, size, size, FileAccess.Read);
-                    }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    Initialize((byte*)_viewHandle.Memory, size, size, FileAccess.Read);
                 }
             }
             finally

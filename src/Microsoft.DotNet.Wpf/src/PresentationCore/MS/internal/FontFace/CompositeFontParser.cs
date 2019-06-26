@@ -11,7 +11,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Interop;
@@ -204,7 +203,7 @@ namespace MS.Internal.FontFace
             {
                 FailNotWellFormed(x);
             }
-            catch (XmlSyntaxException x)
+            catch (Exception x) when(string.Equals(x.GetType().FullName, "System.Security.XmlSyntaxException", StringComparison.OrdinalIgnoreCase))
             {
                 FailNotWellFormed(x);
             }

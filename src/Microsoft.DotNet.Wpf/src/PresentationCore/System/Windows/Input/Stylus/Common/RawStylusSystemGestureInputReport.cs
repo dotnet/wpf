@@ -5,7 +5,6 @@
 using System;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input.StylusWisp;
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

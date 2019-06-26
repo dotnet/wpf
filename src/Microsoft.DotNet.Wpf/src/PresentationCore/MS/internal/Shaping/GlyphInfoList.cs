@@ -12,7 +12,6 @@ using System;
 using System.Diagnostics;
 using System.Windows.Media.TextFormatting;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 

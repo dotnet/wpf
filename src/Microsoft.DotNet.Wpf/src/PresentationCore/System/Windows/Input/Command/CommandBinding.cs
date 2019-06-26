@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Markup;
 using MS.Internal; 
 using System.Security; 
-using System.Security.Permissions; 
 
 namespace System.Windows.Input 
 {

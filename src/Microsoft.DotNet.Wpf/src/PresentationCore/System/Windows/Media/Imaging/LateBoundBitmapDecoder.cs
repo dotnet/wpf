@@ -16,7 +16,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Diagnostics;

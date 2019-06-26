@@ -14,7 +14,6 @@ using System.Collections;
 using System.ComponentModel; // For EditorBrowsable attribute
 using System.Diagnostics; // For Assert
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 using System.Globalization;             //  CultureInfo.InvariantCulture
 

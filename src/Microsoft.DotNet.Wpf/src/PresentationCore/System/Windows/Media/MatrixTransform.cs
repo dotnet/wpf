@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using MS.Internal;
 using MS.Internal.PresentationCore;

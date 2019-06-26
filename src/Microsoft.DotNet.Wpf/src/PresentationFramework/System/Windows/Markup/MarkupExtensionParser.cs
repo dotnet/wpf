@@ -14,7 +14,6 @@ using System.Reflection;
 using System.Threading;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;

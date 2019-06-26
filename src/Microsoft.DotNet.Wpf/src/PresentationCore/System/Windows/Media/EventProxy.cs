@@ -13,7 +13,6 @@ using System.Reflection;
 using System.Collections;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 

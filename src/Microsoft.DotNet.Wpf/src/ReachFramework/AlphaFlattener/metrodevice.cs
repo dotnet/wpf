@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Xps.Serialization;
 using System.Printing;
 using System.Printing.Interop;
-using System.Security.Permissions;
 using System.Security;
 using System.Text;
 using System.Drawing.Printing;
@@ -467,21 +466,11 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetDevModeBegin);
 
-                (new PrintingPermission(PrintingPermissionLevel.DefaultPrinting)).Assert(); // BlessedAssert
+                result = ConvertPrintTicketToDevMode(ticket);
 
-
-                try
+                if (ticketXMLString != null)
                 {
-                    result = ConvertPrintTicketToDevMode(ticket);
-
-                    if (ticketXMLString != null)
-                    {
-                        m_printTicketCache.CacheDevMode(ticketXMLString, result);
-                    }
-                }
-                finally
-                {
-                    PrintingPermission.RevertAssert();
+                    m_printTicketCache.CacheDevMode(ticketXMLString, result);
                 }
 
                 Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetDevModeEnd);

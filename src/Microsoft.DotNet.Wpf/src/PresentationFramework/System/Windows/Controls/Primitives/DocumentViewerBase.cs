@@ -16,7 +16,6 @@
 using System.Collections;               // IEnumerator
 using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
-using System.Security.Permissions;      // SecurityPermission
 using System.Windows.Annotations;       // AnnotationService
 using System.Windows.Automation;        // AutomationPattern
 using System.Windows.Automation.Peers;  // AutomationPeer

@@ -26,7 +26,6 @@ using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                  // For Mutex
 using Microsoft.Win32.SafeHandles;
 using MS.Internal.PresentationCore;
-using System.Security.Permissions;      // for WebPermission
 
 namespace MS.Internal.IO.Packaging
 {
@@ -470,16 +469,7 @@ namespace MS.Internal.IO.Packaging
             //            IWebProxy emptyProxy = GlobalProxySelection.GetEmptyWebProxy();
             //            request.Proxy = emptyProxy;
 
-            // Local assert to allow Proxy get/set under partial trust
-            new WebPermission(PermissionState.Unrestricted).Assert();   // Blessed
-            try
-            {
-                request.Proxy = _proxy;
-            }
-            finally
-            {
-                WebPermission.RevertAssert();
-            }
+            request.Proxy = _proxy;
 
             request.Credentials = _credentials;
             request.CachePolicy = _cachePolicy;

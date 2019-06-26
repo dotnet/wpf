@@ -25,7 +25,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <summary>
     /// This class is used to convert data types back anf forth between DWrite and DWriteWrapper.
     /// </summary>
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class DWriteTypeConverter sealed
     {
         internal:

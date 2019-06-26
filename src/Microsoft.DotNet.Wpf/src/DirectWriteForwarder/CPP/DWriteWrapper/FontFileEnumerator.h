@@ -17,7 +17,6 @@ using namespace System::Diagnostics;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     [ClassInterface(ClassInterfaceType::None), ComVisible(true)]
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class FontFileEnumerator : public IDWriteFontFileEnumeratorMirror
     {     
         private:
@@ -46,7 +45,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Standard HRESULT error code.
             /// </returns>
             [ComVisible(true)]
-            [SecurityCritical]
             virtual HRESULT MoveNext(
                                __out bool% hasCurrentFile
                                );

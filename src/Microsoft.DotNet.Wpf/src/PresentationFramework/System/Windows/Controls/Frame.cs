@@ -268,11 +268,6 @@ namespace System.Windows.Controls
         /// <summary>
         ///    Called when SourceProperty is invalidated on 'd'
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as it access the base uri through GetUriToNavigate
-        /// TreatAsSafe since it does not disclose this
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Frame frame = (Frame)d;
@@ -382,9 +377,7 @@ namespace System.Windows.Controls
             get { return (bool) GetValue(SandboxExternalContentProperty); }
             set
             {
-                // This feature is disabled in partial trust due to a P3P violation
                 bool fSandBox = (bool)value;
-                SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
                 SetValue(SandboxExternalContentProperty, fSandBox);
             }
         }
@@ -396,11 +389,7 @@ namespace System.Windows.Controls
         private static void OnSandboxExternalContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Frame frame = (Frame)d;
-            // we do not want an individual to be able to set this property to true
-            // in partial trust
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)e.NewValue;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             if (fSandBox && !(bool)e.OldValue)
             {
                 frame.NavigationService.Refresh();
@@ -409,11 +398,7 @@ namespace System.Windows.Controls
 
         private static object CoerceSandBoxExternalContentValue(DependencyObject d, object value)
         {
-            // we do not want an individual to be able to set this property to true
-            // in partial trust
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)value;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             return fSandBox;
         }
 

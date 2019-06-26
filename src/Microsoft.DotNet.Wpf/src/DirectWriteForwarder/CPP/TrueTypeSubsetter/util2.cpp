@@ -11,7 +11,6 @@ namespace MS { namespace Internal { namespace FontCache {
 
    
 
-[System::Security::SecurityCritical]
 bool Util2::GetRegistryKeyLastWriteTimeUtc(System::String ^ registryKey, [System::Runtime::InteropServices::Out] System::Int64 % lastWriteTime)
 {
     HKEY hkey = NULL;

@@ -39,16 +39,6 @@ namespace System.IO.Packaging
     ///  as the one that is used to do open). It is up to an application to do proper action in modifying or closing
     ///  packages.
     /// </remarks>
-    /// <SecurityNote>
-    ///     Critical:  This class serves as a deposity of packages to be re-used with PackWebRequest
-    ///      This affects where we load resources. This class is marked as SecurityCritical
-    ///      to ensure that:
-    ///         1. No PT code can add/get/remove custom type of Package since the platform code (PackWebRequest) will
-    ///             execute the custom Package (untrusted code)
-    ///         2. Allow PT code to add/get/remove only the well-known platform Package type (trusted code): ZipPackage
-    ///    TreatAsSafe: These are public methods.
-    ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     public static class PackageStore
     {
         static PackageStore()
@@ -67,10 +57,6 @@ namespace System.IO.Packaging
         /// <permission cref="EnvironmentPermission"></permission>
         /// <remarks>
         /// </remarks>
-        ///<SecurityNote>
-        /// Demands EnvironmentPermission() if package is custom type of Package.
-        /// This prevents Partially Trusted callers from performing this operation on custom type of Package.
-        ///</SecurityNote>
         public static Package GetPackage(Uri uri)
         {
             ValidatePackageUri(uri);
@@ -82,7 +68,6 @@ namespace System.IO.Packaging
                 if (_packages != null && _packages.Contains(uri))
                 {
                     package = (Package) _packages[uri];
-                    DemandSecurityPermissionIfCustomPackage(package);
                 }
                 
                 return package;
@@ -99,18 +84,8 @@ namespace System.IO.Packaging
         /// If a package with the uri is already in the store,it throws an exception.
         /// The package will not be automatically replaced within the store.
         /// </remarks>
-        ///<SecurityNote>
-        /// Demands EnvironmentPermission() if package is custom type of Package.
-        /// This prevents Partially Trusted callers from performing this operation. However, Partially Trusted callers can still
-        /// add well-known platform Package type (ZipPackage) to PackageStore.
-        /// the application's PackageStore.
-        ///</SecurityNote>
         public static void AddPackage(Uri uri, Package package)
         {
-            // Allow well known platform Package to be added into PackageStore under Partial Trust.
-            // Otherwise, demand Environment Permission to make sure only Full Trust app can add a custom Package
-            DemandSecurityPermissionIfCustomPackage(package);
-
             ValidatePackageUri(uri);
 
             // There are well-known package types that are only for internal use (for resource loading)
@@ -156,10 +131,6 @@ namespace System.IO.Packaging
         /// <permission cref="EnvironmentPermission"></permission>
         /// <remarks>
         /// </remarks>
-        ///<SecurityNote>
-        /// Demands EnvironmentPermission() if package is custom type of Package.
-        /// This prevents Partially Trusted callers from performing this operation on custom type of Package.
-        ///</SecurityNote>
         public static void RemovePackage(Uri uri)
         {
             ValidatePackageUri(uri);
@@ -168,8 +139,6 @@ namespace System.IO.Packaging
             {
                 if (_packages != null)
                 {
-                    DemandSecurityPermissionIfCustomPackage((Package) _packages[uri]);
-
                     // If the key doesn't exist, it is no op
                     _packages.Remove(uri);
                 }
@@ -190,17 +159,6 @@ namespace System.IO.Packaging
             if (!uri.IsAbsoluteUri)
             {
                 throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
-            }
-        }
-
-        private static void DemandSecurityPermissionIfCustomPackage(Package package)
-        {
-            // Although ZipPackage is sealed and cannot be subclassed, we shouldn't depend on
-            //  the "sealedness" of ZipPackage. Checking the object type is more reliable way
-            //  than using "as" or "is" operator.
-            if (package != null && package.GetType() != typeof(ZipPackage))
-            {
-                SecurityHelper.DemandEnvironmentPermission();
             }
         }
         

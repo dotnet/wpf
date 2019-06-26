@@ -21,11 +21,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         void Unregister();
 
         /// <summary>

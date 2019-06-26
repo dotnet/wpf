@@ -118,7 +118,6 @@
     <Compile Include="MS\Internal\AppModel\ComGuids.cs" />
     <Compile Include="MS\Internal\AppModel\ContentFilePart.cs" />
     <!-- <Compile Include="MS\Internal\AppModel\DeploymentExceptionMapper.cs" /> -->
-    <Compile Include="MS\Internal\AppModel\IBrowserCallbackServices.cs" />
     <Compile Include="MS\Internal\AppModel\IBrowserHostServices.cs" />
     <Compile Include="MS\Internal\AppModel\IconHelper.cs" />
     <Compile Include="MS\Internal\AppModel\IContentContainer.cs" />
@@ -314,7 +313,6 @@
     <Compile Include="MS\Internal\MatchedTextInfo.cs" />
     <Compile Include="MS\Internal\Navigation\BindStream.cs" />
     <Compile Include="MS\Internal\Navigation\JournalEntryStack.cs" />
-    <Compile Include="MS\Internal\Permissions\UserInitiatedNavigationPermission.cs" />
     <Compile Include="MS\Internal\PrePostDescendentsWalker.cs" />
     <Compile Include="MS\Internal\Printing\NativeMethods.cs" />
     <Compile Include="MS\Internal\Printing\PrintDlgExMarshaler.cs" />
@@ -1136,7 +1134,6 @@
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
-    <Compile Include="System\Windows\Interop\DocobjHost.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />
@@ -1443,7 +1440,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
@@ -1451,7 +1447,10 @@
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />    
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />    
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />    
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\ref\PresentationFramework-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

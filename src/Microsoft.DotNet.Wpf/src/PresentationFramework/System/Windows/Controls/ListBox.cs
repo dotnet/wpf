@@ -30,6 +30,8 @@ namespace System.Windows.Controls
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(ListBoxItem))]
     public class ListBox : Selector
     {
+        internal const string ListBoxSelectAllKey = "Ctrl+A";
+
         //-------------------------------------------------------------------
         //
         //  Constructors
@@ -76,7 +78,7 @@ namespace System.Windows.Controls
             EventManager.RegisterClassHandler(typeof(ListBox), Mouse.MouseUpEvent, new MouseButtonEventHandler(OnMouseButtonUp), true);
             EventManager.RegisterClassHandler(typeof(ListBox), Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotKeyboardFocus));
 
-            CommandHelpers.RegisterCommandHandler(typeof(ListBox), ListBox.SelectAllCommand, new ExecutedRoutedEventHandler(OnSelectAll), new CanExecuteRoutedEventHandler(OnQueryStatusSelectAll), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.ListBoxSelectAllKey), SR.Get(SRID.ListBoxSelectAllKeyDisplayString)));
+            CommandHelpers.RegisterCommandHandler(typeof(ListBox), ListBox.SelectAllCommand, new ExecutedRoutedEventHandler(OnSelectAll), new CanExecuteRoutedEventHandler(OnQueryStatusSelectAll), KeyGesture.CreateFromResourceStrings(ListBoxSelectAllKey, SR.Get(SRID.ListBoxSelectAllKeyDisplayString)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.ListBox);
         }

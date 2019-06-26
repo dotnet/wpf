@@ -652,7 +652,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Switch ViewingMode command
         /// </summary>
-        public static readonly RoutedUICommand SwitchViewingModeCommand = new RoutedUICommand(SR.Get(SRID.SwitchViewingMode), "SwitchViewingMode", typeof(FlowDocumentReader), null);
+        public static readonly RoutedUICommand SwitchViewingModeCommand = new RoutedUICommand(Switch_ViewingMode, "SwitchViewingMode", typeof(FlowDocumentReader), null);
 
         #endregion
 
@@ -798,11 +798,6 @@ namespace System.Windows.Controls
         /// This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Handled) { return; }
@@ -1339,7 +1334,7 @@ namespace System.Windows.Controls
 
             // Command: SwitchViewingMode
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), FlowDocumentReader.SwitchViewingModeCommand,
-                executedHandler, canExecuteHandler, SRID.KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString);
+                executedHandler, canExecuteHandler, KeyGesture.CreateFromResourceStrings(KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString));
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), ApplicationCommands.Find,
@@ -1935,6 +1930,9 @@ namespace System.Windows.Controls
         private const string _contentHostTemplateName = "PART_ContentHost";         // Name for ContentHost
         private const string _findToolBarHostTemplateName = "PART_FindToolBarHost"; // Name for the Find ToolBar host
         private const string _findButtonTemplateName = "FindButton"; // Name for the Find Button
+
+        private const string KeySwitchViewingMode = "Ctrl+M";
+        private const string Switch_ViewingMode =  "_Switch ViewingMode";
 
         #endregion Private Fields
 

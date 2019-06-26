@@ -44,11 +44,6 @@ namespace MS.Internal
             /// The only values returned by this method are PROCESS_SYSTEM_DPI_AWARE or
             /// PROCESS_DPI_UNAWARE
             /// </remarks>
-            /// <SecurityNote>
-            ///     Critical: Calls into native methods
-            ///     Safe: Returns only non-critical information to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static PROCESS_DPI_AWARENESS GetLegacyProcessDpiAwareness()
             {
                 return
@@ -68,11 +63,6 @@ namespace MS.Internal
             /// PROCESS_DPI_AWARENESS value, then the value is obtained from the
             /// current process' DPI awareness information.
             /// </remarks>
-            /// <SecurityNote>
-            ///     Critical: Takes a native handle as a parameter
-            ///     Safe: Only returns non-critical information to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static PROCESS_DPI_AWARENESS GetProcessDpiAwareness(IntPtr hWnd)
             {
                 if (IsGetProcessDpiAwarenessFunctionSupported)
@@ -98,11 +88,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd">Handle of the window</param>
             /// <returns>PROCESS_DPI_AWARENESS value</returns>
-            /// <SecurityNote>
-            ///     Critical: calls into Critical native methods
-            ///     Safe: Returns only non-critical information to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private static PROCESS_DPI_AWARENESS GetProcessDpiAwarenessFromWindow(IntPtr hWnd)
             {
                 int windowThreadProcessId = 0;

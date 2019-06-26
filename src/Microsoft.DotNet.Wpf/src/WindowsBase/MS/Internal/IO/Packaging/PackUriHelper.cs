@@ -34,31 +34,7 @@ namespace MS.Internal.IO.Packaging
     internal static class PackUriHelper
     {
         #region Public Methods
-        /// <summary>
-        /// This method parses the pack uri and returns the absolute 
-        /// path of the URI. This corresponds to the part within the 
-        /// package. This corresponds to the absolute path component in 
-        /// the Uri. If there is no part component present, this method
-        /// returns a null
-        /// </summary>
-        /// <param name="packUri">Returns a relative Uri that represents the
-        /// part within the package. If the pack Uri points to the entire
-        /// package then we return a null</param>
-        /// <returns>Returns a relative URI with an absolute path that points to a part within a package</returns>
-        /// <exception cref="ArgumentNullException">If packUri parameter is null</exception>
-        /// <exception cref="ArgumentException">If packUri parameter is not an absolute Uri</exception>
-        /// <exception cref="ArgumentException">If packUri parameter does not have "pack://" scheme</exception>
-        /// <exception cref="ArgumentException">If partUri extracted from packUri does not conform to the valid partUri syntax</exception>
-        public static Uri GetPartUri(Uri packUri)
-        {
-            Uri packageUri;
-            Uri partUri;
 
-            //Parameter Validation is done in the follwoing method
-            ValidateAndGetPackUriComponents(packUri, out packageUri, out partUri);
-
-            return partUri;
-        }
 
         #endregion Public Methods
 
@@ -85,31 +61,7 @@ namespace MS.Internal.IO.Packaging
         internal static bool IsPackUri(Uri uri)
         {
             return uri != null && 
-                string.Compare(uri.Scheme, UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
-        }
-
-        internal static bool TryValidatePartUri(Uri partUri, out ValidatedPartUri validatedPartUri)
-        {
-            if (partUri is ValidatedPartUri)
-            {
-                validatedPartUri = (ValidatedPartUri)partUri;
-                return true;
-            }
-            else
-            {
-                string partUriString;
-                Exception exception = GetExceptionIfPartUriInvalid(partUri, out partUriString);
-                if (exception != null)
-                {
-                    validatedPartUri = null;
-                    return false;
-                }
-                else
-                {
-                    validatedPartUri = new ValidatedPartUri(partUriString);
-                    return true;
-                }                    
-            }
+                string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
@@ -153,18 +105,7 @@ namespace MS.Internal.IO.Packaging
             if (!(partUri is ValidatedPartUri))
                 partUri = ValidatePartUri(partUri);
 
-            return ((ValidatedPartUri)partUri).PartUriString;           
-        }
-
-        //This method validates the packUri and returns its two components if they are valid-
-        //1. Package Uri
-        //2. Part Uri
-        internal static void ValidateAndGetPackUriComponents(Uri packUri, out Uri packageUri, out Uri partUri)
-        {
-            //Validate if its not null and is an absolute Uri, has pack:// Scheme.
-            packUri = ValidatePackUri(packUri);
-            packageUri = GetPackageUriComponent(packUri);
-            partUri = GetPartUriComponent(packUri);
+            return ((ValidatedPartUri)partUri).PartUriString;
         }
 
         #endregion Internal Methods
@@ -183,18 +124,10 @@ namespace MS.Internal.IO.Packaging
 
         #region Private Constructor
         
-        // <SecurityNote>
-        //   Critical    - as this code does an elevation
-        //   TreatAsSafe - the net effect of this is to enable registration of Pack: Uri scheme. 
-        //   This enables fetching of resources via this scheme. Considered safe - as currently 
-        //   the pack: scheme has no elevations in it ( and any necessary elevations for container 
-        //   access will be reviewed as needed). 
-        // </SecurityNote>         
-        [SecurityTreatAsSafe, SecurityCritical]
         static PackUriHelper()
         {
             // indicate that we want "basic" parsing
-            if (!UriParser.IsKnownScheme(UriSchemePack))
+            if (!UriParser.IsKnownScheme(System.IO.Packaging.PackUriHelper.UriSchemePack))
             {
                 try
                 {
@@ -202,7 +135,7 @@ namespace MS.Internal.IO.Packaging
                     permobj.Assert(); //BlessedAssert:
 
                     // Indicate that we want a default hierarchical parser with a registry based authority
-                    UriParser.Register(new GenericUriParser(GenericUriParserOptions.GenericAuthority), UriSchemePack, -1);
+                    UriParser.Register(new GenericUriParser(GenericUriParserOptions.GenericAuthority), System.IO.Packaging.PackUriHelper.UriSchemePack, -1);
                 }
                 finally
                 {
@@ -220,60 +153,6 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
 
         #region Private Methods
-       
-        /// <summary>
-        /// This method is used to validate the package uri
-        /// </summary>
-        /// <param name="packageUri"></param>
-        /// <returns></returns>
-        private static Uri ValidatePackageUri(Uri packageUri)
-        {
-            if (packageUri == null)
-                throw new ArgumentNullException("packageUri");
-
-            if (!packageUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriShouldBeAbsolute));
-
-            return packageUri;
-        }
-
-        //validates is a given uri has pack:// scheme
-        private static Uri ValidatePackUri(Uri packUri)
-        {
-            if (packUri == null)
-                throw new ArgumentNullException("packUri");
-
-            if (!packUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriShouldBeAbsolute));
-
-            if (packUri.Scheme != PackUriHelper.UriSchemePack)
-                throw new ArgumentException(SR.Get(SRID.UriShouldBePackScheme));
-
-            return packUri;
-}
-        
-        /// <summary>
-        /// Escapes -  %', '@', ',', '?' in the package URI 
-        /// This method modifies the string in a culture safe and case safe manner. 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static string EscapeSpecialCharacters(string path)
-        {            
-            string characterString;
-
-            // Escaping for the following - '%'; '@'; ',' and '?'
-            // !!Important!! - The order is important - The '%' sign should be escaped first.
-            // This is currently enforced by the order of characters in the _specialCharacters array
-            foreach (char c in _specialCharacters)
-            {
-                characterString = c.ToString();
-                if (path.Contains(characterString))
-                    path = path.Replace(characterString, Uri.HexEscape(c));
-            }
-
-            return path;
-        }
 
         private static Exception GetExceptionIfPartUriInvalid(Uri partUri, out string partUriString)
         {
@@ -335,26 +214,12 @@ namespace MS.Internal.IO.Packaging
             return null;
         }
         
-        private static void ThrowIfAbsoluteUri(Uri uri)
-        {
-            Exception exception = GetExceptionIfAbsoluteUri(uri);
-            if (exception != null)
-                throw exception;
-        }
-
         private static ArgumentException GetExceptionIfAbsoluteUri(Uri uri)
         {
             if (uri.IsAbsoluteUri)
                 return new ArgumentException(SR.Get(SRID.URIShouldNotBeAbsolute));
             else
                 return null;
-        }
-
-        private static void ThrowIfFragmentPresent(string partName)
-        {
-            Exception exception = GetExceptionIfFragmentPresent(partName);
-            if (exception != null)
-                throw exception;
         }
 
         private static ArgumentException GetExceptionIfFragmentPresent(string partName)
@@ -365,13 +230,6 @@ namespace MS.Internal.IO.Packaging
                 return null;
         }
 
-        private static void ThrowIfPartNameEndsWithSlash(string partName)
-        {
-            Exception exception = GetExceptionIfPartNameEndsWithSlash(partName);
-            if (exception != null)
-                throw exception;
-        }
-
         private static ArgumentException GetExceptionIfPartNameEndsWithSlash(string partName)
         {
             if (partName.Length > 0)
@@ -380,13 +238,6 @@ namespace MS.Internal.IO.Packaging
                     return new ArgumentException(SR.Get(SRID.PartUriShouldNotEndWithForwardSlash));
             }
             return null;
-        }
-
-        private static void ThrowIfPartNameStartsWithTwoSlashes(string partName)
-        {
-            Exception exception = GetExceptionIfPartNameStartsWithTwoSlashes(partName);
-            if (exception != null)
-                throw exception;
         }
 
         // A relative reference that begins with two slash characters is termed
@@ -405,19 +256,6 @@ namespace MS.Internal.IO.Packaging
             return null;
         }
 
-        //Calling System.Uri.Compare method
-        //This method minimizes the false positives that we might get as a result
-        //of comparing two URIs.
-        //Also, we exclude the Fragment component while comparing.
-        private static int CompareUsingSystemUri(Uri firstUri, Uri secondUri)
-        {
-            return  Uri.Compare(
-                    firstUri,
-                    secondUri,
-                    UriComponents.AbsoluteUri & ~UriComponents.Fragment,
-                    UriFormat.UriEscaped, 
-                    StringComparison.Ordinal);
-        }
 
         //Returns the part name in its escaped string form from an Absolute [must be pack://] or a Relative URI
         private static string GetStringForPartUriFromAnyUri(Uri partUri)
@@ -467,39 +305,6 @@ namespace MS.Internal.IO.Packaging
             else
                 return false;
 }
-                
-        //This method validates and returns the PackageUri component
-        private static Uri GetPackageUriComponent(Uri packUri)
-        {
-            Debug.Assert(packUri != null, "packUri parameter cannot be null");
-
-            //Step 1 - Get the authority part of the URI. This section represents that package URI
-            String hostAndPort = packUri.GetComponents(UriComponents.HostAndPort, UriFormat.UriEscaped);
-
-            //Step 2 - Replace the ',' with '/' to reconstruct the package URI
-            hostAndPort = hostAndPort.Replace(',', '/');
-
-            //Step 3 - Unescape the special characters that we had escaped to construct the packUri
-            Uri packageUri = new Uri(Uri.UnescapeDataString(hostAndPort));
-
-            if (packageUri.Fragment != String.Empty)
-                throw new ArgumentException(SR.Get(SRID.InnerPackageUriHasFragment));
-
-            return packageUri;
-        }
-
-        //This method validates and returns the PartUri component.
-        private static PackUriHelper.ValidatedPartUri GetPartUriComponent(Uri packUri)
-        {
-            Debug.Assert(packUri != null, "packUri parameter cannot be null");
-            
-            string partName = GetStringForPartUriFromAnyUri(packUri);
-
-            if (partName == String.Empty)
-                return null;
-            else
-                return ValidatePartUri(new Uri(partName, UriKind.Relative));
-        }
 
         #endregion Private Methods
 
@@ -517,18 +322,8 @@ namespace MS.Internal.IO.Packaging
         //we use this dummy Uri to represent the root of the container.
         private static readonly Uri _packageRootUri = new Uri("/", UriKind.Relative);
 
-        // We need to perform Escaping for the following - '%'; '@'; ',' and '?' 
-        // !!Important!! - The order is important - The '%' sign should be escaped first.
-        // If any more characters need to be added to the array below they should be added at the end.
-        private static readonly char[] _specialCharacters = { '%', '@', ',', '?' };
-
         //Rels segment and extension
         private static readonly string _relationshipPartExtensionName = ".rels";
-
-        /// <summary>
-        /// pack scheme name
-        /// </summary>
-        public static readonly string UriSchemePack = "pack";
 
         #endregion Private Members
 
@@ -607,24 +402,6 @@ namespace MS.Internal.IO.Packaging
                 get
                 {
                     return _partUriString;
-                }
-            }
-
-            internal string PartUriExtension
-            {
-                get
-                {
-                    if (_partUriExtension == null)
-                    {
-                        _partUriExtension = Path.GetExtension(_partUriString);
-
-                        //If extension is absent just return the empty string
-                        //else remove the leading "." from the returned extension
-                        //string
-                        if (_partUriExtension.Length > 0)
-                            _partUriExtension = _partUriExtension.Substring(1);
-                    }
-                    return _partUriExtension;
                 }
             }
 
@@ -809,7 +586,6 @@ namespace MS.Internal.IO.Packaging
             private ValidatedPartUri _normalizedPartUri;
             private string _partUriString;
             private string _normalizedPartUriString;
-            private string _partUriExtension;
             private bool   _isNormalized;
             private bool   _isRelationshipPartUri;
 

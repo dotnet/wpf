@@ -50,10 +50,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged pointers (proxy), calls critical code, indirectly access arbitrary file resources
-        /// PublicOK: The URI holds relative path which is resolved just before being passed to media player
-        /// </SecurityNote>
         public MediaPlayer()
         {
         }
@@ -532,10 +528,6 @@ namespace System.Windows.Media
         /// <summary>
         /// AddRefOnChannel
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code
-        /// </SecurityNote>
-        [SecurityCritical]
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
             EnsureState();
@@ -550,10 +542,6 @@ namespace System.Windows.Media
         /// AddRefOnChannelCore
         /// </summary>
         /// <param name="channel">Channel</param>
-        /// <SecurityNote>
-        /// Critical - accesses unmanaged objects, and critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         internal DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
             //

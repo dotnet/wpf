@@ -172,10 +172,15 @@
         <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\ref\netcoreapp3.0\System.Xaml.dll" />
       </ItemGroup>
     -->
+    <PropertyGroup>
+      <!-- Since WPF reference assemblies do not carry internals, we need to directly reference the RID-specific lib assemblies from dotnet_wpf_int builds. -->
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+    </PropertyGroup>
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_DotNet_Wpf_GitHub)\ref\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')">
-        <NuGetPackageId>Microsoft.DotNet.Wpf.GitHub</NuGetPackageId>
+      <Reference Include="$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll"
+                 Condition="Exists('$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')">
+        <NuGetPackageId>runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.GitHub</NuGetPackageId>
       </Reference>
     </ItemGroup>
   </Target>

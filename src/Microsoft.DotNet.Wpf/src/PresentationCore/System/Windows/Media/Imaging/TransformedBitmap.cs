@@ -89,11 +89,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Prepare the bitmap to accept initialize paramters.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - eventually accesses critical resources
-        /// PublicOK - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public void EndInit()
         {
             WritePreamble();
@@ -182,10 +177,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();

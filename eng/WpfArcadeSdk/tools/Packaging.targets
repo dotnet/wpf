@@ -105,7 +105,9 @@ $(PreparePackageAssetsDependsOn):
       <PackageAsset Include="$(OutDir)*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
       <PackageAsset Include="$(OutDir)*.exe" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
       <PackageAsset Include="$(OutDir)*.pdb" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
+      
       <PackageAsset Include="$(ReferenceAssemblyDir)*.dll" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
+      <PackageAsset Include="$(ReferenceAssemblyDir)*.xml" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
     </ItemGroup>
     -->
     <CreateItem Include="$(OutDir)*.dll"
@@ -123,9 +125,17 @@ $(PreparePackageAssetsDependsOn):
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
+    
     <CreateItem Include="$(ReferenceAssemblyDir)*.dll"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+    
+    <!-- Intellisense XML's bundled alongwith ref-pack content -->
+    <CreateItem Include="$(ReferenceAssemblyDir)*.xml"
+            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
+            Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 
@@ -133,7 +143,7 @@ $(PreparePackageAssetsDependsOn):
             AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
             Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'!=''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
-    </CreateItem>
+    </CreateItem>   
     <!-- 
         $(XlfLanguages) is defined by XliffTasks.
         The conversion of .resx files to .xlf files, and the building of resource assemblies (.resources.dll) and 
@@ -303,6 +313,12 @@ $(PreparePackageAssetsDependsOn):
         <PackagePath>ref</PackagePath>
       </Content>
 
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\**\*.xml"
+         Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')">
+        <Pack>true</Pack>
+        <PackagePath>ref</PackagePath>
+      </Content>
+
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\**\*.*"
                Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\')" >
         <Pack>true</Pack>
@@ -356,12 +372,9 @@ $(PreparePackageAssetsDependsOn):
         Ensure that SourceRevisionId is obtained if it has not already been read in 
         Reuse tasks from Microsoft.Build.Tasks.Git.targets
     --> 
-    <Microsoft.Build.Tasks.Git.LocateRepository Directory="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
-      <Output TaskParameter="Id" PropertyName="_GitRepositoryRoot" />
-    </Microsoft.Build.Tasks.Git.LocateRepository>
-    <Microsoft.Build.Tasks.Git.GetSourceRevisionId Root="$(_GitRepositoryRoot)" Condition="'$(SourceRevisionId)' == ''">
+    <Microsoft.Build.Tasks.Git.LocateRepository Path="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
       <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
-    </Microsoft.Build.Tasks.Git.GetSourceRevisionId>
+    </Microsoft.Build.Tasks.Git.LocateRepository>
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
       <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />

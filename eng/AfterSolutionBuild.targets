@@ -1,0 +1,3 @@
+<Project>
+    <Import Project="$(MSBuildThisFileDirectory)WpfArcadeSdk\tools\RunDrtsLocal.targets" Condition="'$(Test)'=='True'" />
+</Project>

@@ -32,10 +32,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// A pointer to the wrapped DWrite factory object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             IDWriteFactory* _pFactory;
                       
             /// <summary>
@@ -49,8 +45,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// The factory just created.
             /// </returns>
-            [SecurityCritical]
-            [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
             Factory(
                    FactoryType                   factoryType,
                    IFontSourceCollectionFactory^ fontSourceCollectionFactory,
@@ -66,21 +60,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// The custom loader used by WPF to load font collections.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - We call Marshal.* with this member variable and we
-            //             assume it is trusted.
-            /// </SecurityNote>
-            [SecurityCritical]
             FontCollectionLoader^ _wpfFontCollectionLoader;
 
             /// <summary>
             /// The custom loader used by WPF to load font files.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - We call Marshal.* with this member variable and we
-            //             assume it is trusted.
-            /// </SecurityNote>
-            [SecurityCritical]
             FontFileLoader^       _wpfFontFileLoader;
 
             IFontSourceFactory^   _fontSourceFactory;
@@ -95,7 +79,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         protected:
 
-            [SecuritySafeCritical]
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
             virtual bool ReleaseHandle() override;
 
@@ -103,10 +86,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             property IDWriteFactory* DWriteFactoryAddRef
             {
-                /// <SecurityNote>
-                /// Critical - Exposes critical member _pFactory.
-                /// </SecurityNote>
-                [SecurityCritical]
                 IDWriteFactory* get()
                 {
                     _pFactory->AddRef();
@@ -125,7 +104,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// The factory just created.
             /// </returns>
-            [SecurityCritical]
             static Factory^ Create(
                                   FactoryType                   factoryType,
                                   IFontSourceCollectionFactory^ fontSourceCollectionFactory,
@@ -140,7 +118,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// Newly created font file object, or NULL in case of failure.
             /// </returns>
-            [SecurityCritical]
             FontFile^ CreateFontFile(System::Uri^ filePathUri);
 
             /// <summary>
@@ -153,7 +130,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// Newly created font face object, or NULL in case of failure.
             /// </returns>
-            [SecurityCritical]
             FontFace^ CreateFontFace(
                                     System::Uri^    filePathUri,
                                     unsigned int    faceIndex,
@@ -169,7 +145,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// Newly created font face object, or NULL in case of failure.
             /// </returns>
-            [SecurityCritical]
             FontFace^ CreateFontFace(
                                     System::Uri^ filePathUri,
                                     unsigned int faceIndex
@@ -190,7 +165,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// The font collection.
             /// </returns>
-            [SecurityCritical]
             FontCollection^ GetFontCollection(System::Uri^ uri);
 
             /// <summary>
@@ -221,7 +195,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <returns>
             /// Standard HRESULT error code
             /// </returns>
-            [SecurityCritical]
             static HRESULT CreateFontFile(
                                          IDWriteFactory*         factory,
                                          FontFileLoader^         fontFileLoader,
@@ -229,13 +202,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                          __out IDWriteFontFile** dwriteFontFile
                                          );
 
-            /// <SecurityNote>
-            /// This is a workaround. 
-            /// DWRITE_MATRIX is flagged as a critical type since it uses some security critical
-            /// attributes from Microsoft.VisualC.dll (MiscellaneousBitsAttribute & DebugInfoInPDBAttribute)
-            /// This should be fixed in Microsoft.VisualC.dll.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             __declspec(noinline) static DWRITE_MATRIX GetIdentityTransform()
             {
                 DWRITE_MATRIX transform;
@@ -255,7 +221,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             virtual property bool IsInvalid
             {
-                [SecuritySafeCritical]
                 [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
                 bool get() override;
             }

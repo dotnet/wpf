@@ -1,22 +1,33 @@
 <Project>
+  
+  <PropertyGroup>
+    <EnsureReferenceAssemblyPrerequisitesDependsOn>
+      $(EnsureReferenceAssemblyPrerequisitesDependsOn);
+      EnsureReferenceDestination;
+      CopyIntellisenseXmls
+    </EnsureReferenceAssemblyPrerequisitesDependsOn>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <CoreBuildDependsOn>
-      EnsureReferenceDestination;
+      EnsureReferenceAssemblyPrerequisites;
       $(CoreBuildDependsOn)
     </CoreBuildDependsOn>
     <ResolveReferencesDependsOn>
-      EnsureReferenceDestination;
+      EnsureReferenceAssemblyPrerequisites;
       $(ResolveReferencesDependsOn)
     </ResolveReferencesDependsOn>
   </PropertyGroup>
+  
+  <Target Name="EnsureReferenceAssemblyPrerequisites"
+          DependsOnTargets="$(EnsureReferenceAssemblyPrerequisitesDependsOn)" />
+  
   <Target Name="EnsureReferenceDestination" >
     <!-- Create and export properties used in Reference assembly generation                       -->
     <!--                                                                                          -->
     <!-- $(ArtifactsReferenceAssemblyDir) = $(ArtifactsDir)ref\                                   -->
     <!-- $(BaseReferenceAssemblyDir) = $(ArtifactsReferenceAssemblyDir)$(AssemblyName)\           -->
     <!-- $(ReferenceAssemblyDir) = $(BaseReferenceAssemblyDir)$(Configuration)$(TargetFramework)\ -->
-    <!--                                                                                          -->
-    <!-- $(TargetRefPath) = $(ReferenceAssemblyDir)\<AssemblyName>                                -->
     <CreateProperty Condition="'$(ArtifactsReferenceAssemblyDir)'==''" Value="$(ArtifactsDir)ref\">
       <Output PropertyName="ArtifactsReferenceAssemblyDir" TaskParameter="Value"/>
     </CreateProperty>
@@ -28,19 +39,50 @@
     <CreateProperty Condition="'$(ReferenceAssemblyDir)'==''" Value="$(BaseReferenceAssemblyDir)$(Configuration)\$(TargetFramework)\">
       <Output PropertyName="ReferenceAssemblyDir" TaskParameter="Value"/>
     </CreateProperty>
-
-    <MakeDir Condition="'$(ProduceReferenceAssembly)'=='true' and !Exists('$(ReferenceAssemblyDir)')" Directories="$(ReferenceAssemblyDir)" />
-
-    <ItemGroup>
-      <!-- Conditioning this on '$(ProduceReferenceAssembly)'=='true'  ensures that the next <Error> task will never trigger when -->
-      <!-- reference-assembly generation is not requested                                                                         -->
-      <RefAssemblies Condition="'$(ProduceReferenceAssembly)'=='true'" Include="@(IntermediateRefAssembly->'$(ReferenceAssemblyDir)%(Filename)%(Extension)')" />
-    </ItemGroup>
-
-    <Error Condition="@(RefAssemblies->Count()) &gt; 1" Text="More than one reference assembly is produced at the same time!" />
-
-    <PropertyGroup>
-      <TargetRefPath>@(RefAssemblies)</TargetRefPath>
-    </PropertyGroup>
   </Target>
+
+  <Target Name="CopyIntellisenseXmls"
+          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
+                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')"
+          Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
+    <PropertyGroup>
+      <!-- Also in global.json -->
+      <DotNetApiDocsNetCoreApp30>0.0.0.1</DotNetApiDocsNetCoreApp30>
+      <IntellisenseXmlDir>$(RepositoryToolsDir)native\bin\dotnet-api-docs_netcoreapp3.0\$(DotNetApiDocsNetCoreApp30)\_intellisense\netcore-3.0\</IntellisenseXmlDir>
+    </PropertyGroup>
+    
+    <Error Condition="!Exists('$(IntellisenseXmlDir)')"
+           Text="Intellisense Xml sources not found: IntellisenseXmlDir=$(IntellisenseXmlDir)" />
+
+    <!-- 
+      EnsureReferenceDestination guarantees that there is exactly 1 ref assembly 
+    -->
+    <PropertyGroup>
+      <IntellisenseXmlFile>$(IntellisenseXmlDir)$(AssemblyName).xml</IntellisenseXmlFile>
+    </PropertyGroup>
+
+    <Message Condition="!Exists('$(IntellisenseXmlFile)')"
+             Text="$(IntellisenseXmlFile) is missing" />
+    
+    <Copy SourceFiles="$(IntellisenseXmlFile)"
+          Condition="Exists('$(IntellisenseXmlFile)')"
+          DestinationFolder="$(ReferenceAssemblyDir)"          
+          SkipUnchangedFiles="true"/>
+  </Target>
+
+  <!-- 
+    Hand crafted reference assemblies need to be copied over into the proper artifacts location. 
+    This should be done only if we're dealing with a reference assembly project and that project is
+    meant to be shipped from the particular repository we're building.
+  -->
+  <Target Name="CopyHandCraftedReferenceProjectsToRefDir" 
+          AfterTargets="PrepareForRun"
+          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
+                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')">
+    <Copy SourceFiles="$(TargetPath)"
+          Condition="Exists('$(TargetPath)')"
+          DestinationFolder="$(ReferenceAssemblyDir)"
+          SkipUnchangedFiles="true"/>
+  </Target>
+  
 </Project>

@@ -51,12 +51,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Construct a paragraph cache to be used during optimal paragraph formatting
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls the setter for _ploparabreak.Value which is type SecurityCriticalDataForSet.
-        /// Safe - as it doesn't set security critical data to a random value passed in but rather to a value returned
-        ///        by a safe function TextFormatterContext.CreateParaBreakingSession().
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextParagraphCache(
             FormatSettings      settings,
             int                 firstCharIndex,
@@ -168,11 +162,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Releasing LS unmanaged resource on paragraph content
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this sets critical data _ploparabreak
-        /// Safe - as it does not set critical data thru incoming parameter
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             if(_ploparabreak.Value != IntPtr.Zero)

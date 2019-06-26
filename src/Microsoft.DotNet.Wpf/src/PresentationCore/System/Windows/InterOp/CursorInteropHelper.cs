@@ -41,14 +41,8 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        /// <SecurityNote>
-        ///    Critical: This causes the cursor to change and accesses the SetHandleInternalMethod
-        ///    PublicOK: There is a demand.
-        /// </SecurityNote>
-        [SecurityCritical ]
         public static Cursor Create(SafeHandle cursorHandle)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalCreate(cursorHandle);
         }
@@ -68,10 +62,6 @@ namespace System.Windows.Interop
         /// <param name="cursorHandle">
         ///     SafeHandle to a native Win32 cursor
         /// </param>
-        /// <SecurityNote>
-        ///    Critical: This causes the cursor to change and accesses the SetHandleInternalMethod
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Cursor CriticalCreate(SafeHandle cursorHandle)
         {
             return new Cursor(cursorHandle);

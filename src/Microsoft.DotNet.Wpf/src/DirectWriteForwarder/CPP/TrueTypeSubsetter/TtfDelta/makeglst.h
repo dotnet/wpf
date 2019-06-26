@@ -12,7 +12,6 @@
 #ifndef MAKEGLIST_DOT_H_DEFINED
 #define MAKEGLIST_DOT_H_DEFINED        
 
-[System::Security::SecurityCritical]
 int16 MakeKeepGlyphList(
 TTFACC_FILEBUFFERINFO * pInputBufferInfo,
 CONST uint16 usListType, /* 0 = character list, 1 = glyph list */

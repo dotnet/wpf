@@ -32,7 +32,6 @@
         
 #endif
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 CheckInOffset(TTFACC_FILEBUFFERINFO *a,  uint32 b, uint32 c)
 {
@@ -50,7 +49,6 @@ int16 CheckInOffset(TTFACC_FILEBUFFERINFO *a,  uint32 b, uint32 c)
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 CheckOutOffset(TTFACC_FILEBUFFERINFO *a, register uint32 b, register uint32 c) 
 {
@@ -101,7 +99,6 @@ int16 CheckOutOffset(TTFACC_FILEBUFFERINFO *a, register uint32 b, register uint3
 }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 ReadByte(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * puchBuffer, uint32 ulOffset)
 {
@@ -117,7 +114,6 @@ int16 ReadByte(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * puchBuffer, uin
     return NO_ERROR;    
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) int16 
 ReadWord(TTFACC_FILEBUFFERINFO * pInputBufferInfo, UNALIGNED uint16 * pusBuffer, uint32 ulOffset)
 {
@@ -133,7 +129,6 @@ ReadWord(TTFACC_FILEBUFFERINFO * pInputBufferInfo, UNALIGNED uint16 * pusBuffer,
     return NO_ERROR;
 }    
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 ReadLong(TTFACC_FILEBUFFERINFO * pInputBufferInfo, UNALIGNED uint32 * pulBuffer, uint32 ulOffset)
 {
@@ -149,7 +144,6 @@ int16 ReadLong(TTFACC_FILEBUFFERINFO * pInputBufferInfo, UNALIGNED uint32 * pulB
     return NO_ERROR;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 ReadBytes(TTFACC_FILEBUFFERINFO * pInputBufferInfo, __out_ecount(Count) uint8 * puchBuffer, uint32 ulOffset, uint32 Count)
 {
@@ -165,7 +159,6 @@ int16 ReadBytes(TTFACC_FILEBUFFERINFO * pInputBufferInfo, __out_ecount(Count) ui
     return NO_ERROR;    
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteByte(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint8 uchValue, uint32 ulOffset)
 {
@@ -180,7 +173,6 @@ int16 WriteByte(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint8 uchValue, uint3
     return NO_ERROR;    
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteWord(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint16 usValue, uint32 ulOffset)
 {
@@ -195,7 +187,6 @@ int16 WriteWord(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint16 usValue, uint3
     return NO_ERROR;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteLong(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 ulValue, uint32 ulOffset)
 {
@@ -210,7 +201,6 @@ int16 WriteLong(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 ulValue, uint3
     return NO_ERROR;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteBytes(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint8 * puchBuffer, uint32 ulOffset, uint32 Count)
 {
@@ -234,7 +224,6 @@ Return:
 0 if OK
 error code if not. */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 ReadGeneric(
     TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* buffer info of file buffer to read from */
@@ -335,7 +324,6 @@ Return:
 0 if OK    or
 ErrorCode  */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 ReadGenericRepeat(
 TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* buffer info of file buffer to read from */
@@ -372,7 +360,6 @@ Return:
 0 or Error Code
 */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteGeneric(
 TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
@@ -471,7 +458,6 @@ Return:
 0 if OK    or
 ErrorCode  */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 WriteGenericRepeat(
 TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
@@ -502,7 +488,6 @@ uint16 usBytesWritten;
 
 /* ---------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 uint16 GetGenericSize(uint8 * puchControl) 
 {
 uint16 usCurrOffset = 0;     
@@ -535,7 +520,6 @@ uint16 i;
 /* ---------------------------------------------------------------------- */
 /* next 2 functions moved from ttftabl1.c to allow inline ReadLong access */
 /* calc checksum of an as-yet unwritten Directory. */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 int16 CalcChecksum( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                   uint32 ulOffset,
@@ -580,7 +564,6 @@ int16 CalcChecksum( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
     return NO_ERROR;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 uint16 CalcFileChecksum( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint32 ulLength, uint32 * pulChecksum)
 {
@@ -588,7 +571,6 @@ uint16 CalcFileChecksum( TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint32 ulLeng
 }
 /* ---------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 __checkReturn __success(return==NO_ERROR) 
 uint16 UTF16toUCS4(uint16 *pUTF16, uint16 usCountUTF16, uint32 *pUCS4, uint16 usCountUCS4, uint16 *pusChars)
 {
@@ -634,7 +616,6 @@ uint16 UTF16toUCS4(uint16 *pUTF16, uint16 usCountUTF16, uint32 *pUCS4, uint16 us
 }
 
 /* Init function. Set the function pointers to the default functions below. */
-[System::Security::SecurityCritical]
 void InitFileBufferInfo(TTFACC_FILEBUFFERINFO * pBufferInfo, uint8 *puchBuffer, uint32 ulBufferSize, CFP_REALLOCPROC lpfnReAlloc)
 {
     pBufferInfo->puchBuffer = puchBuffer;
@@ -643,7 +624,6 @@ void InitFileBufferInfo(TTFACC_FILEBUFFERINFO * pBufferInfo, uint8 *puchBuffer, 
     pBufferInfo->lpfnReAllocate = lpfnReAlloc;
 }
 
-[System::Security::SecurityCritical]
 void InitConstFileBufferInfo(CONST_TTFACC_FILEBUFFERINFO * pBufferInfo, CONST uint8 *puchBuffer, uint32 ulBufferSize)
 {
     InitFileBufferInfo((TTFACC_FILEBUFFERINFO *)pBufferInfo, (uint8*)puchBuffer, ulBufferSize, NULL /* cant reallocate const */);

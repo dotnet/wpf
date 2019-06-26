@@ -20,11 +20,6 @@ namespace System.Windows.Input
     {
         #region TouchDevice Implementation
 
-        /// <SecurityNote>
-        ///     Critical: Accesses critical _stylusLogic and InputManager
-        ///     Safe: This constructor handles critical data but does not expose it
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal StylusTouchDeviceBase(StylusDeviceBase stylusDevice)
             : base(stylusDevice.Id)
         {
@@ -122,11 +117,6 @@ namespace System.Windows.Input
             return touchPoints;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls PresentationSource.CriticalFromVisual.
-        ///     TreatAsSafe - Does not expose PresentationSource.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void GetRootTransforms(IInputElement relativeTo, out GeneralTransform elementToRoot, out GeneralTransform rootToElement)
         {
             elementToRoot = rootToElement = null;
@@ -149,20 +139,11 @@ namespace System.Windows.Input
 
         #region StylusLogic Related
 
-        /// <SecurityNote>
-        ///     Critical - Setting the ActiveSource on the device.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void ChangeActiveSource(PresentationSource activeSource)
         {
             SetActiveSource(activeSource);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Accesses _stylusLogic. Could be TreatAsSafe
-        ///               because doesn't expose _stylusLogic itself.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnActivate()
         {
             Activate();
@@ -183,14 +164,6 @@ namespace System.Windows.Input
         /// </summary>
         protected abstract void OnActivateImpl();
 
-        /// <SecurityNote>
-        ///     Critical: Accesses _stylusLogic and _storedStagingAreaItems.
-        ///               Clears _storedStagingAreaItems collection which
-        ///               stores the staging items to be promoted to mouse.
-        ///               Could be TreatAsSafe because doesn't expose the
-        ///               objects themselves.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnDeactivate()
         {
             Deactivate();

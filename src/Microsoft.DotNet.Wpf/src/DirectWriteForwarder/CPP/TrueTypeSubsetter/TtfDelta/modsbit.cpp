@@ -50,7 +50,6 @@ struct glyphoffsetrecordkeeper    /* housekeeping structure */
 };
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 RecordGlyphOffset(PGLYPHOFFSETRECORDKEEPER pKeeper, 
                                uint32 ulOldOffset, 
                                ImageDataBlock * pImageDataBlock)  /* record this block as being used */
@@ -74,7 +73,6 @@ PRIVATE int16 RecordGlyphOffset(PGLYPHOFFSETRECORDKEEPER pKeeper,
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint32 LookupGlyphOffset(PGLYPHOFFSETRECORDKEEPER pKeeper, 
                                 uint32 ulOldOffset, 
                                 ImageDataBlock *pImageDataBlock)
@@ -107,7 +105,6 @@ uint32 i;
       pulEBDTBytesWritten,
       pulTableSize
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 FixSbitSubTables(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* input TTF data */
                               TTFACC_FILEBUFFERINFO * pOutputBufferInfo, /* output TTF data */
                               uint32 ulOffset, /* offset where to read the indexSubHeader (from the Output buffer) */ 
@@ -580,7 +577,6 @@ typedef struct {
 /* There is an error reported if this occurs */
 /* ------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 PRIVATE uint32 FixSbitSubTableFormat1(uint16 usFirstIndex, /* index of first Glyph in table */
                                     uint16 * pusLastIndex, /* pointer to index of last glyph in table - will set if not all table will fit */
                                     uint8 * puchIndexSubTable, /* buffer into which to stuff the Format 3 table(s) - does not include IndexSubTableArray */
@@ -647,7 +643,6 @@ uint16 usIndex;
 /* ------------------------------------------------------------------- */
 /* process all IndexSubTables in an IndexSubTable Array */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 FixSbitSubTableArray(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                                   TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                           uint32 ulOffset,
@@ -805,7 +800,6 @@ PRIVATE int16 FixSbitSubTableArray(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInf
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 WriteIndexSubTables(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                                  INDEXSUBTABLEARRAY *pIndexSubTableArray, 
                                  uint8 * puchIndexSubTables,    
@@ -891,7 +885,6 @@ uint32 ulStartOffset;
     return NO_ERROR;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 void Cleanup_SubTablePointers(SubTablePointers *pSubTablePointers,uint32 ulNumSizes)
 {
 uint16 ulSizeIndex;
@@ -923,7 +916,6 @@ uint16 ulSizeIndex;
 /* If a component of a composite character is deleted (but not the character), */
 /* this is an error */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModSbit( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, /* input buffer, we will read EBDT data from here */
                TTFACC_FILEBUFFERINFO * pOutputBufferInfo, /* output buffer, we will copy EBLC data here, then modify */
                 CONST uint8 *puchKeepGlyphList, /* list of glyphs to keep */

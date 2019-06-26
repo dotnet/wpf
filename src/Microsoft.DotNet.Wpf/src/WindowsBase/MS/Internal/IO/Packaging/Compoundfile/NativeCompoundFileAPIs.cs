@@ -26,19 +26,6 @@ using CultureInfo = System.Globalization.CultureInfo;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
-    // <SecurityNote>
-    //     Critical:  This class serves as a wrapper on top of several unmanaged CompoundFile
-    //      interfaces and API calls. These interfaces and APIs has suppress unamanged
-    //      code attribute set.
-    //     It is up to this class to ensure that the only calls that can go through must
-    //     be either done in Full Trust or with CompoundFileIOPermission.
-    //     This class exposes several internal APIs and interfaces built on top of classes that
-    //     demand the CompoundFileIOPermission and then call through the matching member of
-    //      the unsafe APIs and interfaces.
-    //     SecurityTreatAsSafe:  Demands CompoundFileIOPermission before it makes any calls to
-    //      unmanaged APIs
-    // </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything), SecurityTreatAsSafe]
     internal static class SafeNativeCompoundFileMethods
     {
         /// <summary>
@@ -47,9 +34,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="access">FileAccess we're translating</param>
         /// <param name="grfMode">Mode flag parameter to modify</param>
-        // <SecurityNote>
-        //     SecurityTreatAsSafe:  Makes NO call to security suppressed unmanaged code
-        // </SecurityNote>
         internal static void UpdateModeFlagFromFileAccess( FileAccess access, ref int grfMode )
         {
             // Supporting write-only scenarios container-wide gets tricky and it 
@@ -83,7 +67,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             out IStorage ppstgOpen
             )
         {
-            SecurityHelper.DemandCompoundFileIOPermission();
 
             Invariant.Assert(s != null, "s cannot be null");
 
@@ -114,7 +97,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             out IStorage ppstgOpen
             )
         {
-            SecurityHelper.DemandCompoundFileIOPermission();
 
             Invariant.Assert(s != null, "s cannot be null");
 
@@ -152,7 +134,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             out IStorage ppObjectOpen       //Pointer to an interface pointer
             )
         {
-            SecurityHelper.DemandCompoundFileIOPermission();
 
             UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
             int result;
@@ -186,7 +167,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             out IStorage ppObjectOpen       //Pointer to an interface pointer
             )    
         {
-            SecurityHelper.DemandCompoundFileIOPermission();
 
             UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
             int result;
@@ -209,17 +189,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             return result;
 }
 
-        // <SecurityNote>
-        //     Critical:  This method calls security suppressed unmanaged CompoundFile code.
-        //     ComoundFileIOPermission needs to be demanded to ensure that the only calls
-        //     that can go through must be either done in Full Trust or with under assertion of
-        //     CompoundFileIOPermission.
-        //     SecurityTreatAsSafe:  Demands CompoundFileIOPermission before it makes any calls to
-        //      unmanaged APIs
-        // </SecurityNote>
         internal static int SafePropVariantClear(ref PROPVARIANT pvar)
         {
-            SecurityHelper.DemandCompoundFileIOPermission();
 
             return UnsafeNativeCompoundFileMethods.PropVariantClear(ref pvar);
         }
@@ -234,7 +205,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             internal SafeIStorageImplementation(UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage,
                                                         UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream lockBytesStream)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (storage == null)
                 {
@@ -248,7 +218,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -260,7 +229,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -297,7 +265,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved2,
                 out IStream ppstm )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStream stream;
                 int result;
@@ -328,7 +295,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved2,
                 out IStream ppstm )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStream stream;
                 int result;
@@ -359,7 +325,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved2,
                 out IStorage ppstg )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
                 int result;
@@ -391,7 +356,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved,
                 out IStorage ppstg )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
                 int result;
@@ -422,7 +386,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 IntPtr snbExclude,  // Not properly translated, use NULL to avoid `blow-up
                 IStorage ppstg )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Invariant.Assert(ppstg != null, "ppstg cannot be null");
 
@@ -439,7 +402,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string pwcsNewName,
                 int grfFlags )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Invariant.Assert(pstgDest != null, "pstgDest cannot be null");
 
@@ -453,7 +415,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IStorage.Commit(
                 int grfCommitFlags )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.Commit(
                     grfCommitFlags);
@@ -461,7 +422,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStorage.Revert()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.Revert();
             }
@@ -472,7 +432,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved3,
                 out IEnumSTATSTG ppEnum )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATSTG enumSTATSTG;
 
@@ -491,7 +450,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IStorage.DestroyElement(
                 string pwcsName )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.DestroyElement(
                     pwcsName);
@@ -501,7 +459,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string pwcsOldName,
                 string pwcsNewName )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.RenameElement(
                     pwcsOldName,
@@ -514,7 +471,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 System.Runtime.InteropServices.ComTypes.FILETIME patime,
                 System.Runtime.InteropServices.ComTypes.FILETIME pmtime )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.SetElementTimes(
                     pwcsName,
@@ -526,7 +482,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IStorage.SetClass(
                 ref Guid clsid ) // Hopefully "ref" is how I tell it to use a pointer 
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.SetClass(
                     ref clsid );
@@ -536,7 +491,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int grfStateBits,
                 int grfMask )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.SetStateBits(
                     grfStateBits,
@@ -547,7 +501,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
                 int grfStatFlag )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStorage.Stat(
                     out pstatstg,
@@ -562,7 +515,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out IPropertyStorage ppprstg
                     )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertyStorage propertyStorage;
 
@@ -586,7 +538,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out IPropertyStorage ppprstg
                     )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
                 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertyStorage propertyStorage;
 
@@ -608,7 +559,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     ref Guid rfmtid
                     )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
                 
                 _unsafePropertySetStorage.Delete(
                     ref rfmtid
@@ -619,7 +569,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out IEnumSTATPROPSETSTG ppenum
                     )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATPROPSETSTG enumSTATPROPSETSTG;
                 
@@ -647,7 +596,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -655,7 +603,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -675,7 +622,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             //
             void IStream.Read(Byte[] pv, int cb, out int pcbRead)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (cb < 0)
                 {
@@ -687,7 +633,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.Write(Byte[] pv, int cb, out int pcbWritten)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (cb < 0)
                 {
@@ -701,7 +646,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // IStream portion
             void IStream.Seek(long dlibMove, int dwOrigin, out long plibNewPosition)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (dwOrigin < 0)
                 {
@@ -718,7 +662,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.SetSize(long libNewSize)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (libNewSize < 0)
                 {
@@ -730,7 +673,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.CopyTo(IStream pstm, long cb, out long pcbRead, out long pcbWritten)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Invariant.Assert(pstm != null, "pstm cannot be null");
 
@@ -744,21 +686,18 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.Commit(int grfCommitFlags)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStream.Commit(grfCommitFlags);
             }
 
             void IStream.Revert()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStream.Revert();
             }
 
             void IStream.LockRegion(long libOffset, long cb, int dwLockType)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (libOffset < 0)
                 {
@@ -774,7 +713,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.UnlockRegion(long libOffset, long cb, int dwLockType)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (libOffset < 0)
                 {
@@ -790,14 +728,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStream.Stat(out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg, int grfStatFlag)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeStream.Stat(out pstatstg, grfStatFlag);
             }
 
             void IStream.Clone(out IStream ppstm)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStream stream;
 
@@ -825,7 +761,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -837,7 +772,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -866,7 +800,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out UInt32 pceltFetched
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 return _unsafeEnumSTATPROPSETSTG.Next(
                     celt,
@@ -877,21 +810,18 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IEnumSTATPROPSETSTG.Skip(UInt32 celt)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATPROPSETSTG.Skip(celt);
             }
 
             void IEnumSTATPROPSETSTG.Reset()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATPROPSETSTG.Reset();
             }
 
             void IEnumSTATPROPSETSTG.Clone(out IEnumSTATPROPSETSTG ppenum)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATPROPSETSTG enumSTATPROPSETSTG;
 
@@ -915,7 +845,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -927,7 +856,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -953,7 +881,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 PROPVARIANT[] rgpropvar
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 return _unsafePropertyStorage.ReadMultiple(
                     cpspec,
@@ -969,7 +896,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 uint propidNameFirst
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.WriteMultiple(
                     cpspec,
@@ -984,7 +910,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 PROPSPEC[] rgpspec
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.DeleteMultiple(
                     cpspec,
@@ -998,7 +923,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string[] rglpwstrName
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.ReadPropertyNames(
                     cpropid,
@@ -1013,7 +937,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string[] rglpwstrName
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.WritePropertyNames(
                     cpropid,
@@ -1027,7 +950,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 UInt32[] rgpropid
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.DeletePropertyNames(
                     cpropid,
@@ -1039,7 +961,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 UInt32 grfCommitFlags
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.Commit(
                     grfCommitFlags
@@ -1048,7 +969,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IPropertyStorage.Revert()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.Revert();
             }
@@ -1057,7 +977,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out IEnumSTATPROPSTG ppenum
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
 #if Using_SafeIPropertyStorageImplementation_Enum                
 
@@ -1080,7 +999,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 ref System.Runtime.InteropServices.ComTypes.FILETIME pmtime
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.SetTimes(
                     ref pctime,
@@ -1093,7 +1011,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 ref Guid clsid
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.SetClass(
                     ref clsid
@@ -1104,7 +1021,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out STATPROPSETSTG pstatpsstg
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafePropertyStorage.Stat(
                     out pstatpsstg
@@ -1124,7 +1040,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -1136,7 +1051,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -1165,7 +1079,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out UInt32 pceltFetched
                 )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 return _unsafeEnumSTATPROPSTG.Next(
                     celt,
@@ -1176,21 +1089,18 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IEnumSTATPROPSTG.Skip(UInt32 celt)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATPROPSTG.Skip(celt);
             }
 
             void IEnumSTATPROPSTG.Reset()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATPROPSTG.Reset();
             }
 
             void IEnumSTATPROPSTG.Clone(out IEnumSTATPROPSTG ppenum)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATPROPSTG enumSTATPROPSTG;
 
@@ -1215,7 +1125,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             public void Dispose()
             {              
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -1227,7 +1136,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 try
                 {
@@ -1248,7 +1156,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     // Because marshalling an array of structs that have pointers to strings are troublesome.
                 out UInt32 pceltFetched )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 if (celt != 1)
                 {
@@ -1264,7 +1171,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IEnumSTATSTG.Skip(
                 UInt32 celt )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATSTG.Skip(
                     celt );
@@ -1272,7 +1178,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IEnumSTATSTG.Reset()
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 _unsafeEnumSTATSTG.Reset();
             }
@@ -1280,7 +1185,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IEnumSTATSTG.Clone(
                 out IEnumSTATSTG ppenum )
             {
-                SecurityHelper.DemandCompoundFileIOPermission();
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATSTG enumSTATSTG;
 

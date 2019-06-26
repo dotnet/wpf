@@ -108,7 +108,6 @@
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
     <Compile Include="MS\Internal\CheckedPointers.cs" />
     <Compile Include="MS\Internal\Classification.cs" />
-    <Compile Include="MS\Internal\ConstrainedDataObject.cs" />
     <Compile Include="MS\Internal\CoreAppContextSwitches.cs" />
     <Compile Include="MS\Internal\CustomCategoryAttribute.cs" />
     <Compile Include="MS\Internal\DeferredElementTreeState.cs" />
@@ -549,7 +548,6 @@
     <Compile Include="System\Windows\Input\Command\CommandManager.cs" />
     <Compile Include="System\Windows\Input\Command\ComponentCommands.cs" />
     <Compile Include="System\Windows\Input\Command\ExecutedRoutedEventArgs.cs" />
-    <Compile Include="System\Windows\Input\Command\ICommand.cs" />
     <Compile Include="System\Windows\Input\Command\ICommandSource.cs" />
     <Compile Include="System\Windows\Input\Command\InputBinding.cs" />
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
@@ -1415,7 +1413,6 @@
 
   <ItemGroup>
     <!-- required for internals access -->
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
@@ -1424,6 +1421,24 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!-- 
+    Need Microsoft.WinFx.targets to embed *.compositefont 
+    files using MainResourcesGeneration target
+  -->
+  <PropertyGroup>
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.CompositeFont">
+      <GenerateSource>false</GenerateSource>
+      <XlfSource>false</XlfSource>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

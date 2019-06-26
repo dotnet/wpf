@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("FD48C3F3-A58E-4B5A-8826-1DE54ABE72B2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMGeometryFigureCollection
     {
         void Append([In] IXpsOMGeometryFigure geometryFigure);

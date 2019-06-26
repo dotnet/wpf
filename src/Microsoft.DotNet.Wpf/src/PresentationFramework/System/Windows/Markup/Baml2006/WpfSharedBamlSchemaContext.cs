@@ -28,11 +28,6 @@ namespace System.Windows.Baml2006
         public const Int16 XamlVector3DCollectionSerializer = 752;
     }
 
-    /// <SecurityNote>
-    /// This schema context is shared between all the WPF BAML loads in an AppDomain, including both 
-    /// full and partial trust callers. To be safe for sharing, it must be idempotent and order-independent.
-    /// See the SecurityNote on XamlSchemaContext for more details.
-    /// </SecurityNote>
     partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
         object _syncObject;

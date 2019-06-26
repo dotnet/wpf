@@ -99,10 +99,6 @@ namespace MS.Internal
         /// <returns>
         /// May return null if no text services are available.
         /// </returns>
-        /// <SecurityNote>
-        /// SecurityCritical: As this causes elevation of privilige
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static UnsafeNativeMethods.ITfThreadMgr Load()
         {
             UnsafeNativeMethods.ITfThreadMgr threadManager;
@@ -197,11 +193,6 @@ namespace MS.Internal
         // If we finish iterating all entries under HKLM without returning true, return false.
         //
 
-        ///<SecurityNote>
-        ///  Safe - no critical state stored, disclosure that Tips wanting to run is safe
-        ///  Critical - critical because we do an assert
-        ///</SecurityNote>
-        [SecurityTreatAsSafe, SecurityCritical]
         private static bool TIPsWantToRun()
         {
             object obj;

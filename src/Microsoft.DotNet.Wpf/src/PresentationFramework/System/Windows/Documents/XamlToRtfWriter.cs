@@ -2023,8 +2023,14 @@ namespace System.Windows.Documents
             // Get image type to be added to rtf content
             RtfImageFormat imageFormat = GetImageFormatFromImageSourceName(documentNode.FormatState.ImageSource);
 
-            // Write the shape image like as "\pngblip" or "\jpegblip" rtf control
-            WriteShapeImage(documentNode, imageStream, imageFormat);
+            // Write the shape image like as "\pngblip" or "\jpegblip" rtf control. We wrap the stream that comes
+            // from the package because we require the stream to be seekable.
+            Debug.Assert(!imageStream.CanSeek);
+            using (var seekableStream = new MemoryStream((int)imageStream.Length))
+            {
+                imageStream.CopyTo(seekableStream);
+                WriteShapeImage(documentNode, seekableStream, imageFormat);
+            }
 
 #if WindowsMetaFile
             // This block is disabled because of performance.

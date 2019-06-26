@@ -63,10 +63,6 @@ namespace MS.Internal.Ink
         }
 
         // Copies the internal strokes to the IDataObject
-        /// <SecurityNote>
-        ///    Critical: This code asserts to set data on a data object
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override void DoCopy(IDataObject dataObject)
         {
             // samgeo - Presharp issue

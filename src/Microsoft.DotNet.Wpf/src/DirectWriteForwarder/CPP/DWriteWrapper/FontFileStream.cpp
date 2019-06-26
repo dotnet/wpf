@@ -35,10 +35,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _fontSourceStream->Close();
     }
 
-    /// <SecurityNote>
-    /// Critical - Calls critical CreateGarbageCollectorHandleNativeWrapper
-    /// </SecurityNote>
-    [System::Security::SecurityCritical]
     [ComVisible(true)]
     HRESULT FontFileStream::ReadFileFragment(
         __deref_out_bcount(fragmentSize) const void ** fragmentStart,
@@ -99,14 +95,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return hr;
     }
 
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission to call GCHandle::FromIntPtr
-    ///            Frees a GCHandle based on the passed in pointer so the pointer 
-    ///            passed in must be trusted.
-    /// </SecurityNote>
-    [System::Security::SecurityCritical]
 #ifndef _CLR_NETCORE
-    [System::Security::Permissions::SecurityPermission(System::Security::Permissions::SecurityAction::Assert, UnmanagedCode=true)]
 #endif
     [ComVisible(true)]
     void FontFileStream::ReleaseFileFragment(
@@ -120,12 +109,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permissions to call Marshal.*
-    /// </SecurityNote>
     [ComVisible(true)]
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT FontFileStream::GetFileSize(
         __out UINT64* fileSize
         )

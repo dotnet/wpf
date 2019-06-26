@@ -40,26 +40,15 @@ namespace System.Windows.Media.Imaging
         internal ushort cfType;
         internal IntPtr dwHint;
 
-        [SecurityCritical]
         internal IntPtr pstrName; //this is string array
 
         internal Guid clsid;
 
-        /// <SecurityNote>
-        /// Critical -Initializes a pointer to unmanaged memory to hold onto a string
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(String name)
         {
             pstrName = Marshal.StringToCoTaskMemUni(name);
         }
 
-        /// <SecurityNote>
-        /// Critical -Releases an unmanaged pointer into unmanaged memory.
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Clear()
         {
             Marshal.FreeCoTaskMem(pstrName);
@@ -100,10 +89,6 @@ namespace System.Windows.Media.Imaging
         /// Creates a BitmapEncoder from a container format Guid
         /// </summary>
         /// <param name="containerFormat">Container format for the codec</param>
-        /// <SecurityNote>
-        /// Critical - guid used for creation of critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         public static BitmapEncoder Create(Guid containerFormat)
         {
             if (containerFormat == Guid.Empty)
@@ -277,13 +262,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// The info that identifies this codec.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting codecinfo data is OK
-        /// </SecurityNote>
         public virtual BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical ]
             get
             {
                 VerifyAccess();
@@ -370,12 +350,6 @@ namespace System.Windows.Media.Imaging
         /// Save (encode) the bitmap to the specified stream.
         /// </summary>
         /// <param name="stream">Stream to save into</param>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityCritical]
         public virtual void Save(System.IO.Stream stream)
         {
             VerifyAccess();
@@ -572,11 +546,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Checks to see if encoder has built-in metadata.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureMetadata(bool createBitmapMetadata)
         {
             if (!_supportsGlobalMetadata)
@@ -614,10 +583,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Creates the unmanaged encoder object
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, codecs, creates codec based on GUID
-        /// </SecurityNote>
-        [SecurityCritical]
         private void EnsureUnmanagedEncoder()
         {
             if (_encoderHandle == null)
@@ -644,10 +609,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Save the frame
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         private void SaveFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions, BitmapFrame frame)
         {
             SetupFrame(frameEncodeHandle, encoderOptions);

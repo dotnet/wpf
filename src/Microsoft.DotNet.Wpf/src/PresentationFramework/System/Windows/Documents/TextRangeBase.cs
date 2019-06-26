@@ -1488,8 +1488,7 @@ namespace System.Windows.Documents
             bool canSave = (
                 dataFormat == DataFormats.Text ||
                 dataFormat == DataFormats.Xaml ||
-                (SecurityHelper.CheckUnmanagedCodePermission() && (
-                    dataFormat == DataFormats.XamlPackage ||
+                ((dataFormat == DataFormats.XamlPackage ||
                     dataFormat == DataFormats.Rtf)));
 
             return canSave;
@@ -1502,8 +1501,7 @@ namespace System.Windows.Documents
             bool canLoad = (
                 dataFormat == DataFormats.Text ||
                 dataFormat == DataFormats.Xaml ||
-                (SecurityHelper.CheckUnmanagedCodePermission() && (
-                    dataFormat == DataFormats.XamlPackage ||
+                ((dataFormat == DataFormats.XamlPackage ||
                     dataFormat == DataFormats.Rtf)));
 
             return canLoad;
@@ -1538,13 +1536,13 @@ namespace System.Windows.Documents
                 TextRangeSerialization.WriteXaml(xamlXmlWriter, thisRange, /*useFlowDocumentAsRoot:*/false, /*wpfPayload:*/null, preserveTextElements);
                 xamlXmlWriter.Flush();
             }
-            else if (dataFormat == DataFormats.XamlPackage && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.XamlPackage)
             {
                 // Non-null stream here means unconditional request to create a WPF package for the range
                 // independently whether there are images in it or not.
                 WpfPayload.SaveRange(thisRange, ref stream, /*useFlowDocumentAsRoot:*/false, preserveTextElements);
             }
-            else if (dataFormat == DataFormats.Rtf && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.Rtf)
             {
                 Stream wpfPayloadMemory = null;
                 // Passing null as a wpfPayloadStream we allow to not create wpf package
@@ -1594,7 +1592,7 @@ namespace System.Windows.Documents
                 string xamlText = xamlStreamReader.ReadToEnd();
                 thisRange.Xml = xamlText;
             }
-            else if (dataFormat == DataFormats.XamlPackage && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.XamlPackage)
             {
                 object element = WpfPayload.LoadElement(stream);
                 if (!(element is Section) && !(element is Span))
@@ -1603,7 +1601,7 @@ namespace System.Windows.Documents
                 }
                 thisRange.SetXmlVirtual((TextElement)element);
             }
-            else if (dataFormat == DataFormats.Rtf && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.Rtf)
             {
                 // Need to use streams instead of intrermediate strings
                 StreamReader rtfStreamReader = new StreamReader(stream);

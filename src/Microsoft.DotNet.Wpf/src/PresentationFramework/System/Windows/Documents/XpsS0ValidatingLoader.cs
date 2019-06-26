@@ -57,12 +57,6 @@ namespace System.Windows.Documents
         /// <param name="mimeType"></param>
         /// <param name="rootElement"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical: Accesses a package from PreloadedPackages
-        /// SecurityTreatAsSafe: No package instance or package related objects are handed out from this
-        ///             method except as SecurityCriticalData (to XpsSchema.ValidateRelationships)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object Load(Stream stream, Uri parentUri, ParserContext pc, ContentType mimeType, string rootElement)
         {
             object obj = null;
@@ -79,12 +73,9 @@ namespace System.Windows.Documents
                 XpsSchema schema = XpsSchema.GetSchema(mimeType);
                 Uri uri = pc.BaseUri;
 
-                // Using PackUriHelper.ValidateAndGetPackUriComponents internal method 
-                // to get Package and Part Uri in one step
-                Uri packageUri;
-                Uri partUri;
-                InternalPackUriHelper.ValidateAndGetPackUriComponents(uri, out packageUri, out partUri);
-                             
+                Uri packageUri = PackUriHelper.GetPackageUri(uri);
+                Uri partUri = PackUriHelper.GetPartUri(uri);
+
                 Package package = PreloadedPackages.GetPackage(packageUri);
 
                 Uri parentPackageUri = null;

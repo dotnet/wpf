@@ -5,6 +5,8 @@
 // Changes to this file must follow the http://aka.ms/api-review process.
 // ------------------------------------------------------------------------------
 
+using System.Reflection;
+
 namespace System.Printing
 {
     [System.FlagsAttribute]
@@ -143,7 +145,6 @@ namespace System.Printing
         protected sealed override void InternalDispose(bool disposing) { }
         public sealed override void Refresh() { }
     }
-    [System.Drawing.Printing.PrintingPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Level=(System.Drawing.Printing.PrintingPermissionLevel)(2))]
     public partial class PrintQueue : System.Printing.PrintSystemObject
     {
         public PrintQueue(System.Printing.PrintServer printServer, string printQueueName) { }
@@ -607,6 +608,7 @@ namespace System.Printing.IndexedProperties
         protected virtual void InternalDispose(bool disposing) { }
         public virtual void OnDeserialization(object sender) { }
     }
+    [DefaultMember("Property")]
     public partial class PrintPropertyDictionary : System.Collections.Hashtable, System.IDisposable, System.Runtime.Serialization.IDeserializationCallback, System.Runtime.Serialization.ISerializable
     {
         public PrintPropertyDictionary() { }

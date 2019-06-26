@@ -80,11 +80,6 @@ namespace System.Windows.Input
     {
         #region Constructors
 
-        ///<SecurityNote>
-        ///     Critical - this function elevates via a call to InputManager.Current
-        ///     TreatAsSafe: This code simply attaches a call back which is private
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal KeyboardNavigation()
         {
             InputManager inputManager = InputManager.Current;
@@ -158,11 +153,6 @@ namespace System.Windows.Input
                 SetControlTabOnceActiveElement(d, value);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code retrieves PresentationSource which is a protected resource
-        ///     TreatAsSafe: It returns rootvisual which is ok and it does not expose the PresentationSource
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Visual GetVisualRoot(DependencyObject d)
         {
             if (d is Visual || d is Visual3D)
@@ -864,11 +854,6 @@ namespace System.Windows.Input
                 _focusVisualAdornerCache = null;
             }
         }
-        /// <SecurityNote>
-        ///   Critical: This code accesses link demanded input manager
-        ///   TreatAsSafe: This code is ok to expose as it simply return boolean weather Keyboard is the last used device
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool IsKeyboardMostRecentInputDevice()
         {
             return InputManager.Current.MostRecentInputDevice is KeyboardDevice;
@@ -1141,18 +1126,10 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource.
-        ///     TreatAsSafe: This code causes navigation to different elements within an app.
-        ///     It does not expose the PresentationSource
-        ///     Critical: Asserting UnmanagedCode permission to obtain HwndSource.IKeyboardInputSink.KeyboardInputSite
-        ///     TreatAsSafe: Not leaking the InputKeyboardSite obtained under elevation.
-        /// </SecurityNote>
         /// <param name="currentElement">The element from which Navigation is starting.</param>
         /// <param name="request">The TraversalRequest that determines the navigation direction.</param>
         /// <param name="fromProcessInput">Whether this call comes from a ProcessInput call.</param>
         /// <param name="shouldCycle">A recommendation on whether navigation should cycle in case this call can't navigate outside the PresentationSource.</param>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool NavigateOutsidePresentationSource(DependencyObject currentElement, TraversalRequest request, bool fromProcessInput, ref bool shouldCycle)
         {
             Visual visual = currentElement as Visual;
@@ -1234,10 +1211,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input and asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // Call Forwarded
@@ -1245,10 +1218,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void TranslateAccelerator(object sender, KeyEventArgs e)
         {
             // Call Forwarded
@@ -1256,10 +1225,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void ProcessInput(InputEventArgs inputEventArgs)
         {
             ProcessForMenuMode(inputEventArgs);
@@ -3236,10 +3201,6 @@ namespace System.Windows.Input
         // ISSUE: how do we deal with deactivate?
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input
-        ///</SecurityNote>
-        [SecurityCritical]
         private void ProcessForMenuMode(InputEventArgs inputEventArgs)
         {
             // When ALT or F10 key up happens we should fire the EnterMenuMode event.
@@ -3347,14 +3308,6 @@ namespace System.Windows.Input
             return (e.Key == Key.System) ? e.SystemKey : e.Key;
         }
 
-        /// <SecurityNote>
-        ///   SecurityCritical:This code gets  PresentationSource and passes it to event handlers
-        ///   TreatAsSafe: This code is safe inspite of passing the object because of 3 reasons
-        ///                        1. We have a demand on adding the event handler so that no one external can attach
-        ///                        2. The one event handler that we are aware of does not expose the object
-        ///                        3. This code in the worst case will cause your app to go to menu mode
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool OnEnterMenuMode(object eventSource)
         {
             if (_weakEnterMenuModeHandlers == null)
@@ -3421,17 +3374,10 @@ namespace System.Windows.Input
         /// <summary>
         ///     Called when ALT or F10 is pressed anywhere in the global scope
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code causes the handler attached to get an object of type presentationsource
-        ///                  The add is critical, the remove is ok
-        ///     TreatAsSafe: There is a demand on this
-        /// </SecurityNote>
         internal event EnterMenuModeEventHandler EnterMenuMode
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             add
             {
-                SecurityHelper.DemandUIWindowPermission();
 
                 if (_weakEnterMenuModeHandlers == null)
                     _weakEnterMenuModeHandlers = new WeakReferenceList();
@@ -3494,10 +3440,6 @@ namespace System.Windows.Input
 
         #region UIState
 
-        /// <SecurityNote>
-        ///     Critical: accesses the RawUIStateInputReport
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ProcessForUIState(InputEventArgs inputEventArgs)
         {
             PresentationSource source;
@@ -3516,10 +3458,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses the RawUIStateInputReport
-        /// </SecurityNote>
-        [SecurityCritical]
         private RawUIStateInputReport ExtractRawUIStateInputReport(InputEventArgs e, RoutedEvent Event)
         {
             RawUIStateInputReport uiStateInputReport = null;

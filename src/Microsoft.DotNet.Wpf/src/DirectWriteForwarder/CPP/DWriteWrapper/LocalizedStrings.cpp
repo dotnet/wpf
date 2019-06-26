@@ -12,12 +12,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="localizedStrings">The DWrite localized Strings object that 
     /// this class wraps.</param>
-    /// <SecurityNote>
-    /// Critical - Receives a native pointer and stores it internally.
-    ///            This whole object is wrapped around the passed in pointer
-    ///            So this ctor assumes safety of the passed in pointer.
-    /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     LocalizedStrings::LocalizedStrings(IDWriteLocalizedStrings* localizedStrings)
     {
         _localizedStrings = gcnew NativeIUnknownWrapper<IDWriteLocalizedStrings>(localizedStrings);
@@ -30,11 +24,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="localizedStrings">The DWrite localized Strings object that 
     /// this class wraps.</param>
-    /// <SecurityNote>
-    /// Critical - Writes to security critical member _localizedStrings.
-    /// Safe     - Always writes NULL to _localizedStrings.
-    /// </SecurityNote>
-    //[SecuritySafeCritical]
     __declspec(noinline) LocalizedStrings::LocalizedStrings()
     {
         _localizedStrings = nullptr;
@@ -45,11 +34,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <summary>
     /// Gets the number of language/string pairs.
     /// </summary>
-    /// <SecurityNote>
-    /// Critical - Uses security critical member _localizedStrings.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::StringsCount::get()
     {
         UINT32 count = (_localizedStrings != nullptr)? _localizedStrings->Value->GetCount() : 0;
@@ -120,11 +104,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return _values;
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical member _localizedStrings.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) KeyValuePair<CultureInfo^, String^> LocalizedStrings::LocalizedStringsEnumerator::Current::get()
     {
         if (_currentIndex >= _localizedStrings->StringsCount)
@@ -153,13 +132,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <param name="localeName">Locale name to look for.</param>
     /// <param name="index">Receives the zero-based index of the locale name/string pair.</param>
     /// <returns>TRUE if the locale name exists or FALSE if not.</returns>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission.
-    ///            Uses security critical member _localizedStrings.
-    /// Safe     - Does not expose any security critical info.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) bool LocalizedStrings::FindLocaleName(
                                                                                  System::String^ localeName,
                                          [System::Runtime::InteropServices::Out] UINT32%         index
@@ -192,11 +164,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="index">Zero-based index of the locale name.</param>
     /// <returns>The length in characters, not including the null terminator.</returns>
-    /// <SecurityNote>
-    /// Critical - Uses security critical member _localizedStrings.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::GetLocaleNameLength(
                                                 UINT32 index
                                                 )
@@ -223,13 +190,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="index">Zero-based index of the locale name.</param>
     /// <returns>The locale name.</returns>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission to allocate and delete a native WCHAR buffer.
-    /// TreatAsSafe - Caller does not control size of native buffer and buffer is not exposed.
-    ///             - Method does not return critical data.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) System::String^ LocalizedStrings::GetLocaleName(
                                                    UINT32 index
                                                    )
@@ -271,11 +231,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="index">Zero-based index of the string.</param>
     /// <returns>The length in characters, not including the null terminator.</returns>
-    /// <SecurityNote>
-    /// Critical - Uses security critical member _localizedStrings.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) UINT32 LocalizedStrings::GetStringLength(
                                             UINT32 index
                                             )
@@ -302,13 +257,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// </summary>
     /// <param name="index">Zero-based index of the string.</param>
     /// <returns>The string.</returns>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission to allocate and delete a native WCHAR buffer.
-    /// TreatAsSafe - Caller does not control size of native buffer and buffer is not exposed.
-    ///             - Method does not return critical data.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) System::String^ LocalizedStrings::GetString(
                                                UINT32 index
                                                )

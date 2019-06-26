@@ -1,0 +1,43 @@
+<Project>
+  <PropertyGroup>
+
+    <GenAPIEnabledProjects>
+      PresentationCore;
+      PresentationFramework;
+      PresentationFramework.Aero;
+      PresentationFramework.Aero2;
+      PresentationFramework.AeroLite;
+      PresentationFramework.Classic;
+      PresentationFramework.Luna;
+      PresentationFramework.Royale;
+      ReachFramework;
+      System.Windows.Controls.Ribbon;
+      System.Windows.Input.Manipulations;
+      System.Windows.Presentation;
+      System.Xaml;
+      UIAutomationClient;
+      UIAutomationClientSideProviders;
+      UIAutomationProvider;
+      UIAutomationTypes;
+      WindowsBase;
+      WindowsFormsIntegration;
+    </GenAPIEnabledProjects>
+
+    <GlobalApiExclusionsFile Condition="'$(GlobalApiExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalApiExclusions.txt</GlobalApiExclusionsFile>
+    <GlobalAttrExclusionsFile Condition="'$(GlobalAttrExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalAttrExclusions.txt</GlobalAttrExclusionsFile>
+
+    <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
+    <GenAPIAdditionalParameters Condition="'$(GlobalApiExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-api-list "$(GlobalApiExclusionsFile)" </GenAPIAdditionalParameters>
+    <GenAPIAdditionalParameters Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-attributes-list "$(GlobalAttrExclusionsFile)"</GenAPIAdditionalParameters>
+
+    <!-- 
+      GenAPI is run on demand.  Note that making a public API change without the associated reference assembly change will result in an ApiCompat error. 
+      See: ApiCompat.props/targets and documentation/api-compat.md.
+    -->
+    <_GenerateReferenceAssemblySource>false</_GenerateReferenceAssemblySource>
+    <_GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'=='true'
+                                                        and '$(GenAPIEnabledProjects)'!=''
+                                                        and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblySource>
+
+  </PropertyGroup>
+</Project>

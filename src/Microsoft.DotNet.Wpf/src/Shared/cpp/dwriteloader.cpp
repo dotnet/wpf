@@ -8,10 +8,6 @@ namespace WPFUtils
 {
 
 #if defined(__cplusplus_cli)
-/// <SecurityNote>
-/// Critical - Receives a native pointer as parameter.
-/// </SecurityNote>
-[System::Security::SecurityCritical]
 #endif
 HMODULE LoadDWriteLibraryAndGetProcAddress(void **pfncptrDWriteCreateFactory)
 {

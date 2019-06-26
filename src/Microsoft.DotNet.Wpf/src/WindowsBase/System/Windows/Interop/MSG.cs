@@ -41,10 +41,6 @@ namespace System.Windows.Interop
     [Serializable]
     public struct MSG
     {
-        /// <SecurityNote>
-        ///     Critical: Setting critical data
-        /// </SecurityNote>
-        [SecurityCritical]
         [FriendAccessAllowed] // Built into Base, used by Core or Framework.
         internal MSG(IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, int time, int pt_x, int pt_y)
         {
@@ -64,24 +60,17 @@ namespace System.Windows.Interop
         /// <summary> 
         ///     The handle of the window to which the message was sent. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
         [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr hwnd
         {
-            [SecurityCritical]
             get
             {
                 return _hwnd;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _hwnd = value;   
             }
 }
@@ -89,21 +78,14 @@ namespace System.Windows.Interop
          /// <summary> 
          ///    The Value of the window message. 
          /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         public int message
         {
-            [SecurityCritical]
             get
             {
                 return _message;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _message = value;   
             }
 }
@@ -111,24 +93,17 @@ namespace System.Windows.Interop
         /// <summary> 
         ///     The wParam of the window message. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
         [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr wParam
         {
-            [SecurityCritical]
             get
             {
                 return _wParam;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _wParam = value;   
             }
 }
@@ -136,24 +111,17 @@ namespace System.Windows.Interop
         /// <summary> 
         ///     The lParam of the window message. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
         [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr lParam
         {
-            [SecurityCritical]
             get
             {
                 return _lParam;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _lParam = value;   
             }
 }
@@ -161,21 +129,14 @@ namespace System.Windows.Interop
         /// <summary>
         ///     The time the window message was sent.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         public int time
         {
-            [SecurityCritical]
             get
             {
                 return _time;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _time = value;   
             }
 }
@@ -184,23 +145,16 @@ namespace System.Windows.Interop
         /// <summary> 
         ///     The X coordinate of the message POINT struct. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUpperCased")]
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
         public int pt_x
         {
-            [SecurityCritical]
             get
             {
                 return _pt_x;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _pt_x = value;   
             }
 }
@@ -208,23 +162,16 @@ namespace System.Windows.Interop
         /// <summary> 
         ///     The Y coordinate of the message POINT struct. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code as that may be exploited for spoofing purposes
-        ///     PublicOK: This data is safe for Partial Trust code to read (getter), There is a demand on the setter to block Partial Trust code
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUpperCased")]
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
         public int pt_y
         {
-            [SecurityCritical]
             get
             {
                 return _pt_y;
             }
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 _pt_y = value;   
             }
 }
@@ -237,64 +184,36 @@ namespace System.Windows.Interop
         /// <summary>
         ///     The handle of the window to which the message was sent. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwnd;
 
         /// <summary>
         ///     The Value of the window message. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private int _message;
 
         /// <summary>
         ///     The wParam of the window message. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _wParam;
 
         /// <summary>
         ///     The lParam of the window message. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _lParam;
 
         /// <summary>
         ///     The time the window message was sent.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private int _time;
 
         /// <summary>
         ///     The X coordinate of the message POINT struct. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private int _pt_x;
 
         /// <summary>
         ///     The Y coordinate of the message POINT struct. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data can not be modified by Partial Trust code for spoofing purposes
-        /// </SecurityNote>
-        [SecurityCritical]
         private int _pt_y;
 }
 }

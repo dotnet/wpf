@@ -36,3 +36,4 @@ jobs:
         queue: buildpool.windows.10.amd64.vs2019.pre
       # runAsPublic is used in expressions, which can't read from user-defined variables
       runAsPublic: false
+

@@ -42,10 +42,6 @@ namespace MS.Internal.Documents
         /// <param name="page">Document page that owns the column.</param>
         /// <param name="trackDesc">PTS track description.</param>
         /// <param name="contentOffset">Content's offset.</param>
-        /// <SecurityNote>
-        /// Critical - as this can set the Critical variable _columnHandle to an arbitrary value.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ColumnResult(FlowDocumentPage page, ref PTS.FSTRACKDESCRIPTION trackDesc, Vector contentOffset)
         {
             _page = page;
@@ -65,10 +61,6 @@ namespace MS.Internal.Documents
         /// <param name="subpage">Subpage that owns the column.</param>
         /// <param name="trackDesc">PTS track description.</param>
         /// <param name="contentOffset">Content's offset.</param>
-        /// <SecurityNote>
-        /// Critical - as this can set the Critical variable _columnHandle to an arbitrary value.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ColumnResult(BaseParaClient subpage, ref PTS.FSTRACKDESCRIPTION trackDesc, Vector contentOffset)
         {
             // Subpage must be figure, floater or subpage paraclient
@@ -151,13 +143,8 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Collection of ParagraphResults for the column’s contents.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function GetParagraphResultsFromColumn.
-        /// Safe - as the IntPtr _columnHandle is Critical for setting the value.
-        /// </SecurityNote>
         internal ReadOnlyCollection<ParagraphResult> Paragraphs
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_paragraphs == null)
@@ -237,11 +224,6 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Retrive TextContentRange if necessary.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function GetTextContentRangeFromColumn.
-        /// Safe - as the IntPtr _columnHandle is Critical for setting the value.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureTextContentRange()
         {
             if (_contentRange == null)
@@ -296,14 +278,6 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Column handle (PTS track handle).
         /// </summary>
-        /// <SecurityNote>
-        /// This member should be Critical for set as this gets passed on to unmanaged
-        /// PTS functions via Paragraphs property.  Since this is readonly, just marking
-        /// the constructor Critical is good enough.  This is marked as SecurityCritical/
-        /// SecurityTreatAsSafe.  If ever we remove the readonly tag, we should make this
-        /// a SecurityCriticalDataForSet object.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private readonly IntPtr _columnHandle;
 
         /// <summary>

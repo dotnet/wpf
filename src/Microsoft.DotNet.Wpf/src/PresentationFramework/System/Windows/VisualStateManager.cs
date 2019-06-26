@@ -328,11 +328,6 @@ namespace System.Windows
         ///   storyboards. Also if the group has already changed state, then
         ///   don't start the new storyboards.
         /// </summary> 
-        /// <SecurityNote>
-        ///     Critical - Accesses the PresentationSource
-        ///     TreatAsSafe - Does not expose any part of the PresentationSource to user input.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ShouldRunStateStoryboard(FrameworkElement control, FrameworkElement stateGroupsRoot, VisualState state, VisualStateGroup group)
         {
             bool controlInTree = true;

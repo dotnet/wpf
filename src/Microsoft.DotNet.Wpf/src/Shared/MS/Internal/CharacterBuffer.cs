@@ -38,10 +38,6 @@ namespace MS.Internal
         /// <summary>
         /// Get fixed address of the character buffer
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public abstract unsafe char* GetCharacterPointer();
 
         /// <summary>
@@ -216,10 +212,6 @@ namespace MS.Internal
         /// <summary>
         /// Get fixed address of the character buffer
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             // Even though we could allocate GCHandle for this purpose, we would need
@@ -235,10 +227,6 @@ namespace MS.Internal
         /// Get fixed address of the character buffer and Pin if necessary.
         /// Note: This call should only be used when we know that we are not pinning 
         /// memory for a long time so as not to fragment the heap.
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_characterArray, GCHandleType.Pinned);
@@ -248,11 +236,6 @@ namespace MS.Internal
         /// <summary>
         /// This is a matching call for PinAndGetCharacterPointer to unpin the memory.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical     : This method has access to GCHandle which can provide memory address info.
-        ///    Treat As Safe: This method does not expose any security critical info.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
             gcHandle.Free();
@@ -331,10 +314,6 @@ namespace MS.Internal
         /// <summary>
         /// Get fixed address of the character buffer
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             // Even though we could allocate GCHandle for this purpose, we would need
@@ -350,10 +329,6 @@ namespace MS.Internal
         /// Get fixed address of the character buffer and Pin if necessary.
         /// Note: This call should only be used when we know that we are not pinning 
         /// memory for a long time so as not to fragment the heap.
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_string, GCHandleType.Pinned);
@@ -363,11 +338,6 @@ namespace MS.Internal
         /// <summary>
         /// This is a matching call for PinAndGetCharacterPointer to unpin the memory.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical     : This method has access to GCHandle which can provide memory address info.
-        ///    Treat As Safe: This method does not expose any security critical info.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
             gcHandle.Free();
@@ -405,17 +375,8 @@ namespace MS.Internal
     /// </summary>
     internal sealed unsafe class UnsafeStringCharacterBuffer : CharacterBuffer
     {
-        /// <SecurityNote>
-        ///     Critical: This code is unsafe since it holds a pointer
-        ///     EnforcementCritical
-        /// </SecurityNote>
-        [SecurityCritical]
         private char*   _unsafeString;
 
-        /// <SecurityNote>
-        ///     Critical: Length is critical to avoid buffer overrun. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private int     _length;
 
 
@@ -424,11 +385,6 @@ namespace MS.Internal
         /// </summary>
         /// <param name="characterString">unsafe pointer to character string</param>
         /// <param name="length">number of valid characters referenced by the unsafe pointer</param>
-        /// <SecurityNote>
-        ///     Critical: This code is unsafe since it manipulates a pointer, it constructs an object with 
-        ///     length data from user
-        /// </SecurityNote>
-        [SecurityCritical]
         public UnsafeStringCharacterBuffer(
             char*   characterString,
             int     length
@@ -452,19 +408,13 @@ namespace MS.Internal
         /// <summary>
         /// Read a character from buffer at the specified character index
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code is unsafe since it manipulates a pointer
-        ///     Safe: Info is safe to expose and method does bound check
-        /// </SecurityNote>
         public override char this[int characterOffset]
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get {
                 if (characterOffset >= _length || characterOffset < 0)
                     throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
                 return _unsafeString[characterOffset];
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set { throw new NotSupportedException(); }
         }
 
@@ -472,13 +422,8 @@ namespace MS.Internal
         /// <summary>
         /// Buffer character length
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Lenght is critical data when dealing with unsafe pointer.
-        /// Safe: This value is safe to give out. 
-        /// </SecurityNote>
         public override int Count
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get { return _length; }
         }
 
@@ -486,10 +431,6 @@ namespace MS.Internal
         /// <summary>
         /// Get fixed address of the character buffer
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:This returns the pointer
-        /// </SecurityNote>
-        [SecurityCritical]
         public override unsafe char* GetCharacterPointer()
         {
             return _unsafeString;
@@ -499,10 +440,6 @@ namespace MS.Internal
         /// Get fixed address of the character buffer and Pin if necessary.
         /// Note: This call should only be used when we know that we are not pinning 
         /// memory for a long time so as not to fragment the heap.
-        /// <SecurityNote>
-        ///    Critical:This code manipulates a pointer and returns it
-        /// </SecurityNote>
-        [SecurityCritical]
         public override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = new GCHandle();
@@ -512,11 +449,6 @@ namespace MS.Internal
         /// <summary>
         /// This is a matching call for PinAndGetCharacterPointer to unpin the memory.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical     : This method has access to GCHandle which can provide memory address info.
-        ///    Treat As Safe: This method does not expose any security critical info.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void UnpinCharacterPointer(GCHandle gcHandle)
         {
         }
@@ -528,12 +460,6 @@ namespace MS.Internal
         /// <param name="stringBuilder">string builder to add content to</param>
         /// <param name="characterOffset">index to first character in the buffer to append</param>
         /// <param name="characterLength">number of character appending</param>
-        /// <SecurityNote>
-        ///    Critical: This returns the string in a string builder object, critical because it accesses the pointer
-        ///              and returns its contents embedded in the stringbuilder passed in.
-        ///    Safe:     This method does proper bound check.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override  void AppendToStringBuilder(
             StringBuilder   stringBuilder,
             int             characterOffset,

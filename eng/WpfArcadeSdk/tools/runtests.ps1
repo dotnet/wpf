@@ -4,6 +4,35 @@ Param(
     [switch]$ci
 )
 
+# Get the ID and security principal of the current user account
+$myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+$myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+ 
+# Get the security principal for the Administrator role
+$adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+ 
+# Only need to elevate if not running in ci or currently not an admin
+$elevate = !($ci -or $myWindowsPrincipal.IsInRole($adminRole))
+if ($elevate)
+{
+   # We are not running "as Administrator" - so relaunch as administrator
+   
+   # Create a new process object that starts PowerShell
+   $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+   
+   # Specify the current script path and name as a parameter
+   $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+   
+   # Indicate that the process should be elevated
+   $newProcess.Verb = "runas";
+   
+   # Start the new process
+   [System.Diagnostics.Process]::Start($newProcess);
+   
+   # Exit from the current, unelevated, process
+   exit
+}
+
 # Run any configuration needed for the test pass
 if (Test-Path "$PSScriptRoot\configure-machine.ps1")
 {

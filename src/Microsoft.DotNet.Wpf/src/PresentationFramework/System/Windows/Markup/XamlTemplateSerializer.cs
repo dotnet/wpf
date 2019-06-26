@@ -18,7 +18,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Security.Permissions;
 using MS.Utility;
 
 #if !PBTCOMPILER

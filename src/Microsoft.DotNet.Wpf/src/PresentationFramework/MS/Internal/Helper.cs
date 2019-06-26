@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.IO.Packaging;
 
 using System.Reflection;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Data; // BindingBase
 using System.Windows.Markup; // IProvideValueTarget

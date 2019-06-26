@@ -7,7 +7,6 @@
 using System.Windows.Automation;
 using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Security;
 using MS.Internal.Automation;
 

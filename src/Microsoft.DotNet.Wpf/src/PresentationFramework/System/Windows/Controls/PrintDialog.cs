@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Printing;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -407,27 +406,19 @@ namespace System.Windows.Controls
         {
             PrintQueue printQueue = null;
 
-            MS.Internal.SystemDrawingHelper.NewDefaultPrintingPermission().Assert(); //BlessedAssert
             try
             {
-                try
-                {
-                    LocalPrintServer server = new LocalPrintServer();
-                    printQueue = server.DefaultPrintQueue;
-                }
-                catch (PrintSystemException)
-                {
-                    //
-                    // It is entirely possible for there to be no "default" printer.  In this case,
-                    // the printing system throws an exception.  We do not want this to propagate
-                    // up.  Instead, returning null is fine.
-                    //
-                    printQueue = null;
-                }
+                LocalPrintServer server = new LocalPrintServer();
+                printQueue = server.DefaultPrintQueue;
             }
-            finally
+            catch (PrintSystemException)
             {
-                CodeAccessPermission.RevertAssert();
+                //
+                // It is entirely possible for there to be no "default" printer.  In this case,
+                // the printing system throws an exception.  We do not want this to propagate
+                // up.  Instead, returning null is fine.
+                //
+                printQueue = null;
             }
 
             return printQueue;
@@ -441,33 +432,25 @@ namespace System.Windows.Controls
         {
             PrintTicket printTicket = null;
 
-            MS.Internal.SystemDrawingHelper.NewDefaultPrintingPermission().Assert(); //BlessedAssert
             try
             {
-                try
+                if (printQueue != null)
                 {
-                    if (printQueue != null)
+                    printTicket = printQueue.UserPrintTicket;
+                    if (printTicket == null)
                     {
-                        printTicket = printQueue.UserPrintTicket;
-                        if (printTicket == null)
-                        {
-                            printTicket = printQueue.DefaultPrintTicket;
-                        }
+                        printTicket = printQueue.DefaultPrintTicket;
                     }
                 }
-                catch (PrintSystemException)
-                {
-                    //
-                    // The printing subsystem can throw an exception in certain cases when
-                    // the print ticket is unavailable.  If it does we will handle this
-                    // below.  There is no real need to bubble this up to the application.
-                    //
-                    printTicket = null;
-                }
             }
-            finally
+            catch (PrintSystemException)
             {
-                CodeAccessPermission.RevertAssert();
+                //
+                // The printing subsystem can throw an exception in certain cases when
+                // the print ticket is unavailable.  If it does we will handle this
+                // below.  There is no real need to bubble this up to the application.
+                //
+                printTicket = null;
             }
 
             //
@@ -554,25 +537,17 @@ namespace System.Windows.Controls
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            MS.Internal.SystemDrawingHelper.NewDefaultPrintingPermission().Assert(); //BlessedAssert
-            try
+            if(printQueue != null)
             {
-                if(printQueue != null)
-                {
-                    printQueue.CurrentJobSettings.Description = description;
-                }
-
-                writer = PrintQueue.CreateXpsDocumentWriter(printQueue);
-
-                PrintDlgPrintTicketEventHandler eventHandler = new PrintDlgPrintTicketEventHandler(printTicket);
-
-                writer.WritingPrintTicketRequired +=
-                new WritingPrintTicketRequiredEventHandler(eventHandler.SetPrintTicket);
+                printQueue.CurrentJobSettings.Description = description;
             }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+
+            writer = PrintQueue.CreateXpsDocumentWriter(printQueue);
+
+            PrintDlgPrintTicketEventHandler eventHandler = new PrintDlgPrintTicketEventHandler(printTicket);
+
+            writer.WritingPrintTicketRequired +=
+            new WritingPrintTicketRequiredEventHandler(eventHandler.SetPrintTicket);
 
             return writer;
         }

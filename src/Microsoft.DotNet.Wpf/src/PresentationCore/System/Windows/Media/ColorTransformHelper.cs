@@ -12,7 +12,6 @@ using System.Windows.Media.Imaging;
 using MS.Internal;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;

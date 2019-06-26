@@ -21,7 +21,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Security;
-using System.Security.Permissions;
 namespace MS.Internal.AppModel
 {
     // <summary>

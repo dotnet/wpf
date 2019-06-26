@@ -19,7 +19,6 @@ using System.Text;
 using System.Reflection;
 using System.Globalization;
 using System.ComponentModel;
-using System.Security.Permissions;
 using System.Security.Cryptography;
 
 using System.CodeDom;

@@ -9,7 +9,6 @@ using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 using System.Runtime.Versioning;
 using System.Security;
-using System.Security.Permissions;
 
 
 namespace System.Windows

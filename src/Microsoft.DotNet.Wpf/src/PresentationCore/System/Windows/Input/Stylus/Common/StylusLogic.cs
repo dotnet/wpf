@@ -15,7 +15,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
@@ -301,7 +300,7 @@ namespace System.Windows.Input
                 {
                     result = ((int)(Registry.CurrentUser.OpenSubKey(WpfPointerKey, RegistryKeyPermissionCheck.ReadSubTree)?.GetValue(WpfPointerValue, 0) ?? 0)) == 1;
                 }
-                catch (Exception e) when (e is SecurityException || e is IOException)
+                catch (Exception e) when (e is IOException)
                 {
                     // No permission to access registry or someone 
                     // changed the key type to REG_SZ/REG_EXPAND_SZ/REG_MULTI_SZ.
@@ -345,9 +344,6 @@ namespace System.Windows.Input
             RegistryKey stylusKey = null; // This object has finalizer to close the key.
             RegistryKey touchKey = null; // This object has finalizer to close the key.
 
-            // Acquire permissions to read the one key we care about from the registry
-            new RegistryPermission(RegistryPermissionAccess.Read, WispKeyAssert).Assert(); // BlessedAssert
-
             try
             {
                 stylusKey = Registry.CurrentUser.OpenSubKey(WispPenSystemEventParametersKey);
@@ -378,8 +374,6 @@ namespace System.Windows.Input
             }
             finally
             {
-                CodeAccessPermission.RevertAssert();
-
                 if (stylusKey != null)
                 {
                     stylusKey.Close();

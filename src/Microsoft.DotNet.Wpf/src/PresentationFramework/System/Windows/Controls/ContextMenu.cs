@@ -19,7 +19,6 @@ using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Shapes;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls
 {

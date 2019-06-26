@@ -23,7 +23,6 @@ using System.Printing;
 using MS.Internal.Printing.Configuration;
 using System.Security;
 using System.Drawing.Printing;
-using System.Security.Permissions;
 
 //[assembly:System.Runtime.InteropServices.ComVisibleAttribute(false)]
 

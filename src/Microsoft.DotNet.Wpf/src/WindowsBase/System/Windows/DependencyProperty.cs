@@ -11,7 +11,6 @@ using System.Globalization;
 using System.ComponentModel;
 using System.Windows.Markup;// For ValueSerializerAttribute
 using System.Windows.Threading; // For DispatcherObject
-using System.Security.Permissions; // For LinkDemand
 using MS.Utility;
 using MS.Internal.WindowsBase;
 using System.Reflection;   // for IsInstanceOfType

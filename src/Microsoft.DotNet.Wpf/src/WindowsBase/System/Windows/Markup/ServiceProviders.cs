@@ -12,7 +12,6 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using MS.Internal.WindowsBase;
 
 /////////////////////////////////////////////////////////////////////////////////////////

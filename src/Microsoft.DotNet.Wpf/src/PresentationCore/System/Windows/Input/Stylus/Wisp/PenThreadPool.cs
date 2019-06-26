@@ -9,7 +9,6 @@ using System.Threading;
 using System.Windows.Input.Tracing;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Win32.Penimc;
 

@@ -66,7 +66,6 @@ using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
 using System.Security;              // 
-using System.Security.Permissions;  // 
 using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList

@@ -20,7 +20,6 @@ using System.Diagnostics;           // For Debug.Assert
 using System.Globalization;
 using System.IO;
 using System.Reflection;            // For finding transform objects & their constructor
-using System.Security.Permissions;  // For StrongNameIdentityPermission
 using System.Collections.Generic;
 
 using System.Windows;               // ExceptionStringTable

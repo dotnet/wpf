@@ -11,7 +11,6 @@
 //
 
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows
 {

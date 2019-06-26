@@ -9,7 +9,6 @@
 namespace System.Windows.Documents
 {
     using System.Security; // SecurityCritical, SecurityTreatAsSafe
-    using System.Security.Permissions; // UIPermission
     using System.Windows.Media; // Brush, Transform
     using System.Windows.Media.Animation; // AnimationClock
     using System.Windows.Controls; // ScrollViewer
@@ -976,15 +975,7 @@ namespace System.Windows.Documents
 
                 if (source != null)
                 {
-                     new UIPermission(UIPermissionWindow.AllWindows).Assert();   //BlessedAssert
-                     try
-                     {
-                          hwnd = (source as IWin32Window).Handle;
-                     }
-                     finally
-                     {
-                         UIPermission.RevertAssert();
-                     }
+                        hwnd = (source as IWin32Window).Handle;
                 }
 
                 if (hwnd != IntPtr.Zero)

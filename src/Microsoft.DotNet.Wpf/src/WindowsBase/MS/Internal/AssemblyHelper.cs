@@ -26,7 +26,6 @@ using System;
 using System.IO;                    // FileNotFoundException
 using System.Reflection;            // Assembly
 using System.Security;              // 
-using System.Security.Permissions;  // 
 
 using MS.Internal.WindowsBase;      // [FriendAccessAllowed] // BuildInfo
 
@@ -189,18 +188,6 @@ namespace MS.Internal
         // Get the extension class for the given assembly
         private static object LoadExtensionFor(string name)
         {
-            // The docs claim that Activator.CreateInstance will create an instance
-            // of an internal type provided that (a) the caller has ReflectionPermission
-            // with the RestrictedMemberAccess flag, and (b) the grant set of the
-            // calling assembly (WindowsBase) is a superset of the grant set of the
-            // target assembly (one of our extension assemblies).   Both those conditions
-            // are satisfied, yet the call still results in a security exception when run
-            // under partial trust (specifically, in the PT environment created by
-            // the WPF test infrastructure).   The only workaround I've found is to
-            // assert full trust.
-            PermissionSet ps = new PermissionSet(PermissionState.Unrestricted);
-            ps.Assert();
-
             // build the full display name of the extension assembly
             string assemblyName = Assembly.GetExecutingAssembly().FullName;
             string extensionAssemblyName = assemblyName.Replace("WindowsBase", "PresentationFramework-" + name)

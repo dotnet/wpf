@@ -10,7 +10,6 @@
 #include "NativePointerWrapper.h"
 
 using namespace System::Security;
-using namespace System::Security::Permissions;
 using namespace MS::Internal::Text::TextInterface::Generics;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface

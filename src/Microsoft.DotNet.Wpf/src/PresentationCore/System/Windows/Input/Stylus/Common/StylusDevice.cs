@@ -11,7 +11,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusWisp;

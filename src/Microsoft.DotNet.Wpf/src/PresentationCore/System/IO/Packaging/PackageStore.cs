@@ -14,7 +14,6 @@ using System.Collections.Specialized;
 using System.IO;
 using System.IO.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Navigation;
 using SecurityHelper=MS.Internal.SecurityHelper; 
 using MS.Internal.PresentationCore;     // for ExceptionStringTable

@@ -16,7 +16,6 @@ using System;
 using System.Diagnostics;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 

@@ -8,7 +8,6 @@ using MS.Win32;                              // win32 interop
 using System.Windows.Interop;                // ComponentDispatcher & MSG
 using Microsoft.Win32;                       // Registry
 using System.Security;                       // CAS
-using System.Security.Permissions;           // Registry permissions
 using System.Diagnostics;                    // Debug
 using MS.Utility;                            // EventTrace
 using System.Reflection;                     // Assembly

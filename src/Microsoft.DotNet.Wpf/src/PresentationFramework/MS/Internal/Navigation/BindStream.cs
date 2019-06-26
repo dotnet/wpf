@@ -12,7 +12,6 @@
 using System;
 using System.IO;
 using System.Security; // SecurityCritical attribute
-using System.Security.Permissions;
 using MS.Internal.AppModel;
 using System.Net;
 using System.Windows.Threading; //DispatcherObject

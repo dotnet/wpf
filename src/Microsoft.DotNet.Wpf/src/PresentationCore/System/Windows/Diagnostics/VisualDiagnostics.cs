@@ -11,7 +11,6 @@
 using Microsoft.Win32;              // Registry, RegistryKey
 using MS.Internal;                  // CoreAppContextSwitches
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Interop;       // HwndSource
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -230,15 +229,7 @@ namespace System.Windows.Diagnostics
                 return IsEnvironmentValueSet(value);
             }
 
-            new EnvironmentPermission(EnvironmentPermissionAccess.Read, environmentVariable).Assert();
-            try
-            {
-                value = Environment.GetEnvironmentVariable(environmentVariable);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAll();
-            }
+            value = Environment.GetEnvironmentVariable(environmentVariable);
 
             return IsEnvironmentValueSet(value);
         }
@@ -356,27 +347,19 @@ namespace System.Windows.Diagnostics
             /// </summary>
             private static bool GetDevModeFromRegistry()
             {
-                new RegistryPermission(RegistryPermissionAccess.Read, c_devmodeRegKeyFullPath).Assert();
-                try
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(c_devmodeRegKey);
+
+                if (key != null)
                 {
-                    RegistryKey key = Registry.LocalMachine.OpenSubKey(c_devmodeRegKey);
-
-                    if (key != null)
+                    using (key)
                     {
-                        using (key)
-                        {
-                            object obj = key.GetValue(c_devmodeValueName);
+                        object obj = key.GetValue(c_devmodeValueName);
 
-                            if (obj is int)
-                            {
-                                return ((int)obj != 0);
-                            }
+                        if (obj is int)
+                        {
+                            return ((int)obj != 0);
                         }
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAll();
                 }
 
                 return false;

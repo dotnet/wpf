@@ -15,7 +15,6 @@ using System.Collections.Specialized;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using MS.Internal;
 using MS.Utility;

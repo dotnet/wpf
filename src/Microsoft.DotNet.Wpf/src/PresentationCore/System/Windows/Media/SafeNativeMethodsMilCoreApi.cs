@@ -17,7 +17,6 @@ namespace MS.Win32.PresentationCore
     using System.Runtime.InteropServices.ComTypes;
     using System;
     using System.Security;
-    using System.Security.Permissions;
     using System.Collections;
     using System.IO;
     using System.Text;

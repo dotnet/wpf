@@ -25,7 +25,6 @@ using MS.Win32;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32.SafeHandles;
 
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;

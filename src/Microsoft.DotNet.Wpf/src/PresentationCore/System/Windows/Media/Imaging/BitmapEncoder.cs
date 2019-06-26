@@ -20,7 +20,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;

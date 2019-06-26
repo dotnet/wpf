@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using SecurityHelper=MS.Internal.SecurityHelper; 
 
 namespace System.Windows.Media.Effects

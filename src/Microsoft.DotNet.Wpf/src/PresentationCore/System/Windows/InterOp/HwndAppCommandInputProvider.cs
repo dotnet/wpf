@@ -8,7 +8,6 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
@@ -20,15 +19,8 @@ namespace System.Windows.Interop
     {
         internal HwndAppCommandInputProvider( HwndSource source )
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try
-            {
-                 _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
+
             _source = new SecurityCriticalDataClass<HwndSource>(source);
         }
 

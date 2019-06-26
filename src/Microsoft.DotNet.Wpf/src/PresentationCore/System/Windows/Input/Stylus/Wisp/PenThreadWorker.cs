@@ -13,7 +13,6 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Threading;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Collections.Generic;

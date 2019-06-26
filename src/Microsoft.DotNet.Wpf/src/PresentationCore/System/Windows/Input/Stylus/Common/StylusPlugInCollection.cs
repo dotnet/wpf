@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Security;
-using System.Security.Permissions;
 
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;

@@ -11,7 +11,6 @@ namespace System.Windows.Documents
     using MS.Internal;
     using System.Globalization;
     using System.Security;
-    using System.Security.Permissions;
     using System.Threading;
     using System.ComponentModel;
     using System.Text;
@@ -60,15 +59,7 @@ namespace System.Windows.Documents
                 ExecutedRoutedEventHandler ExecutedRoutedEventHandler = new ExecutedRoutedEventHandler(OnPaste);
                 CanExecuteRoutedEventHandler CanExecuteRoutedEventHandler = new CanExecuteRoutedEventHandler(OnQueryStatusPaste);
                 InputGesture inputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.Get(SRID.KeyShiftInsertDisplayString));
-                new UIPermission(UIPermissionClipboard.AllClipboard).Assert(); //BlessedAssert
-                try
-                {
-                    CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Paste, ExecutedRoutedEventHandler, CanExecuteRoutedEventHandler, inputGesture);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Paste, ExecutedRoutedEventHandler, CanExecuteRoutedEventHandler, inputGesture);
                 if (acceptsRichContent)
                 {
                     CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.PasteFormat, new ExecutedRoutedEventHandler(OnPasteFormat), new CanExecuteRoutedEventHandler(OnQueryStatusPasteFormat), KeyPasteFormat, SRID.KeyPasteFormatDisplayString);
@@ -90,15 +81,7 @@ namespace System.Windows.Documents
             // create your own implementation of it, but you
             // really cannot, because there is no way of
             // using it in our TextEditor.Copy/Drag.
-            (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-            try
-            {
-                dataObject = new DataObject();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            dataObject = new DataObject();
 
             // Get plain text and copy it into the data object.
             string textString = This.Selection.Text;
@@ -300,19 +283,6 @@ namespace System.Windows.Documents
         /// </summary>
         internal static void Cut(TextEditor This, bool userInitiated)
         {
-            if (userInitiated)
-            {
-                // Fail silently if the app explicitly denies clipboard access.
-                try
-                {
-                    new UIPermission(UIPermissionClipboard.OwnClipboard).Demand();
-                }
-                catch (SecurityException)
-                {
-                    return;
-                }
-            }
-
             TextEditorTyping._FlushPendingInputItems(This);
 
             TextEditorTyping._BreakTypingSequence(This);
@@ -361,19 +331,6 @@ namespace System.Windows.Documents
         /// </summary>
         internal static void Copy(TextEditor This, bool userInitiated)
         {
-            if (userInitiated)
-            {
-                // Fail silently if the app explicitly denies clipboard access.
-                try
-                {
-                    new UIPermission(UIPermissionClipboard.OwnClipboard).Demand();
-                }
-                catch (SecurityException)
-                {
-                    return;
-                }
-            }
-
             TextEditorTyping._FlushPendingInputItems(This);
 
             TextEditorTyping._BreakTypingSequence(This);

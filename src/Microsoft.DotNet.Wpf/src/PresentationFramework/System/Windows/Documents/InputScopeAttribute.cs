@@ -9,7 +9,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 

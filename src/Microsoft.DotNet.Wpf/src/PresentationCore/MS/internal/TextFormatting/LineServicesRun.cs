@@ -14,7 +14,6 @@ using System.Windows.Media.TextFormatting;
 using System.Globalization;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Shaping;
 using MS.Internal.FontCache;
 using MS.Utility;

@@ -20,7 +20,6 @@ using System.Windows.Controls.Primitives;
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -147,15 +146,7 @@ namespace System.Windows.Controls
             if (_enterMenuModeHandler == null)
             {
                 _enterMenuModeHandler = new KeyboardNavigation.EnterMenuModeEventHandler(OnEnterMenuMode);
-                (new UIPermission(UIPermissionWindow.AllWindows)).Assert(); //Blessed Assert
-                try
-                {
-                   KeyboardNavigation.Current.EnterMenuMode += _enterMenuModeHandler;
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                KeyboardNavigation.Current.EnterMenuMode += _enterMenuModeHandler;
            }
        }
 

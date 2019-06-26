@@ -23,7 +23,6 @@ using Microsoft.Win32;
 using System.Reflection;
 using MS.Utility;
 using System.Windows.Input;
-using System.Security.Permissions;
 using System.Threading;
 
 namespace MS.Internal.AppModel

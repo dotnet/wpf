@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 using MS.Win32;
@@ -48,13 +47,6 @@ namespace MS.Internal.AppModel
             _initialized = false;
         }
 
-        public CustomCredentialPolicy()
-        {
-            _environmentPermissionSet = new PermissionSet(null);
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERDOMAIN"));
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERNAME"));
-        }
-
         static internal void EnsureCustomCredentialPolicy()
         {
             if (!_initialized)
@@ -63,23 +55,15 @@ namespace MS.Internal.AppModel
                 {
                     if (!_initialized)
                     {
-                        new SecurityPermission(SecurityPermissionFlag.ControlPolicy).Assert();  // BlessedAssert: 
-                        try
+                        // We should allow an application to set its own credential policy, if it has permssion to.
+                        // We do not want to overwrite the application's setting. 
+                        // Check whether it is already set before setting it. 
+                        // The default of this property is null. It demands ControlPolicy permission to be set.
+                        if (AuthenticationManager.CredentialPolicy == null)
                         {
-                            // We should allow an application to set its own credential policy, if it has permssion to.
-                            // We do not want to overwrite the application's setting. 
-                            // Check whether it is already set before setting it. 
-                            // The default of this property is null. It demands ControlPolicy permission to be set.
-                            if (AuthenticationManager.CredentialPolicy == null)
-                            {
-                                AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
-                            }
-                            _initialized = true;
+                            AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
                         }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
+                        _initialized = true;
                     }
                 }
             }
@@ -92,13 +76,13 @@ namespace MS.Internal.AppModel
             switch (MapUrlToZone(challengeUri))
             {
                 // Always send credentials (including default credentials) to these zones
-                case SecurityZone.Intranet:
-                case SecurityZone.Trusted:
-                case SecurityZone.MyComputer:
+                case NativeMethods.URLZONE_INTRANET:
+                case NativeMethods.URLZONE_TRUSTED:
+                case NativeMethods.URLZONE_LOCAL_MACHINE:
                     return true;
                 // Don't send default credentials to any of these zones
-                case SecurityZone.Internet:
-                case SecurityZone.Untrusted:
+                case NativeMethods.URLZONE_INTERNET:
+                case NativeMethods.URLZONE_UNTRUSTED:
                 default:
                     return !IsDefaultCredentials(credential);
             }
@@ -108,40 +92,16 @@ namespace MS.Internal.AppModel
 
         private bool IsDefaultCredentials(NetworkCredential credential)
         {
-            _environmentPermissionSet.Assert();  // BlessedAssert: 
-            try
-            {
-                return credential == CredentialCache.DefaultCredentials;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            return credential == CredentialCache.DefaultCredentials;
         }
 
-        internal static SecurityZone MapUrlToZone(Uri uri)
+        internal static int MapUrlToZone(Uri uri)
         {
             EnsureSecurityManager();
 
             int targetZone;
             _securityManager.MapUrlToZone(BindUriHelper.UriToString(uri), out targetZone, 0);
-
-            // The enum is directly mappable, but taking no chances...
-            switch (targetZone)
-            {
-                case NativeMethods.URLZONE_LOCAL_MACHINE:
-                    return SecurityZone.MyComputer;
-                case NativeMethods.URLZONE_INTERNET:
-                    return SecurityZone.Internet;
-                case NativeMethods.URLZONE_INTRANET:
-                    return SecurityZone.Intranet;
-                case NativeMethods.URLZONE_TRUSTED:
-                    return SecurityZone.Trusted;
-                case NativeMethods.URLZONE_UNTRUSTED:
-                    return SecurityZone.Untrusted;
-            }
-
-            return SecurityZone.NoZone;
+            return targetZone;
         }
 
         private static void EnsureSecurityManager()
@@ -170,7 +130,5 @@ namespace MS.Internal.AppModel
         private static object _lockObj;
 
         private static bool _initialized;
-
-        PermissionSet _environmentPermissionSet;
     }
 }

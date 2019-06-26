@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
-using System.Security.Permissions;
 using MS.Utility;
 using System.Runtime.InteropServices;
 using MS.Internal;

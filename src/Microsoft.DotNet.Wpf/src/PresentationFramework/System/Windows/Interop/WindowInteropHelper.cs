@@ -12,7 +12,6 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Win32;

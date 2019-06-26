@@ -26,7 +26,6 @@ using System.IO;
 using System.Windows;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Data;
@@ -2117,15 +2116,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         private bool UserInitiatedCanPaste()
         {
-            ( new UIPermission(UIPermissionClipboard.AllClipboard) ).Assert();//BlessedAssert
-            try
-            {
-                return PrivateCanPaste();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            return PrivateCanPaste();
         }
 
         /// <summary>
@@ -2215,15 +2206,7 @@ namespace System.Windows.Controls
         private InkCanvasClipboardDataFormats CopyToDataObject()
         {
              DataObject dataObj;
-            (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-            try
-            {
-                dataObj = new DataObject();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            dataObj = new DataObject();
             InkCanvasClipboardDataFormats copiedDataFormats = InkCanvasClipboardDataFormats.None;
 
             // Try to copy the data from the InkCanvas to the clipboard.
@@ -2231,19 +2214,8 @@ namespace System.Windows.Controls
 
             if ( copiedDataFormats != InkCanvasClipboardDataFormats.None )
             {
-                PermissionSet ps = new PermissionSet(PermissionState.None);
-                ps.AddPermission(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter));
-                ps.AddPermission(new UIPermission(UIPermissionClipboard.AllClipboard));
-                ps.Assert(); // BlessedAssert
-                try
-                {
-                    // Put our data object into the clipboard.
-                    Clipboard.SetDataObject(dataObj, true);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                // Put our data object into the clipboard.
+                Clipboard.SetDataObject(dataObj, true);
             }
 
             return copiedDataFormats;
@@ -2563,16 +2535,8 @@ namespace System.Windows.Controls
             CanExecuteRoutedEventHandler pasteQueryEnabledEventHandler = new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled);
             InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.Get(SRID.KeyShiftInsertDisplayString));
 
-            new UIPermission(UIPermissionClipboard.AllClipboard).Assert(); // BlessedAssert:
-            try
-            {
-                CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Paste,
-                    pasteExecuteEventHandler, pasteQueryEnabledEventHandler, pasteInputGesture);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Paste,
+                pasteExecuteEventHandler, pasteQueryEnabledEventHandler, pasteInputGesture);
         }
 
         /// <summary>

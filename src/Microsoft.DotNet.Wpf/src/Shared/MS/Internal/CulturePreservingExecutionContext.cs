@@ -26,7 +26,6 @@
 using System;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 
 namespace MS.Internal

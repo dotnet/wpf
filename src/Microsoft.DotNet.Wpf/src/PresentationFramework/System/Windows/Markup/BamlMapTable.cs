@@ -41,7 +41,6 @@ using System.Windows.Media.Media3D;
 using System.Windows.Markup;
 using System.Windows.Shapes;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationFramework;
 
 #endif

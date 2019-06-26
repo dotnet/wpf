@@ -45,17 +45,7 @@ namespace MS.Internal.Ink
         internal override bool CanPaste(IDataObject dataObject)
         {
             // Check if we have Xaml data
-            bool hasXamlData = false;
-            try
-            {
-                hasXamlData = dataObject.GetDataPresent(DataFormats.Xaml, false);
-            }
-            catch ( SecurityException )
-            {
-                // If we are under the partial trust, the Xaml format will fail when it needs to be registered.
-                // In this case, we should just disable the Paste Xaml format content.
-                hasXamlData = false;
-            }
+            bool hasXamlData = dataObject.GetDataPresent(DataFormats.Xaml, false);
             
             return hasXamlData;
         }

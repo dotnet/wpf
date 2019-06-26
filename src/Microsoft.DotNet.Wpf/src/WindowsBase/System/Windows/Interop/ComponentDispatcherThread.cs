@@ -7,7 +7,6 @@ using System;
 using MS.Win32;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.WindowsBase;
 
 namespace System.Windows.Interop

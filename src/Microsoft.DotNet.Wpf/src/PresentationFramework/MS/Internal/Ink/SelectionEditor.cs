@@ -15,7 +15,6 @@ using MS.Internal;
 using MS.Internal.Controls;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;

@@ -24,7 +24,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Security.Permissions;
 using System.Windows.Controls.Primitives;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

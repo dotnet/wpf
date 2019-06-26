@@ -13,7 +13,6 @@
 --*/
 using System;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Xps.Serialization
 {

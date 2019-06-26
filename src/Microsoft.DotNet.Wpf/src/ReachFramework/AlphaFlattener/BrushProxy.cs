@@ -16,7 +16,6 @@ using System.Windows;                  // for Rect                        Window
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Windows.Xps.Serialization;
 using MS.Utility;

@@ -15,7 +15,6 @@ using System;
 using System.Net;
 using System.Net.Cache;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 
 using System.Windows.Navigation;
@@ -107,9 +106,7 @@ static class WpfWebRequestHelper
 
             // Enable NTLM authentication.
             // This is safe to do thanks to the CustomCredentialPolicy.
-            (new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERNAME")).Assert(); // BlessedAssert
-            try { httpRequest.UseDefaultCredentials = true; }
-            finally { EnvironmentPermission.RevertAssert(); }
+            httpRequest.UseDefaultCredentials = true;
         }
 
         return request;

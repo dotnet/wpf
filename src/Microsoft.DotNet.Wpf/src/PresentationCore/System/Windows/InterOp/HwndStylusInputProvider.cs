@@ -14,7 +14,6 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
 
 
 using SR=MS.Internal.PresentationCore.SR;
@@ -42,18 +41,10 @@ namespace System.Windows.Interop
 
             IntPtr sourceHandle;
 
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed Assert this is for RegisterInputManager and RegisterHwndforinput
-            {
-                // Register ourselves as an input provider with the input manager.
-                _site = new SecurityCriticalDataClass<InputProviderSite>(inputManager.RegisterInputProvider(this));
+            // Register ourselves as an input provider with the input manager.
+            _site = new SecurityCriticalDataClass<InputProviderSite>(inputManager.RegisterInputProvider(this));
 
-                sourceHandle = source.Handle;
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            sourceHandle = source.Handle;
 
             _stylusLogic.Value.RegisterHwndForInput(inputManager, source);
             _source = new SecurityCriticalDataClass<HwndSource>(source);

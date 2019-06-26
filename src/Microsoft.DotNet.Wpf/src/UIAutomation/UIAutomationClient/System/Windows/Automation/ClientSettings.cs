@@ -11,7 +11,6 @@
 using System.Windows.Automation;
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Diagnostics;
 using MS.Internal.Automation;

@@ -22,7 +22,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -199,17 +198,8 @@ namespace MS.Internal.AppModel
 
             //This sets the _ownerHandle correctly and will be used to create the _sourceWindow
             //with the correct parent
-            UIPermission uip = new UIPermission(UIPermissionWindow.AllWindows);
-            uip.Assert();//Blessed Assert to set owner handle and to set styles
-            try
-            {
-                this.OwnerHandle = ihs.HostWindowHandle;
-                this.Win32Style = NativeMethods.WS_CHILD | NativeMethods.WS_CLIPCHILDREN | NativeMethods.WS_CLIPSIBLINGS;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            this.OwnerHandle = ihs.HostWindowHandle;
+            this.Win32Style = NativeMethods.WS_CHILD | NativeMethods.WS_CLIPCHILDREN | NativeMethods.WS_CLIPSIBLINGS;
 
         }
 
@@ -589,29 +579,15 @@ namespace MS.Internal.AppModel
         private void SetUpInputHooks()
         {
             IKeyboardInputSink sink;
-            new UIPermission(PermissionState.Unrestricted).Assert(); //BlessedAssert
-            try
-            {
-                _inputPostFilter = new HwndWrapperHook(BrowserInteropHelper.PostFilterInput);
-                HwndSource hwndSource = base.HwndSourceWindow;
-                hwndSource.HwndWrapper.AddHookLast(_inputPostFilter);
 
-                sink = (IKeyboardInputSink)hwndSource;
-            }
-            finally
-            {
-                UIPermission.RevertAll();
-            }
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); //BlessedAssert
-            try
-            {
-                Debug.Assert(sink.KeyboardInputSite == null);
-                sink.KeyboardInputSite = new KeyInputSite(new SecurityCriticalData<IKeyboardInputSink>(sink));
-            }
-            finally
-            {
-                SecurityPermission.RevertAll();
-            }
+            _inputPostFilter = new HwndWrapperHook(BrowserInteropHelper.PostFilterInput);
+            HwndSource hwndSource = base.HwndSourceWindow;
+            hwndSource.HwndWrapper.AddHookLast(_inputPostFilter);
+
+            sink = (IKeyboardInputSink)hwndSource;
+
+            Debug.Assert(sink.KeyboardInputSite == null);
+            sink.KeyboardInputSite = new KeyInputSite(new SecurityCriticalData<IKeyboardInputSink>(sink));
         }
 
         /// <summary>
@@ -923,19 +899,10 @@ namespace MS.Internal.AppModel
             
             // This gets the PringDocumentImageableArea.OriginWidth/OriginHeight 
             // of the PrintQueue the user chose in the dialog.
-            CodeAccessPermission printp = SystemDrawingHelper.NewDefaultPrintingPermission();
-            printp.Assert();//Blessed Assert to get PrintQueue and call GetPrintCapabilities
-            try
+            queue = dialog.PrintQueue;
+            if (queue != null)
             {
-                queue = dialog.PrintQueue;
-                if (queue != null)
-                {
-                    capabilities = queue.GetPrintCapabilities();
-                }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
+                capabilities = queue.GetPrintCapabilities();
             }
 
             if (capabilities != null)

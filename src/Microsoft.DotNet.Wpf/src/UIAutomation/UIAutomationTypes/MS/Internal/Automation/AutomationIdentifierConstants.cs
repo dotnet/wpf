@@ -11,7 +11,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.UIAutomationTypes.Interop;
 
 namespace MS.Internal.Automation

@@ -22,7 +22,6 @@ using System.Diagnostics;
 using System.Collections;
 using System.Reflection;
 using System.IO;
-using System.Security.Permissions;
 using System.Security;
 
 namespace MS.Internal.AppModel
@@ -128,8 +127,6 @@ namespace MS.Internal.AppModel
                     Delegate d;
                     try
                     {
-                        new ReflectionPermission(ReflectionPermissionFlag.MemberAccess).Assert(); // BlessedAssert
-
                         d = Delegate.CreateDelegate(
                                                                 Type.GetType(_returnList[i]._delegateTypeName),
                                                                 caller,
@@ -138,10 +135,6 @@ namespace MS.Internal.AppModel
                     catch (Exception ex)
                     {
                         throw new NotSupportedException(SR.Get(SRID.ReturnEventHandlerMustBeOnParentPage), ex);
-                    }
-                    finally
-                    {
-                        ReflectionPermission.RevertAssert();
                     }
 
                     child._AddEventHandler(d);

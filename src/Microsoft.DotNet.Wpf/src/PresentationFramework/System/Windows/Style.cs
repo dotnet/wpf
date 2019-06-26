@@ -21,7 +21,6 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation; // For Storyboard support
 using System.Windows.Markup;
-using System.Security.Permissions;
 using System.IO;
 using MS.Utility;
 using MS.Internal;

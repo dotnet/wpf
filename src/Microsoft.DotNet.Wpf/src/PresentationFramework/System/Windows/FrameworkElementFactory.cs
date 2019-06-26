@@ -13,7 +13,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Documents;
-using System.Security.Permissions;
 using System.Collections;               // For ArrayList
 using System.Collections.Generic;
 using System.Collections.Specialized;   // HybridDictionary

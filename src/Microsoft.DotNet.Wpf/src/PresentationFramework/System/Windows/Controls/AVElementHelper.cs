@@ -16,7 +16,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls
 {

@@ -17,7 +17,6 @@ using MS.Win32;
 #endif
 
 using System.Security;
-using System.Security.Permissions;
 // The functionality in this class is shared across framework and core. The functionality in core
 // is a subset of the functionality in framework, so rather than create a dependency from core to
 // framework we have choses to duplicate this chunk of  code.
@@ -163,8 +162,8 @@ namespace MS.Internal.Utility
             Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
             if (sourceUri != null)
             {
-                SecurityZone sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
-                SecurityZone targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
+                int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
+                int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
 
                 // We don't send any referer when crossing zone
                 if (sourceZone == targetZone)

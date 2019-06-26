@@ -33,7 +33,4 @@
     <NetCoreReference Include="System.Runtime.Extensions" />
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
-  </ItemGroup>
 </Project>

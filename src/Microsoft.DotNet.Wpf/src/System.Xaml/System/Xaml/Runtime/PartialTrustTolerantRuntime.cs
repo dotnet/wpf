@@ -92,10 +92,6 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     MemberAccessPermissionDenied = true;
                 }
-                catch (SecurityException)
-                {
-                    MemberAccessPermissionDenied = true;
-                }
             }
             return _elevatedRuntime.CreateFromValue(serviceContext, ts, value, property);
         }
@@ -161,10 +157,6 @@ namespace MS.Internal.Xaml.Runtime
                         throw;
                     }
                 }
-                catch (SecurityException)
-                {
-                    MemberAccessPermissionDenied = true;
-                }
             }
             return _elevatedRuntime.CreateInstance(xamlType, args);
         }
@@ -194,10 +186,6 @@ namespace MS.Internal.Xaml.Runtime
                         throw;
                     }
                 }
-                catch (SecurityException)
-                {
-                    MemberAccessPermissionDenied = true;
-                }
             }
             return _elevatedRuntime.CreateWithFactoryMethod(xamlType, methodName, args);
         }
@@ -226,10 +214,6 @@ namespace MS.Internal.Xaml.Runtime
                     {
                         throw;
                     }
-                }
-                catch (SecurityException)
-                {
-                    MemberAccessPermissionDenied = true;
                 }
             }
             return _elevatedRuntime.DeferredLoad(serviceContext, deferringLoader, deferredContent);

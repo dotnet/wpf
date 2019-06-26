@@ -9,7 +9,6 @@ namespace MS.Win32
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Collections;
     using System.Diagnostics;
     using System.IO;

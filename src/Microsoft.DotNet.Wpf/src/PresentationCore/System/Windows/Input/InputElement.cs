@@ -6,7 +6,6 @@ using System.Windows.Media;
 using MS.Win32;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Media3D;

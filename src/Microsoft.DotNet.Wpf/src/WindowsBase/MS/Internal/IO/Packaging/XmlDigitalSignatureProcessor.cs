@@ -22,7 +22,6 @@ using System.Security;                      // for SecurityCritical and Security
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Permissions;
 using System.Xml;
 using System.IO;
 using System.Windows;
@@ -109,16 +108,8 @@ namespace MS.Internal.IO.Packaging
             // restrictions imposed by the OPC spec
             ValidateReferences(xmlSig.SignedInfo.References, true /*allowPackageSpecificReference*/);
 
-            (new PermissionSet(PermissionState.Unrestricted)).Assert();
-            try
-            {
-                // verify "standard" XmlSignature portions
-                result = xmlSig.CheckSignature(signer, true);
-            }
-            finally
-            {
-                PermissionSet.RevertAssert();
-            }
+            // verify "standard" XmlSignature portions
+            result = xmlSig.CheckSignature(signer, true);
 
             if (result)
             {
@@ -803,25 +794,17 @@ namespace MS.Internal.IO.Packaging
                 // compute the signature
                 SignedXml xmlSig = _signedXml;
 
-                (new PermissionSet(PermissionState.Unrestricted)).Assert();
                 try
                 {
-                    try
-                    {
-                        xmlSig.ComputeSignature();
-                    }
-                    catch (CryptographicException) when (usingMatchingSignatureMethod)
-                    {
-                        // We've hit a state where System.Security is possibly missing the required updates to process the matched signature.
-                        // Disable our matching and attempt to sign again with the default SignatureMethod
-                        BaseCompatibilityPreferences.MatchPackageSignatureMethodToPackagePartDigestMethod = false;
-                        xmlSig.SignedInfo.SignatureMethod = null;
-                        xmlSig.ComputeSignature();
-                    }
+                    xmlSig.ComputeSignature();
                 }
-                finally
+                catch (CryptographicException) when (usingMatchingSignatureMethod)
                 {
-                    PermissionSet.RevertAssert();
+                    // We've hit a state where System.Security is possibly missing the required updates to process the matched signature.
+                    // Disable our matching and attempt to sign again with the default SignatureMethod
+                    BaseCompatibilityPreferences.MatchPackageSignatureMethodToPackagePartDigestMethod = false;
+                    xmlSig.SignedInfo.SignatureMethod = null;
+                    xmlSig.ComputeSignature();
                 }
 
                 // persist
@@ -972,16 +955,8 @@ namespace MS.Internal.IO.Packaging
 
         private static Stream TransformXml(Transform xForm, Object source)
         {
-            (new PermissionSet(PermissionState.Unrestricted)).Assert();  // Blessed
-            try
-            {
-                // transform
-                xForm.LoadInput(source);
-            }
-            finally
-            {
-                PermissionSet.RevertAssert();
-            }
+            // transform
+            xForm.LoadInput(source);
 
             return (Stream)xForm.GetOutput();
         }

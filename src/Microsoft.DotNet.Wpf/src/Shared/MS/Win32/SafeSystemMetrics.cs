@@ -16,7 +16,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media;
 using Microsoft.Win32;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;

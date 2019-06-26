@@ -17,7 +17,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Windows;
 using System.Windows.Media;
@@ -134,10 +133,6 @@ namespace System.Windows.Media
             int faceIndex;
             Util.SplitFontFaceIndex(typefaceSource, out fontSourceUri, out faceIndex);
 
-            // This permission demand is here so that untrusted callers are unable to check for file existence using GlyphTypeface ctor.
-            // Sensitive font data is protected by demands as the user tries to access it.
-            DemandPermissionsForFontInformation();
-
             if (   styleSimulations != StyleSimulations.None 
                 && styleSimulations != StyleSimulations.ItalicSimulation 
                 && styleSimulations != StyleSimulations.BoldSimulation
@@ -157,14 +152,7 @@ namespace System.Windows.Media
                 // FileFormatException will be thrown!
                 if (fontFaceDWrite == null)
                 {
-                    try
-                    {
-                        throw new System.IO.FileFormatException(typefaceSource);
-                    }
-                    catch(SecurityException)
-                    {
-                        throw new System.IO.FileFormatException();
-                    }                    
+                    throw new System.IO.FileFormatException(typefaceSource);             
                 }
                 _font = fontCollection.GetFontFromFontFace(fontFaceDWrite);
             }
@@ -243,7 +231,6 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public byte[] ComputeSubset(ICollection<ushort> glyphs)
         {
-            DemandPermissionsForFontInformation();
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
 
             if (glyphs == null)
@@ -281,7 +268,6 @@ namespace System.Windows.Media
         public Stream GetFontStream()
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-            DemandPermissionsForFontInformation();
             return FontSource.GetStream();
         }
 
@@ -450,7 +436,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.VersionStrings);
             }
         }
@@ -464,7 +449,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.CopyrightNotice);
             }
         }
@@ -478,7 +462,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Manufacturer);
             }
         }
@@ -494,7 +477,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Trademark);
             }
         }
@@ -508,7 +490,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Designer);
             }
         }
@@ -523,7 +504,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Description);
             }
         }
@@ -539,7 +519,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.FontVendorURL);
             }
         }
@@ -553,7 +532,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.DesignerURL);
             }
         }
@@ -569,7 +547,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.LicenseDescription);
             }
         }
@@ -584,7 +561,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.SampleText);
             }
         }
@@ -636,7 +612,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return _font.Version;
             }
         }
@@ -761,7 +736,6 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return _fontFace.EmbeddingRights;
             }
         }
@@ -1058,14 +1032,6 @@ namespace System.Windows.Media
                 MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics = GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways);
 
                 return (double)glyphMetrics.AdvanceWidth / DesignEmHeight;
-            }
-        }
-
-        internal void DemandPermissionsForFontInformation()
-        {
-            if (_fileIOPermObj.Value != null)
-            {
-                _fileIOPermObj.Value.Demand();
             }
         }
 
@@ -2033,8 +1999,6 @@ namespace System.Windows.Media
         /// The Uri that was passed in to constructor.
         /// </summary>
         private SecurityCriticalDataClass<Uri> _originalUri;
-
-        private SecurityCriticalDataForSet<CodeAccessPermission> _fileIOPermObj;
 
         private const double CFFConversionFactor = 1.0 / 65536.0;
 

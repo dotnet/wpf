@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Printing;
 
 using System.Security;
-using System.Security.Permissions;
 
 namespace Microsoft.Internal.AlphaFlattener
 {

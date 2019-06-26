@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.Interop;
 using System.Security;
-using System.Security.Permissions;
 
 // The SecurityHelper class differs between assemblies and could not actually be
 //  shared, so it is duplicated across namespaces to prevent name collision.
@@ -82,46 +81,38 @@ namespace MS.Win32
 
             lock (_hwndList)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert:
-                try
+                foreach (DictionaryEntry entry in _hwndList)
                 {
-                    foreach (DictionaryEntry entry in _hwndList)
+                    IntPtr hwnd = (IntPtr)entry.Value;
+
+                    int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_STYLE);
+                    if((windowStyle & NativeMethods.WS_CHILD) != 0)
                     {
-                        IntPtr hwnd = (IntPtr)entry.Value;
+                        // Tell all the HwndSubclass WndProcs for WS_CHILD windows
+                        // to detach themselves. This is particularly important when
+                        // the parent hwnd belongs to a separate AppDomain in a
+                        // cross AppDomain hosting scenario. In this scenario it is
+                        // possible that the host has subclassed the WS_CHILD window
+                        // and hence it is important to notify the host before we set the
+                        // WndProc to DefWndProc. Also note that we do not want to make a
+                        // blocking SendMessage call to all the subclassed Hwnds in the
+                        // AppDomain because this can lead to slow shutdown speed.
+                        // Eg. Consider a MessageOnlyHwnd created and subclassed on a
+                        // worker thread which is no longer responsive. The SendMessage
+                        // call in this case will block. To avoid this we limit the conversation
+                        // only to WS_CHILD windows. We understand that this solution is
+                        // not foolproof but it is the best outside of re-designing the cleanup
+                        // of Hwnd subclasses.
 
-                        int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_STYLE);
-                        if((windowStyle & NativeMethods.WS_CHILD) != 0)
-                        {
-                            // Tell all the HwndSubclass WndProcs for WS_CHILD windows
-                            // to detach themselves. This is particularly important when
-                            // the parent hwnd belongs to a separate AppDomain in a
-                            // cross AppDomain hosting scenario. In this scenario it is
-                            // possible that the host has subclassed the WS_CHILD window
-                            // and hence it is important to notify the host before we set the
-                            // WndProc to DefWndProc. Also note that we do not want to make a
-                            // blocking SendMessage call to all the subclassed Hwnds in the
-                            // AppDomain because this can lead to slow shutdown speed.
-                            // Eg. Consider a MessageOnlyHwnd created and subclassed on a
-                            // worker thread which is no longer responsive. The SendMessage
-                            // call in this case will block. To avoid this we limit the conversation
-                            // only to WS_CHILD windows. We understand that this solution is
-                            // not foolproof but it is the best outside of re-designing the cleanup
-                            // of Hwnd subclasses.
-
-                            UnsafeNativeMethods.SendMessage(hwnd, HwndSubclass.DetachMessage,
-                                                                IntPtr.Zero /* wildcard */,
-                                                                (IntPtr) 2 /* force and forward */);
-                        }
-
-                        // the last WndProc on the chain might be managed as well
-                        // (see HwndSubclass.SubclassWndProc for explanation).
-                        // Just in case, restore the DefaultWindowProc.
-                        HookUpDefWindowProc(hwnd);
+                        UnsafeNativeMethods.SendMessage(hwnd, HwndSubclass.DetachMessage,
+                                                            IntPtr.Zero /* wildcard */,
+                                                            (IntPtr) 2 /* force and forward */);
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
+
+                    // the last WndProc on the chain might be managed as well
+                    // (see HwndSubclass.SubclassWndProc for explanation).
+                    // Just in case, restore the DefaultWindowProc.
+                    HookUpDefWindowProc(hwnd);
                 }
 }
         }

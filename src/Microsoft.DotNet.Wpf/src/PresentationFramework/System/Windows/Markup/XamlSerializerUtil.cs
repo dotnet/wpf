@@ -16,7 +16,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Globalization;
 using System.Windows.Data;

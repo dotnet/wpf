@@ -31,7 +31,6 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Resources;
 using System.Threading;
 
@@ -2292,10 +2291,6 @@ namespace System.Windows
         {
             string soundFile = null;
             string regPath = string.Format(CultureInfo.InvariantCulture, SYSTEM_SOUNDS_REGISTRY_LOCATION, soundName);
-            PermissionSet permissions = new PermissionSet(null);
-            permissions.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read, SYSTEM_SOUNDS_REGISTRY_BASE));
-            permissions.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-            permissions.Assert();
             try
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
@@ -2310,10 +2305,6 @@ namespace System.Windows
             // (Application.PlaySourd crash when the registry is broken)
             catch (System.IndexOutOfRangeException)
             {
-            }
-            finally
-            {
-               CodeAccessPermission.RevertAssert();
             }
 
             return soundFile;

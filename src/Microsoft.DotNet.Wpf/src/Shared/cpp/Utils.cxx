@@ -7,7 +7,6 @@
 
 #if _MANAGED
 using namespace System::Security;
-using namespace System::Security::Permissions;
 #endif
 
 // These constants are cloned in

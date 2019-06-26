@@ -15,7 +15,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.IO
 {
@@ -100,8 +99,6 @@ namespace System.IO
             const int MaxRetries = 5;
             int retries = MaxRetries;
             filePath = null;
-            bool needAsserts = System.Security.SecurityManager.CurrentThreadRequiresSecurityContextCapture();
-
             string folderPath = Path.GetTempPath();
 
             if (!String.IsNullOrEmpty(subFolder))
@@ -110,24 +107,10 @@ namespace System.IO
 
                 if (!Directory.Exists(subFolderPath))
                 {
-                    if (!needAsserts)
-                    {
-                        Directory.CreateDirectory(subFolderPath);
-                    }
-                    else
-                    {
-                        new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write, folderPath).Assert();
-                        Directory.CreateDirectory(subFolderPath);
-                        FileIOPermission.RevertAssert();
-                    }
+                    Directory.CreateDirectory(subFolderPath);
                 }
 
                 folderPath = subFolderPath;
-            }
-
-            if (needAsserts)
-            {
-                new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write, folderPath).Assert();
             }
 
             FileStream stream = null;
@@ -175,11 +158,6 @@ namespace System.IO
         {
             if (!String.IsNullOrEmpty(filePath))
             {
-                bool needAsserts = System.Security.SecurityManager.CurrentThreadRequiresSecurityContextCapture();
-                if (needAsserts)
-                {
-                    new FileIOPermission(FileIOPermissionAccess.Write, filePath).Assert();
-                }
 
                 try
                 {

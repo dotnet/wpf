@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.ComponentModel;
 using MS.Win32;
 

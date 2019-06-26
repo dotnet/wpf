@@ -448,8 +448,7 @@ namespace System.Windows.Input
                     {
                         RoutedUICommand newCommand = CommandLibraryHelper.CreateUICommand(
                             GetPropertyName(idCommand),
-                            typeof(ApplicationCommands), (byte)idCommand,
-                            new PermissionSet(PermissionState.Unrestricted));
+                            typeof(ApplicationCommands), (byte)idCommand);
 
                         _internalCommands[(int)idCommand] = newCommand;
                     }

@@ -26,19 +26,9 @@ namespace MS.Internal
     [FriendAccessAllowed]
     internal static class CommandLibraryHelper
     {
-        internal static RoutedUICommand CreateUICommand(string name, Type ownerType, byte commandId, PermissionSet ps)
+        internal static RoutedUICommand CreateUICommand(string name, Type ownerType, byte commandId)
         {
-            RoutedUICommand routedUICommand;
-            
-            if (ps != null)
-            {
-                routedUICommand = new SecureUICommand(ps, name, ownerType, commandId);
-            }
-            else
-            {
-                routedUICommand = new RoutedUICommand(name, ownerType, commandId);
-            }
-
+            RoutedUICommand routedUICommand = new RoutedUICommand(name, ownerType, commandId);
             routedUICommand.AreInputGesturesDelayLoaded = true;
             return routedUICommand;
         }                        

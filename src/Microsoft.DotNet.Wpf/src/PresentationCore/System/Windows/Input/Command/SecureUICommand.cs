@@ -29,11 +29,10 @@ namespace System.Windows.Input
         /// <summary>
         /// Creates a new secure command, requiring the specified permissions. Used to delay initialization of Text and InputGestureCollection to time of first use.
         /// </summary>
-        /// <param name="userInitiated">PermissionSet to associate with this command</param>
         /// <param name="name">Name of the Command Property/Field for Serialization</param>
         /// <param name="ownerType">Type that is registering the property</param>
         /// <param name="commandId">Idenfier assigned by the owning type.</param>
-        internal SecureUICommand(PermissionSet userInitiated, string name, Type ownerType, byte commandId)
+        internal SecureUICommand(string name, Type ownerType, byte commandId)
             : base(name, ownerType, commandId)
         {
         }

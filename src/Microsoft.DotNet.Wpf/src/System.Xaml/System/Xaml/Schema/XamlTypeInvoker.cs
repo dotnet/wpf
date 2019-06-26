@@ -326,11 +326,7 @@ namespace System.Xaml.Schema
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
-#if PARTIALTRUST
-                        !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted() ? ThreeValuedBool.True : ThreeValuedBool.False;
-#else
                         ThreeValuedBool.False;
-#endif
                 }
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {

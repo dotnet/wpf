@@ -50,25 +50,20 @@ namespace MS.Internal
                     // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
                     if (a.GlobalAssemblyCache)
                     {
-                        object[] aptca = a.GetCustomAttributes(typeof(AllowPartiallyTrustedCallersAttribute), false);
-                        // if the dll has APTCA
-                        if (aptca.Length > 0 && aptca[0] is AllowPartiallyTrustedCallersAttribute)
+                        string assemblyName = AssemblyNameWithFileVersion(a);
+                        // If we are on the disallowed list kill the application domain
+                        if (AssemblyOnDisallowedList(assemblyName))
                         {
-                            string assemblyName = AssemblyNameWithFileVersion(a);
-                            // If we are on the disallowed list kill the application domain
-                            if (AssemblyOnDisallowedList(assemblyName))
+                            // Kill the application domain
+                            UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
+                            // I want to ensure that the process really dies
+                            try
                             {
-                                // Kill the application domain
-                                UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
-                                // I want to ensure that the process really dies
-                                try
-                                {
-                                    System.Environment.Exit(-1);
-                                }
-                                finally
-                                {
-                                    Debug.Fail("Environment.Exit() failed.");
-                                }
+                                System.Environment.Exit(-1);
+                            }
+                            finally
+                            {
+                                Debug.Fail("Environment.Exit() failed.");
                             }
                         }
                     }

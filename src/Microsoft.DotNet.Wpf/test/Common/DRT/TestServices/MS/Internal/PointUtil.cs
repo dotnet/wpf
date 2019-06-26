@@ -6,7 +6,6 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;

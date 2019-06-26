@@ -13,7 +13,6 @@ namespace MS.Win32
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
     using System;
-    using System.Security.Permissions;
     using System.Collections;
     using System.IO;
     using System.Text;

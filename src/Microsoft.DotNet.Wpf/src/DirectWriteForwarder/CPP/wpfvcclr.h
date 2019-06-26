@@ -42,11 +42,6 @@ typedef const System::String* __const_String_handle;
 ///     startup code path that is sensitive to perf.  So we make a copy here
 ///     and annotate it.
 /// </remarks>
-/// <SecurityNote>
-///     Critical - get an interior gc pointer to the first character contained
-///     in a System::String object.
-/// </SecurityNote>
-[System::Security::SecurityCritical]
 inline __const_Char_ptr CriticalPtrToStringChars(__const_String_handle s)
 {
     _Byte_ptr bp = const_cast<_Byte_ptr>(reinterpret_cast<__const_Byte_ptr>(s));

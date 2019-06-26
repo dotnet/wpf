@@ -18,20 +18,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
 using System.Security.Permissions;
-using MS.Internal.Permissions;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:  This class server as a wrapper on top of private class UnsafeNativeMethods.
-    ///     UnsafeNativeMethods has suppress unamanged code attribute set. 
-    ///     It is up to this class to ensure that the only calls that can go through must beeither done in Full Trust 
-    ///     or with RightsManagementPermission. This class exposes DRMFoo functions that perform demand on the 
-    ///     RightsManagementPermission and then call through to the matching member of the Private Static class 
-    ///     UnsafeNativeMethods
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static partial class SafeNativeMethods
     {
         internal static int DRMCreateClientSession(
@@ -41,7 +31,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string GroupID,
                                  out SafeRightsManagementSessionHandle phSession)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateClientSession(
                                 pfnCallback,
                                 uCallbackVersion,
@@ -67,7 +56,6 @@ namespace MS.Internal.Security.RightsManagement
         internal static int DRMCloseSession(
                                 uint sessionHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMCloseSession(
                                 sessionHandle);
         }
@@ -79,7 +67,6 @@ namespace MS.Internal.Security.RightsManagement
         internal static int DRMCloseHandle(
                                  uint handle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMCloseHandle(
                                 handle);
         }
@@ -91,7 +78,6 @@ namespace MS.Internal.Security.RightsManagement
         internal static int DRMCloseQueryHandle(
                                  uint queryHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMCloseQueryHandle(
                                 queryHandle);
         }
@@ -103,7 +89,6 @@ namespace MS.Internal.Security.RightsManagement
         internal static int DRMCloseEnvironmentHandle(
                                  uint envHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMCloseEnvironmentHandle(
                                 envHandle);
         }
@@ -117,7 +102,6 @@ namespace MS.Internal.Security.RightsManagement
                                  out SafeRightsManagementEnvironmentHandle environmentHandle,
                                  out SafeRightsManagementHandle defaultLibrary)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMInitEnvironment(
                                 eSecurityProviderType,
                                 eSpecification,
@@ -149,7 +133,6 @@ namespace MS.Internal.Security.RightsManagement
                                  uint uFlags,
                                  ActivationServerInfo activationServerInfo)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMIsActivated(
                                 hSession,
                                 uFlags,
@@ -164,7 +147,6 @@ namespace MS.Internal.Security.RightsManagement
                                 IntPtr context,
                                 IntPtr parentWindowHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMActivate(
                                 hSession,
                                 uFlags,
@@ -182,7 +164,6 @@ namespace MS.Internal.Security.RightsManagement
                                 string IssuanceLicense,
                                 out SafeRightsManagementSessionHandle phLicenseStorageSession)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateLicenseStorageSession(
                                 hEnv,
                                 hDefLib,
@@ -211,7 +192,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string url,
                                 IntPtr context)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMAcquireLicense(
                                 hSession,
                                 uFlags,
@@ -230,7 +210,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint puCertDataLen,
                                  StringBuilder wszCertificateData)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMEnumerateLicense(
                                 hSession,
                                 uFlags,
@@ -248,7 +227,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint serviceUrlLength,
                                  StringBuilder serviceUrl)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetServiceLocation(
                                 clientSessionHandle,
                                 serviceType,
@@ -264,7 +242,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint certificateLength,
                                  StringBuilder certificate)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMDeconstructCertificateChain(
                                 chain,
                                 index,
@@ -276,7 +253,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string certificate,
                                  out SafeRightsManagementQueryHandle queryRootHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMParseUnboundLicense(
                                 certificate,
                                 out queryRootHandle);
@@ -297,7 +273,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string subObjectType,
                                  out uint objectCount)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetUnboundLicenseObjectCount(
                                 queryRootHandle,
                                 subObjectType,
@@ -310,7 +285,6 @@ namespace MS.Internal.Security.RightsManagement
                                  uint index,
                                  out SafeRightsManagementHandle subQueryHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMGetBoundLicenseObject(
                                 queryRootHandle,
                                 subObjectType,
@@ -334,7 +308,6 @@ namespace MS.Internal.Security.RightsManagement
                                  uint index,
                                  out SafeRightsManagementQueryHandle subQueryHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMGetUnboundLicenseObject(
                                 queryRootHandle,
                                 subObjectType,
@@ -360,7 +333,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint bufferSize,
                                  byte[] buffer)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetUnboundLicenseAttribute(
                                 queryRootHandle,
                                 attributeType,
@@ -378,7 +350,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint bufferSize,
                                  byte[] buffer)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetBoundLicenseAttribute(
                                 queryRootHandle,
                                 attributeType,
@@ -398,7 +369,6 @@ namespace MS.Internal.Security.RightsManagement
                                  SafeRightsManagementHandle boundLicenseHandle,
                                  out SafeRightsManagementPubHandle issuanceLicenseHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateIssuanceLicense(
                                 timeFrom,
                                 timeUntil,
@@ -426,7 +396,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string userIdType,
                                  out SafeRightsManagementPubHandle userHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateUser(
                                 userName,
                                 userId,
@@ -449,7 +418,6 @@ namespace MS.Internal.Security.RightsManagement
                                  uint index,
                                  out SafeRightsManagementPubHandle userHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMGetUsers(
                                 issuanceLicenseHandle,
                                 index,
@@ -472,7 +440,6 @@ namespace MS.Internal.Security.RightsManagement
                                  uint index,
                                  out SafeRightsManagementPubHandle rightHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMGetUserRights(
                                 issuanceLicenseHandle,
                                 userHandle,
@@ -499,7 +466,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint userIdTypeLength,
                                  StringBuilder userIdType)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetUserInfo(
                                 userHandle,
                                 ref userNameLength,
@@ -517,7 +483,6 @@ namespace MS.Internal.Security.RightsManagement
                                  SystemTime timeFrom,
                                  SystemTime timeUntil)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetRightInfo(
                                 rightHandle,
                                 ref rightNameLength,
@@ -535,7 +500,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string[] extendedInfoValues,
                                  out SafeRightsManagementPubHandle rightHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateRight(
                                 rightName,
                                 timeFrom,
@@ -560,7 +524,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint issuanceLicenseTemplateLength,
                                  StringBuilder issuanceLicenseTemplate)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetIssuanceLicenseTemplate(
                                 issuanceLicenseHandle,
                                 ref issuanceLicenseTemplateLength,
@@ -574,7 +537,6 @@ namespace MS.Internal.Security.RightsManagement
         internal static int DRMClosePubHandle(
                                  uint pubHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMClosePubHandle(
                                 pubHandle);
         }
@@ -584,7 +546,6 @@ namespace MS.Internal.Security.RightsManagement
                                  SafeRightsManagementPubHandle rightHandle,
                                  SafeRightsManagementPubHandle userHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMAddRightWithUser(
                                 issuanceLicenseHandle,
                                 rightHandle,
@@ -600,7 +561,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string contentType,
                                  string contentName)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMSetMetaData(
                                 issuanceLicenseHandle,
                                 contentId,
@@ -623,7 +583,6 @@ namespace MS.Internal.Security.RightsManagement
                                  out SafeRightsManagementPubHandle ownerHandle,
                                  out bool officialFlag)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMGetIssuanceLicenseInfo(
                                 issuanceLicenseHandle,
                                 timeFrom,
@@ -653,7 +612,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint pathLength,
                                  StringBuilder path)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetSecurityProvider(
                                 flags,
                                 ref typeLength,
@@ -666,7 +624,6 @@ namespace MS.Internal.Security.RightsManagement
                                  SafeRightsManagementSessionHandle hSession,
                                  string wszLicenseId)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMDeleteLicense(
                                 hSession,
                                 wszLicenseId);
@@ -679,7 +636,6 @@ namespace MS.Internal.Security.RightsManagement
                                     string name,
                                     string description)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMSetNameAndDescription(
                                  issuanceLicenseHandle,
                                  flagDelete,
@@ -698,7 +654,6 @@ namespace MS.Internal.Security.RightsManagement
                                     ref uint descriptionLength,
                                     StringBuilder description)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetNameAndDescription(
                                     issuanceLicenseHandle,
                                     uIndex,
@@ -721,7 +676,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string Url,
                                  uint context)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetSignedIssuanceLicense(
                                 environmentHandle,
                                 issuanceLicenseHandle,
@@ -740,7 +694,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint ownerLicenseLength,
                                  StringBuilder ownerLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetOwnerLicense(
                                 issuanceLicenseHandle,
                                 ref ownerLicenseLength,
@@ -754,7 +707,6 @@ namespace MS.Internal.Security.RightsManagement
                                  out SafeRightsManagementHandle boundLicenseHandle,
                                  out uint errorLogHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateBoundLicense(
                                 environmentHandle,
                                 boundLicenseParams,
@@ -779,7 +731,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string auxPlugin,
                                  out SafeRightsManagementHandle decryptorHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateEnablingBitsDecryptor(
                                 boundLicenseHandle,
                                 right,
@@ -804,7 +755,6 @@ namespace MS.Internal.Security.RightsManagement
                                  string auxPlugin,
                                  out SafeRightsManagementHandle encryptorHandle)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             int res = UnsafeNativeMethods.DRMCreateEnablingBitsEncryptor(
                                 boundLicenseHandle,
                                 right,
@@ -830,7 +780,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint outputByteCount,
                                  byte[] outputBuffer)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMDecrypt(
                                 cryptoProvHandle,
                                 position,
@@ -848,7 +797,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint outputByteCount,
                                  byte[] outputBuffer)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMEncrypt(
                                 cryptoProvHandle,
                                 position,
@@ -865,7 +813,6 @@ namespace MS.Internal.Security.RightsManagement
                                  ref uint outputByteCount,
                                  byte[] outputBuffer)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetInfo(
                                 handle,
                                 attributeType,
@@ -882,7 +829,6 @@ namespace MS.Internal.Security.RightsManagement
                                 ref uint valueLength,
                                 StringBuilder value)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetApplicationSpecificData(
                                 issuanceLicenseHandle,
                                 index,
@@ -898,7 +844,6 @@ namespace MS.Internal.Security.RightsManagement
                                 string name,
                                 string value)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMSetApplicationSpecificData(
                                 issuanceLicenseHandle,
                                 flagDelete,
@@ -910,7 +855,6 @@ namespace MS.Internal.Security.RightsManagement
                                 SafeRightsManagementPubHandle issuanceLicenseHandle,
                                 ref uint days)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetIntervalTime(
                                 issuanceLicenseHandle,
                                 ref days);
@@ -920,7 +864,6 @@ namespace MS.Internal.Security.RightsManagement
                                 SafeRightsManagementPubHandle issuanceLicenseHandle,
                                 uint days)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMSetIntervalTime(
                                 issuanceLicenseHandle,
                                 days);
@@ -940,7 +883,6 @@ namespace MS.Internal.Security.RightsManagement
                                 ref uint publicKeyLength,
                                 StringBuilder publicKey)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMGetRevocationPoint(
                                 issuanceLicenseHandle,
                                 ref idLength,
@@ -967,7 +909,6 @@ namespace MS.Internal.Security.RightsManagement
                                 string name,
                                 string publicKey)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             return UnsafeNativeMethods.DRMSetRevocationPoint(
                                 issuanceLicenseHandle,
                                 flagDelete,

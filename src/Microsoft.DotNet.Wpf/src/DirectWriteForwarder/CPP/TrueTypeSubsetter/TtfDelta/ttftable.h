@@ -40,32 +40,25 @@ struct namerecord /* MUST be same as NAME_RECORD from ttff.h for the first 6 ele
 
 /* exported functions --------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 void MarkTableForDeletion( 
     TTFACC_FILEBUFFERINFO * pInputBufferInfo,
     __in_bcount(4) const char *  szDirTag );     /* pointer to null terminated string with tag name */
 
-[System::Security::SecurityCritical]
 uint32 FindCmapSubtable( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             uint16 usDesiredPlatform,
             uint16 usDesiredEncodingID,
             uint16 *pusFoundEncoding);
-[System::Security::SecurityCritical]
 int16 ReadCmapLength(
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             CMAP_SUBHEADER_GEN * pCmapSubHeader,
             uint32    ulStartOffset,
             uint16 * pusBytesRead);
-[System::Security::SecurityCritical]
 void FreeCmapFormat4Ids( GLYPH_ID * GlyphId );
-[System::Security::SecurityCritical]
 void FreeCmapFormat4Segs( FORMAT4_SEGMENTS * Format4Segments);
-[System::Security::SecurityCritical]
 void FreeCmapFormat4( 
             FORMAT4_SEGMENTS * Format4Segments,
             GLYPH_ID * GlyphId );
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4Ids( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint16 usSegCount,
             FORMAT4_SEGMENTS * Format4Segments,
@@ -73,13 +66,11 @@ int16 ReadAllocCmapFormat4Ids(
             uint16 * pusnIds,
             uint32 ulOffset,
             uint32 *pulBytesRead );
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4Segs( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint16 usSegCount,
             FORMAT4_SEGMENTS ** Format4Segments, 
             uint32 ulOffset,
             uint32 *pulBytesRead);
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat4( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             CONST uint16 usPlatform,
@@ -90,9 +81,7 @@ int16 ReadAllocCmapFormat4(
             GLYPH_ID ** GlyphId,
             uint16 * pusnIds            
             );
-[System::Security::SecurityCritical]
 void FreeCmapFormat6( uint16 *  glyphIndexArray);
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat6( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
             CONST uint16 usPlatform,
@@ -100,34 +89,28 @@ int16 ReadAllocCmapFormat6(
             uint16 *pusFoundEncoding,
             CMAP_FORMAT6 * pCmap,
             uint16 **  glyphIndexArray);
-[System::Security::SecurityCritical]
 int16 ReadCmapFormat0( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             CONST uint16 usPlatform,
             CONST uint16 usEncoding,
             uint16 *pusFoundEncoding,
             CMAP_FORMAT0 * CmapFormat0);
-[System::Security::SecurityCritical]
 int16 ReadAllocCmapFormat12(
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             uint32 ulSubOffset,
             CMAP_FORMAT12 * pCmapFormat12,
             FORMAT12_GROUPS **  ppFormat12Groups);
-[System::Security::SecurityCritical]
 void FreeCmapFormat12Groups(FORMAT12_GROUPS * pFormat12Groups);
-[System::Security::SecurityCritical]
 uint16 GetGlyphIdx( 
             uint16 CharCode,
             FORMAT4_SEGMENTS * Format4Segments,
             uint16 usnSegments,
             GLYPH_ID * GlyphId,
             uint16 usnGlyphs);
-[System::Security::SecurityCritical]
 uint32 GetGlyphIdx12(
             uint32 ulCharCode,
             FORMAT12_GROUPS * pFormat12Groups,
             uint32 ulnGroups );
-[System::Security::SecurityCritical]
 int16 GetGlyphHeader( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             uint16 GlyfIdx,
@@ -137,12 +120,10 @@ int16 GetGlyphHeader(
             GLYF_HEADER * GlyfHeader,
             uint32 * pulOffset,
             uint16 * pusLength );
-[System::Security::SecurityCritical]
 uint32 GetLoca( TTFACC_FILEBUFFERINFO               *pInputBufferInfo, 
                      __out_ecount(ulAllocedCount) uint32 *pulLoca, 
                      __range(1, USHORT_MAX + 1)   uint32  ulAllocedCount
                   );
-[System::Security::SecurityCritical]
 int16 GetComponentGlyphList( 
             TTFACC_FILEBUFFERINFO * pInputBufferInfo,
             uint16 usCompositeGlyphIdx,
@@ -154,18 +135,15 @@ int16 GetComponentGlyphList(
             uint16 usIdxToLocFmt,
             uint32 ulLocaOffset,
             uint32 ulGlyfOffset);
-[System::Security::SecurityCritical]
 int16 ReadAllocNameRecords(
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
             PNAMERECORD *ppNameRecordArray, 
             uint16 *pNameRecordCount, 
             CFP_ALLOCPROC lfpnAllocate, 
             CFP_FREEPROC lfpnFree);
-[System::Security::SecurityCritical]
 uint32 CalcMaxNameTableLength(
             PNAMERECORD pNameRecordArray, 
             uint16 NameRecordCount);
-[System::Security::SecurityCritical]
 int16 WriteNameRecords(
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
             PNAMERECORD pNameRecordArray, 
@@ -173,37 +151,30 @@ int16 WriteNameRecords(
             BOOL bDeleteStrings, 
             BOOL bOptimize, 
             uint32 *pulBytesWritten);
-[System::Security::SecurityCritical]
 void FreeNameRecords(
             PNAMERECORD pNameRecordArray, 
             uint16 NameRecordCount, 
             CFP_FREEPROC lfpnFree);
 
-[System::Security::SecurityCritical]
 int16 InsertTable(
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
             __in_bcount(4) const char * szTag, 
             uint8 * puchTableBuffer, 
             uint32 ulTableBufferLength);
-[System::Security::SecurityCritical]
 int16 WriteNameTable(
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
             PNAMERECORD pNameRecordArray,     /* internal representation of NameRecord - from ttftable.h */
             uint16 NameRecordCount,
             BOOL bOptimize); /* lcp 4/8/97, if set to TRUE, optimize Name string storage for size */
-[System::Security::SecurityCritical]
 int16 WriteSmartOS2Table(
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
             MAINOS2 * pOS2);
-[System::Security::SecurityCritical]
 void SortByTag( 
             DIRECTORY * aDirectory, 
             uint16 usnDirs);
-[System::Security::SecurityCritical]
 void SortByOffset( 
             DIRECTORY * aDirectory, 
             uint16 usnDirs);
-[System::Security::SecurityCritical]
 int16 CompressTables( 
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
             uint32 * pulBytesWritten);
@@ -220,9 +191,7 @@ typedef struct Char_Glyph_Map_List_Ex {
 } *PCHAR_GLYPH_MAP_LIST_EX;
 
 
-[System::Security::SecurityCritical]
 void FreeFormat4CharCodes(PCHAR_GLYPH_MAP_LIST pusCharCodeList);
-[System::Security::SecurityCritical]
 int16 ReadAllocFormat4CharGlyphMapList(
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
             CONST uint16 usPlatform,
@@ -231,9 +200,7 @@ int16 ReadAllocFormat4CharGlyphMapList(
             uint16 usGlyphCount,  /* count of puchKeepGlyphList */
             PCHAR_GLYPH_MAP_LIST *ppCharGlyphMapList,
             uint16 *pusnCharGlyphMapListCount);
-[System::Security::SecurityCritical]
 void FreeFormat12CharCodes(PCHAR_GLYPH_MAP_LIST_EX pulCharCodeList);
-[System::Security::SecurityCritical]
 int16 ReadAllocFormat12CharGlyphMapList(
             TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
             uint32 ulOffset,
@@ -242,7 +209,6 @@ int16 ReadAllocFormat12CharGlyphMapList(
             PCHAR_GLYPH_MAP_LIST_EX *ppCharGlyphMapList,
             uint32 *pulnCharGlyphMapListCount);
 
-[System::Security::SecurityCritical]
 void ComputeFormat4CmapData( 
             CMAP_FORMAT4 * pCmapFormat4, /* to be set by this routine */
             FORMAT4_SEGMENTS * NewFormat4Segments, /* to be set by this routine */
@@ -252,7 +218,6 @@ void ComputeFormat4CmapData(
             PCHAR_GLYPH_MAP_LIST pCharGlyphMapList, /* input - map of CharCode to GlyphIndex */
             uint16 usnCharGlyphMapListCount);     /* input */
 
-[System::Security::SecurityCritical]
 int16 WriteOutFormat4CmapData( 
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo,          
             CMAP_FORMAT4 *pCmapFormat4,    /* created by ComputeNewFormat4Data */
@@ -263,14 +228,12 @@ int16 WriteOutFormat4CmapData(
             uint32 ulNewOffset,  /* where to write the table */
             uint32 *pulBytesWritten);  /* number of bytes written to table */
 
-[System::Security::SecurityCritical]
 void ComputeFormat12CmapData(
             CMAP_FORMAT12 * pCmapFormat12, /* to be set by this routine */
             FORMAT12_GROUPS * NewFormat12Groups, /* to be set by this routine */
             uint32 * pulnGroups,            /* count of NewFormat12Groups - returned */
             PCHAR_GLYPH_MAP_LIST_EX pCharGlyphMapList, /* input - map of CharCode to GlyphIndex */
             uint32 ulnCharGlyphMapListCount);     /* input */
-[System::Security::SecurityCritical]
 int16 WriteOutFormat12CmapData( 
             TTFACC_FILEBUFFERINFO * pOutputBufferInfo,          
             CMAP_FORMAT12 *pCmapFormat12,        /* created by ComputeNewFormat12Data */

@@ -821,15 +821,8 @@ namespace System.Windows.Input
         /// <summary>
         ///     [TBS]
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls SecurityCritical code StylusLogic.CurrentStylusLogic
-        ///     PublicOK: Used to get the currently active StylusDevice which is safe to expose.
-        ///               this is safe as: 
-        ///                 Takes no input and returns no security critical data.
-        /// </SecurityNote>
         public static StylusDevice CurrentStylusDevice
         {
-            [SecurityCritical]
             get
             {
                 return StylusLogic.CurrentStylusLogic?.CurrentStylusDevice?.StylusDevice;

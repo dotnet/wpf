@@ -43,4 +43,10 @@
     <NetCoreReference Include="System.Runtime.InteropServices" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\ref\System.Windows.Input.Manipulations-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  
 </Project>

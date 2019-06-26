@@ -40,7 +40,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     };
 
     [ClassInterface(ClassInterfaceType::None), ComVisible(true)]
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class TextItemizer
     {
         private:
@@ -67,7 +66,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             TextItemizer(DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     pScriptAnalysisListHead,
                          DWriteTextAnalysisNode<IDWriteNumberSubstitution*>* pNumberSubstitutionListHead);
 
-            [SecurityCritical]
             IList<Span^>^ Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength);
 
             void SetIsDigit(

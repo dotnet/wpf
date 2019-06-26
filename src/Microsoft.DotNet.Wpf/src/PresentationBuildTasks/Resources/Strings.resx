@@ -132,30 +132,6 @@
   <data name="FileResolved" xml:space="preserve">
     <value>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</value>
   </data>
-  <data name="MarkupCompilePass1Task" xml:space="preserve">
-    <value>MarkupCompilePass1</value>
-  </data>
-  <data name="FileClassifierTask" xml:space="preserve">
-    <value>FileClassifier</value>
-  </data>
-  <data name="MarkupCompilePass2Task" xml:space="preserve">
-    <value>MarkupCompilePass2</value>
-  </data>
-  <data name="UidManagerTask" xml:space="preserve">
-    <value>UidManager</value>
-  </data>
-  <data name="ResourcesGeneratorTask" xml:space="preserve">
-    <value>ResourcesGenerator</value>
-  </data>
-  <data name="MergeLocalizationDirectivesTask" xml:space="preserve">
-    <value>MergeLocalizationDirectives</value>
-  </data>
-  <data name="UpdateManifestForBrowserApplicationTask" xml:space="preserve">
-    <value>UpdateManifestForBrowserApplication</value>
-  </data>
-  <data name="GetWinFXPathTask" xml:space="preserve">
-    <value>GetWinFXPath</value>
-  </data>
   <data name="CompileSucceed_Pass1" xml:space="preserve">
     <value>MarkupCompilePass1 successfully generated BAML or source code files.</value>
   </data>

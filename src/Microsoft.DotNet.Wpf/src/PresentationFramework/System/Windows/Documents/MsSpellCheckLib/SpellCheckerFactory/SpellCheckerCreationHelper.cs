@@ -56,10 +56,6 @@ namespace System.Windows.Documents
                 /// </summary>
                 public static RCW.ISpellCheckerFactory ComFactory
                 {
-                    ///<SecurityNote>
-                    /// Critical: Returns a COM handle
-                    ///</SecurityNote>
-                    [SecurityCritical]
                     get
                     {
                         return SpellCheckerFactory.Singleton.ComFactory;
@@ -96,7 +92,6 @@ namespace System.Windows.Documents
                 /// Creates an ISpellChecker instance for a given language
                 /// </summary>
                 /// <returns></returns>
-                [SecurityCritical]
                 public RCW.ISpellChecker CreateSpellChecker()
                 {
                     return ComFactory?.CreateSpellChecker(_language);
@@ -109,7 +104,6 @@ namespace System.Windows.Documents
                 /// </summary>
                 /// <param name="func"></param>
                 /// <returns></returns>
-                [SecurityCritical]
                 public bool CreateSpellCheckerRetryPreamble(out Func<RCW.ISpellChecker> func)
                 {
                     bool success = false;

@@ -20,7 +20,6 @@ namespace MS.Internal
     ///     It monitors memory usage and will periodically scavenge the
     ///     hash table to clean out dead references.
     /// </devdoc>
-    [HostProtection(SharedState = true)]
     internal sealed class WeakHashtable : Hashtable, IWeakHashtable
     {
         private static IEqualityComparer _comparer = new WeakKeyComparer();

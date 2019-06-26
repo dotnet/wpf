@@ -96,20 +96,6 @@ namespace MS.Internal.IO.Packaging
 
     #region Internal Constructors
 
-        /// <summary>
-        /// The class constructor initializes trace and event logging.
-        /// </summary>
-        static XamlFilter()
-        {
-#if TRACE
-#if NETFX
-            EventLog xamlFilterEventLog = new EventLog();
-            xamlFilterEventLog.Log = "Application";
-            xamlFilterEventLog.Source = "XAML filter";
-            Trace.Listeners.Add(new EventLogTraceListener(xamlFilterEventLog));
-#endif
-#endif
-        }
 
         /// <summary>
         /// Constructor. Does initialization.

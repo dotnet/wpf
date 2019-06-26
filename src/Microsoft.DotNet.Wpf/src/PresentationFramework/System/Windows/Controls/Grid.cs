@@ -4250,10 +4250,8 @@ namespace System.Windows.Controls
         private static double _performanceFrequency;
         private static readonly bool _performanceFrequencyInitialized = InitializePerformanceFrequency();
 
-        //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
-        //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
         private static double CostInMilliseconds(long count)

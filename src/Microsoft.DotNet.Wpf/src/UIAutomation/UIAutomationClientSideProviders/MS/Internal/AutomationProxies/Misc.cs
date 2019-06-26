@@ -986,7 +986,6 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
         internal static int MsgWaitForMultipleObjects(SafeWaitHandle handle, bool waitAll, int milliseconds, int wakeMask)
         {
             int terminationEvent, lastWin32Error;

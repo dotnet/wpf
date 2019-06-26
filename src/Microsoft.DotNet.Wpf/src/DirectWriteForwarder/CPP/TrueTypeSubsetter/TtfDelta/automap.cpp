@@ -24,7 +24,6 @@
 #include "automap.h"
 
 
-[System::Security::SecurityCritical]
 int16 MortAutoMap(TTFACC_FILEBUFFERINFO * pInputBufferInfo,   /* ttfacc info */
                  uint8 * pabKeepGlyphs, /* binary list of glyphs to keep - to be updated here */
                  uint16 usnGlyphs,    /* number of glyphs in list */
@@ -69,7 +68,6 @@ int16 errCode = NO_ERROR;
 /* Static function to syncronize the Keep Glyph List with the Coverage list */
 /* (add in values if necessary) */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 static int16 UpdateKeepWithCoverage(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag, uint32 ulBaseOffset, uint32 ulCoverageOffset, uint16 *pArray, uint16 usLookupType, uint16 usSubstFormat)
 {
 uint32 ulOffset;
@@ -302,7 +300,6 @@ int16 errCode = NO_ERROR;
 /* static function to read glyphid out of BaseCoordFormat2 table and   */
 /* add it to the KeepGlyph list */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 static int16 ProcessBaseCoord(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint32 ulOffset, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag)
 {
 BASECOORDFORMAT2 BASECoordFormat2;
@@ -325,7 +322,6 @@ uint16 usBytesRead;
 /* static function to read the glyphids from a MinMax record and add it*/
 /* to the KeepGlyph list */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 static int16 ProcessMinMax(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint32 ulOffset, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag)
 {
 BASEMINMAX BASEMinMax;
@@ -363,7 +359,6 @@ int16 errCode;
 /* function to grab all referenced glyph IDs from GSUB, JSTF and BASE */
 /* TTO tables and add them into the list of glyphs to keep */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 TTOAutoMap( TTFACC_FILEBUFFERINFO * pInputBufferInfo,   /* ttfacc info */
                  uint8 * pabKeepGlyphs, /* binary list of glyphs to keep - to be updated here */
                  uint16 usnGlyphs,    /* number of glyphs in list */
@@ -752,7 +747,6 @@ int16 errCode = NO_ERROR;
 /* function to read all the glyph IDs from the Apple cmap, and add them*/
 /* into the list of glyphs to keep */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 AppleAutoMap( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                    uint8 * pabKeepGlyphs, 
                    uint16 usnGlyphs,

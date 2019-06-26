@@ -90,11 +90,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Wait for a set of handles.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls WaitForMultipleObjectsEx which has a SUC.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.ControlPolicy|SecurityPermissionFlag.ControlEvidence)]
         [PrePrepareMethod]
         public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
         {

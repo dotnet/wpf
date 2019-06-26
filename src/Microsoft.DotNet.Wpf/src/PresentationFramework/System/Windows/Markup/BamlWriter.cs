@@ -30,10 +30,6 @@ namespace System.Windows.Markup
     /// <summary>
     /// Writes BAML records to Stream and exposes an XmlWriter-liker interface for BAML
     /// </summary>
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlWriter : IParserHelper
     {
 #region Constructor

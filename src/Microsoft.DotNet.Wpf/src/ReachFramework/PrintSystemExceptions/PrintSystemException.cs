@@ -145,10 +145,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical System.Exception.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -263,10 +259,6 @@ namespace System.Printing
         ///<summary>
         ///
         ///</summary>
-        ///<SecurityNote>
-        /// Critical    - calls Win32 FormatMessage API
-        /// </SecurityNote>
-        [System.Security.SecurityCritical]
         private static
         String
         GetFormattedWin32Error(
@@ -405,10 +397,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical System.Exception.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -573,10 +561,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -728,10 +712,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -934,10 +914,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override
         void
         GetObjectData(
@@ -1307,10 +1283,6 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
         public override void GetObjectData(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context

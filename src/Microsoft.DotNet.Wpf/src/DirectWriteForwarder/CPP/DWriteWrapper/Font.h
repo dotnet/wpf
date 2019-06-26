@@ -42,10 +42,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// The DWrite font object that this class wraps.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             NativeIUnknownWrapper<IDWriteFont>^ _font;
 
             /// <summary>
@@ -114,12 +110,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Contructs a Font object.
             /// </summary>
             /// <param name="font">The DWrite font object that this class wraps.</param>
-            /// <SecurityNote>
-            /// Critical - Receives a native pointer and stores it internally.
-            ///            This whole object is wrapped around the passed in pointer
-            ///            So this ctor assumes safety of the passed in pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             Font(
                 IDWriteFont* font
                 );
@@ -129,7 +119,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </summary>
             property System::IntPtr DWriteFontAddRef
             {
-                [SecurityCritical]
                 System::IntPtr get();
             }
 

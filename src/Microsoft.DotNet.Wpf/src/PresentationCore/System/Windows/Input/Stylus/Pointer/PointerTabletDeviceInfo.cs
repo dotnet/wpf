@@ -168,11 +168,6 @@ namespace System.Windows.Input.StylusPointer
         /// backfilling of pressure data further up (as in towards the public boundary) and the deeper
         /// portions of the stack just worry about querying device capabilities.
         /// </remarks>
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceProperties
-        ///                     Does not accept/expose secure data
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryInitializeSupportedStylusPointProperties()
         {
             bool success = false;
@@ -292,11 +287,6 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>
         /// True if initialization succeeds, false otherwise.
         /// </returns>
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDeviceRects
-        ///                     Does not accept/expose secure data
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryInitializeDeviceRects()
         {
             bool success = false;

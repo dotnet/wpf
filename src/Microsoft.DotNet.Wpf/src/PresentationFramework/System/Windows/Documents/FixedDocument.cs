@@ -990,18 +990,12 @@ namespace System.Windows.Documents
          /// <summary>
         /// Retrieves the Uri for the DocumentStructure from the container's relationship
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses a package from PreloadedPackages
-        /// SecurityTreatAsSafe: No package instance or package related objects being handed out
-        ///             from this method
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
         {
             Uri absTargetUri = null;
             if (contentUri != null && relationshipName != null)
             {
-                Uri partUri = MS.Internal.IO.Packaging.PackUriHelper.GetPartUri(contentUri);
+                Uri partUri = PackUriHelper.GetPartUri(contentUri);
                 if (partUri != null)
                 {
                     Uri packageUri = PackUriHelper.GetPackageUri(contentUri);
@@ -1009,10 +1003,7 @@ namespace System.Windows.Documents
 
                     if (package == null)
                     {
-                        if (SecurityHelper.CheckEnvironmentPermission())
-                        {
-                            package = PackageStore.GetPackage(packageUri);
-                        }
+                        package = PackageStore.GetPackage(packageUri);
                     }
 
                     if (package != null)

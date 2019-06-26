@@ -67,11 +67,6 @@ namespace System.Windows.Media.Imaging
     ///
     internal static class BitmapDownload
     {           
-        /// <SecurityNote>
-        ///     Critical: This code initializes critical member queue
-        ///     TreatAsSafe: This code does not expose the critical data
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static BitmapDownload()
         {
             _waitEvent = new AutoResetEvent(false);
@@ -93,12 +88,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Begin a download
         ///
-        /// <SecurityNote>
-        ///     Critical: This code elevates to create a file and initiate download.
-        ///               UnmanagedCode permission is asserted to allow the creation
-        ///               of a FileStream from a handle obtained by CreateFile.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void BeginDownload(
             BitmapDecoder decoder, 
             Uri uri, 
@@ -210,41 +199,10 @@ namespace System.Windows.Media.Imaging
 
             if (stream == null)
             {
-                bool fElevate = false;
-                if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
+                if (uriCachePolicy != null)
                 {
-                    SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain), if it
-                    // does we assert and run the code that requires the assert
-                    if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                                MediaPermissionVideo.NoVideo,
-                                                                MediaPermissionImage.SafeImage))
-                    {
-                        fElevate = true;
-                    }
-                }
-
-                // This is the case where we are accessing an http image from an http site and we have media permission
-                if (fElevate)
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
-                    if (uriCachePolicy != null)
-                    {
-                        entry.webRequest.CachePolicy = uriCachePolicy;
-                    }
-                }
-                finally
-                {
-                    if(fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
+                    entry.webRequest.CachePolicy = uriCachePolicy;
                 }
 
                 entry.webRequest.BeginGetResponse(_responseCallback, entry);
@@ -260,11 +218,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Thread Proc
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue, extracts entries and reads content
-        ///     TreatAsSafe: This code does not expose the queue and the read from the stream are sent to a callback.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void DownloadThreadProc()
         {
             Queue workQueue = _workQueue;
@@ -310,10 +263,6 @@ namespace System.Windows.Media.Imaging
 
         ///
         /// Response callback
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue and also calls into WebRequest methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ResponseCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -344,10 +293,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Read callback
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ReadCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -521,10 +466,6 @@ namespace System.Windows.Media.Imaging
         internal static AutoResetEvent _waitEvent = new AutoResetEvent(false);
 
         /// Work Queue
-        /// <SecurityNote>
-        ///     Critical: This element holds data that is obtained under an elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Queue _workQueue;
 
         /// Uri hash table

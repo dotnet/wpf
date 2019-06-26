@@ -74,7 +74,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.UidManagerTask));
+            TaskHelper.DisplayLogo(Log, nameof(UidManager));
 
             if (MarkupFiles == null || MarkupFiles.Length == 0)
             {

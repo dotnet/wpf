@@ -47,13 +47,13 @@ namespace System.Windows.Documents
             var onTableCommand = new ExecutedRoutedEventHandler(OnTableCommand);
             var onQueryStatusNYI = new CanExecuteRoutedEventHandler(OnQueryStatusNYI);
             
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertTable   , onTableCommand, onQueryStatusNYI, SRID.KeyInsertTable, SRID.KeyInsertTableDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertRows    , onTableCommand, onQueryStatusNYI, SRID.KeyInsertRows, SRID.KeyInsertRowsDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertColumns , onTableCommand, onQueryStatusNYI, SRID.KeyInsertColumns, SRID.KeyInsertColumnsDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertTable   , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertTable, SRID.KeyInsertTableDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertRows    , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertRows, SRID.KeyInsertRowsDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertColumns , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertColumns, SRID.KeyInsertColumnsDisplayString));
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteRows    , onTableCommand, onQueryStatusNYI, SRID.KeyDeleteRows, SRID.KeyDeleteRowsDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteColumns , onTableCommand, onQueryStatusNYI, SRID.KeyDeleteColumns, SRID.KeyDeleteColumnsDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MergeCells    , onTableCommand, onQueryStatusNYI, SRID.KeyMergeCells, SRID.KeyMergeCellsDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SplitCell     , onTableCommand, onQueryStatusNYI, SRID.KeySplitCell, SRID.KeySplitCellDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteColumns , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyDeleteColumns, SRID.KeyDeleteColumnsDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MergeCells    , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyMergeCells, SRID.KeyMergeCellsDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SplitCell     , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeySplitCell, SRID.KeySplitCellDisplayString));
         }
 
         #endregion Class Internal Methods
@@ -137,5 +137,12 @@ namespace System.Windows.Documents
         #endregion Misceleneous Commands
 
         #endregion Private methods
+
+        private const string KeyDeleteColumns = "Alt+Ctrl+Shift+D";
+        private const string KeyInsertColumns = "Alt+Ctrl+Shift+C";
+        private const string KeyInsertRows = "Alt+Ctrl+Shift+R";
+        private const string KeyInsertTable = "Alt+Ctrl+Shift+T";
+        private const string KeyMergeCells = "Alt+Ctrl+Shift+M";
+        private const string KeySplitCell = "Alt+Ctrl+Shift+S";
     }
 }

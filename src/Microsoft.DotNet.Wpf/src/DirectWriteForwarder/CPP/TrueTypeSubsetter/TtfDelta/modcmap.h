@@ -12,7 +12,6 @@
 #ifndef MODCMAP_DOT_H_DEFINED
 #define MODCMAP_DOT_H_DEFINED        
 
-[System::Security::SecurityCritical]
 int16 ModCmap(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                 TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                 uint8 *puchKeepGlyphList, /* glyphs to keep - boolean */

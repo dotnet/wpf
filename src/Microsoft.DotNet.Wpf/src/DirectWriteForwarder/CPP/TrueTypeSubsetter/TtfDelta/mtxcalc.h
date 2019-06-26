@@ -16,7 +16,6 @@
 /* macro definitions ---------------------------------------------------- */
 
 /* function prototypes -------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ComputeMaxPStats( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                         uint16 *  pusMaxContours,
                         uint16 *  pusMaxPoints,

@@ -81,13 +81,8 @@ namespace MS.Internal.Controls
 
         //
         // We cache LOGPIXELSX for optimization
-        ///<SecurityNote>
-        ///     Critical: This code calls critical code.
-        ///     TreatAsSafe: This information is safe to expose. 
-        ///</SecurityNote>                 
         public static int LogPixelsX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (logPixelsX == -1)
@@ -109,13 +104,8 @@ namespace MS.Internal.Controls
 
         //
         // We cache LOGPIXELSY for optimization
-        ///<SecurityNote>
-        ///     Critical: This code calls critical code.
-        ///     TreatAsSafe: This information is safe to expose.  
-        ///</SecurityNote>                 
         public static int LogPixelsY
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (logPixelsY == -1)
@@ -152,12 +142,6 @@ namespace MS.Internal.Controls
         /// doesn't work for us either, because we get deadlocks. COM allows re-entrancy when "blocked" on an
         /// outgoing call from an STA, but ContextBoundObject apparently doesn't--it really blocks.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical because of SUC.
-        /// Since wrapping a managed object in a native one that trivially delegates IDispatch calls is safe,
-        /// a caller of this method can generally be marked SecurityTreatAsSafe.
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [DllImport(ExternDll.PresentationHostDll, PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.IDispatch)]
         internal static extern object CreateIDispatchSTAForwarder([MarshalAs(UnmanagedType.IDispatch)] object pDispatchDelegate);

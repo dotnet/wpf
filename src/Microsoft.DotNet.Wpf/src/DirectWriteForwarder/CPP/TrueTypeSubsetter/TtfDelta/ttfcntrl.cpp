@@ -431,7 +431,6 @@ uint8 MORTHEADER_CONTROL[MORTHEADER_CONTROL_COUNT+1]; /* MORTTABLE */
 // methods to fail NGEN and be Jitted causing significant startup perf regressions.
 // This method has to be made SecurityCritical so that NGEN can process it!
 // It contains safe code.
-[SecurityCritical, SecurityTreatAsSafe]
 void GlobalInit::Init()
 {
     if (!_isInitialized)

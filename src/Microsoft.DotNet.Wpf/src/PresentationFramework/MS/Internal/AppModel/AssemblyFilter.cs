@@ -30,21 +30,12 @@ namespace MS.Internal
 {
     internal class AssemblyFilter
     {
-        /// <SecurityNote>
-        ///     Critical: This code sets the allowed assemblies on AssemblyList 
-        ///     TreatAsSafe: Initializing the data is ok since it does not expose anything
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static AssemblyFilter()
         {
             _disallowedListExtracted = new SecurityCriticalDataForSet<bool>(false);
             _assemblyList = new SecurityCriticalDataForSet<System.Collections.Generic.List<string>>(new System.Collections.Generic.List<string>());
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into unmanaged Api that has a SUC on this (IAssemblCache related)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FilterCallback(Object sender, AssemblyLoadEventArgs args)
         {
             // This code is reentrant
@@ -89,10 +80,6 @@ namespace MS.Internal
         }
 
         //appends assembly name with file version to generate a unique entry for the assembly lookup process
-        /// <SecurityNote>
-        ///     Critical: This code elevates to extract assembly name
-        /// </SecurityNote>
-        [SecurityCritical]
         private string AssemblyNameWithFileVersion(Assembly a)
         {
             FileVersionInfo fileVersionInfo;
@@ -114,10 +101,6 @@ namespace MS.Internal
             return ((sb.ToString()).ToLower(System.Globalization.CultureInfo.InvariantCulture)).Trim();
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code populates _assemblyList with Disallowed Elements and sets the bit that dictates whether to repopulate it
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool AssemblyOnDisallowedList(String assemblyToCheck)
         {
             bool retVal = false;
@@ -135,11 +118,6 @@ namespace MS.Internal
             return retVal;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code opens an HKLM registry location and reads it. We do not want 
-        ///     to call this over and over as it could cause performance issues
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ExtractDisallowedRegistryList()
         {
             string[] disallowedAssemblies;
@@ -177,16 +155,8 @@ namespace MS.Internal
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This holds a list of assemblies that are on an allowed and disallowed list and can be exploited to load
-        ///     unsafe dll's into appdomain
-        /// </SecurityNote>
         static SecurityCriticalDataForSet<System.Collections.Generic.List<string>> _assemblyList;
 
-        /// <SecurityNote>
-        ///     Critical: This bit determines whether we need to hit the registry and load the disallowed elements.
-        ///     We would like to see this happen only once per appdomain and delay it as much as possible
-        /// </SecurityNote>
         static SecurityCriticalDataForSet<bool> _disallowedListExtracted;
 
         static object _lock = new object();

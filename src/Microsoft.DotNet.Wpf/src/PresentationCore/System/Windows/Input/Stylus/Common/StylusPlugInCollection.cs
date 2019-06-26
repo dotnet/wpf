@@ -517,13 +517,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// Add this StylusPlugInCollection to the StylusPlugInCollectionList when it the first 
         /// element is added.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Presentation source access
-        /// TreatAsSafe: - PresentationSource makes a SecurityDemand
-        ///                    - no data handed out or accepted
-        ///                    - called by Add and Insert
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void EnsureEventsHooked()
         {
             if (this.Count == 0)

@@ -83,7 +83,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.MarkupCompilePass2Task));
+            TaskHelper.DisplayLogo(Log, nameof(MarkupCompilePass2));
 
             //
             // Create the TaskFileService instance here

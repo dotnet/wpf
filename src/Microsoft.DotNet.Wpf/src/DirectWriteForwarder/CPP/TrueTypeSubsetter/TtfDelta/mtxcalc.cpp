@@ -25,7 +25,6 @@
 
 /* function definitions ---------------------------------------------- */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 GetGlyphStats( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
 uint16    usGlyphIdx,
 int16 *   psnContours,
@@ -69,7 +68,6 @@ int16 errCode;
 
 /* ------------------------------------------------------------------- */
 /* NOT recursive, operates on "flat" tree */
-[System::Security::SecurityCritical]
 PRIVATE int16 GetCompositeGlyphStats( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
              uint16 usGlyphIdx,
              int16 * psnContours,
@@ -121,7 +119,6 @@ BOOL bStatus;
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ComputeMaxPStats( TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
             uint16 *  pusMaxContours,
             uint16 *  pusMaxPoints,

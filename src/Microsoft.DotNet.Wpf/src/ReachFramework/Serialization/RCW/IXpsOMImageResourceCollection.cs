@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("7A4A1A71-9CDE-4B71-B33F-62DE843EABFE"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMImageResourceCollection
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

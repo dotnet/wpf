@@ -16,19 +16,16 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     private ref class NativePointerCriticalHandle abstract : public CriticalHandle
     {
         public:
-            [SecurityCritical]
             NativePointerCriticalHandle(void* pNativePointer);
 
             virtual property bool IsInvalid
             {
-                [SecuritySafeCritical]
                 [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
                 bool get() override;
             }
 
             property T* Value
             {
-                [SecurityCritical]
                 T* get();
             }
     };
@@ -38,12 +35,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
-            [SecuritySafeCritical]
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
             virtual bool ReleaseHandle() override;
 
         public:
-            [SecurityCritical]
             NativeIUnknownWrapper(IUnknown* pNativePointer);
     };
 
@@ -52,12 +47,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
-            [SecuritySafeCritical]
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
             virtual bool ReleaseHandle() override;
 
         public:
-            [SecurityCritical]
             NativePointerWrapper(T* pNativePointer);
     };
 

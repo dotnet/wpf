@@ -509,11 +509,6 @@ namespace MS.Internal.IO.Packaging
         /// contains the property value, or null if the property does not exist
         /// in the encrypted package.
         /// </returns>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.PtrToStringAnsi which LinkDemands
-        ///     TreatAsSafe: can't be used to allocate a string from an arbitrary pointer since it doesn't accept a ptr.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object
         GetOleProperty(
             Guid fmtid,
@@ -634,11 +629,6 @@ namespace MS.Internal.IO.Packaging
         /// An object of the appropriate type for the specified property which
         /// contains the property value, or null if the property is to be deleted.
         /// </param>
-        ///<SecurityNote>
-        ///     Critical: Calls Marshal.StringToCoTaskMemAnsi which LinkDemands.  Also has unsafe code block.
-        ///     TreatAsSafe: the memory that's allocated is freed before returning.  Unsafe code block only manipulates local memory on the stack.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void
         SetOleProperty(
             Guid fmtid,

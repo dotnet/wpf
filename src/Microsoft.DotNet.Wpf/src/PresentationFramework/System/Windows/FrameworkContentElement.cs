@@ -1295,7 +1295,6 @@ namespace System.Windows
         {
         }
 
-        //CASRemoval:[StrongNameIdentityPermissionAttribute(SecurityAction.InheritanceDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal virtual bool IgnoreModelParentBuildRoute(RoutedEventArgs args)
         {
             return false;
@@ -1449,7 +1448,6 @@ namespace System.Windows
         ///     the ancestor has changed, and the purpose is to allow elements to
         ///     perform actions based on the changed ancestor.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermissionAttribute(SecurityAction.InheritanceDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal virtual void OnAncestorChanged()
         {
         }

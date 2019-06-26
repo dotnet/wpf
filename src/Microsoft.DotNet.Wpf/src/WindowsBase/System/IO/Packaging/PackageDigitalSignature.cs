@@ -296,11 +296,6 @@ namespace System.IO.Packaging
         /// <returns></returns>
         /// <remarks>Use this overload when the certificate is not embedded in the container at signing time</remarks>
         /// <exception cref="InvalidOperationException">Thrown if associated digital signature has been deleted.</exception>
-        ///<SecurityNote>
-        ///     Critical: calls X509Certificate2 ctor which LinkDemands
-        ///     TreatAsSafe: X509Certificate2 is only used internally and not returned
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public VerifyResult Verify(X509Certificate signingCertificate)
         {
             ThrowIfInvalidated();

@@ -32,10 +32,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Return advance widths corresponding to characters in a given string.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - As it uses raw pointers.
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe void GetAdvanceWidths(
             char*   characterString,
             int     characterLength,

@@ -31,11 +31,3 @@
 #include "DWriteWrapper\ItemProps.cpp"
 #include "DWriteWrapper\ItemizerHelper.h"
 #include "DWriteWrapper\IClassification.h"
-
-// VC 14.14 updated msvcurt def of this function with SecurityCritical but didn't ship the update to the header that defines this function.
-// Apply it ourselves until the new UCRT headers are available.
-[System::Security::SecurityCritical]
-extern unsigned __int64* __CRTDECL __local_stdio_printf_options(void);
-
-[System::Security::SecurityCritical]
-extern unsigned __int64* __CRTDECL __local_stdio_scanf_options(void);

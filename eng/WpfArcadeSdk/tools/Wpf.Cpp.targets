@@ -8,10 +8,13 @@
   <!-- 
     See comment about UsePrivateFrontEnd in Wpf.Cpp.props
   -->
-  <!-- 
+  <!--  Start optional section -->
   <PropertyGroup>
     <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit'">$(MsvcurtC1xxToolsPath)HostX86\c1xx.dll</FrontEndPath>
     <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit'">$(MsvcurtC1xxToolsPath)HostX64\c1xx.dll</FrontEndPath>
+
+    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\c2.dll')">$(MsvcurtC1xxToolsPath)HostX86\c2.dll</BackEndPath>
+    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\c2.dll')">$(MsvcurtC1xxToolsPath)HostX64\c2.dll</BackEndPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(FrontEndPath)'!=''">
     <ClCompile>
@@ -21,7 +24,12 @@
       <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  --> 
+  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(BackEndPath)'!=''">
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /B2"$(BackEndPath)"</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- End optional section --> 
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -241,8 +249,8 @@ using namespace System::Runtime::Versioning;
       <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
         <Text>
           <![CDATA[
-  <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
+   <ItemGroup>
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
   </ItemGroup>
   ]]>
         </Text>
@@ -280,7 +288,7 @@ using namespace System::Runtime::Versioning;
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
+      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Github'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"

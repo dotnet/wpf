@@ -24,10 +24,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// <summary>
             /// A pointer to the DWrite font file object.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             NativeIUnknownWrapper<IDWriteFontFile>^ _fontFile;
 
             /// <summary>
@@ -37,10 +33,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// This makes the static method fail NGENing and causes Jitting which affects perf.
             /// If the complier gets fixed then we can remove this scheme and use __uuidof(IDWriteLocalFontFileLoader).
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             static NativePointerWrapper<_GUID>^ _guidForIDWriteLocalFontFileLoader;
 
             /// <summary>
@@ -61,7 +53,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Constructs a Font File object.
             /// </summary>
             /// <param name="fontFile">A pointer to the DWrite fontFile object.</param>
-            [SecurityCritical]
             FontFile(IDWriteFontFile* fontFile);
 
             /// <summary>
@@ -75,7 +66,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// </summary>
             property IDWriteFontFile* DWriteFontFileNoAddRef
             {
-                [SecurityCritical]
                 IDWriteFontFile* get();
             }
 
@@ -106,13 +96,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Gets the path of this font file.
             /// </summary>
             /// <returns>The path of this font file.</returns>
-            [SecurityCritical]
             System::String^ GetUriPath();
 
             //// <summary>
             /// dtor.
             /// </summary>
-            [SecuritySafeCritical]
             ~FontFile();
     };
 

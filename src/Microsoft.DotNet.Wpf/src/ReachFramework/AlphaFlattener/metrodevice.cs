@@ -421,10 +421,6 @@ namespace Microsoft.Internal.AlphaFlattener
         protected  PrintTicketConverter m_Converter; // Expensive to create, cache it
         protected  PrintTicketCache     m_printTicketCache; // Cache for per ticket data that is expensive to fetch
 
-        /// <SecurityNote>
-        ///     Critical   : Information got by calling GetDevmode
-        /// </SecurityNote>
-        [SecurityCritical]
         protected  byte[]             m_Devmode;
 
         // settings captured from current PrintTicket
@@ -454,10 +450,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="ticketXMLString">If you wish to read/write to the cache,
         /// this must be set to the result of ticket.ToXmlString().
         /// This an optional performance enhancement.</param>
-        /// <SecurityNote>
-        ///     Critical   : It asserts PrintingPermission
-        /// </SecurityNote>
-        [SecurityCritical]
         private byte[] GetDevmode(PrintTicket ticket, String ticketXMLString)
         {
             Debug.Assert(ticket != null);
@@ -548,10 +540,6 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical   : It calls GetDevmode and give away the print job id
-        /// </SecurityNote>
-        [SecurityCritical]
         public int StartDocument(string jobName, PrintTicket ticket)
         {
             int jobIdentifier = 0;
@@ -611,10 +599,6 @@ namespace Microsoft.Internal.AlphaFlattener
         }
 
 
-        /// <SecurityNote>
-        ///     Critical   : It calls GetDevmode
-        /// </SecurityNote>
-        [SecurityCritical]
         public void CreateDeviceContext(string jobName, PrintTicket ticket)
         {
             if (ticket == null)
@@ -664,10 +648,6 @@ namespace Microsoft.Internal.AlphaFlattener
             DisposePrintTicketConverter();
         }
 
-        /// <SecurityNote>
-        ///     Critical   : It calls GetDevmode
-        /// </SecurityNote>
-        [SecurityCritical]
         public void StartPage(PrintTicket ticket)
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartPageBegin);
@@ -776,11 +756,6 @@ namespace Microsoft.Internal.AlphaFlattener
         }
 
 
-        /// <SecurityNote>
-        ///     Critical    -   Asserts printing permission to dispose PrintTicketConverter
-        /// </SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Assert, Level = PrintingPermissionLevel.DefaultPrinting)]
         private void DisposePrintTicketConverter()
         {
             if (m_Converter != null)

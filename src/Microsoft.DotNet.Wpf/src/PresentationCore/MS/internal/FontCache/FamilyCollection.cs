@@ -58,13 +58,8 @@ namespace MS.Internal.FontCache
 
         #endregion Private Fields
 
-        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.PresentationCoreCommonResources)};component/fonts/";
+        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.PresentationCore)};component/fonts/";
 
-        /// <SecurityNote>
-        ///     Critical    : Accesses the Security Critical FontSource.GetStream().
-        ///     TreatAsSafe : Does not expose this stream publicly.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static List<CompositeFontFamily> GetCompositeFontList(FontSourceCollection fontSourceCollection)
         {
             List<CompositeFontFamily> compositeFonts = new List<CompositeFontFamily>();
@@ -82,26 +77,16 @@ namespace MS.Internal.FontCache
             return compositeFonts;
         }
 
-        /// <SecurityNote>
-        ///     Critical    : Access the security critical DWriteFactory.SystemFontCollection.
-        ///     TreatAsSafe : Does not modify it.
-        /// </SecurityNote>
         private bool UseSystemFonts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return (_fontCollection == DWriteFactory.SystemFontCollection);
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical    : Contructs security critical FontSourceCollection.
-        ///     TreatAsSafe : Does not expose critical info from this object publicly.
-        /// </SecurityNote>
         private IList<CompositeFontFamily> UserCompositeFonts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_userCompositeFonts == null)
@@ -129,14 +114,8 @@ namespace MS.Internal.FontCache
                                                     "Simplified Arabic Fixed" };
             }
 
-            /// <SecurityNote>
-            ///     Critical    : Accesses FamilyCollection.SxSFontsLocation security critical.
-            ///                 : Asserts to get a FontCollection by full path
-            ///     TreatAsSafe : Does not expose security critical data.
-            /// </SecurityNote>
             internal static Text.TextInterface.FontCollection LegacyArabicFontCollection
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (_legacyArabicFontCollection == null)
@@ -146,15 +125,7 @@ namespace MS.Internal.FontCache
                             if (_legacyArabicFontCollection == null)
                             {
                                 Uri criticalSxSFontsLocation = new Uri(FamilyCollection.SxSFontsResourcePrefix);
-                                SecurityHelper.CreateUriDiscoveryPermission(criticalSxSFontsLocation).Assert();
-                                try
-                                {
-                                    _legacyArabicFontCollection = DWriteFactory.GetFontCollectionFromFolder(criticalSxSFontsLocation);
-                                }
-                                finally
-                                {
-                                    CodeAccessPermission.RevertAssert();
-                                }
+                                _legacyArabicFontCollection = DWriteFactory.GetFontCollectionFromFolder(criticalSxSFontsLocation);
                             }
                         }
                     }
@@ -272,13 +243,6 @@ namespace MS.Internal.FontCache
             /// This method returns the composite font with the given index after
             /// lazily allocating it if it has not been already allocated.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical : Creates a Security Critical FontSource object while skipping 
-            ///                the demand for read permission and accesses 
-            ///                FamilyCollection.SxSFontsLocation security critical.
-            ///     TreatAsSafe : Does not expose security critical data.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             internal static CompositeFontFamily GetCompositeFontFamilyAtIndex(int index)
             {
                 if (_systemCompositeFonts[index] == null)
@@ -328,13 +292,6 @@ namespace MS.Internal.FontCache
         /// </summary>
         /// <param name="folderUri">Absolute Uri of a folder</param>
         /// <param name="fontCollection">Collection of fonts loaded from the folderUri location</param>
-        /// <SecurityNote>
-        /// Critical -  The ability to control the place fonts are loaded from is critical.
-        /// 
-        ///             The folderUri parameter is critical as it may contain privileged information
-        ///             (i.e., the location of Windows Fonts);
-        /// </SecurityNote>
-        [SecurityCritical]
         private FamilyCollection(Uri folderUri, MS.Internal.Text.TextInterface.FontCollection fontCollection)
         {
             _folderUri = folderUri;
@@ -345,17 +302,8 @@ namespace MS.Internal.FontCache
         /// Creates a font family collection cache element from a canonical font family reference.
         /// </summary>
         /// <param name="folderUri">Absolute Uri of a folder</param>
-        /// <SecurityNote>
-        /// Critical    -  Calls critical constructors to initialize the returned FamilyCollection
-        ///                The folderUri parameter is critical as it may contain privileged information
-        ///                (i.e., the location of Windows Fonts); it is passed to the FontSourceCollection 
-        ///                constructor which is declared critical and guarantees not to disclose the URI.
-        /// TreatAsSafe -  Demands Uri Read permissions for the uri passed to constructors
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static FamilyCollection FromUri(Uri folderUri)
         {
-            SecurityHelper.DemandUriReadPermission(folderUri);
             return new FamilyCollection(folderUri, DWriteFactory.GetFontCollectionFromFolder(folderUri));
         }
 
@@ -363,17 +311,6 @@ namespace MS.Internal.FontCache
         /// Creates a font family collection cache element from a canonical font family reference.
         /// </summary>
         /// <param name="folderUri">Absolute Uri to the Windows Fonts folder or a file in the Windows Fonts folder.</param>
-        /// <SecurityNote>
-        /// Critical  -  calls critical constructors to initialize the returned FamilyCollection
-        /// 
-        ///             Callers should only call this method if the URI comes from internal
-        ///             WPF code, NOT if it comes from the client. E.g., we want FontFamily="Arial" and 
-        ///             FontFamily="arial.ttf#Arial" to work in partial trust. 
-        ///             But FontFamily="file:///c:/windows/fonts/#Arial" should NOT work in partial trust
-        ///             (even -- or especially -- if the URI is right), as this would enable partial trust 
-        ///             clients to guess the location of Windows Fonts through trial and error.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static FamilyCollection FromWindowsFonts(Uri folderUri)
         {
             return new FamilyCollection(folderUri, DWriteFactory.SystemFontCollection);
@@ -400,10 +337,6 @@ namespace MS.Internal.FontCache
         /// <param name="fontWeight">The weight if the font face in case family name contained style info.</param>
         /// <param name="fontStretch">The stretch if the font face in case family name contained style info.</param>
         /// <returns>The font family if found.</returns>
-        /// <SecurityNote>
-        /// Critical - calls into critical GetFontFromFamily
-        /// </SecurityNote>
-        [SecurityCritical]
         internal IFontFamily LookupFamily(
             string familyName,
             ref FontStyle fontStyle,
@@ -532,10 +465,6 @@ namespace MS.Internal.FontCache
         /// <param name="fontFamily">The font family to look in.</param>
         /// <param name="faceName">The face to look for.</param>
         /// <returns>The font face if found and null if nothing was found.</returns>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.Font.FaceNames
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Text.TextInterface.Font GetFontFromFamily(Text.TextInterface.FontFamily fontFamily, string faceName)
         {
             faceName = faceName.ToUpper(CultureInfo.InvariantCulture);
@@ -633,13 +562,8 @@ namespace MS.Internal.FontCache
                 return true;
             }
 
-            /// <SecurityNote>
-            /// Critical - calls into critical Text.TextInterface.FontCollection
-            /// TreatAsSafe - safe to return a Text.TextInterface.FontFamily object, all access to it is critical
-            /// </SecurityNote>
             Text.TextInterface.FontFamily IEnumerator<Text.TextInterface.FontFamily>.Current
             {
-                [SecurityCritical, SecurityTreatAsSafe]
                 get
                 {
                     if (_currentFamily < 0 || _currentFamily >= _familyCount)
@@ -766,13 +690,8 @@ namespace MS.Internal.FontCache
             return null;
         }
 
-        /// <SecurityNote>
-        ///  Critical: Calls critical Text.TextInterface.FontCollection FamilyCount
-        ///  SecurityTreatAsSafe: Safe to expose the number of font families in a folder.
-        /// </SecurityNote>
         internal uint FamilyCount
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _fontCollection.FamilyCount + (UseSystemFonts ? SystemCompositeFonts.NumOfSystemCompositeFonts : checked((uint)UserCompositeFonts.Count));

@@ -369,7 +369,6 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not used be except for compatibility purposes
         /// </summary>
-        [SecuritySafeCritical]
         private Point ObsoleteClientToScreen(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
@@ -410,7 +409,6 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not be used except for compatibility purposes.
         /// </summary>
-        [SecuritySafeCritical]
         private Point ObsoleteScreenToClient(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);

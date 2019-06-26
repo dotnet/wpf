@@ -63,10 +63,6 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical code, accepts pointer arguments
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe internal CachedBitmap(
                     int pixelWidth,
                     int pixelHeight,
@@ -90,10 +86,6 @@ namespace System.Windows.Media.Imaging
         ///     Creates a managed BitmapSource wrapper around a pre-existing 
         ///     unmanaged bitmap.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - access critical code, accepts pointer
-        /// </SecurityNote>
-        [SecurityCritical]
         internal CachedBitmap(BitmapSourceSafeMILHandle bitmap) : base(true)
         {
             if (bitmap == null)
@@ -135,11 +127,6 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged objects
-        /// TreatAsSafe - all inputs verified, including buffer sizes
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         unsafe internal CachedBitmap(
             int pixelWidth,
             int pixelHeight,
@@ -229,10 +216,6 @@ namespace System.Windows.Media.Imaging
         /// Common implementation for CloneCore(), CloneCurrentValueCore(),
         /// GetAsFrozenCore(), and GetCurrentValueAsFrozenCore().
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical InitFromWICSource
-        /// </SecurityNote>
-        [SecurityCritical]
         private void CopyCommon(CachedBitmap sourceBitmap)
         {
             // Avoid Animatable requesting resource updates for invalidations that occur during construction
@@ -273,11 +256,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Prepare the bitmap to accept initialize paramters.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EndInit()
         {
             _bitmapInit.EndInit();
@@ -290,10 +268,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             lock (_syncObject)
@@ -339,11 +313,6 @@ namespace System.Windows.Media.Imaging
         /// Implementation of <see cref="System.Windows.Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
         /// </summary>
         /// <returns>The new Freezable.</returns>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Freezable CreateInstanceCore()
         {
             return new CachedBitmap();
@@ -352,11 +321,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCore(Freezable sourceFreezable)
         {
             CachedBitmap sourceBitmap = (CachedBitmap) sourceFreezable;
@@ -369,11 +333,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCurrentValueCore(Freezable)">Freezable.CloneCurrentValueCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces clone of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             CachedBitmap sourceBitmap = (CachedBitmap) sourceFreezable;
@@ -387,11 +346,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetAsFrozenCore(Freezable)">Freezable.GetAsFrozenCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces GetAsFrozen of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
             CachedBitmap sourceBitmap = (CachedBitmap)sourceFreezable;
@@ -405,11 +359,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetCurrentValueAsFrozenCore(Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical code.
-        /// TreatAsSafe - method only produces GetCurrentValueAsFrozen of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
             CachedBitmap sourceBitmap = (CachedBitmap)sourceFreezable;
@@ -424,10 +373,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create from WICBitmapSource
         ///
-        /// <SecurityNote>
-        /// Critical - calls unmanaged objects
-        /// </SecurityNote>
-        [SecurityCritical]
         private void InitFromWICSource(
                     SafeMILHandle wicSource
                     )
@@ -460,10 +405,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create from memory
         ///
-        /// <SecurityNote>
-        /// Critical - calls unmanaged objects, accepts pointer parameters
-        /// </SecurityNote>
-        [SecurityCritical]
         private void InitFromMemoryPtr(
                     int pixelWidth,
                     int pixelHeight,

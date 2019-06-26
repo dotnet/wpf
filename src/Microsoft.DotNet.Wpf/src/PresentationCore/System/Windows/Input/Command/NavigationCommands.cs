@@ -238,43 +238,43 @@ namespace System.Windows.Input
             {
                 case  CommandId.BrowseBack:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseBackKey),
+                        BrowseBackKey,
                         SR.Get(SRID.BrowseBackKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.BrowseForward:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseForwardKey),
+                        BrowseForwardKey,
                         SR.Get(SRID.BrowseForwardKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.BrowseHome:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseHomeKey),
+                        BrowseHomeKey,
                         SR.Get(SRID.BrowseHomeKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.BrowseStop:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseStopKey),
+                        BrowseStopKey,
                         SR.Get(SRID.BrowseStopKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.Refresh:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.RefreshKey),
+                        RefreshKey,
                         SR.Get(SRID.RefreshKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.Favorites:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.FavoritesKey),
+                        FavoritesKey,
                         SR.Get(SRID.FavoritesKeyDisplayString),
                         gestures);
                     break;
                 case  CommandId.Search:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.SearchKey),
+                        SearchKey,
                         SR.Get(SRID.SearchKeyDisplayString),
                         gestures);
                     break;
@@ -390,5 +390,13 @@ namespace System.Windows.Input
 
         private static RoutedUICommand[] _internalCommands = new RoutedUICommand[(int)CommandId.Last];
         #endregion Private Fields
+
+        private const string BrowseBackKey = "Alt+Left;Backspace";
+        private const string BrowseForwardKey = "Alt+Right;Shift+Backspace";
+        private const string BrowseHomeKey = "Alt+Home;BrowserHome";
+        private const string BrowseStopKey = "Alt+Esc;BrowserStop";
+        private const string FavoritesKey = "Ctrl+I";
+        private const string RefreshKey = "F5";
+        private const string SearchKey = "F3";
     }
 }

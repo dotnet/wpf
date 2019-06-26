@@ -60,7 +60,6 @@
 
   <ItemGroup>
     <Compile Remove="System\Xaml\XamlProperty.cs" />
-    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" />
     <Compile Remove="System\Xaml\Schema\ClrProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ImplicitProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ClrAttachableEvent.cs" />
@@ -83,7 +82,8 @@
     <Compile Remove="System\Xaml\Context\HashSet.cs" />
     <Compile Remove="System\Xaml\MS\Impl\ConcurrentDictionary.cs" />
     <Compile Remove="System\Xaml\MS\Impl\XamlPropertyInfoKey.cs" />
-
+    <!-- Do not include reference assembly files. -->
+    <Compile Remove="ref\System.Xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -121,5 +121,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 </Project>

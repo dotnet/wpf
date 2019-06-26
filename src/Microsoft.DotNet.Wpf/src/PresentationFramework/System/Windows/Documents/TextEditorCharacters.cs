@@ -48,14 +48,14 @@ namespace System.Windows.Documents
 
             // Editing Commands: Character Editing
             // -----------------------------------
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ResetFormat                  , new ExecutedRoutedEventHandler(OnResetFormat)       , onQueryStatusNYI, SRID.KeyResetFormat, SRID.KeyResetFormatDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBold                   , new ExecutedRoutedEventHandler(OnToggleBold)        , onQueryStatusNYI, SRID.KeyToggleBold, SRID.KeyToggleBoldDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleItalic                 , new ExecutedRoutedEventHandler(OnToggleItalic)      , onQueryStatusNYI, SRID.KeyToggleItalic, SRID.KeyToggleItalicDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleUnderline              , new ExecutedRoutedEventHandler(OnToggleUnderline)   , onQueryStatusNYI, SRID.KeyToggleUnderline, SRID.KeyToggleUnderlineDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleSubscript              , new ExecutedRoutedEventHandler(OnToggleSubscript)   , onQueryStatusNYI, SRID.KeyToggleSubscript, SRID.KeyToggleSubscriptDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleSuperscript            , new ExecutedRoutedEventHandler(OnToggleSuperscript) , onQueryStatusNYI, SRID.KeyToggleSuperscript, SRID.KeyToggleSuperscriptDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.IncreaseFontSize             , new ExecutedRoutedEventHandler(OnIncreaseFontSize)  , onQueryStatusNYI, SRID.KeyIncreaseFontSize, SRID.KeyIncreaseFontSizeDisplayString);
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseFontSize             , new ExecutedRoutedEventHandler(OnDecreaseFontSize)  , onQueryStatusNYI, SRID.KeyDecreaseFontSize, SRID.KeyDecreaseFontSizeDisplayString);
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ResetFormat                  , new ExecutedRoutedEventHandler(OnResetFormat)       , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyResetFormat, SRID.KeyResetFormatDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBold                   , new ExecutedRoutedEventHandler(OnToggleBold)        , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyToggleBold, SRID.KeyToggleBoldDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleItalic                 , new ExecutedRoutedEventHandler(OnToggleItalic)      , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyToggleItalic, SRID.KeyToggleItalicDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleUnderline              , new ExecutedRoutedEventHandler(OnToggleUnderline)   , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyToggleUnderline, SRID.KeyToggleUnderlineDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleSubscript              , new ExecutedRoutedEventHandler(OnToggleSubscript)   , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyToggleSubscript, SRID.KeyToggleSubscriptDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleSuperscript            , new ExecutedRoutedEventHandler(OnToggleSuperscript) , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyToggleSuperscript, SRID.KeyToggleSuperscriptDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.IncreaseFontSize             , new ExecutedRoutedEventHandler(OnIncreaseFontSize)  , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyIncreaseFontSize, SRID.KeyIncreaseFontSizeDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseFontSize             , new ExecutedRoutedEventHandler(OnDecreaseFontSize)  , onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyDecreaseFontSize, SRID.KeyDecreaseFontSizeDisplayString));
 
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyFontSize                , new ExecutedRoutedEventHandler(OnApplyFontSize)     , onQueryStatusNYI, SRID.KeyApplyFontSize, SRID.KeyApplyFontSizeDisplayString);
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyFontFamily              , new ExecutedRoutedEventHandler(OnApplyFontFamily)   , onQueryStatusNYI, SRID.KeyApplyFontFamily, SRID.KeyApplyFontFamilyDisplayString);
@@ -486,5 +486,14 @@ namespace System.Windows.Documents
         #endregion Misceleneous Commands
 
         #endregion Private Methods
+      
+        private const string KeyDecreaseFontSize = "Ctrl+OemOpenBrackets";
+        private const string KeyIncreaseFontSize = "Ctrl+OemCloseBrackets";
+        private const string KeyResetFormat = "Ctrl+Space";
+        private const string KeyToggleBold = "Ctrl+B";
+        private const string KeyToggleItalic = "Ctrl+I";
+        private const string KeyToggleSubscript = "Ctrl+OemPlus";
+        private const string KeyToggleSuperscript = "Ctrl+Shift+OemPlus";
+        private const string KeyToggleUnderline = "Ctrl+U";
     }
 }

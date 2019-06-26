@@ -609,32 +609,13 @@ namespace System.Windows.Documents
             return FlowDirection.LeftToRight;
         }
 
-        internal static bool CanNavigateToUri(Uri uri)
-        {
-            // Is http:, https:, mailto:, or file:?
-            if (!uri.IsAbsoluteUri ||
-                uri.IsUnc ||
-                uri.Scheme == Uri.UriSchemeHttp ||
-                uri.Scheme == Uri.UriSchemeHttps ||
-                uri.Scheme == Uri.UriSchemeMailto || // Automation will request navigation to pack Uris when automating links withing a document
-                (uri.Scheme == PackUriHelper.UriSchemePack && !String.IsNullOrEmpty(uri.Fragment)))
-            {
-                return true;
-            }
-            else
-            {
-                return SecurityHelper.CallerHasWebPermission(uri);
-            }
-        }
-
         internal static Uri GetLinkUri(IInputElement element, Uri inputUri)
         {
             DependencyObject dpo = element as DependencyObject;
             Debug.Assert(dpo != null, "GetLinkUri shouldn't be called for non-DependencyObjects.");
 
             if (inputUri != null &&
-                (CanNavigateToUri(inputUri) ||
-                (inputUri.Scheme == PackUriHelper.UriSchemePack && !String.IsNullOrEmpty(inputUri.Fragment))))
+                (inputUri.Scheme == PackUriHelper.UriSchemePack && !String.IsNullOrEmpty(inputUri.Fragment)))
             // We want to allow navigation to pack:// Uris as we may get these from automation, but we 
             // wouldn't support this if an actual Uri were given as a pack:// Uri
             {

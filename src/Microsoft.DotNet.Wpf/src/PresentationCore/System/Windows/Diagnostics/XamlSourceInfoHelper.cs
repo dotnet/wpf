@@ -54,7 +54,6 @@ namespace System.Windows.Diagnostics
         }
 
         // this method is (also) called via private reflection from test code
-        [SecuritySafeCritical]
         private static void InitializeEnableXamlSourceInfo(string value)
         {
             if (VisualDiagnostics.IsEnabled &&

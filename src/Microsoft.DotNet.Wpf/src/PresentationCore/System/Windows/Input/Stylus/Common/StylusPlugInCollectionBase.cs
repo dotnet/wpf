@@ -35,7 +35,6 @@ namespace System.Windows.Input.StylusPlugIns
     {
         #region Static Factory Methods
 
-        [SecuritySafeCritical]
         internal static StylusPlugInCollectionBase Create(StylusPlugInCollection wrapper)
         {
             StylusPlugInCollectionBase instance;

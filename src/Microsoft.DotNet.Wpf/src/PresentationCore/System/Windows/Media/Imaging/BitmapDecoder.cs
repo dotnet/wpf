@@ -49,14 +49,8 @@ namespace System.Windows.Media.Imaging
     {
         #region Constructors
 
-        /// <SecurityNote>
-        ///     Critical: This code has critical static variables isImageDisabledInitialized
-        ///     TreatAsASafe: The variables are not exposed
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static BitmapDecoder()
         {
-            isImageDisabledInitialized = false;
         }
         /// <summary>
         /// Default constructor
@@ -76,10 +70,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapDecoder(
             Uri bitmapUri,
             BitmapCreateOptions createOptions,
@@ -140,10 +130,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapDecoder(
             Stream bitmapStream,
             BitmapCreateOptions createOptions,
@@ -191,12 +177,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: strictly speaking because the method uses a SafeFileHandle, which is a SecurityCritical
-        ///     type (in v4). But it also takes other resources as input that untrusted code shouldn't have 
-        ///     access to (SafeMILHandle, UnmanagedMemoryStream).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal BitmapDecoder(
             SafeMILHandle decoderHandle,
             BitmapDecoder decoder,
@@ -239,11 +219,6 @@ namespace System.Windows.Media.Imaging
         /// on decode if the cache option was OnDemand/Default. In those cases, the finalizer
         /// would have been suppressed.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical resource _uriStream
-        /// TreatAsSafe - doesn't return the uriStream, just closes it which is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~BitmapDecoder()
         {
             //
@@ -272,14 +247,6 @@ namespace System.Windows.Media.Imaging
         /// Create BitmapDecoder from the uri or stream. If both are specified, the uri
         /// is chosen.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Unmanaged code will eventually create a COM object, need to secure it
-        ///     Calls one of the XxxBitmapDecoder static internal ctors, which are all SecurityCritical.
-        /// TreatAsSafe - All inputs verified
-        ///     The inputs of unsafe types that are passed to XxxBitmapDecoder are produced within this method,
-        ///     not taken from outside.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static BitmapDecoder CreateFromUriOrStream(
             Uri baseUri,
             Uri uri,
@@ -298,9 +265,6 @@ namespace System.Windows.Media.Imaging
             Stream uriStream = null;
             UnmanagedMemoryStream unmanagedMemoryStream = null;
             SafeFileHandle safeFilehandle = null;
-
-            // check to ensure that images are allowed in partial trust
-            DemandIfImageBlocked();
 
             if (uri != null)
             {
@@ -579,13 +543,8 @@ namespace System.Windows.Media.Imaging
         /// If there is an palette, return it.
         /// Otherwise, return null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting palette data is OK
-        /// </SecurityNote>
         public virtual BitmapPalette Palette
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -633,13 +592,8 @@ namespace System.Windows.Media.Imaging
         /// If there is a global thumbnail, return it.
         /// Otherwise, return null. The returned source is frozen.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting thumbnail data is OK
-        /// </SecurityNote>
         public virtual BitmapSource Thumbnail
         {
-            [SecurityCritical ]
             get
             {
                 VerifyAccess();
@@ -699,22 +653,12 @@ namespace System.Windows.Media.Imaging
         /// If there is a global metadata, return it.
         /// Otherwise, return null. The returned source is frozen.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Access unmanaged code, codecs
-        ///     Public -
-        ///       Getting metadata for images from site of origin or bundled with the application is OK
-        ///       Getting metatdat for images from cross domain servers triggers a demand for site of origin.
-        /// </SecurityNote>
         public virtual BitmapMetadata Metadata
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
                 EnsureBuiltInDecoder();
-
-                // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-                CheckIfSiteOfOrigin();
 
                 if (!_isMetadataCached)
                 {
@@ -750,13 +694,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// The info that identifies this codec.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting codecinfo data is OK
-        /// </SecurityNote>
         public virtual BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -807,13 +746,8 @@ namespace System.Windows.Media.Imaging
         /// If there is a global preview image, return it.
         /// Otherwise, return null. The returned source is frozen.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting preview data is OK
-        /// </SecurityNote>
         public virtual BitmapSource Preview
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -956,9 +890,6 @@ namespace System.Windows.Media.Imaging
 
             CheckOriginalWritable();
 
-            // Demand Site Of origin on the URI if it passes then this  information is ok to expose
-            CheckIfSiteOfOrigin();
-
             return InPlaceBitmapMetadataWriter.CreateFromDecoder(_decoderHandle, _syncObject);
         }
 
@@ -1039,10 +970,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Used as a delegate in InternalColorContexts to get the unmanaged IWICColorContexts
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls critical, unmanaged method
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
@@ -1054,20 +981,8 @@ namespace System.Windows.Media.Imaging
         /// If there is an embedded color profile, return it.
         /// Otherwise, return null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// TreatAsSafe - We are exposing specific, non-sensitive data that came from
-        ///               a Uri or a bitmap. If the profile data came from a Uri, the 
-        ///               WebRequest we did to get it demandend the appropriate 
-        ///               permission and we did not expose the request or response. If it came
-        ///               from a bitmap, it may be cross-domain, but the restricted
-        ///               nature of the data combined with the fact that it has been
-        ///               inspected by WCS which is hardened against malicious data
-        ///               makes this OK.
-        /// </SecurityNote>
         internal ReadOnlyCollection<ColorContext> InternalColorContexts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 EnsureBuiltInDecoder();
@@ -1106,40 +1021,7 @@ namespace System.Windows.Media.Imaging
         #endregion
 
         #region Internal/Private Methods
-        /// <SecurityNote>
-        ///     Critical: This sets and accesses critical members isImageDisabledInitialized,isImageDisabled
-        ///     TreatAsSafe: This code does not expose the variables and is not influenced by external paramaters that do not
-        ///     require unmanaged code access permission to set
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        private static void DemandIfImageBlocked()
-        {
-            if(!isImageDisabledInitialized)
-            {
-                // a performance optimization to ensure we hit the registry only once in the lifetime of the application
-                isImageDisabled = new SecurityCriticalDataForSet<bool>(SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaImageDisable));
-                isImageDisabledInitialized = true;
-            }
-            if (isImageDisabled.Value)
-            {
-                // in case the registry key is '1' then demand MediaPermissionImage.AllImage - not granted in Partial Trust
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.AllImage);
-            }
-            else
-            {
-                // Images are enabled. Then, demand permissions for safe imaging - granted in Partial Trust by default
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                     MediaPermissionVideo.NoVideo,
-                                                     MediaPermissionImage.SafeImage);
-            }
-        }
 
-        /// <SecurityNote>
-        /// Critical - Unmanaged code will eventually create a COM object, need to secure it
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static SafeMILHandle SetupDecoderFromUriOrStream(
             Uri uri,
             Stream stream,
@@ -1155,8 +1037,6 @@ namespace System.Windows.Media.Imaging
             IntPtr decoder = IntPtr.Zero;
             System.IO.Stream bitmapStream = null;
             string mimeType = String.Empty;
-            // check to ensure that images are allowed in partial trust NOP in full trust
-            DemandIfImageBlocked();
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1174,11 +1054,6 @@ namespace System.Windows.Media.Imaging
             {
                 if (uri.IsAbsoluteUri)
                 {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain)
-                    SecurityHelper.DemandMediaPermission(MediaPermissionAudio.NoAudio,
-                                                         MediaPermissionVideo.NoVideo,
-                                                         MediaPermissionImage.SiteOfOriginImage) ;
                     // This code path executes only for pack web requests
                     if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
                     {
@@ -1338,28 +1213,9 @@ namespace System.Windows.Media.Imaging
             string decoderMimeTypes;
             clsId = GetCLSIDFromDecoder(decoderHandle, out decoderMimeTypes);
 
-            // If the mime type of the file does not match the associated decoder,
-            // and if we are in a Partial trust scenario, throw!
-            if ((mimeType != String.Empty) &&
-                (decoderMimeTypes.IndexOf(mimeType, StringComparison.OrdinalIgnoreCase) == -1))
-            {
-                try
-                {
-                    SecurityHelper.DemandUnmanagedCode();
-                }
-                catch(SecurityException)
-                {
-                    throw new ArgumentException(SR.Get(SRID.Image_ContentTypeDoesNotMatchDecoder));
-                }
-            }
-
             return decoderHandle;
         }
 
-        /// <SecurityNote>
-        /// Critical: performs an assert for WebPermission potentially outside the site of origin.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Stream ProcessHttpsFiles(Uri uri, Stream stream)
         {
             Stream bitmapStream = stream;
@@ -1371,63 +1227,21 @@ namespace System.Windows.Media.Imaging
             {
                 WebRequest request = null;
 
-                // Block XDomain from apps deployed over HTTPS (For HTTP, LMZ and UNC apps, is ok to access images through HTTPS)
-                SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                // now, we can Assert permissions because we ensured that only apps deployed through non-HTTPS can access XDomain images
-                (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    WebPermission.RevertAssert();
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
             }
             return bitmapStream;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates and extracts a bitmap stream
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Stream ProcessHttpFiles(Uri uri, Stream stream)
         {
             WebRequest request = null;
             Stream bitmapStream =  stream;
-            SecurityHelper.BlockCrossDomainForHttpsApps(uri);
             // Download only if this content is not already downloaded or stream is not seekable
             if (bitmapStream == null || !bitmapStream.CanSeek)
             {
-                // In this case we first check to see if the consumer has media permissions for
-                // safe media (Site of Origin + Cross domain), if it
-                // does we assert and run the code that requires the assert
-                bool fElevate = false;
-                if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                            MediaPermissionVideo.NoVideo,
-                                                            MediaPermissionImage.SafeImage))
-                {
-                    fElevate = true;
-                }
-
-                if (fElevate)
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    request = WpfWebRequestHelper.CreateRequest(uri);
-                }
-                finally
-                {
-                    if (fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
-                }
+                request = WpfWebRequestHelper.CreateRequest(uri);
 
                 // Download only if this content is not already downloaded or stream is not seekable
                 bitmapStream = WpfWebRequestHelper.GetResponseStream(request);
@@ -1435,76 +1249,14 @@ namespace System.Windows.Media.Imaging
             return bitmapStream;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates and extracts a bitmap stream
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Stream ProcessUncFiles(Uri uri)
         {
-            Stream bitmapStream = null;
 
-            // perform checks for UNC content
-            SecurityHelper.EnforceUncContentAccessRules(uri);
 
-            // In this case we first check to see if the consumer has media permissions for
-            // safe media (Site of Origin + Cross domain), if it
-            // does then we assert else we run the code without the assert
-            bool fElevate = false;
-            if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                        MediaPermissionVideo.NoVideo,
-                                                        MediaPermissionImage.SafeImage))
-            {
-                fElevate = true;
-            }
-
-            if(fElevate)
-            {
-                // since the code above ensures that safe image permission is granted we
-                // can now do an assert to allow cross domain web request
-                (new FileIOPermission(FileIOPermissionAccess.Read, uri.LocalPath)).Assert(); // BlessedAssert
-            }
-            try
-            {
-                // FileStream does a demand for us, so no need to do a demand
-                bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            }
-            finally
-            {
-                if(fElevate)
-                {
-                    FileIOPermission.RevertAssert();
-                }
-            }
-            return bitmapStream;
-        }
-
-        /// <SecurityNote>
-        ///     Critical: This code is used to check and grant access to pixel data and metadata.
-        ///     TreatAsSafe: This code does not elevate
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        void CheckIfSiteOfOrigin()
-        {
-            string uri = null;
-
-            if (CanConvertToString())
-            {
-                // This call returns the URI either as an absolute URI which the user
-                // passed in, in the first place or as the string "image"
-                // we only allow this code to succeed in the case of Uri and if it is site of
-                // origin or pack:. In all other conditions we fail
-
-                uri = ToString();
-            }
-
-            SecurityHelper.DemandMediaAccessPermission(uri);
+            return new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         /// Returns the decoder's CLSID
-        /// <SecurityNote>
-        /// Critical - access unmanaged code to retrieve CLSID.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Guid GetCLSIDFromDecoder(SafeMILHandle decoderHandle, out string decoderMimeTypes)
         {
             Guid clsId;
@@ -1604,11 +1356,6 @@ namespace System.Windows.Media.Imaging
         }
 
         /// Check the cache to see if decoder already exists
-        /// <SecurityNote>
-        /// Critical - Eventually calls code that calls unmanaged code.
-        /// TreatAsSafe - Only checks imaging cache to see object exists
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static BitmapDecoder CheckCache(
             Uri uri,
             out Guid clsId
@@ -1645,10 +1392,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Initialize the codec.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Will eventually create a COM object, need to secure it
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(BitmapDecoder decoder)
         {
             _isBuiltInDecoder = true;
@@ -1693,11 +1436,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Closes the stream if its non-null
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - accesses critical resource _uriStream
-        /// TreatAsSafe - doesn't return the uriStream, just closes it which is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CloseStream()
         {
             if (_uriStream != null)
@@ -1717,11 +1455,6 @@ namespace System.Windows.Media.Imaging
         /// will contain the same underlying frames as the collection
         /// passed in. This is called by the LateBoundBitmapDecoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged code
-        /// TreatAsSafe - only access number of frames in the bitmap, a safe operation
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetupFrames(BitmapDecoder decoder, ReadOnlyCollection<BitmapFrame> frames)
         {
             uint numFrames = 1;
@@ -1794,11 +1527,6 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="bitmapStream"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - manipulates memory, com, and unmanaged data structures.
-        ///  Asserts for FileIOPermission and UnmanagedCode permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr GetIStreamFromStream(ref System.IO.Stream bitmapStream)
         {
             IntPtr  comStream = IntPtr.Zero;
@@ -1911,10 +1639,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Metadata
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access only granted if SiteOfOrigin demanded.
-        /// </SecurityNote>
-        [SecurityCritical]
         private BitmapMetadata _metadata;
 
         /// If the metadata is already cached
@@ -1948,10 +1672,6 @@ namespace System.Windows.Media.Imaging
         internal Uri _baseUri;
 
         /// Uri Stream -- this is the stream that was created from the passed in Uri
-        /// <SecurityNote>
-        ///     Critical: Obtained under elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal Stream _uriStream;
 
         /// CreateOptions
@@ -1972,24 +1692,10 @@ namespace System.Windows.Media.Imaging
         /// SyncObject
         private object _syncObject = new Object();
 
-        // this is data that we cache as a performance optimization. It is ok to do so since we do not want to
-        // handle this key change in the lifetime of this app.
-        private static SecurityCriticalDataForSet<bool> isImageDisabled;
-        /// <SecurityNote>
-        ///     Critical: This variable guards against reinitialization of the cached registry value
-        /// </SecurityNote>
-        [SecurityCritical]
-        private static bool isImageDisabledInitialized;
-
         // For UnmanagedMemoryStream we want to make sure that buffer
         // its pointing to is not getting release until decoder is alive
         private UnmanagedMemoryStream _unmanagedMemoryStream;
 
-        /// <SecurityNote>
-        ///     Critical: This variable guards against closing of the filehandle
-        ///      which gets passed to unmanaged decoder.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeFileHandle _safeFilehandle;
 
         private BitmapDecoder _cachedDecoder;

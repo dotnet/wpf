@@ -12,7 +12,6 @@
 #ifndef MODGLYF_DOT_H_DEFINED
 #define MODGLYF_DOT_H_DEFINED        
 
-[System::Security::SecurityCritical]
 int16 ModGlyfLocaAndHead( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                      TTFACC_FILEBUFFERINFO * pOutBufferInfo,
                      uint8 *puchKeepGlyphList, 

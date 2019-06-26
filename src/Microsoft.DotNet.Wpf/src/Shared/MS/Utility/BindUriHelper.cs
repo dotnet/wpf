@@ -162,8 +162,8 @@ namespace MS.Internal.Utility
             Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
             if (sourceUri != null)
             {
-                SecurityZone sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
-                SecurityZone targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
+                int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
+                int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
 
                 // We don't send any referer when crossing zone
                 if (sourceZone == targetZone)

@@ -80,13 +80,13 @@ namespace MS.Internal.AppModel
             switch (MapUrlToZone(challengeUri))
             {
                 // Always send credentials (including default credentials) to these zones
-                case SecurityZone.Intranet:
-                case SecurityZone.Trusted:
-                case SecurityZone.MyComputer:
+                case NativeMethods.URLZONE_INTRANET:
+                case NativeMethods.URLZONE_TRUSTED:
+                case NativeMethods.URLZONE_LOCAL_MACHINE:
                     return true;
                 // Don't send default credentials to any of these zones
-                case SecurityZone.Internet:
-                case SecurityZone.Untrusted:
+                case NativeMethods.URLZONE_INTERNET:
+                case NativeMethods.URLZONE_UNTRUSTED:
                 default:
                     return !IsDefaultCredentials(credential);
             }
@@ -99,29 +99,13 @@ namespace MS.Internal.AppModel
             return credential == CredentialCache.DefaultCredentials;
         }
 
-        internal static SecurityZone MapUrlToZone(Uri uri)
+        internal static int MapUrlToZone(Uri uri)
         {
             EnsureSecurityManager();
 
             int targetZone;
             _securityManager.MapUrlToZone(BindUriHelper.UriToString(uri), out targetZone, 0);
-
-            // The enum is directly mappable, but taking no chances...
-            switch (targetZone)
-            {
-                case NativeMethods.URLZONE_LOCAL_MACHINE:
-                    return SecurityZone.MyComputer;
-                case NativeMethods.URLZONE_INTERNET:
-                    return SecurityZone.Internet;
-                case NativeMethods.URLZONE_INTRANET:
-                    return SecurityZone.Intranet;
-                case NativeMethods.URLZONE_TRUSTED:
-                    return SecurityZone.Trusted;
-                case NativeMethods.URLZONE_UNTRUSTED:
-                    return SecurityZone.Untrusted;
-            }
-
-            return SecurityZone.NoZone;
+            return targetZone;
         }
 
         private static void EnsureSecurityManager()

@@ -13,10 +13,10 @@
 //  It should check the command line for the /verbose switch, and set
 //  Log.Verbose = true if the switch is found.
 //
-//  It should call Log.Banner(<testName>, <owner>) to produce the standard
+//  It should call Log.Banner(<testName>) to produce the standard
 //  introductory line
 //
-// 	    Container DRTs starting [rogerch]... use /verbose for full output.
+// 	    Container DRTs starting... use /verbose for full output.
 //
 //  Finally, it should call Log.AlwaysWriteLine() for output that must always
 //  appear, or Log.WriteLine() for output that appears only if Verbose is true.

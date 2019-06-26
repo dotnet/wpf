@@ -28,7 +28,7 @@ namespace MS.Utility
 {
     public class SpewWriter
     {
-        internal void Banner(string drtName, string owner)
+        public void Banner(string drtName, string owner)
         {
             StringBuilder sb = new StringBuilder();
             if (drtName != null)
@@ -42,47 +42,47 @@ namespace MS.Utility
             AlwaysWriteLine(sb.ToString());
         }
 
-        internal void WriteLine()
+        public void WriteLine()
         {
             if (_verbose)
                 Console.WriteLine();
         }
 
-        internal void Write(string outText)
+        public void Write(string outText)
         {
             if (_verbose)
                 Console.Write(outText);
         }
 
-        internal void WriteLine(string outText)
+        public void WriteLine(string outText)
         {
             if (_verbose)
                 Console.WriteLine(outText);
         }
 
         // Single param covers 99% of cases
-        internal void WriteLine(string outText, object outInfo)
+        public void WriteLine(string outText, object outInfo)
         {
             if (_verbose)
                 Console.WriteLine(outText, outInfo);
         }
     
-        internal void AlwaysWriteLine()
+        public void AlwaysWriteLine()
         {
             Console.WriteLine();
         }
     
-        internal void AlwaysWriteLine(string outText)
+        public void AlwaysWriteLine(string outText)
         {
             Console.WriteLine(outText);
         }
 
-        internal void AlwaysWriteLine(string outText, object outInfo)
+        public void AlwaysWriteLine(string outText, object outInfo)
         {
             Console.WriteLine(outText, outInfo);
         }
 
-        internal bool Verbose
+        public bool Verbose
         {
             get { return _verbose; }
             set { _verbose = value; }

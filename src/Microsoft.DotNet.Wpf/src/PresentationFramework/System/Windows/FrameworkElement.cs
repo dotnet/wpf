@@ -33,7 +33,6 @@ using MS.Utility;
 using MS.Internal.Automation;
 using MS.Internal.PtsTable;                 // BodyContainerProxy
 using System.Security;
-using System.Security.Permissions;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and

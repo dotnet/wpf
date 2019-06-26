@@ -12,7 +12,6 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -858,47 +857,17 @@ namespace System.Windows.Interop
             IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
             if (keyboardInputSite != null)
             {
-                if (_fTrusted.Value == true)
-                {
-                    new UIPermission(PermissionState.Unrestricted).Assert(); //BlessedAssert:
-                }
+                // Derived classes that implement IKeyboardInputSink should support setting it to null.
+                ((IKeyboardInputSink)this).KeyboardInputSite = null;
 
-                try
-                {
-                    // Derived classes that implement IKeyboardInputSink should support setting it to null.
-                    ((IKeyboardInputSink)this).KeyboardInputSite = null;
-
-                    keyboardInputSite.Unregister();
-                }
-                finally
-                {
-                    if (_fTrusted.Value == true)
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
+                keyboardInputSite.Unregister();
             }
 
             // Add ourselves as an IKeyboardInputSinks child of our containing window.
             IKeyboardInputSink source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */) as IKeyboardInputSink;
             if(source != null)
             {
-                if (_fTrusted.Value == true)
-                {
-                    new UIPermission(PermissionState.Unrestricted).Assert(); //BlessedAssert:
-                }
-
-                try
-                {
-                    ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
-                }
-                finally
-                {
-                    if (_fTrusted.Value == true)
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
+                ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
             }
 
             BuildOrReparentWindow();

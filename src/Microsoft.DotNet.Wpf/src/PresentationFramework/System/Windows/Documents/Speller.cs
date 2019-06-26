@@ -15,7 +15,6 @@ namespace System.Windows.Documents
     using System.Collections;
     using System.Collections.Generic;
     using System.Security;
-    using System.Security.Permissions;
     using System.Runtime.InteropServices;
     using MS.Win32;
     using System.Windows.Controls;
@@ -1573,17 +1572,8 @@ namespace System.Windows.Documents
             string tempFolder;
             Uri tempLocationUri;
 
-            // We need environment permission to call Path.GetTempPath()
-            new EnvironmentPermission(PermissionState.Unrestricted).Assert();
-            try
-            {
-                tempLocationUri = LoadPackFile(item);
-                tempFolder = System.IO.Path.GetTempPath();
-            }
-            finally
-            {
-                EnvironmentPermission.RevertAssert();
-            }
+            tempLocationUri = LoadPackFile(item);
+            tempFolder = System.IO.Path.GetTempPath();
 
             try
             {
@@ -1605,7 +1595,6 @@ namespace System.Windows.Documents
         {
             if (tempLocationUri != null)
             {
-                new FileIOPermission(PermissionState.Unrestricted).Assert();
                 try
                 {
                     System.IO.File.Delete(tempLocationUri.LocalPath);
@@ -1614,10 +1603,6 @@ namespace System.Windows.Documents
                 {
                     System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Failure to delete temporary file with custom dictionary data. file Uri:{0},exception:{1}", tempLocationUri.ToString(), e.ToString()));
                     throw;
-                }
-                finally
-                {
-                    FileIOPermission.RevertAssert();
                 }
             }
         }

@@ -18,7 +18,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32;
 using System.IO.Packaging;
 using System.Windows;
@@ -347,22 +346,15 @@ namespace MS.Internal.AppModel
             unsafe
             {
                 String targetString = BindUriHelper.UriToString(target);
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert: 
-                try
-                {
-                    _secMgr.ProcessUrlAction(targetString,
-                                              NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
-                                              (byte*)&policy,
-                                              Marshal.SizeOf(typeof(int)),
-                                              null,
-                                              0,
-                                              NativeMethods.PUAF_NOUI,
-                                              0);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+
+                _secMgr.ProcessUrlAction(targetString,
+                                            NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
+                                            (byte*)&policy,
+                                            Marshal.SizeOf(typeof(int)),
+                                            null,
+                                            0,
+                                            NativeMethods.PUAF_NOUI,
+                                            0);
             }
 
             return (policy == NativeMethods.URLPOLICY_QUERY);
@@ -385,15 +377,8 @@ namespace MS.Internal.AppModel
                         // This enables any dialogs popped to be modal to our window. 
                         // 
                         _secMgrSite = new SecurityMgrSite();
-                        new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert: 
-                        try
-                        {
-                            _secMgr.SetSecuritySite((NativeMethods.IInternetSecurityMgrSite)_secMgrSite);
-                        }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
+
+                        _secMgr.SetSecuritySite((NativeMethods.IInternetSecurityMgrSite)_secMgrSite);
                     }
                 }
             }
@@ -405,22 +390,14 @@ namespace MS.Internal.AppModel
         {
             if (_secMgr != null)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();  // BlessedAssert: 
-                try
+                lock (_lockObj)
                 {
-                    lock (_lockObj)
+                    if (_secMgr != null)
                     {
-                        if (_secMgr != null)
-                        {
-                            _secMgr.SetSecuritySite(null);
-                            _secMgrSite = null;
-                            _secMgr = null;
-                        }
+                        _secMgr.SetSecuritySite(null);
+                        _secMgrSite = null;
+                        _secMgr = null;
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
                 }
             }
         }

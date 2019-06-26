@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;

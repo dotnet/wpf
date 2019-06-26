@@ -15,7 +15,6 @@ using MS.Internal;
 using System.Reflection;
 //using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Security;
 
 namespace System.Windows.Automation

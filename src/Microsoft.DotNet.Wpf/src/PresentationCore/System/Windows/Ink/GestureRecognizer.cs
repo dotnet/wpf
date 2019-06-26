@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using SecurityHelper=MS.Internal.SecurityHelper;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;

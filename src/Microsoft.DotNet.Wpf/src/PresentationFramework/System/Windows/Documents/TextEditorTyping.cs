@@ -24,7 +24,6 @@ namespace System.Windows.Documents
     using System.Windows.Media;
     using System.Windows.Markup;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Interop;
     using MS.Utility;
     using MS.Win32;
@@ -1624,15 +1623,7 @@ namespace System.Windows.Documents
             if (win32Window != null)
             {
                 IntPtr hwnd = IntPtr.Zero;
-                new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert
-                try
-                {
-                    hwnd = win32Window.Handle;
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                hwnd = win32Window.Handle;
 
                 if (hwnd != (IntPtr)0)
                 {

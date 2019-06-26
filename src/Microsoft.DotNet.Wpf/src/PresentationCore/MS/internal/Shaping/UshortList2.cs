@@ -13,7 +13,6 @@ using System.Collections;
 using System.Diagnostics;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 
 namespace MS.Internal.Shaping
 {

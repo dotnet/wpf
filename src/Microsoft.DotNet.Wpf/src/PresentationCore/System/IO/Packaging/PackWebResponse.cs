@@ -23,7 +23,6 @@ using System.Globalization;             // for CultureInfo
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using MS.Internal.IO.Packaging;              // for ResponseStream
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Navigation;
 using MS.Utility;
 using MS.Internal;

@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Collections;
 using System.Diagnostics;

@@ -9,7 +9,6 @@
 using namespace System::Runtime::InteropServices;
 using namespace MS::Internal::Text::TextInterface::Interfaces;
 #ifndef _CLR_NETCORE
-using namespace System::Security::Permissions;
 #endif
 using namespace System::Threading;
 

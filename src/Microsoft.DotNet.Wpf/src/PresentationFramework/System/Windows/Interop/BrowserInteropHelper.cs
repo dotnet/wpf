@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Win32;
@@ -221,16 +220,8 @@ namespace System.Windows.Interop
 
         internal static void InitializeHostFilterInput()
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert(); // Blessed assert
-            try
-            {
-                ComponentDispatcher.ThreadFilterMessage +=
-                                    new ThreadMessageEventHandler(HostFilterInput);
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            ComponentDispatcher.ThreadFilterMessage +=
+                                new ThreadMessageEventHandler(HostFilterInput);
         }
 
         private static void EnsureScriptInteropAllowed()
@@ -239,8 +230,6 @@ namespace System.Windows.Interop
             {
                 _isScriptInteropDisabled.Value = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
             }
-
-            (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
         }
 
         private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;

@@ -11,7 +11,6 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 

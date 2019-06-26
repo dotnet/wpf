@@ -18,7 +18,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.RightsManagement;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Text;
@@ -930,39 +929,23 @@ namespace MS.Internal.Security.RightsManagement
         private static Uri GetRegistryPassportCertificationUrl()
         {
             // This Function Will return null, if the registry entry is missing
-
-            // Acquire permissions to read the one key we care about from the registry
-            RegistryPermission permission = new RegistryPermission(
-                    RegistryPermissionAccess.Read,
-                    System.Security.AccessControl.AccessControlActions.View,
-                    _passportActivationRegistryFullKeyName);
-
-            permission.Assert();
-
-            try
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(_passportActivationRegistryKeyName);
+            if (key == null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(_passportActivationRegistryKeyName);
-                if (key == null)
+                return null;
+            }
+            else
+            {
+                object keyValue = key.GetValue(null); // this should get the default value
+                string stringValue = keyValue as string;
+                if (stringValue != null)
                 {
-                    return null;
+                    return new Uri(stringValue);
                 }
                 else
                 {
-                    object keyValue = key.GetValue(null); // this should get the default value
-                    string stringValue = keyValue as string;
-                    if (stringValue != null)
-                    {
-                        return new Uri(stringValue);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
         }
 

@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Collections; // ArrayList
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Threading;
     using System.Windows.Input;
     using System.Windows.Controls; // ScrollChangedEventArgs

@@ -27,7 +27,6 @@ using System.Windows.Markup;
 using System.Windows.Converters;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;

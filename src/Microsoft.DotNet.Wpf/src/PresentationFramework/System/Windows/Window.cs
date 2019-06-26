@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -3502,8 +3501,6 @@ namespace System.Windows
         ///     for browser hosted case
         private void Initialize()
         {
-            // AVTempUIPermission avtUIPermission = new AVTempUIPermission(AVTUIPermissionNewWindow.LaunchNewWindows);
-            // CASRemoval:avtUIPermission.Demand();
 
             //  this makes MeasureCore / ArrangeCore to defer to direct MeasureOverride and ArrangeOverride calls
             //  without reading Width / Height properties and modifying input constraint size parameter...
@@ -5149,17 +5146,6 @@ namespace System.Windows
 
         private void OnWindowStyleChanged(WindowStyle windowStyle)
         {
-            //Per our conversation with Aaron today, in M6 we are going to demand UnrestrictedFullScreen permission for
-            //setting WindowStyle to None. But there will be changes in M7 so that we can differentiate between FullScreen
-            //and NoBorder window, so we comment this section out for future references.
-            //if ((value == WindowStyle.None) && (WindowState == WindowState.Maximized))
-            //if (windowStyle == WindowStyle.None)
-            //{
-            //    AVTempUIPermission avtUIPermission = new AVTempUIPermission(AVTUIPermissionFullScreen.UnrestrictedFullScreen);
-
-                //CASRemoval:avtUIPermission.Demand();
-            //}
-
             // Adding check for IsCompositionTargetInvalid
             if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
             {
@@ -5475,17 +5461,9 @@ namespace System.Windows
 
         private void SafeStyleSetter()
         {
-            (new UIPermission(UIPermissionWindow.AllWindows)).Assert();
-            try//blessed assert to toggle visibility, this does not let random styles from being set
+            using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd))
             {
-                using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd))
-                {
-                    _Style = _isVisible ? (_Style | NativeMethods.WS_VISIBLE) : _Style;
-                }
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
+                _Style = _isVisible ? (_Style | NativeMethods.WS_VISIBLE) : _Style;
             }
         }
         private static bool _ValidateSizeToContentCallback(object value)

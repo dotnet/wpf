@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;

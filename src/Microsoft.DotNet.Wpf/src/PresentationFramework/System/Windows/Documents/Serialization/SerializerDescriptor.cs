@@ -17,7 +17,6 @@ namespace System.Windows.Documents.Serialization
     using System.Reflection;
     using System.Windows;
     using System.Security;
-    using System.Security.Permissions;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.Win32;
     using MS.Internal.PresentationFramework;

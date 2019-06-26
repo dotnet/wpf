@@ -11,7 +11,6 @@ using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationCore;
 
 namespace MS.Internal

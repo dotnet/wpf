@@ -16,7 +16,6 @@ namespace MS.Internal.Printing.Configuration
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using Microsoft.Internal;
     using MS.Internal.ReachFramework;

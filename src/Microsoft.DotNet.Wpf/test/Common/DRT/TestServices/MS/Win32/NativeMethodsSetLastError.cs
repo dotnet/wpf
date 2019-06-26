@@ -28,7 +28,6 @@ namespace MS.Internal.Drt
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Security;
-    using System.Security.Permissions;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows;

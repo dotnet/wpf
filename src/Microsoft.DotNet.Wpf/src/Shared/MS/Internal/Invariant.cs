@@ -19,7 +19,6 @@ namespace MS.Internal
 {
     using System;
     using System.Security; 
-    using System.Security.Permissions; 
     using Microsoft.Win32;
     using System.Diagnostics;
     using System.Windows;
@@ -50,25 +49,16 @@ namespace MS.Internal
             //
             // Let the user override the inital value of the Strict property from the registry.
             //
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
 
-            new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\" + RegistryKeys.WPF).Assert(); 
-            try
+            if (key != null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
+                object obj = key.GetValue("InvariantStrict");
 
-                if (key != null)
+                if (obj is int)
                 {
-                    object obj = key.GetValue("InvariantStrict");
-
-                    if (obj is int)
-                    {
-                        _strict = (int)obj != 0;
-                    }
+                    _strict = (int)obj != 0;
                 }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAll(); 
             }
 #endif // PRERELEASE
         }
@@ -250,20 +240,9 @@ namespace MS.Internal
                 //extracting all the data under an elevation.
                 object dbgJITDebugLaunchSettingValue;
                 string dbgManagedDebuggerValue;
-                PermissionSet ps = new PermissionSet(PermissionState.None);
-                RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\.NetFramework");
-                ps.AddPermission(regPerm);
-                ps.Assert();//BlessedAssert
-                try
-                {
-                    key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
-                    dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                    dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
-                }
-                finally
-                {
-                    PermissionSet.RevertAssert();
-                }
+                key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
+                dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
+                dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
                 //
                 // Check for the enable.
                 //

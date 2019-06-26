@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Security;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Security.Permissions;
 using MS.Win32;
 
 namespace System.Windows.Input

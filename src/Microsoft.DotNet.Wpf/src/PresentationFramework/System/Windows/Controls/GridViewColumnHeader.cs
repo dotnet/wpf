@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;       // SafeHandle
 using System.Security;                      // 
-using System.Security.Permissions; 
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // ButtonBase
 using System.Windows.Input;                 // MouseButtonEventArgs
@@ -760,24 +759,7 @@ namespace System.Windows.Controls
             Debug.Assert(stream != null, "stream is null");
             if (stream != null)
             {
-                PermissionSet permissions = new PermissionSet(null);
-
-                FileIOPermission filePermission = new FileIOPermission(PermissionState.None);
-                filePermission.AllLocalFiles = FileIOPermissionAccess.Write;
-                permissions.AddPermission(filePermission);
-                
-                permissions.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-                permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode));
-                permissions.Assert();
-
-                try
-                {
-                    cursor = new Cursor(stream);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                cursor = new Cursor(stream);
             }
 
             return cursor;

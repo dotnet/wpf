@@ -17,7 +17,6 @@ using MS.Internal;
 using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;

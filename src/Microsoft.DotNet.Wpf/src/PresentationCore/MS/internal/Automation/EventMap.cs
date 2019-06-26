@@ -14,7 +14,6 @@
 using System;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -283,21 +282,9 @@ namespace MS.Internal.Automation
             PresentationSource source = argsArray[0] as PresentationSource;
             if (source != null && !source.IsDisposed)
             {
-                bool needAsserts = System.Security.SecurityManager.CurrentThreadRequiresSecurityContextCapture();
-                if (needAsserts)
-                {
-                    // permission required to set RootVisual
-                    new UIPermission(UIPermissionWindow.AllWindows).Assert();
-                }
-
                 // setting the RootVisual to itself triggers the logic to
                 // add to the AutomationEvents list
                 source.RootVisual = source.RootVisual;
-
-                if (needAsserts)
-                {
-                    UIPermission.RevertAssert();
-                }
             }
             return null;
         }

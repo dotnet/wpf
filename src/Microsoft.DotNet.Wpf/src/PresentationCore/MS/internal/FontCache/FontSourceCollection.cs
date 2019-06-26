@@ -18,7 +18,6 @@ using System.IO.Packaging;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -129,64 +128,42 @@ namespace MS.Internal.FontCache
                     {
                         if (_isWindowsFonts)
                         {
-                            PermissionSet permissionSet = new PermissionSet(null);
-
-                            // Read and path discovery permission for the %windir%\font path.
-                            permissionSet.AddPermission(new FileIOPermission(
-                                FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery,
-                                Util.WindowsFontsUriObject.LocalPath));
-
-                            // Registry read permissions for the Fonts system registry entry.
-                            permissionSet.AddPermission(new RegistryPermission(
-                                RegistryPermissionAccess.Read,
-                                InstalledWindowsFontsRegistryKeyFullPath));
-
-                            permissionSet.Assert(); // BlessedAssert
-
-                            try
+                            if (_tryGetCompositeFontsOnly)
                             {
-                                if (_tryGetCompositeFontsOnly)
-                                {
-                                    files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                                    isOnlyCompositeFontFiles = true;
-                                }
-                                else
-                                {
-                                    // fontPaths accumulates font file paths obtained from the registry and the file system
-                                    // This collection is a set, i.e. only keys matter, not values.
-                                    Dictionary<string, object> fontPaths = new Dictionary<string, object>(512, StringComparer.OrdinalIgnoreCase);
+                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                                isOnlyCompositeFontFiles = true;
+                            }
+                            else
+                            {
+                                // fontPaths accumulates font file paths obtained from the registry and the file system
+                                // This collection is a set, i.e. only keys matter, not values.
+                                Dictionary<string, object> fontPaths = new Dictionary<string, object>(512, StringComparer.OrdinalIgnoreCase);
 
-                                    using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
+                                using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
+                                {
+                                    // The registry key should be present on a valid Windows installation.
+                                    Invariant.Assert(fontsKey != null);
+
+                                    foreach (string fontValue in fontsKey.GetValueNames())
                                     {
-                                        // The registry key should be present on a valid Windows installation.
-                                        Invariant.Assert(fontsKey != null);
-
-                                        foreach (string fontValue in fontsKey.GetValueNames())
+                                        string fileName = fontsKey.GetValue(fontValue) as string;
+                                        if (fileName != null)
                                         {
-                                            string fileName = fontsKey.GetValue(fontValue) as string;
-                                            if (fileName != null)
-                                            {
-                                                // See if the path doesn't contain any directory information.
-                                                // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.
-                                                if (Path.GetFileName(fileName) == fileName)
-                                                    fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
+                                            // See if the path doesn't contain any directory information.
+                                            // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.
+                                            if (Path.GetFileName(fileName) == fileName)
+                                                fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
 
-                                                fontPaths[fileName] = null;
-                                            }
+                                            fontPaths[fileName] = null;
                                         }
                                     }
-
-                                    foreach (string file in Directory.GetFiles(_uri.LocalPath))
-                                    {
-                                        fontPaths[file] = null;
-                                    }
-                                    files = fontPaths.Keys;
                                 }
-                            }
-                            finally
-                            {
-                                if (_isWindowsFonts)
-                                    CodeAccessPermission.RevertAssert();
+
+                                foreach (string file in Directory.GetFiles(_uri.LocalPath))
+                                {
+                                    fontPaths[file] = null;
+                                }
+                                files = fontPaths.Keys;
                             }
 }
                         else

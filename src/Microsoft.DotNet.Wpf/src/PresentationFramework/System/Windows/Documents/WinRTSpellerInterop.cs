@@ -23,7 +23,6 @@ namespace System.Windows.Documents
     using System.Runtime.InteropServices;
     using System.Runtime.CompilerServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Windows;
@@ -46,14 +45,6 @@ namespace System.Windows.Documents
         /// </exception>
         internal WinRTSpellerInterop()
         {
-            // When the CLR consumes an unmanaged COM object, it invokes
-            // System.ComponentModel.LicenseManager.LicenseInteropHelper.GetCurrentContextInfo
-            // which in turn calls Assembly.GetName. Assembly.GetName requires FileIOPermission for
-            // access to the path of the assembly.
-            FileIOPermission fiop = new FileIOPermission(PermissionState.None);
-            fiop.AllLocalFiles = FileIOPermissionAccess.PathDiscovery;
-            fiop.Assert();
-
             try
             {
                 SpellCheckerFactory.Create(shouldSuppressCOMExceptions: false);
@@ -64,10 +55,6 @@ namespace System.Windows.Documents
             {
                 Dispose();
                 throw new PlatformNotSupportedException(string.Empty, ex);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
             }
 
             _spellCheckers = new Dictionary<CultureInfo, Tuple<WordsSegmenter, SpellChecker>>();
@@ -227,19 +214,12 @@ namespace System.Windows.Documents
             string ietfLanguageTag = data.Item1;
             string filePath = data.Item2;
 
-            try
+            using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
             {
-                new FileIOPermission(FileIOPermissionAccess.AllAccess, filePath).Demand();
-                using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
-                {
-                    SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
-                }
+                SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
+            }
 
-                FileHelper.DeleteTemporaryFile(filePath);
-            }
-            catch(SecurityException)
-            {
-            }
+            FileHelper.DeleteTemporaryFile(filePath);
         }
 
         /// <summary>
@@ -266,16 +246,7 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            // Assert neccessary security to load trusted files.
-            new FileIOPermission(FileIOPermissionAccess.Read, trustedFolder).Assert();
-            try
-            {
-                return LoadDictionaryImpl(item.LocalPath);
-            }
-            finally
-            {
-                FileIOPermission.RevertAssert();
-            }
+            return LoadDictionaryImpl(item.LocalPath);
         }
 
         /// <summary>
@@ -463,15 +434,6 @@ namespace System.Windows.Documents
                 return new Tuple<string, string>(null, null);
             }
 
-            try
-            {
-                new FileIOPermission(FileIOPermissionAccess.Read, lexiconFilePath).Demand();
-            }
-            catch (SecurityException se)
-            {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), se);
-            }
-
             if (!File.Exists(lexiconFilePath))
             {
                 throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath));
@@ -522,7 +484,7 @@ namespace System.Windows.Documents
 
                 return new Tuple<string, string>(ietfLanguageTag, lexiconPrivateCopyPath);
             }
-            catch (Exception e) when ((e is SecurityException) || (e is ArgumentException) || !fileCopied)
+            catch (Exception e) when ((e is ArgumentException) || !fileCopied)
             {
                 // IUserDictionariesRegistrar.RegisterUserDictionary can
                 // throw ArgumentException on failure. Cleanup the temp file if
@@ -567,8 +529,6 @@ namespace System.Windows.Documents
                     foreach (string filePath in items.Value)
                         try
                         {
-                            new FileIOPermission(FileIOPermissionAccess.AllAccess, filePath).Demand();
-
                             using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
                             {
                                 SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
@@ -655,8 +615,6 @@ namespace System.Windows.Documents
         /// <param name="targetPath"></param>
         private static void CopyToUnicodeFile(string sourcePath, FileStream targetStream)
         {
-            new FileIOPermission(FileIOPermissionAccess.Read, sourcePath).Demand();
-
             bool utf16LEEncoding = false;
             using (FileStream sourceStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read))
             {

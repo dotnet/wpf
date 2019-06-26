@@ -37,7 +37,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -581,7 +580,6 @@ namespace MS.Internal.AppModel
                 //persist BaseUri as well
                 BrowserJournal browserJournal = new BrowserJournal(journal, BindUriHelper.BaseUri);
 
-                new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).Assert();
                 try
                 {
                     saveStream.WriteByte(BrowserJournalHeader);
@@ -598,10 +596,6 @@ namespace MS.Internal.AppModel
                     // The application is shutting down and the exception would not be reported anyway.
                     // This is here to help with debugging and failure analysis.
                     Invariant.Assert(false, "Failed to serialize the navigation journal: " + e);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAll() ;
                 }
             }
             else
@@ -776,17 +770,8 @@ namespace MS.Internal.AppModel
                     
                     case BrowserJournalHeader:
                     {
-                        try
-                        {
-                            new SecurityPermission(SecurityPermissionFlag.SerializationFormatter).Demand();
-                            BinaryFormatter formatter = new BinaryFormatter();
-                            deserialized = formatter.Deserialize(inputStream);
-                        }
-                        catch (SecurityException)
-                        {
-                            deserialized = null;
-                        }
-                        
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        deserialized = formatter.Deserialize(inputStream);
                         break;
                     }
                     

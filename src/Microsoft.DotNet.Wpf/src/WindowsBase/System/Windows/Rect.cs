@@ -17,7 +17,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.WindowsBase;
 
 namespace System.Windows

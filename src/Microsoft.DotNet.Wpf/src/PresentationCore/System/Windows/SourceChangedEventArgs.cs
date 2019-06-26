@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32;

@@ -23,7 +23,6 @@ using System.Windows.Xps.Packaging;
 using Microsoft.Internal.AlphaFlattener;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization

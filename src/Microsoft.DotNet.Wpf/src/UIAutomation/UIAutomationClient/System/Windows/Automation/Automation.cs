@@ -13,7 +13,6 @@ using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Diagnostics;
 using MS.Internal.Automation;
@@ -233,8 +232,6 @@ namespace System.Windows.Automation
             Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, SRID.EventIdMustNotBeStructureChanged );
             Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, SRID.EventIdMustNotBeAutomationPropertyChanged );
 
-            //CASRemoval:AutomationPermission.Demand( AutomationPermissionFlag.Read );
-
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener( eventId, element, eventHandler );
         }
@@ -297,8 +294,6 @@ namespace System.Windows.Automation
             Misc.ValidateArgumentNonNull(element, "element" );
             Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
 
-            //CASRemoval:AutomationPermission.Demand( AutomationPermissionFlag.Read );
-
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener(AutomationElement.AutomationPropertyChangedEvent, element, eventHandler);
         }
@@ -339,7 +334,6 @@ namespace System.Windows.Automation
         {
             Misc.ValidateArgumentNonNull(element, "element");
             Misc.ValidateArgumentNonNull(eventHandler, "eventHandler");
-            //CASRemoval:AutomationPermission.Demand(AutomationPermissionFlag.Read);
 
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener(AutomationElement.StructureChangedEvent, element, eventHandler);
@@ -383,8 +377,6 @@ namespace System.Windows.Automation
         {
             Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
 
-            //CASRemoval:AutomationPermission.Demand( AutomationPermissionFlag.Read );
-
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveFocusListener(eventHandler);
         }
@@ -399,8 +391,6 @@ namespace System.Windows.Automation
         /// </outside_see>
         public static void RemoveAllEventHandlers()
         {
-            //CASRemoval:AutomationPermission.Demand( AutomationPermissionFlag.Read );
-
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveAllListeners();
         }

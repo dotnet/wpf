@@ -18,7 +18,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Internal.Controls;
 using MS.Internal;
@@ -1144,16 +1143,7 @@ namespace System.Windows.Input
             if (inputSink != null)
             {
                 IKeyboardInputSite ikis = null;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();  // BlessedAssert
-                try
-                {
-                    ikis = inputSink.KeyboardInputSite;
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                ikis = inputSink.KeyboardInputSite;
 
                 if (ikis != null && ShouldNavigateOutsidePresentationSource(currentElement, request))
                 {

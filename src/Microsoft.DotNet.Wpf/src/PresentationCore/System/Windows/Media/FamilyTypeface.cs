@@ -19,7 +19,6 @@ using System.ComponentModel;
 using System.Windows.Markup;    // for XmlLanguage
 using MS.Internal.FontFace;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;

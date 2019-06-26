@@ -38,7 +38,6 @@ namespace System.Windows.Documents
     using System.Text;
     using MS.Internal.IO.Packaging;
     using System.Security;
-    using System.Security.Permissions;
 
     using PackUriHelper = System.IO.Packaging.PackUriHelper;
     //=====================================================================

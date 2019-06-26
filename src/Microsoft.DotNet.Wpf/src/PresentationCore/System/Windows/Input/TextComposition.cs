@@ -19,7 +19,6 @@ using System.Text;
 using System.Windows.Threading;
 using System.Windows;
 using System.Security; 
-using System.Security.Permissions; 
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;

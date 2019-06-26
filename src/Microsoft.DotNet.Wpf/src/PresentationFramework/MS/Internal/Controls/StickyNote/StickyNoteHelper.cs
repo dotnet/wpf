@@ -22,7 +22,6 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Annotations;

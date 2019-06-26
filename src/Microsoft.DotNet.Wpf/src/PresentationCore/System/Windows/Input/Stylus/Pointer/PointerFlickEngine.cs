@@ -14,7 +14,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;

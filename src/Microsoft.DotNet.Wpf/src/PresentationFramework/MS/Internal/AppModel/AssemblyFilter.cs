@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using MS.Win32;
 using Microsoft.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Text;
 using MS.Internal.AppModel;
@@ -51,27 +50,20 @@ namespace MS.Internal
                     // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
                     if (a.GlobalAssemblyCache)
                     {
-                        object[] aptca = a.GetCustomAttributes(typeof(AllowPartiallyTrustedCallersAttribute), false);
-                        // if the dll has APTCA
-                        if (aptca.Length > 0 && aptca[0] is AllowPartiallyTrustedCallersAttribute)
+                        string assemblyName = AssemblyNameWithFileVersion(a);
+                        // If we are on the disallowed list kill the application domain
+                        if (AssemblyOnDisallowedList(assemblyName))
                         {
-                            string assemblyName = AssemblyNameWithFileVersion(a);
-                            // If we are on the disallowed list kill the application domain
-                            if (AssemblyOnDisallowedList(assemblyName))
+                            // Kill the application domain
+                            UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
+                            // I want to ensure that the process really dies
+                            try
                             {
-                                // Kill the application domain
-                                UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
-                                // I want to ensure that the process really dies
-                                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();//BlessedAssert
-                                try
-                                {
-                                    System.Environment.Exit(-1);
-                                }
-                                finally
-                                {
-                                    SecurityPermission.RevertAssert();
-                                    Debug.Fail("Environment.Exit() failed.");
-                                }
+                                System.Environment.Exit(-1);
+                            }
+                            finally
+                            {
+                                Debug.Fail("Environment.Exit() failed.");
                             }
                         }
                     }
@@ -84,16 +76,8 @@ namespace MS.Internal
         {
             FileVersionInfo fileVersionInfo;
             StringBuilder sb = new StringBuilder(a.FullName);
-            // we need unrestricted here because the location is demands too.
-            (new FileIOPermission(PermissionState.Unrestricted)).Assert();//BlessedAssert
-            try
-            {
-                fileVersionInfo = FileVersionInfo.GetVersionInfo(a.Location);
-            }
-            finally
-            {
-                FileIOPermission.RevertAssert();
-            }
+
+            fileVersionInfo = FileVersionInfo.GetVersionInfo(a.Location);
             if (fileVersionInfo != null && fileVersionInfo.ProductVersion != null)
             {
                 sb.Append(FILEVERSION_STRING + fileVersionInfo.ProductVersion);
@@ -122,36 +106,28 @@ namespace MS.Internal
         {
             string[] disallowedAssemblies;
             RegistryKey featureKey;
-            //Assert for read access to HKLM\Software\Microsoft\.NetFramework\Policy\APTCA
-            (new RegistryPermission(RegistryPermissionAccess.Read, KILL_BIT_REGISTRY_HIVE + KILL_BIT_REGISTRY_LOCATION)).Assert();//BlessedAssert
-            try
+
+            // open the key and read the value
+            featureKey = Registry.LocalMachine.OpenSubKey(KILL_BIT_REGISTRY_LOCATION);
+            if (featureKey != null)
             {
-                // open the key and read the value
-                featureKey = Registry.LocalMachine.OpenSubKey(KILL_BIT_REGISTRY_LOCATION);
-                if (featureKey != null)
+                // Enumerate through all keys and populate dictionary
+                disallowedAssemblies = featureKey.GetSubKeyNames();
+                // iterate over this list and for each extract the APTCA_FLAG value and set it in the 
+                // dictionary
+                foreach (string assemblyName in disallowedAssemblies)
                 {
-                    // Enumerate through all keys and populate dictionary
-                    disallowedAssemblies = featureKey.GetSubKeyNames();
-                    // iterate over this list and for each extract the APTCA_FLAG value and set it in the 
-                    // dictionary
-                    foreach (string assemblyName in disallowedAssemblies)
+                    featureKey = Registry.LocalMachine.OpenSubKey(KILL_BIT_REGISTRY_LOCATION + @"\" + assemblyName);
+                    object keyValue = featureKey.GetValue(SUBKEY_VALUE);
+                    // if there exists a value and it is 1 add to hash table
+                    if ((keyValue != null) && (int)(keyValue) == 1)
                     {
-                        featureKey = Registry.LocalMachine.OpenSubKey(KILL_BIT_REGISTRY_LOCATION + @"\" + assemblyName);
-                        object keyValue = featureKey.GetValue(SUBKEY_VALUE);
-                        // if there exists a value and it is 1 add to hash table
-                        if ((keyValue != null) && (int)(keyValue) == 1)
+                        if (!_assemblyList.Value.Contains(assemblyName))
                         {
-                            if (!_assemblyList.Value.Contains(assemblyName))
-                            {
-                                _assemblyList.Value.Add(assemblyName.ToLower(System.Globalization.CultureInfo.InvariantCulture).Trim());
-                            }
+                            _assemblyList.Value.Add(assemblyName.ToLower(System.Globalization.CultureInfo.InvariantCulture).Trim());
                         }
                     }
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
         }
 

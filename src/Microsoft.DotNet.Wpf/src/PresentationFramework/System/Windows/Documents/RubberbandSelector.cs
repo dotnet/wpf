@@ -21,7 +21,6 @@ namespace System.Windows.Documents
     using System.IO;
     using System.Collections.Generic;
     using System.Security ;
-    using System.Security.Permissions ;
     using System.Diagnostics;
 
 

@@ -16,7 +16,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Windows;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;

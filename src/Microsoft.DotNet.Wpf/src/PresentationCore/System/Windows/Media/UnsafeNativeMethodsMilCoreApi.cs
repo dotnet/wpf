@@ -17,7 +17,6 @@ using System;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.IO;
 using System.Text;

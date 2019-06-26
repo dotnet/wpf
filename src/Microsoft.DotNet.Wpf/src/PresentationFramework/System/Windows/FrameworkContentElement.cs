@@ -23,7 +23,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-using System.Security.Permissions;
 
 #if DEBUG
 using System.Reflection;

@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;

@@ -10,7 +10,6 @@ using System.Collections;
 using System.Diagnostics.Tracing;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using System.Threading;
 using System;
@@ -138,17 +137,8 @@ namespace MS.Utility
 
         static bool IsClassicETWRegistryEnabled()
         {
-            try
-            {
-                string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";
-                new RegistryPermission(RegistryPermissionAccess.Read, regKey).Assert();
-                
-                return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
-            }
+            string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";                
+            return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));
         }
     }
 

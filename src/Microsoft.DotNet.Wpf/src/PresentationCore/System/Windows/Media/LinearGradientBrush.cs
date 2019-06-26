@@ -23,7 +23,6 @@ using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 

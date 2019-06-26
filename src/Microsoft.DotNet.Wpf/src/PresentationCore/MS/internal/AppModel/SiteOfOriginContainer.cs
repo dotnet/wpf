@@ -22,11 +22,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Navigation;
-#if CLICKONCE
-using System.Deployment.Application;
-#endif
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
@@ -86,23 +82,7 @@ namespace MS.Internal.AppModel
                 // An alternative is to cache the value of ApplicationDeployment.IsNetworkDeployed.
                 if (_siteOfOriginForClickOnceApp == null)
                 {
-#if CLICKONCE
-                    if (_browserSource.Value != null)
-                    {
-                        _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(_browserSource.Value);
-                    }
-                    else if (ApplicationDeployment.IsNetworkDeployed)
-                    {
-                        _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(GetDeploymentUri());
-                    }
-                    else
-                    {
-                        _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(null);
-                    }
-#else
                     _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(null);
-#endif
-
                 }
 
                 Invariant.Assert(_siteOfOriginForClickOnceApp != null);
@@ -256,50 +236,6 @@ namespace MS.Internal.AppModel
             return new SiteOfOriginPart(this, uri);
         }
 
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-#if CLICKONCE
-        private static Uri GetDeploymentUri()
-        {
-            Invariant.Assert(ApplicationDeployment.IsNetworkDeployed);
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-            ApplicationIdentity ident = null;
-            string codeBase = null;
-
-            SecurityPermission p1 = new SecurityPermission(SecurityPermissionFlag.ControlDomainPolicy);
-            p1.Assert();
-            try
-            {
-                ident = currentDomain.ApplicationIdentity; // ControlDomainPolicy
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
-            
-            SecurityPermission p2 = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-            p2.Assert();
-            try
-            {
-                codeBase = ident.CodeBase; // Unmanaged Code permission
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
-
-            return new Uri(new Uri(codeBase), new Uri(".", UriKind.Relative));
-        }
-#endif
-    
         #endregion
 
         //------------------------------------------------------

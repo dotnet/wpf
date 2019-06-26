@@ -20,7 +20,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -157,24 +156,7 @@ namespace MS.Internal.FontCache
         {
             if (IsFile)
             {
-                bool revertAssert = false;
-
-                // Assert FileIORead permission for installed fonts.
-                if (_skipDemand)
-                {
-                    new FileIOPermission(FileIOPermissionAccess.Read, _fontUri.LocalPath).Assert(); //Blessed Assert
-                    revertAssert = true;
-                }
-
-                try
-                {
-                    return Directory.GetLastWriteTimeUtc(_fontUri.LocalPath);
-                }
-                finally
-                {
-                    if (revertAssert)
-                        CodeAccessPermission.RevertAssert();
-                }
+                return Directory.GetLastWriteTimeUtc(_fontUri.LocalPath);
             }
 
             // Any special value will do here.
@@ -407,23 +389,12 @@ namespace MS.Internal.FontCache
                 
                 unsafe
                 {
-                    // Initialize() method demands UnmanagedCode permission, and PinnedByteArrayStream is already marked as critical.
-
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); //Blessed Assert
-
-                    try
-                    {
-                        Initialize(
-	                        (byte *)_memoryHandle.AddrOfPinnedObject(),
-	                        bits.Length, 
-	                        bits.Length, 
-	                        FileAccess.Read
-                        );
-                    }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    Initialize(
+	                    (byte *)_memoryHandle.AddrOfPinnedObject(),
+	                    bits.Length, 
+	                    bits.Length, 
+	                    FileAccess.Read
+                    );
                 }
             }
 

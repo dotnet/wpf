@@ -18,7 +18,6 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls.Primitives
 {

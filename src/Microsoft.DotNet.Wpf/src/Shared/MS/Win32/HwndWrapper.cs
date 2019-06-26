@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
@@ -152,17 +151,9 @@ namespace MS.Win32
                 _isInCreateWindow = false;
                 if(_handle == null || _handle.Value == IntPtr.Zero)
                 {
-                    new UIPermission(UIPermissionWindow.AllWindows).Assert(); //BlessedAssert to call Dispose
-                    try
-                    {
-                        // Because the HwndSubclass is pinned, but the HWND creation failed,
-                        // we need to manually clean it up.
-                        hwndSubclass.Dispose();
-                    }
-                    finally
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
+                    // Because the HwndSubclass is pinned, but the HWND creation failed,
+                    // we need to manually clean it up.
+                    hwndSubclass.Dispose();
                 }
             }
             GC.KeepAlive(initialWndProc);

@@ -18,7 +18,6 @@ using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using MS.Win32;
 using MS.Internal.Documents;
@@ -202,15 +201,7 @@ namespace System.Windows.Documents
 
             IntPtr hwnd = IntPtr.Zero;
 
-            new UIPermission(UIPermissionWindow.AllWindows).Assert();//Blessed Assert
-            try
-            {
-                hwnd = ((IWin32Window)_source).Handle;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            hwnd = ((IWin32Window)_source).Handle;
 
             IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
             if (himc != IntPtr.Zero)
@@ -281,16 +272,8 @@ namespace System.Windows.Documents
             HwndSource newSource = null;
             HwndSource oldSource = null;
 
-            new UIPermission(PermissionState.Unrestricted).Assert(); // BlessedAssert
-            try
-            {
-                newSource = e.NewSource as HwndSource;
-                oldSource = e.OldSource as HwndSource;
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            newSource = e.NewSource as HwndSource;
+            oldSource = e.OldSource as HwndSource;
 
             UpdateSource(oldSource, newSource);
 
@@ -328,15 +311,8 @@ namespace System.Windows.Documents
             {
                 Debug.Assert((oldSource == null) || (oldSource == _source));
 
-                new UIPermission(UIPermissionWindow.AllWindows).Assert();//Blessed Assert
-                try
-                {
-                    _source.RemoveHook(new HwndSourceHook(ImmCompositionFilterMessage));
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                _source.RemoveHook(new HwndSourceHook(ImmCompositionFilterMessage));
+
                 _source.Disposed -= new EventHandler(OnHwndDisposed);
 
                 // Remove HwndSource from the list.
@@ -348,15 +324,7 @@ namespace System.Windows.Documents
             {
                 _list[newSource] = this;
                 _source = newSource;
-                new UIPermission(UIPermissionWindow.AllWindows).Assert();//Blessed Assert
-                try
-                {
-                    _source.AddHook(new HwndSourceHook(ImmCompositionFilterMessage));
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                _source.AddHook(new HwndSourceHook(ImmCompositionFilterMessage));
                 _source.Disposed += new EventHandler(OnHwndDisposed);
             }
 
@@ -769,16 +737,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            // get hwnd from _source.
-            new UIPermission(UIPermissionWindow.AllWindows).Assert();//Blessed Assert
-            try
-            {
-                hwnd = ((IWin32Window)_source).Handle;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            hwnd = ((IWin32Window)_source).Handle;
 
             rectUi = UiScope.VisualContentBounds;
             view = _editor.TextView;
@@ -1788,15 +1747,7 @@ namespace System.Windows.Documents
 
             IntPtr hwnd = IntPtr.Zero;
 
-            new UIPermission(UIPermissionWindow.AllWindows).Assert();//Blessed Assert
-            try
-            {
-                hwnd = ((IWin32Window)_source).Handle;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            hwnd = ((IWin32Window)_source).Handle;
 
             IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
@@ -1804,16 +1755,8 @@ namespace System.Windows.Documents
             if (himc != IntPtr.Zero)
             {
                 IntPtr hwndDefIme = IntPtr.Zero;
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();//Blessed Assert
-                try
-                {
-                    hwndDefIme = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, hwnd));
-                    lret = UnsafeNativeMethods.SendMessage(hwndDefIme, s_MsImeMouseMessage, new IntPtr(wParam), himc);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                hwndDefIme = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, hwnd));
+                lret = UnsafeNativeMethods.SendMessage(hwndDefIme, s_MsImeMouseMessage, new IntPtr(wParam), himc);
             }
 
             // We eat this event if IME handled.

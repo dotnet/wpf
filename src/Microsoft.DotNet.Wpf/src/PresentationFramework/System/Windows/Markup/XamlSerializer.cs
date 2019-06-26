@@ -16,7 +16,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using System.Security.Permissions;
 
 using MS.Utility;
 

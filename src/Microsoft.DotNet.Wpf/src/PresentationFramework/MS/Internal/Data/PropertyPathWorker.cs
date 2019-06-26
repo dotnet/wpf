@@ -1663,11 +1663,6 @@ namespace MS.Internal.Data
             {
                 setter = pi.GetSetMethod(true);  // 'true' means get a non-public setter
             }
-            catch (System.Security.SecurityException)
-            {
-                // we cannot reflect on this property - treat as read-only
-                return true;
-            }
             catch (Exception ex2)
             {
                 if (CriticalExceptions.IsCriticalApplicationException(ex2))

@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Documents
 {

@@ -8,7 +8,6 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Windows;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper

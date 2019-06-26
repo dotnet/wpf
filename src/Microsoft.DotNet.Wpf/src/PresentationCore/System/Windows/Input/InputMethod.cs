@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Interop;
@@ -1669,15 +1668,7 @@ namespace System.Windows.Input
                             win32Window = source as IWin32Window;
                             if (win32Window != null)
                             {
-                                (new UIPermission(UIPermissionWindow.AllWindows)).Assert();//Blessed Assert
-                                try
-                                {
-                                    hwnd = win32Window.Handle;
-                                }
-                                finally
-                                {
-                                    UIPermission.RevertAssert();
-                                }
+                                hwnd = win32Window.Handle;
                             }
                         }
 }
@@ -1808,26 +1799,16 @@ namespace System.Windows.Input
             {
                 if (_defaultImc==null)
                 {
-                    //this code causes elevation of privilige to unmanaged code permsission
-                    SecurityPermission sp = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                    sp.Assert();//Blessed Assert
-                    try
-                    {
-                        // 
-                        //  Get the default HIMC from default IME window.
-                        // 
-                        IntPtr hwnd = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, IntPtr.Zero));
-                        IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
+                    // 
+                    //  Get the default HIMC from default IME window.
+                    // 
+                    IntPtr hwnd = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, IntPtr.Zero));
+                    IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
-                        // Store the default imc to _defaultImc.
-                        _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
+                    // Store the default imc to _defaultImc.
+                    _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
 
-                        UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
-                    }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
                 return _defaultImc.Value;
             }

@@ -7,7 +7,6 @@ using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Interop;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Peers

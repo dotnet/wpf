@@ -14,7 +14,6 @@ using System.Windows.Threading;
 
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;

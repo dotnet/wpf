@@ -15,7 +15,6 @@ using System.IO;
 using System.Resources;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Navigation;
 using System.Diagnostics;
 using System.Reflection;
@@ -107,9 +106,7 @@ namespace MS.Internal.AppModel
         private Uri GetEntryAssemblyLocation()
         {
             Uri entryLocation = null;
-            System.Security.PermissionSet permissionSet = new PermissionSet(null);
-            permissionSet.AddPermission(new FileIOPermission(PermissionState.Unrestricted));
-            permissionSet.Assert();
+
             try
             {
                 entryLocation = new Uri(Application.ResourceAssembly.CodeBase);
@@ -126,27 +123,13 @@ namespace MS.Internal.AppModel
                 // DirectoryNotFoundException, IOException, UnauthorizedAccessException, 
                 // ArgumentOutOfRangeException, FileNotFoundException, NotSupportedException
             }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+
             return entryLocation;
         }
 
         private Stream CriticalOpenFile(string filename)
         {
-            Stream s = null;
-            FileIOPermission filePermission = new FileIOPermission(FileIOPermissionAccess.Read, filename);
-            filePermission.Assert();
-            try
-            {
-                s = System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, ResourceContainer.FileShare);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
-            return s;
+            return System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, ResourceContainer.FileShare);
         }
 
         #endregion

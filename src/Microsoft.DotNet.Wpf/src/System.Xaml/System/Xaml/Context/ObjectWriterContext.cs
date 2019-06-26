@@ -399,8 +399,6 @@ namespace MS.Internal.Xaml.Context
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
                                     if (ambientCtrl == null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
                                     {
-                                        // Demand for XamlLoadPermission will fail if we're trying to
-                                        // access an internal property from a partial-trust ME/TC
                                         returnAmbientValue = true;
                                         value = _runtime.GetValue(inst, prop);
                                     }

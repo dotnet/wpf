@@ -9,7 +9,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization; // For CultureInfo.InvariantCulture
 using System.Reflection;
-using System.Security.Permissions; // For LinkDemand
 
 using System.Windows.Threading;
 

@@ -13,7 +13,6 @@ namespace MS.Internal
     using System;
     using System.Collections;
     using System.Diagnostics;
-    using System.Security.Permissions;
 
     /// <devdoc>
     ///     This is a hashtable that stores object keys as weak references.

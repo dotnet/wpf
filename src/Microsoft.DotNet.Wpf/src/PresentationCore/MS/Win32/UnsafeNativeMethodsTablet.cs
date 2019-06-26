@@ -6,7 +6,6 @@
 using System;
 using System.Text;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
 using System.Windows.Ink;

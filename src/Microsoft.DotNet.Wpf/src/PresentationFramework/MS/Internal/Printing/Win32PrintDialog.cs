@@ -10,7 +10,6 @@ using System.Printing.Interop;
 using System.Printing;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Controls;
 
 namespace MS.Internal.Printing
@@ -289,7 +288,6 @@ namespace MS.Internal.Printing
 
             string printerName = (this._printQueue != null) ? this._printQueue.FullName : string.Empty;
 
-            SystemDrawingHelper.NewDefaultPrintingPermission().Assert();  //BlessedAssert
             try
             {
                 // If printer support is not installed this should throw a PrintingNotSupportedException
@@ -301,10 +299,6 @@ namespace MS.Internal.Printing
             {
                 // We can swallow print queue exceptions because they imply that printing
                 // support is installed
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
             }
         }
 

@@ -8,7 +8,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Windows;
@@ -682,7 +681,6 @@ namespace MS.Internal.AppModel
             //fail.
 
             Type pfType = Type.GetType(this._typeName.Value);
-            new ReflectionPermission(ReflectionPermissionFlag.MemberAccess).Assert();
             try
             {
                 pageFunction = (PageFunctionBase)Activator.CreateInstance(pfType);
@@ -690,10 +688,6 @@ namespace MS.Internal.AppModel
             catch (Exception ex)
             {
                 throw new Exception(SR.Get(SRID.FailedResumePageFunction, this._typeName.Value), ex);
-            }
-            finally
-            {
-                ReflectionPermission.RevertAssert();
             }
 
             InitializeComponent(pageFunction);

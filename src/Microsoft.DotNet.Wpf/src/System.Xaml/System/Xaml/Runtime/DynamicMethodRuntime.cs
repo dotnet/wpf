@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Security;
-using System.Security.Permissions;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xaml.Permissions;
@@ -34,7 +33,6 @@ namespace MS.Internal.Xaml.Runtime
         const BindingFlags BF_AllStaticMembers = 
             BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
-        static PermissionSet s_FullTrustPermission;
         static MethodInfo s_GetTypeFromHandleMethod;
         static MethodInfo s_InvokeMemberMethod;
 
@@ -42,8 +40,6 @@ namespace MS.Internal.Xaml.Runtime
         delegate object PropertyGetDelegate(object target);
         delegate object FactoryDelegate(object[] args);
         delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
-
-        XamlLoadPermission _xamlLoadPermission;
 
         Assembly _localAssembly;
 
@@ -133,7 +129,6 @@ namespace MS.Internal.Xaml.Runtime
             Debug.Assert(schemaContext != null);
             Debug.Assert(accessLevel != null);
             _schemaContext = schemaContext;
-            _xamlLoadPermission = new XamlLoadPermission(accessLevel);
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
             if (accessLevel.PrivateAccessToTypeName != null)
             {
@@ -143,8 +138,6 @@ namespace MS.Internal.Xaml.Runtime
 
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> ts)
         {
-            DemandXamlLoadPermission();
-
             Type clrType = ts.ConverterType;
             if (clrType == null)
             {
@@ -182,8 +175,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
-            DemandXamlLoadPermission();
-
             DelegateCreator creator;
             Type targetType = target.GetType();
             if (!DelegateCreators.TryGetValue(targetType, out creator))
@@ -196,7 +187,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object CreateInstanceWithCtor(XamlType xamlType, object[] args)
         {
-            DemandXamlLoadPermission();
             return CreateInstanceWithCtor(xamlType.UnderlyingType, args);
         }
 
@@ -225,8 +215,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo factory = GetFactoryMethod(type, methodName, args, BF_AllStaticMembers);
             FactoryDelegate factoryDelegate;
             if (!FactoryDelegates.TryGetValue(factory, out factoryDelegate))
@@ -239,8 +227,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override object GetValue(XamlMember member, object obj)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo getter = member.Invoker.UnderlyingGetter;
             if (getter == null)
             {
@@ -258,8 +244,6 @@ namespace MS.Internal.Xaml.Runtime
 
         protected override void SetValue(XamlMember member, object obj, object value)
         {
-            DemandXamlLoadPermission();
-
             MethodInfo setter = member.Invoker.UnderlyingSetter;
             if (setter == null)
             {
@@ -460,36 +444,14 @@ namespace MS.Internal.Xaml.Runtime
 
         private DynamicMethod CreateDynamicMethod(string name, Type returnType, params Type[] argTypes)
         {
-            // Need to assert FullTrust because DynamicMethod.ctor demands the entire grant set of
-            // the target assembly, which may be FullTrust
-            if (s_FullTrustPermission == null)
+            if (_localType != null)
             {
-                s_FullTrustPermission = new PermissionSet(PermissionState.Unrestricted);
+                return new DynamicMethod(name, returnType, argTypes, _localType);
             }
-            s_FullTrustPermission.Assert();
-            try
+            else
             {
-                if (_localType != null)
-                {
-                    return new DynamicMethod(name, returnType, argTypes, _localType);
-                }
-                else
-                {
-                    return new DynamicMethod(name, returnType, argTypes, _localAssembly.ManifestModule);
-                }
+                return new DynamicMethod(name, returnType, argTypes, _localAssembly.ManifestModule);
             }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
-        }
-
-        private void DemandXamlLoadPermission()
-        {
-            // Demands XamlLoadPermission for the XamlAccessLevel that was passed in to
-            // XamlObjectWriter.Settings. This specifies the assembly or type that we will ILGen
-            // dynamic methods into in CreateDynamicMethod.
-            _xamlLoadPermission.Demand();
         }
 
         private Type GetTargetType(MethodInfo instanceMethod)

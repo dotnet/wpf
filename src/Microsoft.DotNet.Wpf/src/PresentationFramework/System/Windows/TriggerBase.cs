@@ -5,7 +5,6 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Markup;
-using System.Security.Permissions;
 
 using MS.Utility;
 using MS.Internal;

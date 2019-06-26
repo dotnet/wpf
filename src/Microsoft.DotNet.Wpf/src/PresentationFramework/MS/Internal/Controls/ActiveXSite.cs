@@ -14,7 +14,6 @@ using MS.Internal;
 using MS.Internal.PresentationFramework;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Controls;
 
 namespace MS.Internal.Controls

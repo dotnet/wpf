@@ -28,6 +28,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="$(SystemDrawingCommonPackage)" Version="$(SystemDrawingCommonVersion)" />
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
   </ItemGroup>
 </Project>

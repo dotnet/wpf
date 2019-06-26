@@ -14,7 +14,6 @@ using System.Windows.Threading;
 
 using System.Diagnostics;
 using System.Collections;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Win32;
 

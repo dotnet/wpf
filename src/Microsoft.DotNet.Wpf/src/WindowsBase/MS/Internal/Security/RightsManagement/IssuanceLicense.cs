@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.RightsManagement;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Globalization;             // For CultureInfo

@@ -16,7 +16,6 @@
 
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using System.Windows;
 
@@ -127,17 +126,7 @@ namespace System.Diagnostics
                 &&
                 AvTrace.IsDebuggerAttached())
             {
-                // we need to assert as PT callers under a debugger can invoke this code path
-                // with out having the needed permission to peform this action
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-                try
-                {
-                    source.Switch.Level = SourceLevels.Warning;
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                source.Switch.Level = SourceLevels.Warning;
             }
 
             // returning source after reverting the assert to avoid

@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 
 namespace MS.Internal.Ink
 {

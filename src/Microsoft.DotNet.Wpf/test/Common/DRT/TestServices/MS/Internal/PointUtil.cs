@@ -6,7 +6,6 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
@@ -144,16 +143,7 @@ namespace MS.Internal
             // Assert for unamanaged code permission to get to the handle. 
             // Note that we can't use HwndSource.UnsecureHandle here - as this method is called cross-assembly
             // 
-            HandleRef handleRef ;             
-            new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert: 
-            try
-            {
-                handleRef = new HandleRef( inputSource, inputSource.Handle ); 
-            }
-            finally
-            {
-                UIPermission.RevertAssert(); 
-            }
+            HandleRef handleRef = new HandleRef( inputSource, inputSource.Handle ); 
             
             int windowStyle = UnsafeNativeMethods.GetWindowLong( handleRef, NativeMethods.GWL_EXSTYLE);
             if ((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
@@ -181,16 +171,7 @@ namespace MS.Internal
                 return ptScreen;
             }
 
-            HandleRef handleRef ;
-            new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert: 
-            try
-            {
-                handleRef = new HandleRef( inputSource, inputSource.Handle ); 
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            HandleRef handleRef = new HandleRef( inputSource, inputSource.Handle ); 
             
             // Convert the point from screen coordinates back to client coordinates.
             NativeMethods.POINT ptClient = new NativeMethods.POINT((int)ptScreen.X, (int)ptScreen.Y);

@@ -16,7 +16,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Xps.Serialization;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32;

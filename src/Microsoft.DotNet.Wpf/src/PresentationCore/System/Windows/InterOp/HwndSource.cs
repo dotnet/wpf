@@ -22,7 +22,6 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 
 using SR = MS.Internal.PresentationCore.SR;
@@ -1863,20 +1862,11 @@ namespace System.Windows.Interop
                 // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
                 if(!_eatCharMessages)
                 {
-                    // IKIS implementation does a demand.
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                    try
-                    {
-                        msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
+                    msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
 
-                        if (!msgdata.handled)
-                        {
-                            msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
-                        }
-                    }
-                    finally
+                    if (!msgdata.handled)
                     {
-                        SecurityPermission.RevertAssert();
+                        msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
                     }
 
                     if (!msgdata.handled)
@@ -2553,23 +2543,15 @@ namespace System.Windows.Interop
                     RootVisualInternal = null;
                     RemoveSource();
 
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                    try
+                    // Unregister ourselves if we are a registered KeyboardInputSink.
+                    // Use the property instead of the backing field in case a subclass has overridden it.
+                    IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
+                    if (keyboardInputSite != null)
                     {
-                        // Unregister ourselves if we are a registered KeyboardInputSink.
-                        // Use the property instead of the backing field in case a subclass has overridden it.
-                        IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
-                        if (keyboardInputSite != null)
-                        {
-                            keyboardInputSite.Unregister();
-                            ((IKeyboardInputSink)this).KeyboardInputSite = null;
-                        }
-                        _keyboardInputSinkChildren = null;
+                        keyboardInputSite.Unregister();
+                        ((IKeyboardInputSink)this).KeyboardInputSite = null;
                     }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    _keyboardInputSinkChildren = null;
 
                     if (!_inRealHwndDispose)
                     {

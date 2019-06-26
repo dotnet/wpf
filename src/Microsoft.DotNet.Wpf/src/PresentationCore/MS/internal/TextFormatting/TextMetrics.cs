@@ -15,7 +15,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.FontCache;
 
 using SR = MS.Internal.PresentationCore.SR;

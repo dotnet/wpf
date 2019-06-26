@@ -4,7 +4,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Utility;

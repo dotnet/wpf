@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections;
-using System.Security.Permissions;
 using System.Security ;
 using MS.Internal; 
 using MS.Internal.PresentationCore;                        // SecurityHelper

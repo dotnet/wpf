@@ -25,7 +25,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 using MS.Win32;

@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.IO.Packaging;
 using System.Windows.Xps.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Utility;
 using MS.Internal.IO.Packaging;
 

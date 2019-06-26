@@ -141,11 +141,6 @@ namespace Microsoft.Internal.Interop
 
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        static extern bool IsWindows10RS5OrGreater();
-
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
-        [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS3OrGreater();
 
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]

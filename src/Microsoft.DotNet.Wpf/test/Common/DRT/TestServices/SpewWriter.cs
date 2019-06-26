@@ -1,9 +1,7 @@
-//-----------------------------------------------------------------------------
-//
-// <copyright file="SpewWriter.cs" company="Microsoft">
-//    Copyright (C) Microsoft Corporation.  All rights reserved.
-// </copyright>
-//
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 // Description:
 //  This class helps DRTs to produce minimal spew. A DRT should create an
 //  instance of this class:
@@ -22,19 +20,13 @@
 //
 //  Finally, it should call Log.AlwaysWriteLine() for output that must always
 //  appear, or Log.WriteLine() for output that appears only if Verbose is true.
-//
-// History:
-//  05/20/2002: RogerCh:  Initial implementation.
-//  06/03/2003: LGolding: Split into separate file.
-//
-//-----------------------------------------------------------------------------
 
 using System;
 using System.Text;
 
 namespace MS.Utility
 {
-    internal class SpewWriter
+    public class SpewWriter
     {
         internal void Banner(string drtName, string owner)
         {

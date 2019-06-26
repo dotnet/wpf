@@ -1417,11 +1417,6 @@
         <target state="translated">El encabezado de longitud variable en la secuencia de licencias de publicación es de {0} bytes, que supera la longitud máxima de {1} bytes.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">El nombre de tipo '{0}' no tiene el formato esperado 'nombreDeClase, ensamblado'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">El índice "{0}" está por encima del máximo "{1}".</target>

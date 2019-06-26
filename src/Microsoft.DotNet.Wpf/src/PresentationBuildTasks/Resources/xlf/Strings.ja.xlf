@@ -807,11 +807,6 @@
         <target state="translated">マークアップのコンパイルを準備しています...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: 型名 '{0}' には、予期された書式 'className, assembly' がありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Resource ファイル '{0}' を読み取っています...</target>

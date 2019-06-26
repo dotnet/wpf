@@ -1417,11 +1417,6 @@
         <target state="translated">公開ライセンス ストリームの可変長ヘッダーが {0} バイトです。これは、最大長の {1} バイトを超えています。</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型名には、必要な形式 'className, assembly' がありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">'{0}' インデックスが最大値 '{1}' を超えています。</target>

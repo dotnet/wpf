@@ -630,9 +630,6 @@
   <data name="TemplateNoTriggerTarget" xml:space="preserve">
     <value>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</value>
   </data>
-  <data name="QualifiedNameHasWrongFormat" xml:space="preserve">
-    <value>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</value>
-  </data>
   <data name="InvalidDeSerialize" xml:space="preserve">
     <value>MC4401: Serializer does not support Convert operations.</value>
   </data>

@@ -1112,11 +1112,6 @@
         <target state="translated">MarkupExtension.ProvideValue kann aufgrund einer zyklischen Abhängigkeit nicht aufgerufen werden. Eigenschaften in MarkupExtension können nicht auf Objekte verweisen, die auf das Ergebnis der MarkupExtension verweisen. Betroffene MarkupExtensions:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Typname "{0}" hat nicht das erwartete Format "className, assembly".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Die Anführungszeichen ' oder " sind nur am Anfang von Werten zulässig.</target>

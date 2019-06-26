@@ -807,11 +807,6 @@
         <target state="translated">正在准备标记编译...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: 类型名“{0}”不具有预期的格式“className, assembly”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">正在读取 Resource 文件:“{0}”...</target>

@@ -392,7 +392,6 @@ ConvertFromException='{0}' ValueSerializer cannot convert from '{1}'.
 
 ;System.Windows.Markup
 ServiceTypeAlreadyAdded=This serviceType is already registered to another service.
-QualifiedNameHasWrongFormat='{0}' type name does not have the expected format 'className, assembly'.
 ParserAttributeArgsHigh=Too many attributes are specified for '{0}'.
 ParserAttributeArgsLow='{0}' requires more attributes.
 ParserAssemblyLoadVersionMismatch=Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.

@@ -1112,11 +1112,6 @@
         <target state="translated">Nie można wywołać metody MarkupExtension.ProvideValue z powodu zależności cyklicznej. Właściwości wewnątrz obiektu MarkupExtension nie mogą odwoływać się do obiektów, które odwołują się do wyniku obiektu MarkupExtension. Chodzi o następujące obiekty MarkupExtension:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwaKlasy, zestaw”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Znaki cudzysłowu ' i " są dozwolone tylko na początku wartości.</target>

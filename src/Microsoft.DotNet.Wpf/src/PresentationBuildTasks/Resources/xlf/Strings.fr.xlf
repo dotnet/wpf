@@ -807,11 +807,6 @@
         <target state="translated">Préparation de la compilation du balisage...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301 : le nom de type '{0}' n'a pas le format attendu, 'className, assembly'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Lecture du fichier Resource : '{0}'...</target>

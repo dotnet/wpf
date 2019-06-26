@@ -807,11 +807,6 @@
         <target state="translated">İşaretleme derlemesi için hazırlanıyor...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: '{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Resource dosyası okunuyor: '{0}'...</target>

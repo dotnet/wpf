@@ -807,11 +807,6 @@
         <target state="translated">Trwa przygotowywanie do kompilacji znaczników...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwa_klasy, zestaw”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Trwa odczytywanie pliku Resource: „{0}”...</target>

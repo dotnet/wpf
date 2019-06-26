@@ -1417,11 +1417,6 @@
         <target state="translated">Der Header mit variabler Länge im Datenstrom für die Veröffentlichungslizenz umfasst {0} Bytes. Die maximal zulässige Länge von {1} Bytes wird damit überschritten.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Typname "{0}" hat nicht das erwartete Format "className, assembly".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">Der Index "{0}" liegt über dem Höchstwert "{1}".</target>

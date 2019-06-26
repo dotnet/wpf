@@ -1417,11 +1417,6 @@
         <target state="translated">发布许可证流中的可变长度标头为 {0} 个字节，它超过 {1} 个字节的最大长度。</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">“{0}”类型名称不具有要求的格式“className, assembly”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">“{0}”索引超出了最大值“{1}”。</target>

@@ -807,11 +807,6 @@
         <target state="translated">Připravuji kompilaci označení...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: Název typu {0} není v očekávaném formátu className, assembly.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Načítám soubor Resource: {0}...</target>

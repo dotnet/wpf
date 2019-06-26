@@ -1417,11 +1417,6 @@
         <target state="translated">發行授權資料流中的變數長度標頭為 {0} 個位元組，超過了長度上限 {1} 個位元組。</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型別名稱不是預期的格式 'className, assembly'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">'{0}' 索引超過上限 '{1}'。</target>

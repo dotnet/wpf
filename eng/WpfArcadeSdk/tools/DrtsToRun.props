@@ -14,7 +14,7 @@
         DrtXaml;
       </Tests>
     </DRT>
-    <DRT Include="DigitalDocuments" VisibleTo="WindowsBase">
+    <DRT Include="DigitalDocuments">
       <Tests>
         DRTPackScheme;
         DrtPackagingApis;

@@ -4,7 +4,7 @@
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly Condition="'$(SignAssembly)'!=''">true</SignAssembly>
     <IsShipping>false</IsShipping>
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <CLSCompliant>false</CLSCompliant>

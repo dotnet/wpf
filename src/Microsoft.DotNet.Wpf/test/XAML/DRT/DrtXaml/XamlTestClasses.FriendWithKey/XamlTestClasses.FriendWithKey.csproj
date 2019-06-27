@@ -4,10 +4,8 @@
     <RootNamespace>XamlTestClasses.FriendWithKey</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputType>Library</OutputType>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="XamlTestClasses" />
+  </ItemGroup>
 </Project>

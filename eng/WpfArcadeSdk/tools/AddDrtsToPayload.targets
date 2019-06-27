@@ -26,7 +26,7 @@
 
   <Target Name="AddDrtsToPayload" BeforeTargets="RunDrts">
     <ItemGroup>
-      <DrtPayloadContents Include="$(RepoRoot)artifacts\bin\%(DRT.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
+      <DrtPayloadContents Include="$(RepoRoot)artifacts\bin\%(DrtTestProjects.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
     </ItemGroup>
     <Copy SourceFiles="@(DrtPayloadContents)"
           DestinationFiles="@(DrtPayloadContents->'$(PayloadDrtLocation)%(RecursiveDir)%(Filename)%(Extension)')"  />

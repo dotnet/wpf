@@ -4,5 +4,6 @@
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputType>Library</OutputType>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 </Project>

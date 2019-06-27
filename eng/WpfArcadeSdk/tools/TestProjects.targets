@@ -36,8 +36,6 @@
     <PackageReference Include="System.Security.AccessControl" Version="$(SystemSecurityAccessControlPackageVersion)" CopyLocal="true" />
     <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindowsPackageVersion)" CopyLocal="true" />
 
-
-
     <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
     <None Condition="'$(RuntimeIdentifier)'=='win-x64'"
           Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"

@@ -18,5 +18,6 @@
     <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\Accessibility.dll" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <PackageReference Include="$(MicrosoftDotNetWpfDncEngPackage)" Version="$(MicrosoftDotNetWpfDncEngVersion)" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
   </ItemGroup>
 </Project>

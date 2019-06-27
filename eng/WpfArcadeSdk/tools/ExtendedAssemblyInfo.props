@@ -1,4 +1,5 @@
 <Project> 
+
   <!-- Defines [assembly:] Attributes that is to be stamped onto assemblies -->
   <ItemGroup>
     <ExtendedAssemblyInfo Include="CLSCompliant"

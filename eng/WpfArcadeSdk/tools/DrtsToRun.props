@@ -1,9 +1,32 @@
 <Project>
   <ItemGroup>
     <!--
-    List of Drts to run that are built out of dotnet/wpf. Note that this is incredibly
+    List of Drts (grouped by area) to run that are built out of dotnet/wpf. Note that this is incredibly
     similar to DrtList.xml. https://github.com/dotnet/wpf/issues/815 tracks producing this
-    file based on what is in that list. -->
-    <DRT Include="DrtXaml" Area="Xaml"/>
+    file based on what is in that list.
+    
+    The tests need to be semi-delimited (even Areas with a single Drt) so that the batching for DrtTestProjects
+    works properly. Since these are grouped by Area, we use batching in helixpublish.proj to send HelixWorkItems
+    per each DRT Area.
+    -->
+    <DRT Include="Xaml">
+      <Tests>
+        DrtXaml;
+      </Tests>
+    </DRT>
+    <DRT Include="DigitalDocuments" VisibleTo="WindowsBase">
+      <Tests>
+        DRTPackScheme;
+        DrtPackagingApis;
+        DrtInterleavedPackage;
+        DrtPackageCoreProperties
+      </Tests>
+    </DRT>
   </ItemGroup>
+
+  <!-- Batch the projects into an ItemGroup so that they can each be individually copied over by AddDrtsToPayload.targets -->
+  <ItemGroup>
+    <DrtTestProjects Include="@(DRT->Metadata('Tests'))" />
+  </ItemGroup>
+
 </Project>

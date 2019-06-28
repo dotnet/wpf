@@ -11,21 +11,29 @@
     <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
 
     <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
+
+    <MicrosoftDotNetWpfTestPath>$(ArtifactsPackagingDir)\Microsoft.DotNet.Wpf.DncEng.Test\tools\</MicrosoftDotNetWpfTestPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
-  </ItemGroup>
+   <Choose>
+      <When Condition="'$(InternalPayload)' != 'true'">
+        <!-- Building in the external branch, we need to reference the test package-->
+        <ItemGroup>
+          <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
+        </ItemGroup>
 
-  <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
-    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
-  </PropertyGroup>
+        <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
+          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+        </PropertyGroup>
 
-  <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
-    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
-  </PropertyGroup>
+        <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
+          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+        </PropertyGroup>
+      </When>
+    </Choose>
 
-  <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build">
+  <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build;CopyPackageAssets">
+ 
     <PropertyGroup>
       <LocalDotnetLocation>$(DotNetRoot)x86\</LocalDotnetLocation>
       <LocalDotnetLocation Condition="'$(Platform)' == 'x64'">$(DotNetRoot)</LocalDotnetLocation>

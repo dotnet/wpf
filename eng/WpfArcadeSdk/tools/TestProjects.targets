@@ -68,13 +68,15 @@
       <OutputItemType>_windowsBaseAssemblyLocallyBuiltPath</OutputItemType>
     </ProjectReference>
 
-    <!-- Native assemblies can't be restored for our test projects.-->
+    <!-- 
+    ProjectReference to a native project fails from a .csproj
     <ProjectReference Include="@(_wpfNativeProjects->'%(ProjectPath)')" >
       <Private>True</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ProjectReference>
+    -->
   </ItemGroup>
 
   <PropertyGroup Condition="'$(WpfTest)'=='true' or '$(IsTestProject)'=='true'">

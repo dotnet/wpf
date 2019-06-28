@@ -200,8 +200,12 @@
   <Target Name="ResolveWinFormsReferences"
           Condition="'@(MicrosoftPrivateWinFormsReference)'!='' And $(TargetFramework.StartsWith('netcoreapp3'))">
     <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll') And '%(MicrosoftPrivateWinFormsReference.ReferenceImplementation)'!='true'">
+        <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
+      </Reference>
       <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll') And '%(MicrosoftPrivateWinFormsReference.ReferenceImplementation)'=='true'">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
     </ItemGroup>

@@ -615,8 +615,6 @@ namespace System.Windows.Documents
             Debug.Assert(dpo != null, "GetLinkUri shouldn't be called for non-DependencyObjects.");
 
             if (inputUri != null)
-            // We want to allow navigation to pack:// Uris as we may get these from automation, but we 
-            // wouldn't support this if an actual Uri were given as a pack:// Uri
             {
                 //
                 // First remove the fragment, this is to prevent escape in file URI case, for example,

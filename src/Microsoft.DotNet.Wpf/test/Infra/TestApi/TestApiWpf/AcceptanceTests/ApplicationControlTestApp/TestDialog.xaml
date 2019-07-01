@@ -1,0 +1,14 @@
+﻿<Window x:Class="Microsoft.Test.AcceptanceTests.WpfTestApplication.TestDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    AutomationProperties.AutomationId="TestDialog"
+    Title="TestDialog" Height="300" Width="300">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Dialog opened" />
+            <Button Content="Dialog button" HorizontalAlignment="Left" />
+            <TextBox />
+            <Button Content="Test Button"/>
+        </StackPanel>
+    </Grid>
+</Window>

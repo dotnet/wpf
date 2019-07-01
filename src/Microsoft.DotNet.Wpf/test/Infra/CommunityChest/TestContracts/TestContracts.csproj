@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <AssemblyName>TestContracts</AssemblyName>
+    <OutputType>Library</OutputType>
+    <OutputSubFolder>Infra</OutputSubFolder>
+    <RootNamespace>Microsoft.Test</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ProjectGuid>{8B226BFC-2964-4929-AC4E-8C8715F40690}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AsyncHelper.cs" />
+    <Compile Include="Bug.cs" />
+    <Compile Include="CommaSeparatedListExtensions.cs" />
+    <Compile Include="ContentPropertyBag.cs" />
+    <Compile Include="DefaultListSerializer.cs" />
+    <Compile Include="DefaultObjectSerializer.cs" />
+    <Compile Include="DriverLaunchSettings.cs" />
+    <Compile Include="ExecutionGroupType.cs" />
+    <Compile Include="ExecutionGroupingLevel.cs" />
+    <Compile Include="ExecutionGroupRecord.cs" />
+    <Compile Include="FastObjectSerializer.cs" />
+    <Compile Include="InfraTime.cs" />
+    <Compile Include="InfraTimeConverter.cs" />
+    <Compile Include="MachineRecord.cs" />
+    <Compile Include="ObjectSerializer.cs" />
+    <Compile Include="PropertyBag.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="TestCaseSecurityLevel.cs" />
+    <Compile Include="TestDriverInfo.cs" />
+    <Compile Include="TestInfo.cs" />
+    <Compile Include="TestRecord.cs" />
+    <Compile Include="TestSupportFile.cs" />
+    <Compile Include="TestType.cs" />
+    <Compile Include="TestUacElevation.cs" />
+    <Compile Include="VariationRecord.cs" />
+    <Compile Include="Discovery\DiscoveryAdaptor.cs" />
+    <Compile Include="Discovery\ModelAttribute.cs" />
+    <Compile Include="Discovery\TestAttribute.cs" />
+    <Compile Include="Discovery\TestDefaultsAttribute.cs" />
+    <Compile Include="Discovery\CDFTestHostInterop.cs" />
+    <Compile Include="Discovery\VariationAttribute.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LogContract.cs" />
+    <Compile Include="Logging\LoggingClient.cs" />
+    <Compile Include="Logging\TraceToLoggerAdaptor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
+    <PackageReference Include="StreamJsonRpc" Version="2.0.146" />
+  </ItemGroup>
+</Project>

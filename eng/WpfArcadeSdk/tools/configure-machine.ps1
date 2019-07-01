@@ -13,8 +13,7 @@ if ($ci)
 }
 else
 {
-    # When running local, we can use the DOTNET_INSTALL_DIR environment variable set by Arcade
-    $dotnetLocation = $env:DOTNET_INSTALL_DIR
+    $dotnetLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "..\..\..\..\.dotnet" -Resolve
 
     # The x86 location installed by Arcade is in the x86 directory
     $x86dotnetLocation = "$dotnetLocation\x86"

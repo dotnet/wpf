@@ -20,6 +20,7 @@
     -->
     <IsPackable>true</IsPackable>
     <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
+    <TestDataLocation>$(RepoRoot)src\Microsoft.DotNet.Wpf\Test\BranchCommon\data\</TestDataLocation>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -42,5 +43,19 @@
     <PackagingContent Condition="Exists('$(RepoRoot)THIRD-PARTY-NOTICES.TXT') And $(MSBuildProjectName.Contains('.ArchNeutral'))" 
                       Include="$(RepoRoot)THIRD-PARTY-NOTICES.TXT" 
                       SubFolder="root" />
+  </ItemGroup>
+
+    <!-- Package test specific scripts and discovery files -->
+  <ItemGroup Condition="$(MSBuildProjectName.Contains('.Test')) And !$(MSBuildProjectName.Contains('.ArchNeutral'))">
+    <PackagingContent Include="$(TestDataLocation)DiscoveryInfo.xml" 
+                      SubFolder="root\tools" />
+    <PackagingContent Include="$(TestDataLocation)DiscoveryInfoDrts.xml" 
+                      SubFolder="root\tools" />
+    <PackagingContent Include="$(TestDataLocation)*.cmd" 
+                      SubFolder="root\tools" />
+    <PackagingContent Include="$(TestDataLocation)Deployments\*.xml" 
+                      SubFolder="root\tools\Infra\Deployments" />
+    <PackagingContent Include="$(TestDataLocation)Reporting\*.xsl" 
+                      SubFolder="root\tools\Infra\Reporting" />
   </ItemGroup>
 </Project>

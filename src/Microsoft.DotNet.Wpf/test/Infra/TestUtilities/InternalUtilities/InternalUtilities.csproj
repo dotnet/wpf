@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <AssemblyName>InternalUtilities</AssemblyName>
+    <RootNamespace>Microsoft.Test</RootNamespace>
+    <OutputType>Library</OutputType>
+    <OutputSubFolder>Infra</OutputSubFolder>
+    <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
+    <ProjectGuid>{42625072-D240-4D02-8D7E-75ED24A817D3}</ProjectGuid>
+  </PropertyGroup>
+  <!-- Implicitly opts in to the v4 Security policy which is not compatible with v2 CLR so only do it on v4 -->
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);CLR_30_SECURITY</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DriverState.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Logging\Variation.cs" />
+    <Compile Include="CrossProcess\ADictionary.cs" />
+    <Compile Include="CrossProcess\ClientDictionary.cs" />
+    <Compile Include="CrossProcess\DictionaryContract.cs" />
+    <Compile Include="CrossProcess\DictionaryStore.cs" />
+    <Compile Include="CrossProcess\ServerDictionary.cs" />
+    <Compile Include="OSVersionHelper\GlobalSuppressions.cs" />
+    <Compile Include="OSVersionHelper\NativeConstants.cs" />
+    <Compile Include="OSVersionHelper\NativeMethods.cs" />
+    <Compile Include="OSVersionHelper\NativeTypes.cs" />
+    <Compile Include="OSVersionHelper\OperatingSystemVersion.cs" />
+    <Compile Include="OSVersionHelper\Util.cs" />
+    <Compile Include="OSVersionHelper\VersionHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(TestContractsProject)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StreamJsonRpc" Version="2.0.146" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,34 @@
+﻿<Window x:Class="Microsoft.Test.AcceptanceTests.WpfTestApplication.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Microsoft.Test.AcceptanceTests.WpfTestApplication"
+    AutomationProperties.AutomationId="WpfTestAppWindow1"
+    Title="Window1" Width="800" Height="600">
+   <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <ToolBar Grid.ColumnSpan="2">
+            <Button Content="Open" Name="btn_Open" AutomationProperties.AutomationId="OpenButton" Click="btn_Open_Click" />
+            <Button Content="Start Animation" Name="btn_Animation" AutomationProperties.AutomationId="btn_Animation" Click="btn_Animation_Click" />
+            <Button Content="Debug" Name="btn_Debug" Click="btn_Debug_Click" />
+        </ToolBar>
+
+        <ListView Name="MyListView" Grid.Row="1" Grid.Column="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}" />
+                    <GridViewColumn Header="Middle Name" DisplayMemberBinding="{Binding MiddleName}" />
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}" />
+                    <GridViewColumn Header="Date of Birth" DisplayMemberBinding="{Binding DOB}" />
+                </GridView>
+            </ListView.View>
+        </ListView>         
+    </Grid>
+</Window>

@@ -6,12 +6,10 @@
      <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
     <PlatformFolder>x86</PlatformFolder>
     <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
-    <PayloadRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PayloadRoot>
+    <PayloadRoot>$(ArtifactsDir)\test\$(Configuration)\$(PlatformFolder)</PayloadRoot>
 
     <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
-
     <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
-
     <MicrosoftDotNetWpfTestPath>$(ArtifactsPackagingDir)\Microsoft.DotNet.Wpf.DncEng.Test\tools\</MicrosoftDotNetWpfTestPath>
   </PropertyGroup>
 
@@ -56,6 +54,14 @@
     <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
           DestinationFolder="$(WpfTestBasePayloadPath)DRT"  />
 
+    <!-- TestServices.dll is required even if no DRT or infra project reference it. -->
+    <Copy SourceFiles="$(ArtifactsBinDir)TestServices\$(Platform)\$(Configuration)\TestServices.dll"
+          DestinationFolder="$(WpfTestBasePayloadPath)DRT" 
+          Condition="'$(WpfRuntimeIdentifier)'=='win-x64'" />
+
+    <Copy SourceFiles="$(ArtifactsBinDir)TestServices\$(Configuration)\TestServices.dll"
+          DestinationFolder="$(WpfTestBasePayloadPath)DRT"
+          Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
       <!-- 
         We have to ship over the MicrosoftNetCoreApp that we run against for our tests. This is primarily due to QualityVault
         being built against WindowsDesktop and there not being a way to install WindowsDesktop via the multi-framework support

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/1.0.40">
+
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <_IsPortable>true</_IsPortable>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier></RuntimeIdentifier>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    
+
+    <!-- TODO: Port these as needed or remove them. -->
+    <!--<DataFile Include="Configurations\*.xml" >
+      <SubFolder>Infra\Configurations\</SubFolder>
+    </DataFile>
+    
+    <DataFile Include="Reporting\expand_shrink.gif" >
+      <SubFolder>Infra\Reporting\</SubFolder>
+    </DataFile>-->
+  </ItemGroup>
+
+</Project>

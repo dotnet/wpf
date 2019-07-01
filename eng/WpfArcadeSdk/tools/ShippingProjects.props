@@ -187,7 +187,7 @@
     <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
 
     <!-- Test package overrides Internal, External etc. -->
-    <RepoLocation Condition="$(InternalTestProjects.Contains('$(NormalizedMSBuildProjectName)'))">InternalTest</RepoLocation>
+    <RepoLocation Condition="$(InternalTestProjects.Contains('$(NormalizedMSBuildProjectName);'))">InternalTest</RepoLocation>
 
   </PropertyGroup>
 

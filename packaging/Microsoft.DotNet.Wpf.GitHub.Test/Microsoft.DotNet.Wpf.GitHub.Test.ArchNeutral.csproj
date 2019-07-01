@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>D2366129-FF5E-4AC8-87C1-EF06015B244B</ProjectGuid>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
+    <PackageDescription>WPF Test Infra Package from dotnet/wpf Repository</PackageDescription>
+  </PropertyGroup>
+</Project>

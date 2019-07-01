@@ -1,0 +1,7 @@
+<StateCollection>
+  <!-- The color Profiles live in the Windows Directory. 
+    This is different from the normal convention of being rooted against Test Bin Root.
+    The rollback profile should be: "sRGB Color Space Profile.icm"
+-->
+  <StateModule Type="ColorProfile" Path="%windir%\System32\spool\drivers\color\wsRGB.cdmp" />
+</StateCollection>

@@ -29,5 +29,5 @@ namespace MS.Internal.Text
             }
         }
 
-    };
+    }
 }

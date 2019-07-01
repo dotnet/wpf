@@ -22,5 +22,10 @@ namespace MS.Internal.Text
         {
             return Encoding.GetEncoding(codepage);
         }
+
+        internal static byte[] Convert(System.Text.Encoding srcEncoding, System.Text.Encoding dstEncoding, byte[] bytes)
+        {
+            return Encoding.Convert(srcEncoding, dstEncoding, bytes);
+        }
     }
 }

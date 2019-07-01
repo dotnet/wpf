@@ -23,7 +23,6 @@
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)InjectModuleInitializer.targets" Condition="'$(InjectModuleInitializer)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)TestProjects.targets" />
-  <Import Project="$(WpfArcadeSdkToolsDir)CreateTestPayload.targets" Condition="'$(CreateTestPayload)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)GenAPI.targets"/>
   
   <!-- PresentationBuildTasks related targets files -->

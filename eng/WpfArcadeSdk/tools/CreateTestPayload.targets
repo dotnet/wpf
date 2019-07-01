@@ -9,15 +9,24 @@
     <PayloadRoot>$(ArtifactsDir)\test\$(Configuration)\$(PlatformFolder)</PayloadRoot>
 
     <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
-    <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
-    <MicrosoftDotNetWpfTestPath>$(ArtifactsPackagingDir)\Microsoft.DotNet.Wpf.DncEng.Test\tools\</MicrosoftDotNetWpfTestPath>
+    <PayloadDrtLocation>$(WpfTestBasePayloadPath)DRT\</PayloadDrtLocation>
+    <MicrosoftDotNetWpfTestPath>$(ArtifactsPackagingDir)\Microsoft.DotNet.Wpf.GitHub.Test\tools\</MicrosoftDotNetWpfTestPath>
   </PropertyGroup>
 
+  <!-- 
+  Internal repo use only. When we package the infrastructure and DRTs over to dotnet-wpf-int. Allow that repo to add
+  more DRTs to run. 
+  -->
+  <Import Project="$(RepoRoot)eng\DrtsToRun.props" Condition="Exists('$(RepoRoot)eng\DrtsToRun.props')" />
+
+  <!-- List of DRTs to include that come from dotnet/wpf -->
+  <Import Project="$(MSBuildFileThisDirectory)DrtsToRun.props"/>
+
    <Choose>
-      <When Condition="'$(InternalPayload)' != 'true'">
+      <When Condition="!Exists('$(MicrosoftDotNetWpfTestPath)')">
         <!-- Building in the external branch, we need to reference the test package-->
         <ItemGroup>
-          <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
+          <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.GitHub.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
         </ItemGroup>
 
         <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
@@ -42,7 +51,7 @@
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-machine.ps1" />
-      <MicrosoftNetCoreAppContents Include="$(LocalDotnetLocation)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
+      <DrtPayloadContents Include="$(ArtifactsBinDir)\%(DrtTestProjects.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"
@@ -53,24 +62,8 @@
 
     <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
           DestinationFolder="$(WpfTestBasePayloadPath)DRT"  />
-
-    <!-- TestServices.dll is required even if no DRT or infra project reference it. -->
-    <Copy SourceFiles="$(ArtifactsBinDir)TestServices\$(Platform)\$(Configuration)\TestServices.dll"
-          DestinationFolder="$(WpfTestBasePayloadPath)DRT" 
-          Condition="'$(WpfRuntimeIdentifier)'=='win-x64'" />
-
-    <Copy SourceFiles="$(ArtifactsBinDir)TestServices\$(Configuration)\TestServices.dll"
-          DestinationFolder="$(WpfTestBasePayloadPath)DRT"
-          Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
-      <!-- 
-        We have to ship over the MicrosoftNetCoreApp that we run against for our tests. This is primarily due to QualityVault
-        being built against WindowsDesktop and there not being a way to install WindowsDesktop via the multi-framework support
-        by arcade due to https://github.com/dotnet/core-setup/issues/6370. Once https://github.com/dotnet/wpf/issues/816
-        is done we can remove this.
-      -->
-    <Copy SourceFiles="@(MicrosoftNetCoreAppContents)"
-          DestinationFiles="@(MicrosoftNetCoreAppContents->'$(NETCoreAppPayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"
-          Condition="'$(ContinuousIntegrationBuild)'=='True'"/>
+    
+    <Copy SourceFiles="@(DrtPayloadContents)"
+          DestinationFiles="@(DrtPayloadContents->'$(PayloadDrtLocation)%(RecursiveDir)%(Filename)%(Extension)')"  />
   </Target>
-
 </Project>

@@ -25,7 +25,7 @@
   <PropertyGroup>
     <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
     <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
-    <DncEngTestPackageName>Microsoft.DotNet.Wpf.DncEng.Test</DncEngTestPackageName>
+    <GitHubTestPackageName>Microsoft.DotNet.Wpf.DncEng.Test</GitHubTestPackageName>
 
     <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <!-- Built out of https://www.github.com/dotnet/wpf -->
     <PackageName Condition="'$(RepoLocation)'=='WindowsDesktopSdk'">$(WindowsDesktopSdkPackageName)</PackageName>
 
-    <PackageName Condition="'$(RepoLocation)'=='InternalTest'">$(DncEngTestPackageName)</PackageName>
+    <PackageName Condition="'$(RepoLocation)'=='ExternalTest'">$(GitHubTestPackageName)</PackageName>
 
     <RepositoryUrl Condition="$(RepoLocation.StartsWith('Internal'))">https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</RepositoryUrl>
   </PropertyGroup>

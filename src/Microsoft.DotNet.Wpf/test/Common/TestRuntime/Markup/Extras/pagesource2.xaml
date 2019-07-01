@@ -1,0 +1,3 @@
+﻿<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <TextBlock>External Content</TextBlock>
+</StackPanel>

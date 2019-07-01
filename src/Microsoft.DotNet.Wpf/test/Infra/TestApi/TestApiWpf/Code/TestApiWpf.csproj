@@ -1,25 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>TestApiWpf</AssemblyName>
     <RootNamespace>Microsoft.Test</RootNamespace>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="AutomationUtilities.cs" />
-    <Compile Include="DispatcherOperations.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ApplicationControl\UIAutomationApplicationImpl.cs" />
-    <Compile Include="ApplicationControl\UIAutomationOutOfProcessApplicationFactory.cs" />
-    <Compile Include="ApplicationControl\WpfApplicationImpl.cs" />
-    <Compile Include="ApplicationControl\WpfInProcessApplicationFactory.cs" />
-    <Compile Include="ApplicationControl\WpfInProcessApplicationSettings.cs" />
-    <Compile Include="VisualVerification\SnapshotHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)"/>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(TestApiCoreProject)" />
   </ItemGroup>

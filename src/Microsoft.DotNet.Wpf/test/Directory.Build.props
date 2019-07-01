@@ -16,4 +16,16 @@
     </EmbeddedResource>
   </ItemDefinitionGroup>
   <Import Project="$(WpfTestsDir)MultiTargeting.props" />
+
+  
+  <PropertyGroup>
+    <InternalUtilitiesProject>$(WpfTestBasePath)\Infra\TestUtilities\InternalUtilities\InternalUtilities.csproj</InternalUtilitiesProject>
+    <TestContractsProject>$(WpfTestBasePath)\Infra\CommunityChest\TestContracts\TestContracts.csproj</TestContractsProject>
+    <TestApiCoreProject>$(WpfTestBasePath)\Infra\TestApi\TestApiCore\Code\TestApiCore.csproj</TestApiCoreProject>
+    <TestRuntimeProject>$(WpfTestBasePath)\Common\TestRuntime\TestRuntime.csproj</TestRuntimeProject>
+    <TestServicesProject>$(WpfTestBasePath)\Common\Drt\TestServices\TestServices.csproj</TestServicesProject>
+    <QualityVaultUtilitiesProject>$(WpfTestBasePath)\Infra\QualityVault\QualityVaultUtilities\QualityVaultUtilities.csproj</QualityVaultUtilitiesProject>
+    <DrtToolsProject>$(WpfTestBasePath)\Common\DRT\Tools\DrtTools.csproj</DrtToolsProject>
+  </PropertyGroup>
+  
 </Project>

@@ -1,0 +1,8 @@
+<ApplicationMonitor>
+    <!-- All Default handlers need to be in the ClientTestRuntime.dll -->
+    <Registration Name="BrowserExceptionLogger" Action="LogIfSeen" WindowTitle="property:Microsoft.Test.Loaders.ApplicationDeploymentHelper.ErrorPageTitle, TestRuntime" ProcessName="IEXPLORE" Handler="Microsoft.Test.Loaders.UIHandlers.BrowserAppExceptionLogger"  />
+    <Registration Name="TrustManagerDownlevel" ProcessName="" WindowTitle="RegExp:(@@System.Windows.Forms,Version=2.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL;System.Windows.Forms;TrustManagerPromptUI_InstallTitle@@)|(@@System.Windows.Forms,Version=2.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL;System.Windows.Forms;TrustManagerPromptUI_RunTitle@@)" Handler="Microsoft.Test.Loaders.UIHandlers.DismissSecurityDialog" AllowMultipleInvocations="true" />
+    <Registration Name="TrustManager" ProcessName="" WindowTitle="RegExp:(@@System.Windows.Forms,Version=4.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089,processorArchitecture=MSIL;System.Windows.Forms;TrustManagerPromptUI_InstallTitle@@)|(@@System.Windows.Forms,Version=4.0.0.0,Culture=neutral,PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL;System.Windows.Forms;TrustManagerPromptUI_RunTitle@@)" Handler="Microsoft.Test.Loaders.UIHandlers.DismissSecurityDialog" AllowMultipleInvocations="true" />
+    <Registration Name="TrustManagerEnglishFallback" ProcessName="" WindowTitle="Application Install - Security Warning" Handler="Microsoft.Test.Loaders.UIHandlers.DismissSecurityDialog" AllowMultipleInvocations="true" />
+</ApplicationMonitor>
+

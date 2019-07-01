@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <AssemblyName>TestRuntime</AssemblyName>
+    <OutputType>Library</OutputType>
+    <OutputSubFolder>Common</OutputSubFolder>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);TRACE;TARGET_NET3_5;STANDALONE_BUILD;TESTBUILD_CLR40</DefineConstants>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Globalization\ChineseSimplified.txt">
+      <LogicalName>ChineseSimplified.txt</LogicalName>
+      <Link>Resources\Globalization\ChineseSimplified.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globalization\ChineseTraditional.txt">
+      <LogicalName>ChineseTraditional.txt</LogicalName>
+      <Link>Resources\Globalization\ChineseTraditional.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globalization\Japanese.txt">
+      <LogicalName>Japanese.txt</LogicalName>
+      <Link>Resources\Globalization\Japanese.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globalization\Korean.txt">
+      <LogicalName>Korean.txt</LogicalName>L
+      <Link>Resources\Globalization\Korean.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globalization\ProblemDate.xml">
+      <LogicalName>ProblemDate.xml</LogicalName>
+      <Link>Resources\Globalization\ProblemDate.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globalization\ProblemString.xml">
+      <LogicalName>ProblemString.xml</LogicalName>
+      <Link>Resources\Globalization\ProblemString.xml</Link>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="RenderingVerification\DefaultTolerance.xml">
+      <LogicalName>Microsoft.Test.RenderingVerification.RenderingVerification.DefaultTolerance.xml</LogicalName>
+      <Link>Resources\VScan\DefaultTolerance.xml</Link>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Loaders\NamedRegistrations.xml">
+      <LogicalName>NamedRegistrations.xml</LogicalName>
+      <Link>Resources\Loaders\NamedRegistrations.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loaders\Steps\ErrorCodes.xml">
+      <LogicalName>ErrorCodes.xml</LogicalName>
+      <Link>Resources\Loaders\ErrorCodes.xml</Link>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Windows\PropertiesToSkip.xml">
+      <LogicalName>PropertiesToSkip.xml</LogicalName>
+      <Link>Resources\Windows\PropertiesToSkip.xml</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" ReferenceImplementation="true"/>
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" ReferenceImplementation="true"/>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(TestApiCoreProject)" />
+    <ProjectReference Include="$(TestContractsProject)" />
+    <ProjectReference Include="$(InternalUtilitiesProject)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Threading.AccessControl" Version="4.5.0" />
+    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" />
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+  </ItemGroup>
+</Project>

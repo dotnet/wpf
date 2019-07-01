@@ -1,0 +1,6 @@
+<Project>
+  <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
+  <PropertyGroup>
+    <DestinationSubFolder>$(LibFolder)\DRT</DestinationSubFolder>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,149 @@
+#region Scenario 1
+
+    if (errorfile == null)
+    {               
+     errorfile = MSBuildEngineCommonHelper.VerifyFileExists(Path.GetDirectoryName(Application.ExecutablePath) + Path.DirectorySeparatorChar + @"ErrorCodes.xml");
+    }
+
+    MSBuildProjExecutor msbuild = null;
+
+    if (String.IsNullOrEmpty(errorfile) == false)
+    {
+     //msbuild = new MSBuildProjExecutor(errorfile);
+     msbuild = new MSBuildProjExecutor();
+    }
+    else
+    {
+     msbuild = new MSBuildProjExecutor();
+    }
+
+    if (blogtofile)
+    {
+     string currentdirectory = Path.GetDirectoryName(filename);
+
+     if (String.IsNullOrEmpty(currentdirectory) == false)
+     {
+         currentdirectory += Path.DirectorySeparatorChar;
+     }
+
+     msbuild.BuildLogFileName = currentdirectory + "msbuild.log";
+     msbuild.BuildLogErrorFileName = currentdirectory + "msbuild.err";
+     msbuild.BuildLogWarningFileName = currentdirectory + "msbuild.wrn";
+    }
+
+
+
+
+    msbuild.ParseComandlineArgs(commandlineargs);
+    msbuild.ErrorWarningsToIgnore(errorsandwarningstoignore);
+    msbuild.ErrorFile = errorfile;
+    return msbuild.Build(filename);
+
+#endregion Scenario 1
+
+#region Scenario 2
+
+    MSBuildProjExecutor msbuild = new MSBuildProjExecutor();
+    msbuild.Build(filename);
+
+#endregion Scenario 2
+
+#region Scenario 3
+
+    MSBuildProjExecutor msbuild = new MSBuildProjExecutor();
+    msbuild["HostInBrowser"] = @"true";
+    msbuild.Build(filename);
+
+#endregion Scenario 3
+
+#region Scenario 4
+
+    MSBuildProjExecutor msbuild = new MSBuildProjExecutor();
+
+    msbuild.CreateProject();
+    msbuild.AddProperty("Configuration", "Release");
+    msbuild.AddProperty("TargetType", "winexe");
+    msbuild.AddProperty("HostinBrowser", "false");
+
+    string language = "C#";
+
+    msbuild.AddProperty("AssemblyName", "FooBar");
+    if (StringComparer.InvariantCultureIgnoreCase.Compare(language, "c#") == 0)
+    {
+     msbuild.AddImport(@"$(MSBuildBinPath)\Microsoft.CSharp.targets");
+    }
+    else if (StringComparer.InvariantCultureIgnoreCase.Compare(language, "vb") == 0)
+    {
+     msbuild.AddImport(@"$(MSBuildBinPath)\Microsoft.VisualBasic.targets");
+    }
+
+    msbuild.AddImport(@"$(MSBuildBinPath)\Microsoft.WinFx.targets");
+    msbuild.AddImport(@"$(WINDOWS_TST_CLIENT_ROOT)\WinFxTest.targets");
+
+    msbuild.AddItem("Compile", "Foo.cs");
+    msbuild.AddItem("Page", "Foo.xaml");
+
+    return msbuild.Build();
+#endregion Scenario 4
+
+#region Scenario 5
+
+    MSBuildProjExecutor msbuild = null;
+
+    if (String.IsNullOrEmpty(errorfile))
+    {
+        if (String.IsNullOrEmpty(Path.GetDirectoryName(Application.ExecutablePath)))
+        {
+            GlobalLog.LogDebug("Application executable path incorrect");
+            return false;
+        }
+
+        errorfile = Path.GetDirectoryName(Application.ExecutablePath) + Path.DirectorySeparatorChar + "ErrorCodes.xml";
+        if (File.Exists(errorfile) == false)
+        {
+            GlobalLog.LogDebug("Error file does not exist {0}",errorfile);
+            msbuild = new MSBuildProjExecutor();
+        }
+        else
+        {
+            msbuild = new MSBuildProjExecutor(errorfile);
+        }
+    }
+    else
+    {
+        msbuild = new MSBuildProjExecutor(errorfile);
+    }
+
+    if (msbuild == null)
+    {
+        return false;
+    }
+
+    if (commandlineargs != null)
+    {
+        if (commandlineargs.Length > 0)
+        {
+            msbuild.ParseComandlineArgs(commandlineargs);
+        }
+    }
+
+    if (blogtofile)
+    {
+        string projectrootdirectory = Path.GetDirectoryName(filename);
+        if (String.IsNullOrEmpty(projectrootdirectory))
+        {
+            projectrootdirectory = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
+        }
+        else
+        {
+            projectrootdirectory += Path.DirectorySeparatorChar;
+        }
+
+        msbuild.BuildLogFileName = projectrootdirectory + "msbuild.log";
+        msbuild.BuildLogErrorFileName = projectrootdirectory + "msbuild.err";
+        msbuild.BuildLogWarningFileName = projectrootdirectory + "msbuild.wrn";
+    }
+
+    msbuild.Build(filename);
+
+#endregion 5

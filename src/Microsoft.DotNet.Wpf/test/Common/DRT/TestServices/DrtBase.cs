@@ -2066,7 +2066,7 @@ namespace DRT
                 // Suites can set a ContextExceptionHandler, but they must remove it
                 // before they're done.  Otherwise an exception in a subsequent suite
                 // will get handled (and probably ignored) by the stale handler,
-                // and the DRT might even hang without reporting the problem.
+                // and the DRT might even stop responding without reporting the problem.
                 bool dispatcherHasUnhandledExceptionHandler = (bool)_piHasUnhandledExceptionHandler.GetValue(_dispatcher, null);
                 if (dispatcherHasUnhandledExceptionHandler)
                 {
@@ -2385,7 +2385,7 @@ namespace DRT
         /// <summary>
         /// Does some preliminary checks to make sure it's okay to send input.
         /// Checks to see if the screen saver is running or any power-save mode is active.
-        /// Checks if the DRT window is hung.  Checks if the DRT window is foreground.
+        /// Checks if the DRT window is non-responsive.  Checks if the DRT window is foreground.
         /// </summary>
         public void PrepareToSendInput()
         {
@@ -2407,7 +2407,7 @@ namespace DRT
 
             if (IsHungAppWindow(_source.Handle))
             {
-                string error = String.Format("Main window hung and has been ghosted. This is a bad time to be sending input!");
+                string error = String.Format("Main window stopped responding and has been ghosted. This is a bad time to be sending input!");
                 Console.WriteLine(error);
                 Console.Write("Allowing dispatcher to pump input messages to un-ghost...");
                 _dispatcher.Invoke(DispatcherPriority.Input, (DispatcherOperationCallback)delegate(object arg) { return null; }, null);

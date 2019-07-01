@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<MSBuildErrors>
+    <Warning ID="CS0219" Ignore="true">
+        <StartingMessage>warning CS0219</StartingMessage>
+        <Description>The variable 'page' is assigned but its value is never used</Description>
+    </Warning>
+
+    <Warning ID="MSB3183" Ignore="true" Partial="true">
+      <Assembly>Microsoft.Build.Tasks</Assembly>
+      <ResourceName>Microsoft.Build.Tasks.Strings.resources</ResourceName>
+      <ErrorIdentifier>GenerateManifest.UnmanagedCodePermission</ErrorIdentifier>
+      <StartingMessage>warning MSB3183</StartingMessage>
+      <Description>Reference '{0}' is an interop assembly requiring full trust.</Description>
+    </Warning>
+
+    <PerfTargets>
+      <!--<GetFrameworkPaths/>-->
+      <AfterCompile/>
+      <MarkupCompilePass1/>
+      <FileClassification/>
+      <MarkupCompilePass2/>
+      <MarkupCompilePass2ForMainAssembly/>
+      <GenerateTemporaryTargetAssembly/>
+      <CleanupTemporaryTargetAssembly/>
+      <SatelliteOnlyMarkupCompilePass2/>
+      <GenerateManifests/>
+      <HostInBrowserValidation/>
+      <UpdateBrowserApplicationManifest/>
+      <ResignApplicationManifest/>
+      <SignDeploymentManifest/>
+      <SatelliteResourceGeneration/>
+      <GenerateDeploymentManifest/>
+      <MainResourcesGeneration/>
+      <GenerateResourceWithCultureItem/>
+      <SatelliteDllsProjectOutputGroup/>
+      <!--<CheckUid/>-->
+      <!--<UpdateUid/>
+      <RemoveUid/>-->
+      <MergeLocalizationDirectives/>
+      <AssignWinFXEmbeddedResource/>
+      <Total_Elapsed_Time Report="true"/>
+    </PerfTargets>
+
+</MSBuildErrors>

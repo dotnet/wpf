@@ -6,8 +6,6 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <CreateTestPayload>true</CreateTestPayload>
-    <InternalPayload>true</InternalPayload>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\CleanupCommand.cs" />

@@ -7820,7 +7820,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal RtfToXamlReader(string rtfString)
         {
-            _rtfBytes = InternalEncoding.Default.GetBytes(rtfString);
+            _rtfBytes = Encoding.Default.GetBytes(rtfString);
             _bForceParagraph = false;
 
             Initialize();

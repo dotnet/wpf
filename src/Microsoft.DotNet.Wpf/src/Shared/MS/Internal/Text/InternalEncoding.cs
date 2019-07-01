@@ -6,8 +6,10 @@ using System.Text;
 
 namespace MS.Internal.Text
 {
-    // We use encodings that are not provided by default in core.
-    // This class makes sure that we register extra providers that are required before use.
+    /// <summary>
+    /// We use encodings that are not provided by default in core.
+    /// This class makes sure that we register extra providers that are required before use.
+    /// </summary>
     internal static class InternalEncoding
     {
 
@@ -20,14 +22,5 @@ namespace MS.Internal.Text
         {
             return Encoding.GetEncoding(codepage);
         }
-
-        internal static Encoding Default
-        {
-            get
-            {
-                return Encoding.Default;
-            }
-        }
-
     }
 }

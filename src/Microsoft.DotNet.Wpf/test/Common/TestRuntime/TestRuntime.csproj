@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>TestRuntime</AssemblyName>
     <OutputType>Library</OutputType>
     <OutputSubFolder>Common</OutputSubFolder>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);TRACE;TARGET_NET3_5;STANDALONE_BUILD;TESTBUILD_CLR40</DefineConstants>
-    <EnableDefaultItems>false</EnableDefaultItems>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>

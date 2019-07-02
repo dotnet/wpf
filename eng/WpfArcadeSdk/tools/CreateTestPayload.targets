@@ -20,7 +20,7 @@
   <Import Project="$(RepoRoot)eng\DrtsToRun.props" Condition="Exists('$(RepoRoot)eng\DrtsToRun.props')" />
 
   <!-- List of DRTs to include that come from dotnet/wpf -->
-  <Import Project="$(MSBuildFileThisDirectory)DrtsToRun.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)DrtsToRun.props"/>
 
    <Choose>
       <When Condition="!Exists('$(MicrosoftDotNetWpfTestPath)')">
@@ -30,28 +30,26 @@
         </ItemGroup>
 
         <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
-          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
         </PropertyGroup>
 
         <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
-          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
         </PropertyGroup>
       </When>
     </Choose>
 
+  <ItemGroup>
+  </ItemGroup>
+  
   <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build;CopyPackageAssets">
- 
-    <PropertyGroup>
-      <LocalDotnetLocation>$(DotNetRoot)x86\</LocalDotnetLocation>
-      <LocalDotnetLocation Condition="'$(Platform)' == 'x64'">$(DotNetRoot)</LocalDotnetLocation>
-
-    </PropertyGroup>
     <ItemGroup>
       <MicrosoftDotNetWpfTestContents Include="$(MicrosoftDotNetWpfTestPath)**\*.*" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-machine.ps1" />
-      <DrtPayloadContents Include="$(ArtifactsBinDir)\%(DrtTestProjects.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
+      <DrtPayloadContents Include="$(ArtifactsBinDir)\%(DrtTestProjects.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*" Condition="'$(WpfRuntimeIdentifier)'=='win-x64'"/>      
+      <DrtPayloadContents Include="$(ArtifactsBinDir)\%(DrtTestProjects.Identity)\$(Configuration)\**\*.*" Condition="'$(WpfRuntimeIdentifier)'!='win-x64'"/>
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"

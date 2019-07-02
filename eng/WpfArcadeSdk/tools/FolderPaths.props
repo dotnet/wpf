@@ -11,5 +11,9 @@
     <!-- Test related paths -->
     <WpfTestsDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\test\</WpfTestsDir>   
     <WpfDrtCommonDir>$(WpfTestsDir)Common\DRT\</WpfDrtCommonDir>
+
+    <!-- Artifacts related paths -->
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
   </PropertyGroup>
 </Project>

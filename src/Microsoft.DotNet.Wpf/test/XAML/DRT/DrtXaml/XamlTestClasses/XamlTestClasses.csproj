@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>XamlTestClasses</AssemblyName>
     <RootNamespace>XamlTestClasses</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>

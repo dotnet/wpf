@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>DrtXaml</AssemblyName>
     <RootNamespace>DrtXaml</RootNamespace>
     <LinkSubsystem>console</LinkSubsystem>

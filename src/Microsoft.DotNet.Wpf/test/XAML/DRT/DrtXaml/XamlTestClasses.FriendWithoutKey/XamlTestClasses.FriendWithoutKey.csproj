@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>

@@ -122,12 +122,12 @@ $(PreparePackageAssetsDependsOn):
     </CreateItem>
     <CreateItem Include="$(OutDir)*.deps.json"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
-                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(RepoLocation)'=='ExternalTest'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.runtimeconfig.json"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
-                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(RepoLocation)'=='ExternalTest'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb"
@@ -294,13 +294,13 @@ $(PreparePackageAssetsDependsOn):
       </Content>
 
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.deps.json"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\') and '$(RepoLocation)'=='ExternalTest'" >
         <Pack>true</Pack>
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>
 
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.runtimeconfig.json"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\') and '$(RepoLocation)'=='ExternalTest'" >
         <Pack>true</Pack>
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>

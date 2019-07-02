@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>TestApiCore</AssemblyName>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>Microsoft.Test</RootNamespace>
     <OutputType>Library</OutputType>
     <OutputSubFolder>Infra</OutputSubFolder>

@@ -1,3 +1,13 @@
 <Project>
-    <Import Project="$(MSBuildThisFileDirectory)WpfArcadeSdk\tools\RunDrtsLocal.targets" Condition="'$(Test)'=='True'" />
+  <!--
+  This .targets file is included by the Arcade extension point AfterSolutionBuild.proj. Arcade doesn't
+  include any of the custom MSBuild properties that get set during the regular build. So the $(WpfArcadeSdkPath)
+  properties aren't available to us.
+  -->
+  <PropertyGroup>
+    <WpfArcadeSdkToolsDir Condition="'$(WpfArcadeSdkToolsDir)'==''">$(MSBuildThisFileDirectory)WpfArcadeSdk\tools\</WpfArcadeSdkToolsDir>
+    <ArtifactsBinDir Condition="'$(ArtifactsBinDir)'==''">$(RepoRoot)artifacts\bin\</ArtifactsBinDir>
+  </PropertyGroup>
+  <Import Project="$(WpfArcadeSdkToolsDir)FolderPaths.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)RunDrtsLocal.targets" Condition="'$(Test)'=='True'" />
 </Project>

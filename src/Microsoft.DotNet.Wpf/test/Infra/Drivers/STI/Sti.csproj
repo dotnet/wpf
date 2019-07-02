@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Sti</AssemblyName>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>EXE</OutputType>
     <OutputSubFolder>Infra</OutputSubFolder>
     <SignAssembly>true</SignAssembly>

@@ -9,6 +9,7 @@ namespace Microsoft.Test.Stability.Core
 {    
     public interface IStatePayload
     {
+        [CLSCompliant(false)]
         void Initialize(ContentPropertyBag arguments);
     }
 

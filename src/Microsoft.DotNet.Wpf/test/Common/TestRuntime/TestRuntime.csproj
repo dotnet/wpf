@@ -7,6 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);TRACE;TARGET_NET3_5;STANDALONE_BUILD;TESTBUILD_CLR40</DefineConstants>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
+    <CLSCompliant>true</CLSCompliant>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Globalization\ChineseSimplified.txt">
@@ -45,6 +46,10 @@
       <LogicalName>PropertiesToSkip.xml</LogicalName>
       <Link>Resources\Windows\PropertiesToSkip.xml</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="RenderingVerification\DefaultTolerance.xml">
+      <LogicalName>Microsoft.Test.RenderingVerification.RenderingVerification.DefaultTolerance.xml</LogicalName>
+      <Link>Resources\VScan\DefaultTolerance.xml</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" ReferenceImplementation="true" />
@@ -62,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Threading.AccessControl" Version="4.5.0" />
+    <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
     <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>

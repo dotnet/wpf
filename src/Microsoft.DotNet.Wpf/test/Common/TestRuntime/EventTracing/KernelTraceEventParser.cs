@@ -27,7 +27,7 @@ namespace Microsoft.Test.EventTracing
     /// 
     /// see code:TraceEventParser for more 
     /// </summary>
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class KernelTraceEventParser : TraceEventParser
     {
@@ -2129,7 +2129,7 @@ namespace Microsoft.Test.EventTracing
     ///     * ThreadID to ProcessID mapping
     ///     * Kernel file name to user file name mapping 
     /// </summary>
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     internal class KernelTraceEventParserState : IFastSerializable
     {
         public KernelTraceEventParserState()
@@ -2344,7 +2344,7 @@ namespace Microsoft.Test.EventTracing
     }
     #endregion
 
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)] 
     public sealed class EventTraceHeaderTraceData : TraceEvent
     {
@@ -7920,7 +7920,7 @@ namespace Microsoft.Test.EventTracing
         #endregion
     }
 
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class ThreadPoolTraceEventParser : TraceEventParser
     {
@@ -8347,7 +8347,7 @@ namespace Microsoft.Test.EventTracing
         #endregion
     }
 
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class HeapTraceProviderTraceEventParser : TraceEventParser
     {
@@ -9047,7 +9047,7 @@ namespace Microsoft.Test.EventTracing
         #endregion
     }
 
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class CritSecTraceProviderTraceEventParser : TraceEventParser
     {

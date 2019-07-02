@@ -13,7 +13,7 @@ using Microsoft.Test.EventTracing.FastSerialization;
 
 namespace Microsoft.Test.EventTracing
 {
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class DynamicTraceEventParser : TraceEventParser
     {

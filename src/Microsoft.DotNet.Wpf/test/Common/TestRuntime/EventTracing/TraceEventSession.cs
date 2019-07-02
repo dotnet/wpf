@@ -66,7 +66,7 @@ namespace Microsoft.Test.EventTracing
     /// moduleFile.  Alternatively, you can use code:TraceLog.CreateFromETL to convert the ETL file into an ETLX file. 
     /// Once it is an ETLX file you have a much richer set of processing options availabe from code:TraceLog. 
     /// </summary>
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     public sealed class TraceEventSession : IDisposable
     {
         /// <summary>
@@ -831,7 +831,7 @@ namespace Microsoft.Test.EventTracing
             Dispose();
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public void Dispose()
         {
             if (unmanagedPropertiesBuffer != IntPtr.Zero)

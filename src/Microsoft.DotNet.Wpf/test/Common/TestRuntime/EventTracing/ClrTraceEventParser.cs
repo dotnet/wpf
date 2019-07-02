@@ -23,7 +23,7 @@ namespace Microsoft.Test.EventTracing
     /* Parsers defined in this file */
     // code:ClrTraceEventParser, code:ClrRundownTraceEventParser, code:ClrStressTraceEventParser 
     /* code:ClrPrivateTraceEventParser  code:#ClrPrivateProvider */
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     public class ClrTraceEventParser : TraceEventParser
     {
         public static string ProviderName = "Microsoft-Windows-DotNETRuntime";
@@ -4133,7 +4133,7 @@ namespace Microsoft.Test.EventTracing
             ThreadTimedOut = 0x7,
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         [CLSCompliant(false)]
     public sealed class ClrRundownTraceEventParser : TraceEventParser
     {
@@ -4580,7 +4580,7 @@ namespace Microsoft.Test.EventTracing
 #if !ONLY_PUBLIC_CLR
 
     // #ClrPrivateProvider
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     [CLSCompliant(false)]
     public sealed class ClrPrivateTraceEventParser : TraceEventParser
     {

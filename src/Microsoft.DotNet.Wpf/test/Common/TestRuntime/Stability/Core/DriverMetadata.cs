@@ -16,7 +16,7 @@ namespace Microsoft.Test.Stability.Core
     {
 
         #region Constructor
-
+        [CLSCompliant(false)]
         public StabilityTestDefinition(ContentPropertyBag payload)
         {
             string schedulerTypename = payload["SchedulerType"];

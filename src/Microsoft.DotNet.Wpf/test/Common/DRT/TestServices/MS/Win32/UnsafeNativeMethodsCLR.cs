@@ -1289,14 +1289,14 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, EntryPoint="CreateWindowEx", CharSet=CharSet.Auto, BestFitMapping = false, SetLastError=true)]
         public static extern IntPtr IntCreateWindowEx(int  dwExStyle, string lpszClassName,
                                                    string lpszWindowName, int style, int x, int y, int width, int height,
-                                                   HandleRef hWndParent, HandleRef hMenu, HandleRef hInst, [MarshalAs(UnmanagedType.AsAny)] object pvParam);
+                                                   HandleRef hWndParent, HandleRef hMenu, HandleRef hInst, HandleRef lpParam);
 
         public static IntPtr CreateWindowEx(int  dwExStyle, string lpszClassName,
                                          string lpszWindowName, int style, int x, int y, int width, int height,
-                                         HandleRef hWndParent, HandleRef hMenu, HandleRef hInst, [MarshalAs(UnmanagedType.AsAny)]object pvParam) {
+                                         HandleRef hWndParent, HandleRef hMenu, HandleRef hInst, HandleRef lpParam) {
             IntPtr retVal = IntCreateWindowEx(dwExStyle, lpszClassName,
                                          lpszWindowName, style, x, y, width, height, hWndParent, hMenu,
-                                         hInst, pvParam);
+                                         hInst, lpParam);
             if(retVal == IntPtr.Zero)
             {
                 throw new Win32Exception();

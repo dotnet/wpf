@@ -22,7 +22,7 @@ namespace Microsoft.Test.EventTracing
     /// to get at the Win32 TraceEvent infrastructure.  It is effectively
     /// a port of evntrace.h to C# declarations.  
     /// </summary>
-    [SecurityTreatAsSafe, SecurityCritical]
+    [SecuritySafeCritical, SecurityCritical]
     internal unsafe static class TraceEventNativeMethods
     {
         #region symbol lookup

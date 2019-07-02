@@ -168,7 +168,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public KernelTraceEventParser Kernel
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 if (_Kernel == null)
@@ -254,7 +254,7 @@ namespace Microsoft.Test.EventTracing
         /// <summary>
         /// Should be called when you are done with the source.  
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public virtual void Dispose() { }
 
         /// <summary>
@@ -271,29 +271,29 @@ namespace Microsoft.Test.EventTracing
             userData = new Dictionary<string, object>();
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         abstract protected void RegisterEventTemplateImpl(TraceEvent template);
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         abstract protected void RegisterParserImpl(TraceEventParser parser);
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         abstract protected void RegisterUnhandledEventImpl(Action<TraceEvent> callback);
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         virtual protected string TaskNameForGuidImpl(Guid guid) { return null; }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         virtual protected string ProviderNameForGuidImpl(Guid taskOrProviderGuid) { return null; }
 
         #region ITraceParserServices Members
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void ITraceParserServices.RegisterEventTemplate(TraceEvent template)
         {
             RegisterEventTemplateImpl(template);
         }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void ITraceParserServices.RegisterParser(TraceEventParser parser)
         {
             RegisterParserImpl(parser);
         }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void ITraceParserServices.RegisterUnhandledEvent(Action<TraceEvent> callback)
         {
             RegisterUnhandledEventImpl(callback);
@@ -425,7 +425,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public TraceEventID ID
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 Debug.Assert(ClassicProvider || eventID == (TraceEventID)eventRecord->EventHeader.Id);
@@ -488,7 +488,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public TraceEventLevel Level
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 // Debug.Assert(eventRecord->EventHeader.Level < 6, "Level out of range");
@@ -500,7 +500,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public int Version
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get { return eventRecord->EventHeader.Version; }
         }
         /// <summary>
@@ -510,7 +510,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public TraceEventKeyword Keyword
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get { return (TraceEventKeyword)eventRecord->EventHeader.Keyword; }
         }
         /// <summary>
@@ -519,7 +519,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public TraceEventChannel Channel
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get { return (TraceEventChannel)eventRecord->EventHeader.Channel; }
         }
 
@@ -528,7 +528,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public int ThreadID
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 return eventRecord->EventHeader.ThreadId;
@@ -539,7 +539,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public int ProcessID
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 return eventRecord->EventHeader.ProcessId;
@@ -550,7 +550,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public long TimeStamp100ns
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 return eventRecord->EventHeader.TimeStamp;
@@ -609,7 +609,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public int PointerSize
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get
             {
                 Debug.Assert((eventRecord->EventHeader.Flags & TraceEventNativeMethods.EVENT_HEADER_FLAG_64_BIT_HEADER) != 0 ||
@@ -646,7 +646,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public int EventDataLength
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get { return eventRecord->UserDataLength; }
         }
         /// <summary>
@@ -686,7 +686,7 @@ namespace Microsoft.Test.EventTracing
         /// the original event, you can do so using this Clone functionality.  Note that this operation is
         /// not really cheap, so you should avoid calling it if you can. 
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public unsafe virtual TraceEvent Clone()
         {
             TraceEvent ret = (TraceEvent)MemberwiseClone();     // Clone myself. 
@@ -828,7 +828,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         internal protected bool ClassicProvider
         {
-            [SecurityTreatAsSafe, SecurityCritical]
+            [SecuritySafeCritical, SecurityCritical]
             get { return (eventRecord->EventHeader.Flags & TraceEventNativeMethods.EVENT_HEADER_FLAG_CLASSIC_HEADER) != 0; }
         }
         /// <summary>
@@ -1045,7 +1045,7 @@ namespace Microsoft.Test.EventTracing
         #region Private
         // #TraceEventRecordLayout
         // Constants for picking apart the header of the event payload.  See  code:TraceEventNativeMethods.EVENT_TRACE
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         ~TraceEvent()
         {
             // Most Data does not own its data, so this is usually a no-op. 
@@ -1330,27 +1330,27 @@ namespace Microsoft.Test.EventTracing
         /// expectation is that no memory needs to be allocated during a normal dispatch (in fact only one
         /// field in the code:TraceEvent is set).
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void RegisterEventTemplate(TraceEvent template);
         /// <summary>
         /// It is expected that when a subclass of code:TraceEventParser is created, it calls this
         /// methodIndex on the source.  This allows the source to do any Parser-specific initialization.  
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void RegisterParser(TraceEventParser parser);
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         void RegisterUnhandledEvent(Action<TraceEvent> callback);
         /// <summary>
         /// Looks if any provider has registered an event with task with 'taskGuid'. Will return null if
         /// there is no registered event.
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical] 
+        [SecuritySafeCritical, SecurityCritical] 
         string TaskNameForGuid(Guid taskGuid);
         /// <summary>
         /// Looks if any provider has registered with the given GUID OR has registered any task that mathces
         /// the GUID. Will return null if there is no registered event.
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         string ProviderNameForGuid(Guid taskOrProviderGuid);
     }
 
@@ -1406,7 +1406,7 @@ namespace Microsoft.Test.EventTracing
         /// <summary>
         /// Subscribe to all events compatible with 'callback' 
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public virtual void AddToAllMatching<T>(Action<T> callback)
         {
             // Use reflectin to add the callback to each of the events this class defines.  
@@ -1442,7 +1442,7 @@ namespace Microsoft.Test.EventTracing
             }
         }
         #region protected
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         [CLSCompliant(false)]
         protected TraceEventParser(TraceEventSource source)
         {
@@ -1541,7 +1541,7 @@ namespace Microsoft.Test.EventTracing
             unhandledEventTemplate.source = this;
             ReHash();       // Allocates the hash table
         }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected override void RegisterUnhandledEventImpl(Action<TraceEvent> callback)
         {
             UnhandledEvent += callback;
@@ -1554,7 +1554,7 @@ namespace Microsoft.Test.EventTracing
         /// that code:TraceEvent does NOT have a copy of hte data, but rather just a pointer to it. 
         /// This data is ONLY valid during the callback. 
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         internal protected void Dispatch(TraceEvent anEvent)
         {
 #if DEBUG
@@ -1598,7 +1598,7 @@ namespace Microsoft.Test.EventTracing
         /// Lookup up the event based on its ProviderID (GUID) and EventId (Classic use the TaskId and the
         /// Opcode field for lookup, but use these same fields (see code:ETWTraceEventSource.RawDispatchClassic)
         /// </summary>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         internal TraceEvent Lookup(TraceEventNativeMethods.EVENT_RECORD* eventRecord)
         {
             ushort eventID = eventRecord->EventHeader.Id;
@@ -1666,7 +1666,7 @@ namespace Microsoft.Test.EventTracing
             return unhandledEventTemplate;
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             if (templatesInfo != null)
@@ -1677,13 +1677,13 @@ namespace Microsoft.Test.EventTracing
                 templatesInfo = null;
             }
         }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         ~TraceEventDispatcher()
         {
             Dispose(false);
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         private void ReHash()
         {
             TemplateEntry* oldTemplatesInfo = templatesInfo;
@@ -1815,7 +1815,7 @@ namespace Microsoft.Test.EventTracing
         #endregion
 
         #region ITraceParserServices Members
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected override void RegisterEventTemplateImpl(TraceEvent template)
         {
             if (template.source == null)
@@ -1846,7 +1846,7 @@ namespace Microsoft.Test.EventTracing
                 }
             }
         }
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected override void RegisterParserImpl(TraceEventParser parser)
         {
             if (_Kernel == null)
@@ -1857,7 +1857,7 @@ namespace Microsoft.Test.EventTracing
                 _Dynamic = parser as DynamicTraceEventParser;
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected override string TaskNameForGuidImpl(Guid guid)
         {
             NamesEntry entry;

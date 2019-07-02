@@ -46,7 +46,7 @@ namespace Microsoft.Test.EventTracing
         /// If type == ModuleFile this is the name of the moduleFile to open.
         /// If type == Session this is the name of real time sessing to open.</param>
         /// <param name="type"></param>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public ETWTraceEventSource(string fileOrSessionName, TraceEventSourceType type)
         {
             long now = DateTime.Now.ToFileTime() - 100000;     // subtract 10ms to avoid negative times. 
@@ -180,7 +180,7 @@ namespace Microsoft.Test.EventTracing
         /// code:#Introduction for more
         /// </summary>
         /// <returns>false If StopProcesing was called</returns>
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public override bool Process()
         {
             if (processTraceCalled)
@@ -215,7 +215,7 @@ namespace Microsoft.Test.EventTracing
         /// </summary>
         public bool CanReset { get { return (primaryLogFile.LogFileMode & TraceEventNativeMethods.EVENT_TRACE_REAL_TIME_MODE) == 0; } }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         public override void Dispose()
         {
             Dispose(true);
@@ -229,7 +229,7 @@ namespace Microsoft.Test.EventTracing
         // ETWTraceEventSource is a wrapper around the Windows API code:TraceEventNativeMethods.OpenTrace
         // methodIndex (see http://msdn2.microsoft.com/en-us/library/aa364089.aspx) We set it up so that we call
         // back to code:ETWTraceEventSource.Dispatch which is the heart of the event callback logic.
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         private void RawDispatchClassic(TraceEventNativeMethods.EVENT_RECORD* eventData)
         {
             // TODO not really a EVENT_RECORD on input, but it is a pain to be type-correct.  
@@ -273,7 +273,7 @@ namespace Microsoft.Test.EventTracing
             RawDispatch(eventData);
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         private void RawDispatch(TraceEventNativeMethods.EVENT_RECORD* rawData)
         {
             Debug.Assert(rawData->EventHeader.HeaderType == 0);     // if non-zero probably old-style ETW header
@@ -289,7 +289,7 @@ namespace Microsoft.Test.EventTracing
             Dispatch(anEvent);
         }
 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         protected override void Dispose(bool disposing)
         {
             if (handles != null)
@@ -341,7 +341,7 @@ namespace Microsoft.Test.EventTracing
         }
 
         // Private data / methods 
-        [SecurityTreatAsSafe, SecurityCritical]
+        [SecuritySafeCritical, SecurityCritical]
         private bool TraceEventBufferCallback(IntPtr rawLogFile)
         {
             return !stopProcessing;

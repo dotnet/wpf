@@ -542,7 +542,7 @@ namespace Microsoft.Test.Win32
         [DllImport(ExternDll.User32, EntryPoint = "CreateWindowEx", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr IntCreateWindowEx(int dwExStyle, string lpszClassName,
                                                    string lpszWindowName, int style, int x, int y, int width, int height,
-                                                   IntPtr hWndParent, IntPtr hMenu, IntPtr hInst, [MarshalAs(UnmanagedType.AsAny)] object pvParam);
+                                                   IntPtr hWndParent, IntPtr hMenu, IntPtr hInst, IntPtr lpParam);
 
         /// <summary>
         /// 
@@ -550,11 +550,11 @@ namespace Microsoft.Test.Win32
         /// <returns></returns>
         public static IntPtr CreateWindowEx(int dwExStyle, string lpszClassName,
                                          string lpszWindowName, int style, int x, int y, int width, int height,
-                                         IntPtr hWndParent, IntPtr hMenu, IntPtr hInst, [MarshalAs(UnmanagedType.AsAny)]object pvParam)
+                                         IntPtr hWndParent, IntPtr hMenu, IntPtr hInst, IntPtr lpParam)
         {
             return IntCreateWindowEx(dwExStyle, lpszClassName,
                                          lpszWindowName, style, x, y, width, height, hWndParent, hMenu,
-                                         hInst, pvParam);
+                                         hInst, lpParam);
 
         }
 

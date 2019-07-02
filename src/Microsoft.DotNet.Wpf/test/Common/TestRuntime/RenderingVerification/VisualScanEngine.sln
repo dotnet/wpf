@@ -1,0 +1,22 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualScanEngine", "VisualScanEngine.csproj", "{C2FE522F-B1BA-42E2-A24F-41F93926DE50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibrary", "..\..\MediaLibrary\MediaLibrary.csproj", "{BBFCAADC-E1D4-4557-ABBE-E343E91AF0B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2FE522F-B1BA-42E2-A24F-41F93926DE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2FE522F-B1BA-42E2-A24F-41F93926DE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2FE522F-B1BA-42E2-A24F-41F93926DE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2FE522F-B1BA-42E2-A24F-41F93926DE50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBFCAADC-E1D4-4557-ABBE-E343E91AF0B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBFCAADC-E1D4-4557-ABBE-E343E91AF0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

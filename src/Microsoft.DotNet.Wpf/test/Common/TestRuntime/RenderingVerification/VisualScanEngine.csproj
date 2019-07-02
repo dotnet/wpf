@@ -1,0 +1,383 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood" >
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.31113</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C2FE522F-B1BA-42E2-A24F-41F93926DE50}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>VisualScanEngine</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.Test.RenderingVerification</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE;VSBUILD</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <IncrementalBuild>false</IncrementalBuild>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <IncrementalBuild>false</IncrementalBuild>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Compression, Version=0.0.0.0, Culture=neutral, ProcessorArchitecture=MSIL">
+      <HintPath>..\Compression\bin\Debug\Compression.dll</HintPath>
+      <Name>Compression</Name>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="PresentationCore, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\PresentationCore.dll</HintPath>
+      <Name>PresentationCore</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="PresentationFramework, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\PresentationFramework.dll</HintPath>
+      <Name>PresentationFramework</Name>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="SdApiClientLib, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\SourceControlLib\objchk\i386\SdApiClientLib.dll</HintPath>
+      <Name>SdApiClientLib</Name>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.2.21213\System.dll</HintPath>
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.2.21213\System.Data.dll</HintPath>
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.2.21213\System.XML.dll</HintPath>
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.2.21213\System.Drawing.dll</HintPath>
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.2.21213\System.Windows.Forms.dll</HintPath>
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="WindowsBase, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\WindowsBase.dll</HintPath>
+      <Name>WindowsBase</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UIAutomationClient, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\UIAutomationClient.dll</HintPath>
+      <Name>UIAutomationClient</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UIAutomationTypes, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\UIAutomationClient.dll</HintPath>
+      <Name>UIAutomationTypes</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UIAutomationProvider, Version=6.0.4030.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\public\sdk\ref\UIAutomationClient.dll</HintPath>
+      <Name>UIAutomationProvider</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Filters\ColorSpaceConversion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Curve.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\AffineFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\AttractorFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\BlurFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\BrightnessContrastFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ChannelOperationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ColorFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ColorTransformFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ContrastFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ConvolutionFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\EqualizeFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\Filter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\FilterParameter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\FlipRotateFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\GammaCorrectFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\GaussianFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\GlowFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\GrayscaleFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\Image2DTransforms.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\Interpolator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\LogicalOperationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\MorphologicalFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\MorphShapeFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\NegateFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\NormalizedColorConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\OrderStatisticFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\PixelizeFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ProcessXmlFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\SchematizationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\SharpenFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\SpatialTransformFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\TintFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\VMorph.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\WVMorph.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ImageAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ImageComparator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ImageUtility.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IPUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\Matrix2D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MismatchingPoints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\Criteria.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\DataWrapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\Descriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\ImageToShapeIDMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\ModelManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\MomentExtDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\IExtendedDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Analytical\VScan.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\AnimatedProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\Animator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\AvalonTypographer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\DeltaImageComparator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GeometryFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphColorChooser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphShape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\GlyphText.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\Interfaces.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\LayoutContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\MatchingInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\MatchingInfoEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\StandardTypographer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\TypographBroker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Synthetical\XenoSymbolBroker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Package.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PInvoke.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RuntimeInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnmanagedProxies\UnmanagedInterfaces.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VideoCapture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NormalizedColor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="XamlLauncherReflect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Design\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <CommonProperties>
+        <FL_FAE04EC0_301F_11D3_BF4B_00C04F79EFBC />
+      </CommonProperties>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -15,7 +15,10 @@ namespace Microsoft.Test.Drt
         // So pass/fail is not an acceptable response.  By returning -123456, the DRT can return "ignore" status and still log it. 
         // (Sort of like a warning)
         const int ignoreTestExitCode = -123456;
-
+        public static void Main()
+        {
+            Main(null);
+        }
         public static void Main(string wait)
         {
             DrtRunner driver = new DrtRunner();

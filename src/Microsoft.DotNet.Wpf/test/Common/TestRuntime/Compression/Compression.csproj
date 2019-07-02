@@ -1,0 +1,103 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood" >
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>8.0.31113</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F6CFC9CC-8D74-4C59-AB12-62A656351423}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+    <RootNamespace>Microsoft.Test.Compression</RootNamespace>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>Compression</AssemblyName>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <IncrementalBuild>false</IncrementalBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <IncrementalBuild>false</IncrementalBuild>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <CommonProperties>
+        <FL_FAE04EC0_301F_11D3_BF4B_00C04F79EFBC />
+      </CommonProperties>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+  <ItemGroup>
+    <Reference Include="System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v2.0.31113\System.dll</HintPath>
+      <Name>System</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Data, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, ProcessorArchitecture=x86">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v2.0.31113\System.Data.dll</HintPath>
+      <Name>System.Data</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, ProcessorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v2.0.31113\System.XML.dll</HintPath>
+      <Name>System.XML</Name>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Archiver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\Cab.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabApi.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabCreator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabExtractor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\CabStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\DuplicateStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\HandleManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cab\OffsetStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -146,7 +146,7 @@ namespace Microsoft.Test.Win32
                                                          parent,
                                                          IntPtr.Zero,
                                                          IntPtr.Zero,
-                                                         0);
+                                                         IntPtr.Zero);
             int Win32Err = Marshal.GetLastWin32Error(); // Dance around FxCop
             _isInCreateWindow = false;
             if (_handle == IntPtr.Zero)

@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>TestRuntime</AssemblyName>
     <OutputType>Library</OutputType>
     <OutputSubFolder>Common</OutputSubFolder>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);TRACE;TARGET_NET3_5;STANDALONE_BUILD;TESTBUILD_CLR40</DefineConstants>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
-    <CLSCompliant>true</CLSCompliant>
+    <CLSCompliant>false</CLSCompliant>
+    <NoWarn>$(NoWarn);CS0618;CS3021;CS0649</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Globalization\ChineseSimplified.txt">

@@ -420,10 +420,6 @@ namespace Microsoft.Test.Loaders.Steps
                 param = fileHost.GetUri(FileName, hostScheme).ToString();
             }
 
-            // Clear the fusion cache by default.  Can be disabled for custom ClickOnce scenarios
-            if (ClearFusionCache)
-                ApplicationDeploymentHelper.CleanClickOnceCache();
-
             // Clear IE History but only if specified (defaults to false).  Only matters for history-based navigation
             if (ClearIEHistory)
                 ApplicationDeploymentHelper.ClearIEHistory();

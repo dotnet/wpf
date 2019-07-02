@@ -52,12 +52,6 @@ namespace Microsoft.Test.TestTypes
 
             ApplicationMonitor appMon = new ApplicationMonitor();
 
-            // if we're launching a ClickOnce application, clean the cache
-            // Since this method precludes remote deployment and our enlistment should build properly signed manifests, there's no need to update / resign the manifests.
-            if (pInfo.FileName.ToLowerInvariant().EndsWith(ApplicationDeploymentHelper.STANDALONE_APPLICATION_EXTENSION) || pInfo.FileName.ToLowerInvariant().EndsWith(ApplicationDeploymentHelper.BROWSER_APPLICATION_EXTENSION))
-            {
-                ApplicationDeploymentHelper.CleanClickOnceCache();
-            }
             // shell exec the app
             appMon.StartProcess(pInfo);
 

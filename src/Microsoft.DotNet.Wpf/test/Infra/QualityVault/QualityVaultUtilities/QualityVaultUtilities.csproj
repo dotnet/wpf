@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>QualityVaultUtilities</AssemblyName>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.Test</RootNamespace>

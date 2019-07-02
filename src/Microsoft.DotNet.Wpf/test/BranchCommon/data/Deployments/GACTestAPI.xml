@@ -1,0 +1,4 @@
+<StateCollection>
+  <StateModule Type="GlobalAssemblyCache" Path="Infra\TestApiWPF.dll"/> 
+  <StateModule Type="GlobalAssemblyCache" Path="Infra\TestApiCore.dll"/>  
+</StateCollection>

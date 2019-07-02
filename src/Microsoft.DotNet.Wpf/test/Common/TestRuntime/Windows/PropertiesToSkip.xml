@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PropertiesToSkip>
+  <PropertyToSkip PropertyName="Parent" Ignore="NameAndValue" />
+  <!--
+         We skip these because they are automatically set by serialization,
+         so two otherwise-identical trees will be different.
+     -->
+  <PropertyToSkip PropertyName="XmlnsDefinition" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="XmlSpace" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="XmlAttributes.XmlnsDictionary" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="XmlAttributes.XmlSpace" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="XmlAttributes.XmlNamespaceMaps" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="XmlAttributeProperties.XmlNamespaceMaps" Ignore="NameAndValue" />
+  <!-- bug: 958451 -->
+  <PropertyToSkip PropertyName="XmlnsDictionary" />
+  <!--
+         Focus-related properties
+         We skip these because only one window has focus.
+    -->
+  <PropertyToSkip PropertyName="IsActive" Owner="Window" />
+  <PropertyToSkip PropertyName="IsFocused" />
+  <PropertyToSkip PropertyName="IsFocusWithin" />
+  <!-- This is true in Selector when a ListItem is active -->
+  <PropertyToSkip PropertyName="IsSelectionActivePrivate" />
+  <!-- bug: 1031346 -->
+  <PropertyToSkip PropertyName="IsAtCaretPosition" />
+  <PropertyToSkip PropertyName="LineRange" Ignore="NameAndValue" />
+  <PropertyToSkip PropertyName="IsArrangeValid" />
+  <PropertyToSkip PropertyName="IsMeasureValid" />
+  <!-- Related to mouse over -->
+  <PropertyToSkip PropertyName="IsMouseOver" />
+  <PropertyToSkip PropertyName="IsMouseDirectlyOver" />
+  <PropertyToSkip PropertyName="IsStylusOver" />
+  <PropertyToSkip PropertyName="IsStylusDirectlyOver" />
+  <PropertyToSkip PropertyName="CachedSource" />
+  <PropertyToSkip PropertyName="IsBeingWatched" />
+  <PropertyToSkip PropertyName="ComputedSize" />
+  <PropertyToSkip PropertyName="DesiredSize" />
+  <PropertyToSkip PropertyName="IsAtLineBoundary" Owner="TextPointer" />
+  <PropertyToSkip PropertyName="DocumentEnd" Owner="TextPointer" />
+  <PropertyToSkip PropertyName="DocumentStart" Owner="TextPointer" />
+  <PropertyToSkip PropertyName="HasValidLayout" Owner="TextPointer" />
+  <PropertyToSkip PropertyName="ActualHeight" Owner="TextBlock" />
+  <PropertyToSkip PropertyName="ActualWidth" Owner="TextBlock" />
+  <PropertyToSkip PropertyName="RenderSize" Owner="TextBlock" />
+  <PropertyToSkip PropertyName="BaselineOffset" Owner="TextBlock" />
+  <PropertyToSkip PropertyName="Handle" />
+  <PropertyToSkip PropertyName="IsInternallyChangeable" />
+  <PropertyToSkip PropertyName="EnabledCount" />
+  <PropertyToSkip PropertyName="XmlNamespaceMaps" />
+  <PropertyToSkip PropertyName="Name" Owner="FrameworkElementFactory" />
+  <PropertyToSkip PropertyName="Capacity" />
+  <PropertyToSkip PropertyName="Background" Owner="InstrContentPanelHost" />
+  <!-- it should be the same
+    <PropertyToSkip PropertyName="DecoderInfo" Owner="ImageSource"/>
+    -->
+  <PropertyToSkip PropertyName="OriginalString" />
+  <!--The id's are strictly internal, only exposed in debug builds as a debugging aid.-->
+  <PropertyToSkip PropertyName="DebugId" />
+  <!-- bug: 958306 -->
+  <PropertyToSkip PropertyName="Drawing" />
+  <!-- bug: 952364 -->
+  <PropertyToSkip PropertyName="ForceCursor" />
+  <!-- bug: 952663 -->
+  <PropertyToSkip PropertyName="PersistId" />
+  <!-- Skip some property for Mil breaking change -->
+  <PropertyToSkip PropertyName="Dispatcher" />
+  <PropertyToSkip PropertyName="IsFrozen" Owner="Freezable" />
+  <PropertyToSkip PropertyName="IsSealed" />
+  <!--CultureInfo with different LCID is fine. -->
+  <PropertyToSkip PropertyName="LCID" Owner="CultureInfo" />
+  <!-- With DWM turned on, Button.BorderBrush changes-->
+  <PropertyToSkip PropertyName="BorderBrush" Owner="Button" />
+  <!-- Transform.Inverse property always returns a new Transform, thus putting us into an infinite loop -->
+  <PropertyToSkip PropertyName="Inverse" Owner="Transform" />
+  <PropertyToSkip PropertyName="Inverse" Owner="Transform3D" />
+  <!-- Accessor not implemented-->
+  <PropertyToSkip PropertyName="ColorContexts" Owner="PngBitmapDecoder" />
+  <PropertyToSkip PropertyName="Count" Owner="XmlnsDictionary" />
+  <PropertyToSkip PropertyName="XmlAttributeProperties.XmlnsDictionary" />
+  <PropertyToSkip PropertyName="SyncRoot" Owner="XmlnsDictionary" />
+  <!-- relative uri has not implemented the getter for those properties -->
+  <PropertyToSkip PropertyName="Port" Owner="Uri" />
+  <PropertyToSkip PropertyName="Query" Owner="Uri" />
+  <PropertyToSkip PropertyName="DnsSafeHost" Owner="Uri" />
+  <PropertyToSkip PropertyName="UserInfo" Owner="Uri" />
+  <PropertyToSkip PropertyName="AbsolutePath" Owner="Uri" />
+  <PropertyToSkip PropertyName="Host" Owner="Uri" />
+  <PropertyToSkip PropertyName="Segments" Owner="Uri" />
+  <PropertyToSkip PropertyName="Scheme" Owner="Uri" />
+  <PropertyToSkip PropertyName="LocalPath" Owner="Uri" />
+  <PropertyToSkip PropertyName="HostNameType" Owner="Uri" />
+  <PropertyToSkip PropertyName="IsFile" Owner="Uri" />
+  <PropertyToSkip PropertyName="PathAndQuery" Owner="Uri" />
+  <PropertyToSkip PropertyName="Authority" Owner="Uri" />
+  <PropertyToSkip PropertyName="IsUnc" Owner="Uri" />
+  <PropertyToSkip PropertyName="AbsoluteUri" Owner="Uri" />
+  <PropertyToSkip PropertyName="Fragment" Owner="Uri" />
+  <PropertyToSkip PropertyName="IsLoopback" Owner="Uri" />
+  <PropertyToSkip PropertyName="IsDefaultPort" Owner="Uri" />
+  <PropertyToSkip PropertyName="IdnHost" Owner="Uri" />
+  <PropertyToSkip PropertyName="IsAtLineStartPosition" />
+  <PropertyToSkip PropertyName="VisualTree" Owner="ControlTemplate" />
+  <PropertyToSkip PropertyName="Palette" Owner="BitmapSource" />
+  <PropertyToSkip PropertyName="Thumbnail" />
+  <PropertyToSkip PropertyName="ExtentHeight" Owner="ScrollViewer" />
+  <PropertyToSkip PropertyName="ScrollableHeight" Owner="ScrollViewer" />
+  <PropertyToSkip PropertyName="RenderedGeometry" />
+  <PropertyToSkip PropertyName="Typography" />
+  <PropertyToSkip PropertyName="FirstInline" Owner="InlineCollection" />
+  <PropertyToSkip PropertyName="LastInline" Owner="InlineCollection" />
+  <PropertyToSkip PropertyName="ContentEnd" Owner="Paragraph" />
+  <!--Work around bug 1417471 -->
+  <PropertyToSkip PropertyName="IsLoaded" Owner="Run" />
+  <!--Work around bug 1417041 -->
+  <PropertyToSkip PropertyName="Content" Owner="Frame" />
+  <PropertyToSkip PropertyName="HiddenParent" Owner="FlowDocument" />
+  <PropertyToSkip PropertyName="Opacity" />
+  <PropertyToSkip PropertyName="Id" Owner="AnnotationResource" />
+  <!--Getting the following 4 properties on a Page when its parent is not a winsow throws an exceptiton -->
+  <PropertyToSkip PropertyName="WindowTitle" Owner="Page" />
+  <PropertyToSkip PropertyName="WindowHeight" Owner="Page" />
+  <PropertyToSkip PropertyName="WindowWidth" Owner="Page" />
+  <PropertyToSkip PropertyName="ShowsNavigationUI" Owner="Page" />
+  <!-- By design, see bug 1642595 -->
+  <PropertyToSkip PropertyName="CanFreeze"/>
+  <!--Fixes NetFX2007NS test, currently under investigation-->
+  <PropertyToSkip PropertyName="CanUndo" Owner="RichTextBox" />
+  <!-- By design Secure password cannot be serialized-->
+  <PropertyToSkip PropertyName="SecurePassword" Owner="PasswordBox" />
+
+</PropertiesToSkip>

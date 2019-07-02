@@ -1,0 +1,1994 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DiscoveryInfo AdaptorsAssembly="Infra\QualityVaultUtilities.dll" VersionOrder="VersionOrder.txt">
+  <DefaultTestInfo Type="Functional" Disabled="false" ExecutionGroupingLevel="SharedSupportFiles">
+    <SupportFiles>
+      <SupportFile Source="Common" />
+      <SupportFile Source="Infra" />
+    </SupportFiles>
+      <Deployments>
+          <Deployment>infra\Deployments\Win8DesktopShell.xml</Deployment>
+      </Deployments>
+    <Configurations/>
+  </DefaultTestInfo>
+  <Targets>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Sample\Sample.xtc">
+      <DefaultTestInfo Area="Sample" Type="Functional">
+      </DefaultTestInfo>
+    </Target>
+    <!-- Internal unit tests --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Internal\InternalUnitTests.dll">
+      <DefaultTestInfo Area="Internal" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" Method="Run" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Internal\InternalUnitTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.8+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Controls: Ribbon 4.5 --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Controls\RibbonTest\v4.5\RibbonTest.dll">
+      <DefaultTestInfo Area="Controls" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="Ribbon" Timeout="250">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\*.bmp" />
+          <SupportFile Source="FeatureTests\Controls\Snapshots\TestAPIDefaultProfile.xml" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\v4.5\RibbonTest.dll" />
+        </SupportFiles>
+         <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Annotations --><!--
+    <Target Adaptor="AnnotationAdaptor" Path="FeatureTests\Annotations\AnnotationsTest.exe">
+      <DefaultTestInfo Area="Annotations" Type="Functional" UacElevation="Elevated" Timeout="30">
+        <Driver Executable="AnnotationsTest.exe" />
+        <DriverParameters />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Annotations\AnnotationsTest.exe" />
+          <SupportFile Source="FeatureTests\Annotations\AnnotationCommon.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Annotations\AnnotationCommon.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Annotations Orcas --><!--
+    <Target Adaptor="AnnotationAdaptor" Path="FeatureTests\Annotations\AnnotationsOrcasTest.exe">
+      <DefaultTestInfo Area="Annotations" Type="Functional" UacElevation="Elevated" Timeout="30">
+        <Driver Executable="AnnotationsOrcasTest.exe" />
+        <DriverParameters />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Annotations\AnnotationsOrcasTest.exe" />
+          <SupportFile Source="FeatureTests\Annotations\AnnotationCommon.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Annotations\AnnotationCommon.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Annotations Appmonitor --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Annotations\XBAP\Variations\AnnotationsXBAP.xtc">
+      <DefaultTestInfo Area="Annotations" Type="Functional">
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Annotations Dev10 --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Annotations\AnnotationsDev10.dll">
+      <DefaultTestInfo Area="Annotations" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" Method="Run" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Annotations\AnnotationsDev10.dll" />
+          <SupportFile Source="FeatureTests\Annotations\VersionTolerance\*.*" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- ElementServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\ElementServices\ElementServicesTest.dll">
+      <Areas>
+        <Area>ElementServices</Area>
+      </Areas>
+      <DefaultTestInfo Area="ElementServices" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\ElementServicesTest.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsTrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsUntrusted.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\ElementServices\ElementServicesTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\ElementServices\CoreTestsUntrusted.dll">
+      <Areas>
+        <Area>W8Features</Area>
+      </Areas>
+      <DefaultTestInfo Area="W8Features" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="stiw8.exe" />
+        <DriverParameters DefaultResult="Pass" CreateLog="true" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsUntrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsTrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\ElementServicesTest.dll" />
+          <SupportFile Source="Infra\stiw8.exe" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- XAML/AppModel: simple tests --><!--
+--><!-- Daniel's Note : This was cut in an FI, but weren't there important cases in here? --><!--
+    --><!--Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\ElementServices\CoreTestsUntrusted.dll">
+      <Areas>
+        <Area>XAML</Area>
+        <Area>AppModel</Area>
+      </Areas>
+      <DefaultTestInfo Area="XAML" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" CreateLog="true" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsUntrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsTrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\ElementServicesTest.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target--><!--
+    --><!-- ElementServices: Freezables --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\ElementServices\FreezablesTest.dll">
+      <DefaultTestInfo Area="ElementServices" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\FreezablesTest.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- ElementServices: MDE modeling tests --><!--
+    <Target Adaptor="ModelAttributeAdaptor" Path="FeatureTests\ElementServices\ElementServicesTest.dll">
+      <Areas>
+        <Area>ElementServices</Area>
+      </Areas>
+      <DefaultTestInfo Area="ElementServices" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" CreateLog="true" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\ElementServicesTest.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsUntrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsTrusted.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\ElementServices\ElementServicesTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- ElementServices: MDE modeling tests --><!--
+    <Target Adaptor="ModelAttributeAdaptor" Path="FeatureTests\ElementServices\CoreTestsUntrusted.dll">
+      <Areas>
+        <Area>AppModel</Area>
+      </Areas>
+      <DefaultTestInfo Area="AppModel" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" CreateLog="true" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsUntrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\CoreTestsTrusted.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\ElementServicesTest.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\ElementServices\ElementServicesTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- ElementServices: MultiTouch --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\ElementServices\MultiTouchTest.dll">
+      <DefaultTestInfo Area="ElementServices" Type="Functional" UacElevation="Elevated">
+  	<Configurations>
+    		<Configuration>Infra\Configurations\Multitouch_Win7_Forward.xml</Configuration>
+  	</Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" DefaultResult="Pass" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementServices\StiConfig\sti.exe.config" />
+          <SupportFile Source="FeatureTests\ElementServices\MultiTouchTestCommon.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\MultiTouchTest.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\MS.MobilePCTest.PenActionsEngine.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\MS.TabletTest.PenInjector.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\MS.TabletTest.PenInjector.Mixed.dll" />
+          <SupportFile Source="FeatureTests\ElementServices\PenActionsEngine.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\ElementServices\MultiTouchTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- 3D -->
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\3D\*.xtc">
+      <DefaultTestInfo Area="3D" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <!-- Orcas 3D Suites -->
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\3D\Orcas\*.xtc">
+      <DefaultTestInfo Area="3D" Disabled="False" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <!-- Dev10 3D -->
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\3D\3D-Dev10-RegressionTests.xtc">
+      <DefaultTestInfo Area="3D" Disabled="False" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <!-- 2D -->
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\2D\PartialTrustXaml.dll" >
+      <Areas>
+        <Area>2D</Area>
+      </Areas>
+      <DefaultTestInfo Area="2D" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\2D\PartialTrustXaml.dll" />
+        </SupportFiles>
+        <Deployments>
+            <Deployment>infra\Deployments\GacTestAPI.xml</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\2D\*.xtc">
+        <DefaultTestInfo Area="2D" Disabled="False" Priority="1" Type="Functional">
+            <Driver Executable="sti.exe" />
+            <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+            <Versions>
+                <Version>3.0+</Version>
+                <Version>4.0Client+</Version>
+            </Versions>
+        </DefaultTestInfo>
+    </Target>
+      <!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\2D\Multi-Mon\*.xtc">
+      <DefaultTestInfo Area="2D" Disabled="False" Priority="1" Type="Functional">
+        <Configurations>
+          <Configuration>Infra\Configurations\MultiMon.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\2D\Dev10\*.xtc">
+      <DefaultTestInfo Area="2D" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\2D\2D_Dev10.dll">
+      <Areas>
+        <Area>2D</Area>
+      </Areas>
+      <DefaultTestInfo Area="2D" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\2D\2D_Dev10.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    -->
+      <!-- Effects --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\Effects-GTO.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\Effects-CGT.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Arrowhead Effects tests --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\XamlBasedTest.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" DisableMultiMonitorTesting="True" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\MultiMonXamlBasedTest.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Configurations>
+          <Configuration>Infra\Configurations\MultiMon.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\HlslTest.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\PS3Test.xtc">
+      <DefaultTestInfo Area="Effects" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Effects\EffectsTests.dll">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Effects\EffectsTests.dll" />
+          <SupportFile Source="Common\Effects\ShaderEffects.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Effects\ExplodeBitmapEffect\CustomBitmapEffect.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Effects\EffectsTestsDev10.dll">
+      <Areas>
+        <Area>Effects</Area>
+        <Area>2D</Area>
+      </Areas>
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Effects\EffectsTestsDev10.dll" />
+          <SupportFile Source="FeatureTests\Effects\EffectsTests.dll" />
+          <SupportFile Source="Common\Effects\ShaderEffects.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\XamlBasedTestDev10.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" DisableMultiMonitorTesting="True" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Effects\MultiMonXamlBasedTestDev10.xtc">
+      <DefaultTestInfo Area="Effects" Disabled="False" Priority="1" Type="Functional">
+        <Configurations>
+          <Configuration>Infra\Configurations\MultiMon.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- WDK tests DISABLEDUNSTABLETEST  WLK (Windows Logo Kit) Tests
+    These tests were written for the Windows Logo Kit team. They used them to verify whether a hardware graphics card was good enough for WPF.
+    They have since updated their tools. We do not need to maintain these any more.
+    to find all disabled tests in test tree, use: “findstr /snip DISABLEDUNSTABLETEST” --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\WDK\WdkTests.xtc">
+      <DefaultTestInfo Area="Graphics" SubArea="Wlk" Disabled="True" Priority="3" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- SilverLight tests --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Graphics\SilverLightTests.xtc">
+      <DefaultTestInfo Area="Graphics" SubArea="SilverLight" Disabled="True" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- Imaging --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Imaging\*.xtc">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Imaging\BitmapScalingMode\*.xtc">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ImagingTests.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ImagingTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ArrowheadImagingRegressionTests.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ArrowheadImagingRegressionTests.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Imaging\Codecs.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.5SP1</Version>
+          <Version>AH+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\WriteableBitmapTest.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\WriteableBitmapTest.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP2+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\D3DImage\D3DImageTest.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\*.dll" />
+          <SupportFile Source="Common\Imaging\D3DImage\*.dll" />
+          <SupportFile Source="Common\Imaging\D3DImage\*.fx" />
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\*.xml" />
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\*.ps" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.5SP1</Version>
+          <Version>AH+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- D3DImage test suite, but with new Dev11-specific features (needs to be separate so other tests can pass on pre 45) --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\D3DImage\Dev11\D3DImageTest.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\Dev11\*.dll" />
+          --><!-- Can use support files from the Dev10 D3DImage tests because nothing should change. --><!--
+          <SupportFile Source="Common\Imaging\D3DImage\*.dll" />
+          <SupportFile Source="Common\Imaging\D3DImage\*.fx" />
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\*.xml" />
+          <SupportFile Source="FeatureTests\Imaging\D3DImage\*.ps" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ImagingTestsDev10.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ImagingTestsDev10.dll" />
+          <SupportFile Source="FeatureTests\Imaging\ImagingTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ColorTests\ColorTests.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ColorTests\ColorTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\EncoderTests\EncoderTests.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\EncoderTests\EncoderTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>3.5SP1</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+   <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ArrowheadImagingTests\ArrowheadImagingTests.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ArrowheadImagingTests\ArrowheadImagingTests.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>3.5SP1</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Imaging\ImagingTests2016.dll">
+      <DefaultTestInfo Area="Imaging" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Imaging\ImagingTests2016.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.7+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Media --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Media\*.xtc">
+      <DefaultTestInfo Area="Media" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Media\MediaTestDev10.dll">
+      <DefaultTestInfo Area="Media" Disabled="False" Priority="0" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Media\MediaTestDev10.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTest.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServicesOriginal" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTest.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTestOrcas.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServicesOrcas" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestOrcas.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTest.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTestDev10.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServicesDev10" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestDev10.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTest.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTestDev11.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServicesDev11" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestDev11.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTest2016.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServices2016" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTest2016.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.6.2+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- DataServices --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\DataServices\DataServicesTest2017.dll">
+      <DefaultTestInfo Area="DataServices" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="DataServices2016" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTest2017.dll" />
+          <SupportFile Source="FeatureTests\DataServices\DataServicesTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.7.1+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Integration --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\AMG\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\AvalonNotepad\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\FlexStore\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\MediaCenterMania\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\SdkViewer\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Integration\HLS\TestCases\TaskManager\XTC\*.xtc">
+      <DefaultTestInfo Area="Integration" Disabled="False" Priority="1" Type="Functional">
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Tolerances" />
+          <SupportFile Source="FeatureTests\Integration\HLS\TestCases\Windows.Client.Test.Integration.Common.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 3.0 RTM --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest30RTM.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>3.0</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 3.0 SP1 (red bits) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest30SP1.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>3.0SP1</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 3.5 RTM (green bits) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest35RTM.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>3.5</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - Arrowhead (post-3.5 RTM bits) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTestArrowhead.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>AH</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 3.0 SP2 (post-3.0 SP1 red bits) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest30SP2.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>3.0SP2</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 3.5 SP1 (post-3.5 RTM green bits) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest35SP1.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>3.5SP1</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 4.0 Client (Dev10) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest40RTMClient.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+          <Versions>
+              <Version>4.0</Version>
+              <Version>4.0Client</Version>
+              <Version>4.0GDR</Version>
+              <Version>4.0GDRClient</Version>
+          </Versions>
+          <Keywords>
+              <Keyword>Setup_SanitySuite</Keyword>
+          </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 4.0 Extended (Dev10) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest40RTM.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>4.0</Version>
+          <Version>4.0GDR</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 4.5 Client (Dev11) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest45RTMClient.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+          <Versions>
+              <Version>4.5</Version>
+              <Version>4.5Client</Version>
+          </Versions>
+          <Keywords>
+              <Keyword>Setup_SanitySuite</Keyword>
+          </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Setup - 4.5 Extended (Dev11) --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Setup\SetupTest45RTMExtended.xtc">
+      <DefaultTestInfo Area="Setup" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Versions>
+          <Version>4.5</Version>
+        </Versions>
+        <Keywords>
+          <Keyword>Setup_SanitySuite</Keyword>
+        </Keywords>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Controls --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Controls\*.xtc">
+      <DefaultTestInfo Area="Controls" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="ControlsCommon.dll" Class="Microsoft.Test.Controls.ControlsLoader" Method="RunTest" DefaultResult="Unknown" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="FeatureTests\Controls\ControlsTest.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+          <supportFile Source="Samples\Controls\CodePlexControls.dll" />
+          <SupportFile Source="FeatureTests\Controls\*.pict" />
+          <SupportFile Source="pict*.exe" />
+          <SupportFile Source="FeatureTests\Controls\*.xtc" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Controls --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Controls\ControlsTest.dll">
+      <DefaultTestInfo Area="Controls" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="120">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="FeatureTests\Controls\ControlsTest.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+          <SupportFile Source="FeatureTests\Controls\ControlsAutomationTest.exe" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Controls --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Controls\ControlsTestDev10.dll">
+      <DefaultTestInfo Area="Controls" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="250">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="FeatureTests\Controls\ControlsTestDev10.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\Controls\PresentationFramework.Design.dll" />
+          <SupportFile Source="FeatureTests\Controls\Microsoft.Windows.Design.Extensibility.dll" />
+          <SupportFile Source="FeatureTests\Controls\Microsoft.Windows.Design.Interaction.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+     --><!-- Controls: Ribbon pre-4.5 --><!--
+--><!-- comment out for now until the 4.0 product build issue is resolved - discussed with Patrick --><!--
+--><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Controls\RibbonTest\v4.0\RibbonTest.dll">
+      <DefaultTestInfo Area="Controls" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="250">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\*.bmp" />
+          <SupportFile Source="FeatureTests\Controls\Snapshots\TestAPIDefaultProfile.xml" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\v4.0\RibbonTest.dll" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\v4.0\Microsoft.Windows.Shell.dll" />
+          <SupportFile Source="FeatureTests\Controls\RibbonTest\v4.0\RibbonControlsLibrary.dll" />
+        </SupportFiles>
+         <Versions>
+          <Version>3.0SP1-4.0GDR</Version>
+          <Version>4.0Client-4.0GDRClient</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+--><!--
+    --><!-- Controls Windows 8 Theme Tests --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Controls\Win8Theme\v4.5\Win8ThemeControlStatesTest.dll">
+      <DefaultTestInfo Area="Controls" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="250">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Controls\ControlsCommon.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+          <SupportFile Source="FeatureTests\Controls\Win8Theme\v4.5\*.png" />
+          <SupportFile Source="FeatureTests\Controls\Win8Theme\v4.5\Win8AeroLiteTest.exe" />
+          <SupportFile Source="FeatureTests\Controls\Win8Theme\v4.5\ApplyTheme.exe" />
+          <SupportFile Source="FeatureTests\Controls\Snapshots\TestAPIDefaultProfile.xml" />
+          <SupportFile Source="FeatureTests\Controls\Win8Theme\v4.5\Win8ThemeControlStatesTest.dll" />
+        </SupportFiles>
+         <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Element Layout --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\ElementLayout\ElementLayoutLibrary.dll">
+      <DefaultTestInfo Area="ElementLayout" Type="Functional" ExecutionGroupingLevel="SharedAppDomains">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" CreateLog="true" SecurityLevel="FullTrust" MasterFileArea="ElementLayout" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementLayout\ElementLayoutLibrary.dll" />
+          <SupportFile Source="FeatureTests\ElementLayout\Content\*" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Element Layout --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\ElementLayout\ElementLayoutTestDev10.dll">
+      <DefaultTestInfo Area="ElementLayout" Type="Functional" ExecutionGroupingLevel="SharedAppDomains">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" MasterFileArea="ElementLayout" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\ElementLayout\ElementLayoutTestDev10.dll" />
+          <SupportFile Source="FeatureTests\ElementLayout\ElementLayoutLibrary.dll" />
+          <SupportFile Source="FeatureTests\ElementLayout\Content\*" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Editing --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Editing\EditingTest.exe">
+      <DefaultTestInfo Area="Editing" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Editing\*" />
+          <SupportFile Source="Common\AssemblyLinker\%PROCESSOR_ARCHITECTURE%\al.exe" />
+          <SupportFile Source="Common\AssemblyLinker\%PROCESSOR_ARCHITECTURE%\alink.dll" />
+          <SupportFile Source="Common\AssemblyLinker\%PROCESSOR_ARCHITECTURE%\alinkui.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Editing\EditingTestLib.deployment</Deployment>
+        </Deployments>
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Editing --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Editing\EditingOrcasTest.exe">
+      <DefaultTestInfo Area="Editing" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Editing\*" />
+          <SupportFile Source="FeatureTests\Editing\EditingOrcasTest.deployment" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Editing\EditingTestLib.deployment</Deployment>
+          <Deployment>FeatureTests\Editing\EditingOrcasTest.deployment</Deployment>
+        </Deployments>
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Editing --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Editing\EditingTestDev10.exe">
+      <DefaultTestInfo Area="Editing" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Editing\EditingTestDev10.exe" />
+          <SupportFile Source="FeatureTests\Editing\EditingTestLib.dll" />
+          <SupportFile Source="FeatureTests\Editing\EditingTestLib.deployment" />
+          <SupportFile Source="FeatureTests\Editing\EditingTestDev10.deployment" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Editing\EditingTestLib.deployment</Deployment>
+          <Deployment>FeatureTests\Editing\EditingTestDev10.deployment</Deployment>
+        </Deployments>
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Editing --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Editing\*.xtc">
+      <DefaultTestInfo Area="Editing" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Editing\*" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Editing\EditingTestLib.deployment</Deployment>
+        </Deployments>
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Animation --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Animation\AnimationTest.dll">
+      <DefaultTestInfo Area="Animation" Disabled="False" Priority="1" Type="Functional" Timeout="160">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Animation\AnimationTest.dll" />
+          <SupportFile Source="FeatureTests\Animation\AnimationTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Animation\AnimationMultiMonTest.dll">
+      <DefaultTestInfo Area="Animation"   Disabled="False" Priority="1" Type="Functional" Timeout="160">
+        <Configurations>
+          <Configuration>Infra\Configurations\MultiMon.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Animation\AnimationMultiMonTest.dll" />
+          <SupportFile Source="FeatureTests\Animation\AnimationTestCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- UIAutomation UIAutoLoader cases
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\UIAutomation\UIAutoLoader.xtc">
+      <DefaultTestInfo Area="UiAutomation" SubArea="UiAutoLoader" Disabled="False" Priority="0" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="UIAutoLoader" Class="Avalon.Test.ComponentModel.UIAutoLoader" Method="RunUiaTest" DefaultResult="Unknown" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\UIAutomation\UIAutoFTUtils.dll" />
+          <SupportFile Source="FeatureTests\UIAutomation\UIAutoLoader.dll" />
+          <SupportFile Source="Common\XamlBrowserHost*" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\UIAutomation\UIAutomation.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>  --><!--
+    --><!-- UIAutomation UIAutoVerifier cases--><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\UIAutomation\UIAutoVerifier.xtc">
+      <DefaultTestInfo Area="UiAutomation" SubArea="UIAutoVerifier" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="UIAutoVerifier.exe" Class="WPF.Test.UIAutomation.UIAutoVerifier" Method="RunVerifierTest" SecurityLevel="FullTrust" DefaultResult="Unknown" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\UIAutomation\UIAutoVerifier.exe" />
+          <SupportFile Source="FeatureTests\UIAutomation\WUIALogging.dll" />
+          <SupportFile Source="FeatureTests\UIAutomation\WUIALoggerPiper.dll" />
+          <SupportFile Source="FeatureTests\UIAutomation\WUIATestLibrary.dll" />
+          <SupportFile Source="FeatureTests\UIAutomation\XamlReader.exe" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- PartialTrust --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\PartialTrust\PartialTrustTests.xtc">
+      <DefaultTestInfo Area="PartialTrust" Disabled="False" Priority="1" Type="Functional" UacElevation="Elevated" Timeout="120">
+        <DriverParameters SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\PartialTrust\Aptca.dll" />
+          <SupportFile Source="FeatureTests\PartialTrust\NonAptca.dll" />
+          <SupportFile Source="FeatureTests\PartialTrust\PTCommonLibrary.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\PartialTrust\PartialTrust.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- App Model Tests : Deployment subarea, TestAttributeAdaptor --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\AppModel\Deployment\TestLibraries\DeploymentCommonLibrary.dll">
+      <DefaultTestInfo Area="AppModel" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Fail" Method="Run" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\AppModel\Deployment\TestLibraries\DeploymentCommonLibrary.dll" />
+          <SupportFile Source="FeatureTests\AppModel\Deployment\Resources\XbapExpectedEvents.xml" />
+          --><!-- Need the big file to ensure the Progress Page UI gets shown during execution --><!--
+          <SupportFile Source="FeatureTests\AppModel\Deployment\Apps\LargeXbap\*" />
+          <SupportFile Source="FeatureTests\AppModel\Deployment\Resources\Deploy_Markup1_v4.xaml" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- App Model Tests --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\AppModel\XTCs\*.xtc">
+      <DefaultTestInfo Area="AppModel">
+        <DriverParameters SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+        <Target Adaptor="XtcAdaptor" Path="FeatureTests\AppModel\XTCs\Compilation\*.xtc">
+            <DefaultTestInfo Area="AppModel" Disabled="False">
+                <Versions>
+                    <Version>4.0</Version>
+                </Versions>
+            </DefaultTestInfo>
+        </Target>
+    --><!-- App Model Tests - Orcas 3.5 --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\AppModel\Orcas\XTCs\*.xtc">
+      <DefaultTestInfo Area="AppModel">
+        <Versions>
+          <Version>3.5+</Version>
+          <Version>AH+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- AppModel Deployment/Hosting/Integration Orcas Specific tests --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\AppModel\Deployment\TestLibraries\OrcasDeploymentTestCodeLibrary.dll">
+      <DefaultTestInfo Area="AppModel" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Fail" CreateLog="true" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\AppModel\Deployment\TestLibraries\OrcasDeploymentTestCodeLibrary.dll" />
+          <SupportFile Source="FeatureTests\AppModel\Deployment\TestLibraries\DeploymentCommonLibrary.dll" />
+        </SupportFiles>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Globalization --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Globalization\GlobTestCases.dll">
+      <DefaultTestInfo Area="Globalization" Disabled="False" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Globalization\GlobTestCases.dll" />
+          <SupportFile Source="FeatureTests\Globalization\GlobalizationTestCommon.dll" />
+          <SupportFile Source="FeatureTests\Globalization\GlobCustomControl.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!--FlowLayout 3.0--><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\FlowLayout\FlowLayoutTest.dll">
+      <DefaultTestInfo Area="FlowLayout" Type="Functional" UacElevation="Elevated" ExecutionGroupingLevel="SharedAppDomains">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" SecurityLevel="FullTrust" MasterFileArea="FlowLayout" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\FlowLayout\FlowLayoutTest.dll" />
+          <SupportFile Source="FeatureTests\FlowLayout\Content\*.*" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!--FlowLayout 3.0SP1 --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\FlowLayout\FlowLayoutOrcasTest.dll">
+      <DefaultTestInfo Area="FlowLayout" Type="Functional" UacElevation="Elevated" ExecutionGroupingLevel="SharedAppDomains">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" SecurityLevel="FullTrust" MasterFileArea="FlowLayout" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\FlowLayout\FlowLayoutOrcasTest.dll" />
+          <SupportFile Source="FeatureTests\FlowLayout\Content\*.*" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0SP1+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!--FlowLayout 4.0 --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\FlowLayout\FlowLayoutTestDev10.dll">
+      <DefaultTestInfo Area="FlowLayout" Type="Functional" UacElevation="Elevated" ExecutionGroupingLevel="SharedAppDomains">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" SecurityLevel="FullTrust" MasterFileArea="FlowLayout" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\FlowLayout\FlowLayoutTestDev10.dll" />
+          <SupportFile Source="FeatureTests\FlowLayout\Content\*.*" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!--XAML--><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\3.0\Client\*.xtc">
+      <DefaultTestInfo Area="XamlV3" Priority="2" UacElevation="Elevated" Type="Functional" >
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="FullTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntimeUntrusted.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlTests35.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>3.5+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\3.0\Full\*.xtc">
+      <DefaultTestInfo Area="XamlV3" Priority="2" UacElevation="Elevated" Type="Functional" >
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="FullTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntimeUntrusted.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="Infra\sti.exe*" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlTests35.dll" />
+          <SupportFile Source="FeatureTests\XAML\MarkupCompiler\Common\TestCommon.target" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0-3.0SP2</Version>
+          <Version>3.5+</Version>
+          <Version>4.0+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!--System.Xaml--><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.0\Client\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="2" UacElevation="Elevated" Type="Functional" ExecutionGroup="XamlV4" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="PartialTrust" Mode="SDX" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntimeUntrusted.dll" />
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlTests35.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlWpfTests40.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.0\Full\ExecutionGroupNoPolicy\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="2" UacElevation="Elevated" Type="Functional" ExecutionGroup="XamlV4" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="PartialTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlWpfTests40.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+                --><!-- Note that these tests are FullTrust as they require Compilation --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.0\Full\ExecutionGroupMaximalPerformance\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="2" UacElevation="Elevated" Type="Functional"  ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="FullTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlWpfTests40.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+          <SupportFile Source="FeatureTests\XAML\MarkupCompiler\Common\TestCommon.target" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.0\Full\NoExecutionGroup\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="2" UacElevation="Elevated" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="PartialTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlWpfTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- CDF XAML tests --><!--
+    <Target Adaptor="CDFTestHostAdaptor" Path="FeatureTests\Xaml\XamlClrTests40.dll">
+      <DefaultTestInfo Area="XamlV4" Type="Functional" UacElevation="Elevated" Timeout="600" ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="PartialTrust" Mode="SDX"/>
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTests40.dll" />
+          <SupportFile Source="FeatureTests\Xaml\XamlClrTypes.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\TS\Dev10\TSScrollAccelerationDev10.xtc">
+      <DefaultTestInfo Area="Graphics" SubArea="TS Scroll Acceleration" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+                --><!-- Note that these tests are FullTrust as they require Compilation --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.5\Full\ExecutionGroupMaximalPerformance\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="2" UacElevation="Elevated" Type="Functional"  ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="FullTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+          <SupportFile Source="Common\CompilerServices.dll" />
+          <SupportFile Source="FeatureTests\XAML\MarkupCompiler\Common\TestCommon.target" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.5+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- 4.5 Xaml Compiler tests
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\XAML\Data\XTC\4.5\Client\ExecutionGroupMaximalPerformance\*.xtc">
+      <DefaultTestInfo Area="XamlV4" Priority="1" UacElevation="Elevated" Type="Functional"  ExecutionGroupingLevel="MaximalPerformance">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Assembly="XamlCommon" Class="Microsoft.Test.Xaml.Framework.XamlTestRunner" Method="RunTest" SecurityLevel="FullTrust" SupportingAssemblies="XamlClrTypes,XamlWpfTypes" />
+        <SupportFiles>
+          <SupportFile Source="Common\TestRuntime.dll" />
+          <SupportFile Source="FeatureTests\XAML\XamlCommon.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target --><!--
+
+    --><!-- Tablet --><!--
+    --><!-- Tablet: enable once the msi is installed in lab --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Tablet\TabletTestCases.dll">
+      <DefaultTestInfo Area="Tablet" Priority="1" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="240">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="RunTests" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Tablet\TabletTestCases.dll" />
+          <SupportFile Source="FeatureTests\Tablet\*.xml" />
+          <SupportFile Source="FeatureTests\Tablet\*.dll" />
+          <SupportFile Source="FeatureTests\Tablet\MasterImg_Mouse*.png" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Tablet\TabletTests.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- WindowsFormsIntegration Tests--><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\WindowsFormsIntegration\XTC\*.xtc">
+      <DefaultTestInfo Area="WindowsFormsIntegration">
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Tablet --><!--
+    --><!-- Tablet: enable once the virtual digitizer driver for these tests are found\installed --><!--
+    --><!--Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Tablet\TabletSpecificCases.dll">
+      <DefaultTestInfo Area="Tablet" Priority="1" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="900">
+        <Configurations>
+          <Configuration>Infra\Configurations\Multitouch_Win7_Forward.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="RunTests" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Tablet\TabletSpecificCases.dll" />
+          <SupportFile Source="FeatureTests\Tablet\*.xml" />
+          <SupportFile Source="FeatureTests\Tablet\*.dll" />
+          <SupportFile Source="FeatureTests\Tablet\RenderInk1.isf" />
+          <SupportFile Source="FeatureTests\Tablet\RenderInk1.png" />
+          <SupportFile Source="FeatureTests\Tablet\StrokeRender1.png" />
+          <SupportFile Source="FeatureTests\Tablet\*MasterImg*.png" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Tablet\TabletTests.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target--><!--
+    --><!-- Tablet --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Tablet\RegressionTests.dll">
+      <DefaultTestInfo Area="Tablet" SubArea="Regression" Priority="1" Disabled="False" Type="Functional" UacElevation="Elevated">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="LoadTest" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Tablet\RegressionTests.dll" />
+          <SupportFile Source="FeatureTests\Tablet\v1gif.isf" />
+          <SupportFile Source="FeatureTests\Tablet\DrawingV1.isf" />
+          <SupportFile Source="FeatureTests\Tablet\JournalInk.isf" />
+          <SupportFile Source="FeatureTests\Tablet\1177125.xaml" />
+          <SupportFile Source="FeatureTests\Tablet\*.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Tablet\TabletTests.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Tablet --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\Tablet\TabletRegressionTests.dll">
+      <DefaultTestInfo Area="Tablet" SubArea="Regression" Priority="1" Disabled="False" Type="Functional" UacElevation="Elevated" Timeout="600">
+        <Configurations>
+          <Configuration>Infra\Configurations\Multitouch_Win7_Forward.xml</Configuration>
+        </Configurations>
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="LoadTest" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Tablet\TabletRegressionTests.dll" />
+          <SupportFile Source="FeatureTests\Tablet\v1gif.isf" />
+          <SupportFile Source="FeatureTests\Tablet\DrawingV1.isf" />
+          <SupportFile Source="FeatureTests\Tablet\JournalInk.isf" />
+          <SupportFile Source="FeatureTests\Tablet\1177125.xaml" />
+          <SupportFile Source="FeatureTests\Tablet\1064284.dat" />
+          <SupportFile Source="FeatureTests\Tablet\*.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Tablet\TabletTests.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Tablet --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Tablet\XTC\*.xtc" >
+      <DefaultTestInfo Area="Tablet" Disabled="False">
+        <Configurations>
+          <Configuration>Infra\Configurations\Multitouch_Win7_Forward.xml</Configuration>
+        </Configurations>
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Tablet\*.dll" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Tablet\TabletTestsUsingSDKComponents.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.5+</Version>
+          <Version>4.5Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Text --><!--
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Text\*.xtc">
+      <DefaultTestInfo Area="Text" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <Versions>
+          <Version>3.0-AH</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Printing --><!--
+    <Target Adaptor="XtcModelAdaptor" Path="FeatureTests\Printing\Content\XTC\*.xtc">
+      <DefaultTestInfo Area="Printing" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Printing\WPFPrintTest.exe" />
+          <SupportFile Source="Infra\TestApiCore.dll" />
+          <SupportFile Source="Infra\TestApiWpf.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+          <Version>V4sxsV3</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    <Target Adaptor="XtcAdaptor" Path="FeatureTests\Printing\D2\XTC\*.xtc">
+      <DefaultTestInfo Area="Printing" Disabled="False" Priority="1" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters DefaultResult="Pass" SecurityLevel="FullTrust" />
+        <SupportFiles>
+        </SupportFiles>
+        <Versions>
+          <Version>3.0+</Version>
+          <Version>4.0Client+</Version>
+          <Version>V4sxsV3</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- Speech : Grammar Building --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\grammarbuilding_desktopbvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\cfgs\w3c_sol_with_root.cfg" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\sapi\sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_bad_missing_method.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline_vb.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\planets.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_bad_rule_attribute.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol_with_root.xml" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Speech : Prompt Builder --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\promptbuilder_desktopbvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+          <SupportFile Source="FeatureTests\Speech\data\MultiLang.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01_Voice.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML03_Pron.xml" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Speech : Prompts --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\prompt_desktopbvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+          <SupportFile Source="FeatureTests\Speech\data\MultiLang.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01_Voice.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML03_Pron.xml" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Speech : Recognition --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\Recognition_DesktopBvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+          <SupportFile Source="FeatureTests\Speech\data\RecognizerMultiLang.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\cfgs\w3c_sol_with_root.cfg" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\sapi\sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_bad_missing_method.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline_vb.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\planets.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_bad_rule_attribute.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol_with_root.xml" />
+
+          <SupportFile Source="FeatureTests\Speech\data\enu\audio\Black7ToRed8.wav" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\audio\name.wav" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\audio\PleasePlayTheAceOfSpades.wav" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- Speech : Reco Result --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\RecoResult_DesktopBvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+          <SupportFile Source="FeatureTests\Speech\data\RecoResultMultiLang.xml" />
+
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\cfgs\w3c_sol_with_root.cfg" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\sapi\sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_bad_missing_method.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\stg\stg_hello_world_inline_vb.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\planets.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_bad_rule_attribute.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\grammars\w3c\w3c_sol_with_root.xml" />
+
+          <SupportFile Source="FeatureTests\Speech\data\enu\audio\Black7ToRed8.wav" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- Speech : Synthesizer --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Speech\Synthesizer_DesktopBvt.dll">
+      <DefaultTestInfo Area="Speech" Disabled="False" Type="Functional" UacElevation="Elevated" ExecutionGroup="SpeechBVTs">
+        <Driver Executable="SpeechDriver.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Speech\SpeechDriver.exe" />
+          <SupportFile Source="FeatureTests\Speech\*.dll" />
+          <SupportFile Source="FeatureTests\Speech\data\MultiLang.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML01_Voice.xml" />
+          <SupportFile Source="FeatureTests\Speech\data\enu\tts\ssml\SSML03_Pron.xml" />
+        </SupportFiles>
+        <Deployments>
+          <Deployment>FeatureTests\Speech\SpeechDesktopTest.deployment</Deployment>
+        </Deployments>
+        <Versions>
+          <Version>4.0+</Version>
+          <Version>4.0Client+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- VisualDiagnostics --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Diagnostics\VisualDiagnostics\VisualDiagnosticsLibrary.dll">
+      <DefaultTestInfo Area="Diagnostics" SubArea="VisualDiagnostics" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Diagnostics\VisualDiagnostics\TestData\XamlSourceInfoTest.Debug.dll" />
+          <SupportFile Source="FeatureTests\Diagnostics\VisualDiagnostics\TestData\XamlSourceInfoTest.Release.dll" />
+          <SupportFile Source="FeatureTests\Diagnostics\VisualDiagnostics\VisualDiagnosticsLibrary.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.6+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+
+    --><!-- ResourceDictionaryDiagnostics --><!--
+    <Target Adaptor="TestAttributeAdaptor" Path="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\ResourceDictionaryDiagnosticsTests.dll">
+      <DefaultTestInfo Area="Diagnostics" SubArea="ResourceDictionaryDiagnostics" Type="Functional" Timeout="200">
+        <Driver Executable="sti.exe"/>
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\ResourceDictionaryDiagnosticsTests.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\MyButton.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\MyButton.Aero2.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\MyButton.Classic.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\MyButton.Generic.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\ResourceDictionaryDiagnostics\YourButton.dll"/>
+          <SupportFile Source="FeatureTests\Diagnostics\VisualDiagnostics\TestData\XamlSourceInfoTest.Debug.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.6.2+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>
+    --><!-- PerMonitorDPI --><!--
+    <Target Adaptor="VariationAttributeAdaptor" Path="FeatureTests\PerMonitorDpi\PerMonitorDpiLibrary.dll">
+      <DefaultTestInfo Area="PerMonitorDPI" Type="Functional">
+        <Driver Executable="sti.exe" />
+        <DriverParameters Method="Run" />
+        <SupportFiles>
+          <SupportFile Source="FeatureTests\PerMonitorDpi\PerMonitorDpiLibrary.dll" />
+        </SupportFiles>
+        <Versions>
+          <Version>4.6.2+</Version>
+        </Versions>
+      </DefaultTestInfo>
+    </Target>-->
+  </Targets>
+</DiscoveryInfo>

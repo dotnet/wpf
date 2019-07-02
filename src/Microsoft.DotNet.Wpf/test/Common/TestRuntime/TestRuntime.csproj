@@ -22,7 +22,7 @@
       <Link>Resources\Globalization\Japanese.txt</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Globalization\Korean.txt">
-      <LogicalName>Korean.txt</LogicalName>L
+      <LogicalName>Korean.txt</LogicalName>
       <Link>Resources\Globalization\Korean.txt</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Globalization\ProblemDate.xml">
@@ -33,12 +33,6 @@
       <LogicalName>ProblemString.xml</LogicalName>
       <Link>Resources\Globalization\ProblemString.xml</Link>
     </EmbeddedResource>
-
-    <EmbeddedResource Include="RenderingVerification\DefaultTolerance.xml">
-      <LogicalName>Microsoft.Test.RenderingVerification.RenderingVerification.DefaultTolerance.xml</LogicalName>
-      <Link>Resources\VScan\DefaultTolerance.xml</Link>
-    </EmbeddedResource>
-
     <EmbeddedResource Include="Loaders\NamedRegistrations.xml">
       <LogicalName>NamedRegistrations.xml</LogicalName>
       <Link>Resources\Loaders\NamedRegistrations.xml</Link>
@@ -47,15 +41,14 @@
       <LogicalName>ErrorCodes.xml</LogicalName>
       <Link>Resources\Loaders\ErrorCodes.xml</Link>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Windows\PropertiesToSkip.xml">
       <LogicalName>PropertiesToSkip.xml</LogicalName>
       <Link>Resources\Windows\PropertiesToSkip.xml</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <MicrosoftPrivateWinFormsReference Include="Accessibility" ReferenceImplementation="true"/>
-    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" ReferenceImplementation="true"/>
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" ReferenceImplementation="true" />
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" ReferenceImplementation="true" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />

@@ -25,7 +25,7 @@
   <PropertyGroup>
     <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
     <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
-    <GitHubTestPackageName>Microsoft.DotNet.Wpf.DncEng.Test</GitHubTestPackageName>
+    <GitHubTestPackageName>Microsoft.DotNet.Wpf.GitHub.Test</GitHubTestPackageName>
 
     <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
   </PropertyGroup>

@@ -1,23 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>QualityVaultFrontEnd</AssemblyName>
     <OutputType>Exe</OutputType>
     <RootNamespace>Microsoft.Test</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
-    <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Commands\CleanupCommand.cs" />
-    <Compile Include="Commands\DiscoverAndDistributeCommand.cs" />
-    <Compile Include="Commands\ExecuteCommand.cs" />
-    <Compile Include="Commands\FilterableCommand.cs" />
-    <Compile Include="Commands\MakeReportCommand.cs" />
-    <Compile Include="Commands\MergeResultsCommand.cs" />
-    <Compile Include="Commands\RegisterForDistributionCommand.cs" />
-    <Compile Include="Commands\RunCommand.cs" />
-    <Compile Include="MainEntry.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(TestApiCoreProject)" />
     <ProjectReference Include="$(QualityVaultUtilitiesProject)" />

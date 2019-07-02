@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>QualityVaultUtilities</AssemblyName>
     <OutputType>Library</OutputType>
@@ -6,106 +6,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(TestTrustedKey)</AssemblyOriginatorKeyFile>
     <ApplicationManifest>OSVersion.manifest</ApplicationManifest>
-    <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="CodeCoverageUtilities.cs" />
-    <Compile Include="Profiler.cs" />
-    <Compile Include="ProgressWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RunInfo.cs" />
-    <Compile Include="TestCollection.cs" />
-    <Compile Include="TestRecords.cs" />
-    <Compile Include="Discovery\AnnotationsAdaptor.cs" />
-    <Compile Include="Discovery\CDFTestHostAdaptor.cs" />
-    <Compile Include="Discovery\DiscoveryEngine.cs" />
-    <Compile Include="Discovery\DiscoveryInfo.cs" />
-    <Compile Include="Discovery\DiscoveryTarget.cs" />
-    <Compile Include="Discovery\Drt.cs" />
-    <Compile Include="Discovery\DrtAdaptor.cs" />
-    <Compile Include="Discovery\ModelAttributeAdaptor.cs" />
-    <Compile Include="Discovery\TestAttributeAdaptor.cs" />
-    <Compile Include="Discovery\VariationAttributeAdaptor.cs" />
-    <Compile Include="Discovery\XtcAdaptor.cs" />
-    <Compile Include="Discovery\XtcModelAdaptor.cs" />
-    <Compile Include="Distribution\DistributionEngine.cs" />
-    <Compile Include="Distribution\DistributionStrategy.cs" />
-    <Compile Include="Distribution\StressDistributionStrategy.cs" />
-    <Compile Include="Distribution\FunctionalDistributionStrategy.cs" />
-    <Compile Include="Execution\CdbUtilities.cs" />
-    <Compile Include="Execution\DriverLauncher.cs" />
-    <Compile Include="Execution\ExecutionBackupStore.cs" />
-    <Compile Include="Execution\ExecutionEngine.cs" />
-    <Compile Include="Execution\ExecutionEventLog.cs" />
-    <Compile Include="Execution\ExecutionGrouper.cs" />
-    <Compile Include="Execution\ExecutionSettings.cs" />
-    <Compile Include="Execution\JitRegistrationUtilities.cs" />
-    <Compile Include="Execution\ProcessUtilities.cs" />
-    <Compile Include="Execution\RegistryUtilities.cs" />
-    <Compile Include="Execution\EngineCommands\BackupRecordsCommand.cs" />
-    <Compile Include="Execution\EngineCommands\DebuggingEngineCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ProcessLogsCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ElevationServiceCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ExecutionStateCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ExecutionGroupLogCommand.cs" />
-    <Compile Include="Execution\EngineCommands\GatherTestCodeCoverageCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ICleanableCommand.cs" />
-    <Compile Include="Execution\EngineCommands\ListenToTestsCommand.cs" />
-    <Compile Include="Execution\EngineCommands\LogDirectoryCommand.cs" />
-    <Compile Include="Execution\EngineCommands\MergeCodeCoverageDataCommand.cs" />
-    <Compile Include="Execution\EngineCommands\MoveWindowCommand.cs" />
-    <Compile Include="Execution\EngineCommands\DesktopSnapshotCommand.cs" />
-    <Compile Include="Execution\EngineCommands\SimpleCleanableCommand.cs" />
-    <Compile Include="Execution\EngineCommands\SupportFileCommand.cs" />
-    <Compile Include="Execution\EngineCommands\RunStateCommand.cs" />
-    <Compile Include="Execution\EngineCommands\TemporaryDirectoryCommand.cs" />
-    <Compile Include="Execution\Logging\ConsoleLogger.cs" />
-    <Compile Include="Execution\Logging\LoggerBase.cs" />
-    <Compile Include="Execution\Logging\LoggerCollection.cs" />
-    <Compile Include="Execution\Logging\LoggingMediator.cs" />
-    <Compile Include="Execution\Logging\LoggingNormalizer.cs" />
-    <Compile Include="Execution\Logging\LoggingServer.cs" />
-    <Compile Include="Execution\Logging\RecordingLogger.cs" />
-    <Compile Include="Execution\Logging\WindowProgressLogger.cs" />
-    <Compile Include="Execution\StateManagement\StatePool.cs" />
-    <Compile Include="Execution\StateManagement\StateModule.cs" />
-    <Compile Include="Execution\StateManagement\StateModuleType.cs" />
-    <Compile Include="Execution\StateManagement\StateCollection.cs" />
-    <Compile Include="Execution\Statemanagement\StateManagementEngine.cs" />
-    <Compile Include="Execution\Statemanagement\IStateImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\EmptyStateImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\ColorProfileImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\ColorProfileUtilities.cs" />
-    <Compile Include="Execution\Statemanagement\ComStateImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\GacStateImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\GacUtilities.cs" />
-    <Compile Include="Execution\Statemanagement\ChangeDefaultBrowserImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\ChangeDefaultBrowserUtilities.cs" />
-    <Compile Include="Execution\Statemanagement\KeyboardLayoutStateImplementation.cs" />
-    <Compile Include="Execution\Statemanagement\KeyboardLayoutUtilities.cs" />
-    <Compile Include="Execution\StateManagement\ModernShellStateImplementations.cs" />
-    <Compile Include="Execution\StateManagement\ModernShellUtilities.cs" />
-    <Compile Include="Execution\StateManagement\ThemeStateImplementation.cs" />
-    <Compile Include="Filtering\Configuration.cs" />
-    <Compile Include="Filtering\FilteringEngine.cs" />
-    <Compile Include="Filtering\FilteringSettings.cs" />
-    <Compile Include="Filtering\MonitorInfo.cs" />
-    <Compile Include="Filtering\OSVersionInfo.cs" />
-    <Compile Include="Filtering\VersionMatcher.cs" />
-    <Compile Include="Reporting\AnalyticsReportGenerator.cs" />
-    <Compile Include="Reporting\DrtReportGenerator.cs" />
-    <Compile Include="Reporting\ExecutionEventReportGenerator.cs" />
-    <Compile Include="Reporting\FilteringReportGenerator.cs" />
-    <Compile Include="Reporting\LabReportGenerator.cs" />
-    <Compile Include="Reporting\MachineSummaryReportGenerator.cs" />
-    <Compile Include="Reporting\ReportingEngine.cs" />
-    <Compile Include="Reporting\ReportingUtilities.cs" />
-    <Compile Include="Reporting\SummaryReportGenerator.cs" />
-    <Compile Include="Reporting\VariationReportGenerator.cs" />
-    <Compile Include="Reporting\XUnitReportGenerator.cs" />
-    <Compile Include="Reporting\XmlTableWriter.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(TestContractsProject)" />
     <ProjectReference Include="$(TestApiCoreProject)" />

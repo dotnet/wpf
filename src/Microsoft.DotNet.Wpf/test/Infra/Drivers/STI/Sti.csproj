@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Sti</AssemblyName>
     <OutputType>EXE</OutputType>
@@ -8,12 +8,7 @@
     <ProjectGuid>{D69FC192-2D88-4884-9C07-B70676DF03DA}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SimpleTestInvoke.cs" />
-    <Compile Include="StiDriverParameters.cs" />
-    <Compile Include="StiUtilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="D:\dev\src\dotnet\wpf\src\Microsoft.DotNet.Wpf\src\WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(InternalUtilitiesProject)" />
     <ProjectReference Include="$(TestContractsProject)" />
   </ItemGroup>

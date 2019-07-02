@@ -4,45 +4,45 @@
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>preview8</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemIOPackagingVersion>4.6.0-preview8.19364.1</SystemIOPackagingVersion>
+    <SystemIOPackagingVersion>4.6.0-preview7.19320.1</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview8.19364.5</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview7.19325.3</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
-    <MicrosoftNETCoreRuntimeCoreCLRVersion>3.0.0-preview8.19363.2</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>3.0.0-preview8.19363.2</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>3.0.0-preview8.19363.2</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>3.0.0-preview7.19323.2</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>3.0.0-preview7.19323.2</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>3.0.0-preview7.19323.2</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview8-27914-06</MicrosoftNETCoreAppVersion>
-    <MicrosoftNETCorePlatformsVersion>3.0.0-preview8.19364.1</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>4.6.0-preview8.19364.1</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>4.6.0-preview8.19364.1</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview8.19364.1</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview7-27824-03</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCorePlatformsVersion>3.0.0-preview7.19320.1</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>4.6.0-preview7.19320.1</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>4.6.0-preview7.19320.1</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>4.6.0-preview7.19320.1</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview8.19364.1</MicrosoftWin32RegistryPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview8.19364.1</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview8.19364.1</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview8.19364.1</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>4.6.0-preview8.19364.1</SystemReflectionEmitPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview7.19320.1</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>4.6.0-preview7.19320.1</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview7.19320.1</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview7.19320.1</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.6.0-preview7.19320.1</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>4.6.0-preview8.19364.1</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview8.19364.1</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>4.6.0-preview8.19364.1</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview8.19364.1</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>4.6.0-preview8.19364.1</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>4.6.0-preview7.19320.1</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview7.19320.1</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>4.6.0-preview7.19320.1</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview7.19320.1</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>4.6.0-preview7.19320.1</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19364.1</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19364.1</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19364.1</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19326.2</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19326.2</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19326.2</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>
@@ -56,6 +56,7 @@
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
+    <StreamJsonRpcPackageVersion>2.0.146</StreamJsonRpcPackageVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
@@ -107,6 +108,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview8.19364.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview7.19325.4</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

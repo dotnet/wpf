@@ -46,9 +46,6 @@ namespace Microsoft.Test.Execution.StateManagement
         }
 
         #endregion
-
-        private string filePath;
-        private string previousPath;
     }
 }
 

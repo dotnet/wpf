@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.Test
 {  /// <summary>
@@ -20,12 +21,15 @@ namespace Microsoft.Test
                         TaskContinuationOptions.None,
                         TaskScheduler.Default);
 
+        [SuppressMessage("Microsoft.Performance","VSTHRD002")]
         public static TResult RunSync<TResult>(Func<Task<TResult>> func)
             => _taskFactory
                 .StartNew(func)
                 .Unwrap()
                 .GetAwaiter()
                 .GetResult();
+
+        [SuppressMessage("Microsoft.Performance","VSTHRD002")]
 
         public static void RunSync(Func<Task> func)
             => _taskFactory

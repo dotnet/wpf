@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <WpfTest>true</WpfTest>
+    <LibFolder>tools</LibFolder>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
@@ -26,5 +27,4 @@
     <QualityVaultUtilitiesProject>$(WpfTestsDir)Infra\QualityVault\QualityVaultUtilities\QualityVaultUtilities.csproj</QualityVaultUtilitiesProject>
     <DrtToolsProject>$(WpfTestsDir)Common\DRT\Tools\DrtTools.csproj</DrtToolsProject>
   </PropertyGroup>
-
 </Project>

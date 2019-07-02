@@ -1,6 +1,6 @@
 <Project>
   <Import Condition="Exists('../Directory.Build.props')" Project="../Directory.Build.props" />
   <PropertyGroup>
-    <DestinationSubFolder Condition="'$(DestinationSubFolder)' != ''">$(LibFolder)\Common</DestinationSubFolder>
+    <DestinationSubFolder>$(LibFolder)\Common</DestinationSubFolder>
   </PropertyGroup>
 </Project>

@@ -1,4 +1,9 @@
 <Project>
+  <!--
+  To help ensure no accidental inclusion of projects, we include the semi-colon in the
+  check for the project name, so it looks like: '$(NormalizedMSBuildProjectName);'.
+  This means that even the last item in the list must have a trailing ';'
+  -->
   <PropertyGroup>
     <ExternalShippingProjects>
       System.Xaml;
@@ -36,7 +41,7 @@
       PresentationNative;
       WpfGfx;
       D3DCompiler;
-      VCRuntime
+      VCRuntime;
     </InternalShippingProjects>
 
     <ExternalTestProjects>
@@ -45,7 +50,7 @@
       Sti;
       TestApiCore;
       TestRuntime;
-      TestServices
+      TestServices;
     </ExternalTestProjects>
 
     <ShippingProjects>
@@ -55,11 +60,11 @@
 
     <ExcludeFromXlfLocalization>
       D3DCompiler;
-      VCRuntime
+      VCRuntime;
     </ExcludeFromXlfLocalization>
 
     <WindowsDesktopSdkProject>
-      PresentationBuildTasks
+      PresentationBuildTasks;
     </WindowsDesktopSdkProject>
 
     <CycleBreakerProjects>
@@ -70,7 +75,7 @@
       PresentationUI-PresentationFramework-impl-cycle;
       ReachFramework-PresentationFramework-api-cycle;
       ReachFramework-System.Printing-api-cycle;
-      System.Printing-PresentationFramework-api-cycle
+      System.Printing-PresentationFramework-api-cycle;
     </CycleBreakerProjects>
 
     <!-- 
@@ -110,7 +115,7 @@
       $(CycleBreakerProjects);
       $(ExternalHandCraftedReferenceProjects);
       $(InternalHandCraftedReferenceProjects);
-      $(InternalTestProjects)
+      $(ExternalTestProjects)
     </HelperProjects>
 
     <!--
@@ -175,17 +180,17 @@
     <NormalizedMSBuildProjectName Condition="$(MSBuildProjectName.EndsWith('_wpftmp'))">$(MSBuildProjectName.SubString(0, $(MSBuildProjectName.IndexOf('_'))))</NormalizedMSBuildProjectName>
 
     <IsShipping>false</IsShipping>
-    <IsShipping Condition="$(ShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IsShipping>
+    <IsShipping Condition="$(ShippingProjects.Contains('$(NormalizedMSBuildProjectName);'))">true</IsShipping>
     <IsShipping Condition="'$(IsPackagingProject)'=='true'">true</IsShipping>
 
     <EnableXlfLocalization>false</EnableXlfLocalization>
-    <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(NormalizedMSBuildProjectName)'))">true</EnableXlfLocalization>
+    <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(NormalizedMSBuildProjectName);'))">true</EnableXlfLocalization>
 
-    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
-    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
+    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName);'))">Internal</RepoLocation>
+    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName);'))">External</RepoLocation>
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
-    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName);'))">WindowsDesktopSdk</RepoLocation>
 
     <!-- Test package overrides Internal, External etc. -->
     <RepoLocation Condition="$(ExternalTestProjects.Contains('$(NormalizedMSBuildProjectName);'))">ExternalTest</RepoLocation>

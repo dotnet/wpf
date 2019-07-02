@@ -4,12 +4,12 @@
   -->
   <PropertyGroup>
     <UseEcmaKey>false</UseEcmaKey>
-    <UseEcmaKey Condition="'$(IsShipping)'=='true' And !$(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName)'))">true</UseEcmaKey>
-    <UseEcmaKey Condition="$(HelperProjects.Contains('$(MSBuildProjectName)')) And !$(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName)'))">true</UseEcmaKey>
+    <UseEcmaKey Condition="'$(IsShipping)'=='true' And !$(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName);'))">true</UseEcmaKey>
+    <UseEcmaKey Condition="$(HelperProjects.Contains('$(MSBuildProjectName)')) And !$(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName);'))">true</UseEcmaKey>
 
     <UseMicrosoftSharedKey>false</UseMicrosoftSharedKey>
-    <UseMicrosoftSharedKey Condition="'$(IsShipping)'=='true' And $(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName)'))">true</UseMicrosoftSharedKey>
-    <UseMicrosoftSharedKey Condition="$(HelperProjects.Contains('$(MSBuildProjectName)')) And $(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName)'))">true</UseMicrosoftSharedKey>
+    <UseMicrosoftSharedKey Condition="'$(IsShipping)'=='true' And $(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName);'))">true</UseMicrosoftSharedKey>
+    <UseMicrosoftSharedKey Condition="$(HelperProjects.Contains('$(MSBuildProjectName)')) And $(UseMicrosoftSharedKeyId.Contains('$(NormalizedMSBuildProjectName);'))">true</UseMicrosoftSharedKey>
 
     <StrongNameKeyId Condition="'$(UseEcmaKey)'=='true'">ECMA</StrongNameKeyId>
     <StrongNameKeyId Condition="'$(UseMicrosoftSharedKey)'=='true'">MicrosoftShared</StrongNameKeyId>

@@ -345,7 +345,6 @@ namespace System.Windows.Controls
             }
         }
 
-
         internal static void ShowValidationAdorner(DependencyObject targetElement, bool show)
         {
             // If the element has a VisualStateGroup for validation, then dont show the Adorner
@@ -362,7 +361,6 @@ namespace System.Windows.Controls
                 ShowValidationAdornerHelper(targetElement, adornerSite, show);
             }
         }
-
 
         private static bool HasValidationGroup(FrameworkElement fe)
         {
@@ -420,6 +418,26 @@ namespace System.Windows.Controls
             return null;
         }
 
+        private static void ShowValidationAdornerWhenAdornerSiteGetsVisible(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var adornerSite = sender as UIElement;
+
+            if (adornerSite == null)
+            {
+                return;
+            }
+
+            adornerSite.IsVisibleChanged -= ShowValidationAdornerOnVisible;
+
+            DependencyObject targetElement = GetValidationAdornerSiteFor(adornerSite);
+            if (targetElement == null)
+            {
+                targetElement = adornerSite;
+            }
+
+            ShowValidationAdornerHelper(targetElement, adornerSite, (bool)e.NewValue && GetHasError(targetElement), false);
+        }
+
         private static void ShowValidationAdornerHelper(DependencyObject targetElement, DependencyObject adornerSite, bool show, bool tryAgain)
         {
             UIElement siteUIElement = adornerSite as UIElement;
@@ -432,10 +450,19 @@ namespace System.Windows.Controls
                 {
                     if (tryAgain)
                     {
-                        // try again later, perhaps giving layout a chance to create the adorner layer
-                        adornerSite.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                                    new DispatcherOperationCallback(ShowValidationAdornerOperation),
-                                    new object[]{targetElement, adornerSite, show});
+                        // Check if the element is visible, if not try to show the adorner again once it gets visible.
+                        // This is needed because controls hosted in Expander or TabControl don't have a parent/AdornerLayer till the Expander is expanded or the TabItem is selected.
+                        if (siteUIElement.IsVisible == false)
+                        {
+                            siteUIElement.IsVisibleChanged += ShowValidationAdornerWhenAdornerSiteGetsVisible;
+                        }
+                        else
+                        {
+                            // try again later, perhaps giving layout a chance to create the adorner layer
+                            adornerSite.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                                        new DispatcherOperationCallback(ShowValidationAdornerOperation),
+                                        new object[]{targetElement, adornerSite, show});
+                        }
                     }
                     return;
                 }

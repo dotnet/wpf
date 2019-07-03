@@ -35,21 +35,16 @@ In order to run the set of DRTs on your local machine, pass the `-test` paramete
    Ignore: 0
 
 ```
-If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\Test and run the tests manually with the `/debugtests` flag using the `RunDrts.cmd` script. Note that you do not run the `RunDrtsDebug` script, as this will debug the test infrastructure, `QualityVault`. When you pass the `/debugtests` flag, a cmd window will open where you can open the test executable in Visual Studio and debug it. When the cmd pops up, you will see instructions for debugging using a few different commands, however these commands will enable you to debug the `Simple Test Invocation` executable, `sti.exe`, which simply launches the test executable you are most likely interested in debugging. Using `DrtXaml.exe` as an example, this is how you can debug the test executable. Any MSBuild style properties should be replaced with actual values:
+If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\ and debug the tests by passing the `-waitForDebugger` flag to the `runttests.ps1` script like this:
+> runtests.ps1 /Name=DrtXaml -waitForDebugger
 
-1. `$(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\Test\RunDrts.cmd /name=DrtXaml /debugtests`
-2. Enter following command into the cmd window that pops up:
-`"%ProgramFiles%\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe" DrtXaml.exe`
-3. Once Visual Studio is open, go to `Debug-> DrtXaml Properties` and do the following:
-    - Manually change the `Debugger Type` from `Auto` to `Mixed (CoreCLR)`.
-    - Change the `Environment` from `Default` to a custom one that properly defines the `DOTNET_ROOT` variable so that the host is able to locate the install of `Microsoft.NETCore.App`.
-      - x86 (Default): Name: `DOTNET_ROOT(x86)` Value: `$(RepoRoot).dotnet\x86`
-      - x64 (/p:Platform=x64): Name: `DOTNET_ROOT` Value: `$(RepoRoot).dotnet` 
-4. From there you can F5 and the test will execute.
-
+ This will cause the test to wait for a debugger to attach, you should see a message in the command window indicating when this is ready.
+ 
+ You should run `runtests.ps1` rather than any of the other `Run*.cmd` tests contained in the `Test` folder, as `runtests.ps1` will properly ensure your `DOTNET_ROOT` variables are set correctly.
+ 
 *Note: To run a specific test, you can pass the name of the test like this: `/name=DrtXaml`. The names of these tests are contained in DrtList.xml.*
 
-**NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816. **
+**NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/1149. **
 
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,

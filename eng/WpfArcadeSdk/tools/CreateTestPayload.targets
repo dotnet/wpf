@@ -26,15 +26,11 @@
       <When Condition="!Exists('$(MicrosoftDotNetWpfTestPath)')">
         <!-- Building in the external branch, we need to reference the test package-->
         <ItemGroup>
-          <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.GitHub.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
+          <PackageReference Include="Microsoft.DotNet.Wpf.GitHub.Test" Version="$(MicrosoftDotNetWpfGitHubTestVersion)" GeneratePathProperty="true" />
         </ItemGroup>
 
-        <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
-          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
-        </PropertyGroup>
-
-        <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
-          <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+        <PropertyGroup>
+          <MicrosoftDotNetWpfTestPath>$(PkgMicrosoft_DotNet_Wpf_GitHub_Test)\tools\</MicrosoftDotNetWpfTestPath>
         </PropertyGroup>
       </When>
     </Choose>

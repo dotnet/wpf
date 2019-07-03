@@ -1,7 +1,10 @@
 [CmdLetBinding()]
 Param(
     [string]$command,
-    [switch]$ci
+    [switch]$ci,
+    [switch]$waitForDebugger,
+    [switch]$debugSti,
+    [switch]$debugQV
 )
 
 # Run any configuration needed for the test pass
@@ -20,8 +23,11 @@ if (Test-Path "$env:AppData\QualityVault")
 $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Path) "Test"
 if (Test-Path "$testLocation\QV.cmd")
 {
+    $args = if ($waitForDebugger) { "/debugtests /waitForDebugger"}
+    $args += if ($debugSti) { "/debugSti" }
+    $args += if ($debugQV) { "/debugQV" }
     # We invoke QV directly instead of rundrts to prevent the "RunDrtReport" script being generated. 
-    Invoke-Expression "$testLocation\QV.cmd Run /DiscoveryInfoPath=$testLocation\DiscoveryInfoDrts.xml /RunDirectory=$env:AppData\QualityVault\Run $command"
+    Invoke-Expression "$testLocation\QV.cmd Run /DiscoveryInfoPath=$testLocation\DiscoveryInfoDrts.xml /RunDirectory=$env:AppData\QualityVault\Run $command $args"
 }
 
 if ($ci -and (Test-Path "$env:AppData\QualityVault\Run\Report\DrtReport.xml"))

@@ -282,6 +282,13 @@ $(PreparePackageAssetsDependsOn):
         <Pack>true</Pack>
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>
+      
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.json"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
+        <Pack>true</Pack>
+        <PackagePath>$(LibFolder)</PackagePath>
+      </Content>
+     
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.pdb"
          Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
         <Pack>true</Pack>

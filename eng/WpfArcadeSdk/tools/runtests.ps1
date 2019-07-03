@@ -24,8 +24,8 @@ $testLocation = Join-Path (Split-Path -Parent $script:MyInvocation.MyCommand.Pat
 if (Test-Path "$testLocation\QV.cmd")
 {
     $args = if ($waitForDebugger) { "/debugtests /waitForDebugger"}
-    $args += if ($debugSti) { "/debugSti" }
-    $args += if ($debugQV) { "/debugQV" }
+    $args += if ($debugSti) { " /debugSti" }
+    $args += if ($debugQV) { " /debugQV" }
     # We invoke QV directly instead of rundrts to prevent the "RunDrtReport" script being generated. 
     Invoke-Expression "$testLocation\QV.cmd Run /DiscoveryInfoPath=$testLocation\DiscoveryInfoDrts.xml /RunDirectory=$env:AppData\QualityVault\Run $command $args"
 }

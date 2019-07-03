@@ -12,7 +12,7 @@
     <PayloadDrtLocation>$(WpfTestBasePayloadPath)DRT\</PayloadDrtLocation>
     <MicrosoftDotNetWpfTestPath>$(ArtifactsPackagingDir)\Microsoft.DotNet.Wpf.GitHub.Test\tools\</MicrosoftDotNetWpfTestPath>
   </PropertyGroup>
-
+  
   <!-- 
   Internal repo use only. When we package the infrastructure and DRTs over to dotnet-wpf-int. Allow that repo to add
   more DRTs to run. 
@@ -22,22 +22,20 @@
   <!-- List of DRTs to include that come from dotnet/wpf -->
   <Import Project="$(WpfArcadeSdkToolsDir)DrtsToRun.props"/>
 
-   <Choose>
-      <When Condition="!Exists('$(MicrosoftDotNetWpfTestPath)')">
-        <!-- Building in the external branch, we need to reference the test package-->
-        <ItemGroup>
-          <PackageReference Include="Microsoft.DotNet.Wpf.GitHub.Test" Version="$(MicrosoftDotNetWpfGitHubTestVersion)" GeneratePathProperty="true" />
-        </ItemGroup>
+  <Choose>
+    <When Condition="!Exists('$(MicrosoftDotNetWpfTestPath)')">
+      <!-- 
+        Building from internal repo where the test package must be consumed from the nuget package. We can't restore the package here because the Restore
+        targets aren't run for AfterSolutionBuild.proj. So instead we restore the package in Tools.props. And since only the Restore targets are run for Tools.proj,
+        the path property to the package isn't generated for us so we can't copy it to a well known location there. Instead we generate the path ourselves using
+        well known MSBuild properties available to the entire Build.proj project.
+      -->
+      <PropertyGroup>
+        <MicrosoftDotNetWpfTestPath>$(NuGetPackageRoot)\runtime.win-$(Platform).$(MicrosoftDotNetWpfGitHubTestPackage)\$(MicrosoftDotNetWpfGitHubTestVersion)\tools\</MicrosoftDotNetWpfTestPath>
+      </PropertyGroup>      
+    </When>
+  </Choose>
 
-        <PropertyGroup>
-          <MicrosoftDotNetWpfTestPath>$(PkgMicrosoft_DotNet_Wpf_GitHub_Test)\tools\</MicrosoftDotNetWpfTestPath>
-        </PropertyGroup>
-      </When>
-    </Choose>
-
-  <ItemGroup>
-  </ItemGroup>
-  
   <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build;CopyPackageAssets">
     <ItemGroup>
       <MicrosoftDotNetWpfTestContents Include="$(MicrosoftDotNetWpfTestPath)**\*.*" />
@@ -61,3 +59,4 @@
           DestinationFiles="@(DrtPayloadContents->'$(PayloadDrtLocation)%(RecursiveDir)%(Filename)%(Extension)')"  />
   </Target>
 </Project>
+  

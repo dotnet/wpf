@@ -42,11 +42,9 @@
     <WpfProjectPath Include="UIAutomationClient" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
     <WpfProjectPath Include="UIAutomationClientSideProviders" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj" />
 
-<!--
     <WpfProjectPath Include="PresentationNative_cor3" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj" />
     <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj" />
     <WpfProjectPath Include="PenImc_cor3" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj" />
-  -->
   </ItemGroup>
 
   <PropertyGroup>

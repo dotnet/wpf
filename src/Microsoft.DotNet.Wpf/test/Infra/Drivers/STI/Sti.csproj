@@ -13,4 +13,9 @@
     <ProjectReference Include="$(InternalUtilitiesProject)" />
     <ProjectReference Include="$(TestContractsProject)" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="$(OutDir)Sti.runtimeconfig.json" SubFolder="root\tools\Infra" />
+    <PackagingContent Include="$(OutDir)Sti.deps.json" SubFolder="root\tools\Infra" />
+  </ItemGroup>
 </Project>

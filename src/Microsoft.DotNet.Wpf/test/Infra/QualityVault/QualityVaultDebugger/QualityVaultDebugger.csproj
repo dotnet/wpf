@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>QualityVaultDebugger</AssemblyName>
@@ -14,5 +15,10 @@
   <ItemGroup>
     <ProjectReference Include="$(TestApiCoreProject)" />
     <ProjectReference Include="$(TestContractsProject)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="$(OutDir)QualityVaultDebugger.runtimeconfig.json" SubFolder="root\tools\Infra" />
+    <PackagingContent Include="$(OutDir)QualityVaultDebugger.deps.json" SubFolder="root\tools\Infra" />
   </ItemGroup>
 </Project>

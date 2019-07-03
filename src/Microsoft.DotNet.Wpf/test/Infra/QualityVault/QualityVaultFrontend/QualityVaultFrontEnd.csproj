@@ -15,4 +15,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="$(OutDir)QualityVaultFrontEnd.runtimeconfig.json" SubFolder="root\tools\Infra" />
+    <PackagingContent Include="$(OutDir)QualityVaultFrontEnd.deps.json" SubFolder="root\tools\Infra" />
+  </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 <Project>
   <Import Project="$(WpfArcadeSdkToolsDir)CreateTestPayload.targets"  />
-  <Target Name="RunDrts" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)'!='True'">
+  <Target Name="RunDrts" AfterTargets="Build">
     <Exec Command="$(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\runtests.cmd"/>
   </Target>
 </Project>

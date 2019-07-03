@@ -69,10 +69,10 @@ namespace MS.Internal.Annotations.Anchoring
         public override bool MergeSelections(Object selection1, Object selection2, out Object newSelection)
         {
             if (selection1 == null)
-                throw new ArgumentNullException("selection1");
+                throw new ArgumentNullException(nameof(selection1));
 
             if (selection2 == null)
-                throw new ArgumentNullException("selection2");
+                throw new ArgumentNullException(nameof(selection2));
 
             newSelection = null;
             return false;
@@ -101,12 +101,12 @@ namespace MS.Internal.Annotations.Anchoring
         public override UIElement GetParent(Object selection)
         {
             if (selection == null)
-                throw new ArgumentNullException("selection");
+                throw new ArgumentNullException(nameof(selection));
 
             UIElement element = selection as UIElement;
             if (element == null)
             {
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection");
+                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(element));
             }
 
             return element;
@@ -122,12 +122,12 @@ namespace MS.Internal.Annotations.Anchoring
         public override Point GetAnchorPoint(Object selection)
         {
             if (selection == null)
-                throw new ArgumentNullException("selection");
+                throw new ArgumentNullException(nameof(selection));
 
             Visual element = selection as Visual;
 
             if (element == null)
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection");
+                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(element));
 
             // get the Visual's bounding rectangle's let, top and store them in a point
             Rect rect = element.VisualContentBounds;
@@ -150,10 +150,10 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart> GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
             if (startNode == null)
-                throw new ArgumentNullException("startNode");
+                throw new ArgumentNullException(nameof(startNode));
 
             if (selection == null)
-                throw new ArgumentNullException("selection");
+                throw new ArgumentNullException(nameof(selection));
 
             return new List<ContentLocatorPart>(0);
         }
@@ -174,10 +174,10 @@ namespace MS.Internal.Annotations.Anchoring
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
             if (startNode == null)
-                throw new ArgumentNullException("startNode");
+                throw new ArgumentNullException(nameof(startNode));
 
             if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+                throw new ArgumentNullException(nameof(locatorPart));
 
             attachmentLevel = AttachmentLevel.Full;
 

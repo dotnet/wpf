@@ -106,7 +106,7 @@ namespace MS.Internal.Annotations.Anchoring
             UIElement element = selection as UIElement;
             if (element == null)
             {
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(selection));
+                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(element));
             }
 
             return element;

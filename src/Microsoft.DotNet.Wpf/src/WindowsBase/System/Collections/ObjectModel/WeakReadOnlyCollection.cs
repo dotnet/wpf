@@ -39,7 +39,7 @@ namespace System.Collections.ObjectModel
 
         public WeakReadOnlyCollection(IList<WeakReference> list) {  // assumption: the WRs in list refer to T's
             if (list == null) {
-                throw new ArgumentNullException("list");
+                throw new ArgumentNullException(nameof(list));
             }
             this.list = list;
         }
@@ -145,9 +145,9 @@ namespace System.Collections.ObjectModel
         }
 
         void ICollection.CopyTo(Array array, int index) {
-            if (array==null) {
+            if (array == null) {
                 //ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (array.Rank != 1) {
@@ -162,7 +162,7 @@ namespace System.Collections.ObjectModel
 
             if (index < 0) {
                 //ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.arrayIndex, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.ArgumentOutOfRange_NeedNonNegNum));
+                throw new ArgumentOutOfRangeException(nameof(index), SR.Get(SRID.ArgumentOutOfRange_NeedNonNegNum));
             }
 
             if (array.Length - index < Count) {

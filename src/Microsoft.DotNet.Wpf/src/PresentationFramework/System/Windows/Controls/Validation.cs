@@ -420,9 +420,7 @@ namespace System.Windows.Controls
 
         private static void ShowValidationAdornerWhenAdornerSiteGetsVisible(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var adornerSite = sender as UIElement;
-
-            if (adornerSite == null)
+            if (!(sender is UIElement adornerSite))
             {
                 return;
             }

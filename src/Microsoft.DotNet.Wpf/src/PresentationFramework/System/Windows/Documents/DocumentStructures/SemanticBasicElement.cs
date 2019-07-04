@@ -67,7 +67,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
             ((IAddChild) this).AddChild(element);
         }
@@ -116,7 +116,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
             ((IAddChild) this).AddChild(element);
         }
@@ -176,7 +176,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
             ((IAddChild) this).AddChild(element);
         }
@@ -209,7 +209,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (listItem == null)
             {
-                throw new ArgumentNullException("listItem");
+                throw new ArgumentNullException(nameof(listItem));
             }
             ((IAddChild) this).AddChild(listItem);
         }
@@ -222,7 +222,7 @@ namespace System.Windows.Documents.DocumentStructures
                 return;
             }
 
-            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(ListItemStructure)), "value");
+            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(ListItemStructure)), nameof(value));
         }
         
         void IAddChild.AddText(string text) { }
@@ -254,7 +254,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
             ((IAddChild) this).AddChild(element);
         }
@@ -311,7 +311,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (tableRowGroup == null)
             {
-                throw new ArgumentNullException("tableRowGroup");
+                throw new ArgumentNullException(nameof(tableRowGroup));
             }
             ((IAddChild) this).AddChild(tableRowGroup);
         }
@@ -356,7 +356,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (tableRow == null)
             {
-                throw new ArgumentNullException("tableRow");
+                throw new ArgumentNullException(nameof(tableRow));
             }
             ((IAddChild) this).AddChild(tableRow);
         }
@@ -368,7 +368,7 @@ namespace System.Windows.Documents.DocumentStructures
                 _elementList.Add((TableRowStructure)value);
                 return;
             }
-            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableRowStructure)), "value");
+            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableRowStructure)), nameof(value));
         }
 
         void IAddChild.AddText(string text) { }
@@ -402,7 +402,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (tableCell == null)
             {
-                throw new ArgumentNullException("tableCell");
+                throw new ArgumentNullException(nameof(tableCell));
             }
             ((IAddChild) this).AddChild(tableCell);
         }
@@ -414,7 +414,7 @@ namespace System.Windows.Documents.DocumentStructures
                 _elementList.Add((TableCellStructure)value);
                 return;
             }
-            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableCellStructure)), "value");
+            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableCellStructure)), nameof(value));
         }
         
         void IAddChild.AddText(string text) { }
@@ -449,7 +449,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
             ((IAddChild) this).AddChild(element);
         }
@@ -462,7 +462,7 @@ namespace System.Windows.Documents.DocumentStructures
                 return;
             }
             throw new ArgumentException(SR.Get(SRID.DocumentStructureUnexpectedParameterType4, value.GetType(),
-                typeof(ParagraphStructure), typeof(TableStructure), typeof(ListStructure), typeof(FigureStructure)), "value");
+                typeof(ParagraphStructure), typeof(TableStructure), typeof(ListStructure), typeof(FigureStructure)), nameof(value));
         }
         
         void IAddChild.AddText(string text) { }

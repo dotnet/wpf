@@ -259,7 +259,7 @@ namespace System.Windows.Baml2006
 
             if (newPosition < 0 || newPosition >= _length)
             {
-                throw new ArgumentOutOfRangeException(nameof(newPosition), newPosition, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(offset), offset, string.Empty);
             }
 
             CheckDisposed();

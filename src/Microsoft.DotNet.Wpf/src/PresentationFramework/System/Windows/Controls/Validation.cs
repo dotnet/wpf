@@ -427,7 +427,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            adornerSite.IsVisibleChanged -= ShowValidationAdornerOnVisible;
+            adornerSite.IsVisibleChanged -= ShowValidationAdornerWhenAdornerSiteGetsVisible;
 
             DependencyObject targetElement = GetValidationAdornerSiteFor(adornerSite);
             if (targetElement == null)

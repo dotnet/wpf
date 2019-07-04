@@ -329,6 +329,12 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
+        protected override void OnInitialized(EventArgs e)
+        {
+            UpdateCanExecute();
+            base.OnInitialized(e);
+        }
+
         /// <summary>
         ///     Fetches the value of the IsEnabled property
         /// </summary>

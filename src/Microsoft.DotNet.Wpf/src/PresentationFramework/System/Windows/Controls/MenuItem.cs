@@ -1282,6 +1282,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnInitialized(EventArgs e)
         {
+            UpdateCanExecute();
             base.OnInitialized(e);
             UpdateRole();
 #if OLD_AUTOMATION

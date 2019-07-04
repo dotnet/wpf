@@ -118,6 +118,14 @@ namespace MS.Internal.Commands
 
         internal static bool CanExecuteCommandSource(ICommandSource commandSource)
         {
+            if (commandSource is FrameworkElement fe)
+            {
+                if (!fe.IsInitialized)
+                {
+                    return false;
+                }
+            }
+
             ICommand command = commandSource.Command;
             if (command != null)
             {

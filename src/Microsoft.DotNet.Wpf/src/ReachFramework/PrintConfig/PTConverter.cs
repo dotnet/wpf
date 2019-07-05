@@ -80,14 +80,14 @@ namespace System.Printing.Interop
             // Check input argument
             if (deviceName == null)
             {
-                throw new ArgumentNullException("deviceName");
+                throw new ArgumentNullException(nameof(deviceName));
             }
 
             // Check if we can support the schema version client has requested
             if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
                 (clientPrintSchemaVersion <= 0))
             {
-                throw new ArgumentOutOfRangeException("clientPrintSchemaVersion");
+                throw new ArgumentOutOfRangeException(nameof(clientPrintSchemaVersion));
             }
 
             // Instantiate the provider object this converter instance will use.
@@ -254,7 +254,7 @@ namespace System.Printing.Interop
             // validate devMode parameter
             if (devMode == null)
             {
-                throw new ArgumentNullException("devMode");
+                throw new ArgumentNullException(nameof(devMode));
             }
 
             // validate sope parameter
@@ -262,7 +262,7 @@ namespace System.Printing.Interop
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException("scope");
+                throw new ArgumentOutOfRangeException(nameof(scope));
             }
 
             MemoryStream ptStream = provider.ConvertDevModeToPrintTicket(devMode, scope);
@@ -275,25 +275,25 @@ namespace System.Printing.Interop
                                                                    BaseDevModeType baseType,
                                                                    PrintTicketScope scope)
         {
-            // Input PrinTicket can't be null
+            // Input PrinTicket can't be null.
             if (printTicket == null)
             {
-                throw new ArgumentNullException("printTicket");
+                throw new ArgumentNullException(nameof(printTicket));
             }
 
-            // validate the base type value
+            // Validate the base type value.
             if ((baseType != BaseDevModeType.UserDefault) &&
                 (baseType != BaseDevModeType.PrinterDefault))
             {
-                throw new ArgumentOutOfRangeException("baseType");
+                throw new ArgumentOutOfRangeException(nameof(baseType));
             }
 
-            // validate scope value
+            // Validate scope value.
             if ((scope != PrintTicketScope.PageScope) &&
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException("scope");
+                throw new ArgumentOutOfRangeException(nameof(scope));
             }
 
             MemoryStream ptStream = printTicket.GetXmlStream();

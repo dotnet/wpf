@@ -3263,11 +3263,11 @@ namespace System.Windows.Controls
         private EventHandler UpdatedEvent;
 
         // Max time slice to run FullMeasureTick.
-        private static TimeSpan _maxMeasureTime = TimeSpan.FromMilliseconds(200);
+        private static readonly TimeSpan _maxMeasureTime = TimeSpan.FromMilliseconds(200);
 
         // Number of seconds to disable background layout after receiving
         // user input.
-        private static TimeSpan _throttleBackgroundTimeSpan = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan _throttleBackgroundTimeSpan = TimeSpan.FromSeconds(2);
 
         #endregion Private Fields
     }

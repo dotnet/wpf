@@ -44,8 +44,6 @@ namespace System.Windows.Controls
         {
             Invariant.Assert(host is Control);
             _host = host;
-
-            ((Control)_host).Unloaded += OnHostUnloaded;
         }
 
         #endregion Constructors
@@ -1222,6 +1220,8 @@ namespace System.Windows.Controls
             if (!CheckFlags(Flags.TextContainerListenersInitialized))
                 return;
 
+            ((Control)_host).Unloaded -= OnHostUnloaded;
+
             // if the flag got set, all the variables should be non-null
             System.Diagnostics.Debug.Assert(_host != null && _host.TextContainer != null && _host.TextContainer.Highlights != null,
                 "TextBoxView partners should not be null");
@@ -1397,6 +1397,8 @@ namespace System.Windows.Controls
         {
             if (CheckFlags(Flags.TextContainerListenersInitialized))
                 return;
+
+            ((Control)_host).Unloaded += OnHostUnloaded;
 
             _host.TextContainer.Changing += new EventHandler(OnTextContainerChanging);
             _host.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);

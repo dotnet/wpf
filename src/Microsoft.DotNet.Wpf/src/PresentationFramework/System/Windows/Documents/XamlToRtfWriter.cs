@@ -13,6 +13,7 @@ using System.Windows.Media; // Color
 using System.Globalization;
 using System.IO;
 using MS.Internal.Globalization;
+using MS.Internal.Text;
 
 #if WindowsMetaFile // GetWinMetaFileBits
 using System.Runtime.InteropServices;
@@ -2206,7 +2207,7 @@ namespace System.Windows.Documents
             }
 
             // Return the image hex data string that is the default image data type on Rtf
-            return Encoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
+            return InternalEncoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
         }
 #endif // WindowsMetaFile
 
@@ -2227,7 +2228,7 @@ namespace System.Windows.Documents
             }
 
             // Return the image hex data string that is the default image data type on Rtf
-            return Encoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
+            return InternalEncoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
         }
 
         // Get the image type from image source name
@@ -4023,7 +4024,7 @@ namespace System.Windows.Documents
             {
                 if (e == null)
                 {
-                    e = Encoding.GetEncoding(cp);
+                    e = InternalEncoding.GetEncoding(cp);
                 }
                 int cb = e.GetBytes(new char[] { c }, 0, 1, rgAnsi, 0);
                 int cch = e.GetChars(rgAnsi, 0, cb, rgChar, 0);

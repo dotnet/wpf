@@ -12,17 +12,16 @@
     <BackEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\c2.dll')">$(MsvcurtC1xxToolsPath)HostX64\c2.dll</BackEndPath>
 
     <!-- 
-      Future use
       Requires a full set of cl.exe and link.exe DLL's to enable this. 
     -->
-    <!-- 
-    <ClToolExe Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\cl.exe')">$(MsvcurtC1xxToolsPath)HostX86\cl.exe</ClToolExe>
-    <ClToolExe Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\cl.exe')">$(MsvcurtC1xxToolsPath)HostX64\cl.exe</ClToolExe>
-    <ClToolPath Condition="Exists('$(ClToolExe)')">$([System.IO.Directory]::GetParent('$(ClToolExe)'))</ClToolPath>
+    <!--
+    <ClToolPath Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\cl.exe')">$(MsvcurtC1xxToolsPath)HostX86\</ClToolPath>
+    <ClToolPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\cl.exe')">$(MsvcurtC1xxToolsPath)HostX64\</ClToolPath>
+    <ClToolExe Condition="Exists('$(ClToolPath)')">cl.exe</ClToolExe>
 
-    <LinkExe Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\cl.exe')">$(MsvcurtC1xxToolsPath)HostX86\link.exe</LinkExe>
-    <LinkExe Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\cl.exe')">$(MsvcurtC1xxToolsPath)HostX64\link.exe</LinkExe>
-    <LinkToolPath Condition="Exists('$(LinkToolExe)')">$([System.IO.Directory]::GetParent('$(LinkToolExe)'))</LinkToolPath>
+    <LinkToolPath Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\link.exe')">$(MsvcurtC1xxToolsPath)HostX86\</LinkToolPath>
+    <LinkToolPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\link.exe')">$(MsvcurtC1xxToolsPath)HostX64\</LinkToolPath>
+    <LinkToolExe Condition="Exists('$(LinkToolPath)')">link.exe</LinkToolExe>
     -->
   </PropertyGroup>
   
@@ -35,7 +34,7 @@
     </Link>
   </ItemDefinitionGroup>
   
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(BackEndPath)'!=''">
+  <ItemDefinitionGroup Condition="'$(ManagedCxx)'=='true' And '$(BackEndPath)'!=''">
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /B2"$(BackEndPath)"</AdditionalOptions>
     </ClCompile>

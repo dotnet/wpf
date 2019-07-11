@@ -1,0 +1,44 @@
+<Project>
+  <!-- 
+    See comment about UsePrivateCppTools in Wpf.Cpp.props
+    Also see Wpf.Cpp.PrivateTools.props
+  -->
+  <!--  Start optional section -->
+  <PropertyGroup>
+    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit'">$(MsvcurtC1xxToolsPath)HostX86\c1xx.dll</FrontEndPath>
+    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit'">$(MsvcurtC1xxToolsPath)HostX64\c1xx.dll</FrontEndPath>
+
+    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\c2.dll')">$(MsvcurtC1xxToolsPath)HostX86\c2.dll</BackEndPath>
+    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\c2.dll')">$(MsvcurtC1xxToolsPath)HostX64\c2.dll</BackEndPath>
+
+    <!-- 
+      Future use
+      Requires a full set of cl.exe and link.exe DLL's to enable this. 
+    -->
+    <!-- 
+    <ClToolExe Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\cl.exe')">$(MsvcurtC1xxToolsPath)HostX86\cl.exe</ClToolExe>
+    <ClToolExe Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\cl.exe')">$(MsvcurtC1xxToolsPath)HostX64\cl.exe</ClToolExe>
+    <ClToolPath Condition="Exists('$(ClToolExe)')">$([System.IO.Directory]::GetParent('$(ClToolExe)'))</ClToolPath>
+
+    <LinkExe Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\cl.exe')">$(MsvcurtC1xxToolsPath)HostX86\link.exe</LinkExe>
+    <LinkExe Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX64\cl.exe')">$(MsvcurtC1xxToolsPath)HostX64\link.exe</LinkExe>
+    <LinkToolPath Condition="Exists('$(LinkToolExe)')">$([System.IO.Directory]::GetParent('$(LinkToolExe)'))</LinkToolPath>
+    -->
+  </PropertyGroup>
+  
+  <ItemDefinitionGroup Condition="'$(ManagedCxx)'=='true' And '$(FrontEndPath)'!=''">
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /Bx"$(FrontEndPath)"</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(BackEndPath)'!=''">
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /B2"$(BackEndPath)"</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- End optional section -->
+</Project>

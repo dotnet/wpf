@@ -4,33 +4,8 @@
     <NativeVersionFileDirectory>$([System.IO.Path]::GetDirectoryName($(NativeVersionFile)))</NativeVersionFileDirectory>
   </PropertyGroup>
 
-
-  <!-- 
-    See comment about UsePrivateFrontEnd in Wpf.Cpp.props
-  -->
-  <!--  Start optional section -->
-  <PropertyGroup>
-    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit'">$(MsvcurtC1xxToolsPath)HostX86\c1xx.dll</FrontEndPath>
-    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit'">$(MsvcurtC1xxToolsPath)HostX64\c1xx.dll</FrontEndPath>
-
-    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\c2.dll')">$(MsvcurtC1xxToolsPath)HostX86\c2.dll</BackEndPath>
-    <BackEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit' And Exists('$(MsvcurtC1xxToolsPath)HostX86\c2.dll')">$(MsvcurtC1xxToolsPath)HostX64\c2.dll</BackEndPath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(FrontEndPath)'!=''">
-    <ClCompile>
-      <AdditionalOptions>%(AdditionalOptions) /Bx"$(FrontEndPath)"</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(BackEndPath)'!=''">
-    <ClCompile>
-      <AdditionalOptions>%(AdditionalOptions) /B2"$(BackEndPath)"</AdditionalOptions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <!-- End optional section --> 
-
+  <Import Project="Wpf.Cpp.PrivateTools.targets" Condition="Exists('Wpf.Cpp.PrivateTools.targets') And '$(UsePrivateCppTools)'=='true'"/>
+  
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>

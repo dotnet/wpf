@@ -22,7 +22,6 @@ using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Media.Animation
 {

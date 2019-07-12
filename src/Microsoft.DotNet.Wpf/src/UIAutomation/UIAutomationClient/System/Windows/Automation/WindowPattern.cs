@@ -90,11 +90,6 @@ namespace System.Windows.Automation
         /// Changes the State of the window based on the passed enum.
         /// </summary>
         /// <param name="state">The requested state of the window.</param>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetWindowVisualState( WindowVisualState state )
         {
             UiaCoreApi.WindowPattern_SetWindowVisualState(_hPattern, state);
@@ -106,11 +101,6 @@ namespace System.Windows.Automation
         /// split), it may or may not also close all other panes related to the 
         /// document/content/etc. This behavior is application dependent.
         /// </summary>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Close()
         {
             UiaCoreApi.WindowPattern_Close(_hPattern);
@@ -276,11 +266,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Is this window Maximizable</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanMaximize
             {
                 get
@@ -290,11 +275,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this window Minimizable</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanMinimize
             {
                 get
@@ -304,11 +284,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this is a modal window.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsModal
             {
                 get
@@ -318,11 +293,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is the Window Maximized, Minimized, or Normal (aka restored)</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public WindowVisualState WindowVisualState
             {
                 get
@@ -332,11 +302,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is the Window Closing, ReadyForUserInteraction, BlockedByModalWindow or NotResponding.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public WindowInteractionState WindowInteractionState
             {
                 get
@@ -346,11 +311,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this window is always on top</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsTopmost
             {
                 get

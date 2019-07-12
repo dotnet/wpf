@@ -18,7 +18,6 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Controls;
 using System.Windows.Diagnostics;
 using System.Windows.Media;

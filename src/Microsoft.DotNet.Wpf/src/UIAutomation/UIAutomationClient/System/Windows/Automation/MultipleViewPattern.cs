@@ -71,11 +71,6 @@ namespace System.Windows.Automation
         /// be the same across instances.
         /// </param>
         /// <returns>Return a localized, human readable string in the application's current UI language.</returns>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public string GetViewName( int viewId )
         {
             return UiaCoreApi.MultipleViewPattern_GetViewName(_hPattern, viewId);
@@ -84,11 +79,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Change the current view using an ID returned from GetSupportedViews()        
         /// </summary>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetCurrentView( int viewId )
         {
             UiaCoreApi.MultipleViewPattern_SetCurrentView(_hPattern, viewId);
@@ -226,11 +216,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>The view ID corresponding to the control's current state. This ID is control-specific</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int CurrentView
             {
                 get
@@ -240,11 +225,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Returns an array of ints representing the full set of views available in this control.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int [] GetSupportedViews()
             {
                 return (int [])_el.GetPatternPropertyValue(SupportedViewsProperty, _useCache);

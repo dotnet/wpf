@@ -88,9 +88,6 @@ namespace Microsoft.Win32
         ///  implementation of Reset() if they choose to
         ///  override this function.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public override void Reset()
         {
 
@@ -136,9 +133,6 @@ namespace Microsoft.Win32
         ///  dialog box automatically adds an extension to a
         ///  file name if the user omits the extension.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public bool AddExtension
         {
             get
@@ -164,9 +158,6 @@ namespace Microsoft.Win32
         ///  the dialog box displays a warning if the 
         ///  user specifies a file name that does not exist.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public virtual bool CheckFileExists
         {
             get
@@ -186,9 +177,6 @@ namespace Microsoft.Win32
         ///  used and the user types an invalid path and file name in the File Name entry field, 
         ///  a warning is displayed in a message box.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public bool CheckPathExists
         {
             get
@@ -245,9 +233,6 @@ namespace Microsoft.Win32
         ///  of the file referenced by the shortcut or whether it returns the location 
         ///  of the shortcut (.lnk).
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public bool DereferenceLinks
         {
             get
@@ -327,9 +312,6 @@ namespace Microsoft.Win32
         ///  Gets or sets a string containing the full path of the file selected in 
         ///  the file dialog box.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public string FileName
         {
             get
@@ -360,9 +342,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///     Gets the file names of all selected files in the dialog box.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public string[] FileNames
         {
             get
@@ -466,9 +445,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Gets or sets the initial directory displayed by the file dialog box.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public string InitialDirectory
         {
             get
@@ -490,9 +466,6 @@ namespace Microsoft.Win32
         ///  This property is only valid for SaveFileDialog;  it has no effect
         ///  when set on an OpenFileDialog.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public bool RestoreDirectory
         {
             get
@@ -511,9 +484,6 @@ namespace Microsoft.Win32
         ///       If this property is null, a localized default from the operating
         ///       system itself will be used (typically something like "Save As" or "Open")
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public string Title
         {
             get
@@ -536,9 +506,6 @@ namespace Microsoft.Win32
         ///  Gets or sets a value indicating whether the dialog box accepts only valid
         ///  Win32 file names.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public bool ValidateNames
         {
             get

@@ -285,9 +285,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Start the composition.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static bool StartComposition(TextComposition composition)
         {
             return UnsafeStartComposition(composition);
@@ -296,9 +293,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Update the composition.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static bool UpdateComposition(TextComposition composition)
         {
             return UnsafeUpdateComposition(composition);
@@ -307,9 +301,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Complete the composition.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static bool CompleteComposition(TextComposition composition)
         {
             return UnsafeCompleteComposition(composition);

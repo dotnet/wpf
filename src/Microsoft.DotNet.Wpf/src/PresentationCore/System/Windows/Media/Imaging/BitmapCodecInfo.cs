@@ -58,9 +58,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Container format
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual Guid ContainerFormat
         {
             get
@@ -82,9 +79,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Author
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string Author
         {
             get
@@ -128,9 +122,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Version
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual System.Version Version
         {
             get
@@ -174,9 +165,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Spec Version
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual Version SpecificationVersion
         {
             get
@@ -220,9 +208,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Friendly Name
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string FriendlyName
         {
             get
@@ -266,9 +251,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Device Manufacturer
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string DeviceManufacturer
         {
             get
@@ -312,9 +294,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Device Models
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string DeviceModels
         {
             get
@@ -358,9 +337,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Mime types
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string MimeTypes
         {
             get
@@ -404,9 +380,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// File extensions
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual string FileExtensions
         {
             get
@@ -450,9 +423,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Animation
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual bool SupportsAnimation
         {
             get
@@ -474,9 +444,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Lossless
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual bool SupportsLossless
         {
             get
@@ -498,9 +465,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Multiple Frames
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual bool SupportsMultipleFrames
         {
             get

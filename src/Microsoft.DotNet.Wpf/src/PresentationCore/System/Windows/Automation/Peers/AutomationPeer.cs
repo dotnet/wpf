@@ -219,8 +219,6 @@ namespace System.Windows.Automation.Peers
     {
         /// <summary>
         /// This is the only public constructor on this class.
-        /// It requires "Full Trust" level of security permissions to be executed, since this
-        /// class is wrappign an HWND direct access to which is a critical asset.
         /// </summary>
         public HostedWindowWrapper(IntPtr hwnd)
         {

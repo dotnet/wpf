@@ -60,9 +60,6 @@ namespace System.Windows.Documents
         ///     We finalize Cicero's composition and TextStore will automatically
         ///     generate the proper TextComposition events.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public override void Complete()
         {
             _pendingComplete = true;

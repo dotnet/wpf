@@ -284,9 +284,6 @@ namespace System.Windows.Input
         ///     Will be set by Rights Management code.
         /// </summary>
         /// <value></value>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         internal bool IsBlockedByRM
         {
             get

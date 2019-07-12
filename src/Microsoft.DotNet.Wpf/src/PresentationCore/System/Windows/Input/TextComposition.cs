@@ -142,9 +142,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Finalize the composition.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public virtual void Complete()
         {
 //             VerifyAccess();

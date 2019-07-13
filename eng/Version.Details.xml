@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview8.19362.12">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview8.19362.11">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>4c7c6a278e9c578403726c0027161fb41017b972</Sha>
+      <Sha>15725abcdc3311b329b00da96a29666915c75f74</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
@@ -59,7 +59,7 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>635b268f77eadeb469d2b14cfbf655f035898f13</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview8-27912-13" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview8-27912-12" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>b5983343c7ff2946a3ba769c42d025bb731c65b7</Sha>
     </Dependency>

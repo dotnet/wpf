@@ -268,7 +268,7 @@ namespace Microsoft.Test.Execution.EngineCommands
             }
 
             // Shutdown any process started within the span of the test. This seems overly aggressive but probably has good reason.
-            if (userSid.Equals(ProcessUtilities.GetProcessUserSid(process), StringComparison.InvariantCultureIgnoreCase) && !process.HasExited && process.StartTime > startTime))
+            if (userSid.Equals(ProcessUtilities.GetProcessUserSid(process), StringComparison.InvariantCultureIgnoreCase) && !process.HasExited && process.StartTime > startTime)
             {
                 return true;
             }

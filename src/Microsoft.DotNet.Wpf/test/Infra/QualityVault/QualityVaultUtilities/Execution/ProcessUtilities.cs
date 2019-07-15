@@ -78,7 +78,7 @@ namespace Microsoft.Test.Execution
 
         internal static bool IsIDE(Process process)
         {
-            return process.ProcessName == "devenv" || process.ProcessName == "code"
+            return process.ProcessName == "devenv" || process.ProcessName == "code";
         }
 
         internal static bool IsKnownTestProcess(Process process)

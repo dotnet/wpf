@@ -58,7 +58,11 @@
     { "path": "Company.WpfControlLibrary.vbproj" },
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "path": "UserControl1.xaml"
+      "path": "UserControl1.xaml.vb"
+    },
+    {
+        "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+        "path": "UserControl1.xaml"
     }
   ],
   "defaultName": "WpfControlLibrary1",
@@ -78,7 +82,7 @@
       "manualInstructions": [ ],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
-        "files": "1"
+        "files": "1;2"
       },
       "continueOnError": true
     }

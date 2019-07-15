@@ -256,17 +256,30 @@ namespace Microsoft.Test.Execution.EngineCommands
         }
 
         /// <summary>
-        /// If any process is started within the span of the test we want to terminate this process.                    
-        /// Ignore System and Idle processes which no applications don't have proper priviledges to look at. (Avoids predictable access exceptions)
-        /// Aggressively identify known test processes via IsKnownTestProcess
+        /// Determines if a process should not be kept around after test execution
         /// </summary>
-        /// <returns>whether this process should be killed</returns>
+        /// <returns>whether this process is unwanted</returns>
         private static bool IsUnwantedProcess(DateTime startTime, string userSid, Process process)
         {
-            return (!ProcessUtilities.IsCriticalProcess(process) &&
-                                    userSid.Equals(ProcessUtilities.GetProcessUserSid(process), StringComparison.InvariantCultureIgnoreCase) &&
-                                    !process.HasExited && process.StartTime > startTime) ||
-                                    ProcessUtilities.IsKnownTestProcess(process);
+            // Don't shutdown a critical process or the developers IDE
+            if (ProcessUtilities.IsCriticalProcess(process) || ProcessUtilities.IsIDE(process))
+            {
+                return false;
+            }
+
+            // Shutdown any process started within the span of the test. This seems overly aggressive but probably has good reason.
+            if (userSid.Equals(ProcessUtilities.GetProcessUserSid(process), StringComparison.InvariantCultureIgnoreCase) && !process.HasExited && process.StartTime > startTime))
+            {
+                return true;
+            }
+
+            // Shutdown any known processes associated with tests
+            if (ProcessUtilities.IsKnownTestProcess(process))
+            {
+                return true;
+            }
+            
+            return false;
         }        
 
         private static string GenerateJitDebuggerCommand(DirectoryInfo infraPath)

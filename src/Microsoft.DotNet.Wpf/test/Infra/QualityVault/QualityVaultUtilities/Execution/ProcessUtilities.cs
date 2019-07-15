@@ -76,6 +76,11 @@ namespace Microsoft.Test.Execution
                    process.ProcessName == "audiodg"); //DRM
         }
 
+        internal static bool IsIDE(Process process)
+        {
+            return process.ProcessName == "devenv" || process.ProcessName == "code"
+        }
+
         internal static bool IsKnownTestProcess(Process process)
         {
             return (process.ProcessName == "sti"); //sometimes it doesnt get picked up or killed the first time...

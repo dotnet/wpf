@@ -173,6 +173,13 @@ namespace Microsoft.Test.Execution
 
             ProcessStartInfo startInfo = ProcessUtilities.CreateStartInfo("cmd.exe", arguments, ProcessWindowStyle.Normal);
 
+            if (settings.DebugTests && !settings.WaitForDebugger)
+            {
+                // Create a window if debugging tests in the legacy fashion
+                startInfo.UseShellExecute = true;
+                startInfo.RedirectStandardOutput = false;
+            }
+
             startInfo.WorkingDirectory = executionDirectory.FullName;
 
             return startInfo;

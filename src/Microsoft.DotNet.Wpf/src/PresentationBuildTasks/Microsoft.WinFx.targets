@@ -573,7 +573,10 @@
   </Target>
 
   <Target Name="SplashScreenValidation" Condition="'@(SplashScreen)' != ''" >
-    <Error Condition="'$(TargetFrameworkVersion)' == 'v3.0'" Text="The SplashScreen Build Action is not supported in the selected Target Framework." />
+    <Error Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' And 
+                      '$(_TargetFrameworkVersionWithoutV)' != ''        And 
+                      '$(_TargetFrameworkVersionWithoutV)' == '3.0'" 
+           Text="The SplashScreen Build Action is not supported on $(TargetFrameworkIdentifier) $(TargetFrameworkVersion)." />
   </Target>
 
 

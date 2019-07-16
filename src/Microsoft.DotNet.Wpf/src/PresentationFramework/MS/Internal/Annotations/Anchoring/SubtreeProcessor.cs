@@ -50,7 +50,7 @@ namespace MS.Internal.Annotations.Anchoring
         protected SubTreeProcessor(LocatorManager manager)
         {
             if (manager == null)
-                throw new ArgumentNullException("manager");
+                throw new ArgumentNullException(nameof(manager));
 
             _manager = manager;
         }
@@ -96,7 +96,7 @@ namespace MS.Internal.Annotations.Anchoring
         public virtual IList<IAttachedAnnotation> PostProcessNode(DependencyObject node, bool childrenCalledProcessAnnotations, out bool calledProcessAnnotations)
         {
             if (node == null)
-                throw new ArgumentNullException("node");
+                throw new ArgumentNullException(nameof(node));
 
             calledProcessAnnotations = false;
 

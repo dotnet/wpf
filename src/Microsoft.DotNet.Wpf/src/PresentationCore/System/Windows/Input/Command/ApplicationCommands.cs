@@ -20,7 +20,6 @@ using System.Windows.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal; // CommandHelper

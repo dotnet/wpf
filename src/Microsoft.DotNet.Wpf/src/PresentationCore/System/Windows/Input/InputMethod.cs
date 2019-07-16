@@ -642,10 +642,7 @@ namespace System.Windows.Input
 
         /// <summary> 
         /// Access the current microphone on/off status.
-        /// </summary> 
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
+        /// </summary>
         public InputMethodState MicrophoneState
         {
             get
@@ -716,9 +713,6 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current speech mode
         /// </summary> 
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public SpeechMode SpeechMode
         {
             get

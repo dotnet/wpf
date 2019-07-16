@@ -22,7 +22,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;

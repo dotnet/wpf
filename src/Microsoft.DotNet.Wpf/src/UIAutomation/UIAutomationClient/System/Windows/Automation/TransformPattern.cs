@@ -75,11 +75,6 @@ namespace System.Windows.Automation
         /// 
         /// <param name="x">absolute on-screen position of the top left corner</param>
         /// <param name="y">absolute on-screen position of the top left corner</param>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Move( double x, double y )
         {
             UiaCoreApi.TransformPattern_Move(_hPattern, x, y);
@@ -93,10 +88,6 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="width">The requested width of the window.</param>
         /// <param name="height">The requested height of the window.</param>
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Resize( double width, double height )
         {
             UiaCoreApi.TransformPattern_Resize(_hPattern, width, height);
@@ -107,10 +98,6 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="degrees">The requested degrees to rotate the element.  A positive number rotates clockwise
         /// a negative number rotates counter clockwise</param>
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Rotate( double degrees )
         {
             UiaCoreApi.TransformPattern_Rotate(_hPattern, degrees);
@@ -251,11 +238,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Returns true if the element can be moved otherwise returns false.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanMove
             {
                 get
@@ -265,11 +247,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Returns true if the element can be resized otherwise returns false.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanResize
             {
                 get
@@ -279,11 +256,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Returns true if the element can be rotated otherwise returns false.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanRotate
             {
                 get

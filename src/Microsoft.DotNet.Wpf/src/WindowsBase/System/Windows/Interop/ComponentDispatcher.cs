@@ -61,9 +61,6 @@ namespace System.Windows.Interop
         /// Returns true if one or more components has gone modal.
         /// Although once one component is modal a 2nd shouldn't.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static bool IsThreadModal
         {
             get
@@ -76,9 +73,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns "current" message.   More exactly the last MSG Raised.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static MSG CurrentKeyboardMessage
         {
             get
@@ -110,9 +104,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to go modal.  Current thread wide only.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static void PushModal()
         {
             CriticalPushModal();
@@ -130,9 +121,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to end being modal.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static void PopModal()
         {
             CriticalPopModal();
@@ -150,9 +138,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this when it is time to do idle processing.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public static void RaiseIdle()
         {
@@ -163,9 +148,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this for every keyboard message.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         [SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
         public static bool RaiseThreadMessage(ref MSG msg)
@@ -180,9 +162,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// thread idle processing.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static event EventHandler ThreadIdle
         {
             add {
@@ -197,9 +176,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (first chance processing).
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
@@ -215,9 +191,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (second chance processing).
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
@@ -252,9 +225,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// a component on this thread has "gone modal", when previously none were.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static event EventHandler EnterThreadModal
         {
             add {
@@ -269,9 +239,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// all components on this thread are done being modal.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static event EventHandler LeaveThreadModal
         {
             add

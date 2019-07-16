@@ -154,9 +154,6 @@ namespace System.Windows.Media.Imaging
         /// The info that identifies this codec.
         /// If the LateBoundDecoder is still downloading, the returned CodecInfo is null.
         /// </summary>
-        /// <Remarks>
-        ///     The getter demands RegistryPermission(PermissionState.Unrestricted)
-        /// </Remarks>
         public override BitmapCodecInfo CodecInfo
         {
             get

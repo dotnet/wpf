@@ -40,9 +40,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     The input manager processing the input event.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public InputManager InputManager 
         {
             get 

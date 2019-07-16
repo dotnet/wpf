@@ -16,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;

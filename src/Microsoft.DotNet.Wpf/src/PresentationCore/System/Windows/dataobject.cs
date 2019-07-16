@@ -2863,13 +2863,29 @@ namespace System.Windows
                     {
                         data = ReadBitmapSourceFromHandle(hglobal);
                     }
-                    //  Restrict deserialization to only primitives 
-                    // and strings here to prevent potentially malicious objects from
+                    // Limit deserialization to only primitive types, which consist of the following:
+                    //
+                    // DataFormats.CommaSeparatedValue
+                    // DataFormats.FileDrop
+                    // DataFormats.Html
+                    // DataFormats.OemText
+                    // DataFormats.PenData
+                    // DataFormats.Rtf
+                    // DataFormats.Serializable
+                    // DataFormats.Text
+                    // DataFormats.UnicodeText
+                    // DataFormats.WaveAudio
+                    // DataFormats.Xaml
+                    // DataFormats.XamlPackage 
+                    // DataFormats.StringFormat
+                    // 
+                    // Out of these primitive types, we will disallow deserialization of 
+                    // DataFormats.StringFormat to prevent potentially malicious objects from
                     // being deserialized as part of a "text" copy-paste or drag-drop.
+                    // 
                     // The rest of the following formats are pre-defined in the OS, 
-                    // they are not managed objects so we shouldn't try to deserialize them as such,
-                    // allow primitives in a best effort for compat, but restrict other types.
-                    else if (!Clipboard.UseLegacyDangerousClipboardDeserializationMode())
+                    // they are not managed objects - an so we will not attempt to deserialize them. 
+                    else
                     {
                         bool restrictDeserialization =
                           (IsFormatEqual(format, DataFormats.StringFormat) ||
@@ -2888,11 +2904,7 @@ namespace System.Windows
 
                         data = ReadObjectFromHandle(hglobal, restrictDeserialization);
                     }
-                    else
-                    {
-                        data = ReadObjectFromHandle(hglobal, restrictDeserialization: false);
-                    }
-}
+                }
 
                 return data;
             }

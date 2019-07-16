@@ -100,8 +100,7 @@ namespace MS.Internal.Ink
 
             if ( !String.IsNullOrEmpty(xml) )
             {
-                bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                UIElement element = XamlReader.Load(new System.Xml.XmlTextReader(new System.IO.StringReader(xml)), useRestrictiveXamlReader) as UIElement;
+                UIElement element = XamlReader.Load(new System.Xml.XmlTextReader(new System.IO.StringReader(xml)), useRestrictiveXamlReader: true) as UIElement;
                 if (element != null)
                 {
                     ElementList.Add(element);

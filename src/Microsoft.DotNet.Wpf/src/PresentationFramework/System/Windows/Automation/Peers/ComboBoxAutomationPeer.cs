@@ -51,15 +51,19 @@ namespace System.Windows.Automation.Peers
         override public object GetPattern(PatternInterface pattern)
         {
             object iface = null;
+            ComboBox owner = (ComboBox)Owner;
 
             if (pattern == PatternInterface.Value)
             {
-                ComboBox owner = (ComboBox)Owner;
                 if (owner.IsEditable) iface = this;
             }
             else if(pattern == PatternInterface.ExpandCollapse)
             {
                 iface = this;
+            }
+            else if (pattern == PatternInterface.Scroll)
+            {
+                if (owner.IsDropDownOpen) iface = this;
             }
             else
             {

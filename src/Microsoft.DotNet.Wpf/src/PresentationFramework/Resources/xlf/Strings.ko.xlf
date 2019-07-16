@@ -1613,13 +1613,17 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
-        <source>'{0}' does not exist.\r\nDo you want to create it?</source>
-        <target state="translated">'{0}'이(가) 없습니다.\r\n만드시겠습니까?</target>
+        <source>'{0}' does not exist.
+Do you want to create it?</source>
+        <target state="translated">'{0}'이(가) 없습니다.
+만드시겠습니까?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
-        <source>'{0}' does not exist.\r\nVerify that the file name is correct.</source>
-        <target state="translated">'{0}'이(가) 없습니다.\r\n파일 이름이 올바른지 확인하세요.</target>
+        <source>'{0}' does not exist.
+Verify that the file name is correct.</source>
+        <target state="translated">'{0}'이(가) 없습니다.
+파일 이름이 올바른지 확인하세요.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -1638,8 +1642,10 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogOverwritePrompt">
-        <source>'{0}' already exists.\r\nDo you want to replace it?</source>
-        <target state="translated">’{0}'이(가) 이미 있습니다.\r\n바꾸시겠습니까?</target>
+        <source>'{0}' already exists.
+Do you want to replace it?</source>
+        <target state="translated">’{0}'이(가) 이미 있습니다.
+바꾸시겠습니까?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogSubClassFailure">

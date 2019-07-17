@@ -38,6 +38,7 @@ namespace System.Windows.Documents
     using MS.Internal.PresentationFramework; // SecurityHelper
 
     using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
+    using PackagingUtilities = MS.Internal.IO.Packaging.PackagingUtilities;
     // An object supporting flow content packaging with images and other resources.
     /// <summary>
     /// WpfPayload is a class providing services for creating,
@@ -723,7 +724,7 @@ namespace System.Windows.Documents
             imageSourceString = imageSourceString.Substring(1); // cut the leading dot out
             Uri imagePartUri = new Uri(XamlPayloadDirectory + imageSourceString, UriKind.Relative);
             PackagePart imagePart = _package.GetPart(imagePartUri);
-            return imagePart.GetStream();
+            return PackagingUtilities.GetSeekablePackagePartStream(imagePart);
         }
 
         // -------------------------------------------------------------

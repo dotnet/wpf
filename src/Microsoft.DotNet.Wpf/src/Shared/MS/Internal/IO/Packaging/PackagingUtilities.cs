@@ -13,6 +13,7 @@
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.IO.Packaging;
 using MS.Internal.WindowsBase;  // FriendAccessAllowed
 using System.Xml;               // For XmlReader
 using System.Diagnostics;       // For Debug.Assert
@@ -474,6 +475,29 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
+        internal static Stream GetSeekablePackagePartStream(PackagePart packPart)
+        {
+            return GetSeekablePackagePartStream(packPart, FileMode.OpenOrCreate, packPart.Package.FileOpenAccess);
+        }
+
+        internal static Stream GetSeekablePackagePartStream(PackagePart packPart, FileMode mode)
+        {
+            return GetSeekablePackagePartStream(packPart, mode, packPart.Package.FileOpenAccess);
+        }
+
+        internal static Stream GetSeekablePackagePartStream(PackagePart packPart, FileMode mode, FileAccess access)
+        {
+            var packStream = packPart.GetStream(mode, access);
+
+            Debug.Assert(!packStream.CanSeek);
+
+            var seekableStream = new MemoryStream((int)packStream.Length);
+
+            packStream.CopyTo(seekableStream);
+
+            return seekableStream;
+        }
+
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -626,7 +650,7 @@ namespace MS.Internal.IO.Packaging
             //------------------------------------------------------
             private string _path;
             private ReliableIsolatedStorageFileFolder _folder;
-            private bool   _disposed;
+            private bool _disposed;
         }
 
 
@@ -820,9 +844,9 @@ namespace MS.Internal.IO.Packaging
             //
             //------------------------------------------------------
             private static IsolatedStorageFile _file;
-            private static bool                _userHasProfile;
-            private int                        _refCount;               // number of outstanding "streams"
-            private bool                       _disposed;
+            private static bool _userHasProfile;
+            private int _refCount;               // number of outstanding "streams"
+            private bool _disposed;
         }
 
         //------------------------------------------------------
@@ -835,7 +859,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <remarks>See PS 1468964 for details.</remarks>
         private static Object _isoStoreSyncObject = new Object();
-        private static Object _isolatedStorageFileLock = new Object();  
+        private static Object _isolatedStorageFileLock = new Object();
         private static ReliableIsolatedStorageFileFolder _defaultFile;
         private const string XmlNamespace = "xmlns";
         private const string _encodingAttribute = "encoding";

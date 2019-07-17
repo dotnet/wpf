@@ -489,11 +489,19 @@ namespace MS.Internal.IO.Packaging
         {
             var packStream = packPart.GetStream(mode, access);
 
-            Debug.Assert(!packStream.CanSeek);
+            // If the stream returned is seekable it meets all requirements and can be used directly.
+            if(packStream.CanSeek)
+            {
+                return packStream;
+            }
 
-            var seekableStream = new MemoryStream((int)packStream.Length);
+            // Non-seekable streams need to be copied out into memory so they are seekable.
+            using (packStream)
+            {
+                var seekableStream = new MemoryStream((int)packStream.Length);
 
-            packStream.CopyTo(seekableStream);
+                packStream.CopyTo(seekableStream);
+            }
 
             return seekableStream;
         }

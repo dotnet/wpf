@@ -445,7 +445,7 @@ namespace System.Windows
                 // if not, this is a first time regular load of the component.
                 PackagePart part = GetResourceOrContentPart(resourceLocator);
                 ContentType contentType = new ContentType(part.ContentType);
-                stream = part.GetStream();
+                stream = PackagingUtilities.GetSeekablePackagePartStream(part);
                 bCloseStream = true;
 
                 //
@@ -509,7 +509,7 @@ namespace System.Windows
 
             PackagePart part = GetResourceOrContentPart(packUri);
             ContentType contentType = new ContentType(part.ContentType);
-            Stream stream = part.GetStream();
+            Stream stream = PackagingUtilities.GetSeekablePackagePartStream(part);
 
             ParserContext pc = new ParserContext();
             pc.BaseUri = packUri;
@@ -623,7 +623,7 @@ namespace System.Windows
             }
 
             ResourcePart part = GetResourceOrContentPart(uriResource) as ResourcePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetStream(), part.ContentType);
+            return (part == null) ? null : new StreamResourceInfo(PackagingUtilities.GetSeekablePackagePartStream(part), part.ContentType);
         }
 
         /// <summary>
@@ -656,7 +656,7 @@ namespace System.Windows
             }
 
             ContentFilePart part = GetResourceOrContentPart(uriContent) as ContentFilePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetStream(), part.ContentType);
+            return (part == null) ? null : new StreamResourceInfo(PackagingUtilities.GetSeekablePackagePartStream(part), part.ContentType);
         }
 
         /// <summary>
@@ -714,7 +714,7 @@ namespace System.Windows
             {
                 try
                 {
-                    stream = sooPart.GetStream();
+                    stream = PackagingUtilities.GetSeekablePackagePartStream(sooPart);
 
                     if (stream == null)
                     {

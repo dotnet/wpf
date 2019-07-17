@@ -157,7 +157,7 @@ namespace MS.Internal.IO.Packaging
                                 result = false;     // content type mismatch
                                 break;
                             }
-                            s = part.GetStream(FileMode.Open, FileAccess.Read);
+                            s = part.GetSeekableStream(FileMode.Open, FileAccess.Read);
                         }
 
                         using (s)
@@ -609,7 +609,7 @@ namespace MS.Internal.IO.Packaging
                 // Load the XML
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.PreserveWhitespace = true;
-                using (Stream s = SignaturePart.GetStream())
+                using (Stream s = SignaturePart.GetSeekableStream())
                 {
                     using (XmlTextReader xmlReader = new XmlTextReader(s))
                     {
@@ -937,7 +937,7 @@ namespace MS.Internal.IO.Packaging
         private void UpdatePartFromSignature(Signature sig)
         {
             // write to stream
-            using (Stream s = SignaturePart.GetStream(FileMode.Create, FileAccess.Write))
+            using (Stream s = SignaturePart.GetSeekableStream(FileMode.Create, FileAccess.Write))
             {
                 using (XmlTextWriter xWriter = new XmlTextWriter(s, System.Text.Encoding.UTF8))
                 {

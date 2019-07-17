@@ -222,7 +222,7 @@ namespace System.Windows.Documents
                     PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                     // Write the part's content
-                    Stream xamlPartStream = xamlEntryPart.GetStream();
+                    Stream xamlPartStream = PackagingUtilities.GetSeekablePackagePartStream(xamlEntryPart);
                     using (xamlPartStream)
                     {
                         StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -262,7 +262,7 @@ namespace System.Windows.Documents
                 PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                 // Write the part's content
-                Stream xamlPartStream = xamlEntryPart.GetStream();
+                Stream xamlPartStream = PackagingUtilities.GetSeekablePackagePartStream(xamlEntryPart);
                 using (xamlPartStream)
                 {
                     StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -345,7 +345,7 @@ namespace System.Windows.Documents
 
                     // Call xaml parser
                     bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                    xamlObject = XamlReader.Load(xamlEntryPart.GetStream(), parserContext, useRestrictiveXamlReader);
+                    xamlObject = XamlReader.Load(PackagingUtilities.GetSeekablePackagePartStream(xamlEntryPart), parserContext, useRestrictiveXamlReader);
 
                     // Remove the temporary uri from the PackageStore
                     PackageStore.RemovePackage(packageUri);
@@ -485,7 +485,7 @@ namespace System.Windows.Documents
             bitmapEncoder.Frames.Add(BitmapFrame.Create(imageSource));
 
             // Save encoded image data into the image part in the package
-            Stream imageStream = imagePart.GetStream();
+            Stream imageStream = PackagingUtilities.GetSeekablePackagePartStream(imagePart);
             using (imageStream)
             {
                 bitmapEncoder.Save(imageStream);
@@ -693,7 +693,7 @@ namespace System.Windows.Documents
             PackagePart part = this.CreateWpfEntryPart();
 
             // Return a stream opened for writing an image data
-            return part.GetStream();
+            return PackagingUtilities.GetSeekablePackagePartStream(part);
         }
 
         internal Stream CreateImageStream(int imageCount, string contentType, out string imagePartUriString)
@@ -715,7 +715,7 @@ namespace System.Windows.Documents
             imagePartUriString = GetImageReference(imagePartUriString);
 
             // Return a stream opened for writing an image data
-            return imagePart.GetStream();
+            return PackagingUtilities.GetSeekablePackagePartStream(imagePart);
         }
 
         internal Stream GetImageStream(string imageSourceString)

@@ -378,7 +378,7 @@ namespace MS.Internal.IO.Packaging
                             _currentFilter = GetFilterFromClsid(new Guid(filterClsid));
                             if (_currentFilter != null)
                             {
-                                _currentStream = currentPart.GetStream();
+                                _currentStream = PackagingUtilities.GetSeekablePackagePartStream(currentPart);
                                 ManagedIStream stream = new ManagedIStream(_currentStream);
                                 try
                                 {
@@ -415,7 +415,7 @@ namespace MS.Internal.IO.Packaging
                         {
                             if (_currentStream == null)
                             {
-                                _currentStream = currentPart.GetStream();
+                                _currentStream = PackagingUtilities.GetSeekablePackagePartStream(currentPart);
                             }
 
                             IndexingFilterMarshaler xamlFilterMarshaler

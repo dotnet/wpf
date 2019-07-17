@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup>
     <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
+    <EnableDefaultPageItems Condition="'$(EnableDefaultPageItems)' == ''">true</EnableDefaultPageItems> 
+    <EnableDefaultApplicationDefinition Condition="'$(EnableDefaultApplicationDefinition)' == ''">true</EnableDefaultApplicationDefinition>
   </PropertyGroup>
 
   <PropertyGroup>

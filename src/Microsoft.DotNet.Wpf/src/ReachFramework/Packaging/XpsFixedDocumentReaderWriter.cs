@@ -1128,21 +1128,20 @@ namespace System.Windows.Xps.Packaging
             {
                 sigDefPart = CurrentXpsManager.AddSignatureDefinitionPart( _metroPart );
             }
-            Stream stream = sigDefPart.GetStream(FileMode.Create);
-            XmlTextWriter writer = new XmlTextWriter(
-                stream,
-                System.Text.Encoding.UTF8
-                );
-            writer.WriteStartDocument();
-            writer.WriteStartElement( XpsS0Markup.SignatureDefinitions,
-            XpsS0Markup.SignatureDefinitionNamespace);
-            foreach( XpsSignatureDefinition sigDef in _signatureDefinitions )
+
+            using (Stream stream = sigDefPart.GetStream(FileMode.Create))
+            using (XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8))
             {
-                sigDef.WriteXML( writer );
+                writer.WriteStartDocument();
+                writer.WriteStartElement(XpsS0Markup.SignatureDefinitions,
+                XpsS0Markup.SignatureDefinitionNamespace);
+                foreach (XpsSignatureDefinition sigDef in _signatureDefinitions)
+                {
+                    sigDef.WriteXML(writer);
+                }
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
-            writer.Close();
-            stream.Close();
+
             _sigCollectionDirty = false;
         }
 

@@ -7,10 +7,10 @@
   "description": "A project for creating a class library that targets a .NET Core WPF Application",
   "groupIdentity": "Microsoft.Common.WPF.Library",
   "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.Library.CSharp.3.0",
+  "identity": "Microsoft.Common.WPF.Library.VisualBasic.3.0",
   "shortName": "wpflib",
   "tags": {
-    "language": "C#",
+    "language": "VB",
     "type": "project"
   },
   "sourceName": "Company.ClassLibrary1",
@@ -58,7 +58,7 @@
     { "path": "Company.ClassLibrary1.csproj" },
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "path": "Class1.cs"
+      "path": "Class1.vb"
     }
   ],
   "defaultName": "WpfLibrary1",

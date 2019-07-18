@@ -251,7 +251,7 @@ namespace System.IO.Packaging
 
                     PackagePart p = c.GetPart(_partName);
 
-                    Stream s = PackagingUtilities.GetSeekablePackagePartStream(p, FileMode.Open, FileAccess.Read);
+                    Stream s = p.GetSeekableStream(FileMode.Open, FileAccess.Read);
 
                     _mimeType = new MS.Internal.ContentType(p.ContentType);      // save this for use in ContentType property - may still be null
                     _fullStreamLength = s.Length;   // just this stream
@@ -649,7 +649,7 @@ namespace System.IO.Packaging
                                         System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
                                         "CachedResponse - Getting part stream ");
 #endif
-                            Stream s = PackagingUtilities.GetSeekablePackagePartStream(p, FileMode.Open, FileAccess.Read);
+                            Stream s = p.GetSeekableStream(FileMode.Open, FileAccess.Read);
 
                             // Unless package is thread-safe, wrap the returned stream so that
                             // package access is serialized

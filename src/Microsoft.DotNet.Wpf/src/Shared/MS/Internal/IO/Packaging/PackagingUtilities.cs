@@ -475,37 +475,6 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        internal static Stream GetSeekablePackagePartStream(PackagePart packPart)
-        {
-            return GetSeekablePackagePartStream(packPart, FileMode.OpenOrCreate, packPart.Package.FileOpenAccess);
-        }
-
-        internal static Stream GetSeekablePackagePartStream(PackagePart packPart, FileMode mode)
-        {
-            return GetSeekablePackagePartStream(packPart, mode, packPart.Package.FileOpenAccess);
-        }
-
-        internal static Stream GetSeekablePackagePartStream(PackagePart packPart, FileMode mode, FileAccess access)
-        {
-            var packStream = packPart.GetStream(mode, access);
-
-            // If the stream returned is seekable it meets all requirements and can be used directly.
-            if(packStream.CanSeek)
-            {
-                return packStream;
-            }
-
-            // Non-seekable streams need to be copied out into memory so they are seekable.
-            using (packStream)
-            {
-                var seekableStream = new MemoryStream((int)packStream.Length);
-
-                packStream.CopyTo(seekableStream);
-            }
-
-            return seekableStream;
-        }
-
         #endregion Internal Methods
 
         //------------------------------------------------------

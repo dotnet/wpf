@@ -10,7 +10,7 @@
   "identity": "Microsoft.Common.WPF.Control.VisualBasic.3.0",
   "shortName": "wpfcontrollib",
   "tags": {
-    "language": "C#",
+    "language": "VB",
     "type": "project"
   },
   "sourceName": "Company.WpfControlLibrary",

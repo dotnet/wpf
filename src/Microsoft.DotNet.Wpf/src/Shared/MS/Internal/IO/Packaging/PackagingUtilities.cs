@@ -13,7 +13,6 @@
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.IO.Packaging;
 using MS.Internal.WindowsBase;  // FriendAccessAllowed
 using System.Xml;               // For XmlReader
 using System.Diagnostics;       // For Debug.Assert

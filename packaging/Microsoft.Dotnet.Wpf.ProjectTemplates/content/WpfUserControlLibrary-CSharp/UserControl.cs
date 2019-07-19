@@ -22,7 +22,6 @@ namespace Company.WpfControlLibrary
     {
         public UserControl1()
         {
-            InitializeComponent();
         }
     }
 }

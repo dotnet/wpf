@@ -2882,6 +2882,10 @@ namespace System.Windows
                     // * Out of these, we will disallow deserialization of 
                     // DataFormats.StringFormat to prevent potentially malicious objects from
                     // being deserialized as part of a "text" copy-paste or drag-drop.
+                    // TypeRestrictingSerializationBinder will throw when it encounters 
+                    // anything other than strings and primitives - this ensures that we will
+                    // continue successfully deserializing basic strings while rejecting other 
+                    // data types that advertise themselves as DataFormats.StringFormat.
                     // 
                     // The rest of the following formats are pre-defined in the OS, 
                     // they are not managed objects - an so we will not attempt to deserialize them. 

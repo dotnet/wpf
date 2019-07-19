@@ -8,7 +8,7 @@
   "groupIdentity": "Microsoft.Common.WPF.Control",
   "precedence": "3000",
   "identity": "Microsoft.Common.WPF.Control.VisualBasic.3.0",
-  "shortName": "wpfcontrollib",
+  "shortName": "wpfusercontrollib",
   "tags": {
     "language": "VB",
     "type": "project"

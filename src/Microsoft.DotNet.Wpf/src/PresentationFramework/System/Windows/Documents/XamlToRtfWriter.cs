@@ -2019,18 +2019,13 @@ namespace System.Windows.Documents
             // Read the image binary data from WpfPayLoad that contains Xaml and Images.
             // Xaml content have the image source like as "./Image1.png" so that we can
             // query the image from the container of WpfPayLoad with the image source name.
-            Stream imageStream = _wpfPayload.GetImageStream(documentNode.FormatState.ImageSource);
-
-            // Get image type to be added to rtf content
-            RtfImageFormat imageFormat = GetImageFormatFromImageSourceName(documentNode.FormatState.ImageSource);
-
-            // Write the shape image like as "\pngblip" or "\jpegblip" rtf control. We wrap the stream that comes
-            // from the package because we require the stream to be seekable.
-            Debug.Assert(!imageStream.CanSeek);
-            using (var seekableStream = new MemoryStream((int)imageStream.Length))
+            using (Stream imageStream = _wpfPayload.GetImageStream(documentNode.FormatState.ImageSource))
             {
-                imageStream.CopyTo(seekableStream);
-                WriteShapeImage(documentNode, seekableStream, imageFormat);
+                // Get image type to be added to rtf content
+                RtfImageFormat imageFormat = GetImageFormatFromImageSourceName(documentNode.FormatState.ImageSource);
+
+                // Write the shape image like as "\pngblip" or "\jpegblip" rtf control.
+                WriteShapeImage(documentNode, imageStream, imageFormat);
             }
 
 #if WindowsMetaFile

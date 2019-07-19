@@ -1,6 +1,3 @@
-Imports System.Windows
-Imports System.Windows.Controls
-
 Public Class CustomControl1
     Inherits Control
 

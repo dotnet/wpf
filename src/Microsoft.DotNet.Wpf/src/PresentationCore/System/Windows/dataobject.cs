@@ -2863,7 +2863,7 @@ namespace System.Windows
                     {
                         data = ReadBitmapSourceFromHandle(hglobal);
                     }
-                    // Limit deserialization to only primitive types, which consist of the following:
+                    // Limit deserialization to DataFormats that correspond to primitives, which are:
                     //
                     // DataFormats.CommaSeparatedValue
                     // DataFormats.FileDrop
@@ -2877,9 +2877,9 @@ namespace System.Windows
                     // DataFormats.WaveAudio
                     // DataFormats.Xaml
                     // DataFormats.XamlPackage 
-                    // DataFormats.StringFormat
+                    // DataFormats.StringFormat *
                     // 
-                    // Out of these primitive types, we will disallow deserialization of 
+                    // * Out of these, we will disallow deserialization of 
                     // DataFormats.StringFormat to prevent potentially malicious objects from
                     // being deserialized as part of a "text" copy-paste or drag-drop.
                     // 

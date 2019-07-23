@@ -491,17 +491,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         /// <summary>
-        /// Determines whether the legacy dangerous clipboard deserialization mode should be used based on the AppContext switch and Device Guard policies.
-        /// </summary>
-        /// <returns>
-        /// If Device Guard is enabled this method returns false, otherwise it returns the AppContext switch value.
-        /// </returns>
-        internal static bool UseLegacyDangerousClipboardDeserializationMode()
-        {
-            return !IsDeviceGuardEnabled && CoreAppContextSwitches.EnableLegacyDangerousClipboardDeserializationMode;
-        }
-
-        /// <summary>
         /// Places data on the system Clipboard and uses copy to specify whether the data 
         /// should remain on the Clipboard after the application exits.
         /// </summary>

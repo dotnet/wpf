@@ -150,7 +150,9 @@ namespace System.Windows.Automation.Peers
                     if (itemsHost == null)
                     {
                         if (_expanderPeer == null)
+                        {
                             return null;
+                        }
                         else
                         {
                             children.Add(_expanderPeer);

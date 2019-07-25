@@ -131,7 +131,7 @@ namespace MS.Internal.IO.Packaging
             Byte[] byteArray = _certificate.GetRawCertData();
 
             // FileMode.Create will ensure that the stream will shrink if overwritten
-            using (Stream s = _part.GetStream(FileMode.Create, FileAccess.Write))
+            using (Stream s = _part.GetSeekableStream(FileMode.Create, FileAccess.Write))
             {
                 s.Write(byteArray, 0, byteArray.Length);
             }

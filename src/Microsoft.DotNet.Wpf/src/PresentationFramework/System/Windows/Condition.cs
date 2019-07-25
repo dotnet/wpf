@@ -50,12 +50,12 @@ namespace System.Windows
         /// </remarks>
         public Condition( DependencyProperty conditionProperty, object conditionValue, string sourceName )
         {
-            if( conditionProperty == null )
+            if(conditionProperty == null)
             {
-                throw new ArgumentNullException("conditionProperty");
+                throw new ArgumentNullException(nameof(conditionProperty));
             }
 
-            if( !conditionProperty.IsValidValue( conditionValue ) )
+            if(!conditionProperty.IsValidValue(conditionValue))
             {
                 throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, conditionValue, conditionProperty.Name));
             }
@@ -71,9 +71,9 @@ namespace System.Windows
         /// </summary>
         public Condition( BindingBase binding, object conditionValue )
         {
-            if( binding == null )
+            if(binding == null)
             {
-                throw new ArgumentNullException("binding");
+                throw new ArgumentNullException(nameof(binding));
             }
 
             Binding = binding;
@@ -118,7 +118,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
                 }
 
-                if( _property != null )
+                if(_property != null)
                 {
                     throw new InvalidOperationException(SR.Get(SRID.ConditionCannotUseBothPropertyAndBinding));
                 }
@@ -147,7 +147,7 @@ namespace System.Windows
                                                        value.GetType().Name));
                 }
 
-                if( value is Expression )
+                if(value is Expression)
                 {
                     throw new ArgumentException(SR.Get(SRID.ConditionValueOfExpressionNotSupported));
                 }
@@ -171,7 +171,7 @@ namespace System.Windows
             }
             set
             {
-                if( _sealed )
+                if(_sealed)
                 {
                     throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
                 }
@@ -271,11 +271,11 @@ namespace System.Windows
         {
             if (targetObject == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
             if (eventArgs == null)
             {
-                throw new ArgumentNullException("eventArgs");
+                throw new ArgumentNullException(nameof(eventArgs));
             }
 
             Condition condition = targetObject as Condition;
@@ -292,11 +292,11 @@ namespace System.Windows
             Condition condition = targetObject as Condition;
             if (condition == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
             if (eventArgs == null)
             {
-                throw new ArgumentNullException("eventArgs");
+                throw new ArgumentNullException(nameof(eventArgs));
             }
 
             if (eventArgs.Member.Name == "Property")

@@ -84,7 +84,7 @@ namespace System.Windows.Media
         {
             if (parent == null)
             {
-                throw new ArgumentNullException("parent");
+                throw new ArgumentNullException(nameof(parent));
             }
             _owner = parent;
         }
@@ -193,7 +193,7 @@ namespace System.Windows.Media
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (array.Rank != 1)
@@ -204,7 +204,7 @@ namespace System.Windows.Media
             if ((index < 0) ||
                 (array.Length - index < _size))
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
@@ -227,13 +227,13 @@ namespace System.Windows.Media
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if ((index < 0) ||
                 (array.Length - index < _size))
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
@@ -279,7 +279,7 @@ namespace System.Windows.Media
                 {
                     if (value < _size)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.Get(SRID.VisualCollection_NotEnoughCapacity));
+                        throw new ArgumentOutOfRangeException(nameof(value), SR.Get(SRID.VisualCollection_NotEnoughCapacity));
                     }
                     if (value > 0)
                     {
@@ -353,7 +353,7 @@ namespace System.Windows.Media
                 // get methods
 
 #pragma warning disable 6503
-                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException("index");
+                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException(nameof(index));
                 return _items[index];
 #pragma warning restore 6503
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Media
             {
                 VerifyAPIReadWrite(value);
 
-                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException("index");
+                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException(nameof(index));
 
                 Visual child = _items[index];
 
@@ -721,7 +721,7 @@ namespace System.Windows.Media
 
             if (index < 0 || index > _size)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             if ((visual != null) &&
@@ -773,7 +773,7 @@ namespace System.Windows.Media
 
             if (index < 0 || index >= _size)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             InternalRemove(_items[index]);
@@ -806,15 +806,15 @@ namespace System.Windows.Media
             // Do we really need this extra check index >= _size.
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
             if (_size - index < count)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             if (count > 0)

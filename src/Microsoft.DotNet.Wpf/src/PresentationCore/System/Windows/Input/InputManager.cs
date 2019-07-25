@@ -40,9 +40,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Return the input manager associated with the current context.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static InputManager Current
         {
             get
@@ -180,10 +177,6 @@ namespace System.Windows.Input
             _inputTimer.Interval = TimeSpan.FromMilliseconds(125);
         }
 
-        /// <summary></summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public event PreProcessInputEventHandler PreProcessInput
         {
             add
@@ -196,11 +189,6 @@ namespace System.Windows.Input
             }
         }
 
-
-        /// <summary></summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public event NotifyInputEventHandler PreNotifyInput
         {
             add
@@ -212,10 +200,6 @@ namespace System.Windows.Input
                 _preNotifyInput -= value;
             }
 }
-        /// <summary></summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public event NotifyInputEventHandler PostNotifyInput
         {
             add
@@ -228,10 +212,6 @@ namespace System.Windows.Input
 }
         }
 
-        /// <summary></summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public event ProcessInputEventHandler PostProcessInput
         {
             add
@@ -300,9 +280,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns a collection of input providers registered with the input manager.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public ICollection InputProviders
         {
             get
@@ -568,7 +545,6 @@ namespace System.Windows.Input
         ///     The specified input is processed by all of the filters and
         ///     monitors, and is finally dispatched to the appropriate
         ///     element as an input event.
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
         /// <returns>
         ///     Whether or not any event generated as a consequence of this

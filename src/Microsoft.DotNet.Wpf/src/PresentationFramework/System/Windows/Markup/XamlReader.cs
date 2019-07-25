@@ -79,7 +79,7 @@ namespace System.Windows.Markup
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             return Load(stream, null);
@@ -95,7 +95,7 @@ namespace System.Windows.Markup
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             return Load(reader, null, XamlParseMode.Synchronous);
@@ -112,7 +112,7 @@ namespace System.Windows.Markup
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             if (parserContext == null)
             {
@@ -134,9 +134,9 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream)
         {
-            if (null == stream)
+            if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             _stream = stream;
 
@@ -161,9 +161,9 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(XmlReader reader)
         {
-            if (null == reader)
+            if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             return LoadAsync(reader, null);
@@ -182,9 +182,9 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream, ParserContext parserContext)
         {
-            if (null == stream)
+            if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             _stream = stream;
 
@@ -220,7 +220,7 @@ namespace System.Windows.Markup
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (parserContext == null)
@@ -682,7 +682,7 @@ namespace System.Windows.Markup
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             if (parserContext == null)
             {
@@ -705,7 +705,7 @@ namespace System.Windows.Markup
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             return Load(reader, null, XamlParseMode.Synchronous, useRestrictiveXamlReader);
@@ -879,7 +879,7 @@ namespace System.Windows.Markup
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
             object root = null;
             try

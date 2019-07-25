@@ -1613,13 +1613,17 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
-        <source>'{0}' does not exist.\r\nDo you want to create it?</source>
-        <target state="translated">'{0}' non esiste.\r\nCrearlo?</target>
+        <source>'{0}' does not exist.
+Do you want to create it?</source>
+        <target state="translated">'{0}' non esiste.
+Crearlo?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
-        <source>'{0}' does not exist.\r\nVerify that the file name is correct.</source>
-        <target state="translated">'{0}' non esiste.\r\nVerificare che il nome file sia corretto.</target>
+        <source>'{0}' does not exist.
+Verify that the file name is correct.</source>
+        <target state="translated">'{0}' non esiste.
+Verificare che il nome file sia corretto.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -1638,8 +1642,10 @@
         <note />
       </trans-unit>
       <trans-unit id="FileDialogOverwritePrompt">
-        <source>'{0}' already exists.\r\nDo you want to replace it?</source>
-        <target state="translated">'{0}' già esistente.\r\nSostituirlo?</target>
+        <source>'{0}' already exists.
+Do you want to replace it?</source>
+        <target state="translated">'{0}' già esistente.
+Sostituirlo?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogSubClassFailure">

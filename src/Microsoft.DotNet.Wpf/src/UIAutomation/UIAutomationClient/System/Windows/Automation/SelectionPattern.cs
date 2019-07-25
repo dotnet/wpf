@@ -215,11 +215,6 @@ namespace System.Windows.Automation
             /// Get the currently selected elements
             /// </summary>
             /// <returns>An AutomationElement array containing the currently selected elements</returns>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public AutomationElement[] GetSelection()
             {
                 return (AutomationElement[])_el.GetPatternPropertyValue(SelectionProperty, _useCache);
@@ -240,11 +235,6 @@ namespace System.Windows.Automation
             /// </summary>
             /// <returns>Boolean indicating whether the control allows more than one element to be selected</returns>
             /// <remarks>If this is false, then the control is a single-select ccntrol</remarks>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanSelectMultiple
             {
                 get
@@ -258,11 +248,6 @@ namespace System.Windows.Automation
             /// </summary>
             /// <returns>Boolean indicating whether the control requires at least one element to be selected</returns>
             /// <remarks>If this is false, then the control allows all elements to be unselected</remarks>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsSelectionRequired
             {
                 get

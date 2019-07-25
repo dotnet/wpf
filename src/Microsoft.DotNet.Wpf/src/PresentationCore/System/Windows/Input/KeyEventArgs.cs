@@ -51,9 +51,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     The input source that provided this input.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public PresentationSource InputSource
         {
             get 

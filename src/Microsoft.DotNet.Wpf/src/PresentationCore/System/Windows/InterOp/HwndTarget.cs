@@ -2631,9 +2631,6 @@ namespace System.Windows.Interop
             /// <summary>
             ///     Handles the messages for the notification window
             /// </summary>
-            /// <SecurityNode>
-            ///     Critical: Elevates permissions via unsafe native methods
-            /// </SecurityNode>
             private IntPtr NotificationFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
             {
                 IntPtr retInt = IntPtr.Zero;

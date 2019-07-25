@@ -63,11 +63,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Blocking method that returns after the element has been expanded
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Expand()
         {
             UiaCoreApi.ExpandCollapsePattern_Expand(_hPattern);
@@ -76,11 +71,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Blocking method that returns after the element has been collapsed
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Collapse()
         {
             UiaCoreApi.ExpandCollapsePattern_Collapse(_hPattern);
@@ -220,11 +210,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             ///<summary>indicates an element's current Collapsed or Expanded state</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public ExpandCollapseState ExpandCollapseState
             {
                 get

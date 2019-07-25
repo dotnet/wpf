@@ -1158,6 +1158,15 @@ namespace System.Windows.Media
         private struct MILColorF // this structure is the "milrendertypes.h" structure and should be identical for performance
         {
             public float a, r, g, b;
+
+            public override int GetHashCode()
+            {
+                return a.GetHashCode() ^ r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
+            }
+            public override bool Equals(object obj)
+            {
+                return base.Equals(obj);
+            }
         };
 
         private MILColorF scRgbColor;

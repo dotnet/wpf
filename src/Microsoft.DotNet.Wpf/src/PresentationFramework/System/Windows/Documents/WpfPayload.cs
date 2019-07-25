@@ -21,6 +21,7 @@
 namespace System.Windows.Documents
 {
     using MS.Internal; // Invariant
+    using MS.Internal.IO.Packaging;
     using System;
     using System.Xml;
     using System.Windows.Markup; // TypeConvertContext, ParserContext
@@ -221,7 +222,7 @@ namespace System.Windows.Documents
                     PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                     // Write the part's content
-                    Stream xamlPartStream = xamlEntryPart.GetStream();
+                    Stream xamlPartStream = xamlEntryPart.GetSeekableStream();
                     using (xamlPartStream)
                     {
                         StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -261,7 +262,7 @@ namespace System.Windows.Documents
                 PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                 // Write the part's content
-                Stream xamlPartStream = xamlEntryPart.GetStream();
+                Stream xamlPartStream = xamlEntryPart.GetSeekableStream();
                 using (xamlPartStream)
                 {
                     StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -334,8 +335,8 @@ namespace System.Windows.Documents
                     // Uniqueness is required to make sure that cached images are not mixed up.
                     int newWpfPayoutCount = Interlocked.Increment(ref _wpfPayloadCount);
                     Uri payloadUri = new Uri("payload://wpf" + newWpfPayoutCount, UriKind.Absolute);
-                    Uri entryPartUri = PackUriHelper.Create(payloadUri, xamlEntryPart.Uri); // gives an absolute uri of the entry part
-                    Uri packageUri = PackUriHelper.GetPackageUri(entryPartUri); // extracts package uri from combined package+part uri
+                    Uri entryPartUri = System.IO.Packaging.PackUriHelper.Create(payloadUri, xamlEntryPart.Uri); // gives an absolute uri of the entry part
+                    Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(entryPartUri); // extracts package uri from combined package+part uri
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
 
                     // Set this temporary uri as a base uri for xaml parser
@@ -343,8 +344,7 @@ namespace System.Windows.Documents
                     parserContext.BaseUri = entryPartUri;
 
                     // Call xaml parser
-                    bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                    xamlObject = XamlReader.Load(xamlEntryPart.GetStream(), parserContext, useRestrictiveXamlReader);
+                    xamlObject = XamlReader.Load(xamlEntryPart.GetSeekableStream(), parserContext, useRestrictiveXamlReader: true);
 
                     // Remove the temporary uri from the PackageStore
                     PackageStore.RemovePackage(packageUri);
@@ -484,7 +484,7 @@ namespace System.Windows.Documents
             bitmapEncoder.Frames.Add(BitmapFrame.Create(imageSource));
 
             // Save encoded image data into the image part in the package
-            Stream imageStream = imagePart.GetStream();
+            Stream imageStream = imagePart.GetSeekableStream();
             using (imageStream)
             {
                 bitmapEncoder.Save(imageStream);
@@ -692,7 +692,7 @@ namespace System.Windows.Documents
             PackagePart part = this.CreateWpfEntryPart();
 
             // Return a stream opened for writing an image data
-            return part.GetStream();
+            return part.GetSeekableStream();
         }
 
         internal Stream CreateImageStream(int imageCount, string contentType, out string imagePartUriString)
@@ -714,7 +714,7 @@ namespace System.Windows.Documents
             imagePartUriString = GetImageReference(imagePartUriString);
 
             // Return a stream opened for writing an image data
-            return imagePart.GetStream();
+            return imagePart.GetSeekableStream();
         }
 
         internal Stream GetImageStream(string imageSourceString)
@@ -723,7 +723,7 @@ namespace System.Windows.Documents
             imageSourceString = imageSourceString.Substring(1); // cut the leading dot out
             Uri imagePartUri = new Uri(XamlPayloadDirectory + imageSourceString, UriKind.Relative);
             PackagePart imagePart = _package.GetPart(imagePartUri);
-            return imagePart.GetStream();
+            return imagePart.GetSeekableStream();
         }
 
         // -------------------------------------------------------------

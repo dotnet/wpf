@@ -115,7 +115,7 @@ namespace System.Windows.Media.Animation
 
             if (child == null)
             {
-                throw new ArgumentNullException("child");
+                throw new ArgumentNullException(nameof(child));
             }
 
             AddChild(child);
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Animation
 
             if (timelineChild == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_ChildMustBeTimeline), "child");
+                throw new ArgumentException(SR.Get(SRID.Timing_ChildMustBeTimeline), nameof(child));
             }
             else
             {
@@ -180,7 +180,7 @@ namespace System.Windows.Media.Animation
 
             if (childText == null)
             {
-                throw new ArgumentNullException("childText");
+                throw new ArgumentNullException(nameof(childText));
             }
 
             AddText(childText);

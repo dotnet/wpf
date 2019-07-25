@@ -26,4 +26,4 @@ if ($ci) {
 # Always generate binary logs
 $binaryLog = $true
 $DoNotAbortNativeToolsInstallationOnFailure = $true
-
+$DoNotDisplayNativeToolsInstallationWarnings =$true

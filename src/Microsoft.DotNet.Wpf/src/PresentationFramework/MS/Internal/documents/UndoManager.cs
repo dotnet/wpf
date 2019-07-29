@@ -104,12 +104,12 @@ namespace MS.Internal.Documents
         {
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             if (undoManager == null)
             {
-                throw new ArgumentNullException("undoManager");
+                throw new ArgumentNullException(nameof(undoManager));
             }
 
             if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
@@ -146,7 +146,7 @@ namespace MS.Internal.Documents
 
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             // Detach existing undo service if any
@@ -212,7 +212,7 @@ namespace MS.Internal.Documents
 
             if (unit == null)
             {
-                throw new ArgumentNullException("unit");
+                throw new ArgumentNullException(nameof(unit));
             }
 
             deepestOpen = DeepestOpenUnit;
@@ -264,7 +264,7 @@ namespace MS.Internal.Documents
 
             if (unit == null)
             {
-                throw new ArgumentNullException("unit");
+                throw new ArgumentNullException(nameof(unit));
             }
 
             if (OpenedUnit != null)
@@ -343,7 +343,7 @@ namespace MS.Internal.Documents
 
             if (unit == null)
             {
-                throw new ArgumentNullException("unit");
+                throw new ArgumentNullException(nameof(unit));
             }
 
             if (OpenedUnit == null)
@@ -365,7 +365,7 @@ namespace MS.Internal.Documents
 
                 if (closeParent.OpenedUnit == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.UndoUnitNotFound), "unit");
+                    throw new ArgumentException(SR.Get(SRID.UndoUnitNotFound), nameof(unit));
                 }
 
                 closeParent.Close(closeAction);
@@ -439,7 +439,7 @@ namespace MS.Internal.Documents
 
             if (unit == null)
             {
-                throw new ArgumentNullException("unit");
+                throw new ArgumentNullException(nameof(unit));
             }
 
             parent = DeepestOpenUnit;
@@ -540,7 +540,7 @@ namespace MS.Internal.Documents
 
             if (count > UndoCount || count <= 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             if (State != UndoState.Normal)
@@ -607,7 +607,7 @@ namespace MS.Internal.Documents
 
             if (count > RedoStack.Count || count <= 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             if (State != UndoState.Normal)

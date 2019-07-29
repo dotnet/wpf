@@ -50,9 +50,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the input event.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public InputEventArgs Input
         {
             get {return _input;}
@@ -83,9 +80,6 @@ namespace System.Windows.Input
         /// <param name="value">
         ///     The data to set for this key.  This can be null.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public void SetData(object key, object value)
         {
             _dictionary[key] = value;

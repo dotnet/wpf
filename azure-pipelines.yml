@@ -14,16 +14,36 @@ variables:
   _PublishUsingPipelines: true
   _DotNetArtifactsCategory: WINDOWSDESKTOP
 
+# This is set in the pipeline directly 
+# When set to false, CI tests will not be enabled in builds. 
+#
+# _ContinuousIntegrationTestsEnabled: false
+
+# Setting batch to true, triggers one build at a time.
+# if there is a push while a build in progress, it will wait,
+# until the running build finishes, and produce a build with all the changes
+#
 # only trigger ci builds for the master and release branches
 trigger:
-- master
-- release/3.0
-- arcade
+  batch: true 
+  branches:
+    include: 
+    - master
+    - release/3.0
+    # - arcade
+  paths:
+    exclude:
+    - Documentation/*
 
-# To be added in the future when VSTS supports this feature
-# only trigger pull request builds for the master branch
-# pr:
-# - master
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - master
+    - release/3.0
+  paths:
+    exclude:
+    - Documentation/*
 
 # Call the pipeline.yml template, which does the real work
 jobs:

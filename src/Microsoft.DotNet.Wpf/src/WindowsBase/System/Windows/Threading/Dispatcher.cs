@@ -243,9 +243,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Begins the process of shutting down the dispatcher.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public void InvokeShutdown()
         {
 
@@ -295,7 +292,6 @@ namespace System.Windows.Threading
         /// </summary>
         /// <remarks>
         ///     This frame will continue until the dispatcher is shut down.
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
         public static void Run()
         {
@@ -308,9 +304,6 @@ namespace System.Windows.Threading
         /// <param name="frame">
         ///     The frame for the dispatcher to process.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static void PushFrame(DispatcherFrame frame)
         {
             if(frame == null)
@@ -340,9 +333,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Requests that all nested frames exit.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public static void ExitAllFrames()
         {
 
@@ -1598,7 +1588,6 @@ namespace System.Windows.Threading
         ///     <p/>
         ///     This method is public so that any thread can probe to
         ///     see if it has access to the DispatcherObject.
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
         /// <returns>
         ///     True if the calling thread has access to this object.
@@ -1637,7 +1626,6 @@ namespace System.Windows.Threading
         ///     creating secondary exceptions and to catch any that occur.
         ///     It is recommended to avoid allocating memory or doing any
         ///     heavylifting if possible.
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
         /// </remarks>
         public event DispatcherUnhandledExceptionFilterEventHandler UnhandledExceptionFilter
         {
@@ -1849,11 +1837,6 @@ namespace System.Windows.Threading
                 // Because we may have to defer the actual shutting-down until
                 // later, we need to remember the execution context we started
                 // the shutdown from.
-                //
-                // Note that we demanded permissions when BeginInvokeShutdown
-                // or InvokeShutdown were called.  So if there were not enough
-                // permissions, we would have thrown then.
-                //
                 CulturePreservingExecutionContext shutdownExecutionContext = CulturePreservingExecutionContext.Capture();
                 _shutdownExecutionContext = new SecurityCriticalDataClass<CulturePreservingExecutionContext>(shutdownExecutionContext);
 

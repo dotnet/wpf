@@ -454,6 +454,15 @@ internal struct MilColorF
     internal float g;
     internal float b;
     internal float a;
+
+    public override int GetHashCode()
+    {
+        return a.GetHashCode() ^ r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
+    }
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }
 };
 
 /// <summary>

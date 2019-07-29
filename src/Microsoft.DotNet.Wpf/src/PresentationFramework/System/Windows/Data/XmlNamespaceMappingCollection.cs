@@ -72,7 +72,7 @@ namespace System.Windows.Data
         protected virtual void AddText(string text)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -88,10 +88,10 @@ namespace System.Windows.Data
         public void Add(XmlNamespaceMapping mapping)
         {
             if (mapping == null)
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), "mapping");
+                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
 
             // BUG 983685: change this to take Uri when AddNamespace is fixed to use Uri instead of String.
             // SECURITY: this workaround (passing the original string) defeats the security benefits of using Uri.
@@ -123,10 +123,10 @@ namespace System.Windows.Data
         public bool Contains(XmlNamespaceMapping mapping)
         {
             if (mapping == null)
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), "mapping");
+                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
 
             return (this.LookupNamespace(mapping.Prefix) == mapping.Uri.OriginalString);
         }
@@ -137,14 +137,14 @@ namespace System.Windows.Data
         public void CopyTo(XmlNamespaceMapping[] array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
 
             int i = arrayIndex;
             int maxLength = array.Length;
             foreach (XmlNamespaceMapping mapping in this)
             {
                 if (i >= maxLength)
-                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, "arrayIndex", "array"));
+                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, nameof(arrayIndex), nameof(array)));
                 array[i] = mapping;
                 ++ i;
             }
@@ -160,10 +160,10 @@ namespace System.Windows.Data
         public bool Remove(XmlNamespaceMapping mapping)
         {
             if (mapping == null)
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), "mapping");
+                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
 
             if (Contains(mapping))
             {

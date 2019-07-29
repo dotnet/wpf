@@ -923,8 +923,7 @@ namespace System.Windows.Documents
                 try
                 {
                     // Parse the fragment into a separate subtree
-                    bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader);
+                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader: true);
                     TextElement flowContent = xamlObject as TextElement;
 
                     success = flowContent == null ? false : PasteTextElement(This, flowContent);

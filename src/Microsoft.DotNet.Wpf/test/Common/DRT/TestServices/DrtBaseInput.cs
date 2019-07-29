@@ -371,6 +371,7 @@ namespace DRT
         public const int KEYEVENTF_UNICODE = 0x0004;
         public const int KEYEVENTF_SCANCODE = 0x0008;
 
+        public const int MOUSEEVENTF_MOVE_NOCOALESCE = 0x2000;
         public const int MOUSEEVENTF_VIRTUALDESK = 0x4000;
 
         public const int INPUT_MOUSE = 0;
@@ -484,6 +485,12 @@ namespace DRT
                 intflags |= InternalNativeMethods.MOUSEEVENTF_VIRTUALDESK;
             }
 
+            // don't coalesce mouse moves - tests expect to see the results immediately
+            if ((intflags & (int)SendMouseInputFlags.Move) != 0)
+            {
+                intflags |= InternalNativeMethods.MOUSEEVENTF_MOVE_NOCOALESCE;
+            }
+
             InternalUnsafeNativeMethods.INPUT mi = new InternalUnsafeNativeMethods.INPUT();
             mi.type = InternalNativeMethods.INPUT_MOUSE;
             mi.union.mouseInput.dx = (int)x;
@@ -495,6 +502,14 @@ namespace DRT
             //Console.WriteLine("Sending");
             if ( InternalUnsafeNativeMethods.SendInput( 1, ref mi, Marshal.SizeOf( mi ) ) == 0 )
                 throw new Win32Exception( Marshal.GetLastWin32Error() );
+
+            if ((intflags & (int)SendMouseInputFlags.Wheel) != 0)
+            {
+                // MouseWheel input seems to be getting coalesced by the OS, similar to mouse-move.
+                // There isn't a NOCOALESCE flag to turn this off, so instead just sleep for
+                // a short time, hopefully enough to avoid the coalescing.
+                System.Threading.Thread.Sleep(50);
+            }
         }
 
 

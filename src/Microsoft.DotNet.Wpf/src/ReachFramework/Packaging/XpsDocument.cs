@@ -325,25 +325,27 @@ namespace System.Windows.Xps.Packaging
 
                 foreach( PackagePart part in xmlPartList )
                 {
-                    Stream stream = part.GetStream(FileMode.Open, FileAccess.Read );
-                    //
-                    // An empty stream contains not version extensibility thus is valid
-                    // We do create empty parts for print tickets
-                    //
-                    if( stream.Length == 0 )
-                        continue;
-                    try
+                    using (Stream stream = part.GetStream(FileMode.Open, FileAccess.Read))
                     {
-                        if( StreamContainsVersionExtensiblity(stream) )
+                        //
+                        // An empty stream contains not version extensibility thus is valid
+                        // We do create empty parts for print tickets
+                        //
+                        if (stream.Length == 0)
+                            continue;
+                        try
+                        {
+                            if (StreamContainsVersionExtensiblity(stream))
+                            {
+                                isSignable = false;
+                                break;
+                            }
+                        }
+                        catch (XmlException)
                         {
                             isSignable = false;
                             break;
                         }
-                    }
-                    catch( XmlException )
-                    {
-                        isSignable = false;
-                        break;
                     }
                 }
                 return isSignable;

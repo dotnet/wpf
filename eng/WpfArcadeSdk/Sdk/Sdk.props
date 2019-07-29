@@ -68,6 +68,20 @@
         Suppress NU1605 (Package downgrade warnings) when building inside Visual Studio
     -->
     <NoWarn Condition="'$(BuildingInsideVisualStudio)'=='true'">$(NoWarn);NU1605</NoWarn>
+
+    <!-- 
+      Support for suppressing warnings by supplying /p:AdditionalNoWarn=0123;4567 from 
+      dotnet.exe/msbuild commandline.
+      
+      Helpful for debugging, and/or working through transient build problems, compiler issues etc. 
+      
+      Note that it is not possible to supply /p:NoWarn=0123;4567 successfully - this will cause the 
+      <NoWarn>$(NoWarn);....</NoWarn> property specifications in projects/props/targets to be overridden
+      and ignored, in turn resulting in additional build-failures. 
+      
+      ** Note**: AdditionalNoWarn should not be used in projects/props/targets.
+    -->
+    <NoWarn Condition="'$(AdditionalNoWarn)' != '' And '$(NoWarn)' != ''">$(AdditionalNoWarn);$(NoWarn)</NoWarn>
   </PropertyGroup>
 
   <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->

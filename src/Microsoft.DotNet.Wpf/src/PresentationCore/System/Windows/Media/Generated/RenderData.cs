@@ -27,7 +27,6 @@ using System.Diagnostics;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Media
 {

@@ -54,7 +54,7 @@ namespace System.Windows.Markup
             // Validate input arguments
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             // Create TextWriter
@@ -92,11 +92,11 @@ namespace System.Windows.Markup
             // Validate input arguments
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             // Create XmlTextWriter
@@ -123,11 +123,11 @@ namespace System.Windows.Markup
             // Validate input arguments
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             // Create XmlTextWriter
@@ -156,11 +156,11 @@ namespace System.Windows.Markup
             // Validate input arguments
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
             if (xmlWriter == null)
             {
-                throw new ArgumentNullException("xmlWriter");
+                throw new ArgumentNullException(nameof(xmlWriter));
             }
 
             try
@@ -192,11 +192,11 @@ namespace System.Windows.Markup
             // Validate input arguments
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
             if (manager == null)
             {
-                throw new ArgumentNullException("manager");
+                throw new ArgumentNullException(nameof(manager));
             }
 
             MarkupWriter.SaveAsXml(manager.XmlWriter, obj, manager);

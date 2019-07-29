@@ -65,11 +65,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Moves the window to be docked at the requested location.
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetDockPosition( DockPosition dockPosition )
         {
             UiaCoreApi.DockPattern_SetDockPosition(_hPattern, dockPosition);
@@ -200,11 +195,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Returns whether the DockPosition is Top, Left, Bottom, Right, Fill, or None.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public DockPosition DockPosition
             {
                 get

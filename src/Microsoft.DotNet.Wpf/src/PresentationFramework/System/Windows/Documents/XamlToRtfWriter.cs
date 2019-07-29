@@ -13,6 +13,7 @@ using System.Windows.Media; // Color
 using System.Globalization;
 using System.IO;
 using MS.Internal.Globalization;
+using MS.Internal.Text;
 
 #if WindowsMetaFile // GetWinMetaFileBits
 using System.Runtime.InteropServices;
@@ -2018,18 +2019,13 @@ namespace System.Windows.Documents
             // Read the image binary data from WpfPayLoad that contains Xaml and Images.
             // Xaml content have the image source like as "./Image1.png" so that we can
             // query the image from the container of WpfPayLoad with the image source name.
-            Stream imageStream = _wpfPayload.GetImageStream(documentNode.FormatState.ImageSource);
-
-            // Get image type to be added to rtf content
-            RtfImageFormat imageFormat = GetImageFormatFromImageSourceName(documentNode.FormatState.ImageSource);
-
-            // Write the shape image like as "\pngblip" or "\jpegblip" rtf control. We wrap the stream that comes
-            // from the package because we require the stream to be seekable.
-            Debug.Assert(!imageStream.CanSeek);
-            using (var seekableStream = new MemoryStream((int)imageStream.Length))
+            using (Stream imageStream = _wpfPayload.GetImageStream(documentNode.FormatState.ImageSource))
             {
-                imageStream.CopyTo(seekableStream);
-                WriteShapeImage(documentNode, seekableStream, imageFormat);
+                // Get image type to be added to rtf content
+                RtfImageFormat imageFormat = GetImageFormatFromImageSourceName(documentNode.FormatState.ImageSource);
+
+                // Write the shape image like as "\pngblip" or "\jpegblip" rtf control.
+                WriteShapeImage(documentNode, imageStream, imageFormat);
             }
 
 #if WindowsMetaFile
@@ -2206,7 +2202,7 @@ namespace System.Windows.Documents
             }
 
             // Return the image hex data string that is the default image data type on Rtf
-            return Encoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
+            return InternalEncoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
         }
 #endif // WindowsMetaFile
 
@@ -2227,7 +2223,7 @@ namespace System.Windows.Documents
             }
 
             // Return the image hex data string that is the default image data type on Rtf
-            return Encoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
+            return InternalEncoding.GetEncoding(XamlRtfConverter.RtfCodePage).GetString(imageHexBytes);
         }
 
         // Get the image type from image source name
@@ -4023,7 +4019,7 @@ namespace System.Windows.Documents
             {
                 if (e == null)
                 {
-                    e = Encoding.GetEncoding(cp);
+                    e = InternalEncoding.GetEncoding(cp);
                 }
                 int cb = e.GetBytes(new char[] { c }, 0, 1, rgAnsi, 0);
                 int cch = e.GetChars(rgAnsi, 0, cb, rgChar, 0);

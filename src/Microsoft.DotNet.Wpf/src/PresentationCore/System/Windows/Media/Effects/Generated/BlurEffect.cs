@@ -32,7 +32,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Security;
-using System.Security.Permissions;
 using SR = MS.Internal.PresentationCore.SR;
 using SRID = MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop

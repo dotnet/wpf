@@ -337,25 +337,6 @@ namespace MS.Internal
 
         #endregion
 
-        #region EnableLegacyDangerousClipboardDeserializationMode
-
-        internal const string EnableLegacyDangerousClipboardDeserializationModeSwitchName = "Switch.System.Windows.EnableLegacyDangerousClipboardDeserializationMode";
-        private static int _enableLegacyDangerousClipboardDeserializationMode;
-        public static bool EnableLegacyDangerousClipboardDeserializationMode
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                /// <summary>
-                /// Malicious managed objects could be placed in the clipboard lying about its format, 
-                /// to fix this OleConverter now restricts object deserialization in some cases.
-                /// When this switch is enabled behavior falls back to deserializing without restriction.
-                /// </summary>
-                return LocalAppContext.GetCachedSwitchValue(EnableLegacyDangerousClipboardDeserializationModeSwitchName, ref _enableLegacyDangerousClipboardDeserializationMode);
-            }
-        }
-
-        #endregion
     }
 #pragma warning restore 436
 }

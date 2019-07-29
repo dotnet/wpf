@@ -783,7 +783,7 @@ namespace MS.Internal.IO.Packaging
             reference.AppendChild(GenerateDigestMethod(manager, xDoc));
 
             // <DigestValue>
-            using (Stream s = part.GetStream(FileMode.Open, FileAccess.Read))
+            using (Stream s = part.GetSeekableStream(FileMode.Open, FileAccess.Read))
             {
                 reference.AppendChild(GenerateDigestValueNode(xDoc, hashAlgorithm, s, transformName));
             }

@@ -950,23 +950,25 @@ namespace System.Windows.Xps.Packaging
         void
         ParsePages()
         {
-            Stream stream = _metroPart.GetStream(FileMode.Open);
-            //
-            // If the stream is empty there are no pages to parse
-            //
-            if( stream.Length > 0 )
+            using (Stream stream = _metroPart.GetStream(FileMode.Open))
             {
-                XmlTextReader reader = new XmlTextReader(stream);
-
-                while( reader.Read() )
+                //
+                // If the stream is empty there are no pages to parse
+                //
+                if (stream.Length > 0)
                 {
-                    if( reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.PageContent)
+                    XmlTextReader reader = new XmlTextReader(stream);
+
+                    while (reader.Read())
                     {
-                        string attribute = reader.GetAttribute(XmlTags.Source);
-                        if( attribute != null )
+                        if (reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.PageContent)
                         {
-                            Uri relativeUri =  new Uri(attribute, UriKind.Relative);
-                            AddPageToCache(PackUriHelper.ResolvePartUri( Uri, relativeUri));
+                            string attribute = reader.GetAttribute(XmlTags.Source);
+                            if (attribute != null)
+                            {
+                                Uri relativeUri = new Uri(attribute, UriKind.Relative);
+                                AddPageToCache(PackUriHelper.ResolvePartUri(Uri, relativeUri));
+                            }
                         }
                     }
                 }
@@ -1074,14 +1076,16 @@ namespace System.Windows.Xps.Packaging
             Collection<XpsSignatureDefinition>  sigDefCollection
             )
         {
-            XmlTextReader reader = new XmlTextReader( sigDefPart.GetStream(FileMode.Open) );
-            while( reader.Read() )
+            using (XmlTextReader reader = new XmlTextReader(sigDefPart.GetStream(FileMode.Open)))
             {
-                if( reader.NodeType == XmlNodeType.Element &&
-                    reader.Name == XpsS0Markup.SignatureDefinitions
-                  )
+                while (reader.Read())
                 {
-                    ParseSignatureDefinitions( reader, sigDefCollection );
+                    if (reader.NodeType == XmlNodeType.Element &&
+                        reader.Name == XpsS0Markup.SignatureDefinitions
+                      )
+                    {
+                        ParseSignatureDefinitions(reader, sigDefCollection);
+                    }
                 }
             }
         }
@@ -1124,21 +1128,20 @@ namespace System.Windows.Xps.Packaging
             {
                 sigDefPart = CurrentXpsManager.AddSignatureDefinitionPart( _metroPart );
             }
-            Stream stream = sigDefPart.GetStream(FileMode.Create);
-            XmlTextWriter writer = new XmlTextWriter(
-                stream,
-                System.Text.Encoding.UTF8
-                );
-            writer.WriteStartDocument();
-            writer.WriteStartElement( XpsS0Markup.SignatureDefinitions,
-            XpsS0Markup.SignatureDefinitionNamespace);
-            foreach( XpsSignatureDefinition sigDef in _signatureDefinitions )
+
+            using (Stream stream = sigDefPart.GetStream(FileMode.Create))
+            using (XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8))
             {
-                sigDef.WriteXML( writer );
+                writer.WriteStartDocument();
+                writer.WriteStartElement(XpsS0Markup.SignatureDefinitions,
+                XpsS0Markup.SignatureDefinitionNamespace);
+                foreach (XpsSignatureDefinition sigDef in _signatureDefinitions)
+                {
+                    sigDef.WriteXML(writer);
+                }
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
-            writer.Close();
-            stream.Close();
+
             _sigCollectionDirty = false;
         }
 

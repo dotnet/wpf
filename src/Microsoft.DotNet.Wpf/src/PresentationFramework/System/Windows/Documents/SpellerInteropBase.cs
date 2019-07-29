@@ -175,9 +175,6 @@ namespace System.Windows.Documents
         /// which we created and filled with data from pack Uri locations specified by user.
         /// These 'trusted' files are placed under <paramref name="trustedFolder"/>.
         ///
-        /// Explicitly specified file locations will be passed to COM APIs without asserting
-        /// Security permissions, so it would pass in FullTrust and fail in PartialTrust.
-        ///
         /// Files specified in <paramref name="trustedFolder"/> are wrapped in FileIOPermission.Assert(),
         /// providing read access to trusted files under <paramref name="trustedFolder"/>, i.e. additionally
         /// we're making sure that specified trusted locations are under the trusted Folder.

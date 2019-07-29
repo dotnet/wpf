@@ -14,6 +14,7 @@ using System.IO;
 using System.Windows.Media; // Color
 using Microsoft.Win32; // Registry for font substitutes
 using MS.Internal; // Invariant
+using MS.Internal.Text;
 
 
 namespace System.Windows.Documents
@@ -3444,7 +3445,7 @@ namespace System.Windows.Documents
 
                 for (int i = 0; i < CodePageList.Length; i++)
                 {
-                    Encoding e = Encoding.GetEncoding(CodePageList[i]);
+                    Encoding e = InternalEncoding.GetEncoding(CodePageList[i]);
 
                     int cb = e.GetBytes(Name, 0, Name.Length, rgBytes, 0);
                     int cch = e.GetChars(rgBytes, 0, cb, rgChars, 0);
@@ -8844,7 +8845,7 @@ namespace System.Windows.Documents
                     if (nChar < 0xFFFF)
                     {
                         // NB: How to interpret this numeric value as Shift-JIS?
-                        Encoding ec = Encoding.GetEncoding(932);
+                        Encoding ec = InternalEncoding.GetEncoding(932);
                         int nChars = nChar > 256 ? 2 : 1;
                         byte[] ba = new byte[2];
                         if (nChars == 1)

@@ -63,13 +63,13 @@
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>d15a0adeb874801e7bfaa4fbbb306a2efa268497</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19378.1">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19379.29">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>a8e982d3bac01d8f4f91a4c57191147570079448</Sha>
+      <Sha>84d9a013b66c3e14a67ace0a99ae84e6eb8b6a7d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19378.1">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19379.29">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>a8e982d3bac01d8f4f91a4c57191147570079448</Sha>
+      <Sha>84d9a013b66c3e14a67ace0a99ae84e6eb8b6a7d</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-preview8.19378.8" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -95,17 +95,17 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>c01a9a157d512343ef104bb2b1f97b356e708b11</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19378.1">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19379.29">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>a8e982d3bac01d8f4f91a4c57191147570079448</Sha>
+      <Sha>84d9a013b66c3e14a67ace0a99ae84e6eb8b6a7d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19378.1">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19379.29">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>a8e982d3bac01d8f4f91a4c57191147570079448</Sha>
+      <Sha>84d9a013b66c3e14a67ace0a99ae84e6eb8b6a7d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="1.0.0-beta.19378.1">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="1.0.0-beta.19379.29">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>a8e982d3bac01d8f4f91a4c57191147570079448</Sha>
+      <Sha>84d9a013b66c3e14a67ace0a99ae84e6eb8b6a7d</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

@@ -16,6 +16,7 @@ using System.Threading;                      // Thread
 //  shared, so it is duplicated across namespaces to prevent name collision.
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
+    using TemporaryTesting;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
@@ -426,7 +427,10 @@ namespace MS.Win32
                 if (hook != null)
                 {
                     // make the call
-                    param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);
+                    using(DpiUtil.WithDpiAwarenessContext(param.hwnd))
+                    {
+                        param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);
+                    }
                 }
             }
 

@@ -27,6 +27,9 @@ using System;
 using System.Globalization;
 using System.Security;
 using System.Threading;
+using MS.Utility;
+using MS.Win32;
+using TemporaryTesting;
 
 namespace MS.Internal
 {
@@ -281,7 +284,7 @@ namespace MS.Internal
         private class CultureAndContextManager
         {
             #region Constructor 
-
+            [SecurityCritical]
             private CultureAndContextManager(ContextCallback callback, object state)
             {
                 Callback = callback;
@@ -298,22 +301,25 @@ namespace MS.Internal
             /// <param name="callback"></param>
             /// <param name="state"></param>
             /// <returns></returns>
+            [SecurityCritical]
             public static CultureAndContextManager Initialize(ContextCallback callback, object state)
             {
                 return new CultureAndContextManager(callback, state);
             }
 
-
+            [SecurityCritical]
             public void ReadCultureInfosFromCurrentThread()
             {
                 _culture = Thread.CurrentThread.CurrentCulture;
                 _uICulture = Thread.CurrentThread.CurrentUICulture;
+                _dpiContext = UnsafeNativeMethods.GetThreadDpiAwarenessContext();
             }
 
             public void WriteCultureInfosToCurrentThread()
             {
                 Thread.CurrentThread.CurrentCulture = _culture;
                 Thread.CurrentThread.CurrentUICulture = _uICulture;
+                UnsafeNativeMethods.SetThreadDpiAwarenessContext(_dpiContext);
             }
 
             public ContextCallback Callback
@@ -328,6 +334,7 @@ namespace MS.Internal
 
             private CultureInfo _culture;
             private CultureInfo _uICulture;
+            private DpiAwarenessContextHandle _dpiContext;
         }
 
         #endregion

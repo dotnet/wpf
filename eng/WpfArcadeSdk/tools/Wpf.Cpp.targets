@@ -2,6 +2,7 @@
   <PropertyGroup>
     <NativeVersionFile Condition="'$(NativeVersionFile)'==''">$(IntermediateOutputPath)NativeVersion.rc</NativeVersionFile>
     <NativeVersionFileDirectory>$([System.IO.Path]::GetDirectoryName($(NativeVersionFile)))</NativeVersionFileDirectory>
+    <NativeResourceFileWithVersionInformation Condition="'$(NativeResourceFileWithVersionInformation)' == ''">$(IntermediateOutputPath)ExtendedNativeVersion.rc</NativeResourceFileWithVersionInformation>
   </PropertyGroup>
 
   <Import Project="Wpf.Cpp.PrivateTools.targets" Condition="Exists('Wpf.Cpp.PrivateTools.targets') And '$(UsePrivateCppTools)'=='true'"/>
@@ -50,6 +51,55 @@
 
   <Target Name="CreateNativeVersionFile" BeforeTargets="ResourceCompile" Outputs="$(NativeVersionFile)" Condition="!Exists('$(NativeVersionFile)')">
     <CallTarget Targets="GenerateNativeVersionFile" />
+  </Target>
+
+  <!-- Target only runs for projects that already include .rc files in their build -->
+  <Target Name="CreateNativeResourceFileWithVersionInformation"
+          AfterTargets="CreateNativeVersionFile"
+          BeforeTargets="ResourceCompile"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformationFromSourceControlManager"
+          Outputs="$(NativeResourceFileWithVersionInformation)"
+          Returns="@(ResourceCompile)"
+          Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(ManagedCxx)' != 'true' And '$(IsRedistProject)' != 'true'">
+    
+    <PropertyGroup>
+      <_WindowsFileVersion>$(FileVersion.Replace('.', ','))</_WindowsFileVersion>
+      <_SourceBuildInfo> %40Commit: $(SourceRevisionId)</_SourceBuildInfo>
+      
+      <_ExtendedNativeVersionFileContents>
+        <![CDATA[
+        
+#if !defined(IDS_STRING_PRODUCT_VER)
+#define IDS_STRING_PRODUCT_VER 1001
+#endif 
+
+#if !defined(IDS_STRING_REPO_URL)
+#define IDS_STRING_REPO_URL 1002
+#endif 
+
+// String Table
+STRINGTABLE 
+BEGIN
+    IDS_STRING_PRODUCT_VER "$(_WindowsFileVersion)$(_SourceBuildInfo)"
+    IDS_STRING_REPO_URL "RepoUrl: $(ScmRepositoryUrl)"
+    
+END
+        ]]>
+      </_ExtendedNativeVersionFileContents>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ExtendenNativeVersionFileLines Include="$(_ExtendedNativeVersionFileContents)" />
+    </ItemGroup>
+    
+    <WriteLinesToFile Lines="@(_ExtendenNativeVersionFileLines)"
+                      File="$(NativeResourceFileWithVersionInformation)"
+                      Overwrite="true" />
+
+    <ItemGroup>
+      <ResourceCompile Remove="$(NativeResourceFileWithVersionInformation)" />
+      <ResourceCompile Include="$(NativeResourceFileWithVersionInformation)" />
+    </ItemGroup>
   </Target>
 
   <!--

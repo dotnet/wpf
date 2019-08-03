@@ -173,6 +173,7 @@ namespace MS.Internal
 
                 return
                     dpiAwarenessContext.Equals(DpiAwarenessContextValue.Unaware) ||
+                    dpiAwarenessContext.Equals(DpiAwarenessContextValue.UnawareGdiScaled) ||
                     dpiAwarenessContext.Equals(DpiAwarenessContextValue.SystemAware);
             }
         }

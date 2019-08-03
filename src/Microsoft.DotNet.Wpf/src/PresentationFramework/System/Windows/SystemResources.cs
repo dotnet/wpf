@@ -1033,9 +1033,9 @@ namespace System.Windows
         /// would be bounded by:
         ///     #(valid DpiAwarenessContextValues) + 2*#(unique DPI values that are observed during calls to <see cref="GetDpiAwarenessCompatibleNotificationWindow(HandleRef)"/>)
         /// The only DpiAwarenessContextValues for which unique DPI values would matter are <see cref="DpiAwarenessContextValue.PerMonitorAware"/> and 
-        /// <see cref="DpiAwarenessContextValue.PerMonitorAwareVersion2"/>. For <see cref="DpiAwarenessContextValue.SystemAware"/> and <see cref="DpiAwarenessContextValue.Unaware"/>,
-        /// the OS would never report back anything other than the System DPI and 96 respectively, and thus we would only ever maintain one entry for those
-        /// DpiAwarenessContextValues.
+        /// <see cref="DpiAwarenessContextValue.PerMonitorAwareVersion2"/>. For <see cref="DpiAwarenessContextValue.SystemAware"/>, <see cref="DpiAwarenessContextValue.Unaware"/>,
+        /// and <see cref="DpiAwarenessContextValue.UnawareGdiScaled"/>, the OS would never report back anything other than the System DPI and 96 respectively, and thus we would 
+        /// only ever maintain one entry for those DpiAwarenessContextValues.
         /// </summary>
         private static void EnsureResourceChangeListener()
         {
@@ -1186,12 +1186,16 @@ namespace System.Windows
         /// <remarks>Defaults to System DPI if an invalid <paramref name="dpiContextValue"/> is supplied</remarks>
         private static DpiScale2 GetDpiScaleForUnawareOrSystemAwareContext(DpiAwarenessContextValue dpiContextValue)
         {
-            Debug.Assert(dpiContextValue == DpiAwarenessContextValue.Unaware || dpiContextValue == DpiAwarenessContextValue.SystemAware);
+            Debug.Assert(
+                dpiContextValue == DpiAwarenessContextValue.Unaware ||
+                dpiContextValue == DpiAwarenessContextValue.UnawareGdiScaled ||
+                dpiContextValue == DpiAwarenessContextValue.SystemAware);
 
             DpiScale2 dpiScale = null;
             switch (dpiContextValue)
             {
                 case DpiAwarenessContextValue.Unaware:
+                case DpiAwarenessContextValue.UnawareGdiScaled:
                     dpiScale = DpiScale2.FromPixelsPerInch(DpiUtil.DefaultPixelsPerInch, DpiUtil.DefaultPixelsPerInch);
                     break;
                 case DpiAwarenessContextValue.SystemAware:

@@ -7207,6 +7207,18 @@ namespace MS.Win32 {
         /// </remarks>
         internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2;
 
+        /// <summary>
+        /// DPI unaware with improved quality of GDI-based content.
+        /// This mode behaves similarly to DPI_AWARENESS_CONTEXT_UNAWARE, but also enables
+        /// the system to automatically improve the rendering quality of text and other GDI-based
+        /// primitives when the window is displayed on a high-DPI monitor.
+        /// </summary>
+        /// <remarks>
+        /// - DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED was introduced in the October 2018 update of Windows 10 (also known as version 1809).
+        /// - <code><![CDATA[#define DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED ((DPI_AWARENESS_CONTEXT)-5)]]></code>
+        /// </remarks>
+        internal static readonly DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED = DpiAwarenessContextHandle.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED;
+
 #endif
 
         /// <summary>

@@ -32,6 +32,7 @@ namespace MS.Utility
                 { DpiAwarenessContextValue.SystemAware, new IntPtr((int)DpiAwarenessContextValue.SystemAware) },
                 { DpiAwarenessContextValue.PerMonitorAware, new IntPtr((int)DpiAwarenessContextValue.PerMonitorAware) },
                 { DpiAwarenessContextValue.PerMonitorAwareVersion2, new IntPtr((int)DpiAwarenessContextValue.PerMonitorAwareVersion2) },
+                { DpiAwarenessContextValue.UnawareGdiScaled, new IntPtr((int)DpiAwarenessContextValue.UnawareGdiScaled) },
             };
 
             DPI_AWARENESS_CONTEXT_UNAWARE =
@@ -45,6 +46,9 @@ namespace MS.Utility
 
             DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 =
                 new DpiAwarenessContextHandle(WellKnownContextValues[DpiAwarenessContextValue.PerMonitorAwareVersion2]);
+
+            DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED =
+                new DpiAwarenessContextHandle(WellKnownContextValues[DpiAwarenessContextValue.UnawareGdiScaled]);
         }
 
         /// <summary>
@@ -120,6 +124,11 @@ namespace MS.Utility
         /// Gets DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
         /// </summary>
         internal static DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 { get; }
+
+        /// <summary>
+        /// Gets DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED
+        /// </summary>
+        internal static DpiAwarenessContextHandle DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED { get; }
 
         /// <summary>
         /// Gets map of well-known DPI awareness context handles

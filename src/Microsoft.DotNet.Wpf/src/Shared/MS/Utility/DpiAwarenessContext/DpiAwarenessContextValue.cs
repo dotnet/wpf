@@ -50,6 +50,11 @@ namespace MS.Utility
         /// <summary>
         /// DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
         /// </summary>
-        PerMonitorAwareVersion2 = -4
+        PerMonitorAwareVersion2 = -4, 
+
+        /// <summary>
+        /// DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED
+        /// </summary>
+        UnawareGdiScaled = -5
     }
 }

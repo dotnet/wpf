@@ -1684,47 +1684,8 @@ namespace MS.Internal.Data
             }
 
             // if we get here, the property has CanWrite=true, and a non-public
-            // setter.  (We presume that pi.SetValue will actually call that
-            // setter, but there's no way to tell for sure.)   In 4.0, we threw
-            // an exception, but in 4.5 we accidentally allowed writing to such
-            // a property. A compat flag guides how we proceed now.
-            switch (FrameworkCompatibilityPreferences.GetHandleTwoWayBindingToPropertyWithNonPublicSetter())
-            {
-                case FrameworkCompatibilityPreferences.HandleBindingOptions.Allow:
-                    // 4.5RTM behavior.   Treat the property as writeable.
-                    return false;
-
-                case FrameworkCompatibilityPreferences.HandleBindingOptions.Disallow:
-                    // Intermediate behavior.  Turn off updates, so that we
-                    // don't call the non-public setter, but don't throw either.
-                    // Also send a warning to the debug/trace ouput, to help
-                    // developers catch this undesireable situation.
-                    if (_host != null)
-                    {
-                        string propertyName = "(unknown)";
-                        string typeName = "(unknown)";
-                        try
-                        {
-                            propertyName = pi.Name;
-                            typeName = pi.DeclaringType.Name;
-                        }
-                        catch (Exception ex3)
-                        {
-                            if (CriticalExceptions.IsCriticalApplicationException(ex3))
-                                throw;
-                        }
-                        TraceData.Trace(TraceEventType.Warning,
-                                        TraceData.DisallowTwoWay(typeName, propertyName),
-                                        _host.ParentBindingExpression);
-                        _host.ParentBindingExpression.IsReflective = false; // turn off updates
-                    }
-                    return false;                                       // don't throw
-
-                case FrameworkCompatibilityPreferences.HandleBindingOptions.Throw:
-                default:
-                    // 4.0 behavior.  Returning true causes the caller to throw.
-                    return true;
-            }
+            // setter. Returning true causes the caller to throw.
+            return true;
 
 #pragma warning restore 56500
 #pragma warning restore 1634, 1691

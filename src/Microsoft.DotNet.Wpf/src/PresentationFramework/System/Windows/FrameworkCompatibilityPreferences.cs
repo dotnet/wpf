@@ -40,7 +40,6 @@ namespace System.Windows
 
             if (appSettings != null)
             {
-                SetHandleTwoWayBindingToPropertyWithNonPublicSetterFromAppSettings(appSettings);
                 SetUseSetWindowPosForTopmostWindowsFromAppSettings(appSettings);
                 SetVSP45CompatFromAppSettings(appSettings);
                 SetScrollingTraceFromAppSettings(appSettings);
@@ -172,78 +171,6 @@ namespace System.Windows
         }
 
         #endregion KeepTextBoxDisplaySynchronizedWithTextProperty
-
-        #region HandleTwoWayBindingToPropertyWithNonPublicSetter
-
-        // the different ways we can handle a TwoWay binding to a propery with non-public setter.
-        // These must appear in order, from tightest to loosest.
-        internal enum HandleBindingOptions
-        {
-            Throw,      // 4.0 behavior - throw an exception
-            Disallow,   // diagnostic behavior - don't throw, but don't allow updates
-            Allow,      // 4.5RTM behavior - allow the binding to update
-        }
-
-        // this flag defaults to:
-        //      partial-trust           -> Throw    (plug security hole)
-        //      wrong target framework  -> Disallow (app probably not built by VS.  E.g. ServerManager)
-        //      target = 4.5            -> Allow    (compat with 4.5RTM)
-        //      any other unknown target -> Throw   (compat with 4.0)
-        //      .NET Core               -> Allow    (compat with 4.5RTM)
-#if NETFX && !NETCOREAPP
-        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter =
-                BinaryCompatibility.AppWasBuiltForFramework != TargetFrameworkId.NetFramework ? HandleBindingOptions.Disallow :
-                BinaryCompatibility.AppWasBuiltForVersion == 40500 ? HandleBindingOptions.Allow :
-                /* else */  HandleBindingOptions.Throw;
-#elif NETCOREAPP
-        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter = HandleBindingOptions.Allow;
-#else
-        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter = HandleBindingOptions.Throw;
-#endif
-
-
-        internal static HandleBindingOptions HandleTwoWayBindingToPropertyWithNonPublicSetter
-        {
-            get { return _handleTwoWayBindingToPropertyWithNonPublicSetter; }
-            set
-            {
-                lock (_lockObject)
-                {
-                    if (_isSealed)
-                    {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "HandleTwoWayBindingToPropertyWithNonPublicSetter", "FrameworkCompatibilityPreferences"));
-                    }
-
-                    // apps are allowed to tighten the restriction, but not to loosen it
-                    if (value.CompareTo(_handleTwoWayBindingToPropertyWithNonPublicSetter) > 0)
-                    {
-                        throw new ArgumentException();
-                    }
-
-                    _handleTwoWayBindingToPropertyWithNonPublicSetter = value;
-                }
-            }
-        }
-
-        internal static HandleBindingOptions GetHandleTwoWayBindingToPropertyWithNonPublicSetter()
-        {
-            Seal();
-
-            return HandleTwoWayBindingToPropertyWithNonPublicSetter;
-        }
-
-        static void SetHandleTwoWayBindingToPropertyWithNonPublicSetterFromAppSettings(NameValueCollection appSettings)
-        {
-            // user can use config file to tighten the restriction
-            string s = appSettings["HandleTwoWayBindingToPropertyWithNonPublicSetter"];
-            HandleBindingOptions value;
-            if (Enum.TryParse(s, true, out value) && value.CompareTo(HandleTwoWayBindingToPropertyWithNonPublicSetter) <= 0)
-            {
-                HandleTwoWayBindingToPropertyWithNonPublicSetter = value;
-            }
-        }
-
-        #endregion AllowTwoWayBindingToPropertyWithNonPublicSetter
 
         // There is a bug in the Windows desktop window manager which can cause
         // incorrect z-order for windows when several conditions are all met:

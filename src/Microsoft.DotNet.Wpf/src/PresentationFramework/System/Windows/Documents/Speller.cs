@@ -1033,7 +1033,7 @@ namespace System.Windows.Documents
                         // a scan after a timeout near a Hyperlink.  The second scan
                         // effectively repeats the work of the first, after backing
                         // up the context, and times out in the same place as the
-                        // first, thus making no progress.  DDVSO 945462)
+                        // first, thus making no progress.)
                         // Ignore the time limit if no progress has been made.
                         if (timeoutPosition.CompareTo(status.StartPosition) > 0)
                         {

@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.Net.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>System.Windows.Controls.Ribbon</AssemblyName>
+    <PackageId>System.Windows.Controls.Ribbon-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <DefineConstants>$(DefineConstants);RIBBON_IN_FRAMEWORK</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll --> 
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+    <Compile Include="$(WpfSourceDir)System.Windows.Controls.Ribbon\AssemblyAttrs.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Classic\ref\PresentationFramework.Classic-ref.csproj" />
+  </ItemGroup>
+
+  <!-- 
+    Minimal set of references needed to build System.Windows.Controls.Ribbon 
+  -->
+  <ItemGroup>
+
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Drawing.Common" />
+    <NetCoreReference Include="System.Drawing.Primitives" />
+    <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
+    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
+    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.ThreadPool" />
+
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+    <NetCoreReference Include="System.Collections.Specialized" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+
+  </ItemGroup>
+
+</Project>

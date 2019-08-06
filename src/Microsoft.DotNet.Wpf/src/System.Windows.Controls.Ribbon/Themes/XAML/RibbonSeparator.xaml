@@ -1,0 +1,73 @@
+<!-- [[Generic]] -->  
+
+    <!--=================================================================
+            RibbonSeparator
+        =================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonSeparator}" TargetType="{x:Type ribbon:RibbonSeparator}">
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.Background}" />
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.BorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonSeparator}">
+                    <Border x:Name="MainBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                            <TextBlock x:Name="Text" 
+                                       Text="{TemplateBinding Label}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <Setter TargetName="MainBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Label" Value="{x:Null}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ribbon:RibbonSeparator}">
+                            <StackPanel>
+                                <Line x:Name="Line"
+                                      X1="0" 
+                                      Y1="0" 
+                                      X2="1" 
+                                      Y2="0" 
+                                      Stroke="{TemplateBinding BorderBrush}" 
+                                      StrokeThickness="1" 
+                                      Stretch="Fill" />
+                                <Line x:Name="HighlightLine"
+                                      X1="0" 
+                                      Y1="0" 
+                                      X2="1" 
+                                      Y2="0"
+                                      Stroke="White" 
+                                      StrokeThickness="1"
+                                      Stretch="Fill" />
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+#ifdef Net45
+                                <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                                <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                                    <Setter TargetName="Line" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" />
+                                    <Setter TargetName="HighlightLine" Property="Stroke" Value="Transparent" />
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>

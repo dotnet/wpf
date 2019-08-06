@@ -1,0 +1,397 @@
+<!-- [[Generic]] -->
+
+<!--=================================================================
+        Ribbon
+    ==================================================================-->
+<SolidColorBrush x:Key="RibbonInnerBorderBrushKey" Color="#60FFFFFF"/>
+<SolidColorBrush x:Key="RibbonBackgroundBrushKey" Color="#DFE9F5" />
+<SolidColorBrush x:Key="RibbonBorderBrushKey" Color="#B9C9DA" />
+<LinearGradientBrush x:Key="RibbonOverlayBackgroundBrushKey" StartPoint="0.5,0.0" EndPoint="0.5,1.0" >
+    <GradientStop Color="#EEFFFFFF" Offset="0.0"/>
+    <GradientStop Color="#BBFFFFFF" Offset="0.1"/>
+    <GradientStop Color="#05FFFFFF" Offset="0.5"/>
+    <GradientStop Color="#20FFFFFF" Offset="1.0"/>
+</LinearGradientBrush>
+
+<Style x:Key="{x:Type ribbon:Ribbon}"  TargetType="{x:Type ribbon:Ribbon}">
+    <Style.Resources>
+        <PopupAnimation x:Key="{x:Static SystemParameters.MenuPopupAnimationKey}">Fade</PopupAnimation>
+    </Style.Resources>   
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Background" Value="{StaticResource RibbonBackgroundBrushKey}" />
+    <Setter Property="BorderBrush" Value="{StaticResource RibbonBorderBrushKey}" />
+    <Setter Property="MouseOverBorderBrush" Value="{StaticResource MouseOverBorderBrushKey}" />
+    <Setter Property="MouseOverBackground" Value="{StaticResource MouseOverBackgroundBrushKey}" />
+    <Setter Property="PressedBorderBrush" Value="{StaticResource PressedBorderBrushKey}" />
+    <Setter Property="PressedBackground" Value="{StaticResource PressedBackgroundBrushKey}" />
+    <Setter Property="CheckedBorderBrush" Value="{StaticResource PressedBorderBrushKey}" />
+    <Setter Property="CheckedBackground" Value="{StaticResource CheckedBackgroundBrushKey}" />
+    <Setter Property="FocusedBorderBrush" Value="{StaticResource MouseOverBorderBrushKey}" />
+    <Setter Property="FocusedBackground" Value="{StaticResource MouseOverBackgroundBrushKey}" />
+    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" />
+    <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
+    <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}" />
+    <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:Ribbon}">
+
+                <Grid SnapsToDevicePixels="True" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Ribbon Background -->
+                    <Border Name="BackgroundBorder" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="3" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"/>
+
+                    <!-- Popup hosting the groups when IsMinimized=true -->
+                    <Border Grid.ColumnSpan="3" Grid.Row="1">
+                        <Popup x:Name="PART_ITEMSPRESENTERPOPUP" 
+                               AllowsTransparency="True" 
+                               IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" >
+                            <classic:SystemDropShadowChrome Name="Shdw" Focusable="True" FocusVisualStyle="{x:Null}" Color="Transparent" Margin="0,0,5,5"
+#ifdef Net40
+                                RenderOptions.ClearTypeHint="Enabled"
+#endif
+                            >
+                                <Border Name="CollapsedPopupBackgroundBorder"  Background="{TemplateBinding Background}">
+                                    <ContentControl x:Name="popupItemsPresenterHost" Margin="0,1,0,0" Focusable="False" 
+                                                    KeyboardNavigation.TabNavigation="Cycle"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                </Border>
+                            </classic:SystemDropShadowChrome>
+                        </Popup>
+                    </Border>
+
+                    <ContentControl x:Name="mainItemsPresenterHost" Grid.ColumnSpan="3" Grid.Row="2" Focusable="False">
+                        <Border x:Name="groupsBorder"
+                                    Background="{StaticResource RibbonOverlayBackgroundBrushKey}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    Height="{StaticResource RibbonHeight}"
+                                    SnapsToDevicePixels="True">
+                            <Border BorderThickness="0,0,0,1" Margin="0,0,0,1" BorderBrush="{StaticResource RibbonInnerBorderBrushKey}" SnapsToDevicePixels="True">
+                                <ItemsPresenter Name="ItemsPresenter" />
+                            </Border>
+                        </Border>
+                    </ContentControl>
+                    
+                    <!-- QuickAccessToolbar bottom placeholder -->
+                    <Border x:Name="QatBottomHost" Grid.Row="3" Grid.ColumnSpan="3" BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter x:Name="QatBottomHostContentPresenter" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="True"/>
+                    </Border>
+
+                    <!-- TitleBar -->
+                    <Border Name="titleBarBackground"
+                                  Grid.ColumnSpan="3"
+                                  Background="{StaticResource RibbonOverlayBackgroundBrushKey}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="0,0,0,1"
+                                  Visibility="Collapsed"/>
+#ifdef Net45
+                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Path=(SystemParameters.WindowCaptionHeight)}" LastChildFill="True">
+#else
+                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=WindowCaptionHeight}" LastChildFill="True">
+#endif
+                        <!-- This makes sure that the title and QAT does not overlap the close minimize and restore buttons. -->
+                        <ContentControl x:Name="windowButtonPlaceHolder"
+#ifdef Net45
+                                        Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"
+#else
+                                        Width="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=WindowCaptionButtonsLocation.Width}"
+#endif
+                                        Visibility="{TemplateBinding IsHostedInRibbonWindow, Converter={StaticResource BooleanToVisibilityConverterKey}}"
+                                        IsHitTestVisible="False" 
+                                        DockPanel.Dock="Right" 
+                                        Focusable="False"
+                                        Margin="3,0,0,0"/>
+                        <ContentControl x:Name="windowIconPadding"
+#ifdef Net45
+                                        Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+#else
+                                        Width="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=SmallIconSize.Width}"
+#endif
+                                        Margin="0,0,3,0"
+                                        IsHitTestVisible="False" 
+                                        DockPanel.Dock="Left" 
+                                        Focusable="False"/>
+                        <primitives:RibbonTitlePanel x:Name="PART_TitlePanel">
+                            <Grid x:Name="QatTopHost">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="QatTopHostLeftBorder"
+                                        Grid.Column="0"
+                                        Margin="8,2,0,2"
+                                        Width="3"
+                                        Background="#77222222"
+                                        BorderBrush="#66CCCCCC"
+                                        BorderThickness="1,0,1,0.9"
+                                        CornerRadius="0,0,2,2"/>
+                                
+                                <ContentPresenter x:Name="QatTopHostContentPresenter" 
+                                                  Grid.Column="1"
+                                                  Content="{TemplateBinding QuickAccessToolBar}" 
+                                                  IsHitTestVisible="True"/>
+
+                                <Border x:Name="QatTopHostRightBorder"
+                                        Grid.Column="2"
+                                        Margin="0,2,1,2"
+                                        Width="3"
+                                        Background="#77222222"
+                                        BorderBrush="#66CCCCCC"
+                                        BorderThickness="1,0,1,0.9"
+                                        CornerRadius="0,0,2,2"/>
+                                
+                            </Grid>
+                            <ContentPresenter x:Name="PART_TitleHost"
+                                              ContentSource="Title"
+                                              ContentTemplate="{TemplateBinding TitleTemplate}" 
+                                              TextBlock.FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                              TextBlock.FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+                                              TextBlock.FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+                                              TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="3,0"
+#ifdef Net45
+                                              MinHeight="{Binding Path=(SystemParameters.WindowCaptionHeight)}"
+#else
+                                              MinHeight="{Binding Path=WindowCaptionHeight, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                              MinWidth="75"
+                                              IsHitTestVisible="False">
+                                <ContentPresenter.Resources>
+                                    <!-- Glowing effect around Title in Aero glass theme -->
+                                    <DataTemplate DataType="{x:Type system:String}">
+                                        <TextBlock x:Name="titleTextBlock" 
+                                                   Margin="0,-2,0,0"
+                                                   Text="{TemplateBinding Content}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
+                                        <DataTemplate.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                                    <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="True"/>
+#else
+                                                    <Condition Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsHostedInRibbonWindow}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="titleTextBlock" Property="TextBlock.Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect Color="White" BlurRadius="5.0" ShadowDepth="0"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </MultiDataTrigger>
+#ifdef Net45
+                                            <DataTrigger Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False">
+#else
+                                            <DataTrigger Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="False">
+#endif
+                                                <Setter TargetName="titleTextBlock" Property="Margin" Value="0" />
+                                                <Setter TargetName="titleTextBlock" Property="VerticalAlignment" Value="Center" />
+                                            </DataTrigger>
+#ifdef Net45
+                                            <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                                            <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                                                <Setter TargetName="titleTextBlock" Property="Margin" Value="0,1,0,0" />
+                                            </DataTrigger>
+                                            <!-- The Title is drawn slightly differently in AeroLite. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                                    <Condition Binding="{Binding Path=(SystemParameters.UxThemeName)}" Value="AeroLite"/>
+                                                    <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False"/>
+#else
+                                                    <Condition Binding="{Binding Path=UxThemeName, Source={x:Static windows:SystemParameters2.Current}}" Value="AeroLite"/>
+                                                    <Condition Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsHostedInRibbonWindow}" Value="True" />
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=WindowState}" Value="Normal"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="titleTextBlock" Property="Margin" Value="0,0,0,7"/>
+                                            </MultiDataTrigger>
+
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                            <ribbon:RibbonContextualTabGroupItemsControl x:Name="PART_ContextualTabGroupItemsControl" 
+                                                                               IsHitTestVisible="True"
+                                                                               shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                                               HorizontalAlignment="Center" />
+                        </primitives:RibbonTitlePanel>
+                    </DockPanel>
+
+                    <!-- Application Menu -->
+                    <ContentPresenter x:Name="applicationMenu" Grid.Row="1" Content="{TemplateBinding ApplicationMenu}" VerticalAlignment="Top" />
+                    
+                    <ribbon:RibbonTabHeaderItemsControl 
+                            x:Name="TabHeaderItemsControl" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" 
+                            Grid.Row="1" 
+                            Grid.Column="1" 
+                            Margin="1,1,1,0"/>
+
+                    <!-- HelpPane appears to the right of TabsPanel -->
+                    <ContentPresenter x:Name="PART_HelpPane" 
+                                      ContentSource="HelpPaneContent" 
+                                      ContentTemplate="{TemplateBinding HelpPaneContentTemplate}" 
+                                      Grid.Column="2" 
+                                      Grid.Row="1" 
+                                      HorizontalAlignment="Right" 
+                                      VerticalAlignment="Top"/>
+
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsCollapsed" Value="true">
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="applicationMenu"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="QatBottomHost"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="QatTopHost"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="mainItemsPresenterHost"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="TabHeaderItemsControl"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="PART_HelpPane"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="PART_ContextualTabGroupItemsControl" />
+                        <Setter Property="MinWidth" Value="0" TargetName="PART_TitleHost" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsCollapsed" Value="True" />
+                            <Condition Property="IsHostedInRibbonWindow" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </MultiTrigger>
+                    <Trigger Property="ShowQuickAccessToolBarOnTop" Value="false">
+                        <Setter Property="Content"  Value="{x:Null}" TargetName="QatTopHostContentPresenter"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="QatTopHost"/>
+                        <Setter Property="Content"  Value="{Binding Path=QuickAccessToolBar,RelativeSource={RelativeSource TemplatedParent}}" TargetName="QatBottomHostContentPresenter"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1" TargetName="BackgroundBorder"/>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=QuickAccessToolBar.HasItems}" Value="False"/>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=QuickAccessToolBar.CustomizeMenuButton}" Value="{x:Null}"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Collapsed" TargetName="QatTopHost"/>
+                        <Setter Property="Visibility" Value="Collapsed" TargetName="QatBottomHost"/>
+                    </MultiDataTrigger>
+                    <Trigger Property="IsMinimized" Value="True">
+                        <Setter Property="Content"  Value="{x:Null}" TargetName="mainItemsPresenterHost"/>
+                        <Setter Property="Visibility"  Value="Collapsed" TargetName="mainItemsPresenterHost"/>
+                        <Setter Property="Content"  Value="{Binding ElementName=groupsBorder}" TargetName="popupItemsPresenterHost"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1" TargetName="BackgroundBorder"/>
+                    </Trigger>
+                    <Trigger Property="WindowIconVisibility" Value="Collapsed">
+                        <Setter Property="Visibility" Value="Collapsed" TargetName="windowIconPadding"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMinimized" Value="true" />
+                            <Condition Property="ShowQuickAccessToolBarOnTop" Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="QatBottomHost"/>
+                    </MultiTrigger>
+                    <Trigger Property="IsHostedInRibbonWindow" Value="False">
+                        <Setter TargetName="BackgroundBorder" Property="Grid.Row" Value="0" />
+                        <Setter TargetName="BackgroundBorder" Property="Grid.RowSpan" Value="4" />
+                        <Setter TargetName="titleBarBackground" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="windowIconPadding" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                    <Trigger Property="IsDropDownOpen" Value="True">
+                        <Setter Property="BorderThickness" Value="0" TargetName="BackgroundBorder"/>
+                    </Trigger>
+                    <Trigger SourceName="PART_ITEMSPRESENTERPOPUP" Property="Popup.HasDropShadow" Value="true">
+                        <Setter TargetName="Shdw" Property="Color" Value="{StaticResource RibbonShadowColorKey}"/>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=IsActive}" Value="False"/>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHostedInRibbonWindow}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="PART_TitleHost" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+                    </MultiDataTrigger>
+
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="BackgroundBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <Setter TargetName="groupsBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="groupsBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <Setter TargetName="groupsBorder" Property="Height" Value="{StaticResource RibbonHighContrastHeight}"/>
+                        <Setter TargetName="QatBottomHost" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <Setter TargetName="titleBarBackground" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="titleBarBackground" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <Setter TargetName="CollapsedPopupBackgroundBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        <Setter TargetName="PART_ITEMSPRESENTERPOPUP" Property="PopupAnimation" Value="None" />
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Margin" Value="10,1,2,2"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Width" Value="1"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="BorderThickness" Value="0"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="Margin" Value="0,1,2,2"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="Width" Value="1"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="BorderThickness" Value="0"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                    </DataTrigger>
+
+                    <!-- The Title & separators that surround the QAT are drawn slightly differently in Aero. -->
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.UxThemeName)}" Value="Aero">
+#else
+                    <DataTrigger Binding="{Binding Path=UxThemeName, Source={x:Static windows:SystemParameters2.Current}}" Value="Aero">
+#endif
+                        <Setter TargetName="QatTopHost" Property="Margin" Value="0,-3,0,0"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Margin" Value="3,3,0,5"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="Background" Value="#81444444"/>
+                        <Setter TargetName="QatTopHostLeftBorder" Property="BorderBrush" Value="#69EEEEEE"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="Margin" Value="0,3,1,5"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="Background" Value="#81444444"/>
+                        <Setter TargetName="QatTopHostRightBorder" Property="BorderBrush" Value="#69EEEEEE"/>
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.UxThemeName)}" Value="Aero"/>
+#else
+                            <Condition Binding="{Binding Path=UxThemeName, Source={x:Static windows:SystemParameters2.Current}}" Value="Aero"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=WindowState}" Value="Maximized"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="QatTopHost" Property="Margin" Value="0"/>
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>

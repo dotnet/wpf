@@ -1,0 +1,884 @@
+﻿<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+ <!--=================================================================
+        ListBox
+    ==================================================================-->
+     <!-- This color is shared between ComboBox and TextBox -->
+    <LinearGradientBrush x:Key="TextBoxBorder"
+                         StartPoint="0,0"
+                         EndPoint="0,20"
+                         MappingMode="Absolute">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#ABADB3"
+                          Offset="0.05"/>
+            <GradientStop Color="#E2E3EA"
+                          Offset="0.07"/>
+            <GradientStop Color="#E3E9EF"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+         
+    <!--=================================================================
+        TextBoxBase
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBoxBase}"
+           TargetType="{x:Type TextBoxBase}"
+           BasedOn="{x:Null}">        
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TextBoxBorder}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Padding"
+                Value="1"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <theme:ListBoxChrome x:Name="Bd"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         Background="{TemplateBinding Background}"
+                                         RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                         RenderFocused="{TemplateBinding IsKeyboardFocusWithin}"
+                                         SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </theme:ListBoxChrome>
+                    <ControlTemplate.Triggers>
+                        <!-- Disabled TextBox Triggers -->
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                        Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--=================================================================
+        TextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type TextBox}">
+    </Style>
+    <!--=================================================================
+        RichTextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type RichTextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type RichTextBox}">        
+        <Style.Resources>
+            <Style x:Key="{x:Type FlowDocument}"
+                   TargetType="{x:Type FlowDocument}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="true"/>
+            </Style>
+            <Style x:Key="{x:Type Hyperlink}"
+                   BasedOn="{StaticResource {x:Type Hyperlink}}"
+                   TargetType="{x:Type Hyperlink}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="true">
+                        <Setter Property="Foreground"
+                                Value="Blue"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinWidth"
+                Value="10"/>
+    </Style>
+    <!--=================================================================
+        PasswordBox
+    ==================================================================-->
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TextBoxBorder}"/>
+        <Setter Property="FontFamily"
+                Value="Times New Roman"/>
+        <Setter Property="PasswordChar"
+                Value="●"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="Padding"
+                Value="1"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <theme:ListBoxChrome x:Name="Bd"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         Background="{TemplateBinding Background}"
+                                         RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                         RenderFocused="{TemplateBinding IsKeyboardFocusWithin}"
+                                         SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </theme:ListBoxChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- [[Classic]] -->
+
+    <Thickness x:Key="TextBoxBaseHighContrastBorderThickness">5</Thickness>
+
+    <!--=================================================================
+        TextBoxBase
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBoxBase}"
+           TargetType="{x:Type TextBoxBase}">
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="2"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>       
+        <Setter Property="Padding"
+                Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <theme:ClassicBorderDecorator Name="Bd"
+                                                  BorderStyle="Sunken"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  BorderBrush="{TemplateBinding BorderBrush}">
+                        <ScrollViewer x:Name="PART_ContentHost"/>
+                    </theme:ClassicBorderDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource TextBoxBaseHighContrastBorderThickness}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--=================================================================
+        PasswordBox
+    ==================================================================-->
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="2"/>
+        <Setter Property="FontFamily"
+                Value="Times New Roman"/>
+        <Setter Property="PasswordChar"
+                Value="●"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Padding"
+                Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <theme:ClassicBorderDecorator Name="Bd"
+                                                  BorderStyle="Sunken"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                                  SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </theme:ClassicBorderDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource TextBoxBaseHighContrastBorderThickness}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- [[AeroLite.NormalColor]] -->
+
+    <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFE2E3EA" />
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FFC5DAED" />
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FFB5CFE7" />
+
+    <!--=================================================================
+        TextBoxBase
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--=================================================================
+        PasswordBox
+    ==================================================================-->
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="PasswordChar" Value="●"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- [[Aero2.NormalColor]] -->
+
+    <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3" />
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA" />
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5" />
+
+    <!--=================================================================
+        TextBoxBase
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--=================================================================
+        PasswordBox
+    ==================================================================-->
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="PasswordChar" Value="●"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!-- [[AeroLite.NormalColor, Aero2.NormalColor, Classic]] -->
+
+    <!--=================================================================
+        TextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type TextBox}">
+    </Style>
+    <!--=================================================================
+        RichTextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type RichTextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style x:Key="{x:Type FlowDocument}"
+                   TargetType="{x:Type FlowDocument}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="true"/>
+            </Style>
+            <Style x:Key="{x:Type Hyperlink}"
+                   BasedOn="{StaticResource {x:Type Hyperlink}}"
+                   TargetType="{x:Type Hyperlink}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="true">
+                        <Setter Property="Foreground"
+                                Value="Blue"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinWidth"
+                Value="10"/>
+    </Style>
+
+    <!-- [[Luna.NormalColor,Luna.Homestead,Luna.Metallic,Royale.NormalColor]] -->
+
+    <!--=================================================================
+        TextBoxBase
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBoxBase}"
+           TargetType="{x:Type TextBoxBase}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource ListBorder}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="Padding"
+                Value="2"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--=================================================================
+        TextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type TextBox}">
+    </Style>
+    <!--=================================================================
+        RichTextBox
+    ==================================================================-->
+    <Style x:Key="{x:Type RichTextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style x:Key="{x:Type FlowDocument}"
+                   TargetType="{x:Type FlowDocument}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="true"/>
+            </Style>
+            <Style x:Key="{x:Type Hyperlink}"
+                   BasedOn="{StaticResource {x:Type Hyperlink}}"
+                   TargetType="{x:Type Hyperlink}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="true">
+                        <Setter Property="Foreground"
+                                Value="Blue"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinWidth"
+                Value="10"/>
+    </Style>
+    <!--=================================================================
+        PasswordBox
+    ==================================================================-->
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource ListBorder}"/>
+        <Setter Property="FontFamily"
+                Value="Times New Roman"/>
+        <Setter Property="PasswordChar"
+                Value="●"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="Padding"
+                Value="2"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="AllowDrop"
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+                <!-- DDVSO:405199
+                     Ensure that the proper text selection colors are used per theme if non-adorner selection is enabled -->
+                <Setter Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+

@@ -1,0 +1,154 @@
+<!-- [[Generic]] -->
+
+<!--=================================================================
+            HorizontalScrollViewer
+    ==================================================================-->
+
+<Style x:Key="ScrollBarButton" TargetType="{x:Type RepeatButton}">
+    <Setter Property="OverridesDefaultStyle" Value="true"/>
+    <Setter Property="Focusable" Value="false"/>
+    <Setter Property="Width" Value="14"/>
+    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(ribbon:RibbonControlService.Ribbon).Background}"/>
+    <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(ribbon:RibbonControlService.Ribbon).BorderBrush}"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <Border Name="OuterBorder" CornerRadius="3,0,0,3" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                    <Border Name="InnerBorder" CornerRadius="3,0,0,3" Background="#80FFFFFF">
+                        <Path Name="GlyphPath" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="#808080" Data="M 4,0 L 0,3.5 L 4,7"/>
+                    </Border>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="HorizontalContentAlignment" Value="Right">
+                        <Setter TargetName="GlyphPath" Property="Data" Value="M 0,0 L 4,3.5 L 0,7"/>
+                        <Setter TargetName="OuterBorder" Property="CornerRadius" Value="0,3,3,0"/>
+                        <Setter TargetName="InnerBorder" Property="CornerRadius" Value="0,3,3,0"/>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(ribbon:RibbonControlService.Ribbon).MouseOverBackground}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(ribbon:RibbonControlService.Ribbon).PressedBackground}"/>
+                    </MultiDataTrigger>
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="OuterBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        <Setter TargetName="InnerBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="GlyphPath" Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<primitives:RibbonScrollButtonVisibilityConverter x:Key="RibbonScrollButtonVisibilityConverter"/>
+
+<ControlTemplate x:Key="HorizontalScrollViewerControlTemplate" TargetType="{x:Type ScrollViewer}">
+    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ScrollContentPresenter  Margin="{TemplateBinding Padding}" x:Name="PART_ScrollContentPresenter" Grid.ColumnSpan="3"  Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}" />
+        <RepeatButton
+                                      Style="{StaticResource ScrollBarButton}"
+                                      HorizontalContentAlignment="Left"
+                                      Grid.Column="0"
+                                      Command="{x:Static ScrollBar.LineLeftCommand}"
+                                      CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                      Focusable="false">
+            <RepeatButton.Visibility>
+                <MultiBinding FallbackValue="Visibility.Collapsed"
+                                              Converter="{StaticResource RibbonScrollButtonVisibilityConverter}"
+                                              ConverterParameter="0">
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ComputedHorizontalScrollBarVisibility"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="HorizontalOffset"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ExtentWidth"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ViewportWidth"/>
+                </MultiBinding>
+            </RepeatButton.Visibility>
+        </RepeatButton>
+        <RepeatButton
+                                      Style="{StaticResource ScrollBarButton}"
+                                      HorizontalContentAlignment="Right"
+                                      Grid.Column="2"
+                                      Command="{x:Static ScrollBar.LineRightCommand}"
+                                      CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                      Focusable="false">
+            <RepeatButton.Visibility>
+                <MultiBinding FallbackValue="Visibility.Collapsed"
+                                              Converter="{StaticResource RibbonScrollButtonVisibilityConverter}"
+                                              ConverterParameter="100">
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ComputedHorizontalScrollBarVisibility"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="HorizontalOffset"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ExtentWidth"/>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="ViewportWidth"/>
+                </MultiBinding>
+            </RepeatButton.Visibility>
+        </RepeatButton>
+    </Grid>
+</ControlTemplate>
+
+<Style x:Key="RibbonTabScrollViewer"
+       TargetType="{x:Type ScrollViewer}"
+       BasedOn="{x:Null}">
+    <Setter Property="Focusable" Value="False"/>
+    <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+    <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+    <Setter Property="CanContentScroll" Value="True"/>
+    <Setter Property="Template" Value="{StaticResource HorizontalScrollViewerControlTemplate}"/>
+</Style>

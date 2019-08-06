@@ -1,0 +1,4 @@
+Compat issues with assembly System.Windows.Controls.Ribbon:
+MembersMustExist : Member 'System.Windows.Controls.Ribbon.RibbonGalleryItem.OnSelected(System.Windows.RoutedEventArgs)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'System.Windows.Controls.Ribbon.RibbonGalleryItem.OnUnselected(System.Windows.RoutedEventArgs)' does not exist in the implementation but it does exist in the contract.
+Total Issues: 2

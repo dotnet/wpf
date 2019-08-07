@@ -95,12 +95,17 @@
       System.Windows.Controls.Ribbon-ref;
       System.Windows.Presentation-ref;
       WindowsFormsIntegration-ref;
+      PresentationUI-ref;
     </InternalHandCraftedReferenceProjects>
+
+    <HandCraftedReferenceProjects>
+      $(ExternalHandCraftedReferenceProjects);
+      $(InternalHandCraftedReferenceProjects)
+    </HandCraftedReferenceProjects>
 
     <HelperProjects>
       $(CycleBreakerProjects);
-      $(ExternalHandCraftedReferenceProjects);
-      $(InternalHandCraftedReferenceProjects);
+      $(HandCraftedReferenceProjects);
     </HelperProjects>
 
     <!--

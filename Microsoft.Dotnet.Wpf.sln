@@ -169,6 +169,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationUI", "src\Micro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsFormsIntegration", "src\Microsoft.DotNet.Wpf\src\WindowsFormsIntegration\WindowsFormsIntegration.csproj", "{9F3166CE-7406-4A8F-8B00-705AE57E6D35}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsFormsIntegration-ref", "src\Microsoft.DotNet.Wpf\src\WindowsFormsIntegration\ref\WindowsFormsIntegration-ref.csproj", "{61334087-4A73-4F17-984B-56B84D2148DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -985,6 +987,18 @@ Global
 		{9F3166CE-7406-4A8F-8B00-705AE57E6D35}.Release|x64.Build.0 = Release|x64
 		{9F3166CE-7406-4A8F-8B00-705AE57E6D35}.Release|x86.ActiveCfg = Release|Any CPU
 		{9F3166CE-7406-4A8F-8B00-705AE57E6D35}.Release|x86.Build.0 = Release|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|x64.ActiveCfg = Debug|x64
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|x64.Build.0 = Debug|x64
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|x64.ActiveCfg = Release|x64
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|x64.Build.0 = Release|x64
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{61334087-4A73-4F17-984B-56B84D2148DA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1053,6 +1067,7 @@ Global
 		{D224BACC-340B-4986-81D6-C695EB2B5A62} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
 		{EA7825C4-0E99-477A-985D-0B5F0421A30A} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
 		{598B6188-937C-448B-8E6B-925F000BC076} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
+		{61334087-4A73-4F17-984B-56B84D2148DA} = {D0AED517-9972-41CB-8751-983E4EB8F511}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4340004-DAC0-497D-B69D-CFA7CD93F567}

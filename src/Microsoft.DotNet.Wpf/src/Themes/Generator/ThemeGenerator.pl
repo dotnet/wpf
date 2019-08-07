@@ -266,7 +266,9 @@ open(UNOPTFILE,">$unoptimizedFile") || die "can't open the output file \"$unopti
 print OUTFILE <<'END';
 
 <!--=================================================================
-Copyright (C) Microsoft Corporation.  All rights reserved.
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
 
 This file was generated from individual xaml files found
    in WPF\src\Themes\XAML\, please do not edit it directly.
@@ -285,7 +287,9 @@ END
 
 print UNOPTFILE <<END;
 <!--=================================================================
-Copyright (C) Microsoft Corporation.  All rights reserved.
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
 
 Theme Styles For Windows Presentation Foundation Version $version
 ==================================================================-->

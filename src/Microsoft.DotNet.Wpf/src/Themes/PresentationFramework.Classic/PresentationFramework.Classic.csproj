@@ -36,16 +36,6 @@
     <Compile Include="Microsoft\Windows\Themes\DataGridHeaderBorder.cs" />
   </ItemGroup>
 
-  <!-- 
-    These theme XAML files are accessed at design-time by IDE's, esp. Visual Studio
-  -->
-  <ItemGroup>
-    <Resource Include="themes/**/*.xaml">
-      <XlfInput>false</XlfInput>
-      <GenerateSource>false</GenerateSource>
-    </Resource>
-  </ItemGroup>
-
   <!-- Project References -->
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />

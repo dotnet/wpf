@@ -67,7 +67,7 @@
       <ManifestResourceName>System.Printing</ManifestResourceName>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <CLCompile Include="CPP\Win32Inc.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -122,11 +122,6 @@
     <CLCompile Include="CPP\src\InteropAttributeValueDictionary.cpp" />
   </ItemGroup>
 
-  <!-- 
-    When a referenced project is migrated from dotnet-wpf-int over to dotnet/github, 
-      i. Remove ReferenceOutputAssembly=False
-      ii. Remove corresponding #using from Win32Inc.hpp
-  -->
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -167,7 +162,7 @@
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
 
-  <Target Name="AddDefineReferences" BeforeTargets="ClCompile" AfterTargets="ResolveReferences" Returns="@(CLCompile)">
+<Target Name="AddDefineReferences" BeforeTargets="ClCompile" AfterTargets="ResolveReferences" Returns="@(CLCompile)">
     <PropertyGroup>
       <_defineReferences>@(_defineReference->'%(Define)=&lt;%(Identity)&gt;')</_defineReferences>
     </PropertyGroup>
@@ -243,6 +238,6 @@
           DestinationFolder="$(ReferenceAssemblyDir)"
           Condition="!Exists('$(ReferenceAssemblyDir)$(SystemPrintingRefDll)')" />
   </Target>
-  
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

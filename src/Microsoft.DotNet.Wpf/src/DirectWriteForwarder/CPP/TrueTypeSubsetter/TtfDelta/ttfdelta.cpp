@@ -791,6 +791,12 @@ CONST_TTFACC_FILEBUFFERINFO InputBufferInfo;
     OutputBufferInfo.ulOffsetTableOffset = 0;
     OutputBufferInfo.lpfnReAllocate = lpfnReAllocate;  /* for reallocation */
 
+    // If OutputBufferInfo.puchBuffer goes through a realloc call that moves it, the original buffer pointed to by
+    // *ppuchDestBuffer will be de-allocated.  If there is then an error condition in the call-chain, we can end up
+    // returning a pointer to the de-allocated buffer.  Callers may then double free the buffer as they are none the wiser.
+    // Setting *ppuchDestBuffer to NULL allows us to return NULL in the error case and the non-error case still works as before.
+    *ppuchDestBuffer = NULL;
+
     if (usFormat == TTFDELTA_SUBSET1 || usFormat == TTFDELTA_DELTA)   /* if we will be trying to compact the font */
         usDttfGlyphIndexCount = usGlyphKeepCount;
     

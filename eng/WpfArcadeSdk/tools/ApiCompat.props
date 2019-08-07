@@ -60,6 +60,7 @@
       System.Xaml;
       WindowsBase;
       WindowsFormsIntegration;
+      PresentationUI;
     </RefApiCompatNeededProjects>
 
     <!-- TODO:  

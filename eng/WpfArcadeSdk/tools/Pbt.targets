@@ -102,6 +102,16 @@
           Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"
           Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') "/>
 
+  <!--
+  WindowsBase comes from NetCoreApp.Reference. When we try to compile the themes dlls, which reference WindowsBase,
+  we then get an error during markup compilation that looks like this:
+  src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Aero\Themes\Aero.NormalColor.xaml(26,27): error MC1000: Unknown build error,
+  'The assembly 'WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' has already loaded been loaded into this
+  MetadataLoadContext. Line 26 Position 27.'  [src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Aero\PresentationFramework.Aero.csproj]
+
+  We always want to reference the WindowsBase that comes from this repository, so we'll go ahead and remove the reference to the one that comes
+  from Microsoft.NetCore.App.Ref
+  -->
   <Target Name="RemoveWindowsBaseNetCoreAppReference"
           AfterTargets="ResolveTargetingPacks"
           BeforeTargets="MarkupCompilePass1"

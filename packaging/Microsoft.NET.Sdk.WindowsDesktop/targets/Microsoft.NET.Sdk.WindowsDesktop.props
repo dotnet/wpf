@@ -156,7 +156,7 @@
                         '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
 
     <!-- 
-            Windows Forms and WPF are supported only on .NET Core 3.0+
+        Windows Forms and WPF are supported only on .NET Core 3.0+
     -->
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.0" />
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.1" />
@@ -165,12 +165,22 @@
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.2" />
 
     <!--
-            Windows Forms and WPF are not supported an any .NET Standard targets
+        Windows Forms and WPF are not supported an any .NET Standard targets
     -->
     <_UnsupportedNETStandardTargetFramework Include="@(SupportedNETStandardTargetFramework)" />
 
+    <!--
+        Windows Forms and WPF are supported on .NET Framework 3.0+
+        
+        The SDK does not define versions < 2.0 in @(SupportedNETFrameworkTargetFramework) list, so none of those
+        need to be excluded here - removing 2.0 would suffice.
+    -->
+    <_UnsupportedNETFrameworkTargetFramework Include=".NETFramework,Version=v2.0" />
+
     <SupportedNETCoreAppTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework)" />
     <SupportedNETStandardTargetFramework Remove="@(_UnsupportedNETStandardTargetFramework)" />
-    <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework)" />
+    <SupportedNETFrameworkTargetFramework Remove="@(_UnsupportedNETFrameworkTargetFramework)" />
+    
+    <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 </Project>

@@ -170,7 +170,16 @@
     <_UnsupportedNETStandardTargetFramework Include="@(SupportedNETStandardTargetFramework)" />
 
     <!--
-        Windows Forms and WPF are supported on .NET Framework 3.0+
+        Windows Forms was supported since .NET Framework 1.0, and is currently supported on 
+        .NET Framework 2.0+. 
+        
+        WPF is supported on .NET Framework and WPF are supported on .NET Framework 3.0+
+        
+        In practice, the WindowsDesktop SDK is only supported on .NET Framework 3.0+ - this is controlled
+        by $(_WindowsDesktopSdkTargetFrameworkVersionFloor), defined as 3.0, which applies to both .NETFramework
+        and .NETCore.
+        
+        Here, we will encode .NET Framework 3.0 as the lowest supported version for both Windows Forms and WPF. 
         
         The SDK does not define versions < 2.0 in @(SupportedNETFrameworkTargetFramework) list, so none of those
         need to be excluded here - removing 2.0 would suffice.

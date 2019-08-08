@@ -209,6 +209,10 @@
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
 
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)PresentationUI\ref\PresentationUI-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

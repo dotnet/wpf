@@ -132,4 +132,64 @@
     <_SDKImplicitReference Include="WindowsFormsIntegration"
                        Condition=" ('$(UseWindowsForms)' == 'true') And ('$(UseWPF)' == 'true') "/>
   </ItemGroup>
+  
+  
+  <!-- 
+        Supported (and unsupported) TargetFrameworks 
+        
+        Visual Studio Project System determines the list of valid TargetFrameworks to show 
+        in the Project properties by querying SupportedTargetFramework values. 
+        
+        The Project System does not refer to this list at this time for .NET Framework TFM's.
+  -->
+
+  <!-- 
+    When WindowsDesktop SDK is used without setting UseWPF or UseWinForms, it shows a (suppressible) warning and functions much
+    like Microsoft.NET.Sdk
+    
+    Likewise, when WindowsDesktop SDK is used with a netcore TFM that is less than 3.0, it will simply act as if it were an
+    Microsoft.NET.Sdk project (and show a suppressible build-time warning). 
+    
+    Detect these situations and skip updates to @(SupportedTargetFramework) etc. 
+  --> 
+  <ItemGroup Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And 
+                        '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+
+    <!-- 
+        Windows Forms and WPF are supported only on .NET Core 3.0+
+    -->
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.0" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.1" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.0" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.1" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.2" />
+
+    <!--
+        Windows Forms and WPF are not supported an any .NET Standard targets
+    -->
+    <_UnsupportedNETStandardTargetFramework Include="@(SupportedNETStandardTargetFramework)" />
+
+    <!--
+        Windows Forms was supported since .NET Framework 1.0, and is currently supported on 
+        .NET Framework 2.0+. 
+        
+        WPF is supported on .NET Framework and WPF are supported on .NET Framework 3.0+
+        
+        In practice, the WindowsDesktop SDK is only supported on .NET Framework 3.0+ - this is controlled
+        by $(_WindowsDesktopSdkTargetFrameworkVersionFloor), defined as 3.0, which applies to both .NETFramework
+        and .NETCore.
+        
+        Here, we will encode .NET Framework 3.0 as the lowest supported version for both Windows Forms and WPF. 
+        
+        The SDK does not define versions < 2.0 in @(SupportedNETFrameworkTargetFramework) list, so none of those
+        need to be excluded here - removing 2.0 would suffice.
+    -->
+    <_UnsupportedNETFrameworkTargetFramework Include=".NETFramework,Version=v2.0" />
+
+    <SupportedNETCoreAppTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework)" />
+    <SupportedNETStandardTargetFramework Remove="@(_UnsupportedNETStandardTargetFramework)" />
+    <SupportedNETFrameworkTargetFramework Remove="@(_UnsupportedNETFrameworkTargetFramework)" />
+    
+    <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
+  </ItemGroup>
 </Project>

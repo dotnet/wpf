@@ -1,0 +1,7 @@
+Compat issues with assembly WindowsFormsIntegration:
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.Peers.WindowsFormsHostAutomationPeer' does not inherit from base type 'System.Windows.Threading.DispatcherObject' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.DesignerAttribute' exists on 'System.Windows.Forms.Integration.ElementHost' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.Design.Serialization.DesignerSerializerAttribute' exists on 'System.Windows.Forms.Integration.ElementHost' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.Forms.Integration.PropertyMap' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Forms.Integration.WindowsFormsHost' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+Total Issues: 5

@@ -1,0 +1,1203 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor]] -->
+
+ 
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style>
+    
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}" />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        DocumentViewer
+    ==================================================================-->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DocumentViewerToolBarDividerGradient"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="1"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="0"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Classic]] -->
+
+
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style>
+
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}" />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}"
+                        />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"
+                        />
+    </DataTemplate>
+    <!--
+            **********************************************************
+            * DocumentViewer Style                                       *
+            **********************************************************
+    -->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InfoColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.MenuColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Luna.Homestead]] -->
+
+
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style>
+
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}" />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        DocumentViewer
+    ==================================================================-->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DocumentViewerToolBarDividerGradient"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="1"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="0"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.Metallic]] -->
+ 
+
+
+ 
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style> 
+
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        DocumentViewer
+    ==================================================================-->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DocumentViewerToolBarDividerGradient"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="1"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="0"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Luna.NormalColor]] -->
+
+  
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style>
+    
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}" />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}" />
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        DocumentViewer
+    ==================================================================-->
+    <!--TODO: Can these be moved to PresentationUI? -->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DocumentViewerToolBarDividerGradient"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="1"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="0"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Royale.NormalColor]] -->
+
+
+   
+   
+    <!--=================================================================
+        FlowDocument
+    ==================================================================-->
+    <Style x:Key="{x:Type FlowDocument}"
+           TargetType="{x:Type FlowDocument}">
+        <Setter Property="TextAlignment"
+                Value="Justify"/>
+        <Setter Property="FontFamily"
+                Value="Georgia"/>
+        <Setter Property="FontSize"
+                Value="16.0"/>
+    </Style>
+    <!--=================================================================
+        TextBlock
+    ==================================================================-->
+    <Style x:Key="{x:Type TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping"
+                Value="NoWrap"/>
+        <Setter Property="TextTrimming"
+                Value="None"/>
+    </Style>
+    <!--=================================================================
+        Bold
+    ==================================================================-->
+    <Style x:Key="{x:Type Bold}"
+           TargetType="{x:Type Bold}">
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+    </Style>
+    <!--=================================================================
+        Italic
+    ==================================================================-->
+    <Style x:Key="{x:Type Italic}"
+           TargetType="{x:Type Italic}">
+        <Setter Property="FontStyle"
+                Value="Italic"/>
+    </Style>
+    <!--=================================================================
+        Underline
+    ==================================================================-->
+    <Style x:Key="{x:Type Underline}"
+           TargetType="{x:Type Underline}">
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+    </Style>
+    <!--=================================================================
+        Paragraph
+    ==================================================================-->
+    <Style x:Key="{x:Type Paragraph}"
+           TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        List
+    ==================================================================-->
+    <Style x:Key="{x:Type List}"
+           TargetType="{x:Type List}">
+        <Setter Property="Margin"
+                Value="Auto"/>
+        <Setter Property="Padding"
+                Value="Auto"/>
+    </Style>
+    <!--=================================================================
+        Floater
+    ==================================================================-->
+    <Style x:Key="{x:Type Floater}"
+           TargetType="{x:Type Floater}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right"/>
+    </Style>
+    
+  
+    <!--=================================================================
+        FlowDocument - Handled by FlowDocumentReader
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FlowDocument}">
+        <FlowDocumentReader Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocument - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocument}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        FixedDocumentSequence - Handled by DocumentViewer
+    ==================================================================-->
+    <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+        <DocumentViewer Document="{Binding}"/>
+    </DataTemplate>
+    <!--=================================================================
+        DocumentViewer
+    ==================================================================-->
+    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentViewerToolBarGradient}"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="0"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DocumentViewerToolBarDividerGradient"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionTextColor}"
+                          Offset="1"/>
+            <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}"
+                          Offset="0"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!-- DocumentViewer Style -->
+    <Style x:Key="{x:Type DocumentViewer}"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle x:Name="ToolbarShadow"
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

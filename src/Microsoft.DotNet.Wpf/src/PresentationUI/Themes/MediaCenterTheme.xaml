@@ -1,0 +1,308 @@
+﻿<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+=================================================================-->
+<ResourceDictionary
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      x:Uid="ResourceDictionary_2"
+    >
+    <!-- TODO: Add simple theme from sdk here for controls that are mce worthy -->
+       <!-- MCE Shared Resources -->
+
+  <LinearGradientBrush x:Key="GlassyBackground" StartPoint="0,0" EndPoint="0,1" x:Uid="LinearGradientBrush_1">
+    <LinearGradientBrush.GradientStops>
+
+      <GradientStop Color="#60FFFFFF" Offset="0" x:Uid="GradientStop_1"/>
+      <GradientStop Color="#30FFFFFF" Offset="0.4" x:Uid="GradientStop_2"/>
+      <GradientStop Color="#20FFFFFF" Offset="0.7" x:Uid="GradientStop_3"/>
+      <GradientStop Color="#40FFFFFF" Offset="1" x:Uid="GradientStop_4"/>
+
+  </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="GlassyBorder" StartPoint="0,0" EndPoint="0,1" x:Uid="LinearGradientBrush_2">
+  <LinearGradientBrush.GradientStops>
+      <GradientStop Color="#E0FFFFFF" Offset="0" x:Uid="GradientStop_5"/>
+      <GradientStop Color="#80FFFFFF" Offset="0.4" x:Uid="GradientStop_6"/>
+      <GradientStop Color="#70FFFFFF" Offset="0.8" x:Uid="GradientStop_7"/>
+      <GradientStop Color="#90FFFFFF" Offset="1" x:Uid="GradientStop_8"/>
+
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" x:Uid="Style_1" >
+    <!-- Setter Property="OverridesDefaultStyle" Value="true" /-->
+    <Setter x:Uid="Setter_136" Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Background" Value="#10FFFFFF" x:Uid="Setter_1"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF" x:Uid="Setter_2"/>
+    <Setter Property="HorizontalContentAlignment" Value="Left" x:Uid="Setter_3"/>
+    <Setter Property="VerticalContentAlignment" Value="Center" x:Uid="Setter_4"/>
+    <Setter Property="Padding" Value="10,4,10,4" x:Uid="Setter_5"/>
+    <Setter Property="FontFamily" Value="Segoe SemiBold" x:Uid="Setter_6"/>
+    <Setter Property="FontSize" Value="28" x:Uid="Setter_7"/>
+    <Setter Property="Foreground" Value="White" x:Uid="Setter_8" />
+    <Setter Property="Template" x:Uid="Setter_9">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}" x:Uid="ControlTemplate_1">
+          <Border x:Name="Border" Padding="{TemplateBinding Padding}" CornerRadius="3" Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" x:Uid="Border_1">
+            <ContentPresenter x:Name="ContentSite" 
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" x:Uid="ContentPresenter_1"/>
+          </Border>
+
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True" x:Uid="Trigger_1">
+                <Setter TargetName="Border" Property="BorderBrush" Value="#B0FFFFFF" x:Uid="Setter_10"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True" x:Uid="Trigger_2">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource GlassyBackground}" x:Uid="Setter_11"/>
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource GlassyBorder}" x:Uid="Setter_12"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True" x:Uid="Trigger_3">
+                <Setter TargetName="Border" Property="Background" Value="#10FFFFFF" x:Uid="Setter_13"/>
+                <Setter TargetName="Border" Property="BorderBrush" Value="#40FFFFFF" x:Uid="Setter_14"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false" x:Uid="Trigger_4">
+              <Setter Property="Foreground" Value="#40FFFFFF" x:Uid="Setter_15"/>
+            </Trigger>
+<!--
+            <Trigger Property="Width" Value="Auto">
+              <Setter Property="MinWidth" Value="280" />
+            </Trigger>
+            <Trigger Property="Height" Value="Auto">
+              <Setter Property="MinHeight" Value="50" />
+            </Trigger>
+-->
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!-- MCE CheckBox -->
+
+  <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}" x:Uid="Style_2">
+    <Setter Property="OverridesDefaultStyle" Value="true" x:Uid="Setter_16"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" x:Uid="Setter_17"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF" x:Uid="Setter_18"/>
+    <Setter Property="Background" Value="#10FFFFFF" x:Uid="Setter_19"/>
+    <Setter Property="Padding" Value="10,5,0,0" x:Uid="Setter_20"/>
+    <Setter Property="Margin" Value="3" x:Uid="Setter_21"/>
+    <Setter Property="FontFamily" Value="Segoe SemiBold" x:Uid="Setter_22"/>
+    <Setter Property="FontSize" Value="28" x:Uid="Setter_23"/>
+    <Setter Property="Foreground" Value="White" x:Uid="Setter_24"/>
+    <Setter Property="Template" x:Uid="Setter_25">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type CheckBox}" x:Uid="ControlTemplate_2">
+          <BulletDecorator Background="Transparent" x:Uid="BulletDecorator_1">
+              <BulletDecorator.Bullet>
+                  <Grid x:Uid="Grid_1">
+                <Rectangle x:Name="OuterRectangle" RadiusX="3" RadiusY="3" Width="50" Height="50"  Fill="{TemplateBinding Background}" StrokeThickness="2" Stroke="{TemplateBinding BorderBrush}" x:Uid="Rectangle_1"/>
+                <Path VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Checkmark" Fill="#40FFFFFF" Visibility="Hidden" Data="M 2 10 L -1 13 L 7.5 22 L 24 5 L 21 2 L 7.5 16 Z" x:Uid="Path_1"/>
+              </Grid>
+            </BulletDecorator.Bullet>
+            <ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" x:Uid="ContentPresenter_2"/>
+          </BulletDecorator>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True" x:Uid="Trigger_5">
+              <Setter TargetName="Checkmark" Property="Fill" Value="#B0FFFFFF" x:Uid="Setter_26"/>
+              <Setter TargetName="OuterRectangle" Property="Stroke" Value="#B0FFFFFF" x:Uid="Setter_27"/>
+          </Trigger>
+          <Trigger Property="IsFocused" Value="True" x:Uid="Trigger_6">
+              <Setter TargetName="Checkmark" Property="Fill" Value="White" x:Uid="Setter_135"/>
+              <Setter TargetName="OuterRectangle" Property="Stroke" Value="{StaticResource GlassyBorder}" x:Uid="Setter_28"/>
+                <Setter TargetName="OuterRectangle" Property="Fill" Value="{StaticResource GlassyBackground}" x:Uid="Setter_29"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True" x:Uid="Trigger_7">
+                <Setter TargetName="Checkmark" Property="Visibility" Value="Visible" x:Uid="Setter_30"/>
+              <Setter TargetName="Checkmark" Property="Fill" Value="#66FFFFFF" x:Uid="Setter_31"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True" x:Uid="Trigger_8">
+                <Setter TargetName="Checkmark" Property="Visibility" Value="Visible" x:Uid="Setter_32"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false" x:Uid="Trigger_9">
+                <Setter Property="Foreground" Value="#40FFFFFF" x:Uid="Setter_33"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type RadioButton}" x:Uid="Style_3">
+    <Setter Property="OverridesDefaultStyle" Value="true" x:Uid="Setter_34"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" x:Uid="Setter_35"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF" x:Uid="Setter_36"/>
+    <Setter Property="Background" Value="#10FFFFFF" x:Uid="Setter_37"/>
+    <Setter Property="Padding" Value="10,5,0,0" x:Uid="Setter_38"/>
+    <Setter Property="Margin" Value="3" x:Uid="Setter_39"/>
+    <Setter Property="FontFamily" Value="Segoe SemiBold" x:Uid="Setter_40"/>
+    <Setter Property="FontSize" Value="28" x:Uid="Setter_41"/>
+    <Setter Property="Foreground" Value="White" x:Uid="Setter_42"/>
+    <Setter Property="Template"  x:Uid="Setter_43">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type RadioButton}"  x:Uid="ControlTemplate_43">
+          <BulletDecorator Background="Transparent"  x:Uid="BulletDecorator_44">
+            <BulletDecorator.Bullet>
+                <Grid  x:Uid="Grid_45">
+                <Ellipse x:Name="OuterCircle" Width="50" Height="50"  Fill="{TemplateBinding Background}" StrokeThickness="2" Stroke="{TemplateBinding BorderBrush}"  x:Uid="Ellipse_46"/>
+                <Ellipse x:Name="InnerCircle" Width="20"  Height="20" Fill="#40FFFFFF" Visibility="Hidden"  x:Uid="Ellipse_47"/>
+              </Grid>
+            </BulletDecorator.Bullet>
+            <ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True"  x:Uid="ContentPresenter_48"/>
+          </BulletDecorator>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True"  x:Uid="Trigger_49">
+              <Setter TargetName="InnerCircle" Property="Fill" Value="#B0FFFFFF"  x:Uid="Setter_49"/>
+              <Setter TargetName="OuterCircle" Property="Stroke" Value="#B0FFFFFF"  x:Uid="Setter_50"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True"  x:Uid="Trigger_51">
+              <Setter TargetName="InnerCircle" Property="Fill" Value="White"  x:Uid="Setter_52"/>
+              <Setter TargetName="OuterCircle" Property="Stroke" Value="{StaticResource GlassyBorder}"  x:Uid="Setter_53"/>
+              <Setter TargetName="OuterCircle" Property="Fill" Value="{StaticResource GlassyBackground}"  x:Uid="Setter_54"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True"  x:Uid="Trigger_55">
+              <Setter TargetName="InnerCircle" Property="Visibility" Value="Visible"  x:Uid="Setter_56"/>
+              <Setter TargetName="InnerCircle" Property="Fill" Value="#66FFFFFF"  x:Uid="Setter_57"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True"  x:Uid="Trigger_58">
+              <Setter TargetName="InnerCircle" Property="Visibility" Value="Visible"  x:Uid="Setter_59"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False"  x:Uid="Trigger_60">
+              <Setter Property="Foreground" Value="#40FFFFFF"  x:Uid="Setter_61"/>
+              <Setter TargetName="InnerCircle" Property="Fill" Value="#40FFFFFF"  x:Uid="Setter_62"/>
+              <Setter TargetName="OuterCircle" Property="Stroke" Value="#40FFFFFF"  x:Uid="Setter_63"/>
+              <Setter TargetName="OuterCircle" Property="Fill" Value="#10FFFFFF"  x:Uid="Setter_64"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}"  x:Uid="Style_65">
+    <Setter Property="Foreground" Value="#C0FFFFFF"  x:Uid="Setter_66"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF"  x:Uid="Setter_67"/>
+    <Setter Property="Background" Value="Transparent"  x:Uid="Setter_68"/>
+    <Setter Property="Template"  x:Uid="Setter_69">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ProgressBar}"  x:Uid="ControlTemplate_70">
+            <Border x:Name="PART_Track" Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}"   x:Uid="Border_71">
+            <Rectangle HorizontalAlignment="Left" Fill="{TemplateBinding Foreground}" x:Name="PART_Indicator"  x:Uid="Rectangle_72"/>
+          </Border>
+          <ControlTemplate.Triggers>
+<!--
+            <Trigger Property="Width" Value="Auto"  x:Uid="Trigger_73">
+              <Setter TargetName="PART_Track" Property="MinWidth" Value="100"  x:Uid="Setter_74"/>
+            </Trigger>
+-->
+            <Trigger Property="Height" Value="Auto"  x:Uid="Trigger_75">
+              <Setter TargetName="PART_Track" Property="MinHeight" Value="21"  x:Uid="Setter_76"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBoxBase}"  x:Uid="Style_77">
+    <Setter Property="OverridesDefaultStyle" Value="true"  x:Uid="Setter_78"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"  x:Uid="Setter_79"/>
+    <Setter Property="Background" Value="#40FFFFFF"  x:Uid="Setter_80"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF"  x:Uid="Setter_81"/>
+    <Setter Property="Padding" Value="2"  x:Uid="Setter_82"/>
+    <Setter Property="Padding" Value="4,4,4,4"  x:Uid="Setter_83"/>
+    <Setter Property="FontFamily" Value="Segoe SemiBold"  x:Uid="Setter_84"/>
+    <Setter Property="FontSize" Value="48"  x:Uid="Setter_85"/>
+    <Setter Property="Foreground" Value="Black"  x:Uid="Setter_86"/>
+    <Setter Property="Template"  x:Uid="Setter_87">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type TextBox}"  x:Uid="ControlTemplate_88">
+          <Border x:Name="PART_ContentHost" CornerRadius="3" Focusable="false" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"  x:Uid="Border_89"/>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused" Value="True"  x:Uid="Trigger_90">
+              <Setter TargetName="PART_ContentHost" Property="Background" Value="White"  x:Uid="Setter_91"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false"  x:Uid="Trigger_92">
+              <Setter TargetName="PART_ContentHost" Property="Background" Value="#10FFFFFF"  x:Uid="Setter_93"/>
+              <Setter TargetName="PART_ContentHost" Property="BorderBrush" Value="#10FFFFFF"  x:Uid="Setter_94"/>
+              <Setter Property="Foreground" Value="#40FFFFFF"  x:Uid="Setter_95"/>
+            </Trigger>
+            <Trigger Property="Width" Value="Auto"  x:Uid="Trigger_95">
+              <Setter Property="MinWidth" Value="250"  x:Uid="Setter_96"/>
+            </Trigger>
+            <Trigger Property="Height" Value="Auto"  x:Uid="Trigger_97">
+              <Setter Property="MinHeight" Value="50"  x:Uid="Setter_98"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type ListBox}" TargetType="{x:Type ListBox}"  x:Uid="Style_99">
+    <Setter Property="OverridesDefaultStyle" Value="true"  x:Uid="Setter_100"/>
+    <Setter Property="Background" Value="Transparent"  x:Uid="Setter_101"/>
+    <Setter Property="BorderThickness" Value="2"  x:Uid="Setter_102"/>
+    <Setter Property="BorderBrush" Value="Transparent"  x:Uid="Setter_103"/>
+    <Setter Property="Padding" Value="6"  x:Uid="Setter_104"/>
+    <Setter Property="FontFamily" Value="Segoe SemiBold"  x:Uid="Setter_105"/>
+    <Setter Property="FontSize" Value="28"  x:Uid="Setter_106"/>
+    <Setter Property="Foreground" Value="White"  x:Uid="Setter_107"/>
+    <Setter Property="Template"  x:Uid="Setter_108">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ListBox}"  x:Uid="ControlTemplate_109">
+          <Border 
+            CornerRadius="3" 
+            Background="{TemplateBinding Background}" 
+            BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}"
+             x:Uid="Border_110"							>
+            <ItemsPresenter x:Uid="ItemPresenter_136"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- MCE ListBoxItem -->
+
+  <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}"  x:Uid="Style_111">
+    <Setter Property="OverridesDefaultStyle" Value="true"  x:Uid="Setter_112"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" x:Uid="Setter_113"/>
+    <Setter Property="Background" Value="#10FFFFFF" x:Uid="Setter_114"/>
+    <Setter Property="BorderBrush" Value="#40FFFFFF" x:Uid="Setter_115"/>
+    <Setter Property="HorizontalContentAlignment" Value="Left" x:Uid="Setter_116"/>
+    <Setter Property="VerticalContentAlignment" Value="Center" x:Uid="Setter_117"/>
+    <Setter Property="Padding" Value="10,4,10,4" x:Uid="Setter_118"/>
+    <Setter Property="Margin" Value="0,0,4,4" x:Uid="Setter_119"/>
+    <Setter Property="Template" x:Uid="Setter_120">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ListBoxItem}" x:Uid="ControlTemplate_121">
+            <Border x:Name="Border" Padding="{TemplateBinding Padding}" CornerRadius="3" Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" x:Uid="Border_122">
+            <ContentPresenter x:Name="ContentSite" 
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" x:Uid="ContentPresenter_123"
+								/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsSelected" Value="true" x:Uid="Trigger_124">
+              <Setter Property="Background" Value="{StaticResource GlassyBackground}" x:Uid="Setter_125"/>
+              <Setter Property="BorderBrush" Value="{StaticResource GlassyBorder}" x:Uid="Setter_126"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true" x:Uid="Trigger_127">
+              <Setter Property="BorderBrush" Value="#B0FFFFFF" x:Uid="Setter_128"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false" x:Uid="Trigger_129">
+              <Setter Property="Foreground" Value="#40FFFFFF" x:Uid="Setter_130"/>
+            </Trigger>
+            <Trigger Property="Width" Value="Auto" x:Uid="Trigger_131">
+              <Setter Property="MinWidth" Value="280" x:Uid="Setter_132"/>
+            </Trigger>
+            <Trigger Property="Height" Value="Auto" x:Uid="Trigger_133">
+              <Setter Property="MinHeight" Value="50" x:Uid="Setter_134"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

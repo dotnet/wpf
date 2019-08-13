@@ -79,7 +79,7 @@ stages:
       # This is to enable SDL runs part of Post-Build Validation Stage
       # Temporarily disable SDK validation until https://github.com/dotnet/arcade/issues/3565 is resolved. 
       SDLValidationParameters:
-        enable: false
+        enable: true
         params: ' -SourceToolsList @("policheck","credscan")
         -TsaInstanceURL $(_TsaInstanceURL)
         -TsaProjectName $(_TsaProjectName)

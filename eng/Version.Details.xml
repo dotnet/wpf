@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview9.19414.5">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-preview9.19414.6">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>695d02b474b6fc387d24ef9d8064882d4a6aaf2e</Sha>
+      <Sha>6a5fe0aa61d3b498574ae0f8b0b330f8dbcaac10</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
@@ -59,9 +59,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>b82d2bc44424c8a99a1f0fc13202bdfd43e6f9f5</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview9-19414-05" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-preview9-19414-10" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>a46b9aa0efb53f37c7af0760e8ad8eb347f0ea19</Sha>
+      <Sha>da4c59684cb1f42511820e4c7d1ec2af460fc96c</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19411.1">
       <Uri>https://github.com/dotnet/arcade</Uri>

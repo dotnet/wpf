@@ -112,6 +112,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview9.19416.4</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview9.19416.7</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

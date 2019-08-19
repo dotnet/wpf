@@ -168,6 +168,7 @@
     <Compile Include="System\ComponentModel\IItemProperties.cs" />
     <Compile Include="System\ComponentModel\GroupDescription.cs" />
     <Compile Include="System\ComponentModel\PropertyChangedEventManager.cs" />
+    <Compile Include="System\ComponentModel\PropertyChangedExtensions.cs" />
     <Compile Include="System\ComponentModel\PropertyFilterFlags.cs" />
     <Compile Include="System\ComponentModel\PropertyFilterAttribute.cs" />
     <Compile Include="System\ComponentModel\SortDescription.cs" />

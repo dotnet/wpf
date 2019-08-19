@@ -793,7 +793,7 @@ namespace System.Windows.Documents
             // multi-word errors correctly.
             //
 
-            status = new ScanStatus(timeLimit);
+            status = new ScanStatus(timeLimit, start);
 
             XmlLanguage language;
             CultureInfo culture = GetCurrentCultureAndLanguage(start, out language);
@@ -1025,7 +1025,20 @@ namespace System.Windows.Documents
                     // a multi-word error.
                     if (timeOutOffset > data.TextMap.ContentStartOffset)
                     {
-                        status.TimeoutPosition = data.TextMap.MapOffsetToPosition(timeOutOffset);
+                        ITextPointer timeoutPosition = data.TextMap.MapOffsetToPosition(timeOutOffset);
+
+                        // even if the offset has advanced past the content-start,
+                        // the text position may not have advanced past the original
+                        // starting position.  (This has been observed when resuming
+                        // a scan after a timeout near a Hyperlink.  The second scan
+                        // effectively repeats the work of the first, after backing
+                        // up the context, and times out in the same place as the
+                        // first, thus making no progress.)
+                        // Ignore the time limit if no progress has been made.
+                        if (timeoutPosition.CompareTo(status.StartPosition) > 0)
+                        {
+                            status.TimeoutPosition = timeoutPosition;
+                        }
                     }
                 }
             }
@@ -1854,9 +1867,10 @@ namespace System.Windows.Documents
         {
             // Creates a new instance.  timeLimit is the maximum value of
             // DateTime.Now.Ticks at which the scan should end.
-            internal ScanStatus(long timeLimit)
+            internal ScanStatus(long timeLimit, ITextPointer startPosition)
             {
                 _timeLimit = timeLimit;
+                _startPosition = startPosition;
             }
 
             // Returns true if the scan has exceeded its time budget.
@@ -1886,8 +1900,17 @@ namespace System.Windows.Documents
                 set { _timeoutPosition = value; }
             }
 
+            // starting text position - scan must advance past this
+            internal ITextPointer StartPosition
+            {
+                get { return _startPosition; }
+            }
+
             // Budget for this scan, in 100 nanosecond intervals.
             private readonly long _timeLimit;
+
+            // starting text position - scan must advance past this
+            private readonly ITextPointer _startPosition;
 
             // If we've timed out, holds the position we left off -- the remainder
             // of the text run yet to be analyzed.

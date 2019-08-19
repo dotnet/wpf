@@ -1,0 +1,81 @@
+﻿<!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonGalleryCategory
+        ==================================================================-->
+    <SolidColorBrush x:Key="RibbonGalleryCategoryHeaderBackGroundBrushKey" Color="#0C000000" />
+
+    <Style x:Key="{x:Type ribbon:RibbonGalleryCategory}"  TargetType="{x:Type ribbon:RibbonGalleryCategory}">
+        <Setter Property="Background" Value="{StaticResource RibbonGalleryCategoryHeaderBackGroundBrushKey}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment"
+                        Value="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment"
+                        Value="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <primitives:RibbonGalleryItemsPanel Name ="ItemsHostPanel" IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonGalleryCategory}">
+                    <Grid x:Name="MainGrid"
+                          SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="HeaderBorder" 
+                                CornerRadius="2"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"                               
+                                Visibility="{TemplateBinding HeaderVisibility}">
+
+                            <ContentPresenter x:Name="PART_Header"
+                                              ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                        </Border>
+                        <ItemsPresenter x:Name="ItemsHost" 
+                                        Grid.Row="1"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}"/>
+                        </Trigger>
+
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <Setter TargetName="HeaderBorder" Property="CornerRadius" Value="0"/>
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

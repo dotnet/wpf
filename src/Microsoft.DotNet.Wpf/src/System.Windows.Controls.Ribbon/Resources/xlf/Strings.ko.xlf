@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ko" original="../Strings.resx">
+    <body>
+      <trans-unit id="ElementNotKeyTipScope">
+        <source>Element is not a valid KeyTip scope.</source>
+        <target state="translated">요소가 유효한 KeyTip 범위가 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InRibbonGallery_ScrollDownButtonAutomationName">
+        <source>Row Down</source>
+        <target state="translated">행 아래로</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InRibbonGallery_ScrollUpButtonAutomationName">
+        <source>Row Up</source>
+        <target state="translated">행 위로</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidApplicationMenuOrItemContainer">
+        <source>'{0}' can only host a RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
+        <target state="translated">'{0}'은(는) RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery 또는 RibbonSeparator만 호스트할 수 있습니다. '{1}'은(는) 잘못된 컨테이너입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterNoInfinityForStarSize">
+        <source>'{0}' parameter cannot be Infinity for RibbonControlLengthUnitType.Star.</source>
+        <target state="translated">'{0}' 매개 변수는 RibbonControlLengthUnitType.Star가 Infinity일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterNoNaN">
+        <source>'{0}' parameter cannot be NaN.</source>
+        <target state="translated">매개 변수 '{0}'은(는) NaN일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterUnknownRibbonControlLengthUnitType">
+        <source>'{0}' parameter is not valid. Valid values are RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item, or RibbonControlLengthUnitType.Star.</source>
+        <target state="translated">'{0}' 매개 변수가 잘못되었습니다. 유효한 값은 RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item 또는 RibbonControlLengthUnitType.Star입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidKeyTipOffset">
+        <source>Offset cannot be infinity or NaN.</source>
+        <target state="translated">오프셋은 무한대 또는 NaN일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMenuButtonOrItemContainer">
+        <source>'{0}' can only host a RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
+        <target state="translated">'{0}'은(는) RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery 또는 RibbonSeparator만 호스트할 수 있습니다. '{1}'은(는) 잘못된 컨테이너입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QATKeyTipCharacters">
+        <source>ABCDEFGHIJKLMNOPQRSTUVWXYZ</source>
+        <target state="translated">ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResizeParametersNotValid">
+        <source>Resize parameters out of bounds.</source>
+        <target state="translated">범위를 벗어난 매개 변수의 크기를 조정하십시오.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_AddGalleryToQAT">
+        <source>_Add gallery to Quick Access Toolbar</source>
+        <target state="translated">빠른 실행 도구 모음에 갤러리 추가(_A)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_AddToQAT">
+        <source>_Add to Quick Access Toolbar</source>
+        <target state="translated">빠른 실행 도구 모음에 추가(_A)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_MaximizeTheRibbon">
+        <source>Ma_ximize the Ribbon</source>
+        <target state="translated">리본 최대화(_X)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_MinimizeTheRibbon">
+        <source>Mi_nimize the Ribbon</source>
+        <target state="translated">리본 최소화(_N)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_RemoveFromQAT">
+        <source>_Remove from Quick Access Toolbar</source>
+        <target state="translated">빠른 실행 도구 모음에서 제거(_R)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_ShowQATAbove">
+        <source>_Show Quick Access Toolbar above the Ribbon</source>
+        <target state="translated">빠른 실행 도구 모음을 리본 위에 표시(_S)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_ShowQATBelow">
+        <source>_Show Quick Access Toolbar below the Ribbon</source>
+        <target state="translated">빠른 실행 도구 모음을 리본 아래에 표시(_S)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonGallery_AllFilter">
+        <source>All</source>
+        <target state="translated">전체</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonGroupsPanel_InvalidRegistrationParameter">
+        <source>RibbonGroupsPanel RegisterStarLayoutProvider and UnregisterStarLayoutProvider accepts only IProvideStarLayoutInfo instances.</source>
+        <target state="translated">RibbonGroupsPanel RegisterStarLayoutProvider와 UnregisterStarLayoutProvider는 IProvideStarLayoutInfo 인스턴스만 허용합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonQuickAccessToolBar_OverflowButtonToolTip">
+        <source>More controls</source>
+        <target state="translated">기타 컨트롤</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonWindow_ExtendUnShownGlass">
+        <source>Window must be shown before extending glass</source>
+        <target state="translated">투명 효과를 확장하기 전에 창을 표시해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Ribbon_ContextualTabHeadersSourceInvalid">
+        <source>Cannot set both ContextualTabGroupHeadersSource and ContextualTabGroupHeaders.</source>
+        <target state="translated">ContextualTabGroupHeadersSource와 ContextualTabGroupHeaders를 둘 다 설정할 수는 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>The target element cannot receive focus.</source>
+        <target state="translated">대상 요소가 포커스를 받을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIA_OperationCannotBePerformed">
+        <source>Cannot perform operation.</source>
+        <target state="translated">작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VirtualizedElement">
+        <source>Element does not exist or it is virtualized.</source>
+        <target state="translated">요소가 없거나 가상화되었습니다.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

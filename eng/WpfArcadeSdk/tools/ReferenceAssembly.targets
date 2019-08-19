@@ -42,8 +42,7 @@
   </Target>
 
   <Target Name="CopyIntellisenseXmls"
-          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
-                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')"
+          Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'"
           Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
     <PropertyGroup>
       <!-- Also in global.json -->
@@ -77,8 +76,7 @@
   -->
   <Target Name="CopyHandCraftedReferenceProjectsToRefDir" 
           AfterTargets="PrepareForRun"
-          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
-                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')">
+          Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'">
     <Copy SourceFiles="$(TargetPath)"
           Condition="Exists('$(TargetPath)')"
           DestinationFolder="$(ReferenceAssemblyDir)"

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CLRSupport>pure</CLRSupport>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Target .Net Core 3.0 -->
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
+  </PropertyGroup>
+  
+  <Import Project="$(WpfCppProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{765E6BBC-772B-4808-BB72-E85615E8F237}</ProjectGuid>
+    <UseClrCrt>true</UseClrCrt>
+    <OutputName>System.Printing</OutputName>
+    <TargetType>DYNLINK</TargetType>
+    <LinkSubSystem>CONSOLE</LinkSubSystem>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\CPP;.\CPP\inc;.\CPP\inc\GDIExporter</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAsManaged>pure</CompileAsManaged>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Win32Inc.hpp</PrecompiledHeaderFile>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>%(AdditionalOptions) /CLRUNMANAGEDCODECHECK:NO /ignore:4042</AdditionalOptions>
+      <LinkTimeCodeGeneration Condition="'$(ConfigurationGroup)'!='Debug'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  
+  <ItemGroup>
+    <Link Include="Shlwapi.lib" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\System.Printing.resx">
+      <ManifestResourceName>System.Printing</ManifestResourceName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <CLCompile Include="CPP\Win32Inc.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </CLCompile>
+    <CLCompile Include="CPP\src\PrintQueue.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemAttributeValueFactory.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemNotifications.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemAttributeValue.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemUtil.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemObject.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemObjectFactory.cpp" />
+    <CLCompile Include="CPP\src\Driver.cpp" />
+    <CLCompile Include="CPP\src\Filter.cpp" />
+    <CLCompile Include="CPP\src\PrintProcessor.cpp" />
+    <CLCompile Include="CPP\src\Port.cpp" />
+    <CLCompile Include="CPP\src\ObjectsAttributesValuesFactory.cpp" />
+    <CLCompile Include="CPP\src\PrintServer.cpp" />
+    <CLCompile Include="CPP\src\InteropPrinterDefaults.cpp" />
+    <CLCompile Include="CPP\src\InteropDocInfo.cpp" />
+    <CLCompile Include="CPP\src\InteropDevMode.cpp" />
+    <CLCompile Include="CPP\src\InteropPrinterInfo.cpp" />
+    <CLCompile Include="CPP\src\InteropInfoLevelProfile.cpp" />
+    <CLCompile Include="CPP\src\InteropJobInfo.cpp" />
+    <CLCompile Include="CPP\src\GenericTypeMappings.cpp" />
+    <CLCompile Include="CPP\src\GenericPrinterThunkFilter.cpp" />
+    <CLCompile Include="CPP\src\GenericPrinterLevelThunk.cpp" />
+    <CLCompile Include="CPP\src\GenericDriverThunkFilter.cpp" />
+    <CLCompile Include="CPP\src\GenericDriverLevelThunk.cpp" />
+    <CLCompile Include="CPP\src\GenericJobLevelThunk.cpp" />
+    <CLCompile Include="CPP\src\GenericJobThunkFilter.cpp" />
+    <CLCompile Include="CPP\src\GetDataThunkObject.cpp" />
+    <CLCompile Include="CPP\src\SetDataThunkObject.cpp" />
+    <CLCompile Include="CPP\src\EnumDataThunkObject.cpp" />
+    <CLCompile Include="CPP\src\InteropLevelCoverageList.cpp" />
+    <CLCompile Include="CPP\src\InteropPrinterInfoUnmanagedBuilder.cpp" />
+    <CLCompile Include="CPP\src\InteropPrinterHandler.cpp" />
+    <CLCompile Include="CPP\src\InternalPrintSystemException.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemPathResolver.cpp" />
+    <CLCompile Include="CPP\src\LocalPrintServer.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemAssemblyInfo.cpp" />
+    <CLCompile Include="CPP\src\PrintSystemJobInfo.cpp" />
+    <CLCompile Include="CPP\src\LegacyDevice.cpp" />
+    <CLCompile Include="CPP\src\GDIExporter.cpp" />
+    <CLCompile Include="CPP\src\XpsDeviceSimulatingInteropPrinterHandler.cpp" />
+    <CLCompile Include="CPP\src\XpsCompatiblePrinter.cpp" />
+    <CLCompile Include="CPP\src\XPSDocumentWriter.cpp" />
+    <CLCompile Include="CPP\src\XpsPrintJobStream.cpp" />
+    <CLCompile Include="CPP\src\XpsPrintStream.cpp" />
+    <CLCompile Include="CPP\src\PremiumPrintStream.cpp" />
+    <CLCompile Include="CPP\src\PrintJobSettings.cpp" />
+    <CLCompile Include="CPP\src\PrintDocumentImageableArea.cpp" />
+    <CLCompile Include="CPP\src\InteropAttributeValueDictionary.cpp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_defineReference</OutputItemType>
+      <Define>SYSTEMXAML_DLL</Define>
+    </ProjectReference>
+
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_defineReference</OutputItemType>
+      <Define>WINDOWSBASE_DLL</Define>
+    </ProjectReference>
+
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_defineReference</OutputItemType>
+      <Define>PRESENTATIONCORE_DLL</Define>
+    </ProjectReference>
+
+    <ProjectReference Include="$(WpfCycleBreakersDir)PresentationFramework\PresentationFramework-System.Printing-impl-cycle.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_defineReference</OutputItemType>
+      <Define>PRESENTATIONFRAMEWORK_DLL</Define>
+    </ProjectReference>
+    
+    <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_defineReference</OutputItemType>
+      <Define>REACHFRAMEWORK_DLL</Define>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!-- 
+    PackageReferences to pass to CppCliHelper target  
+  -->
+  <ItemGroup>
+    <AdditionalPackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
+    <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+  </ItemGroup>
+
+<Target Name="AddDefineReferences" BeforeTargets="ClCompile" AfterTargets="ResolveReferences" Returns="@(CLCompile)">
+    <PropertyGroup>
+      <_defineReferences>@(_defineReference->'%(Define)=&lt;%(Identity)&gt;')</_defineReferences>
+    </PropertyGroup>
+    
+    <!-- 
+        EnsureWpfProjectReference target would have filled in @(MicrosoftDotNetWpfGitHubReference)
+        Prior to that, CppCliHelper would have filled in @(Reference) with all the contents of Microsoft.DotNet.Wpf.GitHub
+        
+        Use this knowledge to resolve reference paths for projects that do not exist locally. 
+        Then remove them from @(Reference) and @(ReferencePath) since these assemblies will be reference using #using
+        in Win32Inc.hpp
+    -->
+    <ItemGroup>
+      <_projectRefsFromFallBacks Remove="@(_projectRefsFromFallBacks)" />
+      <__projectRefsFromFallBacksDeDuped Remove="@(_projectRefsFromFallBacksDeDuped)" />
+    </ItemGroup>
+    
+    <FilterItem1ByItem2 Item1="@(MicrosoftDotNetWpfGitHubReference)" 
+                        Item2="@(Reference->'%(FileName)')"
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true"
+                        PreserveItem2Metadata="true">
+        <Output ItemName="_projectRefsFromFallBacks" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+    
+    <RemoveDuplicates Inputs="@(_projectRefsFromFallBacks)">
+      <Output TaskParameter="Filtered" ItemName="_projectRefsFromFallBacksDeDuped" />
+    </RemoveDuplicates>
+
+    <ItemGroup>
+      <_projectFallBackHintPaths Include="@(_projectRefsFromFallBacksDeDuped->'%(HintPath)')" />
+    </ItemGroup>
+    
+    <PropertyGroup>
+      <_defineReferences>$(_defineReferences);@(_projectFallBackHintPaths->'%(Define)=&lt;%(RootDir)%(Directory)..\..\lib\$(TargetFramework)\%(Filename).dll&gt;')</_defineReferences>
+    </PropertyGroup>
+    <ItemGroup>
+      <CLCompile>
+        <PreprocessorDefinitions>%(CLCompile.PreprocessorDefinitions);$(_defineReferences)</PreprocessorDefinitions>
+      </CLCompile>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Reference Remove="@(_projectRefsFromFallBacksDeDuped->'%(OriginalItemSpec)')" />
+      <ReferencePath Remove="@(_projectRefsFromFallBacksDeDuped->'%(OriginalItemSpec)')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    Ensure that the Reference assembly produced  by System.Printing-ref.csproj is copied to 
+    the appropriate destination folder before it is needed
+  -->
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>SystemPrintingRefDlls</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <PreparePackageAssetsDependsOn>
+      $(PreparePackageAssetsDependsOn);
+      CopySystemPrintingReferenceAssemblyToReferenceAssemblyDir
+    </PreparePackageAssetsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CopySystemPrintingReferenceAssemblyToReferenceAssemblyDir">
+    <PropertyGroup>
+      <SystemPrintingRefDll>@(SystemPrintingRefDlls)</SystemPrintingRefDll>
+    </PropertyGroup>
+    
+    <Copy SourceFiles="$(SystemPrintingRefDll)"
+          DestinationFolder="$(ReferenceAssemblyDir)"
+          Condition="!Exists('$(ReferenceAssemblyDir)$(SystemPrintingRefDll)')" />
+  </Target>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

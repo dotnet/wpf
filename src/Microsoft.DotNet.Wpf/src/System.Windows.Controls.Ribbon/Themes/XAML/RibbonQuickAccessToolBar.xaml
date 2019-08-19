@@ -1,0 +1,133 @@
+﻿
+    <!-- [[Generic]] -->
+
+<!--=================================================================
+            RibbonQuickAccessToolBar
+    ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonQuickAccessToolBar}" TargetType="{x:Type ribbon:RibbonQuickAccessToolBar}">
+        <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.CaptionHeightKey}}" />
+        <Setter Property="Margin" Value="3,-0.5,3,-1.4"/>
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.Background}" />
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.BorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonQuickAccessToolBar}">
+
+                        <Grid SnapsToDevicePixels="True" Margin="{TemplateBinding Margin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Effect>
+                                <DropShadowEffect Color="White" BlurRadius="15.0" ShadowDepth="0"/>
+                            </Grid.Effect>
+
+                            <primitives:RibbonQuickAccessToolBarPanel IsItemsHost="true" Name="PART_MainPanel" Grid.Column="0"/>
+                            
+                            <ContentPresenter Name="MainCustomizeMenuHost"
+                                              Grid.Column="2"
+                                              Content="{Binding Path=CustomizeMenuButton, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                            <Grid x:Name="OverflowButtonHost" Grid.Column="2" Visibility="Collapsed">
+                                <!-- Please note that the setter for the Style property is only so that this ToggleButton doesn't accidentally pick up some styles defined at the app level. -->
+                                <ribbon:RibbonToggleButton x:Name="PART_OverflowButton"
+                                                           Style="{StaticResource {x:Type ribbon:RibbonToggleButton}}"
+                                                           Width="12"
+                                                           IsChecked="{Binding Path=IsOverflowOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                                           ClickMode="Press"
+                                                           KeyTip="00">
+                                    <ribbon:RibbonToggleButton.ControlSizeDefinition>
+                                        <ribbon:RibbonControlSizeDefinition ImageSize="Collapsed" IsLabelVisible="True" />
+                                    </ribbon:RibbonToggleButton.ControlSizeDefinition>
+                                </ribbon:RibbonToggleButton>
+                                <Path HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="1,0,0,0"
+                                      IsHitTestVisible="False"
+                                      Width="7" 
+                                      Height="5" 
+                                      Fill="{TemplateBinding Foreground}" 
+                                      Stretch="Fill" 
+                                      Stroke="{TemplateBinding Foreground}"
+                                      Data="M0,0 L2,2 0,4 M4,0 L6,2 4,4" />
+                                <Popup x:Name="PART_OverflowPopup"
+                                       AllowsTransparency="true"
+                                       Placement="Bottom"
+                                       IsOpen="{Binding Path=IsOverflowOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                                       Focusable="false"
+                                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                                    <classic:SystemDropShadowChrome Name="Shdw"
+                                                                    Color="Transparent"
+                                                                    Focusable="true"
+                                                                    FocusVisualStyle="{x:Null}"
+#ifdef Net40                                                                    
+                                                                    RenderOptions.ClearTypeHint="Enabled"
+#endif                                                                    
+                                    >
+                                        <Border x:Name="PopupBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                CornerRadius="2"
+                                                BorderThickness="1"
+                                                Padding="2">
+                                            <DockPanel>
+                                                <primitives:RibbonQuickAccessToolBarOverflowPanel
+                                                    Name="PART_OverflowPanel"
+                                                    KeyboardNavigation.TabNavigation="Cycle"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                                <ContentPresenter Name="OverflowCustomizeMenuHost" DockPanel.Dock="Right" />
+                                            </DockPanel>
+                                        </Border>
+                                    </classic:SystemDropShadowChrome>
+                                </Popup>
+                            </Grid>
+                        </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- Show QuickAccessToolbar on bottom -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ribbon:Ribbon}, Path=ShowQuickAccessToolBarOnTop}" Value="false">
+                            <Setter TargetName="PART_MainPanel" Property="Margin" Value="2,0,2,0" />
+                        </DataTrigger>
+                        <Trigger Property="HasOverflowItems" Value="true">
+                            <Setter TargetName="OverflowButtonHost" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="MainCustomizeMenuHost" Property="Content" Value="{x:Null}"/>
+                            <Setter TargetName="OverflowCustomizeMenuHost" Property="Content" Value="{Binding Path=CustomizeMenuButton, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_OverflowPopup" Property="Popup.IsOpen" Value="False">
+                            <Setter TargetName="PART_OverflowPopup" Property="PopupAnimation" Value="None" />
+                        </Trigger>
+
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="PART_OverflowPopup" Property="PopupAnimation"  Value="None" />
+                            <Setter TargetName="PopupBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <Setter TargetName="PopupBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter TargetName="PopupBorder" Property="CornerRadius" Value="0"/>
+                            <Setter TargetName="Shdw" Property="CornerRadius" Value="0"/>
+                        </DataTrigger>
+                        <Trigger SourceName="PART_OverflowPopup" Property="Popup.HasDropShadow" Value="true">
+                            <Setter TargetName="Shdw" Property="Margin" Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw" Property="Color" Value="{StaticResource RibbonShadowColorKey}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+
+#ifdef Net45
+            <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+            <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                <Setter Property="Margin" Value="4,0,6,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+

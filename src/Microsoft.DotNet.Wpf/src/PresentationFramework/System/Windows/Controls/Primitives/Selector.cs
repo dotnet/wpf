@@ -729,7 +729,7 @@ namespace System.Windows.Controls.Primitives
             if (entry.IsCoerced || s.SelectedValue != null)
             {
                 // Coercing SelectedValue will retry a previously-set value that had
-                // been coerced to null. 
+                // been coerced to null.
                 s.CoerceValue(SelectedValueProperty);
             }
         }
@@ -1110,6 +1110,16 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">Information about what has changed</param>
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
+            base.OnItemsChanged(e);
+
+            // if the selector is disconnected, don't do any more work - it
+            // wouldn't help, and could actually hurt, e.g. by sending bad
+            // values through bindings attached to the selection properties.
+            if (DataContext == BindingExpressionBase.DisconnectedItem)
+            {
+                return;
+            }
+
             // When items become available, reevaluate the choice of algorithm
             // used by _selectedItems.
             if (e.Action == NotifyCollectionChangedAction.Reset ||
@@ -1118,8 +1128,6 @@ namespace System.Windows.Controls.Primitives
             {
                 ResetSelectedItemsAlgorithm();
             }
-
-            base.OnItemsChanged(e);
 
             // Do not coerce the SelectedIndexProperty if it holds a DeferredSelectedIndexReference
             // because this deferred reference object is guaranteed to produce a pre-coerced value.

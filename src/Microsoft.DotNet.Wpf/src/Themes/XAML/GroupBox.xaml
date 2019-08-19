@@ -1,0 +1,365 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor]] -->
+
+    <!--=================================================================
+            GroupBox
+        ==================================================================-->
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    <Style x:Key="{x:Type GroupBox}"
+           TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush"
+                Value="#D5DFE5"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <!-- Border for the background with the same CornerRadius as the Border with the Header
+                                 Using this because if the background is set in the Border with the Header the opacity
+                                   mask will be applied to the background as well. -->
+                        <Border CornerRadius="4"
+                                Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}"/>
+
+                        <Border CornerRadius="4"
+                                Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="White">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}"
+                                              ConverterParameter="7">
+                                    <Binding ElementName="Header"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualHeight"/>
+                                </MultiBinding>
+                            </Border.OpacityMask>
+
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="3">
+                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="White"
+                                        CornerRadius="2"/>
+                            </Border>
+                        </Border>
+                        
+                        <!-- ContentPresenter for the header -->
+                        <Border x:Name="Header"
+                                Padding="3,1,3,0"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <!-- Primary content for GroupBox -->
+                        <ContentPresenter Grid.Row="2"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!--[[Luna.Homestead]] -->
+
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" 
+                     Color="#D0D0BF"/>
+
+    <SolidColorBrush x:Key="GroupBoxHeaderBrush" 
+                     Color="#99540A"/>
+
+<!--[[Luna.Metallic]] -->
+
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" 
+                     Color="#BFB8BF"/>
+
+    <SolidColorBrush x:Key="GroupBoxHeaderBrush" 
+                     Color="#0046D5"/>
+
+<!--[[Luna.NormalColor]] -->
+
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" 
+                     Color="#D0D0BF"/>
+
+    <SolidColorBrush x:Key="GroupBoxHeaderBrush" 
+                     Color="#0046D5"/>
+
+<!--[[Royale.NormalColor]] -->
+
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" 
+                     Color="#D6D5D9"/>
+
+    <SolidColorBrush x:Key="GroupBoxHeaderBrush" 
+                     Color="#335EA8"/>
+
+<!--[[Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+ 
+    <!--=================================================================
+        GroupBox
+    ==================================================================-->
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    <Style x:Key="{x:Type GroupBox}"
+           TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush"
+                Value="{StaticResource GroupBoxBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <!-- Border for the background with the same CornerRadius as the Border with the Header
+                             Using this because if the background is set in the Border with the Header the opacity
+                               mask will be applied to the background as well. -->
+                        <Border CornerRadius="4"
+                                Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}"/>
+
+                        <Border CornerRadius="4"
+                                Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}"
+                                              ConverterParameter="7">
+                                    <Binding ElementName="Header"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualHeight"/>
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                        </Border>
+                        
+                        <!-- ContentPresenter for the header -->
+                        <Border x:Name="Header"
+                                Padding="3,0,3,0"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              TextElement.Foreground="{StaticResource GroupBoxHeaderBrush}"/>
+                        </Border>
+                        <!-- Primary content for GroupBox -->
+                        <ContentPresenter Grid.Row="2"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Classic]] -->
+
+  
+    <!--=================================================================
+        GroupBox
+    ==================================================================-->
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    <Style x:Key="{x:Type GroupBox}"
+           TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <!-- Border for the background with the same CornerRadius as the Border with the Header
+                             Using this because if the background is set in the Border with the Header the opacity
+                               mask will be applied to the background as well. -->
+                        <Border Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}"/>
+
+                        <theme:ClassicBorderDecorator Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderStyle="Etched">
+                            <theme:ClassicBorderDecorator.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}"
+                                              ConverterParameter="7">
+                                    <Binding ElementName="Header"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualHeight"/>
+                                </MultiBinding>
+                            </theme:ClassicBorderDecorator.OpacityMask>
+                        </theme:ClassicBorderDecorator>
+                        
+                        <!-- ContentPresenter for the header -->
+                        <Border x:Name="Header"
+                                Padding="3,0,3,0"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <!-- Primary content for GroupBox -->
+                        <ContentPresenter Grid.Row="2"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+<!-- [[AeroLite.NormalColor]] -->
+
+    <SolidColorBrush x:Key="GroupBox.Border" Color="#FFA3A3A3" />
+
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    
+    <Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush" Value="{StaticResource GroupBox.Border}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <!-- Separate Border for the background because if the background is set in the Border with the Header the opacity mask will be applied to the background as well. -->
+                        <Border Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}"/>
+    
+                        <Border Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.ColumnSpan="4"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}"
+                                              ConverterParameter="7">
+                                    <Binding ElementName="Header"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualWidth"/>
+                                    <Binding RelativeSource="{RelativeSource Self}"
+                                             Path="ActualHeight"/>
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                        </Border>
+                        
+                        <!-- ContentPresenter for the header -->
+                        <Border x:Name="Header"
+                                Padding="3,0,3,0"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <!-- Primary content for GroupBox -->
+                        <ContentPresenter Grid.Row="2"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

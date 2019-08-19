@@ -1,0 +1,229 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+
+    <!--=================================================================
+        Menu
+    ==================================================================-->
+
+    <LinearGradientBrush x:Key="MenuBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#F6F6F6"
+                          Offset="0.25"/>
+            <GradientStop Color="#EAE8E8"
+                          Offset="0.25"/>
+            <GradientStop Color="#DCD9D9"
+                          Offset="0.8"/>
+            <GradientStop Color="White"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <Style x:Key="{x:Type Menu}"
+           TargetType="{x:Type Menu}">
+        <Setter Property="Background"
+                Value="{StaticResource MenuBackground}"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+<!--=================================================================
+        Menu
+    ==================================================================-->
+    <Style x:Key="{x:Type Menu}"
+           TargetType="{x:Type Menu}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+<!-- [[Classic]] -->
+
+<!--=================================================================
+        Menu
+    ==================================================================-->
+    <Style x:Key="{x:Type Menu}"
+           TargetType="{x:Type Menu}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor]] -->
+
+    <SolidColorBrush x:Key="Menu.Background" Color="#FFF5F5F5" />
+    <SolidColorBrush x:Key="Menu.Border" Color="#FF979797" />
+    <SolidColorBrush x:Key="MenuItem.TopLevel.Static.Background" Color="#FFEAF1FB" />
+    <SolidColorBrush x:Key="MenuItem.TopLevel.Static.Border" Color="#FFEAF1FB" />
+    <SolidColorBrush x:Key="MenuItem.TopLevel.Static.Foreground" Color="#FF000000" />
+    <SolidColorBrush x:Key="MenuItem.SubLevel.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="MenuItem.SubLevel.Static.Border" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="MenuItem.SubLevel.Static.Foreground" Color="#FF000000" />
+    <SolidColorBrush x:Key="MenuItem.Disabled.Foreground" Color="#FF9A9A9A" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#FFD7EFFC" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF3C7FB1" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Foreground" Color="#FF000000" />
+    <SolidColorBrush x:Key="MenuItem.Pressed.Background" Color="#FFC2E4F6" />
+    <SolidColorBrush x:Key="MenuItem.Pressed.Border" Color="#FF2C628B" />
+    <SolidColorBrush x:Key="MenuItem.Pressed.Foreground" Color="#FF1E395B" />
+    <SolidColorBrush x:Key="MenuItem.Selected.Glyph" Color="#FF0C12A1" />
+
+<!--=================================================================
+        Menu
+    ==================================================================-->
+
+    <Style TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{StaticResource MenuItem.TopLevel.Static.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuItem.TopLevel.Static.Foreground}" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="true">
+                        <ItemsPresenter
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Aero2.NormalColor]] -->
+
+    <SolidColorBrush x:Key="Menu.Static.Background" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="Menu.Static.Border" Color="#FF999999" />
+    <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF212121" />
+
+    <SolidColorBrush x:Key="Menu.Static.Separator" Color="#FFD7D7D7" />
+
+    <SolidColorBrush x:Key="Menu.Disabled.Background" Color="#3DDADADA" />
+    <SolidColorBrush x:Key="Menu.Disabled.Border" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="Menu.Disabled.Foreground" Color="#FF707070" />
+
+    <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#3D26A0DA" />
+    <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF26A0DA" />
+
+    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#3D26A0DA" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF26A0DA" />
+
+    <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Background" Color="#0A000000" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Border" Color="#21000000" />
+
+
+<!--=================================================================
+        Menu
+    ==================================================================-->
+
+    <Style TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{StaticResource Menu.Static.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground" Value="{StaticResource Menu.Static.Foreground}" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="true">
+                        <ItemsPresenter
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

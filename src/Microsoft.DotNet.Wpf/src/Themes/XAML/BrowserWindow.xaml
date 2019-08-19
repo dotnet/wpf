@@ -1,0 +1,1377 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.NormalColor, Luna.Homestead, Luna.Metallic, Royale.NormalColor]] -->
+
+    <JournalEntryListConverter x:Key="NavigationWindowDropDownLimiter"/>
+
+    <!-- Browser Window back/fwd button Drop Down style-->
+    <Style x:Key="BrowserWindowNavigationButtonJournalEntryStyle"
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="Header"
+                Value="{Binding Path=Name}"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.NavigateJournal"/>
+        <!-- It is important to target the NavigationWindow directly, to avoid the command routing's 
+            dependence on the focused element. Menu is a FocusScope. -->
+        <Setter Property="CommandTarget"
+                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type NavigationWindow}}}"/>
+        <Setter Property="CommandParameter"
+                Value="{Binding RelativeSource={RelativeSource Self}}"/>
+    </Style>
+
+
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+    <Style x:Key="BrowserWindowMenuItem"
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="Margin"
+                Value="0"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <DockPanel x:Name="Panel"
+                               Background="Transparent">
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="true"
+                               Placement="Bottom"
+                               IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                               Focusable="false"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                            <theme:SystemDropShadowChrome Name="Shdw"
+                                                          Color="Transparent">
+                                <Border Name="SubMenuBorder"
+                                        Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+                                    <ScrollViewer Name="SubMenuScrollViewer"
+                                                  Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}" 
+                                                Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}" 
+                                                Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                      </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </theme:SystemDropShadowChrome>
+                        </Popup>
+                        <Path x:Name="Arrow"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="0 2 0 0"
+                              Fill="white"
+                              Stroke="#AAAAAA"
+                              StrokeThickness="1"
+                              Data="{StaticResource DownArrow}"/>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSuspendingPopupAnimation"
+                                 Value="true">
+                            <Setter TargetName="PART_Popup"
+                                    Property="PopupAnimation"
+                                    Value="None"/>
+                        </Trigger>
+                       
+                        <Trigger Property="IsHighlighted"
+                                 Value="true">
+                            <Setter TargetName="Arrow"
+                                    Property="Fill"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <Setter TargetName="Panel"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Arrow"
+                                    Property="Fill"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup"
+                                 Property="Popup.HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="SnapsToDevicePixels"
+                                    Value="true"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                        <Trigger SourceName="SubMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false" >
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=SubMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=SubMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BrowserWindowMenu"
+           TargetType="{x:Type Menu}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <DockPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding"
+                Value="0,0,0,0"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="IsMainMenu" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+  
+
+  
+    <!--=================================================================
+        BrowserWindow
+    ==================================================================-->
+    <!-- Downlevel Browser Window Back Button Style -->
+    <Style x:Key="NavigationChromeDownLevelBackButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="Margin"
+                Value="0,0,0,0"/>
+        <Setter Property="IsEnabled"
+                Value="false"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.BrowseBack"/>
+        <Setter Property="Focusable"
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <DockPanel>
+                        <!--right -->
+                        <Rectangle DockPanel.Dock="Right"
+                                   x:Name="R1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--bottom-->
+                        <Rectangle DockPanel.Dock="Bottom"
+                                   x:Name="B1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--left  -->
+                        <Rectangle DockPanel.Dock="Left"
+                                   x:Name="L1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <!--top   -->
+                        <Rectangle DockPanel.Dock="Top"
+                                   x:Name="T1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Viewbox Grid.Column="0"
+                                     Grid.Row="0">
+                                <Grid Width="50"
+                                      Height="50"
+                                      Margin="15,0,0,0">
+                                    <Ellipse x:Name="EllipseBackground"
+                                             Opacity="1"
+                                             StrokeThickness="2">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#B3E2A2"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#25B40E"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                        <Ellipse.Stroke>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="black"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#ccffffff"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Stroke>
+                                    </Ellipse>
+                                    <Ellipse x:Name="EllipseShine"
+                                             Stroke="transparent"
+                                             Margin="5,5,5,15">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#aaffffff"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="transparent"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Path x:Name="Arrow"
+                                          Fill="white"
+                                          Stroke="#086403"
+                                          Data="M0.5,20.468c0.002,0.34,0.036,0.679,0.102,1.013c0.032,0.162,0.092,0.312,0.139,0.468    c0.052,0.176,0.092,0.355,0.163,0.527c0.076,0.183,0.18,0.349,0.274,0.521c0.073,0.132,0.131,0.27,0.216,0.397    c0.196,0.294,0.418,0.568,0.667,0.817l14.611,14.611c2.083,2.083,5.459,2.083,7.542,0c2.083-2.083,2.083-5.459,0-7.542    l-5.509-5.509h23.791c2.945,0,5.333-2.388,5.333-5.333c0-2.946-2.388-5.333-5.333-5.333H18.732l5.509-5.509    c2.083-2.083,2.083-5.459,0-7.542c-2.083-2.083-5.459-2.083-7.542,0L2.203,16.549c-0.043,0.04-0.095,0.07-0.136,0.111    c-0.002,0.002-0.005,0.003-0.007,0.006c-0.002,0.002-0.003,0.004-0.005,0.006c-0.246,0.247-0.465,0.517-0.659,0.807    c-0.088,0.132-0.149,0.275-0.224,0.413c-0.092,0.167-0.192,0.328-0.266,0.505c-0.072,0.175-0.114,0.357-0.167,0.538    c-0.045,0.153-0.104,0.299-0.135,0.458C0.536,19.732,0.5,20.075,0.5,20.419c0,0.006-0.002,0.012-0.002,0.019    C0.498,20.448,0.5,20.458,0.5,20.468z">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <TransformGroup.Children>
+                                                    <TransformCollection>
+                                                        <ScaleTransform ScaleX="0.65"
+                                                                        ScaleY="0.65"/>
+                                                        <TranslateTransform X="11.5"
+                                                                            Y="10"/>
+                                                    </TransformCollection>
+                                                </TransformGroup.Children>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Viewbox>
+                            <DockPanel Grid.Column="1"
+                                       Grid.Row="0">
+                                <!--right -->
+                                <Rectangle DockPanel.Dock="Right"
+                                           x:Name="R2"
+                                           Width="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                <!--bottom-->
+                                <Rectangle DockPanel.Dock="Bottom"
+                                           x:Name="B2"
+                                           Height="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                <!--left  -->
+                                <Rectangle DockPanel.Dock="Left"
+                                           x:Name="L2"
+                                           Width="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                <!--top   -->
+                                <Rectangle DockPanel.Dock="Top"
+                                           x:Name="T2"
+                                           Height="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                <Grid Width="10">
+                                    <Menu Style="{StaticResource BrowserWindowMenu}">
+                                        <MenuItem x:Name="NavWinMenu"
+                                                  Style="{StaticResource BrowserWindowMenuItem}"
+                                                  ItemContainerStyle="{StaticResource BrowserWindowNavigationButtonJournalEntryStyle}"
+                                                  ItemsSource="{Binding Path=BackStack,Converter={StaticResource NavigationWindowDropDownLimiter},Mode=OneTime,RelativeSource={RelativeSource AncestorType={x:Type NavigationWindow}}}"
+                                                  IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    </Menu>
+                                </Grid>
+                            </DockPanel>
+                        </Grid>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Path.Fill"
+                                    TargetName="EllipseBackground">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="white"
+                                                              Offset="0"/>
+                                                <GradientStop Color="gray"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="NavWinMenu"
+                                    Property="Background"
+                                    Value="Transparent">
+                            </Setter>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B1"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Arrow"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <ScaleTransform ScaleX="0.65"
+                                                                ScaleY="0.65"/>
+                                                <TranslateTransform X="10"
+                                                                    Y="12"/>
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="EllipseShine"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="0"
+                                                        Y="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="MenuItem.IsSubmenuOpen"
+                                 Value="true">
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Downlevel Browser Window Forward Button Style -->
+    <Style x:Key="NavigationChromeDownLevelForwardButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="Margin"
+                Value="0,0,0,0"/>
+        <Setter Property="IsEnabled"
+                Value="false"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.BrowseForward"/>
+        <Setter Property="Focusable"
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <DockPanel>
+                        <!--right -->
+                        <Rectangle DockPanel.Dock="Right"
+                                   x:Name="R1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--bottom-->
+                        <Rectangle DockPanel.Dock="Bottom"
+                                   x:Name="B1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--left  -->
+                        <Rectangle DockPanel.Dock="Left"
+                                   x:Name="L1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <!--top   -->
+                        <Rectangle DockPanel.Dock="Top"
+                                   x:Name="T1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Viewbox Grid.Column="0"
+                                     Grid.Row="0">
+                                <Grid Width="50"
+                                      Height="50"
+                                      Margin="15,0,0,0">
+                                    <Ellipse x:Name="EllipseBackground"
+                                             Opacity="1"
+                                             StrokeThickness="2">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#B3E2A2"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#25B40E"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                        <Ellipse.Stroke>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="black"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#ccffffff"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Stroke>
+                                    </Ellipse>
+                                    <Ellipse x:Name="EllipseShine"
+                                             Stroke="transparent"
+                                             Margin="5,3,5,15">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#aaffffff"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="transparent"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Path x:Name="Arrow"
+                                          Fill="white"
+                                          Stroke="#086403"
+                                          Data="M47.82,20.407c-0.002-0.34-0.036-0.679-0.102-1.013c-0.032-0.162-0.092-0.312-0.139-0.468    c-0.052-0.176-0.092-0.355-0.163-0.527c-0.076-0.183-0.18-0.349-0.274-0.521c-0.073-0.132-0.131-0.27-0.216-0.397    c-0.196-0.294-0.418-0.568-0.667-0.817L31.647,2.053c-2.083-2.083-5.459-2.083-7.542,0c-2.083,2.083-2.083,5.459,0,7.542    l5.509,5.509H5.823c-2.945,0-5.333,2.388-5.333,5.333c0,2.946,2.388,5.333,5.333,5.333h23.765l-5.509,5.509    c-2.083,2.083-2.083,5.459,0,7.542c2.083,2.083,5.459,2.083,7.542,0l14.497-14.497c0.043-0.04,0.095-0.07,0.136-0.111    c0.002-0.002,0.005-0.003,0.007-0.006c0.002-0.002,0.003-0.004,0.005-0.006c0.246-0.247,0.465-0.517,0.659-0.807    c0.088-0.132,0.149-0.275,0.224-0.413c0.092-0.167,0.192-0.328,0.266-0.505c0.072-0.175,0.114-0.357,0.167-0.538    c0.045-0.153,0.104-0.299,0.135-0.458c0.067-0.339,0.103-0.682,0.104-1.026c0-0.006,0.002-0.012,0.002-0.019    C47.823,20.427,47.82,20.417,47.82,20.407z">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <TransformGroup.Children>
+                                                    <TransformCollection>
+                                                        <ScaleTransform ScaleX="0.65"
+                                                                        ScaleY="0.65"/>
+                                                        <TranslateTransform X="8.5"
+                                                                            Y="10"/>
+                                                    </TransformCollection>
+                                                </TransformGroup.Children>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Viewbox>
+                            <DockPanel Grid.Column="1"
+                                       Grid.Row="0">
+                                <!--right -->
+                                <Rectangle DockPanel.Dock="Right"
+                                           x:Name="R2"
+                                           Width="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                <!--bottom-->
+                                <Rectangle DockPanel.Dock="Bottom"
+                                           x:Name="B2"
+                                           Height="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                <!--left  -->
+                                <Rectangle DockPanel.Dock="Left"
+                                           x:Name="L2"
+                                           Width="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                <!--top   -->
+                                <Rectangle DockPanel.Dock="Top"
+                                           x:Name="T2"
+                                           Height="1"
+                                           Visibility="Hidden"
+                                           Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                <Grid Width="10">
+                                    <Menu Style="{StaticResource BrowserWindowMenu}">
+                                        <MenuItem x:Name="NavWinMenu"
+                                                  Style="{StaticResource BrowserWindowMenuItem}"
+                                                  ItemContainerStyle="{StaticResource BrowserWindowNavigationButtonJournalEntryStyle}"
+                                                  ItemsSource="{Binding Path=ForwardStack,Converter={StaticResource NavigationWindowDropDownLimiter},Mode=OneTime,RelativeSource={RelativeSource AncestorType={x:Type NavigationWindow}}}"
+                                                  IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    </Menu>
+                                </Grid>
+                            </DockPanel>
+                        </Grid>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Path.Fill"
+                                    TargetName="EllipseBackground">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="white"
+                                                              Offset="0"/>
+                                                <GradientStop Color="gray"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="NavWinMenu"
+                                    Property="Background"
+                                    Value="Transparent">
+                            </Setter>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B1"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Arrow"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <ScaleTransform ScaleX="0.65"
+                                                                ScaleY="0.65"/>
+                                                <TranslateTransform X="10"
+                                                                    Y="12"/>
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="EllipseShine"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="0"
+                                                        Y="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="MenuItem.IsSubmenuOpen"
+                                 Value="true">
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T2"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="BrowserHostWindowTemplateKey"
+                     TargetType="{x:Type NavigationWindow}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <AdornerDecorator>
+                <ContentPresenter Name="PART_NavWinCP" ClipToBounds="true"/>
+            </AdornerDecorator>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="{x:Static SystemParameters.NavigationChromeStyleKey}"
+           TargetType="{x:Type NavigationWindow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template"
+                Value="{StaticResource BrowserHostWindowTemplateKey}"/>
+    </Style>
+    <ControlTemplate x:Key="BrowserHostDownLevelWindowTemplateKey"
+                     TargetType="{x:Type NavigationWindow}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <DockPanel>
+                <Grid
+                      FlowDirection="{x:Static theme:PlatformCulture.FlowDirection}"
+                      DockPanel.Dock="Top"
+                      Height="30">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0"
+                                             EndPoint="1,0">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="silver"
+                                                  Offset="0"/>
+                                    <GradientStop Color="white"
+                                                  Offset="1"/>
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <DockPanel LastChildFill="false">
+                        <Button Style="{StaticResource NavigationChromeDownLevelBackButtonStyle}"
+                                DockPanel.Dock="left"
+                                Width="40"
+                                Button.IsEnabled="{TemplateBinding NavigationWindow.CanGoBack}"/>
+                        <Button Style="{StaticResource NavigationChromeDownLevelForwardButtonStyle}"
+                                DockPanel.Dock="left"
+                                Width="40"
+                                Button.IsEnabled="{TemplateBinding NavigationWindow.CanGoForward}"/>
+                    </DockPanel>
+                </Grid>
+                <Border>
+                    <AdornerDecorator>
+                        <ContentPresenter Name="PART_NavWinCP" ClipToBounds="true"/>
+                    </AdornerDecorator>
+                </Border>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="{x:Static SystemParameters.NavigationChromeDownLevelStyleKey}"
+           TargetType="{x:Type NavigationWindow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template"
+                Value="{StaticResource BrowserHostDownLevelWindowTemplateKey}"/>
+        <Style.Triggers>
+            <Trigger Property="NavigationWindow.ShowsNavigationUI"
+                     Value="false">
+                <Setter Property="Template"
+                        Value="{StaticResource BrowserHostWindowTemplateKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+<!-- [[Classic]] -->
+
+    
+    <!--
+            **********************************************************
+            * BrowserWindow Styles                                   *
+            **********************************************************
+    -->
+    <!-- Downlevel Browser Window Back Button Style -->
+    <Style x:Key="NavigationChromeDownLevelBackButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="MinWidth"
+                Value="0"/>
+        <Setter Property="Margin"
+                Value="0,0,0,0"/>
+        <Setter Property="IsEnabled"
+                Value="false"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.BrowseBack"/>
+        <Setter Property="Focusable"
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <DockPanel>
+                        <!--right -->
+                        <Rectangle DockPanel.Dock="Right"
+                                   x:Name="R1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--bottom-->
+                        <Rectangle DockPanel.Dock="Bottom"
+                                   x:Name="B1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--left  -->
+                        <Rectangle DockPanel.Dock="Left"
+                                   x:Name="L1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <!--top   -->
+                        <Rectangle DockPanel.Dock="Top"
+                                   x:Name="T1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Viewbox Grid.Column="0"
+                                     Grid.Row="0">
+                                <Grid Width="50"
+                                      Height="50"
+                                      Margin="15,0,0,0">
+                                    <Ellipse x:Name="EllipseBackground"
+                                             Opacity="1"
+                                             StrokeThickness="2">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#B3E2A2"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#25B40E"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                        <Ellipse.Stroke>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="black"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#ccffffff"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Stroke>
+                                    </Ellipse>
+                                    <Ellipse x:Name="EllipseShine"
+                                             Stroke="transparent"
+                                             Margin="5,3,5,15">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#aaffffff"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="transparent"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Path x:Name="Arrow"
+                                          Fill="white"
+                                          Stroke="#086403"
+                                          Data="M0.5,20.468c0.002,0.34,0.036,0.679,0.102,1.013c0.032,0.162,0.092,0.312,0.139,0.468    c0.052,0.176,0.092,0.355,0.163,0.527c0.076,0.183,0.18,0.349,0.274,0.521c0.073,0.132,0.131,0.27,0.216,0.397    c0.196,0.294,0.418,0.568,0.667,0.817l14.611,14.611c2.083,2.083,5.459,2.083,7.542,0c2.083-2.083,2.083-5.459,0-7.542    l-5.509-5.509h23.791c2.945,0,5.333-2.388,5.333-5.333c0-2.946-2.388-5.333-5.333-5.333H18.732l5.509-5.509    c2.083-2.083,2.083-5.459,0-7.542c-2.083-2.083-5.459-2.083-7.542,0L2.203,16.549c-0.043,0.04-0.095,0.07-0.136,0.111    c-0.002,0.002-0.005,0.003-0.007,0.006c-0.002,0.002-0.003,0.004-0.005,0.006c-0.246,0.247-0.465,0.517-0.659,0.807    c-0.088,0.132-0.149,0.275-0.224,0.413c-0.092,0.167-0.192,0.328-0.266,0.505c-0.072,0.175-0.114,0.357-0.167,0.538    c-0.045,0.153-0.104,0.299-0.135,0.458C0.536,19.732,0.5,20.075,0.5,20.419c0,0.006-0.002,0.012-0.002,0.019    C0.498,20.448,0.5,20.458,0.5,20.468z">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <TransformGroup.Children>
+                                                    <TransformCollection>
+                                                        <ScaleTransform ScaleX="0.65"
+                                                                        ScaleY="0.65"/>
+                                                        <TranslateTransform X="11.5"
+                                                                            Y="10"/>
+                                                    </TransformCollection>
+                                                </TransformGroup.Children>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Viewbox>
+                            <Grid Grid.Column="1"
+                                  Grid.Row="0"
+                                  Width="10">
+                                <Path VerticalAlignment="center"
+                                      HorizontalAlignment="center"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Data="M 0 0 L 3.5 4 L 7 0 Z"/>
+                                <Menu Background="Transparent"
+                                      KeyboardNavigation.TabNavigation="None"
+                                      IsMainMenu="false">
+                                    <Menu.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Grid/>
+                                        </ItemsPanelTemplate>
+                                    </Menu.ItemsPanel>
+                                    <MenuItem x:Name="NavWinMenu"
+                                              ItemContainerStyle="{StaticResource BrowserWindowNavigationButtonJournalEntryStyle}"
+                                              ItemsSource="{Binding Path=BackStack,Mode=OneTime,Converter={StaticResource NavigationWindowDropDownLimiter},RelativeSource={RelativeSource AncestorType={x:Type NavigationWindow}}}"/>
+                                </Menu>
+                            </Grid>
+                        </Grid>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Path.Fill"
+                                    TargetName="EllipseBackground">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="white"
+                                                              Offset="0"/>
+                                                <GradientStop Color="gray"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="NavWinMenu"
+                                    Property="Background"
+                                    Value="Transparent">
+                            </Setter>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B1"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Arrow"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <ScaleTransform ScaleX="0.65"
+                                                                ScaleY="0.65"/>
+                                                <TranslateTransform X="10"
+                                                                    Y="12"/>
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="EllipseShine"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="0"
+                                                        Y="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Downlevel Browser Window Forward Button Style -->
+    <Style x:Key="NavigationChromeDownLevelForwardButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="MinWidth"
+                Value="0"/>
+        <Setter Property="Margin"
+                Value="0,0,0,0"/>
+        <Setter Property="IsEnabled"
+                Value="false"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.BrowseForward"/>
+        <Setter Property="Focusable"
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <DockPanel>
+                        <!--right -->
+                        <Rectangle DockPanel.Dock="Right"
+                                   x:Name="R1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--bottom-->
+                        <Rectangle DockPanel.Dock="Bottom"
+                                   x:Name="B1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                        <!--left  -->
+                        <Rectangle DockPanel.Dock="Left"
+                                   x:Name="L1"
+                                   Width="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <!--top   -->
+                        <Rectangle DockPanel.Dock="Top"
+                                   x:Name="T1"
+                                   Height="1"
+                                   Visibility="Hidden"
+                                   Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Viewbox Grid.Column="0"
+                                     Grid.Row="0">
+                                <Grid Width="50"
+                                      Height="50"
+                                      Margin="15,0,0,0">
+                                    <Ellipse x:Name="EllipseBackground"
+                                             Opacity="1"
+                                             StrokeThickness="2">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#B3E2A2"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#25B40E"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                        <Ellipse.Stroke>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="black"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="#ccffffff"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Stroke>
+                                    </Ellipse>
+                                    <Ellipse x:Name="EllipseShine"
+                                             Stroke="transparent"
+                                             Margin="5,3,5,15">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="#aaffffff"
+                                                                      Offset="0"/>
+                                                        <GradientStop Color="transparent"
+                                                                      Offset="1"/>
+                                                    </GradientStopCollection>
+                                                </GradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Path x:Name="Arrow"
+                                          Fill="white"
+                                          Stroke="#086403"
+                                          Data="M47.82,20.407c-0.002-0.34-0.036-0.679-0.102-1.013c-0.032-0.162-0.092-0.312-0.139-0.468    c-0.052-0.176-0.092-0.355-0.163-0.527c-0.076-0.183-0.18-0.349-0.274-0.521c-0.073-0.132-0.131-0.27-0.216-0.397    c-0.196-0.294-0.418-0.568-0.667-0.817L31.647,2.053c-2.083-2.083-5.459-2.083-7.542,0c-2.083,2.083-2.083,5.459,0,7.542    l5.509,5.509H5.823c-2.945,0-5.333,2.388-5.333,5.333c0,2.946,2.388,5.333,5.333,5.333h23.765l-5.509,5.509    c-2.083,2.083-2.083,5.459,0,7.542c2.083,2.083,5.459,2.083,7.542,0l14.497-14.497c0.043-0.04,0.095-0.07,0.136-0.111    c0.002-0.002,0.005-0.003,0.007-0.006c0.002-0.002,0.003-0.004,0.005-0.006c0.246-0.247,0.465-0.517,0.659-0.807    c0.088-0.132,0.149-0.275,0.224-0.413c0.092-0.167,0.192-0.328,0.266-0.505c0.072-0.175,0.114-0.357,0.167-0.538    c0.045-0.153,0.104-0.299,0.135-0.458c0.067-0.339,0.103-0.682,0.104-1.026c0-0.006,0.002-0.012,0.002-0.019    C47.823,20.427,47.82,20.417,47.82,20.407z">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <TransformGroup.Children>
+                                                    <TransformCollection>
+                                                        <ScaleTransform ScaleX="0.65"
+                                                                        ScaleY="0.65"/>
+                                                        <TranslateTransform X="8.5"
+                                                                            Y="10"/>
+                                                    </TransformCollection>
+                                                </TransformGroup.Children>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Viewbox>
+                            <Grid Grid.Column="1"
+                                  Grid.Row="0"
+                                  Width="10">
+                                <Path VerticalAlignment="center"
+                                      HorizontalAlignment="center"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Data="M 0 0 L 3.5 4 L 7 0 Z"/>
+                                <Menu Background="Transparent"
+                                      KeyboardNavigation.TabNavigation="None"
+                                      IsMainMenu="false">
+                                    <Menu.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Grid/>
+                                        </ItemsPanelTemplate>
+                                    </Menu.ItemsPanel>
+                                    <MenuItem x:Name="NavWinMenu"
+                                              ItemContainerStyle="{StaticResource BrowserWindowNavigationButtonJournalEntryStyle}"
+                                              ItemsSource="{Binding Path=ForwardStack,Mode=OneTime,Converter={StaticResource NavigationWindowDropDownLimiter},RelativeSource={RelativeSource AncestorType={x:Type NavigationWindow}}}"/>
+                                </Menu>
+                            </Grid>
+                        </Grid>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Path.Fill"
+                                    TargetName="EllipseBackground">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="white"
+                                                              Offset="0"/>
+                                                <GradientStop Color="gray"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="NavWinMenu"
+                                    Property="Background"
+                                    Value="Transparent">
+                            </Setter>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="L1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="R1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="T1"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"
+                                    TargetName="B1"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="EllipseBackground"
+                                    Property="Path.Fill">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#25B40E"
+                                                              Offset="0"/>
+                                                <GradientStop Color="#086403"
+                                                              Offset="1"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Arrow"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <ScaleTransform ScaleX="0.65"
+                                                                ScaleY="0.65"/>
+                                                <TranslateTransform X="10"
+                                                                    Y="12"/>
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="EllipseShine"
+                                    Property="Path.RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="0"
+                                                        Y="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="BrowserHostWindowTemplateKey"
+                     TargetType="{x:Type NavigationWindow}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <AdornerDecorator>
+                <ContentPresenter Name="PART_NavWinCP" ClipToBounds="true"/>
+            </AdornerDecorator>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="{x:Static SystemParameters.NavigationChromeStyleKey}"
+           TargetType="{x:Type NavigationWindow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template"
+                Value="{StaticResource BrowserHostWindowTemplateKey}"/>
+    </Style>
+    <ControlTemplate x:Key="BrowserHostDownLevelWindowTemplateKey"
+                     TargetType="{x:Type NavigationWindow}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <DockPanel>
+                <Grid 
+                      FlowDirection="{x:Static theme:PlatformCulture.FlowDirection}"
+                      DockPanel.Dock="Top"
+                      Height="30">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0"
+                                             EndPoint="1,0">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="silver"
+                                                  Offset="0"/>
+                                    <GradientStop Color="white"
+                                                  Offset="1"/>
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <DockPanel LastChildFill="false">
+                        <Button Style="{StaticResource NavigationChromeDownLevelBackButtonStyle}"
+                                DockPanel.Dock="left"
+                                Width="40"
+                                Button.IsEnabled="{TemplateBinding NavigationWindow.CanGoBack}"/>
+                        <Button Style="{StaticResource NavigationChromeDownLevelForwardButtonStyle}"
+                                DockPanel.Dock="left"
+                                Width="40"
+                                Button.IsEnabled="{TemplateBinding NavigationWindow.CanGoForward}"/>
+                    </DockPanel>
+                </Grid>
+                <Border>
+                    <AdornerDecorator>
+                        <ContentPresenter Name="PART_NavWinCP" ClipToBounds="true"/>
+                    </AdornerDecorator>
+                </Border>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="{x:Static SystemParameters.NavigationChromeDownLevelStyleKey}"
+           TargetType="{x:Type NavigationWindow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template"
+                Value="{StaticResource BrowserHostDownLevelWindowTemplateKey}"/>
+        <Style.Triggers>
+            <Trigger Property="NavigationWindow.ShowsNavigationUI"
+                     Value="false">
+                <Setter Property="Template"
+                        Value="{StaticResource BrowserHostWindowTemplateKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+

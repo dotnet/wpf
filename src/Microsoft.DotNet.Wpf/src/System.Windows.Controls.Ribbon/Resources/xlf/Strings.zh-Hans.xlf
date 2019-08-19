@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+    <body>
+      <trans-unit id="ElementNotKeyTipScope">
+        <source>Element is not a valid KeyTip scope.</source>
+        <target state="translated">元素不是有效的 KeyTip 范围。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InRibbonGallery_ScrollDownButtonAutomationName">
+        <source>Row Down</source>
+        <target state="translated">下移行</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InRibbonGallery_ScrollUpButtonAutomationName">
+        <source>Row Up</source>
+        <target state="translated">上移行</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidApplicationMenuOrItemContainer">
+        <source>'{0}' can only host a RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
+        <target state="translated">“{0}”只能承载 RibbonApplicationMenuItem、RibbonApplicationSplitMenuItem、RibbonGallery 或 RibbonSeparator。“{1}”是无效的容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterNoInfinityForStarSize">
+        <source>'{0}' parameter cannot be Infinity for RibbonControlLengthUnitType.Star.</source>
+        <target state="translated">RibbonControlLengthUnitType.Star 的“{0}”参数不能是 Infinity。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterNoNaN">
+        <source>'{0}' parameter cannot be NaN.</source>
+        <target state="translated">“{0}”参数不能是 NaN。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCtorParameterUnknownRibbonControlLengthUnitType">
+        <source>'{0}' parameter is not valid. Valid values are RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item, or RibbonControlLengthUnitType.Star.</source>
+        <target state="translated">“{0}”参数无效。有效值是 RibbonControlLengthUnitType.Auto、RibbonControlLengthUnitType.Pixel、RibbonControlLengthUnitType.Item 或 RibbonControlLengthUnitType.Star。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidKeyTipOffset">
+        <source>Offset cannot be infinity or NaN.</source>
+        <target state="translated">偏移量不能是无穷大或 NaN。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMenuButtonOrItemContainer">
+        <source>'{0}' can only host a RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
+        <target state="translated">“{0}”只能承载 RibbonMenuItem、RibbonSplitMenuItem、RibbonGallery 或 RibbonSeparator。“{1}”是无效的容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QATKeyTipCharacters">
+        <source>ABCDEFGHIJKLMNOPQRSTUVWXYZ</source>
+        <target state="translated">ABCDEFGHIJKLMNOPQRSTUVWXYZ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResizeParametersNotValid">
+        <source>Resize parameters out of bounds.</source>
+        <target state="translated">调整大小参数超出界限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_AddGalleryToQAT">
+        <source>_Add gallery to Quick Access Toolbar</source>
+        <target state="translated">将库添加到快速访问工具栏(_A)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_AddToQAT">
+        <source>_Add to Quick Access Toolbar</source>
+        <target state="translated">添加到快速访问工具栏(_A)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_MaximizeTheRibbon">
+        <source>Ma_ximize the Ribbon</source>
+        <target state="translated">最大化功能区(_X)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_MinimizeTheRibbon">
+        <source>Mi_nimize the Ribbon</source>
+        <target state="translated">最小化功能区(_N)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_RemoveFromQAT">
+        <source>_Remove from Quick Access Toolbar</source>
+        <target state="translated">从快速访问工具栏中删除(_R)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_ShowQATAbove">
+        <source>_Show Quick Access Toolbar above the Ribbon</source>
+        <target state="translated">在功能区上方显示快速访问工具栏(_S)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonContextMenu_ShowQATBelow">
+        <source>_Show Quick Access Toolbar below the Ribbon</source>
+        <target state="translated">在功能区下方显示快速访问工具栏(_S)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonGallery_AllFilter">
+        <source>All</source>
+        <target state="translated">全部</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonGroupsPanel_InvalidRegistrationParameter">
+        <source>RibbonGroupsPanel RegisterStarLayoutProvider and UnregisterStarLayoutProvider accepts only IProvideStarLayoutInfo instances.</source>
+        <target state="translated">RibbonGroupsPanel 的 RegisterStarLayoutProvider 和 UnregisterStarLayoutProvider 只接受 IProvideStarLayoutInfo 实例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonQuickAccessToolBar_OverflowButtonToolTip">
+        <source>More controls</source>
+        <target state="translated">其他控件</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RibbonWindow_ExtendUnShownGlass">
+        <source>Window must be shown before extending glass</source>
+        <target state="translated">在扩展玻璃之前必须显示窗口</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Ribbon_ContextualTabHeadersSourceInvalid">
+        <source>Cannot set both ContextualTabGroupHeadersSource and ContextualTabGroupHeaders.</source>
+        <target state="translated">不能同时设置 ContextualTabGroupHeadersSource 和 ContextualTabGroupHeaders。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>The target element cannot receive focus.</source>
+        <target state="translated">目标元素无法接收焦点。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIA_OperationCannotBePerformed">
+        <source>Cannot perform operation.</source>
+        <target state="translated">无法执行操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VirtualizedElement">
+        <source>Element does not exist or it is virtualized.</source>
+        <target state="translated">元素不存在或已虚拟化。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

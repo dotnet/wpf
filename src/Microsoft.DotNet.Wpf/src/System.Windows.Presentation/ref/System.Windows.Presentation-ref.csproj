@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>System.Windows.Presentation</AssemblyName>
+    <PackageId>System.Windows.Presentation-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Platforms>AnyCPU;x64</Platforms>
+    <DefineConstants>$(DefineConstants);WINDOWSFORMSINTEGRATION</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(WpfSourceDir)WindowsFormsIntegration\Resources\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
+    <Compile Include="OtherAssemblyAttrs.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+      <Link>Common\System\SR.cs</Link>
+    </Compile>
+    <Compile Include="MS\Win32\DCSafeHandle.cs" />
+    <Compile Include="MS\Win32\ExternDll.cs" />
+    <Compile Include="MS\Win32\NativeMethods.cs" />
+    <Compile Include="MS\Win32\SafeNativeMethods.cs" />
+    <Compile Include="MS\Win32\UnsafeNativeMethods.cs" />
+    <Compile Include="System\Windows\Automation\Peers\WindowsFormsHostAutomationPeer.cs" />
+    <Compile Include="System\Windows\Integration\ApplicationInterop.cs" />
+    <Compile Include="System\Windows\Integration\ChildChangedEventArgs.cs" />
+    <Compile Include="System\Windows\Integration\Convert.cs" />
+    <Compile Include="System\Windows\Integration\ElementHost.cs" />
+    <Compile Include="System\Windows\Integration\ElementHostAutomationPeer.cs" />
+    <Compile Include="System\Windows\Integration\ElementHostPropertyMap.cs" />
+    <Compile Include="System\Windows\Integration\HostUtils.cs" />
+    <Compile Include="System\Windows\Integration\IntegrationExceptionEventArgs.cs" />
+    <Compile Include="System\Windows\Integration\LayoutExceptionEventArgs.cs" />
+    <Compile Include="System\Windows\Integration\PropertyMap.cs" />
+    <Compile Include="System\Windows\Integration\PropertyMappingExceptionEventArgs.cs" />
+    <Compile Include="System\Windows\Integration\WindowsFormsHost.cs" />
+    <Compile Include="System\Windows\Integration\WindowsFormsHostPropertyMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)WindowsFormsIntegration\ref\WindowsFormsIntegration-ref.csproj" >
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Drawing" />
+    <NetCoreReference Include="System.Drawing.Primitives" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Threading" />
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="$(SystemDrawingCommonPackage)" Version="$(SystemDrawingCommonVersion)" />
+  </ItemGroup>
+</Project>

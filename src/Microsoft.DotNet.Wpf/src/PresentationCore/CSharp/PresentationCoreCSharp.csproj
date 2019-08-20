@@ -4,6 +4,7 @@
     <OutputType>Module</OutputType>
     <ModuleAssemblyName>PresentationCore</ModuleAssemblyName>
     <AssemblyName>PresentationCore</AssemblyName>
+    <TargetExt>.netmodule</TargetExt>
     <SignAssembly>false</SignAssembly>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>
     <NoWarn>$(NoWarn);0618;0436;1058;1705;3001;3002;3003;3009;3024</NoWarn>

@@ -26,7 +26,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <!-- Don't Link, we only need the OBJ file as an Additional module for C# -->
     <LinkCompiled>false</LinkCompiled>
-    <!-- Set the TargetExt so that TargetPath has the correct value -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetExt>.obj</TargetExt>
   </PropertyGroup>
 
@@ -43,8 +43,6 @@
     <ProjectGuid>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</ProjectGuid>
     <UseClrCrt>true</UseClrCrt>
     <OutputName>PresentationCoreCpp</OutputName>
-    <TargetType>DYNLINK</TargetType>
-    <LinkSubSystem>CONSOLE</LinkSubSystem>
     <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
   </PropertyGroup>
   
@@ -73,7 +71,7 @@
     <ClInclude Include="precomp.hxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPP\DirectWriteForwarder.cpp" />
+    <ClCompile Include="CPP\PresentationCoreCpp.cpp" />
     <ClCompile Include="CPP\precomp.cxx">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

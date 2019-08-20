@@ -50,7 +50,8 @@ pr:
     - master
     # TODO - Re-enable when branding is decided.
     # - release/3.0
-    - release/3.0-preview9  paths:
+    - release/3.0-preview9 
+  paths:
     exclude:
     - Documentation/*
 

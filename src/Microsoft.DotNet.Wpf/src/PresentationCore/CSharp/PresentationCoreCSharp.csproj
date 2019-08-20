@@ -1,6 +1,10 @@
 ﻿<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
+    <OutputType>Module</OutputType>
+    <ModuleAssemblyName>PresentationCore</ModuleAssemblyName>
+    <AssemblyName>PresentationCore</AssemblyName>
+    <SignAssembly>false</SignAssembly>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>
     <NoWarn>$(NoWarn);0618;0436;1058;1705;3001;3002;3003;3009;3024</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -9,7 +13,6 @@
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
-    <InjectModuleInitializer>true</InjectModuleInitializer>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -102,7 +105,6 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
-    <Compile Include="ModuleInitializer.cs" />
     <Compile Include="otherassemblyattrs.cs" />
     <Compile Include="SR.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
@@ -1413,6 +1415,7 @@
   <ItemGroup>
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <!-- TODO: Swap to the C++ portion project when available. -->
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
@@ -1420,9 +1423,10 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+    <!-- TODO: Hoist up into the C++ merge project. -->
+    <!--<ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
+    </ProjectReference>-->
   </ItemGroup>
 
   <!-- 
@@ -1434,21 +1438,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\*.CompositeFont">
+    <!-- TODO: Hoist up into the C++ project. -->
+    <!--<Resource Include="Fonts\*.CompositeFont">
       <GenerateSource>false</GenerateSource>
       <XlfSource>false</XlfSource>
-    </Resource>
+    </Resource>-->
   </ItemGroup>
 
+  <!-- TODO: Copy up into the C++ project. -->
   <ItemGroup>
     <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />
-    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\System\Windows\Media\Resources\ColorProfiles\ColorProfiles.resx">
+    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\CSharp\System\Windows\Media\Resources\ColorProfiles\ColorProfiles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <GenerateSource>false</GenerateSource>
       <XlfInput>false</XlfInput>
       <ManifestResourceName>ColorProfiles</ManifestResourceName>
     </EmbeddedResource>
     
+    <!-- TODO: Hoist up into the C++ project. -->
     <!-- 
         Workaround for https://github.com/dotnet/wpf/issues/1385
         ReadyToRun images of WPF applications crash 
@@ -1467,10 +1474,10 @@
              PresentationCore -> DirectWriteFowarder
              ReachFramework -> System.Printing
     -->    
-    <EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
+    <!--<EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
       <XlfInput>false</XlfInput>
       <LogicalName>$(AssemblyName).xml</LogicalName>
-    </EmbeddedResource>
+    </EmbeddedResource>-->
   </ItemGroup>
 
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because

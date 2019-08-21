@@ -132,29 +132,29 @@
     <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs">
       <Link>WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
-      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\MS\internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\CSharp\MS\internal\Media\XamlSerializationHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
-      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\MS\internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\CSharp\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
-      <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\Media\StreamGeometryContext.cs">
+      <Link>PresentationCore\CSharp\System\Windows\Media\StreamGeometryContext.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\ParsersCommon.cs">
-      <Link>PresentationCore\System\Windows\Media\ParsersCommon.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\Media\ParsersCommon.cs">
+      <Link>PresentationCore\CSharp\System\Windows\Media\ParsersCommon.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\LocalizationCategory.cs">
-      <Link>PresentationCore\System\Windows\LocalizationCategory.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\LocalizationCategory.cs">
+      <Link>PresentationCore\CSharp\System\Windows\LocalizationCategory.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\Knowncolors.cs">
-      <Link>PresentationCore\System\Windows\Media\Knowncolors.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\Media\Knowncolors.cs">
+      <Link>PresentationCore\CSharp\System\Windows\Media\Knowncolors.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Modifiability.cs">
-      <Link>PresentationCore\System\Windows\Modifiability.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\Modifiability.cs">
+      <Link>PresentationCore\CSharp\System\Windows\Modifiability.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Readability.cs">
-      <Link>PresentationCore\System\Windows\Readability.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\CSharp\System\Windows\Readability.cs">
+      <Link>PresentationCore\CSharp\System\Windows\Readability.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\AttributeData.cs">
       <Link>PresentationFramework\System\Windows\Markup\AttributeData.cs</Link>

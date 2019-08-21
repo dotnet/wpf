@@ -28,6 +28,8 @@
       <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>
+      <!-- Required to ensure the PresentationCore CSharp NetModule builds. -->
+      <ClassName Condition="'$(AssemblyName)'=='PresentationCoreCSharp'">MS.Internal.PresentationCore.SRID </ClassName>
       <Classname Condition="'%(ClassName)'==''">System.SRID</Classname>
     </EmbeddedResource>
   </ItemDefinitionGroup>

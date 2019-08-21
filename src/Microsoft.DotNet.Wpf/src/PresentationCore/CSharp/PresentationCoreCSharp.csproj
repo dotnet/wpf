@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>Module</OutputType>
     <ModuleAssemblyName>PresentationCore</ModuleAssemblyName>
-    <AssemblyName>PresentationCore</AssemblyName>
     <TargetExt>.netmodule</TargetExt>
     <SignAssembly>false</SignAssembly>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>

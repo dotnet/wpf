@@ -30,20 +30,20 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
   </PropertyGroup>
-  
-  <Import Project="$(WpfCppProps)" />
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E490620F-542F-4F65-9DAA-577F17B0CCB9}</ProjectGuid>
-    <UseClrCrt>true</UseClrCrt>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
     <UseClrCrt>true</UseClrCrt>
     <OutputName>PresentationCore</OutputName>
     <TargetType>DYNLINK</TargetType>
     <LinkSubSystem>CONSOLE</LinkSubSystem>
   </PropertyGroup>
-  
+
+  <Import Project="$(WpfCppProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
@@ -67,18 +67,20 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Link</OutputItemType>
     </ProjectReference>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+    <!-- TODO: Add back ref assembly and ensure ApiCompat passes. -->
+    <!--<ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
+    </ProjectReference>-->
   </ItemGroup>
   <ItemGroup>
     <Link Include="Shlwapi.lib" />
   </ItemGroup>
 
+  <!-- TODO: Add back PBT dependency -->
   <!-- 
     Need Microsoft.WinFx.targets to embed *.compositefont 
     files using MainResourcesGeneration target
-  -->
+  --><!--
   <PropertyGroup>
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
   </PropertyGroup>
@@ -88,7 +90,7 @@
       <GenerateSource>false</GenerateSource>
       <XlfSource>false</XlfSource>
     </Resource>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />

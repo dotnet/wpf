@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <VersionPrefix>4.8.0</VersionPrefix>
-    <PreReleaseVersionLabel>preview9</PreReleaseVersionLabel>
+    <PreReleaseVersionLabel>rc1</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemIOPackagingVersion>4.6.0-preview9.19409.17</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.0-preview9.19417.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-preview9.19420.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-preview9-19416-02</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-preview9-19419-06</MicrosoftNETCoreAppVersion>
     <MicrosoftNETCorePlatformsVersion>3.0.0-preview9.19409.17</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.6.0-preview9.19409.17</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-preview9.19409.17</SystemDirectoryServicesVersion>
@@ -112,6 +112,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-preview9.19416.7</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>5.0.0-alpha1.19420.2</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

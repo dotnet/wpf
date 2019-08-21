@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CLRSupport>pure</CLRSupport>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <!-- Target .Net Core 3.0 -->
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
+  </PropertyGroup>
+  
+  <Import Project="$(WpfCppProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E490620F-542F-4F65-9DAA-577F17B0CCB9}</ProjectGuid>
+    <UseClrCrt>true</UseClrCrt>
+    <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
+    <UseClrCrt>true</UseClrCrt>
+    <OutputName>PresentationCore</OutputName>
+    <TargetType>DYNLINK</TargetType>
+    <LinkSubSystem>CONSOLE</LinkSubSystem>
+  </PropertyGroup>
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\</AdditionalIncludeDirectories>
+      <CompileAsManaged>pure</CompileAsManaged>
+      <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>%(AdditionalOptions) /CLRUNMANAGEDCODECHECK:NO /ignore:4042,4075</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj"/>
+    <ProjectReference Include="Cpp\PresentationCoreCpp.vcxproj">
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Link</OutputItemType>
+    </ProjectReference>
+    <ProjectReference Include="CSharp\PresentationCoreCSharp.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Link</OutputItemType>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Link Include="Shlwapi.lib" />
+  </ItemGroup>
+
+  <!-- 
+    Need Microsoft.WinFx.targets to embed *.compositefont 
+    files using MainResourcesGeneration target
+  -->
+  <PropertyGroup>
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.CompositeFont">
+      <GenerateSource>false</GenerateSource>
+      <XlfSource>false</XlfSource>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />
+    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\CSharp\System\Windows\Media\Resources\ColorProfiles\ColorProfiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <GenerateSource>false</GenerateSource>
+      <XlfInput>false</XlfInput>
+      <ManifestResourceName>ColorProfiles</ManifestResourceName>
+    </EmbeddedResource>
+
+    <!-- TODO:  We probably don't need this in the merged assembly as ILLinker will skip us. -->
+    <!-- 
+        Workaround for https://github.com/dotnet/wpf/issues/1385
+        ReadyToRun images of WPF applications crash 
+        
+        When producing ReadyToRun images, the ILLinker is configured to skip 
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
+        https://github.com/mono/linker/pull/658. 
+        
+        In turn, this results in the failure of the dependencies of such assemblies from being
+        identified and included in the ReadyToRun images. 
+        
+        This linker hint exists to ensure that such dependencies are included. We need
+        to place these hints in an assembly that has a reference to the corresponding
+        C++/CLI assembly. 
+        
+             PresentationCore -> DirectWriteFowarder
+             ReachFramework -> System.Printing
+    -->
+    <!--<EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
+      <XlfInput>false</XlfInput>
+      <LogicalName>$(AssemblyName).xml</LogicalName>
+    </EmbeddedResource>-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <CLCompile Include="main.cpp" />
+    <CLCompile Include="$(WpfSharedDir)\cpp\dwriteloader.cpp" />
+    <CLCompile Include="$(WpfSharedDir)\cpp\Utils.cxx" />
+  </ItemGroup>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+</Project>

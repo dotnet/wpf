@@ -1416,71 +1416,26 @@
   <ItemGroup>
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <!-- TODO: Swap to the C++ portion project when available. -->
-    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
-      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    <ProjectReference Include="..\CPP\PresentationCoreCpp.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>AddModules</OutputItemType>
+      <!-- the VC targets assume a project is either a managed assembly or static lib, but we treat this as both.
+           To make that work run GetTargetPath explicitly since Build won't return it  -->
+      <Targets>Build;GetTargetPath</Targets>
+      <Project>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</Project>
+      <Name>PresentationCoreCpp</Name>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
-    <!-- TODO: Hoist up into the C++ merge project. -->
-    <!--<ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>-->
   </ItemGroup>
 
-  <!-- 
-    Need Microsoft.WinFx.targets to embed *.compositefont 
-    files using MainResourcesGeneration target
-  -->
-  <PropertyGroup>
-    <InternalMarkupCompilation>true</InternalMarkupCompilation>
-  </PropertyGroup>
-
   <ItemGroup>
-    <!-- TODO: Hoist up into the C++ project. -->
-    <!--<Resource Include="Fonts\*.CompositeFont">
-      <GenerateSource>false</GenerateSource>
-      <XlfSource>false</XlfSource>
-    </Resource>-->
-  </ItemGroup>
-
-  <!-- TODO: Copy up into the C++ project. -->
-  <ItemGroup>
+    <!-- Needs to be included here in order to generate SRID. -->
     <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />
-    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\CSharp\System\Windows\Media\Resources\ColorProfiles\ColorProfiles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <GenerateSource>false</GenerateSource>
-      <XlfInput>false</XlfInput>
-      <ManifestResourceName>ColorProfiles</ManifestResourceName>
-    </EmbeddedResource>
-    
-    <!-- TODO: Hoist up into the C++ project. -->
-    <!-- 
-        Workaround for https://github.com/dotnet/wpf/issues/1385
-        ReadyToRun images of WPF applications crash 
-        
-        When producing ReadyToRun images, the ILLinker is configured to skip 
-        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
-        https://github.com/mono/linker/pull/658. 
-        
-        In turn, this results in the failure of the dependencies of such assemblies from being
-        identified and included in the ReadyToRun images. 
-        
-        This linker hint exists to ensure that such dependencies are included. We need
-        to place these hints in an assembly that has a reference to the corresponding
-        C++/CLI assembly. 
-        
-             PresentationCore -> DirectWriteFowarder
-             ReachFramework -> System.Printing
-    -->    
-    <!--<EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
-      <XlfInput>false</XlfInput>
-      <LogicalName>$(AssemblyName).xml</LogicalName>
-    </EmbeddedResource>-->
   </ItemGroup>
-
+  
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
        which is modified by the T4 targets, to be overwritten, so the TransformAll target 

@@ -28,6 +28,8 @@
     <LinkCompiled>false</LinkCompiled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetExt>.obj</TargetExt>
+    <!-- CPP targets disable copying since its typically done by link, but we're disabling link -->
+    <SkipCopyBuildProduct>false</SkipCopyBuildProduct>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -71,13 +73,10 @@
     <ClInclude Include="precomp.hxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPP\PresentationCoreCpp.cpp" />
-    <ClCompile Include="CPP\precomp.cxx">
+    <ClCompile Include="PresentationCoreCpp.cpp" />
+    <ClCompile Include="precomp.cxx">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <CLCompile Include="$(WpfSharedDir)\cpp\dwriteloader.cpp" />
-    <CLCompile Include="$(WpfSharedDir)\cpp\Utils.cxx" />
-    <CLCompile Include="OtherAssemblyAttrs.cpp" />
   </ItemGroup>
 
   <!-- 

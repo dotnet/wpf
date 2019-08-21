@@ -35,8 +35,7 @@ trigger:
   branches:
     include: 
     - master
-    # TODO - Re-enable when branding is decided.
-    # - release/3.0
+    - release/3.0
     - release/3.0-preview9
     # - arcade
   paths:
@@ -48,8 +47,7 @@ pr:
   branches:
     include:
     - master
-    # TODO - Re-enable when branding is decided.
-    # - release/3.0
+    - release/3.0
     - release/3.0-preview9
   paths:
     exclude:

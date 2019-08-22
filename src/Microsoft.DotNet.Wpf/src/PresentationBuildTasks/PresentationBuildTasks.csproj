@@ -98,6 +98,9 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs">
       <Link>Shared\System\Windows\Markup\ReflectionHelper.cs</Link>
     </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\RetargetablePathAssemblyResolver.cs">
+      <Link>Shared\System\Windows\Markup\RetargetablePathAssemblyResolver.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs">
       <Link>Shared\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs</Link>
     </Compile>

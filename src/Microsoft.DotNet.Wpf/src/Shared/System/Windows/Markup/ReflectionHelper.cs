@@ -62,7 +62,7 @@ namespace System.Xaml
             // System.Reflection.MetadataLoadContext Assembly cache 
             _cachedMetadataLoadContextAssemblies = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             _cachedMetadataLoadContextAssembliesByNameNoExtension = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
-            _metadataLoadContext = new MetadataLoadContext(new PathAssemblyResolver(assemblyPaths), MscorlibReflectionAssemblyName);
+            _metadataLoadContext = new MetadataLoadContext(new RetargetablePathAssemblyResolver(assemblyPaths), MscorlibReflectionAssemblyName);
             _localAssemblyName = string.Empty;
         }
 

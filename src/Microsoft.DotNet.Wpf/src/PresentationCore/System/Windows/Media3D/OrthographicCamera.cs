@@ -203,7 +203,7 @@ namespace System.Windows.Media.Media3D
             viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width/2, -viewSize.Height/2, 1));
             viewportMatrix.TranslatePrepend(new Vector3D(1, 1, 0));
             
-            // `First world-to-camera, then camera's projection, then normalized clip space to viewport.
+            // First, world-to-camera, then camera's projection, then normalized clip space to viewport.
             rayParameters.HitTestProjectionMatrix = 
                 viewMatrix *
                 projectionMatrix *

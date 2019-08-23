@@ -1433,10 +1433,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </ProjectReference>    
+    </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />    
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />    
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />

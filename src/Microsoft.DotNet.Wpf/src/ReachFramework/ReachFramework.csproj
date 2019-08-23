@@ -369,8 +369,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />

@@ -1418,6 +1418,7 @@
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="..\CPP\PresentationCoreCpp.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>AddModules</OutputItemType>
       <!-- the VC targets assume a project is either a managed assembly or static lib, but we treat this as both.

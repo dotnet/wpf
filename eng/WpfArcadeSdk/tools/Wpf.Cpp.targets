@@ -100,21 +100,21 @@
 #include <winres.h>
 #include "_version.h"
 
-#if defined(_DEBUG)
+#ifndef _DEBUG
   #define VER_VER_DEBUG             $(_VS_FF_DEBUG)
 #else
   #define VER_VER_DEBUG             0
 #endif
 
-#if !defined(VER_FILEFLAGS)
+#ifndef VER_FILEFLAGS
 #define VER_FILEFLAGS   VER_VER_DEBUG
 #endif
 
-#if !defined(VER_FILEOS)
+#ifndef VER_FILEOS
 #define VER_FILEOS  $(_VOS_NT_WINDOWS32)
 #endif
 
-#if !defined(VER_FILETYPE)
+#ifndef VER_FILETYPE
 #define VER_FILETYPE $(_VerFileTypeValue)
 #endif
 

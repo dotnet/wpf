@@ -2,7 +2,7 @@
   
   <!-- 
     $(TargetFrameworkVersion), $(_TargetFrameworkVersionWithoutV) etc. are defined in 
-    Microsoft.NET.Sdk.WindowsDesktop\targets\Microsoft.NET.Sdk.WindowsDesktop.targets. 
+    Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets. 
     
     Microsoft.NET.Sdk.targets is included prior to this file by Sdk.targets, so it is safe to define _TargetFrameworkValue
     here. 
@@ -20,7 +20,7 @@
       is safe to use here. 
   -->
   <PropertyGroup>
-    <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault($(_TargetFrameworkVersionWithoutV), $(_InvalidTargetFrameworkVersion)))</_TargetFrameworkVersionValue>
+    <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
   
   <Import Project="Microsoft.WinFX.targets" />

@@ -25,6 +25,11 @@
       to identify when a TFV is undefined
     -->
     <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+    
+    <!--
+      Initial/Default value set to 'undefined'. Updated in Microsoft.NET.WindowsDesktop.targets
+    --> 
+    <_TargetFrameworkVersionValue>$(_UndefinedTargetFrameworkVersion)</_TargetFrameworkVersionValue>
   </PropertyGroup>
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And 

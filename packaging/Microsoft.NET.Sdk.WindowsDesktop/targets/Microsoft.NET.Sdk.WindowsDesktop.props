@@ -23,6 +23,12 @@
       is safe to use here. 
   -->
     <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+
+    <!-- 
+      Represents an undefined TFV value. This will be used in comparisons of _TargetFrameworkVersionValue (defined in Microsoft.NET.WindowsDesktop.targets)
+      to identify when a TFV is undefined
+    -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And 

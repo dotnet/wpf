@@ -1,4 +1,23 @@
 <Project>
+  
+  <!-- 
+    $(TargetFrameworkVersion), $(_TargetFrameworkVersionWithoutV) etc. are defined in 
+    Microsoft.NET.Sdk.WindowsDesktop\targets\Microsoft.NET.Sdk.WindowsDesktop.targets. 
+    
+    Microsoft.NET.Sdk.targets is included prior to this file by Sdk.targets, so it is safe to define _TargetFrameworkValue
+    here. 
+    
+    _TargetFrameworkValue will be used in WindowsDesktop SDK as reliable proxy for _TargetFrameworkVersionWithoutV. 
+    _TargetFrameworkVersionWithoutV can be empty ('') or it can be a numeric value (e.g., '3.0') - which makes it hard to work with
+    esp. in outer builds.  _TargetFrameworkValue will always be guaranteed to have a numeric value ('0.0' or a valid TFM). 
+    
+    _TargetFrameworkVersionValue will be used in Microsoft.NET.Sdk.WindowsDesktop.props in Item conditions. This will be valid
+    because Items are evaluated after Properties (see https://docs.microsoft.com/en-us/visualstudio/msbuild/comparing-properties-and-items?view=vs-2019). 
+  -->
+  <PropertyGroup>
+    <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault($(_TargetFrameworkVersionWithoutV), $(_InvalidTargetFrameworkVersion)))</_TargetFrameworkVersionValue>
+  </PropertyGroup>
+  
   <Import Project="Microsoft.WinFX.targets" />
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 

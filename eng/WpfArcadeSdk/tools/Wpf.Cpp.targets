@@ -97,15 +97,8 @@
       <_ExtendedNativeVersionFileContents>
         <![CDATA[
 
+#include <winres.h>
 #include "_version.h"
-
-#if !defined(IDS_STRING_PRODUCT_VER)
-#define IDS_STRING_PRODUCT_VER 1001
-#endif 
-
-#if !defined(IDS_STRING_REPO_URL)
-#define IDS_STRING_REPO_URL 1002
-#endif 
 
 #if defined(_DEBUG)
   #define VER_VER_DEBUG             $(_VS_FF_DEBUG)
@@ -124,13 +117,7 @@
 #if !defined(VER_FILETYPE)
 #define VER_FILETYPE $(_VerFileTypeValue)
 #endif
-// String Table
-STRINGTABLE 
-BEGIN
-    IDS_STRING_PRODUCT_VER "$(_WindowsFileVersion)$(_SourceBuildInfo)"
-    IDS_STRING_REPO_URL "RepoUrl: $(ScmRepositoryUrl)"
-    
-END
+
 
 /////////////////////////////////////////////////////////////////////
 //

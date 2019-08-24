@@ -8449,7 +8449,7 @@ style should be placed here.
                                               ToolTip="Previous Page"
                                               Command="NavigationCommands.PreviousPage"
                                               IsEnabled="{TemplateBinding CanGoToPreviousPage}"
-                                              Focusable="False">
+                                              Focusable="True">
                                     <Viewbox x:Uid="Viewbox_5" Height="{TemplateBinding FontSize}">
                                         <Path x:Uid="Path_15" Fill="{TemplateBinding Foreground}">
                                             <Path.Data>
@@ -8472,7 +8472,7 @@ style should be placed here.
                                               ToolTip="Next Page" 
                                               Command="NavigationCommands.NextPage" 
                                               IsEnabled="{TemplateBinding CanGoToNextPage}"
-                                              Focusable="False">
+                                              Focusable="True">
                                     <Viewbox x:Uid="Viewbox_6" Height="{TemplateBinding FontSize}">
                                         <Path x:Uid="Path_16" Fill="{TemplateBinding Foreground}">
                                             <Path.Data>
@@ -8501,7 +8501,7 @@ style should be placed here.
                                               BorderBrush="{TemplateBinding BorderBrush}"
                                               Width="{TemplateBinding FontSize}" 
                                               Height="{TemplateBinding FontSize}" 
-                                              Focusable="False">
+                                              Focusable="True">
                                     <RepeatButton.LayoutTransform>
                                         <ScaleTransform x:Uid="ScaleTransform_12" ScaleX="2.2" 
                                                         ScaleY="2.2"/>
@@ -8531,7 +8531,7 @@ style should be placed here.
                                               BorderBrush="{TemplateBinding BorderBrush}"
                                               Width="{TemplateBinding FontSize}" 
                                               Height="{TemplateBinding FontSize}" 
-                                              Focusable="False">
+                                              Focusable="True">
                                     <RepeatButton.LayoutTransform>
                                         <ScaleTransform x:Uid="ScaleTransform_13" ScaleX="2.2" 
                                                         ScaleY="2.2"/>

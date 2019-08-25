@@ -23,8 +23,6 @@
 
   <PropertyGroup>
     <CLRSupport>pure</CLRSupport>
-    <!-- TODO: remove when we figure out ApiCompat targets here -->
-    <RunRefApiCompat>false</RunRefApiCompat>
   </PropertyGroup>
 
   <PropertyGroup>

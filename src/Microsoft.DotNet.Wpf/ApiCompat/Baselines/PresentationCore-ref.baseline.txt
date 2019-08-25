@@ -1,4 +1,5 @@
 Compat issues with assembly PresentationCore:
+TypesMustExist : Type 'MS.Internal.TrueTypeSubsetter' does not exist in the implementation but it does exist in the contract.
 CannotChangeAttribute : Attribute 'System.AttributeUsageAttribute' on 'System.Windows.LocalizabilityAttribute' changed from '[AttributeUsageAttribute(412, AllowMultiple=false, Inherited=true)]' in the contract to '[AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Struct, AllowMultiple=false, Inherited=true)]' in the implementation.
 CannotRemoveAttribute : Attribute 'MS.Internal.PresentationCore.FriendAccessAllowedAttribute' exists on 'System.Windows.Input.InputEventArgs' in the contract but not the implementation.
 MembersMustExist : Member 'System.Windows.Media.Brush.AddRefOnChannelCore(System.Windows.Media.Composition.DUCE.Channel)' does not exist in the implementation but it does exist in the contract.
@@ -19,4 +20,4 @@ MembersMustExist : Member 'System.Windows.Media.Imaging.BitmapDecoder.SealObject
 MembersMustExist : Member 'System.Windows.Media.Imaging.BitmapEncoder.SealObject()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Media.TextFormatting.TextFormatter.CreateParagraphCache(System.Windows.Media.TextFormatting.TextSource, System.Int32, System.Double, System.Windows.Media.TextFormatting.TextParagraphProperties, System.Windows.Media.TextFormatting.TextLineBreak, System.Windows.Media.TextFormatting.TextRunCache)' does not exist in the implementation but it does exist in the contract.
 CannotChangeAttribute : Attribute 'System.AttributeUsageAttribute' on 'System.Windows.Resources.AssemblyAssociatedContentFileAttribute' changed from '[AttributeUsageAttribute(1, AllowMultiple=true)]' in the contract to '[AttributeUsageAttribute(AttributeTargets.Assembly, AllowMultiple=true)]' in the implementation.
-Total Issues: 20
+Total Issues: 21

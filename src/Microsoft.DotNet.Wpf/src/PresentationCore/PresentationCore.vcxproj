@@ -70,10 +70,9 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Link</OutputItemType>
     </ProjectReference>
-    <!-- TODO: Add back ref assembly and ensure ApiCompat passes. -->
-    <!--<ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>-->
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Link Include="Shlwapi.lib" />

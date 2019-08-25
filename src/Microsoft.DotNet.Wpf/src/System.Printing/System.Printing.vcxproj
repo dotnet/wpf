@@ -135,7 +135,7 @@
       <Define>WINDOWSBASE_DLL</Define>
     </ProjectReference>
 
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>_defineReference</OutputItemType>
       <Define>PRESENTATIONCORE_DLL</Define>

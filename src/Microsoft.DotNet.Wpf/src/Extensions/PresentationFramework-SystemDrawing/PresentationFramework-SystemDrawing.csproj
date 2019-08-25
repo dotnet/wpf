@@ -9,7 +9,9 @@
     <Compile Include="SystemDrawingExtension.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
   </ItemGroup>

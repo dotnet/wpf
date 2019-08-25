@@ -41,7 +41,9 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
 
     <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Classic\ref\PresentationFramework.Classic-ref.csproj">

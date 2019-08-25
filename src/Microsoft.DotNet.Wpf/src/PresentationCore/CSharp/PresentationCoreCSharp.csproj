@@ -1437,7 +1437,9 @@
 
   <ItemGroup>
     <!-- Needs to be included here in order to generate SRID. -->
-    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />
+    <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx">
+      <ManifestResourceName>FxResources.PresentationCore.SR</ManifestResourceName>
+    </EmbeddedResource>
   </ItemGroup>
   
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because

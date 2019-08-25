@@ -78,22 +78,6 @@
     <Link Include="Shlwapi.lib" />
   </ItemGroup>
 
-  <!-- TODO: Add back PBT dependency -->
-  <!-- 
-    Need Microsoft.WinFx.targets to embed *.compositefont 
-    files using MainResourcesGeneration target
-  --><!--
-  <PropertyGroup>
-    <InternalMarkupCompilation>true</InternalMarkupCompilation>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Resource Include="Fonts\*.CompositeFont">
-      <GenerateSource>false</GenerateSource>
-      <XlfSource>false</XlfSource>
-    </Resource>
-  </ItemGroup>-->
-
   <ItemGroup>
     <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\Resources\Strings.resx" />
     <EmbeddedResource Include="$(WpfSourceDir)PresentationCore\CSharp\System\Windows\Media\Resources\ColorProfiles\ColorProfiles.resx">

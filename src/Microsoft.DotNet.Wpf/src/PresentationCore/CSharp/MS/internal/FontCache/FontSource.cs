@@ -365,8 +365,9 @@ namespace MS.Internal.FontCache
         {
             string fontFilename = _fontUri.OriginalString.Substring(_fontUri.OriginalString.LastIndexOf('/') + 1).ToLowerInvariant();
 
-            var fontResourceAssembly = Assembly.GetExecutingAssembly();
-            ResourceManager rm = new ResourceManager($"{fontResourceAssembly.GetName().Name}.g", fontResourceAssembly);
+            var resourcesAssemblyName = Path.GetFileNameWithoutExtension(ExternDll.WindowsBase); 
+            var fontResourceAssembly = Assembly.Load(resourcesAssemblyName);
+            ResourceManager rm = new ResourceManager($"{resourcesAssemblyName}.g", fontResourceAssembly);
 
             return rm?.GetStream($"fonts/{fontFilename}");
         }

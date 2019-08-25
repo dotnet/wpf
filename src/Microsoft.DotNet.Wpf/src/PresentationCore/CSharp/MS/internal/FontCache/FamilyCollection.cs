@@ -57,7 +57,7 @@ namespace MS.Internal.FontCache
 
         #endregion Private Fields
 
-        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.PresentationCore)};component/fonts/";
+        internal static string SxSFontsResourcePrefix { get; } = $"/{Path.GetFileNameWithoutExtension(ExternDll.WindowsBase)};component/fonts/";
 
         private static List<CompositeFontFamily> GetCompositeFontList(FontSourceCollection fontSourceCollection)
         {

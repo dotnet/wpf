@@ -1,8 +1,32 @@
 <Project>
+  
+  <!-- 
+    $(TargetFrameworkVersion), $(_TargetFrameworkVersionWithoutV) etc. are defined in 
+    Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets. 
+    
+    Microsoft.NET.Sdk.targets is included prior to this file by Sdk.targets, so it is safe to define _TargetFrameworkValue
+    here. 
+    
+    _TargetFrameworkValue will be used in WindowsDesktop SDK as reliable proxy for _TargetFrameworkVersionWithoutV. 
+    _TargetFrameworkVersionWithoutV can be empty ('') or it can be a numeric value (e.g., '3.0') - which makes it hard to work with
+    esp. in outer builds.  _TargetFrameworkValue will always be guaranteed to have a numeric value ('0.0' or a valid TFM). 
+    
+    _TargetFrameworkVersionValue will be used in Microsoft.NET.Sdk.WindowsDesktop.props in Item conditions. This will be valid
+    because Items are evaluated after Properties (see https://docs.microsoft.com/en-us/visualstudio/msbuild/comparing-properties-and-items?view=vs-2019). 
+    
+    Note:
+      Please see https://github.com/microsoft/msbuild/issues/3212 for a discussion about the use of 
+      the private $(_TargetFrameworkVersionWithoutV) property - which will likely remain supported and
+      is safe to use here. 
+  -->
+  <PropertyGroup>
+    <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
+  </PropertyGroup>
+  
   <Import Project="Microsoft.WinFX.targets" />
 
-  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 
-                         ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
+                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     
     <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
          as Resource, Content, or None items, then remove them from the Page items. -->
@@ -16,7 +40,7 @@
   <Target Name="CheckForDuplicatePageItems" 
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform;CoreCompile"
           DependsOnTargets="CheckForDuplicateItems"
-          Condition="('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+          Condition="('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
     <CheckForDuplicateItems
       Items="@(Page)"
@@ -44,7 +68,7 @@
   --> 
   <Target Name="_WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms"
           BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
-          Condition="('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+          Condition="('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms" 
                    Condition="'$(UseWpf)' != 'true' And '$(UseWindowsForms)' != 'true'"/>
   </Target>
@@ -58,7 +82,7 @@
   <Target Name="_WindowsDesktopFrameworkRequiresVersion30"
         BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
         Condition="('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And 
-                  ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+                  ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
 </Project>

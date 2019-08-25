@@ -23,6 +23,8 @@
 
   <PropertyGroup>
     <CLRSupport>pure</CLRSupport>
+    <!-- We don't need assembly info here as the output from this project will just be merged into PresentationCore. -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup>

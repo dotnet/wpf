@@ -176,7 +176,7 @@ END
       Additional assembly scope attributes besides TargetFrameworkAttribute are added here 
   -->
   <Target Name="GenerateTargetFrameworkMonikerAttribute2"
-      Condition="'$(ManagedCxx)'=='true'"
+      Condition="'$(ManagedCxx)'=='true' and '$(GenerateAssemblyInfo)'=='true'"
           BeforeTargets="SetMscorlibAdditionalUsingDirectory"
           DependsOnTargets="PrepareForBuild;GetReferenceAssemblyPaths;InitializeAssemblyAttributeInformation"
           Outputs="$(TargetFrameworkMonikerAssemblyAttributesPath)">

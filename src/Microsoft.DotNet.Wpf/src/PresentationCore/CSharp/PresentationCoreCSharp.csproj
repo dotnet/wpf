@@ -15,6 +15,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <!-- Must always build this as AnyCPU to avoid LNK1302 in the merge project one level above. -->
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <!-- We don't need assembly info here as the output from this project will just be merged into PresentationCore. -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   
   <PropertyGroup>

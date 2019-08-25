@@ -10,6 +10,8 @@ using MS.Internal.PresentationCore;
 using System;
 using System.Runtime.CompilerServices;
 
+[assembly: CLSCompliant(true)]
+
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFramework)]
 [assembly:InternalsVisibleTo(BuildInfo.ReachFramework)]
 [assembly:InternalsVisibleTo(BuildInfo.SystemPrinting)]

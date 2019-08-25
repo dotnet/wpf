@@ -59,7 +59,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj"/>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="Cpp\PresentationCoreCpp.vcxproj">
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -114,6 +115,7 @@
 
   <ItemGroup>
     <CLCompile Include="main.cpp" />
+    <CLCompile Include="otherassemblyattrs.cpp" />
     <CLCompile Include="$(WpfSharedDir)\cpp\dwriteloader.cpp" />
     <CLCompile Include="$(WpfSharedDir)\cpp\Utils.cxx" />
   </ItemGroup>

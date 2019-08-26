@@ -6,7 +6,7 @@
 // ------------------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;
-using MS.Internal.PresentationCore;
+using Microsoft.Internal;
 
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFramework)]
 

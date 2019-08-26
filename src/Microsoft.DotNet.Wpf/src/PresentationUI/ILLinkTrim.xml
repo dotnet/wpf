@@ -1,5 +1,5 @@
 <linker>
-  <!-- Include dependencies of DirectWriteForwarder, which is not
+  <!-- Include C++/CLI, which are not
        analyzed by the linker. -->
   <assembly fullname="System.Diagnostics.Debug" />
   <assembly fullname="mscorlib" />

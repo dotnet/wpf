@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
   </ItemGroup>

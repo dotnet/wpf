@@ -1433,7 +1433,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />    

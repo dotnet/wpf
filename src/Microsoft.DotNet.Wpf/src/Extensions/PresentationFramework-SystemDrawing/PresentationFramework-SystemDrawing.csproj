@@ -10,7 +10,7 @@
     <Compile Include="SystemDrawingExtension.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />

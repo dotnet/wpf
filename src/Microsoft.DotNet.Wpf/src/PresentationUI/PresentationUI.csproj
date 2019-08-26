@@ -208,7 +208,7 @@
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
 
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
 

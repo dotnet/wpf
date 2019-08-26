@@ -18,7 +18,7 @@
   <ItemGroup>
     <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\Accessibility.dll" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
   </ItemGroup>

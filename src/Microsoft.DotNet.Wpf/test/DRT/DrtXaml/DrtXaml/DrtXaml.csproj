@@ -25,6 +25,9 @@
 
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
   </ItemGroup>
 
   <PropertyGroup>

@@ -3,6 +3,7 @@
     <AssemblyName>XamlTestClasses</AssemblyName>
     <RootNamespace>XamlTestClasses</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   
   <PropertyGroup>

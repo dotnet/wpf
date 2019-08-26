@@ -7,6 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>DrtXaml.XamlDrt</StartupObject>
     <CreateTestPayload>true</CreateTestPayload>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <PropertyGroup>

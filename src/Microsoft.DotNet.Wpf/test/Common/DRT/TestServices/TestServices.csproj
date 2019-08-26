@@ -8,6 +8,7 @@
       <Platforms>AnyCPU;x64</Platforms>
       <CLSCompliant>false</CLSCompliant>
       <OutputType>Library</OutputType>
+      <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     </PropertyGroup>
 
   <ItemGroup>

@@ -18,7 +18,6 @@ using System.Windows.Markup;
 [assembly:DependencyAttribute("System,", LoadHint.Always)]
 [assembly:DependencyAttribute("System.Xaml,", LoadHint.Sometimes)]
 
-[assembly:InternalsVisibleTo(BuildInfo.DirectWriteForwarder)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationCore)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFramework)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationUI)]

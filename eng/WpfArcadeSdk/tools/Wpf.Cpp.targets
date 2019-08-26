@@ -48,8 +48,17 @@
              Importance="high" />
   </Target>
 
+  <PropertyGroup>
+    <BeforeClCompileTargets>
+      CreateNativeVersionFile;
+      $(BeforeClCompileTargets)
+    </BeforeClCompileTargets>
+  </PropertyGroup>
 
-  <Target Name="CreateNativeVersionFile" BeforeTargets="ResourceCompile" Outputs="$(NativeVersionFile)" Condition="!Exists('$(NativeVersionFile)')">
+  <Target Name="CreateNativeVersionFile" 
+          BeforeTargets="ResourceCompile"
+          Outputs="$(NativeVersionFile)" 
+          Condition="!Exists('$(NativeVersionFile)')">
     <CallTarget Targets="GenerateNativeVersionFile" />
   </Target>
 
@@ -60,29 +69,86 @@
           DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformationFromSourceControlManager"
           Outputs="$(NativeResourceFileWithVersionInformation)"
           Returns="@(ResourceCompile)"
-          Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(ManagedCxx)' != 'true' And '$(IsRedistProject)' != 'true'">
+          Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(IsRedistProject)' != 'true'">
+
+    <PropertyGroup>
+      <_NativeVersionHeader>$([System.IO.Path]::Combine('$(NativeVersionFileDirectory)', '_version.h'))</_NativeVersionHeader>
+    </PropertyGroup>
+
+    <Copy SourceFiles="$(NativeVersionFile)" DestinationFiles="$(_NativeVersionHeader)" SkipUnchangedFiles="true" />
     
     <PropertyGroup>
       <_WindowsFileVersion>$(FileVersion.Replace('.', ','))</_WindowsFileVersion>
       <_SourceBuildInfo> %40Commit: $(SourceRevisionId)</_SourceBuildInfo>
+
+      <!-- Values from documentation for VS_FIXEDFILEINFO structure -->
+      <_VFT_APP>0x00000001</_VFT_APP>
+      <_VFT_DLL>0x00000002</_VFT_DLL>
+      <_VFT_UNKNOWN>0x00000000</_VFT_UNKNOWN>
+      
+      <_VOS_NT_WINDOWS32>0x00040004</_VOS_NT_WINDOWS32>
+      
+      <_VS_FF_DEBUG>0x00000001</_VS_FF_DEBUG>
+      
+      <_VerFileTypeValue>$(_VFT_UNKNOWN)</_VerFileTypeValue>
+      <_VerFileTypeValue Condition="'$(ConfigurationType)' =='Application'">$(_VFT_APP)</_VerFileTypeValue>
+      <_VerFileTypeValue Condition="'$(ConfigurationType)' =='DynamicLibrary'">$(_VFT_DLL)</_VerFileTypeValue>
       
       <_ExtendedNativeVersionFileContents>
         <![CDATA[
-        
-#if !defined(IDS_STRING_PRODUCT_VER)
-#define IDS_STRING_PRODUCT_VER 1001
-#endif 
 
-#if !defined(IDS_STRING_REPO_URL)
-#define IDS_STRING_REPO_URL 1002
-#endif 
+#include <winres.h>
+#include "_version.h"
 
-// String Table
-STRINGTABLE 
+#ifndef _DEBUG
+  #define VER_VER_DEBUG             $(_VS_FF_DEBUG)
+#else
+  #define VER_VER_DEBUG             0
+#endif
+
+#ifndef VER_FILEFLAGS
+#define VER_FILEFLAGS   VER_VER_DEBUG
+#endif
+
+#ifndef VER_FILEOS
+#define VER_FILEOS  $(_VOS_NT_WINDOWS32)
+#endif
+
+#ifndef VER_FILETYPE
+#define VER_FILETYPE $(_VerFileTypeValue)
+#endif
+
+
+/////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION        VER_FILEVERSION
+ PRODUCTVERSION     VER_PRODUCTVERSION
+ FILEFLAGSMASK      0x3fL
+ FILEFLAGS          VER_FILEFLAGS
+ FILEOS             VER_FILEOS
+ FILETYPE           VER_FILETYPE
+ FILESUBTYPE        0x0L
 BEGIN
-    IDS_STRING_PRODUCT_VER "$(_WindowsFileVersion)$(_SourceBuildInfo)"
-    IDS_STRING_REPO_URL "RepoUrl: $(ScmRepositoryUrl)"
-    
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription",  VER_FILEDESCRIPTION_STR "\0"
+            VALUE "FileVersion",      VER_FILEVERSION_STR "\0"
+            VALUE "InternalName",     VER_INTERNALNAME_STR "\0"
+            VALUE "LegalCopyright",   VER_LEGALCOPYRIGHT_STR "\0"
+            VALUE "OriginalFilename", VER_ORIGINALFILENAME_STR "\0"
+            VALUE "ProductName",      VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",   VER_PRODUCTVERSION_STR "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
 END
         ]]>
       </_ExtendedNativeVersionFileContents>

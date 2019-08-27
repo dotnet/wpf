@@ -24,6 +24,10 @@
 
   <ItemGroup>
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
-    <PackagingContent Include="content\**\*" SubFolder="root\%(RecursiveDir)" />
+    
+    <!-- 
+        Do not include VB templates in .NET Core 3.0 - https://github.com/dotnet/wpf/issues/1734
+    -->
+    <PackagingContent Include="content\**\*" Exclude="content\*VisualBasic\**\*" SubFolder="root\%(RecursiveDir)" />
   </ItemGroup>
 </Project>

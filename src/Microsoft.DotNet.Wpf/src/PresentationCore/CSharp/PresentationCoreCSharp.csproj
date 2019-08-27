@@ -1419,15 +1419,13 @@
   <ItemGroup>
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="..\CPP\PresentationCoreCpp.vcxproj">
+    <ProjectReference Include="..\CPP\PresentationCoreCpp.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>AddModules</OutputItemType>
       <!-- the VC targets assume a project is either a managed assembly or static lib, but we treat this as both.
            To make that work run GetTargetPath explicitly since Build won't return it  -->
       <Targets>Build;GetTargetPath</Targets>
-      <Project>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</Project>
-      <Name>PresentationCoreCpp</Name>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />

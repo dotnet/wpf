@@ -70,8 +70,43 @@
       $(MarkupCompilePass1DependsOn)
     </MarkupCompilePass1DependsOn>
   </PropertyGroup>
-  
 
+  <!--
+    Automatically add ILLinkTrim.xml as a resource to any project that references 
+    PresentationCore.vcxproj or System.Printing.vcxproj and is a shipping assembly
+    but not a reference assembly.
+  -->
+  <Target Name="EnsureILLinkerTrimming"
+          BeforeTargets="ResolveReferences"
+          Condition="'$(IsShipping)'=='true' 
+                      and !$(HandCraftedReferenceProjects.Contains('$(MSBuildProjectName);'))
+                      and !$(MSBuildProjectFile.Contains('vcxproj'))">
+    <ItemGroup>
+      <_PCoreAndSysPrintingReferences Include="@(ProjectReference)" 
+                                      Condition="'%(Filename)%(Extension)'=='PresentationCore.vcxproj' 
+                                                 or '%(Filename)%(Extension)'=='System.Printing.vcxproj'"/>
+      <!-- 
+        Workaround for https://github.com/dotnet/wpf/issues/1385
+        ReadyToRun images of WPF applications crash 
+        
+        When producing ReadyToRun images, the ILLinker is configured to skip 
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
+        https://github.com/mono/linker/pull/658. 
+        
+        In turn, this results in the failure of the dependencies of such assemblies from being
+        identified and included in the ReadyToRun images. 
+        
+        This linker hint exists to ensure that such dependencies are included. We need
+        to place these hints in an assembly that has a reference to the corresponding
+        C++/CLI assembly. 
+      -->
+      <EmbeddedResource Include="$(WpfArcadeSdkToolsDir)ILLinkTrim.xml"
+                        Condition="'@(_PCoreAndSysPrintingReferences->Count())' &gt; 0">
+        <XlfInput>false</XlfInput>
+        <LogicalName>$(AssemblyName).xml</LogicalName>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
 
   <Target Name="EnsureWpfProjectReference" 
           DependsOnTargets="$(EnsureWpfProjectReferenceDependsOn)"

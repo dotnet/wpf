@@ -1,7 +1,0 @@
-<linker>
-  <!-- Include C++/CLI assembly dependencies, which are not
-       analyzed by the linker. -->
-  <assembly fullname="System.Diagnostics.Debug" />
-  <assembly fullname="mscorlib" />
-  <assembly fullname="netstandard" />  
-</linker>

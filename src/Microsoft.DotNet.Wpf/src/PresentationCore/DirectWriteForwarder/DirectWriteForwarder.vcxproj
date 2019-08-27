@@ -51,7 +51,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</ProjectGuid>
     <UseClrCrt>true</UseClrCrt>
-    <OutputName>PresentationCoreCpp</OutputName>
+    <OutputName>DirectWriteForwarder</OutputName>
     <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
   </PropertyGroup>
   
@@ -80,7 +80,7 @@
     <ClInclude Include="precomp.hxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PresentationCoreCpp.cpp" />
+    <ClCompile Include="DirectWriteForwarder.cpp" />
     <ClCompile Include="precomp.cxx">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -59,7 +59,7 @@
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="Cpp\PresentationCoreCpp.vcxproj">
+    <ProjectReference Include="DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Link</OutputItemType>

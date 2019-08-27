@@ -1419,7 +1419,7 @@
   <ItemGroup>
     <!-- required for internals access -->
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="..\CPP\PresentationCoreCpp.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
+    <ProjectReference Include="..\DirectWriteForwarder\DirectWriteForwarder.vcxproj" Condition="'$(DesignTimeBuild)'!='true'">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>AddModules</OutputItemType>

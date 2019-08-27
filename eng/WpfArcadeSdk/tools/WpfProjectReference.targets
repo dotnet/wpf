@@ -12,9 +12,6 @@
   <ItemGroup>
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
-      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </WpfProjectPath>
     <WpfProjectPath Include="System.Windows.Input.Manipulations" ProjectPath="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <WpfProjectPath Include="WindowsFormsIntegration" ProjectPath="$(WpfSourceDir)WindowsFormsIntegration\WindowsFormsIntegration.csproj" />
 

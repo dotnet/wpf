@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationCore", "Present
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCoreCSharp", "src\Microsoft.DotNet.Wpf\src\PresentationCore\CSharp\PresentationCoreCSharp.csproj", "{74C63A45-EAE5-407A-9F89-E0C6BC604841}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PresentationCoreCpp", "src\Microsoft.DotNet.Wpf\src\PresentationCore\CPP\PresentationCoreCpp.vcxproj", "{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectWriteForwarder", "src\Microsoft.DotNet.Wpf\src\PresentationCore\DirectWriteForwarder\DirectWriteForwarder.vcxproj", "{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PresentationCore", "src\Microsoft.DotNet.Wpf\src\PresentationCore\PresentationCore.vcxproj", "{E490620F-542F-4F65-9DAA-577F17B0CCB9}"
 EndProject

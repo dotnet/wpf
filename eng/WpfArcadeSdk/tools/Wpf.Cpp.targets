@@ -296,7 +296,7 @@ using namespace System::Runtime::Versioning;
     the C++ compiler. 
     
     A simple C# project is generated dynamically. It contains PackageReferences for common packages
-    that are used in WPF's C++/CLI projects. There are only two such projects - DirectWriteForwarder
+    that are used in WPF's C++/CLI projects. There are only three such projects - DirectWriteForwarder, PresentationCore
     and System.Printing - which makes it unnecessary to create a flexible and parametrized target. This
     can remain a simple and one-size-fits-all target for now. 
     

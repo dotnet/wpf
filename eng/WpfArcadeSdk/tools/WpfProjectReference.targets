@@ -63,10 +63,12 @@
     </CoreCompileDependsOn>
     <ResolveReferencesDependsOn>
       EnsureWpfProjectReference;
+      EnsureILLinkerTrimming;
       $(ResolveReferencesDependsOn)
-      </ResolveReferencesDependsOn>
+    </ResolveReferencesDependsOn>
     <MarkupCompilePass1DependsOn>
       EnsureWpfProjectReference;
+      EnsureILLinkerTrimming;
       $(MarkupCompilePass1DependsOn)
     </MarkupCompilePass1DependsOn>
   </PropertyGroup>
@@ -77,7 +79,6 @@
     but not a reference assembly.
   -->
   <Target Name="EnsureILLinkerTrimming"
-          BeforeTargets="ResolveReferences"
           Condition="'$(IsShipping)'=='true' 
                       and !$(HandCraftedReferenceProjects.Contains('$(MSBuildProjectName);'))
                       and !$(MSBuildProjectFile.Contains('vcxproj'))">

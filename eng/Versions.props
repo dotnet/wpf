@@ -8,17 +8,17 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.0-rc1.19427.6</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.0-rc1.19428.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
-    <MicrosoftNETCoreRuntimeCoreCLRVersion>3.0.0-rc1.19426.4</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>3.0.0-rc1.19426.4</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>3.0.0-rc1.19426.4</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>3.0.0-rc1.19427.10</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>3.0.0-rc1.19427.10</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>3.0.0-rc1.19427.10</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.0.0-rc1-19427-09</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppVersion>3.0.0-rc1-19427-13</MicrosoftNETCoreAppVersion>
     <MicrosoftNETCorePlatformsVersion>3.0.0-rc1.19420.10</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.6.0-rc1.19420.10</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.6.0-rc1.19420.10</SystemDirectoryServicesVersion>

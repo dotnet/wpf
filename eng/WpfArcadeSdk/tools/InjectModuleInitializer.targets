@@ -400,6 +400,7 @@
           Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))">
     <PropertyGroup>
       <TargetFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</TargetFile>
+      <ResourceFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).res'))</ResourceFile>
       <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
     </PropertyGroup>
 
@@ -411,12 +412,21 @@
           Condition="Exists('$(TargetFile)')" />
 
     <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="!Exists('$(ResourceFile)')"
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"
                Dll="true"
                Debug="true"
                Quiet="true" />
 
+    <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="Exists('$(ResourceFile)')"
+               SourceFile="$(ILFile)"
+               Resource="$(ResourceFile)"
+               Out="$(TargetFile)"
+               Dll="true"
+               Debug="true"
+               Quiet="true" />
   </Target>
 
 </Project>

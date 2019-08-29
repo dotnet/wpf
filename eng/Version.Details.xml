@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-rc1.19424.2">
+    <Dependency Name="Microsoft.Private.Winforms" Version="4.8.0-rc1.19428.6">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>462b52b7bce8cce9f40382866fdf87b162393afa</Sha>
+      <Sha>5ce84261d3c849e16348823def55dd266059d6c4</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
@@ -59,9 +59,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>d341fd37dcb2c22e382adccdc06770cf8f160577</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-rc1-19423-11" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.App" Version="3.0.0-rc1-19428-08" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/core-setup</Uri>
-      <Sha>abecfcd748e6b8850e1111184bf34c93e9277f90</Sha>
+      <Sha>5bc760ed917c526ce503de6addbf204ce51934cb</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19411.1">
       <Uri>https://github.com/dotnet/arcade</Uri>
@@ -83,17 +83,17 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>d341fd37dcb2c22e382adccdc06770cf8f160577</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-rc1.19422.4" CoherentParentDependency="Microsoft.NETCore.App">
+    <Dependency Name="Microsoft.NETCore.Runtime.CoreCLR" Version="3.0.0-rc1.19428.2" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/coreclr</Uri>
-      <Sha>795458a84583d81a9f9e6952fc47fcfc9e58e73c</Sha>
+      <Sha>ebbcd615e12bf2d3174d8f481b4ee73b527c35e0</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="3.0.0-rc1.19422.4" CoherentParentDependency="Microsoft.NETCore.Runtime.CoreCLR">
+    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="3.0.0-rc1.19428.2" CoherentParentDependency="Microsoft.NETCore.Runtime.CoreCLR">
       <Uri>https://github.com/dotnet/coreclr</Uri>
-      <Sha>795458a84583d81a9f9e6952fc47fcfc9e58e73c</Sha>
+      <Sha>ebbcd615e12bf2d3174d8f481b4ee73b527c35e0</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILAsm" Version="3.0.0-rc1.19422.4" CoherentParentDependency="Microsoft.NETCore.Runtime.CoreCLR">
+    <Dependency Name="Microsoft.NETCore.ILAsm" Version="3.0.0-rc1.19428.2" CoherentParentDependency="Microsoft.NETCore.Runtime.CoreCLR">
       <Uri>https://github.com/dotnet/coreclr</Uri>
-      <Sha>795458a84583d81a9f9e6952fc47fcfc9e58e73c</Sha>
+      <Sha>ebbcd615e12bf2d3174d8f481b4ee73b527c35e0</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19411.1">
       <Uri>https://github.com/dotnet/arcade</Uri>

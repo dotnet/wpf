@@ -404,6 +404,12 @@
       <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
     </PropertyGroup>
 
+    <!-- Ensures the DebuggableAttribute has the appropriate optimizations enabled. -->
+    <PropertyGroup>
+      <DebugEnableJitOptimization>false</DebugEnableJitOptimization>
+      <DebugEnableJitOptimization Condition="'$(Configuration)' == 'Release'">true</DebugEnableJitOptimization>
+    </PropertyGroup>
+
     <!-- 
       Make a backup before overwriting $(TargetFile) 
     -->
@@ -417,6 +423,7 @@
                Out="$(TargetFile)"
                Dll="true"
                Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
                Quiet="true" />
 
     <ILAsmTask ILAsm="$(ILAsm)"
@@ -426,6 +433,7 @@
                Out="$(TargetFile)"
                Dll="true"
                Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
                Quiet="true" />
   </Target>
 

@@ -643,7 +643,7 @@ namespace MS.Internal
                     }
 
                     CodeChecksumPragma csPragma = new CodeChecksumPragma();
-                    csPragma.FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML;
+                    csPragma.FileName = Path.GetFullPath(SourceFileInfo.OriginalFilePath) + XAML;
                     csPragma.ChecksumAlgorithmId = s_hashGuid;
                     csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, s_hashGuid);
                     ccu.StartDirectives.Add(csPragma);
@@ -1564,35 +1564,15 @@ namespace MS.Internal
             }
         }
 
-        private string ParentFolderPrefix
-        {
-            get
-            {
-                string parentFolderPrefix = string.Empty;
-                if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
-                {
-                    string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
-                    relPath += SourceFileInfo.RelativeSourceFilePath;
-                    string[] dirs = relPath.Split(new Char[] { ESCAPED_BACKSLASH_CHAR });
-                    for (int i = 1; i < dirs.Length; i++)
-                    {
-                        parentFolderPrefix += PARENTFOLDER;
-                    }
-                }
-
-                return parentFolderPrefix;
-            }
-        }
-
         private void AddLinePragma(CodeTypeMember ctm, int lineNumber)
         {
-            CodeLinePragma clp = new CodeLinePragma(ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML, lineNumber);
+            CodeLinePragma clp = new CodeLinePragma(Path.GetFullPath(SourceFileInfo.OriginalFilePath) + XAML, lineNumber);
             ctm.LinePragma = clp;
         }
 
         private void AddLinePragma(CodeStatement cs, int lineNumber)
         {
-            CodeLinePragma clp = new CodeLinePragma(ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML, lineNumber);
+            CodeLinePragma clp = new CodeLinePragma(Path.GetFullPath(SourceFileInfo.OriginalFilePath) + XAML, lineNumber);
             cs.LinePragma = clp;
         }
 

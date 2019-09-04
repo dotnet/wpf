@@ -27,11 +27,26 @@
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    
-    <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
-         as Resource, Content, or None items, then remove them from the Page items. -->
-    <Page Remove="@(Resource);@(Content);@(None)"
+
+    <!--
+         In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
+         as Resource, Content then remove them from the Page items.
+         
+         If EnableDefaultApplicationDefinition is false, ApplicationDefinition must also be removed from Page as
+         PresentationBuildTasks will include the generated code for the ApplicationDefinition twice otherwise.
+         We cannot do this in all cases in the props file as ApplicationDefinition won't be available
+         at that point in the evaluation when EnableDefaultApplicationDefinition is false.
+    -->
+    <Page Remove="@(Resource);@(Content);@(ApplicationDefinition)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
+
+    <!--
+         Only remove None from Page in the event that we disable both the default ApplicationDefinition and the DefaultPageItems.
+         Otherwise we can enter a situation where we are explicitly removing page items that should otherwise be included (such as
+         when (EnableDefaultApplicationDefinition xor EnableDefaultPageItems) is true).
+    -->
+    <Page Remove="@(None)"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false' and '$(EnableDefaultPageItems)' != 'false'" />
   </ItemGroup>
 
   <!-- Generate error if there are duplicate page items.  The task comes from the .NET SDK, and this target follows

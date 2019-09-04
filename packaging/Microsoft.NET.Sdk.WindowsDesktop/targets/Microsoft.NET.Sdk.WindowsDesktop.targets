@@ -31,15 +31,19 @@
     <!--
          In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
          as Resource, Content then remove them from the Page items.
-         
-         If EnableDefaultApplicationDefinition is false, ApplicationDefinition must also be removed from Page as
-         PresentationBuildTasks will include the generated code for the ApplicationDefinition twice otherwise.
-         We cannot do this in all cases in the props file as ApplicationDefinition won't be available
-         at that point in the evaluation when EnableDefaultApplicationDefinition is false.
     -->
     <Page Remove="@(Resource);@(Content);@(ApplicationDefinition)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
 
+    <!--
+        If ApplicationDefinition must also be removed from Page as PresentationBuildTasks will include the
+        generated code for the ApplicationDefinition twice otherwise.  We cannot do this in all cases in the
+        props file as ApplicationDefinition won't be available at that point in the evaluation when
+        EnableDefaultApplicationDefinition is false.  We unconditionally remove it here as ApplicationDefinition
+        is considered a special singleton Item that WPF ensures is only where it needs to be.
+    -->
+    <Page Remove="@(ApplicationDefinition)" />
+    
     <!--
          Only remove None from Page in the event that we disable both the default ApplicationDefinition and the DefaultPageItems.
          Otherwise we can enter a situation where we are explicitly removing page items that should otherwise be included (such as

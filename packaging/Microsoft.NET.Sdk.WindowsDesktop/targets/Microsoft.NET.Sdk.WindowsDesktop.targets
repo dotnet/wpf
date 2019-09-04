@@ -32,7 +32,7 @@
          In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
          as Resource, Content then remove them from the Page items.
     -->
-    <Page Remove="@(Resource);@(Content);@(ApplicationDefinition)"
+    <Page Remove="@(Resource);@(Content)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
 
     <!--

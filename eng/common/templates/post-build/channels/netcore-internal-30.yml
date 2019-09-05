@@ -1,12 +1,14 @@
 parameters:
   enableSymbolValidation: true
+  symbolPublishingAdditionalParameters: ''
+  artifactsPublishingAdditionalParameters: ''
 
 stages:
-- stage: IS_Publish
+- stage: NetCore_30_Internal_Servicing_Publishing
   dependsOn: validate
   variables:
     - template: ../common-variables.yml
-  displayName: Internal Servicing
+  displayName: .NET Core 3.0 Internal Servicing Publishing
   jobs:
   - template: ../setup-maestro-vars.yml
 
@@ -20,21 +22,29 @@ stages:
       vmImage: 'windows-2019'
     steps:
       - task: DownloadBuildArtifacts@0
-        displayName: Download Artifacts
+        displayName: Download Blob Artifacts
         inputs:
-          downloadType: specific files
-          matchingPattern: "*Artifacts*"
+          artifactName: 'BlobArtifacts'
+        continueOnError: true
+
+      - task: DownloadBuildArtifacts@0
+        displayName: Download PDB Artifacts
+        inputs:
+          artifactName: 'PDBArtifacts'
+        continueOnError: true
 
       - task: PowerShell@2
         displayName: Publish
         inputs:
           filePath: eng\common\sdk-task.ps1
           arguments: -task PublishToSymbolServers -restore -msbuildEngine dotnet
-            /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat) 
-            /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat) 
+            /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
+            /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
             /p:PDBArtifactsDirectory='$(Build.ArtifactStagingDirectory)/PDBArtifacts/'
             /p:BlobBasePath='$(Build.ArtifactStagingDirectory)/BlobArtifacts/'
+            /p:SymbolPublishingExclusionsFile='$(Build.SourcesDirectory)/eng/SymbolPublishingExclusionsFile.txt'
             /p:Configuration=Release
+            ${{ parameters.symbolPublishingAdditionalParameters }}
 
   - job: publish_assets
     displayName: Publish Assets
@@ -74,7 +84,7 @@ stages:
           AZURE_DEVOPS_EXT_PAT: $(dn-bot-dnceng-unviersal-packages-rw)
         inputs:
           filePath: eng\common\sdk-task.ps1
-          arguments: -task PublishArtifactsInManifest -restore -msbuildEngine dotnet 
+          arguments: -task PublishArtifactsInManifest -restore -msbuildEngine dotnet
             /p:ChannelId=$(InternalServicing_30_Channel_Id)
             /p:IsStableBuild=$(IsStableBuild)
             /p:IsInternalBuild=$(IsInternalBuild)
@@ -85,14 +95,15 @@ stages:
             /p:AzureDevOpsFeedsBaseUrl=$(dotnetfeed-internal-private-feed-url)
             /p:StaticInternalFeed=$(dotnetfeed-internal-nonstable-feed-url)
             /p:NugetPath=$(Agent.BuildDirectory)\Nuget\NuGet.exe
-            /p:BARBuildId=$(BARBuildId) 
-            /p:MaestroApiEndpoint='$(MaestroApiEndPoint)' 
-            /p:BuildAssetRegistryToken='$(MaestroApiAccessToken)' 
-            /p:ManifestsBasePath='$(Build.ArtifactStagingDirectory)/AssetManifests/' 
-            /p:BlobBasePath='$(Build.ArtifactStagingDirectory)\BlobArtifacts' 
-            /p:PackageBasePath='$(Build.ArtifactStagingDirectory)\PackageArtifacts' 
-            /p:Configuration=Release 
-        
+            /p:BARBuildId=$(BARBuildId)
+            /p:MaestroApiEndpoint='$(MaestroApiEndPoint)'
+            /p:BuildAssetRegistryToken='$(MaestroApiAccessToken)'
+            /p:ManifestsBasePath='$(Build.ArtifactStagingDirectory)/AssetManifests/'
+            /p:BlobBasePath='$(Build.ArtifactStagingDirectory)\BlobArtifacts'
+            /p:PackageBasePath='$(Build.ArtifactStagingDirectory)\PackageArtifacts'
+            /p:Configuration=Release
+            ${{ parameters.artifactsPublishingAdditionalParameters }}
+
       - task: NuGetCommand@2
         displayName: Publish Packages to AzDO Feed
         condition: contains(variables['TargetAzDOFeed'], 'pkgs.visualstudio.com')
@@ -106,7 +117,7 @@ stages:
         displayName: Publish Blobs to AzDO Feed
         inputs:
           filePath: $(Build.SourcesDirectory)/eng/common/post-build/publish-blobs-to-azdo.ps1
-          arguments: -FeedName $(AzDoFeedName) 
+          arguments: -FeedName $(AzDoFeedName)
             -SourceFolderCollection $(Build.ArtifactStagingDirectory)/BlobArtifacts/
             -PersonalAccessToken $(dn-bot-dnceng-unviersal-packages-rw)
         enabled: false
@@ -114,11 +125,11 @@ stages:
       - template: ../trigger-subscription.yml
         parameters:
           ChannelId: ${{ variables.InternalServicing_30_Channel_Id }}
-        
-- stage: IS_PublishValidation
-  displayName: Publish Validation
+
+- stage: NetCore_30_Internal_Servicing_Publish_Validation
+  displayName: .NET Core 3.0 Internal Servicing Publish Validation
   variables:
-    - template: ../common-variables.yml  
+    - template: ../common-variables.yml
   jobs:
   - template: ../setup-maestro-vars.yml
 

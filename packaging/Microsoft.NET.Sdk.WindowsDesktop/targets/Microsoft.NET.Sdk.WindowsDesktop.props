@@ -15,18 +15,26 @@
     using the SDK style projects. For e.g., see https://github.com/microsoft/msbuild/issues/1333
     
     Irrespective of whether '$(TargetFrameworkIdentifier)' is '.NETCoreApp' or '.NETFramework', 
-    the minimum value of $(_TargetFrameworkVersionWithoutV) we will be testing for is '3.0'
+    the minimum value of $(_TargetFrameworkVersionValue) we will be testing for is '3.0'
     
-    Note:
-      Please see https://github.com/microsoft/msbuild/issues/3212 for a discussion about the use of 
-      the private $(_TargetFrameworkVersionWithoutV) property - which will likely remain supported and
-      is safe to use here. 
   -->
     <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+
+    <!-- 
+      Represents an undefined TFV value. This will be used in comparisons of _TargetFrameworkVersionValue (defined in Microsoft.NET.WindowsDesktop.targets)
+      to identify when a TFV is undefined
+    -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+    
+    <!--
+      Initial/Default value set to 'undefined'. Updated in Microsoft.NET.WindowsDesktop.targets
+    --> 
+    <_TargetFrameworkVersionValue>$(_UndefinedTargetFrameworkVersion)</_TargetFrameworkVersionValue>
   </PropertyGroup>
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And 
-                         ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+                         ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
+                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <ApplicationDefinition Include="App.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
       <Generator>MSBuild:Compile</Generator>
@@ -60,8 +68,8 @@
   
   <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
                       ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And
-                      ('$(_TargetFrameworkVersionWithoutV)' != '') And
-                      ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+                      ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                      ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
     <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true"
                         Condition="('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' == 'true')"/>
@@ -95,33 +103,36 @@
                 System.Windows.Controls.Ribbon
 
   -->
-  <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And ('$(_TargetFrameworkVersionWithoutV)' != '') And 
-                        ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And 
+                        ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
+                        ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
     <!--
-      The following 3 _WpfCommonNetFxReference items normally require Condition="'$(_TargetFrameworkVersionWithoutV)' >= '3.0'", since
+      The following 3 _WpfCommonNetFxReference items normally require Condition="'$(_TargetFrameworkVersionValue)' >= '3.0'", since
       they are supported on .NET Framework 3.0 and above. 
       
-      This condition is implicitly satisfied by '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' 
+      This condition is implicitly satisfied by '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' 
       in the outer ItemGroup
     -->
     <_WpfCommonNetFxReference Include="WindowsBase" /> 
     <_WpfCommonNetFxReference Include="PresentationCore" />
     <_WpfCommonNetFxReference Include="PresentationFramework" />
 
-    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'">
+    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </_WpfCommonNetFxReference>
-    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
 
-    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionWithoutV)' >= '4.5'" />
+    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionValue)' >= '4.5'" />
   </ItemGroup>
 
-  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And ('$(TargetFrameworkIdentifier)' == '.NETFramework') And 
-                        ('$(_TargetFrameworkVersionWithoutV)' != '') And ('$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+  <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And 
+                        ('$(TargetFrameworkIdentifier)' == '.NETFramework') And 
+                        ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
+                        ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     
     <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)"
                        Condition="'$(UseWPF)' == 'true'"/>
@@ -153,7 +164,8 @@
     Detect these situations and skip updates to @(SupportedTargetFramework) etc. 
   --> 
   <ItemGroup Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And 
-                        '$(_TargetFrameworkVersionWithoutV)' != '' And '$(_TargetFrameworkVersionWithoutV)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+                        '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And 
+                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
 
     <!-- 
         Windows Forms and WPF are supported only on .NET Core 3.0+

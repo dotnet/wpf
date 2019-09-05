@@ -92,11 +92,20 @@
           Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)') "/>
 
   <!-- 
-    _WindowsDesktopSdkTargetFrameworkVersionFloor is defined in Microsoft.NET.WindowDesktop.props. 
-    This needs to be defined before Microsoft.NET.Sdk.WindowsDesktop.targets is imported. 
+    _WindowsDesktopSdkTargetFrameworkVersionFloor, _UndefinedTargetFrameworkVersion and _TargetFrameworkVersionValue are 
+    defined in Microsoft.NET.WindowDesktop.props. 
+    
+    These need to be defined before Microsoft.NET.Sdk.WindowsDesktop.targets is imported. 
   -->
   <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') ">
     <_WindowsDesktopSdkTargetFrameworkVersionFloor Condition="'$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' == ''">3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+    
+    <!--  Represents an undefined TFV value. -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+
+    <!-- Initial/Default value set to 'undefined'. Updated in Microsoft.NET.WindowsDesktop.targets -->
+    <_TargetFrameworkVersionValue>$(_UndefinedTargetFrameworkVersion)</_TargetFrameworkVersionValue>
+    
   </PropertyGroup>
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
           Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"

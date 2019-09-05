@@ -400,7 +400,14 @@
           Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))">
     <PropertyGroup>
       <TargetFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</TargetFile>
+      <ResourceFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).res'))</ResourceFile>
       <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
+    </PropertyGroup>
+
+    <!-- Ensures the DebuggableAttribute has the appropriate optimizations enabled. -->
+    <PropertyGroup>
+      <DebugEnableJitOptimization>false</DebugEnableJitOptimization>
+      <DebugEnableJitOptimization Condition="'$(Configuration)' == 'Release'">true</DebugEnableJitOptimization>
     </PropertyGroup>
 
     <!-- 
@@ -411,12 +418,23 @@
           Condition="Exists('$(TargetFile)')" />
 
     <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="!Exists('$(ResourceFile)')"
                SourceFile="$(ILFile)"
                Out="$(TargetFile)"
                Dll="true"
                Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
                Quiet="true" />
 
+    <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="Exists('$(ResourceFile)')"
+               SourceFile="$(ILFile)"
+               Resource="$(ResourceFile)"
+               Out="$(TargetFile)"
+               Dll="true"
+               Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
+               Quiet="true" />
   </Target>
 
 </Project>

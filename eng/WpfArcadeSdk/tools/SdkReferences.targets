@@ -33,45 +33,18 @@
 
   <PropertyGroup>
     <ResolveAssemblyReferencesDependsOn>
-      ResolveMicrosoftNetCoreAppReferences;
-      ResolveMicrosoftWindowsDesktopAppReferences;
       ResolveMicrosoftDotNetWpfGitHubReferences;
       ResolveWinFormsReferences;
       $(ResolveAssemblyReferencesDependsOn)
     </ResolveAssemblyReferencesDependsOn>
   </PropertyGroup>
 
-  <Target
-    Name="ResolveMicrosoftNetCoreAppReferences"
-    Returns="@(Reference)"
-    Condition="'$(PkgMicrosoft_NETCore_App)'!='' And '@(NetCoreReference)'!='' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') and '$(DoNotLimitMicrosoftNetCoreReferences)'!='true'">
-    <!-- 
-    In your project, Add a references to assemblies from Microsoft.NETCore.App like this
-      <ItemGroup>
-        <NetCoreReference Include="netstandard" />
-        <NetCoreReference Include="System.IO" />
-      </ItemGroup>
-      
-      It will get translated into something like this:
-      <ItemGroup>
-        <Reference Include="C:\Users\username\.nuget\packages\microsoft.netcore.app\3.0.0-preview5-27609-17\ref\netcoreapp3.0\netstandard.dll" />
-        <Reference Include="C:\Users\username\.nuget\packages\microsoft.netcore.app\3.0.0-preview5-27609-17\ref\netcoreapp3.0\System.IO.dll" />
-      </ItemGroup>
-    -->
-    <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_NETCore_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_NETCore_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll')" >
-        <NuGetPackageId>Microsoft.NetCore.App</NuGetPackageId>
-      </Reference>
-    </ItemGroup>
-  </Target>
-
 
   <Target
     Name="LimitNetCoreAppReferences"
-    AfterTargets="ResolveTargetingPacks"
+    AfterTargets="ResolveTargetingPackAssets;ResolveTargetingPacks"
     Returns="@(Reference)"
-    Condition="'$(PkgMicrosoft_NETCore_App)'!='' And '@(NetCoreReference)' != '' And '@(Reference)' != ''">
+    Condition="'@(NetCoreReference)' != '' And '@(Reference)' != ''">
     <!--
       Example
       <NetCoreReference Include="Microsoft.CSharp" />
@@ -105,28 +78,10 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="ResolveMicrosoftWindowsDesktopAppReferences"
-          Returns="@(Reference)"
-          Condition="'$(PkgMicrosoft_WindowsDesktop_App)'!='' And '@(WindowsDesktopAppReference)'!='' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') and '$(DoNotLimitWindowsDesktopAppReferences)'!='true'">
-    <!-- 
-    In your project, Add a references to assemblies from Microsoft.NETCore.App like this
-      <ItemGroup>
-        <WindowsDesktopAppeference Include="PresentationCore" />
-        <WindowsDesktopAppeference Include="System.Xaml" />
-      </ItemGroup>
-    -->
-    <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_WindowsDesktop_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_WindowsDesktop_App)\ref\$(TargetFramework)\%(NetCoreReference.Identity).dll')">
-        <NuGetPackageId>Microsoft.WindowsDesktop.App</NuGetPackageId>
-      </Reference>
-    </ItemGroup>
-  </Target>
-
   <Target Name="LimitWindowsDesktopAppReferences"
-        AfterTargets="ResolveTargetingPacks"
+        AfterTargets="ResolveTargetingPacks;ResolveTargetingPackAsssets"
         Returns="@(Reference)"
-        Condition="'$(PkgMicrosoft_WindowsDesktop_App)'!='' And '@(WindowsDesktopReference)'!='' and '@(Reference)' != ''">
+        Condition="'@(WindowsDesktopReference)'!='' and '@(Reference)' != ''">
     <!--
       Example
       <WindowsDesktopReference Include="PresentationCore" />

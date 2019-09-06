@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp5.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <IsShippingPackage>true</IsShippingPackage>
-    <VersionPrefix>3.0.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

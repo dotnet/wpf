@@ -5,6 +5,7 @@
     <PreReleaseVersionLabel>alpha1</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <SystemIOPackagingVersion>5.0.0-alpha1.19455.7</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>5.0.0-alpha1.19455.7</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>

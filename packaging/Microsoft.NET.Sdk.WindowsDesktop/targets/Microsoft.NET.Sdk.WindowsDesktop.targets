@@ -27,11 +27,35 @@
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-    
-    <!-- In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
-         as Resource, Content, or None items, then remove them from the Page items. -->
-    <Page Remove="@(Resource);@(Content);@(None)"
+
+    <!--
+         In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
+         as Resource, Content then remove them from the Page items.
+    -->
+    <Page Remove="@(Resource);@(Content)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
+
+    <!--
+        ApplicationDefinition must also be removed from Page.  Otherwise, PresentationBuildTasks will include the
+        generated code for the ApplicationDefinition twice.  We cannot do this in all cases in the props file as
+        ApplicationDefinition isn't available at that point in the evaluation when EnableDefaultApplicationDefinition
+        is false.  We unconditionally remove it here as ApplicationDefinition is considered a special singleton Item 
+        in WPF.
+    -->
+    <Page Remove="@(ApplicationDefinition)" />
+    
+    <!--
+         The WindowsDesktop props file removes "**/*.xaml" from None if both EnableDefaultApplicationDefinition and 
+         EnableDefaultPageItems are true.  This is done so that we remove any implicitly globbed XAML files from None
+         in support of Visual Studio.  
+         
+         In the case where one or both of these properties are not true, the WindowsDesktop props file does not remove
+         any XAML files from None.  Under those conditions, removing None from Page here will remove explicitly specified
+         pages causing compilation errors.  We match the condition from the WindowsDesktop props file here so that we only
+         remove None from Page when we are guaranteed to not need those items.
+    -->
+    <Page Remove="@(None)"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false' and '$(EnableDefaultPageItems)' != 'false'" />
   </ItemGroup>
 
   <!-- Generate error if there are duplicate page items.  The task comes from the .NET SDK, and this target follows

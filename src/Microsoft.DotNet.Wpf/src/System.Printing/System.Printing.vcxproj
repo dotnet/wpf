@@ -27,9 +27,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Target .Net Core 3.0 -->
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
   </PropertyGroup>
   
   <Import Project="$(WpfCppProps)" />

@@ -7,7 +7,7 @@
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

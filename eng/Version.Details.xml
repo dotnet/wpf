@@ -111,5 +111,9 @@
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-test</Uri>
       <Sha>1ccfd5a80e9957d9eb355fe44ed02ae192c5153a</Sha>
     </Dependency>
+    <Dependency Name="System.Resources.Extensions" Version="4.6.0-rc1.19420.10" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>d341fd37dcb2c22e382adccdc06770cf8f160577</Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

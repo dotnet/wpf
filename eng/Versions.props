@@ -38,6 +38,7 @@
     <SystemIOPackagingVersion>4.6.0-rc2.19460.1</SystemIOPackagingVersion>
     <SystemReflectionEmitPackageVersion>4.6.0-rc2.19460.1</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>4.6.0-rc1.19420.10</SystemResourcesExtensionsVersion>
     <SystemSecurityAccessControlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>4.6.0-rc2.19460.1</SystemSecurityPermissionsPackageVersion>

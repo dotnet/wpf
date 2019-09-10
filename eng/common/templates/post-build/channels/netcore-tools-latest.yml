@@ -1,8 +1,8 @@
 parameters:
-  enableSymbolValidation: true
   symbolPublishingAdditionalParameters: ''
   artifactsPublishingAdditionalParameters: ''
   publishInstallersAndChecksums: false
+  publishToAzureDevOpsFeeds: true
 
 stages:
 - stage: NetCore_Tools_Latest_Publish
@@ -26,12 +26,6 @@ stages:
         displayName: Download Blob Artifacts
         inputs:
           artifactName: 'BlobArtifacts'
-        continueOnError: true
-
-      - task: DownloadBuildArtifacts@0
-        displayName: Download PDB Artifacts
-        inputs:
-          artifactName: 'PDBArtifacts'
         continueOnError: true
 
       - task: DownloadBuildArtifacts@0
@@ -120,39 +114,18 @@ stages:
             /p:BlobBasePath='$(Build.ArtifactStagingDirectory)/BlobArtifacts/' 
             /p:PackageBasePath='$(Build.ArtifactStagingDirectory)/PackageArtifacts/' 
             /p:Configuration=Release
-            /p:InstallersTargetStaticFeed=$(InstallersBlobFeedUrl)
             /p:PublishInstallersAndChecksums=${{ parameters.publishInstallersAndChecksums }}
+            /p:InstallersTargetStaticFeed=$(InstallersBlobFeedUrl)
             /p:InstallersAzureAccountKey=$(dotnetcli-storage-key)
             /p:ChecksumsTargetStaticFeed=$(ChecksumsBlobFeedUrl)
             /p:ChecksumsAzureAccountKey=$(dotnetclichecksums-storage-key)
+            /p:PublishToAzureDevOpsNuGetFeeds=${{ parameters.publishToAzureDevOpsFeeds }}
+            /p:AzureDevOpsStaticShippingFeed='https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json'
+            /p:AzureDevOpsStaticShippingFeedKey='$(dn-bot-dnceng-artifact-feeds-rw)'
+            /p:AzureDevOpsStaticTransportFeed='https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json'
+            /p:AzureDevOpsStaticTransportFeedKey='$(dn-bot-dnceng-artifact-feeds-rw)
             ${{ parameters.artifactsPublishingAdditionalParameters }}
-        
-      - task: NuGetCommand@2
-        displayName: Publish Packages to AzDO Feed
-        condition: contains(variables['TargetAzDOFeed'], 'pkgs.visualstudio.com')
-        inputs:
-          command: push
-          vstsFeed: $(AzDoFeedName)
-          packagesToPush: $(Build.ArtifactStagingDirectory)\PackageArtifacts\*.nupkg
-          publishVstsFeed: $(AzDoFeedName)
-
-      - task: PowerShell@2
-        displayName: Publish Blobs to AzDO Feed
-        inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/post-build/publish-blobs-to-azdo.ps1
-          arguments: -FeedName $(AzDoFeedName) 
-            -SourceFolderCollection $(Build.ArtifactStagingDirectory)/BlobArtifacts/
-            -PersonalAccessToken $(dn-bot-dnceng-unviersal-packages-rw)
-        enabled: false
-
-
-- stage: NetCore_Tools_Latest_PublishValidation
-  displayName: .NET Tools - Latest Publish Validation
-  variables:
-    - template: ../common-variables.yml
-  jobs:
-  - template: ../setup-maestro-vars.yml
-
-  - template: ../promote-build.yml
-    parameters:
-      ChannelId: ${{ variables.NetCore_Tools_Latest_Channel_Id }}
+              
+      - template: ../../steps/promote-build.yml
+        parameters:
+          ChannelId: ${{ variables.NetCore_Tools_Latest_Channel_Id }}

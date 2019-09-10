@@ -28,7 +28,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(AutomationIdProperty, value);
@@ -41,7 +41,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(AutomationIdProperty));
@@ -67,7 +67,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(NameProperty, value);
@@ -80,7 +80,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(NameProperty));
@@ -106,7 +106,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(HelpTextProperty, value);
@@ -119,7 +119,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(HelpTextProperty));
@@ -145,7 +145,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(AcceleratorKeyProperty, value);
@@ -158,7 +158,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(AcceleratorKeyProperty));
@@ -184,7 +184,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(AccessKeyProperty, value);
@@ -197,7 +197,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(AccessKeyProperty));
@@ -223,7 +223,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(ItemStatusProperty, value);
@@ -236,7 +236,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(ItemStatusProperty));
@@ -262,7 +262,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(ItemTypeProperty, value);
@@ -275,7 +275,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((string)element.GetValue(ItemTypeProperty));
@@ -300,7 +300,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(IsColumnHeaderProperty, value);
@@ -313,7 +313,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((bool)element.GetValue(IsColumnHeaderProperty));
@@ -338,7 +338,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(IsRowHeaderProperty, value);
@@ -351,7 +351,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((bool)element.GetValue(IsRowHeaderProperty));
@@ -376,7 +376,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(IsRequiredForFormProperty, value);
@@ -389,7 +389,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((bool)element.GetValue(IsRequiredForFormProperty));
@@ -414,7 +414,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(LabeledByProperty, value);
@@ -427,7 +427,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((UIElement)element.GetValue(LabeledByProperty));
@@ -452,7 +452,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(IsOffscreenBehaviorProperty, value);
@@ -465,7 +465,7 @@ namespace System.Windows.Automation
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return ((IsOffscreenBehavior)element.GetValue(IsOffscreenBehaviorProperty));

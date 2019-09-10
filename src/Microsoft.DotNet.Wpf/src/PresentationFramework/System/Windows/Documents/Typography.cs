@@ -43,7 +43,7 @@ namespace System.Windows.Documents
             //there should be actual owner
             if(owner == null)
             {
-                throw new ArgumentNullException("owner");
+                throw new ArgumentNullException(nameof(owner));
             }
             _owner = owner;
         }
@@ -380,7 +380,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StandardLigaturesProperty, value);
@@ -396,7 +396,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StandardLigaturesProperty);
@@ -412,7 +412,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(ContextualLigaturesProperty, value);
@@ -428,7 +428,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(ContextualLigaturesProperty);
@@ -444,7 +444,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(DiscretionaryLigaturesProperty, value);
@@ -460,7 +460,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(DiscretionaryLigaturesProperty);
@@ -476,7 +476,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(HistoricalLigaturesProperty, value);
@@ -492,7 +492,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(HistoricalLigaturesProperty);
@@ -508,7 +508,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(AnnotationAlternatesProperty, value);
@@ -524,7 +524,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (int)element.GetValue(AnnotationAlternatesProperty);
@@ -540,7 +540,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(ContextualAlternatesProperty, value);
@@ -556,7 +556,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(ContextualAlternatesProperty);
@@ -572,7 +572,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(HistoricalFormsProperty, value);
@@ -588,7 +588,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(HistoricalFormsProperty);
@@ -604,7 +604,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(KerningProperty, value);
@@ -620,7 +620,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(KerningProperty);
@@ -636,7 +636,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(CapitalSpacingProperty, value);
@@ -652,7 +652,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(CapitalSpacingProperty);
@@ -668,7 +668,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(CaseSensitiveFormsProperty, value);
@@ -684,7 +684,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(CaseSensitiveFormsProperty);
@@ -700,7 +700,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet1Property, value);
@@ -716,7 +716,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet1Property);
@@ -732,7 +732,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet2Property, value);
@@ -748,7 +748,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet2Property);
@@ -764,7 +764,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet3Property, value);
@@ -780,7 +780,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet3Property);
@@ -796,7 +796,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet4Property, value);
@@ -812,7 +812,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet4Property);
@@ -828,7 +828,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet5Property, value);
@@ -844,7 +844,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet5Property);
@@ -860,7 +860,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet6Property, value);
@@ -876,7 +876,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet6Property);
@@ -892,7 +892,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet7Property, value);
@@ -908,7 +908,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet7Property);
@@ -924,7 +924,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet8Property, value);
@@ -940,7 +940,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet8Property);
@@ -956,7 +956,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet9Property, value);
@@ -972,7 +972,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet9Property);
@@ -988,7 +988,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet10Property, value);
@@ -1004,7 +1004,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet10Property);
@@ -1020,7 +1020,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet11Property, value);
@@ -1036,7 +1036,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet11Property);
@@ -1052,7 +1052,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet12Property, value);
@@ -1068,7 +1068,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet12Property);
@@ -1084,7 +1084,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet13Property, value);
@@ -1100,7 +1100,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet13Property);
@@ -1116,7 +1116,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet14Property, value);
@@ -1132,7 +1132,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet14Property);
@@ -1148,7 +1148,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet15Property, value);
@@ -1164,7 +1164,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet15Property);
@@ -1180,7 +1180,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet16Property, value);
@@ -1196,7 +1196,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet16Property);
@@ -1212,7 +1212,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet17Property, value);
@@ -1228,7 +1228,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet17Property);
@@ -1244,7 +1244,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet18Property, value);
@@ -1260,7 +1260,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet18Property);
@@ -1276,7 +1276,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet19Property, value);
@@ -1292,7 +1292,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet19Property);
@@ -1308,7 +1308,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticSet20Property, value);
@@ -1324,7 +1324,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(StylisticSet20Property);
@@ -1340,7 +1340,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(FractionProperty, value);
@@ -1356,7 +1356,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontFraction)element.GetValue(FractionProperty);
@@ -1372,7 +1372,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(SlashedZeroProperty, value);
@@ -1388,7 +1388,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(SlashedZeroProperty);
@@ -1404,7 +1404,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(MathematicalGreekProperty, value);
@@ -1420,7 +1420,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(MathematicalGreekProperty);
@@ -1436,7 +1436,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(EastAsianExpertFormsProperty, value);
@@ -1452,7 +1452,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (bool)element.GetValue(EastAsianExpertFormsProperty);
@@ -1468,7 +1468,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(VariantsProperty, value);
@@ -1484,7 +1484,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontVariants)element.GetValue(VariantsProperty);
@@ -1500,7 +1500,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(CapitalsProperty, value);
@@ -1516,7 +1516,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontCapitals)element.GetValue(CapitalsProperty);
@@ -1532,7 +1532,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(NumeralStyleProperty, value);
@@ -1548,7 +1548,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontNumeralStyle)element.GetValue(NumeralStyleProperty);
@@ -1564,7 +1564,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(NumeralAlignmentProperty, value);
@@ -1580,7 +1580,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontNumeralAlignment)element.GetValue(NumeralAlignmentProperty);
@@ -1596,7 +1596,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(EastAsianWidthsProperty, value);
@@ -1612,7 +1612,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontEastAsianWidths)element.GetValue(EastAsianWidthsProperty);
@@ -1628,7 +1628,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(EastAsianLanguageProperty, value);
@@ -1644,7 +1644,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (FontEastAsianLanguage)element.GetValue(EastAsianLanguageProperty);
@@ -1660,7 +1660,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StandardSwashesProperty, value);
@@ -1676,7 +1676,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (int)element.GetValue(StandardSwashesProperty);
@@ -1692,7 +1692,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(ContextualSwashesProperty, value);
@@ -1708,7 +1708,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (int)element.GetValue(ContextualSwashesProperty);
@@ -1724,7 +1724,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             element.SetValue(StylisticAlternatesProperty, value);
@@ -1740,7 +1740,7 @@ namespace System.Windows.Documents
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return (int)element.GetValue(StylisticAlternatesProperty);

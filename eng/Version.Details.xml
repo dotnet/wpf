@@ -107,5 +107,9 @@
       <Uri>https://github.com/dotnet/arcade</Uri>
       <Sha>0f5cfb20a355c27bc84cedd049c946b44a7fc1da</Sha>
     </Dependency>
+    <Dependency Name="System.Resources.Extensions" Version="4.6.0-rc1.19420.10" CoherentParentDependency="Microsoft.NETCore.App">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>d341fd37dcb2c22e382adccdc06770cf8f160577</Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

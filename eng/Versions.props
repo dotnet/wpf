@@ -5,6 +5,7 @@
     <PreReleaseVersionLabel>preview1</PreReleaseVersionLabel>
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <SystemResourcesExtensionsVersion>4.6.0-rc1.19420.10</SystemResourcesExtensionsVersion>
     <SystemIOPackagingVersion>4.6.0-rc1.19420.10</SystemIOPackagingVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->

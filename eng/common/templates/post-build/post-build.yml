@@ -4,7 +4,6 @@ parameters:
   enableSymbolValidation: false
   enableNugetValidation: true
   publishInstallersAndChecksums: false
-  enableAzDONuGetFeeds: true
   SDLValidationParameters:
     enable: false
     continueOnError: false
@@ -98,47 +97,36 @@ stages:
 
 - template: \eng\common\templates\post-build\channels\netcore-dev-5.yml
   parameters:
-    symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
-    artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
-    publishInstallersAndChecksums: ${{ parameters.publishInstallersAndChecksums }}
-    enableAzDONuGetFeeds: ${{ parameters.enableAzDONuGetFeeds }}
-
-- template: \eng\common\templates\post-build\channels\netcore-dev-30.yml
-  parameters:
+    enableSymbolValidation: ${{ parameters.enableSymbolValidation }}
     symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
     publishInstallersAndChecksums: ${{ parameters.publishInstallersAndChecksums }}
 
 - template: \eng\common\templates\post-build\channels\netcore-dev-31.yml
   parameters:
+    enableSymbolValidation: ${{ parameters.enableSymbolValidation }}
     symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
     publishInstallersAndChecksums: ${{ parameters.publishInstallersAndChecksums }}
 
 - template: \eng\common\templates\post-build\channels\netcore-tools-latest.yml
   parameters:
+    enableSymbolValidation: ${{ parameters.enableSymbolValidation }}
     symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
     publishInstallersAndChecksums: ${{ parameters.publishInstallersAndChecksums }}
-    enableAzDONuGetFeeds: ${{ parameters.enableAzDONuGetFeeds }}
 
 - template: \eng\common\templates\post-build\channels\public-validation-release.yml
   parameters:
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
     publishInstallersAndChecksums: ${{ parameters.publishInstallersAndChecksums }}
-    enableAzDONuGetFeeds: ${{ parameters.enableAzDONuGetFeeds }}
 
-- template: \eng\common\templates\post-build\channels\netcore-release-30.yml
+- template: \eng\common\templates\post-build\channels\public-release.yml
   parameters:
     symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
 
-- template: \eng\common\templates\post-build\channels\netcore-release-31.yml
-  parameters:
-    symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
-    artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}
-
-- template: \eng\common\templates\post-build\channels\netcore-internal-30.yml
+- template: \eng\common\templates\post-build\channels\internal-servicing.yml
   parameters:
     symbolPublishingAdditionalParameters: ${{ parameters.symbolPublishingAdditionalParameters }}
     artifactsPublishingAdditionalParameters: ${{ parameters.artifactsPublishingAdditionalParameters }}

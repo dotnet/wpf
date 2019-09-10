@@ -1,4 +1,5 @@
 parameters:
+  enableSymbolValidation: true
   symbolPublishingAdditionalParameters: ''
   artifactsPublishingAdditionalParameters: ''
 
@@ -24,6 +25,12 @@ stages:
         displayName: Download Blob Artifacts
         inputs:
           artifactName: 'BlobArtifacts'
+        continueOnError: true
+
+      - task: DownloadBuildArtifacts@0
+        displayName: Download PDB Artifacts
+        inputs:
+          artifactName: 'PDBArtifacts'
         continueOnError: true
 
       - task: DownloadBuildArtifacts@0
@@ -95,15 +102,12 @@ stages:
             /p:IsInternalBuild=$(IsInternalBuild)
             /p:RepositoryName=$(Build.Repository.Name)
             /p:CommitSha=$(Build.SourceVersion)
-            /p:StaticInternalFeed=$(StaticInternalFeed)
-            /p:InternalChecksumsTargetStaticFeed=$(InternalChecksumsBlobFeedUrl)
-            /p:InternalChecksumsTargetStaticFeedKey=$(InternalChecksumsBlobFeedKey)
-            /p:InternalInstallersTargetStaticFeed=$(InternalInstallersBlobFeedUrl)
-            /p:InternalInstallersTargetStaticFeedKey=$(InternalInstallersBlobFeedKey)
-            /p:NugetPath=$(NuGetExeToolPath)
-            /p:AzdoTargetFeedPAT='$(dn-bot-dnceng-universal-packages-rw)'
-            /p:TargetFeedPAT='$(dn-bot-dnceng-universal-packages-rw)' 
             /p:AzureStorageTargetFeedPAT='$(dotnetfeed-storage-access-key-1)' 
+            /p:AzureStorageAccountName=$(ProxyBackedFeedsAccountName)
+            /p:AzureStorageAccountKey=$(dotnetfeed-storage-access-key-1)
+            /p:AzureDevOpsFeedsBaseUrl=$(dotnetfeed-internal-private-feed-url)
+            /p:StaticInternalFeed=$(dotnetfeed-internal-nonstable-feed-url)
+            /p:NugetPath=$(Agent.BuildDirectory)\Nuget\NuGet.exe
             /p:BARBuildId=$(BARBuildId) 
             /p:MaestroApiEndpoint='$(MaestroApiEndPoint)' 
             /p:BuildAssetRegistryToken='$(MaestroApiAccessToken)' 
@@ -112,6 +116,24 @@ stages:
             /p:PackageBasePath='$(Build.ArtifactStagingDirectory)/PackageArtifacts/' 
             /p:Configuration=Release 
             ${{ parameters.artifactsPublishingAdditionalParameters }}
+        
+      - task: NuGetCommand@2
+        displayName: Publish Packages to AzDO Feed
+        condition: contains(variables['TargetAzDOFeed'], 'pkgs.visualstudio.com')
+        inputs:
+          command: push
+          vstsFeed: $(AzDoFeedName)
+          packagesToPush: $(Build.ArtifactStagingDirectory)\PackageArtifacts\*.nupkg
+          publishVstsFeed: $(AzDoFeedName)
+
+      - task: PowerShell@2
+        displayName: Publish Blobs to AzDO Feed
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/post-build/publish-blobs-to-azdo.ps1
+          arguments: -FeedName $(AzDoFeedName) 
+            -SourceFolderCollection $(Build.ArtifactStagingDirectory)/BlobArtifacts/
+            -PersonalAccessToken $(dn-bot-dnceng-unviersal-packages-rw)
+        enabled: false
 
       - template: ../trigger-subscription.yml
         parameters:

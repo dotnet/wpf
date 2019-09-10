@@ -196,7 +196,6 @@ _script_dir=$(pwd)/eng/common
 
 # Make sure all of our variables are available for future steps
 Write-PipelineSetVariable -name "UseCoreRun" -value "$use_core_run" -is_multi_job_variable false
-Write-PipelineSetVariable -name "UseBaselineCoreRun" -value "$use_baseline_core_run" -is_multi_job_variable false
 Write-PipelineSetVariable -name "Architecture" -value "$architecture" -is_multi_job_variable false
 Write-PipelineSetVariable -name "PayloadDirectory" -value "$payload_directory" -is_multi_job_variable false
 Write-PipelineSetVariable -name "PerformanceDirectory" -value "$performance_directory" -is_multi_job_variable false
@@ -213,4 +212,3 @@ Write-PipelineSetVariable -name "Creator" -value "$creator" -is_multi_job_variab
 Write-PipelineSetVariable -name "HelixSourcePrefix" -value "$helix_source_prefix" -is_multi_job_variable false
 Write-PipelineSetVariable -name "Kind" -value "$kind" -is_multi_job_variable false
 Write-PipelineSetVariable -name "_BuildConfig" -value "$architecture.$kind.$framework" -is_multi_job_variable false
-Write-PipelineSetVariable -name "Compare" -value "$compare" -is_multi_job_variable false

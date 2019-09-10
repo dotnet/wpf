@@ -1,7 +1,6 @@
 variables:
   - group: Publish-Build-Assets
   - group: DotNet-DotNetCli-Storage
-  - group: DotNet-MSRC-Storage
 
   # .NET Core 3 Dev
   - name: PublicDevRelease_30_Channel_Id
@@ -52,27 +51,8 @@ variables:
   - name: SymbolToolVersion
     value: 1.0.1
 
-  # Feed Configurations
-  # These should include the suffix "/index.json"
-
-  # Configuration for the feed where packages from internal non-stable builds will be published to
-  - name: StaticInternalFeed
-    value: 'https://dnceng.pkgs.visualstudio.com/_packaging/dotnet-core-internal/nuget/v3/index.json'
-
   # Default locations for Installers and checksums
-  # Public Locations
   - name: ChecksumsBlobFeedUrl
-    value: https://dotnetclichecksums.blob.core.windows.net/dotnet/index.json
-  - name: InstallersBlobFeedUrl
     value: https://dotnetcli.blob.core.windows.net/dotnet/index.json
-
-  # Private Locations
-  - name: InternalChecksumsBlobFeedUrl
-    value: https://dotnetclichecksumsmsrc.blob.core.windows.net/dotnet/index.json
-  - name: InternalChecksumsBlobFeedKey
-    value: $(dotnetclichecksumsmsrc-storage-key)
-
-  - name: InternalInstallersBlobFeedUrl
-    value: https://dotnetclimsrc.blob.core.windows.net/dotnet/index.json
-  - name: InternalInstallersBlobFeedKey
-    value: $(dotnetclimsrc-access-key)
+  - name: InstallersBlobFeedUrl
+    value: https://dotnetclichecksums.blob.core.windows.net/dotnet/index.json

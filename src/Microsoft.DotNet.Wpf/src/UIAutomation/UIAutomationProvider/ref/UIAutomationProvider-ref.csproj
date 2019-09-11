@@ -9,7 +9,7 @@
     <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
     <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
     <Platforms>AnyCPU;x64</Platforms>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

@@ -70,6 +70,13 @@
     <NoWarn Condition="'$(BuildingInsideVisualStudio)'=='true'">$(NoWarn);NU1605</NoWarn>
 
     <!-- 
+        Workaround for https://github.com/dotnet/core-sdk/issues/4744
+            .NET Core 3.1 SDK hasn't consumed the fix for https://github.com/NuGet/Home/issues/8467 yet. 
+            Suppress these warnings temporarily 
+    --> 
+    <NoWarn>$(NoWarn);NU5128;NU5313;NU5131</NoWarn>
+    
+    <!-- 
       Support for suppressing warnings by supplying /p:AdditionalNoWarn=0123;4567 from 
       dotnet.exe/msbuild commandline.
       

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Branding information -->
   <PropertyGroup>
     <VersionPrefix>4.8.0</VersionPrefix>
     <PreReleaseVersionLabel>rc2</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemIOPackagingVersion>4.6.0-rc2.19460.1</SystemIOPackagingVersion>
+    <!--
+        When StabilizePackageVersion is set to 'true', this branch will produce stable outputs for 'Shipping' packages
+    -->
+    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">true</StabilizePackageVersion>                                                                                             
+    <DotNetFinalVersionKind Condition="'$(StabilizePackageVersion)' == 'true'">release</DotNetFinalVersionKind>
   </PropertyGroup>
+  
   <!-- NuGet Package Versions -->
   <PropertyGroup>
     <MicrosoftPrivateWinformsVersion>4.8.0-rc2.19462.7</MicrosoftPrivateWinformsVersion>
@@ -30,6 +36,7 @@
     <SystemCodeDomPackageVersion>4.6.0-rc2.19460.1</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-rc2.19460.1</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>4.6.0-rc2.19460.1</SystemDiagnosticsEventLogPackageVersion>
+    <SystemIOPackagingVersion>4.6.0-rc2.19460.1</SystemIOPackagingVersion>
     <SystemReflectionEmitPackageVersion>4.6.0-rc2.19460.1</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
     <SystemSecurityAccessControlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityAccessControlPackageVersion>

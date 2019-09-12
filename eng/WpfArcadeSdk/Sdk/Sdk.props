@@ -70,6 +70,7 @@
     <NoWarn Condition="'$(BuildingInsideVisualStudio)'=='true'">$(NoWarn);NU1605</NoWarn>
 
     <!-- 
+
       Support for suppressing warnings by supplying /p:AdditionalNoWarn=0123;4567 from 
       dotnet.exe/msbuild commandline.
       

@@ -51,11 +51,11 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
     # Layout of where the managed binaries looks something like this: 
-    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
-    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
+    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp5.0
+    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp5.0
 
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
-    $BinaryLocationInPackage = "netcoreapp3.0"
+    $BinaryLocationInPackage = "netcoreapp5.0"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 
@@ -140,7 +140,7 @@ else
     $runtimeIdentifer = "win-$arch"
     $location = [System.IO.Path]::Combine($destination, "bin\Debug\netcoreapp3.0", $runtimeIdentifer, "publish")
     if(![System.IO.Directory]::Exists($location))
-    {
+    {     
         Write-Host "Location unavailable: " $location -ForegroundColor Red
         return
     }

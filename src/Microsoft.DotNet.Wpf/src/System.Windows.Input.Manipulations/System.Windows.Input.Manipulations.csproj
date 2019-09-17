@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.resx"/>
+    <Compile Include="System\Windows\Input\Manipulations\DoubleUtil.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Exceptions.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\GlobalSuppressions.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\InertiaExpansionBehavior2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\InertiaParameters2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\InertiaProcessor2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\InertiaRotationBehavior2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\InertiaTranslationBehavior2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Lazy.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Manipulation2DCompletedEventArgs.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Manipulation2DDeltaEventArgs.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Manipulation2DStartedEventArgs.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationDelta2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationParameters2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationPivot2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationProcessor2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Manipulations2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationSequence.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\ManipulationVelocities2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Manipulator2D.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\PointF.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\Validations.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\VectorD.cs" />
+    <Compile Include="System\Windows\Input\Manipulations\VectorF.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="System.Collections" />    
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.Extensions" />    
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\ref\System.Windows.Input.Manipulations-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  
+</Project>

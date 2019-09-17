@@ -1,0 +1,1252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="de" original="../Strings.resx">
+    <body>
+      <trans-unit id="CertSelectionDialogMessage">
+        <source>Select a certificate</source>
+        <target state="translated">Zertifikat auswählen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogTitle">
+        <source>Digital Signature</source>
+        <target state="translated">Digitale Signatur</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString1">
+        <source>&lt;None&gt;</source>
+        <target state="translated">&lt;Kein&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString2">
+        <source>I am the author of this document.</source>
+        <target state="translated">Ich bin der Autor dieses Dokuments.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString3">
+        <source>I have reviewed the contents of this document.</source>
+        <target state="translated">Ich habe den Inhalt dieses Dokuments überprüft.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString4">
+        <source>I have reviewed and approve the contents of this document.</source>
+        <target state="translated">Ich habe den Inhalt dieses Dokuments überprüft und genehmigt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString5">
+        <source>I agree with the terms defined in this document.</source>
+        <target state="translated">Ich stimme den in diesem Dokument definierten Bedingungen zu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString6">
+        <source>I attest to the accuracy and integrity of this document.</source>
+        <target state="translated">Ich bestätige die Richtigkeit und Integrität dieses Dokuments.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigRequestTitle">
+        <source>Request Digital Signatures</source>
+        <target state="translated">Digitale Signaturen anfordern</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderIntent">
+        <source>Intent:</source>
+        <target state="translated">Priorität:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderLocale">
+        <source>Locale:</source>
+        <target state="translated">Gebietsschema:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderName">
+        <source>Name:</source>
+        <target state="translated">Name:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderSignBy">
+        <source>Sign By:</source>
+        <target state="translated">Signiert von:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderSignatureStatus">
+        <source>Signature Status:</source>
+        <target state="translated">Signaturstatus:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumDone">
+        <source>&amp;Done</source>
+        <target state="translated">&amp;Fertig</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumRequestAdd">
+        <source>&amp;Add...</source>
+        <target state="translated">&amp;Hinzufügen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumRequestDelete">
+        <source>De&amp;lete</source>
+        <target state="translated">&amp;Löschen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumSign">
+        <source>&amp;Sign...</source>
+        <target state="translated">&amp;Signieren...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumTitle">
+        <source>Digital Signature Summary</source>
+        <target state="translated">Zusammenfassung zu digitalen Signaturen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumViewCert">
+        <source>View &amp;Certificate...</source>
+        <target state="translated">Z&amp;ertifikat anzeigen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageActionInvalidatesSignature">
+        <source>The changes that you selected will invalidate one or more signatures that are applied to this document.\r\n\r\nAre you sure you want to continue?</source>
+        <target state="translated">Durch die ausgewählten Änderungen wird mindestens eine der auf dieses Dokument angewendeten Signaturen ungültig gemacht.\r\n\r\nMöchten Sie den Vorgang fortsetzen?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageAddRequestsBeforeSigning">
+        <source>You are about to apply the first digital signature to this document.\r\n\r\nIf this document must be signed by other users, you need to request their signatures before you sign by using the Digital Signatures menu.\r\n\r\nAfter you sign this document, changes to the document will invalidate your signature.  Are you sure you want to continue?</source>
+        <target state="translated">Sie sind im Begriff, die erste digitale Signatur auf dieses Dokument anzuwenden.\r\n\r\nWenn dieses Dokument von anderen Benutzern signiert werden muss, müssen Sie diese Signaturen anfordern, bevor Sie das Dokument über das Menü "Digitale Signaturen" signieren.\r\n\r\nNachdem Sie dieses Dokument signiert haben, wird die Signatur durch Änderungen am Dokument ungültig. Möchten Sie den Vorgang fortsetzen?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageAddRequestsBeforeSigningTitle">
+        <source>Digital Signatures - Document Is Not Signed</source>
+        <target state="translated">Digitale Signaturen - Dokument ist nicht signiert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageDocumentNotSignable">
+        <source>This document cannot be signed because it contains content that cannot be displayed.</source>
+        <target state="translated">Dieses Dokument kann nicht signiert werden, da Inhalte vorhanden sind, die nicht angezeigt werden können.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageDocumentNotSignableTitle">
+        <source>Digital Signatures</source>
+        <target state="translated">Digitale Signaturen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNoPending">
+        <source>This document has no pending signatures. Are you sure you want to sign it anyway?</source>
+        <target state="translated">Dieses Dokument besitzt keine ausstehenden Signaturen. Möchten Sie es wirklich signieren?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNow">
+        <source>Do you want to sign this document now?\r\n\r\nYou have just defined information about who is required to sign this document. You should digitally sign the document to ensure tamper evidence if someone tries to modify it. If you still want to modify this document then you should not sign it now.</source>
+        <target state="translated">Möchten Sie dieses Dokument jetzt signieren?\r\n\r\nSie haben gerade Informationen dazu definiert, wer dieses Dokument signieren muss. Sie müssen das Dokument digital signieren, um sicherzustellen, dass Sie über einen Manipulationsbeweis verfügen, falls jemand das Dokument ändert. Falls Sie noch weitere Änderungen an diesem Dokument ausführen möchten, dürfen Sie es jetzt nicht signieren.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNowTitle">
+        <source>Sign XPS Document</source>
+        <target state="translated">XPS-Dokument signieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignPending">
+        <source>You have not selected any of the pending signatures requested by the publisher of this document. Are you sure you want to continue?</source>
+        <target state="translated">Sie haben keine der ausstehenden Signaturen ausgewählt, die vom Herausgeber dieses Dokuments angefordert wurden. Möchten Sie den Vorgang wirklich fortsetzen?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureNoFixedDocumentSequence">
+        <source>The document does not contain a valid FixedDocumentSequence.</source>
+        <target state="translated">Das Dokument enthält keine gültige "FixedDocumentSequence".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorGeneric">
+        <source>The following error occurred while signing the document:\r\n{0}</source>
+        <target state="translated">Beim Signieren des Dokuments ist der folgende Fehler aufgetreten:\r\n{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorRMSigningMessage">
+        <source>You do not have permission to sign this document.</source>
+        <target state="translated">Sie besitzen keine Berechtigung zum Signieren dieses Dokuments.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorRMSigningMessageNoCerts">
+        <source>Signing process failed. To sign this document, you need to obtain a digital certificate.</source>
+        <target state="translated">Fehler beim Signieren. Zum Signieren dieses Dokuments benötigen Sie ein digitales Zertifikat.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorReadOnlyInputError">
+        <source>Requested signer and reason for signing must be entered before adding this requested signature.</source>
+        <target state="translated">Vor dem Hinzufügen dieser anforderten Signatur müssen der angeforderte Signaturgeber und der Grund für die Signatur eingegeben werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorReadOnlyNoMoreRequest">
+        <source>This document has been signed already and cannot be signed again.</source>
+        <target state="translated">Dieses Dokument wurde bereits signiert und kann nicht erneut signiert werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorSigningErrorTitle">
+        <source>XPS Document Signing Error</source>
+        <target state="translated">Fehler beim Signieren des XPS-Dokuments.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerFocusToolBarCommand">
+        <source>Give focus to the main toolbar.</source>
+        <target state="translated">Fokussieren der Hauptsymbolleiste.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerRequestSignersCommand">
+        <source>Request signatures</source>
+        <target state="translated">Signaturen anfordern</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMCredentialManagerCommand">
+        <source>Restrict permission as...</source>
+        <target state="translated">Berechtigung einschränken als...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMPermissionsCommand">
+        <source>View my permissions</source>
+        <target state="translated">Berechtigungen anzeigen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMPublishingUICommand">
+        <source>Set permissions</source>
+        <target state="translated">Berechtigungen festlegen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowSignatureSummaryCommand">
+        <source>View signature details</source>
+        <target state="translated">Signaturdetails anzeigen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerSignCommand">
+        <source>Sign this document</source>
+        <target state="translated">Dieses Dokument signieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogAuthorLabel">
+        <source>Author:</source>
+        <target state="translated">Autor: </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogCategoryLabel">
+        <source>Category:</source>
+        <target state="translated">Kategorie:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogContentLabel">
+        <source>Content:</source>
+        <target state="translated">Inhalt:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDateFormat">
+        <source>{0:F}</source>
+        <target state="translated">{0:F}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDescriptionLabel">
+        <source>Description:</source>
+        <target state="translated">Beschreibung:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentCreatedLabel">
+        <source>Published:</source>
+        <target state="translated">Veröffentlicht:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentDetailBoxLabel">
+        <source>Authoring Information</source>
+        <target state="translated">Authoringinformationen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentModifiedLabel">
+        <source>Edited:</source>
+        <target state="translated">Bearbeitet:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentPrintedLabel">
+        <source>Printed:</source>
+        <target state="translated">Gedruckt:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentPropertiesMustExist">
+        <source>DocumentProperties must exist.</source>
+        <target state="translated">"DocumentProperties" muss vorhanden sein.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileAccessedLabel">
+        <source>Accessed:</source>
+        <target state="translated">Zugriff:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileCreatedLabel">
+        <source>Created:</source>
+        <target state="translated">Erstellt:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileModifiedLabel">
+        <source>Modified:</source>
+        <target state="translated">Geändert:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeBytesUnit">
+        <source>bytes</source>
+        <target state="translated">Bytes</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeFormat">
+        <source>{{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})</source>
+        <target state="translated">{{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeKBUnit">
+        <source>KB</source>
+        <target state="translated">KB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeMBUnit">
+        <source>MB</source>
+        <target state="translated">MB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSystemBoxLabel">
+        <source>File System</source>
+        <target state="translated">Dateisystem</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogIdentifierLabel">
+        <source>Identifier:</source>
+        <target state="translated">Bezeichner:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogInfoLabel">
+        <source>File</source>
+        <target state="translated">Datei</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogKeywordsLabel">
+        <source>Keywords:</source>
+        <target state="translated">Schlüsselwörter:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogLanguageLabel">
+        <source>Language:</source>
+        <target state="translated">Sprache:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogLastSavedByLabel">
+        <source>Last Saved By:</source>
+        <target state="translated">Zuletzt gespeichert von:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogNotAvailable">
+        <source>Not Available</source>
+        <target state="translated">Nicht verfügbar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogOkButtonLabel">
+        <source>&amp;Close</source>
+        <target state="translated">S&amp;chließen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogRevisionLabel">
+        <source>Revision:</source>
+        <target state="translated">Revision:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSizeLabel">
+        <source>Size:</source>
+        <target state="translated">Größe:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogStatusLabel">
+        <source>Status:</source>
+        <target state="translated">Status:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSubjectLabel">
+        <source>Subject:</source>
+        <target state="translated">Betreff:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSummaryLabel">
+        <source>Content</source>
+        <target state="translated">Inhalt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogTitle">
+        <source>XPS Document Properties</source>
+        <target state="translated">XPS-Dokumenteigenschaften</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogTitleLabel">
+        <source>Title:</source>
+        <target state="translated">Titel:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogVersionLabel">
+        <source>Version:</source>
+        <target state="translated">Version:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerAppliedToolTip">
+        <source>Click here to verify the signer's identity.</source>
+        <target state="translated">Klicken Sie hier, um die Identität der Signatur zu überprüfen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerDefaultToolTip">
+        <source>Sign this document using a digital signature.</source>
+        <target state="translated">Dieses Dokument mit einer digitalen Signatur signieren.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerInvalid">
+        <source>This document is signed. However, there are problems with one or more signatures. Click here for more information...</source>
+        <target state="translated">Das Dokument ist signiert. Bei mindestens einer der Signaturen wurde jedoch ein Problem festgestellt. Klicken Sie hier, um weitere Informationen zu erhalten...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerUndetermined">
+        <source>This document contains digital signatures that will be checked when the download is complete. Click here to verify the signer's identity...</source>
+        <target state="translated">Das Dokument enthält digitale Signaturen, die geprüft werden, sobald der Download abgeschlossen ist. Klicken Sie hier, um die Identität der Signatur zu überprüfen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerValid">
+        <source>This document is signed. All signatures are valid. Click here to view the signer's identity...</source>
+        <target state="translated">Das Dokument ist signiert. Alle Signaturen sind gültig. Klicken Sie hier, um die Identität der Signatur zu überprüfen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamCanNoLongerOpen">
+        <source>Can no longer open file.</source>
+        <target state="translated">Die Datei kann nicht mehr geöffnet werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeFileSource">
+        <source>Operation valid only on file based sources.</source>
+        <target state="translated">Der Vorgang ist nur in dateibasierten Quellen gültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeTemporary">
+        <source>Operation valid only on temporary documents.</source>
+        <target state="translated">Der Vorgang ist nur in temporären Dokumenten gültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeXpsFile">
+        <source>Only XPS documents are supported.</source>
+        <target state="translated">Es werden nur XPS-Dokumente unterstützt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementDestinationIsReadOnly">
+        <source>Cannot save to this file because it is read-only.</source>
+        <target state="translated">In diese Datei kann nicht gespeichert werden, da sie schreibgeschützt ist.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoAccessToDestination">
+        <source>Cannot save to the target location.</source>
+        <target state="translated">Am Zielspeicherort kann nicht gespeichert werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoAccessToSource">
+        <source>Cannot open from the target location.</source>
+        <target state="translated">Vom Zielspeicherort aus kann nicht geöffnet werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoTemporaryFileAccess">
+        <source>Cannot create a temporary file; some features will not be available.</source>
+        <target state="translated">Das Erstellen einer temporären Datei ist nicht möglich; einige Features sind nicht verfügbar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementSaveExt">
+        <source>.xps</source>
+        <target state="translated">.xps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementSaveFilter">
+        <source>Document (*.xps)|*.xps</source>
+        <target state="translated">Dokument (*.xps)|*.xps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementStreamProxyIsReadOnly">
+        <source>Cannot change target because stream proxy is read-only.</source>
+        <target state="translated">Das Ziel kann nicht geändert werden, da der Proxy des Datenstroms schreibgeschützt ist.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementTitleError">
+        <source>File Access Error</source>
+        <target state="translated">Dateizugriffsfehler</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageControllerStreamCorruption">
+        <source>Source and destination cannot be same stream.</source>
+        <target state="translated">Derselbe Datenstrom kann nicht gleichzeitig als Quelle und Ziel verwendet werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartTypeNotWritable">
+        <source>Writing to parts with the provided content type is not supported.</source>
+        <target state="translated">Das Schreiben in Teile mit bereitgestelltem Inhaltstyp wird nicht unterstützt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingCircularReference">
+        <source>Value returned from writeable factory delegate refers to self.</source>
+        <target state="translated">Der vom schreibbaren Herstellerdelegaten zurückgegebene Wert enthält einen Selbstverweis.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteNotSupported">
+        <source>This instance cannot perform write operations.</source>
+        <target state="translated">Diese Instanz kann keine Schreibvorgänge ausführen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteableDelegateGaveNullPart">
+        <source>Delegate returned a null writing part.</source>
+        <target state="translated">Vom Delegaten wurde ein Schreibteil mit dem Wert NULL zurückgegeben.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteableDelegateGaveNullStream">
+        <source>Delegate returned a null writing stream.</source>
+        <target state="translated">Vom Delegaten wurde ein Schreibdatenstrom mit dem Wert NULL zurückgegeben.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PageTextBoxToolTip">
+        <source>Type the number of the page that you want to view.</source>
+        <target state="translated">Geben Sie die Nummer der Seite ein, die Sie anzeigen möchten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PeoplePickerErrorConditionFromOpenQueryWindow">
+        <source>An error was returned from OpenQueryWindow while invoking the Find Users, Contacts, and Groups dialog box, HRESULT={0}.</source>
+        <target state="translated">Fehler von "OpenQueryWindow" beim Aufrufen des Dialogfelds "Benutzer, Kontakte und Gruppen suchen" zurückgegeben, HRESULT={0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PeoplePickerInvalidParentWindow">
+        <source>The parent HWND passed to the Find Users, Contacts, and Groups dialog box is not valid.</source>
+        <target state="translated">Das an das Dialogfeld "Benutzer, Kontakte und Gruppen suchen"  übergebene übergeordnete HWND ist ungültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProgressBarKiloBytesStringFormat">
+        <source>{0} KB</source>
+        <target state="translated">{0} KB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProgressBarPercentageStringFormat">
+        <source>{0}%</source>
+        <target state="translated">{0}%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMAppliedToolTip">
+        <source>View my permissions for this document.</source>
+        <target state="translated">Meine Berechtigungen für dieses Dokument anzeigen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementAdd">
+        <source>&amp;Add...</source>
+        <target state="translated">&amp;Hinzufügen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementCancel">
+        <source>Cancel</source>
+        <target state="translated">Abbrechen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementDialog">
+        <source>User Accounts</source>
+        <target state="translated">Benutzerkonten</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementInstruction">
+        <source>Select one of the following user accounts to create or open content with restricted permission. To use an account not listed below, click Add.</source>
+        <target state="translated">Wählen Sie eines der folgenden Benutzerkonten zum Erstellen oder Öffnen von Inhalt mit eingeschränkten Berechtigungen aus. Wenn Sie ein Konto verwenden möchten, das unten nicht aufgeführt ist, klicken Sie auf "Hinzufügen".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementOk">
+        <source>OK</source>
+        <target state="translated">OK</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementPassportAccount">
+        <source>{0} (Passport)</source>
+        <target state="translated">{0} (Passport)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementRemove">
+        <source>&amp;Remove</source>
+        <target state="translated">&amp;Entfernen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementUnknownAccount">
+        <source>{0} (Unknown)</source>
+        <target state="translated">{0} (Unbekannt)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementWindowsAccount">
+        <source>{0}</source>
+        <target state="translated">{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMDefaultToolTip">
+        <source>Choose who can view or manage this document and for how long.</source>
+        <target state="translated">Wählen Sie, wer dieses Dokument für welchen Zeitraum anzeigen und verwalten kann.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentCancel">
+        <source>Cancel</source>
+        <target state="translated">Abbrechen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentNext">
+        <source>&amp;Next</source>
+        <target state="translated">&amp;Weiter</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1a">
+        <source>To publish or access XPS documents with restricted permissions, you need a user account.</source>
+        <target state="translated">Sie benötigen ein Benutzerkonto, um XPS-Dokumente mit eingeschränkten Berechtigungen zu veröffentlichen oder darauf zuzugreifen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1b">
+        <source>You can use your network credentials (the account you use to log on to your company network) or your .NET Passport.</source>
+        <target state="translated">Sie können Ihre Netzwerkanmeldeinformationen (das Konto, mit dem Sie sich beim Firmennetzwerk anmelden) oder Ihren .NET Passport verwenden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1c">
+        <source>Privacy Statement: </source>
+        <target state="translated">Datenschutzbestimmungen: </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1d">
+        <source>Each time you set up a user account to publish or access XPS documents with restricted permissions, computers that certify user accounts and manage permissions to the document check your user name and e-mail address. Your account password is not used during this process.</source>
+        <target state="translated">Jedes Mal, wenn Sie ein Benutzerkonto einrichten, um XPS-Dokumente mit eingeschränkten Berechtigungen zu veröffentlichen oder darauf zuzugreifen, werden Ihr Benutzername und Ihre E-Mail-Adresse von Computern geprüft, die Benutzerkonten zertifizieren und Berechtigungen für das Dokument verwalten. Während dieses Vorgangs wird Ihr Kontokennwort nicht verwendet.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1e">
+        <source>To continue, click Next.</source>
+        <target state="translated">Klicken Sie auf "Weiter", um den Vorgang fortzusetzen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2a">
+        <source>Choose the account you want to use to open protected documents.</source>
+        <target state="translated">Wählen Sie das Konto aus, das Sie zum Öffnen geschützter Dokumente verwenden möchten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2b">
+        <source>In the future, this account will be used automatically to open protected documents. You can change this setting later. Your document may need to be reloaded to use the new account.</source>
+        <target state="translated">Künftig wird automatisch das ausgewählte Konto zum Öffnen geschützter Dokumente verwendet. Sie können diese Einstellung zu einem späteren Zeitpunkt ändern. Möglicherweise muss das Dokument zum Verwenden des neuen Kontos neu geladen werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2c">
+        <source>N&amp;etwork user account</source>
+        <target state="translated">N&amp;etzwerkbenutzerkonto</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2e">
+        <source>.NET &amp;Passport account</source>
+        <target state="translated">.NET &amp;Passport-Konto</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage3b">
+        <source>Please wait while we finish setting up your account.</source>
+        <target state="translated">Warten Sie, während Ihr Konto eingerichtet wird.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage3c">
+        <source>Activating your account</source>
+        <target state="translated">Aktivieren des Kontos</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentTitle">
+        <source>Rights Management Configuration</source>
+        <target state="translated">Konfiguration der Rechteverwaltung</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsAnnotatePermission">
+        <source>Annotate</source>
+        <target state="translated">Änderungeverlauf einblenden</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsAuthenticatedAs">
+        <source>You have permission to view this document as:</source>
+        <target state="translated">Sie sind berechtigt, dieses Dokuments anzuzeigen als:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsCloseButton">
+        <source>&amp;Close</source>
+        <target state="translated">S&amp;chließen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsCopyPermission">
+        <source>Copy</source>
+        <target state="translated">Kopieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsExpiresOn">
+        <source>This document expires on: </source>
+        <target state="translated">Diese Dokument läuft ab am: </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsHavePermissions">
+        <source>You have the following permissions:</source>
+        <target state="translated">Sie verfügen über die folgenden Berechtigungen:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsNoExpiration">
+        <source>This document never expires</source>
+        <target state="translated">Diese Dokument läuft nie ab.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsOwnerPermission">
+        <source>Owner</source>
+        <target state="translated">Besitzer</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsPrintPermission">
+        <source>Print</source>
+        <target state="translated">Drucken</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsRequestFrom">
+        <source>Request additional permissions from:</source>
+        <target state="translated">Zusätzliche Berechtigungen anfordern von:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsSignPermission">
+        <source>Sign</source>
+        <target state="translated">Signieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsTitle">
+        <source>Permissions</source>
+        <target state="translated">Berechtigungen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsUnknownOwner">
+        <source>Unknown</source>
+        <target state="translated">Unbekannt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsViewPermission">
+        <source>View</source>
+        <target state="translated">Anzeigen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProtected">
+        <source>This document is restricted. Click here to view your permissions...</source>
+        <target state="translated">Der Zugriff auf dieses Dokument ist eingeschränkt. Klicken Sie hier, um Ihre Berechtigungen anzuzeigen...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoPackageToDecrypt">
+        <source>No encrypted package to decrypt.</source>
+        <target state="translated">Es ist kein verschlüsseltes Paket zum Entschlüsseln vorhanden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoPublishLicense">
+        <source>Document protected with rights management does not have publish license.</source>
+        <target state="translated">Das mit der Rechteverwaltung geschützte Dokument besitzt keine Veröffentlichungslizenz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoRightsToDocument">
+        <source>The current user does not have permission to access the document.</source>
+        <target state="translated">Der aktuelle Benutzer besitzt nicht die Berechtigung, um auf das Dokument zuzugreifen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoUseLicense">
+        <source>The current user has no use license for the document.</source>
+        <target state="translated">Der aktuelle Benutzer besitzt keine Nutzungslizenz für das Dokument.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNotOwnerOfDocument">
+        <source>Only the owner of a document is allowed to publish it.</source>
+        <target state="translated">Nur der Besitzer eines Dokuments kann das Dokument veröffentlichen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAddUserButton">
+        <source>&amp;Add User</source>
+        <target state="translated">B&amp;enutzer hinzufügen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAddUserButtonToolTip">
+        <source>Type an e-mail address, and then add the user to the list so you can apply permissions.</source>
+        <target state="translated">Geben Sie eine E-Mail-Adresse ein, und fügen Sie dann den Benutzer der Liste hinzu, damit Sie die Berechtigungen anwenden können.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneButton">
+        <source>Everyone</source>
+        <target state="translated">Jeder</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneButtonToolTip">
+        <source>Allow all users to read the document, or apply other permissions for all users.</source>
+        <target state="translated">Allen Benutzern das Lesen des Dokuments erlauben oder andere Berechtigungen auf alle Benutzer anwenden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneUserDisplay">
+        <source>Everyone</source>
+        <target state="translated">Jeder</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingCancelButton">
+        <source>Cancel</source>
+        <target state="translated">Abbrechen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingCopyHeader">
+        <source>Copy</source>
+        <target state="translated">Kopieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingExpiresOn">
+        <source>Permissions e&amp;xpire on</source>
+        <target state="translated">&amp;Berechtigungen gültig bis</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingMainContentGroupLabel">
+        <source>Details</source>
+        <target state="translated">Informationen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingOwnerHeader">
+        <source>All</source>
+        <target state="translated">Alle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPeoplePickerButton">
+        <source>People Picker</source>
+        <target state="translated">Personenauswahl</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPeoplePickerButtonToolTip">
+        <source>Find users, contacts, and groups.</source>
+        <target state="translated">Benutzer, Kontakte und Gruppen suchen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPermissionsRadio">
+        <source>Apply permissions</source>
+        <target state="translated">Berechtigungen anwenden</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPrintHeader">
+        <source>Print</source>
+        <target state="translated">Drucken</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingReadHeader">
+        <source>Read</source>
+        <target state="translated">Lesen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRemoveButton">
+        <source>Remove</source>
+        <target state="translated">Entfernen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRemoveButtonToolTip">
+        <source>Remove permissions for selected users, contacts, or groups.</source>
+        <target state="translated">Berechtigungen für ausgewählte Benutzer, Kontakte oder Gruppen entfernen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRequestPermissionsFrom">
+        <source>Users can re&amp;quest additional permissions from:</source>
+        <target state="translated">Benutzer können zusätzliche Berechtigungen &amp;anfordern von:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveAsButton">
+        <source>Sa&amp;ve As...</source>
+        <target state="translated">S&amp;peichern unter...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveAsButtonToolTip">
+        <source>Save a copy of the document and apply selected permissions to the copy only.</source>
+        <target state="translated">Eine Kopie des Dokuments speichern und ausgewählte Berechtigungen nur auf die Kopie anwenden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveButton">
+        <source>&amp;Save</source>
+        <target state="translated">&amp;Speichern</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveButtonToolTip">
+        <source>Apply selected permissions to the current document.</source>
+        <target state="translated">Ausgewählte Berechtigungen auf das aktuelle Dokument anwenden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSelectTemplate">
+        <source>Select one of your company's predefined templates:</source>
+        <target state="translated">Wählen Sie eine der von Ihrem Unternehmen vordefinierten Vorlagen aus:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSignHeader">
+        <source>Sign</source>
+        <target state="translated">Signieren</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingTemplateRadio">
+        <source>Apply permissions using a template</source>
+        <target state="translated">Berechtigungen mithilfe einer Vorlage anwenden</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingTitle">
+        <source>Permissions</source>
+        <target state="translated">Berechtigungen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUnrestrictedRadio">
+        <source>Do not apply permissions</source>
+        <target state="translated">Berechtigungen nicht anwenden</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUnrestrictedText">
+        <source>All users can view this document, digitally sign it, or change permissions. To decide who can access the document and for how long, apply permissions. You can apply permissions to this version of the document, or save a copy of the document and then apply changes to the copy only.</source>
+        <target state="translated">Alle Benutzer können dieses Dokument anzeigen, digital signieren oder Berechtigungen ändern. Wenden Sie Berechtigungen an, um festzulegen, welche Benutzer für welchen Zeitraum auf das Dokument zugreifen können. Sie können Berechtigungen für diese Version des Dokuments anwenden oder eine Kopie des Dokuments speichern und die Änderungen dann nur auf die Kopie anwenden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUserHeader">
+        <source>User</source>
+        <target state="translated">Benutzer</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUserSeparator">
+        <source>;</source>
+        <target state="translated">;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogAdd">
+        <source>&amp;Add</source>
+        <target state="translated">&amp;Hinzufügen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogCancel">
+        <source>Cancel</source>
+        <target state="translated">Abbrechen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogIntentLabel">
+        <source>Reason for signing this document (choose one or create your own):</source>
+        <target state="translated">Ursache für die Signatur dieses Dokuments (bitte auswählen oder eine eigene Ursache erstellen):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogLocationLabel">
+        <source>Location (for example, city name):</source>
+        <target state="translated">Ort (zum Beispiel Name der Stadt):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogRequestSignerNameLabel">
+        <source>Requested signer's name or role:</source>
+        <target state="translated">Name (oder Rolle) des angeforderten Signaturgebers:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogSignatureAppliedByDateLabel">
+        <source>Signature must be applied by:</source>
+        <target state="translated">Signatur muss angewendet werden am:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogTitle">
+        <source>Add Requested Signature</source>
+        <target state="translated">Angeforderte Signatur hinzufügen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementExceptionNoRightsForOperation">
+        <source>The user does not have sufficient rights to perform the operation.</source>
+        <target state="translated">Der Benutzer besitzt nicht die erforderlichen Rechte, um diesen Vorgang durchzuführen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorClockModified">
+        <source>Cannot open this document because the system clock has been modified.</source>
+        <target state="translated">Das Dokument kann nicht geöffnet werden, weil die Systemuhr geändert wurde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorConfigurationError">
+        <source>This application has detected a problem with your Rights Management configuration. Contact your network administrator or support personnel.</source>
+        <target state="translated">Von dieser Anwendung wurde ein Fehler bei der Konfiguration der Rechteverwaltung erkannt. Wenden Sie sich an den Netzwerkadministrator oder an den Support.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorDebuggerDetected">
+        <source>Cannot open or publish documents with restricted permissions because a debugging application has been detected.</source>
+        <target state="translated">Dokumente mit eingeschränkten Berechtigungen können nicht geöffnet oder veröffentlicht werden, da eine Debuganwendung erkannt wurde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorExpiredPermission">
+        <source>Cannot open this document because your permissions have expired.</source>
+        <target state="translated">Dieses Dokument kann nicht geöffnet werden, da Ihre Berechtigungen abgelaufen sind.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorFailedToLoadTemplate">
+        <source>Cannot load the requested template. Select a different template and contact your network administrator or support personnel.</source>
+        <target state="translated">Die angeforderte Vorlage kann nicht geladen werden. Wählen Sie eine andere Vorlage aus, und wenden Sie sich an den Netzwerkadministrator oder an den Support.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorFailedToRemoveUser">
+        <source>Cannot remove this account because it is in use.</source>
+        <target state="translated">Das Konto kann nicht entfernt werden, da es verwendet wird.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorGenericFailure">
+        <source>Failed to initialize rights management. Contact your network administrator or support personnel.</source>
+        <target state="translated">Fehler beim Initialisieren der Rechteverwaltung. Wenden Sie sich an den Netzwerkadministrator oder an den Support.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorInvalidContent">
+        <source>Cannot open this document with restricted permissions because the content is invalid or corrupted.</source>
+        <target state="translated">Dieses Dokument mit eingeschränkten Berechtigungen kann nicht geöffnet werden, da der Inhalt ungültig oder beschädigt ist.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorInvalidTemplate">
+        <source>Cannot sign with the requested template. Select a different template and contact your network administrator or support personnel.</source>
+        <target state="translated">Das Signieren war mit der angeforderten Vorlage nicht möglich. Wählen Sie eine andere Vorlage aus, und wenden Sie sich an den Netzwerkadministrator oder an den Support.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoAddress">
+        <source>Enter a valid e-mail address for whom to add rights.</source>
+        <target state="translated">Geben Sie eine gültige E-Mail-Adresse für den Benutzer ein, für den Rechte hinzugefügt werden sollen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoPermission">
+        <source>You do not have permission to open this document with this account. Would you like to use a different account or create a new account?</source>
+        <target state="translated">Sie haben keine Berechtigung, das Dokument mit diesem Konto zu öffnen. Möchten Sie ein anderes Konto verwenden oder ein neues Konto erstellen?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoReferralAddress">
+        <source>Enter a valid e-mail address to contact for permissions.</source>
+        <target state="translated">Geben Sie für die Berechtigungen eine gültige Kontakt-E-Mail-Adresse ein.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorRMNotInstalled">
+        <source>The Windows Rights Management Services Client (RMS) is required in order for you to be able to open and create XPS documents with restricted permissions. Do you want to download and install Windows RMS Client now?</source>
+        <target state="translated">Sie benötigen den Windows Rights Management Services-Client (RMS), um XPS-Dokumente mit eingeschränkten Berechtigungen öffnen erstellen zu können. Möchten Sie den RMS-Client jetzt herunterladen und installieren?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorServerError">
+        <source>Cannot verify your permissions to this document because the server that manages permissions for this document is not available.</source>
+        <target state="translated">Ihre Berechtigungen für dieses Dokument können nicht überprüft werden. Der Server, der die Berechtigungen für dieses Dokument verwaltet, ist nicht verfügbar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorTemporaryActivationNotSupported">
+        <source>The server does not support temporary activation.</source>
+        <target state="translated">Der Server unterstützt die temporäre Aktivierung nicht.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorTitle">
+        <source>XPS Document Rights Management Error</source>
+        <target state="translated">Fehler bei der Rechteverwaltung für XPS-Dokumente</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServerSideTemplateDisplayNone">
+        <source>&lt;none&gt;</source>
+        <target state="translated">&lt;keine&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusCannotBeVerified">
+        <source>Certificate cannot be verified</source>
+        <target state="translated">Das Zertifikat kann nicht verifiziert werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusCorrupted">
+        <source>Certificate is corrupted</source>
+        <target state="translated">Das Zertifikat ist beschädigt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusExpired">
+        <source>Certificate has expired</source>
+        <target state="translated">Das Zertifikat ist abgelaufen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusIssuerNotTrusted">
+        <source>Certificate issuer is not trusted</source>
+        <target state="translated">Der Zertifikataussteller ist nicht vertrauenswürdig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusNoCertificate">
+        <source>Certificate is missing</source>
+        <target state="translated">Das Zertifikat fehlt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusOk">
+        <source>Certificate is valid</source>
+        <target state="translated">Das Zertifikat ist gültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusRevoked">
+        <source>Certificate has been revoked</source>
+        <target state="translated">Das Zertifikat wurde gesperrt.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusVerifying">
+        <source>Certificate is being verified</source>
+        <target state="translated">Das Zertifikat wird überprüft</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperMissingCertificate">
+        <source>The certificate was null, which is not valid for the current certificate status.</source>
+        <target state="translated">Das Zertifikat war NULL. Dies ist für den aktuellen Zertifikatstatus ungültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperNone">
+        <source>&lt;none&gt;</source>
+        <target state="translated">&lt;keine&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusInvalid">
+        <source>Document has been modified since signed</source>
+        <target state="translated">Das Dokument wurde geändert, nachdem es signiert wurde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusUnverifiable">
+        <source>Not all signed content can be displayed</source>
+        <target state="translated">Es können nicht alle signierten Inhalte angezeigt werden.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusValid">
+        <source>Signature is valid</source>
+        <target state="translated">Die Signatur ist gültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusValidCertInvalid">
+        <source>Document has not been modified since signed</source>
+        <target state="translated">Das Dokument wurde nicht geändert, nachdem es signiert wurde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSummaryBreakLine">
+        <source>{0}\r\n</source>
+        <target state="translated">{0}\r\n</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSummaryFormat">
+        <source>{0}{1}Signed by {2} on {3:d}\r\n{4}</source>
+        <target state="translated">{0}{1}Signiert von {2} am {3:d}\r\n{4}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperValidSigSummaryPending">
+        <source>Signature pending:\r\n{0}\r\nSign by {1:d}\r\n{2}</source>
+        <target state="translated">Signatur steht aus:\r\n{0}\r\nSignatur fällig am {1:d}\r\n{2}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourcesFormatForAccessibility">
+        <source>Summary: {0} Name: {1} Intent: {2} Locale: {3} Sign By: {4}</source>
+        <target state="translated">Zusammenfassung: {0} Name: {1} Absicht: {2} Gebietsschema: {3} Fälligkeitsdatum für Signatur: {4}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogActionlabel">
+        <source>The following will invalidate your signature:</source>
+        <target state="translated">Durch die folgenden Aktionen wird die Signatur ungültig:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogAddDigSigCheckBox">
+        <source>Apply additional &amp;digital signatures to this document</source>
+        <target state="translated">Weitere di&amp;gitale Signaturen auf dieses Dokument anwenden</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogAddDocPropCheckBox">
+        <source>Add or modify document &amp;properties (for example, author or keywords)</source>
+        <target state="translated">D&amp;okumenteigenschaften hinzufügen oder ändern (zum Beispiel Autor oder Schlüsselwörter)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogCancelButton">
+        <source>Cancel</source>
+        <target state="translated">Abbrechen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogLocationLabel">
+        <source>Location (for example, city name):</source>
+        <target state="translated">Ort (zum Beispiel Name der Stadt):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogNA">
+        <source>N/A</source>
+        <target state="translated">N/V</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogReasonLabel">
+        <source>Reason for signing this document (choose one or create your own): </source>
+        <target state="translated">Ursachen für die Signatur dieses Dokuments (bitte auswählen oder eine eigene Ursache erstellen): </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignButton">
+        <source>&amp;Sign and Save</source>
+        <target state="translated">&amp;Signieren und speichern</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignSaveAsButton">
+        <source>Sign and Save &amp;As...</source>
+        <target state="translated">Signieren und speichern &amp;unter...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignerlabel">
+        <source>Signing as '{0}'</source>
+        <target state="translated">Signieren unter '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogTitle">
+        <source>Signing XPS Document</source>
+        <target state="translated">Das XPS-Dokument wird signiert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningProgressLabel">
+        <source>Signing XPS document.</source>
+        <target state="translated">Das XPS-Dokument wird signiert.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningProgressTitle">
+        <source>Signing</source>
+        <target state="translated">Signierung</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValidationProgressLabel">
+        <source>Validating content. Please wait.</source>
+        <target state="translated">Der Inhalt wird überprüft. Bitte warten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValidationProgressTitle">
+        <source>Digital Signatures</source>
+        <target state="translated">Digitale Signaturen</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WPF_UILanguage">
+        <source>en</source>
+        <target state="translated">de</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsViewerGenericException">
+        <source>There has been an exception in this application.</source>
+        <target state="translated">In dieser Anwendung ist eine Ausnahme aufgetreten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsViewerRightsManagementException">
+        <source>An XPS viewer rights management operation failed.</source>
+        <target state="translated">Beim Rechteverwaltungsvorgang für den XPS-Viewer ist ein Fehler aufgetreten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem100">
+        <source>100%</source>
+        <target state="translated">100%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem150">
+        <source>150%</source>
+        <target state="translated">150%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem25">
+        <source>25%</source>
+        <target state="translated">25%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem250">
+        <source>250%</source>
+        <target state="translated">250%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem400">
+        <source>400%</source>
+        <target state="translated">400%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem50">
+        <source>50%</source>
+        <target state="translated">50%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem75">
+        <source>75%</source>
+        <target state="translated">75%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxToolTip">
+        <source>Select a zoom percentage or type a zoom percent.</source>
+        <target state="translated">Wählen Sie einen Prozentwert für den Zoom aus, oder geben Sie einen Prozentwert für den Zoom ein.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomPercentageConverterStringFormat">
+        <source>{0:0.##}%</source>
+        <target state="translated">{0:0.##}%</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

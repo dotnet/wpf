@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{2DD6F2F8-DFF4-4EE1-9D48-0FD692DB084D}</ProjectGuid>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENT</DefineConstants>
+    <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\Resources\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+      <Link>Common\System\SR.cs</Link>
+    </Compile>
+    <Compile Include="MS\Internal\Automation\Accessible.cs" />
+    <Compile Include="MS\Internal\Automation\AutomationAttributeInfo.cs" />
+    <Compile Include="MS\Internal\Automation\AutomationPatternInfo.cs" />
+    <Compile Include="MS\Internal\Automation\AutomationPropertyInfo.cs" />
+    <Compile Include="MS\Internal\Automation\BoundingRectTracker.cs" />
+    <Compile Include="MS\Internal\Automation\CacheHelper.cs" />
+    <Compile Include="MS\Internal\Automation\CalloutQueueItem.cs" />
+    <Compile Include="MS\Internal\Automation\ClickablePoint.cs" />
+    <Compile Include="MS\Internal\Automation\ClientEventManager.cs" />
+    <Compile Include="MS\Internal\Automation\ClientSideQueueItem.cs" />
+    <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
+    <Compile Include="MS\Internal\Automation\EventListener.cs" />
+    <Compile Include="MS\Internal\Automation\EventListenerClientSide.cs" />
+    <Compile Include="MS\Internal\Automation\FocusTracker.cs" />
+    <Compile Include="MS\Internal\Automation\HwndProxyElementProvider.cs" />
+    <Compile Include="MS\Internal\Automation\input.cs" />
+    <Compile Include="MS\Internal\Automation\InvokeHandlers.cs" />
+    <Compile Include="MS\Internal\Automation\MenuTracker.cs" />
+    <Compile Include="MS\Internal\Automation\Misc.cs" />
+    <Compile Include="MS\Internal\Automation\ProxyManager.cs" />
+    <Compile Include="MS\Internal\Automation\QueueProcessor.cs" />
+    <Compile Include="MS\Internal\Automation\SafeHandles.cs" />
+    <Compile Include="MS\Internal\Automation\SafeProcessHandle.cs" />
+    <Compile Include="MS\Internal\Automation\Schema.cs" />
+    <Compile Include="MS\Internal\Automation\SelectionPatternProviderSideWrapper.cs" />
+    <Compile Include="MS\Internal\Automation\UiaCoreApi.cs" />
+    <Compile Include="MS\Internal\Automation\WindowHideOrCloseTracker.cs" />
+    <Compile Include="MS\Internal\Automation\WindowInteractionStateTracker.cs" />
+    <Compile Include="MS\Internal\Automation\WindowShowOrOpenTracker.cs" />
+    <Compile Include="MS\Internal\Automation\WindowVisualStateTracker.cs" />
+    <Compile Include="MS\Internal\Automation\WinEventQueueItem.cs" />
+    <Compile Include="MS\Internal\Automation\WinEventWrap.cs" />
+    <Compile Include="MS\Win32\NativeMethods.cs" />
+    <Compile Include="MS\Win32\SafeNativeMethods.cs" />
+    <Compile Include="MS\Win32\UnsafeNativeMethods.cs" />
+    <Compile Include="System\Windows\Automation\AndCondition.cs" />
+    <Compile Include="System\Windows\Automation\Automation.cs" />
+    <Compile Include="System\Windows\Automation\AutomationElement.cs" />
+    <Compile Include="System\Windows\Automation\AutomationElementCollection.cs" />
+    <Compile Include="System\Windows\Automation\AutomationFocusChangedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\BasePattern.cs" />
+    <Compile Include="System\Windows\Automation\CacheRequest.cs" />
+    <Compile Include="System\Windows\Automation\ClientSettings.cs" />
+    <Compile Include="System\Windows\Automation\ClientSideProviderDescription.cs" />
+    <Compile Include="System\Windows\Automation\Condition.cs" />
+    <Compile Include="System\Windows\Automation\DockPattern.cs" />
+    <Compile Include="System\Windows\Automation\ExpandCollapsePattern.cs" />
+    <Compile Include="System\Windows\Automation\GridItemPattern.cs" />
+    <Compile Include="System\Windows\Automation\GridPattern.cs" />
+    <Compile Include="System\Windows\Automation\InvokePattern.cs" />
+    <Compile Include="System\Windows\Automation\ItemContainerPattern.cs" />
+    <Compile Include="System\Windows\Automation\MultipleViewPattern.cs" />
+    <Compile Include="System\Windows\Automation\NotCondition.cs" />
+    <Compile Include="System\Windows\Automation\OrCondition.cs" />
+    <Compile Include="System\Windows\Automation\PropertyCondition.cs" />
+    <Compile Include="System\Windows\Automation\RangeValuePattern.cs" />
+    <Compile Include="System\Windows\Automation\ScrollItemPattern.cs" />
+    <Compile Include="System\Windows\Automation\ScrollPattern.cs" />
+    <Compile Include="System\Windows\Automation\SelectionItemPattern.cs" />
+    <Compile Include="System\Windows\Automation\SelectionPattern.cs" />
+    <Compile Include="System\Windows\Automation\SynchronizedInputPattern.cs" />
+    <Compile Include="System\Windows\Automation\TableItemPattern.cs" />
+    <Compile Include="System\Windows\Automation\TablePattern.cs" />
+    <Compile Include="System\Windows\Automation\TextPattern.cs" />
+    <Compile Include="System\Windows\Automation\TogglePattern.cs" />
+    <Compile Include="System\Windows\Automation\TransformPattern.cs" />
+    <Compile Include="System\Windows\Automation\TreeWalker.cs" />
+    <Compile Include="System\Windows\Automation\ValuePattern.cs" />
+    <Compile Include="System\Windows\Automation\VirtualizedItemPattern.cs" />
+    <Compile Include="System\Windows\Automation\WindowPattern.cs" />
+    <Compile Include="System\Windows\Automation\Text\TextRange.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.StackTrace" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+  </ItemGroup>
+</Project>

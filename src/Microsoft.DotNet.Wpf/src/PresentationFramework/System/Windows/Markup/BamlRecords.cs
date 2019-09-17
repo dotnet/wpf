@@ -7,6 +7,7 @@
 * Purpose:  Contains implementation for specific BamlRecords
 *
 \***************************************************************************/
+
 using System;
 using System.Xml;
 using System.IO;
@@ -15,7 +16,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Specialized;
@@ -374,10 +374,6 @@ namespace System.Windows.Markup
     }
 
     // This class handles allocation, read and write management of baml records.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlRecordManager
     {
 #if !PBTCOMPILER
@@ -801,7 +797,6 @@ namespace System.Windows.Markup
         // from being created.
 
         BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
-
     }
 
     // The base of all baml records.  This gives a fixed size record that contains
@@ -809,7 +804,6 @@ namespace System.Windows.Markup
     // line number information is not currently written out to the baml stream.
     internal abstract class BamlRecord
     {
-
  #region Methods
 
 #if !PBTCOMPILER
@@ -906,7 +900,6 @@ namespace System.Windows.Markup
             {
                 return PinnedCount > 0;
             }
-
         }
 
         // (See comment on IsPinned.)
@@ -1019,7 +1012,6 @@ namespace System.Windows.Markup
                    bamlRecordType == BamlRecordType.PropertyIDictionaryStart
                    ||
                    bamlRecordType == BamlRecordType.Text;
-            
         }
 
 #endif
@@ -1029,10 +1021,6 @@ namespace System.Windows.Markup
 
     // An abstract base class for records that record their size as part of the
     // baml stream.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal abstract class BamlVariableSizedRecord : BamlRecord
     {
  #region Methods
@@ -1170,13 +1158,8 @@ namespace System.Windows.Markup
 #endregion Data
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlXmlnsPropertyRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1201,7 +1184,6 @@ namespace System.Windows.Markup
             {
                 AssemblyIds = null;
             }
-
         }
 #endif
 
@@ -1281,16 +1263,10 @@ namespace System.Windows.Markup
         short[] _assemblyIds;
 
 #endregion Data
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPIMappingRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1345,7 +1321,6 @@ namespace System.Windows.Markup
 
         internal short AssemblyId
         {
-
             get
             {
                 short value = (short) _flags[_assemblyIdLowSection];
@@ -1359,7 +1334,6 @@ namespace System.Windows.Markup
                 _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
                 _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
         }
 
         // Allocate space in _flags.
@@ -1392,13 +1366,8 @@ namespace System.Windows.Markup
     }
 
     // Common base class for variables sized records that contain a string value
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal abstract class BamlStringValueRecord : BamlVariableSizedRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1503,10 +1472,6 @@ namespace System.Windows.Markup
 
     // BamlRecord use in a defer loaded dictionary as the key for adding a value.
     // The value is a type that is refered to using a TypeID
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDefAttributeKeyTypeRecord : BamlElementStartRecord, IBamlDictionaryKey
     {
         internal BamlDefAttributeKeyTypeRecord()
@@ -1689,10 +1654,6 @@ namespace System.Windows.Markup
 
     // BamlRecord for x:Key attribute when used in a defer loaded dictionary
     // as the key for adding a value.  The value is stored as a string.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDefAttributeKeyStringRecord : BamlStringValueRecord, IBamlDictionaryKey
     {
         internal BamlDefAttributeKeyStringRecord()
@@ -1789,7 +1750,6 @@ namespace System.Windows.Markup
             {
                 _flags[_sharedSection] = value ? 1 : 0;
             }
-
         }
 
         // Whether Shared was set
@@ -1804,7 +1764,6 @@ namespace System.Windows.Markup
             {
                 _flags[_sharedSetSection] = value ? 1 : 0;
             }
-
         }
 
         // Allocate space in _flags.
@@ -1887,13 +1846,8 @@ namespace System.Windows.Markup
     }
 
     // BamlRecord for x:Whatever attribute
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDefAttributeRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -1982,13 +1936,8 @@ namespace System.Windows.Markup
     }
 
     // BamlRecord for PresentationOptions:Whatever attribute
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPresentationOptionsAttributeRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -2068,13 +2017,8 @@ namespace System.Windows.Markup
     // BamlPropertyComplexStartRecord is for Complex DependencyProperty declarations
     // in markup, where the actual type and value is determined by subsequent records.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyComplexStartRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -2141,10 +2085,6 @@ namespace System.Windows.Markup
     // BamlPropertyStringReferenceRecord is for Property values that are written
     // out as references into the string table.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyStringReferenceRecord : BamlPropertyComplexStartRecord
     {
         #region Methods
@@ -2208,10 +2148,6 @@ namespace System.Windows.Markup
     // BamlPropertyTypeReferenceRecord is for Property values that are written
     // out as references into the type table.  So the property value is a 'Type' object.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyTypeReferenceRecord : BamlPropertyComplexStartRecord
     {
         #region Methods
@@ -2271,10 +2207,6 @@ namespace System.Windows.Markup
     //
     // BamlPropertyWithConverterRecord information for property with custom type converter
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyWithConverterRecord : BamlPropertyRecord
     {
         #region Methods
@@ -2337,13 +2269,8 @@ namespace System.Windows.Markup
     // BamlPropertyRecord is for DependencyProperty values that are written
     // out as strings.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -2407,10 +2334,6 @@ namespace System.Windows.Markup
     // BamlPropertyWithExtensionRecord is for property values that are Markup extensions
     // with a single param member that are written out as attributeIds.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyWithExtensionRecord : BamlRecord, IOptimizedMarkupExtension
     {
         #region Methods
@@ -2558,10 +2481,6 @@ namespace System.Windows.Markup
     // the BAML stream in whatever format they understand. This record is used only
     // during BAML write time.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyCustomWriteInfoRecord : BamlPropertyCustomRecord
     {
         internal override void WriteRecordData(BinaryWriter bamlBinaryWriter)
@@ -2783,10 +2702,6 @@ namespace System.Windows.Markup
     // The property value objects are read directly from the BAML stream by the
     // custom binary serializer for the property.
     //
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyCustomRecord : BamlVariableSizedRecord
     {
 #region Methods
@@ -3006,13 +2921,8 @@ namespace System.Windows.Markup
 #endregion Data
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyArrayEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3023,13 +2933,8 @@ namespace System.Windows.Markup
 #endregion Properties
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlConstructorParametersStartRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3038,16 +2943,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlConstructorParametersEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3056,13 +2955,8 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlConstructorParameterTypeRecord : BamlRecord
     {
         #region Methods
@@ -3117,13 +3011,8 @@ namespace System.Windows.Markup
         #endregion Data
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyIListEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3132,16 +3021,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyIDictionaryEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3150,16 +3033,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyComplexEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3168,17 +3045,11 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyArrayStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3187,16 +3058,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyIListStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3205,16 +3070,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlPropertyIDictionaryStartRecord : BamlPropertyComplexStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3223,16 +3082,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlRoutedEventRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3287,13 +3140,8 @@ namespace System.Windows.Markup
 
 
     // A section of literal content.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlLiteralContentRecord : BamlStringValueRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3301,9 +3149,6 @@ namespace System.Windows.Markup
         {
             Value  =  bamlBinaryReader.ReadString();
 
-            // TODO - peterost - Why are these stored?  They aren't needed and
-            //                   should be removed with an M8 breaking change, and
-            //                   then remove this method.
             Int32 _lineNumber = bamlBinaryReader.ReadInt32();
             Int32 _linePosition = bamlBinaryReader.ReadInt32();
         }
@@ -3313,9 +3158,6 @@ namespace System.Windows.Markup
         {
             bamlBinaryWriter.Write(Value);
 
-            // TODO - peterost - Why are these stored?  They aren't needed and
-            //                   should be removed with an M8 breaking change, and
-            //                   then remove this method.
             bamlBinaryWriter.Write((Int32)0);
             bamlBinaryWriter.Write((Int32)0);
         }
@@ -3330,15 +3172,10 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
      }
 
     // An record for the connection id that the (Style)BamlRecordReader uses to
     // hookup an ID or event on any element in the object tree or Style visual tree.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlConnectionIdRecord : BamlRecord
     {
 #if !PBTCOMPILER
@@ -3386,13 +3223,8 @@ namespace System.Windows.Markup
 
     // An object record in the object tree.  This can be a CLR
     // object or a DependencyObject.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlElementStartRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3424,7 +3256,6 @@ namespace System.Windows.Markup
         // Id of the type of this object
         internal short TypeId
         {
-
             get
             {
                 short value = (short) _flags[_typeIdLowSection];
@@ -3438,8 +3269,6 @@ namespace System.Windows.Markup
                 _flags[_typeIdLowSection] = (short)  (value & 0xff);
                 _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
-
         }
 
         // Whether this object instance is expected to be created via TypeConverter
@@ -3531,7 +3360,6 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
     internal class BamlNamedElementStartRecord : BamlElementStartRecord
     {
-
 #region Methods
 
         #if !PBTCOMPILER
@@ -3601,10 +3429,6 @@ namespace System.Windows.Markup
 
     // Marks a block that has deferable content.  This record contains the size
     // of the deferable section, excluding the start and end records themselves.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDeferableContentStartRecord : BamlRecord
     {
 #region Methods
@@ -3714,7 +3538,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
 
         byte[] _valuesBuffer;
-        
+
 #endif
 
 #endregion Data
@@ -3730,7 +3554,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceStartRecord : BamlElementStartRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3739,7 +3562,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3752,7 +3574,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceEndRecord : BamlElementEndRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -3761,7 +3582,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3774,7 +3594,6 @@ namespace System.Windows.Markup
     
     internal class BamlOptimizedStaticResourceRecord : BamlRecord, IOptimizedMarkupExtension
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3902,7 +3721,6 @@ namespace System.Windows.Markup
     
     internal class BamlStaticResourceIdRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -3980,7 +3798,6 @@ namespace System.Windows.Markup
     
     internal class BamlPropertyWithStaticResourceIdRecord : BamlStaticResourceIdRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -4050,10 +3867,6 @@ namespace System.Windows.Markup
 
 
     // Text content between the begin and end tag of an element.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlTextRecord : BamlStringValueRecord
     {
 #region Properties
@@ -4067,10 +3880,6 @@ namespace System.Windows.Markup
     }
 
     // This is a text record within a [Static/Dynamic]ResourceExtension.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlTextWithIdRecord : BamlTextRecord
     {
 #region Methods
@@ -4120,10 +3929,6 @@ namespace System.Windows.Markup
     }
 
     // Text content between the begin and end tag of an element that will be parsed using a type converter.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlTextWithConverterRecord : BamlTextRecord
     {
 #region Methods
@@ -4180,16 +3985,11 @@ namespace System.Windows.Markup
         short _converterTypeId = 0;
 
 #endregion Data
-
     }
 
     // Marks the start of a Baml document.  This must always be the first
     // record in a BAML stream.   It contains version information, and other
     // document wide directives.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDocumentStartRecord : BamlRecord
     {
 #region Methods
@@ -4309,13 +4109,8 @@ namespace System.Windows.Markup
     }
 
     // This marks the end tag of an element
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlElementEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4324,7 +4119,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the start tag of an element being used as the key for an IDictionary
@@ -4343,13 +4137,11 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the end tag of an element being used as the key for an IDictionary
     internal class BamlKeyElementEndRecord : BamlElementEndRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4358,17 +4150,11 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // This marks the end of the baml stream, or document.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlDocumentEndRecord : BamlRecord
     {
-
 #region Properties
 
         internal override BamlRecordType RecordType
@@ -4377,7 +4163,6 @@ namespace System.Windows.Markup
         }
 
 #endregion Properties
-
     }
 
     // The following records are used internally in the baml stream to
@@ -4386,10 +4171,6 @@ namespace System.Windows.Markup
     // publically exposed
 
     // Information about an assembly where a type is defined
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlAssemblyInfoRecord : BamlVariableSizedRecord
     {
         internal BamlAssemblyInfoRecord()
@@ -4437,7 +4218,6 @@ namespace System.Windows.Markup
         // ID of this assembly
         internal short AssemblyId
         {
-
             get
             {
                 short value = (short) _flags[_assemblyIdLowSection];
@@ -4451,7 +4231,6 @@ namespace System.Windows.Markup
                 _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
                 _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
         }
 
         // Allocate space in _flags.
@@ -4510,10 +4289,6 @@ namespace System.Windows.Markup
     }
 
     // Information about a type for an element, object or property
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlTypeInfoRecord : BamlVariableSizedRecord
     {
         internal BamlTypeInfoRecord()
@@ -4571,7 +4346,6 @@ namespace System.Windows.Markup
         // Type is needed.
         internal short TypeId
         {
-
             get
             {
                 short value = (short) _flags[_typeIdLowSection];
@@ -4585,8 +4359,6 @@ namespace System.Windows.Markup
                 _flags[_typeIdLowSection] = (short)  (value & 0xff);
                 _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
             }
-
-
         }
 
         // Assembly id of the assembly where this type is defined.
@@ -4717,10 +4489,6 @@ namespace System.Windows.Markup
 
     // Type info record for a type that has a custom serializer associated with it.
     // This gives the serializer type that will be used when deserializing this type
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlTypeInfoWithSerializerRecord : BamlTypeInfoRecord
     {
         internal BamlTypeInfoWithSerializerRecord()
@@ -4819,10 +4587,6 @@ namespace System.Windows.Markup
     // name of the attribute.  Note that Attribute is used for historical
     // reasons and for similarities to Xml attributes.  For us attributes
     // are just properties and events.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlAttributeInfoRecord : BamlVariableSizedRecord
     {
         internal BamlAttributeInfoRecord()
@@ -5215,10 +4979,6 @@ namespace System.Windows.Markup
     }
 
     // Information about a String that is an entry in the String table.
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlStringInfoRecord : BamlVariableSizedRecord
     {
         internal BamlStringInfoRecord()
@@ -5332,10 +5092,6 @@ namespace System.Windows.Markup
     }
 
     // Sets the content property context for an element
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlContentPropertyRecord : BamlRecord
     {
         #region Methods
@@ -5395,13 +5151,8 @@ namespace System.Windows.Markup
 
 
     // Debugging Linenumber record.  Linenumber from the XAML
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlLineAndPositionRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -5472,13 +5223,8 @@ namespace System.Windows.Markup
 
 
     // Debugging Line Position record.  Line Position from the XAML
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlLinePositionRecord : BamlRecord
     {
-
 #region Methods
 
 #if !PBTCOMPILER
@@ -5535,6 +5281,4 @@ namespace System.Windows.Markup
         }
 #endif
     }
-
-
 }

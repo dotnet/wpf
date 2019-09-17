@@ -40,6 +40,26 @@
       <AssemblyMetadata Include="Commit" Condition="'$(SourceRevisionId)'!=''">
         <Value>$(SourceRevisionId)</Value>
       </AssemblyMetadata>
+
+      <!-- 
+        Crossgen wants to detect when an assembly is built from C++/CLI sources, 
+        since it is unable to function correctly today (ostensibly due to bugs). Since
+        /clr:pure is deprecated and WPF will eventually switch over to /clr (i.e., IJW),
+        Crossgen will eventually (i.e., in the near-term) fail to work on C++/CLI 
+        assemblies anyway. 
+
+        Crossgen will detect [assembly: AssemblyMetadta("Language", "C++")] and
+        skip those assemblies. WPF will add this attribute to assemblies that are
+        compiled from C++/CLI sources. 
+
+        WPF will also add [assembly: AssemblyMetadata("Language, "C#")] to C#
+        assemblies.
+        
+        https://github.com/dotnet/wpf/issues/587
+      --> 
+      <AssemblyMetadata Include="Language" Condition="'$(Language)'!=''">
+        <Value>$(Language)</Value>
+      </AssemblyMetadata>
     </ItemGroup>
   </Target>
   
@@ -100,7 +120,7 @@
   -->
   <UsingTask TaskName="ParseExtendedAssemblyInfo"
              TaskFactory="CodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" >
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <ExtendedAssemblyInfo ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />

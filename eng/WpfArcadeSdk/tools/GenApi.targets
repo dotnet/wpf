@@ -1,0 +1,22 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.GenAPI" Version="$(MicrosoftDotNetGenAPIVersion)" GeneratePathProperty="true"
+                      Condition="'$(_GenerateReferenceAssemblySource)'=='true'"/>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(_GenerateReferenceAssemblySource)'=='true'">
+    <!-- 
+      By default, GenAPI's target (GenerateReferenceAssemblySource) generates code into $(TargetDir).
+      Instead, WPF generates into the ref directory in the project's source tree.
+    -->
+    <GenAPITargetDir>$(MSBuildProjectDir)ref\</GenAPITargetDir>
+    <GenAPITargetPath>$(GenAPITargetDir)$(AssemblyName).cs</GenAPITargetPath>
+  </PropertyGroup>
+
+  <Target Name="EnsureGenAPITargetDirectory"
+        BeforeTargets="GenerateReferenceAssemblySource"
+        Condition="!Exists('$(GenAPITargetDir)')">
+    <MakeDir Directories="$(GenAPITargetDir)" />
+  </Target>
+
+</Project>

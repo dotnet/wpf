@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>PresentationUI</AssemblyName>
+    <PackageId>PresentationUI-PresentationFramework-impl-cycle</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>    
+    <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
+    <Platforms>AnyCPU;x64</Platforms>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <!--The field '{0}' is never used -->
+    <NoWarn>$(NoWarn);0169</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="PresentationUI.cs" />
+    <Compile Include="PresentationUI.internals.cs" />
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" /> 
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfCycleBreakersDir)PresentationFramework\PresentationFramework-PresentationUI-api-cycle.csproj" />
+  </ItemGroup>
+</Project>

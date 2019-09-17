@@ -1,0 +1,3622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+    <body>
+      <trans-unit id="AccessKeyManager_NotAUnicodeCharacter">
+        <source>'{0}' is not a single Unicode character.</source>
+        <target state="translated">'{0}' 不是單一 Unicode 字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AcquireBreakRecordFailure">
+        <source>Text formatting engine cannot acquire break record due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法取得中斷記錄: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AcquirePenaltyModuleFailure">
+        <source>Text formatting engine cannot acquire text penalty module due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法取得文字懲罰 (text penalty) 模組: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddText_Invalid">
+        <source>Cannot add text to '{0}'.</source>
+        <target state="translated">無法新增文字至 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AllGesturesMustExistAlone">
+        <source>If AllGestures is specified, it must be the only ApplicationGesture in the ApplicationGesture array.</source>
+        <target state="translated">若指定 AllGestures，它必須是 ApplicationGesture 陣列中唯一的 ApplicationGesture。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_AlreadyAttached">
+        <source>This AnimationEffect is already attached to a UIElement.</source>
+        <target state="translated">此 AnimationEffect 已附加到 UIElement。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_CollectionInUse">
+        <source>This AnimationEffectCollection is already being used by another UIElement.</source>
+        <target state="translated">此 AnimationEffectCollection 已由另一個 UIElement 使用中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_NoVisual">
+        <source>This AnimationEffect is not attached to a Visual.</source>
+        <target state="translated">此 AnimationEffect 未附加到 Visual。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_AnimationTimelineTypeMismatch">
+        <source>AnimationTimeline of type '{0}' cannot be used to animate the '{1}' property of type '{2}'.</source>
+        <target state="translated">無法使用類型為 '{0}' 的 AnimationTimeline 來顯示類型為 '{2}' 之 '{1}' 屬性的動畫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_CalculatedValueIsInvalidForProperty">
+        <source>The animation(s) applied to the '{0}' property calculate a current value of '{1}', which is not a valid value for the property.</source>
+        <target state="translated">套用至 '{0}' 屬性的動畫，計算出目前值為 '{1}'，這對於該屬性而言不是有效值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">XAML 中 KeyFrameAnimation 的子項目必須是相容型別的 KeyFrame。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildTypeMismatch">
+        <source>One of the animations in the timeline is a '{0}' and cannot be used to animate a property of type '{1}'.</source>
+        <target state="translated">時間表中的其中一個動畫是 '{0}'，且無法用於顯示類型 '{1}' 屬性的動畫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_DependencyPropertyIsNotAnimatable">
+        <source>'{0}' property is not animatable on '{1}' class because the IsAnimationProhibited flag has been set on the UIPropertyMetadata used to associate the property with the class.</source>
+        <target state="translated">'{0}' 屬性無法在 '{1}' 類別上顯示動畫，因為已在用於和該類別屬性產生關聯的 UIPropertyMetadata 上，設定了 IsAnimationProhibited 旗標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Exception">
+        <source>Cannot animate the '{0}' property on a '{1}' using a '{2}'. For details see the inner exception.</source>
+        <target state="translated">無法在使用 '{2}' 的 '{1}' 上顯示 '{0}' 屬性的動畫。如需詳細資料，請參閱內部例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">'{0}' 對類別 '{2}' 來說，並非有效的 '{1}' 值。此值可能已由正展示其動畫之屬性的基礎值提供，或是由另一個套用至相同屬性之動畫的輸出值提供。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}] has specified KeyTime '{2}', which resolves to time {3}Animation_InvalidAnimationUsingKeyFramesDuration</source>
+        <target state="translated">為索引 {1} 主要畫面間隔所解析的 KeyTime，不可大於為索引 {4} 主要畫面間隔所解析的 KeyTime。KeyFrames[{1}] 指定了 KeyTime '{2}'，其會解析為時間 {3}Animation_InvalidAnimationUsingKeyFramesDuration</target>
+        <note>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</note>
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">'{2}' KeyTime 值對此 '{0}' 的索引 {1} 主要畫面間格而言無效，因為它大於動畫的 Duration 值 '{3}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">'{0}' 無法使用 '{2}' 的預設值 {1}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeySpline_InvalidValue">
+        <source>Cannot set '{0}' to '{1}'. KeySpline values must be between 0.0 and 1.0.</source>
+        <target state="translated">無法將 '{0}' 設定為 '{1}'。KeySpline 值必須介於 0.0 到 1.0 之間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeyTime_InvalidPercentValue">
+        <source>'{0}' is not a valid Percent value for a KeyTime. The Percent value must be a number from 0.0 to 1.0.</source>
+        <target state="translated">'{0}' 不是 KeyTime 的有效 Percent 值。Percent 值必須是介於 0.0 到 1.0 之間的數字。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeyTime_LessThanZero">
+        <source>Cannot create a KeyTime with the value '{0}' because it is less than zero.</source>
+        <target state="translated">無法使用值 '{0}' 建立 KeyTime，因為它小於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoAnimationsSpecified">
+        <source>'{0}' value is not valid because it contains no animations.</source>
+        <target state="translated">'{0}' 值無效，因為它並未包含動畫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">KeyFrameAnimation 物件不能使用文字物件做為子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ReturnedUnsetValueInstance">
+        <source>A '{0}' on the '{1}' property of a '{2}' returned a current value of UnsetValue.Instance, which is not valid.</source>
+        <target state="translated">'{2}' 之 '{1}' 屬性上的 '{0}'，傳回目前的 UnsetValue.Instance 值，但其無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_UnrecognizedHandoffBehavior">
+        <source>The HandoffBehavior value is not valid.</source>
+        <target state="translated">HandoffBehavior 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationGestureArrayLengthIsZero">
+        <source>The ApplicationGesture array must contain at least one member.</source>
+        <target state="translated">ApplicationGesture 陣列必須至少包含一個成員。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationGestureIsInvalid">
+        <source>The specified ApplicationGesture is not valid.</source>
+        <target state="translated">指定的 ApplicationGesture 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AutomationDispatcherShutdown">
+        <source>Automation client cannot access UI because application is shutting down.</source>
+        <target state="translated">Automation 用戶端無法存取 UI，因為應用程式正在關閉。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AutomationTimeout">
+        <source>Timeout occurred while attempting to access UI. The application might be busy or unresponsive.</source>
+        <target state="translated">嘗試存取 UI 時逾時。應用程式可能忙碌中或無回應。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidConnectedPeer">
+        <source>'{0}' is not a valid System.Windows.Automation.AutomationPeer. It is expected to be associated with a Window known to Automation.</source>
+        <target state="translated">'{0}' 不是有效的 System.Windows.Automation.AutomationPeer。預期它應與動畫已知的視窗關聯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidEventId">
+        <source>'{0}' is not a valid System.Windows.Automation.AutomationEvent.</source>
+        <target state="translated">'{0}' 不是有效的 System.Windows.Automation.AutomationEvent。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidSynchronizedInputType">
+        <source>'{0}' is not a valid System.Windows.Automation.SynchronizedInputType.</source>
+        <target state="translated">'{0}' 不是有效的 System.Windows.Automation.SynchronizedInputType。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_RecursivePublicCall">
+        <source>Recursive call to Automation Peer API is not valid.</source>
+        <target state="translated">Automation Peer 應用程式開發介面的遞迴呼叫無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_UnsupportedUIAutomationEventAssociation">
+        <source>Unsupported UI Automation event association.</source>
+        <target state="translated">不支援的 UI Automation 事件關聯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_OpacityChanged">
+        <source>BitmapCacheBrush does not support Opacity.</source>
+        <target state="translated">BitmapCacheBrush 不支援 Opacity。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_RelativeTransformChanged">
+        <source>BitmapCacheBrush does not support RelativeTransform.</source>
+        <target state="translated">BitmapCacheBrush 不支援 RelativeTransform。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_TransformChanged">
+        <source>BitmapCacheBrush does not support Transform.</source>
+        <target state="translated">BitmapCacheBrush 不支援 Transform。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseBackKeyDisplayString">
+        <source>Alt+Left;Backspace</source>
+        <target state="translated">Alt+Left;Backspace</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseBackText">
+        <source>Back</source>
+        <target state="translated">返回</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseForwardKeyDisplayString">
+        <source>Alt+Right;Shift+Backspace</source>
+        <target state="translated">Alt+Right;Shift+Backspace</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseForwardText">
+        <source>Forward</source>
+        <target state="translated">往前</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseHomeKeyDisplayString">
+        <source>Alt+Home;BrowserHome</source>
+        <target state="translated">Alt+Home;BrowserHome</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseHomeText">
+        <source>Home</source>
+        <target state="translated">首頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseStopKeyDisplayString">
+        <source>Alt+Esc;BrowserStop</source>
+        <target state="translated">Alt+Esc;BrowserStop</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseStopText">
+        <source>Stop</source>
+        <target state="translated">停止</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrushUnknownBamlType">
+        <source>Unrecognized brush type in BAML file.</source>
+        <target state="translated">在 BAML 檔案中發現無法識別的筆刷類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeDownloaderDisposed">
+        <source>Cannot access a disposed HTTP byte range downloader.</source>
+        <target state="translated">無法存取已處置的 HTTP 位元組範圍下載器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeDownloaderErroredOut">
+        <source>Byte range request failed.</source>
+        <target state="translated">位元組範圍要求失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeRequestIsNotSupported">
+        <source>Server does not support byte range request.</source>
+        <target state="translated">伺服器不支援位元組範圍要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CancelPrintText">
+        <source>Cancel Print</source>
+        <target state="translated">取消列印</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAttachVisualTwice">
+        <source>Cannot attach a Visual that is already attached.</source>
+        <target state="translated">無法附加已附加的 Visual。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotBothBeNull">
+        <source>'{0}' and '{1}' cannot both be null.</source>
+        <target state="translated">'{0}' 與 '{1}' 不可皆為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">無法將字串值 '{0}' 轉換為類型 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">無法將類型 '{0}' 轉換為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">無法修改唯讀容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyVisualChildrenDuringTreeWalk">
+        <source>Cannot modify the Visual children for this node because a tree walk is in progress.</source>
+        <target state="translated">無法修改此節點的 Visual 子項目，因為正在瀏覽樹狀目錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotNavigateToApplicationResourcesInWebBrowser">
+        <source>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</source>
+        <target state="translated">無法使用 WebBrowser 控制項來巡覽應用程式資源 '{0}'。如果是 URI 巡覽，資源必須位在該應用程式的來源網站。請使用前置詞 pack://siteoforigin:,,,/ 來避免 URI 成為硬式編碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">無法從唯寫容器取得組件或組件資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Channel_InvalidCommandBufferPointer">
+        <source>Cannot read from the specified command buffer pointer.</source>
+        <target state="translated">無法讀取指定的命令緩衝區指標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_MissingRequiredField">
+        <source>The Metrics property of CharacterMetrics is missing a required field.</source>
+        <target state="translated">CharacterMetrics 的 Metrics 屬性遺失必要的欄位。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_NegativeHorizontalAdvance">
+        <source>CharacterMetrics is not valid. The horizontal advance (defined as the sum of BlackBoxWidth, LeftSideBearing, and RightSideBearing) cannot be negative.</source>
+        <target state="translated">CharacterMetrics 無效。水平遞增 (定義為 BlackBoxWidth、LeftSideBearing 與 RightSideBearing 的加總) 不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_NegativeVerticalAdvance">
+        <source>CharacterMetrics is not valid. The vertical advance (defined as the sum of BlackBoxHeight, TopSideBearing, and BottomSideBearing) cannot be negative.</source>
+        <target state="translated">CharacterMetrics 無效。垂直遞增 (定義為 BlackBoxHeight、TopSideBearing 與 BottomSideBearing 的加總) 不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_TooManyFields">
+        <source>The Metrics property of CharacterMetrics has too many fields.</source>
+        <target state="translated">CharacterMetrics 的 Metrics 屬性有太多欄位。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClassTypeIllegal">
+        <source>Class handlers can be registered only for UIElement or ContentElement and their subtypes.</source>
+        <target state="translated">只能為 UIElement 或 ContentElement 以及其子型別登錄類別處理常式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloneBreakRecordFailure">
+        <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法複製中斷記錄: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseText">
+        <source>Close</source>
+        <target state="translated">關閉</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapEntriesShouldNotDecrease">
+        <source>A cluster map entry must be greater than or equal to a previous entry.</source>
+        <target state="translated">叢集對應記錄必須大於或等於上一個項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapEntryShouldPointWithinGlyphIndices">
+        <source>A cluster map entry must point to a valid glyph indices element.</source>
+        <target state="translated">叢集對應項目必須指向有效的圖像索引項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapFirstEntryMustBeZero">
+        <source>The first element in the cluster map must equal zero.</source>
+        <target state="translated">叢集對應中的第一個項目必須等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CodePointOutOfRange">
+        <source>'{0}' character is outside the Unicode code point range.</source>
+        <target state="translated">'{0}' 字元位於 Unicode 字碼指標範圍之外。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionDuplicateKey">
+        <source>'{0}' key already exists in the collection.</source>
+        <target state="translated">'{0}' 索引鍵已存在於此集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionEnumerationError">
+        <source>Collection was modified during enumeration.</source>
+        <target state="translated">列舉時未修改集合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionIsFixedSize">
+        <source>This collection is fixed size.</source>
+        <target state="translated">此集合是固定大小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeGreaterThanZero">
+        <source>The number of elements in this collection must be greater than zero.</source>
+        <target state="translated">此集合中的項目數目必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">此集合中的項目數目必須小於或等於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsShouldBeEqualTo">
+        <source>The number of elements in this collection should equal '{0}'.</source>
+        <target state="translated">此集合中的項目數目必須等於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsCommandBindings">
+        <source>Collection accepts only objects of type CommandBinding.</source>
+        <target state="translated">集合只接受型別為 CommandBinding 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsInputBindings">
+        <source>Collection accepts only objects of type InputBinding.</source>
+        <target state="translated">集合只接受型別為 InputBinding 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsInputGestures">
+        <source>Collection accepts only objects of type InputGesture.</source>
+        <target state="translated">集合只接受型別為 InputGesture 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadDestArray">
+        <source>Destination array is not compatible with objects within '{0}'.</source>
+        <target state="translated">目的陣列與 '{0}' 中的物件不相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadRank">
+        <source>Input array is not a valid rank.</source>
+        <target state="translated">輸入陣列不是有效的範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">無法將類型 '{1}' 的執行個體新增至類型 '{0}' 的集合。只允許類型為 '{2}' 的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">無法傳遞多維度陣列至集合上的 CopyTo 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">'{0}' 參數值等於或大於 '{1}' 參數值的長度。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">此集合中的項目數，大於從 '{0}' 到目的地 '{1}' 結尾的可用空間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_NoNull">
+        <source>Cannot add null to the collection.</source>
+        <target state="translated">無法新增空值到集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ColorContext_FileTooLarge">
+        <source>File is too large to be a valid ColorContext.</source>
+        <target state="translated">檔案太大，不是有效的 ColorContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_ColorContextNotsRGB_or_scRGB">
+        <source>Color context must be sRGB or scRGB for this operation.</source>
+        <target state="translated">對於此操作，色彩內容必須是 sRGB 或 scRGB。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_ColorContextTypeMismatch">
+        <source>Color context types mismatch.</source>
+        <target state="translated">色彩內容類型不相符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_DimensionMismatch">
+        <source>Color context dimensions mismatch.</source>
+        <target state="translated">色彩內容維度不相符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_NullColorContext">
+        <source>Color context is null.</source>
+        <target state="translated">色彩內容是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompatibilityPreferencesSealed">
+        <source>The property '{0}' cannot be changed. The '{1}' class has been sealed.</source>
+        <target state="translated">無法變更屬性 '{0}'。'{1}' 類別已密封。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileFeatureSet_InvalidTypographyProperties">
+        <source>Typography properties are not valid.</source>
+        <target state="translated">印刷樣式屬性無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontAttributeValue1">
+        <source>Invalid value for {0} attribute.</source>
+        <target state="translated">{0} 屬性的值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontAttributeValue2">
+        <source>Invalid value for {0} attribute: {1}</source>
+        <target state="translated">{0} 屬性的值無效: {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontInvalidUnicodeRange">
+        <source>Unicode range is not valid.</source>
+        <target state="translated">Unicode 範圍無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontMissingAttribute">
+        <source>Missing required attribute '{0}'.</source>
+        <target state="translated">遺失必要屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontMissingElement">
+        <source>Missing required element '{0}'.</source>
+        <target state="translated">遺失必要項目 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontSignificantWhitespace">
+        <source>The composite font contains significant whitespace where none is expected.</source>
+        <target state="translated">組合字型包含未預期的空白字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontUnknownAttribute">
+        <source>'{0}' attribute in XML namespace '{1}' not recognized. Note that attribute names are case sensitive.</source>
+        <target state="translated">無法辨識 XML 命名空間 '{1}' 中的 '{0}' 屬性。請注意，屬性名稱區分大小寫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontUnknownElement">
+        <source>'{0}' element in XML namespace '{1}' not recognized. Note that element names are case sensitive.</source>
+        <target state="translated">無法辨識 XML 命名空間 '{1}' 中的 '{0}' 項目。請注意，項目名稱區分大小寫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFont_DuplicateTypeface">
+        <source>A FontFamily cannot have more than one FamilyTypeface with the same Style, Weight, and Stretch.</source>
+        <target state="translated">FontFamily 不能有多個相同 Style、Weight 與 Stretch 的 FamilyTypeface。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFont_TooManyFamilyMaps">
+        <source>The FontFamily cannot hold any more FamilyMaps.</source>
+        <target state="translated">FontFamily 不能有多個 FamilyMaps。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositionTarget_RootVisual_HasParent">
+        <source>The root Visual of a VisualTarget cannot have a parent.</source>
+        <target state="translated">VisualTarget 的根 Visual 不能有父項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorRecursion">
+        <source>Possible constructor recursion detected.</source>
+        <target state="translated">發現可能的建構函式遞迴。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuKeyDisplayString">
+        <source>Shift+F10;Apps</source>
+        <target state="translated">Shift+F10;Apps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuText">
+        <source>Context Menu</source>
+        <target state="translated">內容功能表</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertFromNotSupported">
+        <source>Cannot convert from type.</source>
+        <target state="translated">無法從型別轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertToNotSupported">
+        <source>Cannot convert to type.</source>
+        <target state="translated">無法轉換至型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CopyKeyDisplayString">
+        <source>Ctrl+C;Ctrl+Insert</source>
+        <target state="translated">Ctrl+C;Ctrl+Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CopyText">
+        <source>Copy</source>
+        <target state="translated">複製</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorrectionListText">
+        <source>Correction List</source>
+        <target state="translated">更正清單</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CountOfBitsGreatThanRemainingBits">
+        <source>Count must be less than or equal to remaining number of bits in stream.</source>
+        <target state="translated">計數必須小於或等於資料流中的剩餘位元數目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CountOfBitsOutOfRange">
+        <source>Count must be less than or equal to bits per byte and greater than zero.</source>
+        <target state="translated">計數必須小於或等於每位元組位元數，且必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateBreaksFailure">
+        <source>Text formatting engine cannot format breakpoints due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定中斷點的格式: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateContextFailure">
+        <source>Text formatting engine cannot create text formatting context due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法建立文字格式設定內容: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateLineFailure">
+        <source>Text formatting engine cannot format a line of text due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定文字行的格式: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateParaBreakingSessionFailure">
+        <source>Text formatting engine cannot format a paragraph cache due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定段落快取的格式: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentDispatcherNotFound">
+        <source>Current dispatcher cannot be found.</source>
+        <target state="translated">找不到目前的發送器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_InvalidStream">
+        <source>Failed to load cursor from the stream.</source>
+        <target state="translated">無法從目前的資料流載入資料指標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_LoadImageFailure">
+        <source>Failed to load cursor file '{0}'.</source>
+        <target state="translated">無法載入資料指標檔案 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_UnsupportedFormat">
+        <source>'{0}' has unsupported extension for cursor.</source>
+        <target state="translated">'{0}' 包含資料指標不支援的延伸。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CutKeyDisplayString">
+        <source>Ctrl+X;Shift+Delete</source>
+        <target state="translated">Ctrl+X;Shift+Delete</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CutText">
+        <source>Cut</source>
+        <target state="translated">剪下</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_AARequires9Ex">
+        <source>An antialiased back buffer requires a IDirect3DDevice9Ex device.</source>
+        <target state="translated">消除鋸齒的背景緩衝區需要使用 IDirect3DDevice9Ex 裝置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidDevice">
+        <source>Back buffer's device is not valid.</source>
+        <target state="translated">背景緩衝區的裝置無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidPool">
+        <source>Back buffer's pool does not meet the requirements for the resource type.</source>
+        <target state="translated">背景緩衝區的集區不符合資源類型的要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidUsage">
+        <source>Back buffer's usage does not meet the requirements for the resource type.</source>
+        <target state="translated">背景緩衝區的使用方式不符合資源類型的要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_MustHaveBackBuffer">
+        <source>Cannot call this method without a back buffer.</source>
+        <target state="translated">無法在沒有背景緩衝區的情況下呼叫這個方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_SurfaceTooBig">
+        <source>Back buffer's size is too large.</source>
+        <target state="translated">背景緩衝區的大小太大。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_CannotSetDataOnAFozenOLEDataDbject">
+        <source>Cannot SetData on a frozen OLE data object.</source>
+        <target state="translated">無法在已凍結的 OLE 資料物件上執行 SetData。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_DataFormatNotPresentOnDataObject">
+        <source>'{0}' data format is not present on DataObject.</source>
+        <target state="translated">'{0}' 資料格式不存在於 DataObject 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_DataObjectMustHaveAtLeastOneFormat">
+        <source>Data object must have at least one format.</source>
+        <target state="translated">資料物件至少必須有一個格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_EmptyFormatNotAllowed">
+        <source>Empty string is not a valid value for parameter 'format'.</source>
+        <target state="translated">空字串不是參數 'format' 的有效值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
+        <source>'{0}' file drop path is not valid.</source>
+        <target state="translated">'{0}' 檔案置放路徑無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_FileDropListIsEmpty">
+        <source>'{0}' must contain at least one file drop path.</source>
+        <target state="translated">'{0}' 必須至少包含一個檔案置放路徑。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_NotImplementedEnumFormatEtc">
+        <source>'{0}' dwDirection parameter value is not supported.</source>
+        <target state="translated">不支援 '{0}' dwDirection 參數值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecompressPacketDataFailed">
+        <source>Decompression of packet data failed.</source>
+        <target state="translated">解壓縮封包料失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecompressPropertyFailed">
+        <source>Decompression of property data failed.</source>
+        <target state="translated">屬性資料 Decompression 失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecreaseZoomText">
+        <source>Decrease Zoom</source>
+        <target state="translated">降低縮放比例</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeleteKeyDisplayString">
+        <source>Del</source>
+        <target state="translated">Del</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeleteText">
+        <source>Delete</source>
+        <target state="translated">刪除</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectoryNotFoundExceptionWithFileName">
+        <source>Cannot find a part of the path '{0}'.</source>
+        <target state="translated">找不到路徑 '{0}' 的某部分。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DragDrop_DragActionInvalid">
+        <source>'{0}' DragAction is not valid.</source>
+        <target state="translated">'{0}' DragAction 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DragDrop_DragDropEffectsInvalid">
+        <source>'{0}' DragDropEffects is not valid.</source>
+        <target state="translated">'{0}' DragDropEffects 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingContext_TooManyPops">
+        <source>This Pop operation has no corresponding Push to remove from the stack because the stack depth of the DrawingContext is zero.</source>
+        <target state="translated">此 Pop 操作沒有對應的 Push 可從堆疊移除，因為 DrawingContext 的堆疊深度是零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_AlreadyOpen">
+        <source>This object has an outstanding DrawingContext. The DrawingContext must be Closed or Disposed before making Open or Append calls.</source>
+        <target state="translated">此物件具有未處理的 DrawingContext。進行 Open 或 Append 呼叫之前，必須先關閉或處置 DrawingContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_CannotAppendToFrozenCollection">
+        <source>Cannot append to a frozen DrawingGroup.Children collection.</source>
+        <target state="translated">無法附加到已凍結的 DrawingGroup.Children 集合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_CannotAppendToNullCollection">
+        <source>Cannot append to a null DrawingGroup.Children collection.</source>
+        <target state="translated">無法附加到空值 DrawingGroup.Children 集合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateApplicationGestureFound">
+        <source>Duplicate ApplicationGesture values are not allowed.</source>
+        <target state="translated">不允許重複的 ApplicationGesture 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateEventName">
+        <source>RoutedEvent Name '{0}' for OwnerType '{1}' already used.</source>
+        <target state="translated">已使用 OwnerType '{1}' 的 RoutedEvent Name '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateStrokeAdded">
+        <source>Duplicate Stroke in StrokeCollectionChangedEventArgs.Added.</source>
+        <target state="translated">在 StrokeCollectionChangedEventArgs.Added 中發現重複的 Stroke。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPExists">
+        <source>ExtendedProperty is already part of the ExtendedPropertyCollection.</source>
+        <target state="translated">ExtendedProperty 已經是 ExtendedPropertyCollection 的一部分。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPGuidNotFound">
+        <source>The GUID is not part of the ExtendedPropertyCollection.</source>
+        <target state="translated">GUID 不是 ExtendedPropertyCollection 的一部分。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPNotFound">
+        <source>Property not set.</source>
+        <target state="translated">未設定屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_20ShaderUsing30Registers">
+        <source>A pixel shader using Pixel Shader Model 2.0 cannot be set because registers only available in Pixel Shader Model 3.0 are being used.</source>
+        <target state="translated">無法設定使用 Pixel Shader Model 2.0 的像素著色器，因為只會使用 Pixel Shader Model 3.0 中的暫存器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_CombinedLegacyAndNew">
+        <source>BitmapEffect and Effect cannot be combined on a Visual.</source>
+        <target state="translated">BitmapEffect 和 Effect 無法在 Visual 上結合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_No_ContextInputSource">
+        <source>Cannot call BitmapEffect.GetOutput directly with a ContextInputSource. Provide a valid BitmapSource.</source>
+        <target state="translated">無法使用 ContextInputSource 直接呼叫 BitmapEffect.GetOutput。請提供有效的 BitmapSource。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_No_InputSource">
+        <source>There is no input set.</source>
+        <target state="translated">未設定輸入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_PixelFormat">
+        <source>'{0}' PixelFormat is not supported for this operation.</source>
+        <target state="translated">此操作不支援 '{0}' PixelFormat。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_RenderThreadError">
+        <source>An error occurred on the render thread with a user-supplied shader.</source>
+        <target state="translated">具有使用者提供的著色器的轉譯執行緒上發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader20ConstantRegisterLimit">
+        <source>Pixel Shader Model 2.0 requires floating point constants to be in registers [0-31].</source>
+        <target state="translated">Pixel Shader Model 2.0 要求浮點數的常數必須是在暫存器 [0-31] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader20SamplerRegisterLimit">
+        <source>Pixel Shader Model 2.0 requires sampler constants to be in registers [0-3].</source>
+        <target state="translated">Pixel Shader Model 2.0 要求取樣器的常數必須是在暫存器 [0-3] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30BoolConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires boolean constants to be in registers [0-15].</source>
+        <target state="translated">Pixel Shader Model 3.0 要求布林常數必須是在暫存器 [0-15] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30FloatConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires floating point constants to be in registers [0-223].</source>
+        <target state="translated">Pixel Shader Model 3.0 要求浮點數的常數必須是在暫存器 [0-223] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30IntConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires integer constants to be in registers [0-15].</source>
+        <target state="translated">Pixel Shader Model 3.0 要求整數常數必須是在暫存器 [0-15] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30SamplerRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires sampler constants to be in registers [0-7].</source>
+        <target state="translated">Pixel Shader Model 3.0 要求取樣器的常數必須是在暫存器 [0-7] 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderBytecodeSize">
+        <source>Shader bytecode must be an integral number of 4-byte words.</source>
+        <target state="translated">著色器 Bytecode 必須是四位元組文字的整數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderBytecodeSource">
+        <source>No shader bytecode present.  Must either set UriSource or call SetStreamSource.</source>
+        <target state="translated">著色器 Bytecode 不存在。必須設定 UriSource 或是呼叫 SetStreamSource。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderConstantType">
+        <source>Shader constant of type '{0}' is not allowed.</source>
+        <target state="translated">不允許型別為 '{0}' 的著色器常數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderEffectPadding">
+        <source>Padding must be non-negative.</source>
+        <target state="translated">填補必須是非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderPixelShaderSet">
+        <source>PixelShader must be set on ShaderEffect.</source>
+        <target state="translated">必須在 ShaderEffect 上設定 PixelShader。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderSamplerType">
+        <source>Pixel shader sampler must be Effect.ImplicitInput, or an instance of BitmapCacheBrush, VisualBrush, or ImageBrush.</source>
+        <target state="translated">像素著色器取樣器必須是 Effect.ImplicitInput，或是 BitmapCacheBrush、VisualBrush 或 ImageBrush 的執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderSeekableStream">
+        <source>PixelShader only accepts seekable streams.</source>
+        <target state="translated">PixelShader 只能接受可搜尋的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_SourceUriMustBeFileOrPack">
+        <source>Uri must be a file or pack Uri.</source>
+        <target state="translated">URI 必須是檔案或套件 URI。 </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyArray">
+        <source>Empty arrays are not a valid argument value.</source>
+        <target state="translated">空白陣列不是有效的引數值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyArrayNotAllowedAsArgument">
+        <source>The array cannot be empty.</source>
+        <target state="translated">陣列不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyDataToLoad">
+        <source>No data to load.</source>
+        <target state="translated">沒有資料可載入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyScToReplace">
+        <source>Collection cannot be empty.</source>
+        <target state="translated">集合不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyScToReplaceWith">
+        <source>The replacement StrokeCollection cannot be empty.</source>
+        <target state="translated">取代項 StrokeCollection 不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EndHitTestingCalled">
+        <source>EndHitTesting has already been called on the IncrementalHitTester.</source>
+        <target state="translated">已在 IncrementalHitTester 上呼叫 EndHitTesting。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EndOfStreamReached">
+        <source>End of stream reached.</source>
+        <target state="translated">已到達資料流結尾。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EnumLineFailure">
+        <source>Text formatting engine cannot enumerate contents in a line due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法列舉行的內容: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' 列舉值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_CollectionChanged">
+        <source>The enumerator is not valid because the collection changed.</source>
+        <target state="translated">列舉程式無效，因為集合已變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_NotStarted">
+        <source>The enumerator has not been started.</source>
+        <target state="translated">列舉程式未啟動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_ReachedEnd">
+        <source>The enumerator has reached the end of the collection.</source>
+        <target state="translated">列舉程式已到達集合結尾。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">沒有可傳回的目前物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventArgIsNull">
+        <source>Event arguments must be non-null.</source>
+        <target state="translated">事件引數不能是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionDownKeyDisplayString">
+        <source>Shift+Down</source>
+        <target state="translated">Shift+Down</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionDownText">
+        <source>Extend Selection Down</source>
+        <target state="translated">向下延伸選取範圍</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionLeftKeyDisplayString">
+        <source>Shift+Left</source>
+        <target state="translated">Shift+Left</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionLeftText">
+        <source>Extend Selection Left</source>
+        <target state="translated">向左延伸選取範圍</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionRightKeyDisplayString">
+        <source>Shift+Right</source>
+        <target state="translated">Shift+Right</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionRightText">
+        <source>Extend Selection Right</source>
+        <target state="translated">向右延伸選取範圍</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionUpKeyDisplayString">
+        <source>Shift+Up</source>
+        <target state="translated">Shift+Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionUpText">
+        <source>Extend Selection Up</source>
+        <target state="translated">向上延伸選取範圍</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FaceIndexMustBePositiveOrZero">
+        <source>Font face index must be greater than or equal to zero.</source>
+        <target state="translated">字體索引必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FaceIndexValidOnlyForTTC">
+        <source>Nonzero font face index values are valid only for TrueType collections (.ttc).</source>
+        <target state="translated">非零值字體索引值只對於 TrueType 集合 (.ttc) 有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FamilyCollection_CannotFindCompositeFontsLocation">
+        <source>Cannot load system composite fonts. Location not found.</source>
+        <target state="translated">無法載入系統組合字型，因為找不到位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FamilyMap_TargetNotSet">
+        <source>Cannot add FamilyMap because Target property is not set.</source>
+        <target state="translated">無法新增 FamilyMap，因為未設定 Target 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FavoritesKeyDisplayString">
+        <source>Ctrl+I</source>
+        <target state="translated">Ctrl+I</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FavoritesText">
+        <source>Favorites</source>
+        <target state="translated">我的最愛</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">輸入檔或資料流不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' 檔案不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionWithFileName">
+        <source>Cannot find file '{0}'.</source>
+        <target state="translated">找不到檔案 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FindKeyDisplayString">
+        <source>Ctrl+F</source>
+        <target state="translated">Ctrl+F</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FindText">
+        <source>Find</source>
+        <target state="translated">尋找</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FirstPageText">
+        <source>First Page</source>
+        <target state="translated">第一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FloatUnknownBamlType">
+        <source>Unrecognized float type in BAML file.</source>
+        <target state="translated">無法識別 BAML 檔案中的浮點數型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FlushNotSupported">
+        <source>Stream does not support Flush.</source>
+        <target state="translated">資料流不支援 Flush。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FontFamily_ReadOnly">
+        <source>A named FontFamily object cannot be modified.</source>
+        <target state="translated">無法修改已命名的 FontFamily 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">所指定型別 '{0}' 的值必須將 IsFrozen 設定為 false，才能進行修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CloneInvalidType">
+        <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
+        <target state="translated">型別 '{0}' 的執行個體複本是空值，或不是 '{0}' 的執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_Reentrant">
+        <source>Cannot change FreezableCollection during a CollectionChanged event.</source>
+        <target state="translated">無法在 CollectionChanged 事件期間變更 FreezableCollection。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_UnexpectedChange">
+        <source>Unknown/unexpected change event</source>
+        <target state="translated">未知/未預期的變更事件</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneralTransform_TransformFailed">
+        <source>The transform is not defined for the point.</source>
+        <target state="translated">未針對該點定義轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_BadType">
+        <source>The object passed to '{0}' is not a valid type.</source>
+        <target state="translated">傳遞到 '{0}' 的物件不是有效的型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_Expected_Type">
+        <source>Expected object of type '{0}'.</source>
+        <target state="translated">必須是型別為 '{0}' 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_ObjectIsReadOnly">
+        <source>The object is marked 'Read Only'.</source>
+        <target state="translated">物件已標示為 'Read Only'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Geometry_BadNumber">
+        <source>Arithmetic error found while trying to perform this operation.</source>
+        <target state="translated">嘗試執行此操作時發生算數錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GestureRecognizerNotAvailable">
+        <source>No gesture recognizer is available on the system.</source>
+        <target state="translated">系統上沒有可用的筆勢辨識器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetPenaltyModuleHandleFailure">
+        <source>Text formatting engine cannot retrieve penalty module handle due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法抓取處罰 (penalty) 模組控制碼: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetResponseFailed">
+        <source>Cannot get response for web request to '{0}'.</source>
+        <target state="translated">無法取得 '{0}' 的 Web 要求回應。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphAreaTooBig">
+        <source>Values for advanceWidths and glyphOffsets constitute too large of a GlyphRun. The area of its bounding box, measured in renderingEmSize squares, is '{0}' but it cannot exceed '{1}'.</source>
+        <target state="translated">advanceWidths 與 glyphOffsets 的值造成 GlyphRun 太大。其週框區域 (以 renderingEmSize 矩形表示) 是 '{0}'，但其不可超過 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphCoordinateTooBig">
+        <source> advanceWidths and glyphOffsets constitute coordinate too large for glyph at index '{0}'. For renderingEmSize '{1}' the values cannot exceed '{2}'.</source>
+        <target state="translated"> advanceWidths 與 glyphOffsets 造成索引 '{0}' 的字符太大。對於 renderingEmSize '{1}' 來說，值不可超過 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphIndexOutOfRange">
+        <source>'{0}' glyph index is not valid for the specified font.</source>
+        <target state="translated">'{0}' 圖像索引對於指定的字型而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphTypefaceNotRecorded">
+        <source>Glyph typeface URI does not point to a previously recorded glyph typeface.</source>
+        <target state="translated">圖像字樣 URI 未指向先前記錄的圖像字樣。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GoToPageText">
+        <source>Go To Page</source>
+        <target state="translated">移至頁面</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HandlerTypeIllegal">
+        <source>Handler type is mismatched.</source>
+        <target state="translated">處理嘗試型別不相符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HelpKeyDisplayString">
+        <source>F1</source>
+        <target state="translated">F1</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HelpText">
+        <source>Help</source>
+        <target state="translated">說明</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HitTest_Invalid">
+        <source>'{0}' HitTestParameters are not supported on '{1}'.</source>
+        <target state="translated">在 '{1}' 上不支援 '{0}' HitTestParameters。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HitTest_Singular">
+        <source>Hit testing with a singular MatrixCamera is not supported.</source>
+        <target state="translated">不支援使用單一 MatrixCamera 執行叫用測試。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndSourceDisposed">
+        <source>Cannot access a disposed HwndSource.</source>
+        <target state="translated">無法存取已處置的 HwndSource。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_HardwareNotSupportDueToProtocolMismatch">
+        <source>Due to protocol mismatch hardware support is not available.</source>
+        <target state="translated">因為通訊協定不符，所以不提供硬體支援。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowHandle">
+        <source>The specified handle is not a valid window handle.</source>
+        <target state="translated">指定的控制碼不是有效的視窗控制碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowProcess">
+        <source>The specified window does not belong to the current process.</source>
+        <target state="translated">指定的視窗不屬於目前的處理程序。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowThread">
+        <source>The specified window does not belong to the current thread.</source>
+        <target state="translated">指定的視窗不屬於目前的執行緒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_WindowAlreadyHasContent">
+        <source>Another HwndTarget is associated with this window.</source>
+        <target state="translated">已有另一個 HwndTarget 與此視窗關聯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IAnimatable_CantAnimateSealedDO">
+        <source>Cannot animate the '{0}' property on '{1}' because the object is sealed or frozen.</source>
+        <target state="translated">因為該物件已密封或已凍結，所以無法在 '{1}' 顯示 '{0}' 屬性的動畫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOBufferOverflow">
+        <source>A read or write operation references a location outside the bounds of the buffer provided.</source>
+        <target state="translated">讀取或寫入操作參考位於所提供之緩衝區範圍以外的位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOExceptionWithFileName">
+        <source>I/O error when opening file '{0}'.</source>
+        <target state="translated">開啟檔案 '{0}' 時發生 I/O 錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_AlphaThresholdOutOfRange">
+        <source>Alpha threshold must be from 0 through 100.</source>
+        <target state="translated">Alpha 閾值必須介於 0 到 100 之間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadDimensions">
+        <source>The bitmap specified does not have the correct dimensions.</source>
+        <target state="translated">指定的點陣圖沒有正確的尺寸。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadMetadataHeader">
+        <source>The image has corrupted metadata header.</source>
+        <target state="translated">影像具有已以損毀的中繼資料標頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadPixelFormat">
+        <source>'{0}' not a valid pixel format.</source>
+        <target state="translated">'{0}' 不是有效的像素格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadStreamData">
+        <source>The stream is corrupted.</source>
+        <target state="translated">資料流已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadVersion">
+        <source>DLL version not correct.</source>
+        <target state="translated">DLL 版本不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CannotCreateTempFile">
+        <source>Unable to create temporary file for download.</source>
+        <target state="translated">無法建立暫存檔案以供下載使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantBeFrozen">
+        <source>The Image passed to the ImageVisualManager cannot be frozen.</source>
+        <target state="translated">無法凍結傳遞給 ImageVisualManager 的 Image。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantDealWithStream">
+        <source>The codec cannot use the type of stream provided.</source>
+        <target state="translated">轉碼器無法使用提供的資料流類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantDealWithUri">
+        <source>The codec cannot use the type of URI provided.</source>
+        <target state="translated">轉碼器無法使用提供的 URI 類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CodecPresent">
+        <source>Codec added more than once.</source>
+        <target state="translated">已重複新增轉碼器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ColorContextInvalid">
+        <source>Color context is not valid.</source>
+        <target state="translated">色彩內容無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ColorTransformInvalid">
+        <source>Color transform is not valid.</source>
+        <target state="translated">色彩轉換無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ComponentNotFound">
+        <source>No imaging component suitable to complete this operation was found.</source>
+        <target state="translated">找不到完成此操作所需的影像處理元件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ContentTypeDoesNotMatchDecoder">
+        <source>The mime type registered with the system does not match the mime type of the file.</source>
+        <target state="translated">在系統登錄的 MIME 類型與檔案的 MIME 類型不相符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DecoderError">
+        <source>The image decoder cannot decode the image. The image might be corrupted.</source>
+        <target state="translated">影像解碼器無法將影像解碼。影像可能已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DisplayStateInvalid">
+        <source>The system display state is not valid.</source>
+        <target state="translated">系統顯示狀態無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DuplicateMetadataPresent">
+        <source>Duplicate copies of metadata present.</source>
+        <target state="translated">發現重複的中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoColorContext">
+        <source>The designated BitmapEncoder does not support ColorContexts.</source>
+        <target state="translated">指定的 BitmapEncoder 不支援 ColorContext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoGlobalMetadata">
+        <source>The designated BitmapEncoder does not support global metadata.</source>
+        <target state="translated">指定的 BitmapEncoder 不支援全域中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoGlobalThumbnail">
+        <source>The designated BitmapEncoder does not support global thumbnails.</source>
+        <target state="translated">指定的 BitmapEncoder 不支援全域縮圖。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoPreview">
+        <source>The designated BitmapEncoder does not support previews.</source>
+        <target state="translated">指定的 BitmapEncoder 不支援預覽。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EndInitWithoutBeginInit">
+        <source>Cannot call EndInit without a matching BeginInit call.</source>
+        <target state="translated">未使用對應的 BeginInit 呼叫時，無法呼叫 EndInit。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_FrameMissing">
+        <source>The image is missing a frame.</source>
+        <target state="translated">影像遺失畫面格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_FreezableCloneNotAllowed">
+        <source>This class does not support cloning.</source>
+        <target state="translated">此類別不支援複製。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_GuidEmpty">
+        <source>Empty GUID is not valid for '{0}'.</source>
+        <target state="translated">空白 GUID 對於 '{0}' 而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_HeaderError">
+        <source>The image cannot be decoded. The image header might be corrupted.</source>
+        <target state="translated">無法將影像解碼。影像標頭可能已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InInitialize">
+        <source>Already in an initializing state.</source>
+        <target state="translated">已處於初始化狀態。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_IndexedPixelFormatRequiresPalette">
+        <source>Must specify a palette when using an indexed pixel format.</source>
+        <target state="translated">使用索引像素格式時，必須指定調色盤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InitializationIncomplete">
+        <source>BitmapImage initialization is not complete. Call the EndInit method to complete the initialization.</source>
+        <target state="translated">BitmapImage 初始化不完整。請呼叫 EndInit 方法來完成初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InplaceMetadataNoCopy">
+        <source>InPlaceBitmapMetadataWriter cannot be copied.</source>
+        <target state="translated">無法複製 InPlaceBitmapMetadataWriter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InsufficientBuffer">
+        <source>Buffer size is not sufficient.</source>
+        <target state="translated">緩衝區大小不足。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InsufficientBufferSize">
+        <source>Buffer not large enough to copy memory.</source>
+        <target state="translated">緩衝區不足，無法複製記憶體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InternalError">
+        <source>An error occurred.</source>
+        <target state="translated">發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidArrayForPixel">
+        <source>Cannot match the type of this array to a pixel format.</source>
+        <target state="translated">無法將此陣列與像素格式配對。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidColorContext">
+        <source>Bitmap color context is not valid.</source>
+        <target state="translated">點陣圖色彩內容無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryCharacter">
+        <source>Character is not valid in metadata query request.</source>
+        <target state="translated">字元在中繼資料查詢要求中是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryRequest">
+        <source>Metadata query request is not valid.</source>
+        <target state="translated">中繼資料查詢要求無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_LockCountLimit">
+        <source>The lock count cannot exceed UInt32.MaxValue.</source>
+        <target state="translated">鎖定計數不可超過 UInt32.MaxValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataInitializationIncomplete">
+        <source>BitmapMetadata initialization incomplete.</source>
+        <target state="translated">BitmapMetadata 初始化不完整。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataNotCompatible">
+        <source>The bitmap metadata is not compatible with this container format.</source>
+        <target state="translated">點陣圖中繼資料與此容器格式不相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataNotSupported">
+        <source>BitmapMetadata is not available on BitmapImage.</source>
+        <target state="translated">BitmapMetadata 在 BitmapImage 上無法使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataReadOnly">
+        <source>Bitmap metadata cannot be changed.</source>
+        <target state="translated">無法變更點陣圖中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataSizeFixed">
+        <source>Cannot add any more top-level metadata blocks.</source>
+        <target state="translated">無法新增其他頂層中繼資料區塊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MustBeLocked">
+        <source>Cannot call this method while the image is unlocked.</source>
+        <target state="translated">無法在影像解除鎖定時呼叫這個方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NeitherArgument">
+        <source>Property '{0}' or property '{1}' must be set.</source>
+        <target state="translated">必須設定屬性 '{0}' 或屬性 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoArgument">
+        <source>'{0}' property is not set.</source>
+        <target state="translated">未設定 '{0}' 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoCodecsFound">
+        <source>No codec found that can decode the specified file.</source>
+        <target state="translated">找不到轉碼器可將指定的檔案解碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoDecodeFrames">
+        <source>Image does not contain any frames.</source>
+        <target state="translated">影像未包含任何畫面格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoFrames">
+        <source>Cannot save an image with no frames.</source>
+        <target state="translated">無法儲存沒有畫面格的影像。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoPalette">
+        <source>The specified image does not contain a palette.</source>
+        <target state="translated">指定的影像未包含調色盤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoPixelFormatFound">
+        <source>No information was found about this pixel format.</source>
+        <target state="translated">找不到關於此像素格式的資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoThumbnail">
+        <source>Bitmap does not contain thumbnail.</source>
+        <target state="translated">點陣圖未包含縮圖。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NotInitialized">
+        <source>BitmapImage has not been initialized.  Call the BeginInit method, set the appropriate properties, and then call the EndInit method.</source>
+        <target state="translated">BitmapImage 尚未初始化。請呼叫 BeginInit 方法、設定適當的屬性，然後呼叫 EndInit 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOneInit">
+        <source>Cannot set the initializing state more than once.</source>
+        <target state="translated">無法重複設定初始化狀態。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOneSave">
+        <source>Cannot call Save on an Encoder more than once.</source>
+        <target state="translated">無法重複呼叫 Encoder 上的 Save。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOrthogonal">
+        <source>Transform must be a combination of scales, flips, and 90 degree rotations.</source>
+        <target state="translated">轉換必須是縮放、翻轉與 90 度旋轉的組合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OriginalStreamReadOnly">
+        <source>In place editing of bitmap metadata is not allowed because the original source is not writable.</source>
+        <target state="translated">不允許直接編輯點陣圖中繼資料，因為原始來源無法寫入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_Overflow">
+        <source>The image data generated an overflow during processing.</source>
+        <target state="translated">處理時影像資料產生溢位。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteColorsDoNotMatchFormat">
+        <source>The number of colors in the palette is larger than the maximum allowed by the supplied pixel format.</source>
+        <target state="translated">調色盤中的色彩數目大於提供之像素格式所允許的數目上限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteFixedType">
+        <source>Must use a fixed palette type. '{0}' not supported here.</source>
+        <target state="translated">必須使用固定調色盤類型。這裡不支援 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteZeroColors">
+        <source>Cannot create a palette with less than 1 color or more than 256 colors.</source>
+        <target state="translated">無法建立包含少於一個色彩或多於 256 個色彩的調色盤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotFound">
+        <source>Property cannot be found.</source>
+        <target state="translated">找不到屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotSupported">
+        <source>This codec does not support the specified property.</source>
+        <target state="translated">此轉碼器不支援指定的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertySize">
+        <source>Property is corrupted.</source>
+        <target state="translated">屬性已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyUnexpectedType">
+        <source>Unexpected property type or value.</source>
+        <target state="translated">未預期的型別或值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_RequestOnlyValidAtMetadataRoot">
+        <source>The metadata query is valid only at the root of the metadata hierarchy.</source>
+        <target state="translated">中繼資料查詢只有在中繼資料階層的根是有效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SetPropertyOutsideBeginEndInit">
+        <source>Cannot set this property outside a BeginInit/EndInit block.</source>
+        <target state="translated">無法在 BeginInit/EndInit 區塊之外設定此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SingularMatrix">
+        <source>Cannot invert singular matrix.</source>
+        <target state="translated">無法轉換單一矩陣。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SizeOptionsAngle">
+        <source>Bad Rotation parameter. Only Rotate0, Rotate90, Rotate180, and Rotate270 are supported.</source>
+        <target state="translated">Rotation 參數錯誤。只支援 Rotate0、Rotate90、Rotate180 與 Rotate270。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SizeOutOfRange">
+        <source>The image dimensions are out of the range supported by this codec.</source>
+        <target state="translated">此影像尺寸超過此轉碼器所支援的範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamNotAvailable">
+        <source>Metadata stream is not available for this operation.</source>
+        <target state="translated">此操作無法使用中繼資料資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamRead">
+        <source>Cannot read from the stream.</source>
+        <target state="translated">無法讀取資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamWrite">
+        <source>Cannot write to the stream.</source>
+        <target state="translated">無法寫入資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooManyScanlines">
+        <source>The bitmap has too many scanlines for the specified encoder.</source>
+        <target state="translated">對於指定的編碼器而言，此點陣圖具有太多掃描線。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooMuchMetadata">
+        <source>Commit unsuccessful because too much metadata changed.</source>
+        <target state="translated">認可失敗，因為太多中繼資料發生變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnexpectedMetadataType">
+        <source>Unexpected type of metadata.</source>
+        <target state="translated">未預期的中繼資料類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnknownFormat">
+        <source>The image format is unrecognized.</source>
+        <target state="translated">影像格式無法識別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedOperation">
+        <source>Operation not supported.</source>
+        <target state="translated">不支援的操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedPixelFormat">
+        <source>Pixel format not supported.</source>
+        <target state="translated">不支援的像素格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_WrongState">
+        <source>Operation caused an invalid state.</source>
+        <target state="translated">操作導致無效的狀態。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InInitialization">
+        <source>The object is already being initialized.</source>
+        <target state="translated">物件已在初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncompatibleStylusPointDescriptions">
+        <source>The StylusPointDescriptions are incompatible. Use the StylusPointDescription.GetCommonDescription method to find a common StylusPointDescription and then call StylusPointCollection.Reformat to return a compatible StylusPointCollection.</source>
+        <target state="translated">StylusPointDescriptions 不相容。請使用 StylusPointDescription.GetCommonDescription 方法來尋找通用 StylusPointDescription，然後呼叫 StylusPointCollection.Reformat 以傳回相容的 StylusPointCollection。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncreaseZoomText">
+        <source>Increase Zoom</source>
+        <target state="translated">增加縮放比例</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationIncomplete">
+        <source>The operation fails because the object is not fully initialized.</source>
+        <target state="translated">操作失敗，因為物件未完全初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializingCompressorFailed">
+        <source>Cannot initialize compressor.</source>
+        <target state="translated">無法初始化壓縮程式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InnerRequestNotAllowed">
+        <source>InnerRequest not available for preloaded packages.</source>
+        <target state="translated">預先載入的封裝無法使用 InnerRequest。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputBinding_ExpectedInputGesture">
+        <source>Gesture accepts only objects of type '{0}'.</source>
+        <target state="translated">筆勢只接受型別為 '{0}' 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputLanguageManager_NotReadyToChangeCurrentLanguage">
+        <source>InputLanguageManager is not ready to change the current input languages.</source>
+        <target state="translated">InputLanguageManager 尚未就緒，無法變更目前的輸入語言。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputMethod_InvalidConversionMode">
+        <source>'{0}' is not a valid ImeConversionMode.</source>
+        <target state="translated">'{0}' 不是有效的 ImeConversionMode。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputMethod_InvalidSentenceMode">
+        <source>'{0}' is not a valid ImeSentenceMode.</source>
+        <target state="translated">'{0}' 不是有效的 ImeSentenceMode。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputProviderSiteDisposed">
+        <source>The InputProviderSite has already been disposed.</source>
+        <target state="translated">InputProviderSite 已處置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputScope_InvalidInputScopeName">
+        <source>'{0}' is not a valid InputScopeName.</source>
+        <target state="translated">'{0}' 不是有效的 InputScopeName。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IntegerCollectionLengthLessThanZero">
+        <source>Integer collection size cannot be negative.</source>
+        <target state="translated">整數集合大小不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAbsoluteUriInFontFamilyName">
+        <source>An absolute URI in a font family name must have file:// scheme.</source>
+        <target state="translated">字型家族名稱中的絕對 URI 必須有 file:// 配置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAdditionalDataForStylusPoint">
+        <source>The additional data passed in does not match what is expected based on the StylusPointDescription.</source>
+        <target state="translated">傳遞的額外資料不符合 StylusPointDescription 所預期的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBufferLength">
+        <source>Maximum buffer length must be within actual buffer length.</source>
+        <target state="translated">最大緩衝區長度不能大於實際緩衝區長度。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidByteRanges">
+        <source>Byte ranges are not valid in '{0}'.</source>
+        <target state="translated">位元組範圍在 '{0}' 中是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCursorType">
+        <source>'{0}' cursor type is not valid.</source>
+        <target state="translated">'{0}' 資料指標類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDataInISF">
+        <source>The specified data is invalid, see inner exception for details.</source>
+        <target state="translated">指定的資料無效。如需詳細資訊，請參閱內部例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDataTypeForExtendedProperty">
+        <source>Property data must be a non-reference variant compatible type.</source>
+        <target state="translated">屬性資料必須是非參考 Variant 相容型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDiameter">
+        <source>The value is out of range.</source>
+        <target state="translated">值超出範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDrawingAttributesHeight">
+        <source>Height must be greater than or equal to DrawingAttributes.MinHeight and less than or equal to DrawingAttribute.MaxHeight.</source>
+        <target state="translated">高度必須大於或等於 DrawingAttributes.MinHeight，且小於或等於 DrawingAttribute.MaxHeight。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDrawingAttributesWidth">
+        <source>Width must be greater than or equal to DrawingAttributes.MinWidth and less than or equal to DrawingAttribute.MaxWidth.</source>
+        <target state="translated">寬度必須大於或等於 DrawingAttributes.MinWidth，且小於或等於 DrawingAttribute.MaxWidth。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEpInIsf">
+        <source>Extended property data type is not valid.</source>
+        <target state="translated">延伸屬性資料型別無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEventHandle">
+        <source>The event handle is not usable.</source>
+        <target state="translated">事件控制碼無法使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidGuid">
+        <source>GUID cannot be empty.</source>
+        <target state="translated">GUID 不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidIsButtonForId">
+        <source>The specified GUID represents a button, so isButton must be true.</source>
+        <target state="translated">指定的 GUID 代表按鈕，因此 isButton 必須是 True。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidIsButtonForId2">
+        <source>The specified GUID does not represent a button, so isButton must be false.</source>
+        <target state="translated">指定的 GUID 不代表按鈕，因此 isButton 必須是 False。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMatrixContainsInfinity">
+        <source>Infinity member value is not valid in Matrix.</source>
+        <target state="translated">沒有限制的成員值在 Matrix 中是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMatrixContainsNaN">
+        <source>NaN is not a valid value for Matrix member.</source>
+        <target state="translated">NaN 不是 Matrix 成員的有效值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMinMaxForButton">
+        <source>StylusPointPropertyInfos that are buttons must have a minimum of 0 and a maximum of 1.</source>
+        <target state="translated">若 StylusPointPropertyInfos 是按鈕，則最小值是 0，而最大值是 1。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPartName">
+        <source>The part name does not correspond to its content type.</source>
+        <target state="translated">部分名稱未對應到其內容類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">PermissionState 值 '{0}' 對此權限無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPressureValue">
+        <source>Pressure must be a value between 0 and 1.</source>
+        <target state="translated">壓力必須是介於 0 到 1 之間的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRemovedStroke">
+        <source>The stroke being removed does not exist in the current collection.</source>
+        <target state="translated">要移除的筆劃不存在於目前的集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidReplacedStroke">
+        <source>The stroke being replaced does not exist in the current collection.</source>
+        <target state="translated">要取代的筆劃不存在於目前的集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidScheme">
+        <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
+        <target state="translated">HTTP 位元組範圍下載程式只支援 HTTP 或 HTTPS 配置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSiteOfOriginUri">
+        <source>'{0}' must be a relative URI for site of origin.</source>
+        <target state="translated">對於此原始網站，'{0}' 必須是相對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSizeSpecified">
+        <source>The specified size is less than the information decoded in the ISF stream.</source>
+        <target state="translated">指定的大小小於在 ISF 資料流中解碼的資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStream">
+        <source>Stream is not valid.</source>
+        <target state="translated">資料流無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSttValue">
+        <source>Translation is not valid.</source>
+        <target state="translated">轉譯無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointCollectionZeroCount">
+        <source>StylusPointCollection cannot be empty when attached to a Stroke.</source>
+        <target state="translated">當 StylusPointCollection 已附加到 Stroke 時，它不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointConstructionZeroLengthCollection">
+        <source>The specified collection cannot be empty.</source>
+        <target state="translated">指定的集合不能是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescription">
+        <source>StylusPointDescription must contain at least X, Y and NormalPressure in that order.</source>
+        <target state="translated">StylusPointDescription 必須至少依序包含 X、Y 與 NormalPressure。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionButtonsMustBeLast">
+        <source>When constructing a StylusPointDescription, any StylusPointPropertyInfos that represent buttons must be placed at the end of the collection.</source>
+        <target state="translated">建構 StylusPointDescription 時，代表按鈕的任何 StylusPointPropertyInfos 都必須放在集合的結尾。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionDuplicatesFound">
+        <source>StylusPointDescription cannot contain duplicate StylusPointPropertyInfos.</source>
+        <target state="translated">StylusPointDescription 無法包含重複的 StylusPointPropertyInfo。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionSubset">
+        <source>The specified StylusPointDescription must be a subset.</source>
+        <target state="translated">指定的 StylusPointDescription 必須是子集。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionTooManyButtons">
+        <source>StylusPointDescription supports no more than 31 buttons.</source>
+        <target state="translated">StylusPointDescription 最多支援 31 個按鈕。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointProperty">
+        <source>The StylusPoint does not support the specified StylusPointProperty.</source>
+        <target state="translated">StylusPoint 不支援指定的 StylusPointProperty。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointPropertyInfoResolution">
+        <source>Resolution must be at least 0.0f.</source>
+        <target state="translated">解析度必須至少為 0.0f。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointXYNaN">
+        <source>Value cannot be Double.NaN.</source>
+        <target state="translated">值不能是 Double.NaN。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTempFileName">
+        <source>Cannot have empty name of a temporary file.</source>
+        <target state="translated">暫存檔案的名稱不能是空白的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTextDecorationCollectionString">
+        <source>The requested TextDecorationCollection string is not valid: '{0}'.</source>
+        <target state="translated">要求的 TextDecorationCollection 字串無效: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueOfType">
+        <source>Invalid value '{0}' for type '{1}'.</source>
+        <target state="translated">類型 '{1}' 的值 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueType">
+        <source>Value must be of type '{0}'.</source>
+        <target state="translated">值的型別必須是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueType1">
+        <source>Value must be of type '{0}' or '{1}'.</source>
+        <target state="translated">值的類型必須是 '{0}' 或 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_IInputElement">
+        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
+        <target state="translated">'{0}' 不是有效的 IInputElement 型別。應該是 UIElement 或 ContentElement。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_URI">
+        <source>The URI specified is invalid.</source>
+        <target state="translated">指定的 URI 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_isfData_Length">
+        <source>The length of the ISF data must be greater than zero.</source>
+        <target state="translated">ISF 資料的長度必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IsfOperationFailed">
+        <source>InkSerializedFormat operation failed.</source>
+        <target state="translated">InkSerializedFormat 操作失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyGesture_Invalid">
+        <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
+        <target state="translated">KeyGesture 不支援 '{0}+{1}' 按鍵與輔助按鍵組合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkAlreadyOwned">
+        <source>The specified keyboard sink is already owned by a site.</source>
+        <target state="translated">指定的鍵盤接收器已由網站擁有。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkMustBeAnElement">
+        <source>The specified keyboard sink must be a UIElement.</source>
+        <target state="translated">指定的鍵盤接收器必須是 UIElement。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkNotAChild">
+        <source>The specified keyboard sink is not a child of this source.</source>
+        <target state="translated">指定的鍵盤接收器不是此來源的子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LastPageText">
+        <source>Last Page</source>
+        <target state="translated">最後一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LayoutManager_DeepRecursion">
+        <source>Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.</source>
+        <target state="translated">配置地回已達到允許的限制，以避免堆疊溢位: '{0}'。可能是樹狀結構包含迴圈，或樹狀結構太深。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_InvalidManipulationMode">
+        <source>An unrecognized ManipulationMode flag was encountered.</source>
+        <target state="translated">遇到無法辨認的 ManipulationMode 旗標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_ManipulationNotActive">
+        <source>Manipulation is not active on the specified element.</source>
+        <target state="translated">指定之項目的操作不在使用中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_ManipulationNotEnabled">
+        <source>IsManipulationEnabled is not set to true on the specified element.</source>
+        <target state="translated">指定之項目的 IsManipulationEnabled 未設為 true。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Matrix3D_NotInvertible">
+        <source>Cannot invert the matrix, because the matrix is not invertible.</source>
+        <target state="translated">無法反轉矩陣，因為矩陣無法反轉。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MatrixNotInvertible">
+        <source>The specified Matrix must be invertible.</source>
+        <target state="translated">指定的 Matrix 必須可以反轉。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaBoostBassText">
+        <source>Boost Bass</source>
+        <target state="translated">提高低音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaChannelDownText">
+        <source>Channel Down</source>
+        <target state="translated">下一頻道</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaChannelUpText">
+        <source>Channel Up</source>
+        <target state="translated">上一頻道</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_APINotAllowed">
+        <source>Cannot call this API during the OnRender callback. During OnRender, only drawing operations that draw the content of the Visual can be performed.</source>
+        <target state="translated">在進行 OnRender 回呼時，無法呼叫此 API。在 OnRender 時，只能執行繪製 Visual 內容的繪製操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_InfiniteLayoutLoop">
+        <source>An infinite loop appears to have resulted from cross-dependent views.</source>
+        <target state="translated">無限迴圈似乎是因為交叉依存檢視所造成。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_InfiniteTickLoop">
+        <source>An infinite loop appears to have resulted from repeatedly invalidating the TimeManager during the Layout/Render process.</source>
+        <target state="translated">無限迴圈似乎是因為 Layout/Render 程序中重複發現無效的 TimeManager 所造成。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_NoBadShaderHandler">
+        <source>Invalid user-specified pixel shader.  Register a PixelShader.InvalidPixelShaderEncountered event handler to avoid this exception being raised.</source>
+        <target state="translated">使用者指定的像素著色器無效。請註冊 PixelShader.InvalidPixelShaderEncountered 事件處理常式來避免引發這個例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_OutOfVideoMemory">
+        <source>Out of video memory.</source>
+        <target state="translated">視訊記憶體不足。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_RenderThreadError">
+        <source>An unspecified error occurred on the render thread.</source>
+        <target state="translated">在轉譯執行緒上發現未指定的錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseBassText">
+        <source>Decrease Bass</source>
+        <target state="translated">降低低音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseMicrophoneVolumeText">
+        <source>Decrease Microphone Volume</source>
+        <target state="translated">降低麥克風音量</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseTrebleText">
+        <source>Decrease Treble</source>
+        <target state="translated">降低高音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseVolumeText">
+        <source>Decrease Volume</source>
+        <target state="translated">降低音量</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaFastForwardText">
+        <source>Fast Forward</source>
+        <target state="translated">向前快轉</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseBassText">
+        <source>Increase Bass</source>
+        <target state="translated">提高低音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseMicrophoneVolumeText">
+        <source>Increase Microphone Volume</source>
+        <target state="translated">提高麥克風音量</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseTrebleText">
+        <source>Increase Treble</source>
+        <target state="translated">提高高音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseVolumeText">
+        <source>Increase Volume</source>
+        <target state="translated">提高音量</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaMuteMicrophoneVolumeText">
+        <source>Mute Microphone Volume</source>
+        <target state="translated">將麥克風靜音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaMuteVolumeText">
+        <source>Mute Volume</source>
+        <target state="translated">將音量靜音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaNextTrackText">
+        <source>Next Track</source>
+        <target state="translated">下一首</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPauseText">
+        <source>Pause</source>
+        <target state="translated">暫停</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPlayText">
+        <source>Play</source>
+        <target state="translated">播放</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPreviousTrackText">
+        <source>Previous Track</source>
+        <target state="translated">上一首</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaRecordText">
+        <source>Record</source>
+        <target state="translated">錄音</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaRewindText">
+        <source>Rewind</source>
+        <target state="translated">倒帶</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSelectText">
+        <source>Select</source>
+        <target state="translated">Select</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaStopText">
+        <source>Stop</source>
+        <target state="translated">停止</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSystem_ApiInvalidContext">
+        <source>This API was accessed with arguments from the wrong context.</source>
+        <target state="translated">從錯誤的內容使用引數存取此 API。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSystem_OutOfOrderConnectOrDisconnect">
+        <source>Received an out of order connect or disconnect message.</source>
+        <target state="translated">已接收順序不正確的連線或中斷連線訊息。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaToggleMicrophoneOnOffText">
+        <source>Toggle Microphone OnOff</source>
+        <target state="translated">切換麥克風開/關</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaTogglePlayPauseText">
+        <source>Toggle Play Pause</source>
+        <target state="translated">切換播放/暫停</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_DownloadFailed">
+        <source>Media file download failed.</source>
+        <target state="translated">媒體檔案下載失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileFormatNotSupported">
+        <source>Installed codecs do not support the media file format.</source>
+        <target state="translated">已安裝的轉碼器不支援該媒體檔案格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileNotFound">
+        <source>Cannot find the media file.</source>
+        <target state="translated">找不到媒體檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_HardwareVideoAccelerationNotAvailable">
+        <source>Display driver must support video acceleration for video or audio playback.</source>
+        <target state="translated">顯示卡驅動程式必須支援視訊加速，才能播放視訊或音訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InsufficientVideoResources">
+        <source>There are insufficient video resources available for video or audio playback.</source>
+        <target state="translated">視訊資源不足，無法播放視訊或音訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidArgument">
+        <source>Value does not fall within the expected range.</source>
+        <target state="translated">視訊超出預期的範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidWmpVersion">
+        <source>Windows Media Player version 10 or later is required.</source>
+        <target state="translated">需要 Windows Media Player 10 或更新的版本。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_LogonFailure">
+        <source>Access was denied on the media file.</source>
+        <target state="translated">存取媒體檔案時遭拒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_NotAllowedWhileTimingEngineInControl">
+        <source>Cannot perform this operation while a clock is assigned to the media player.</source>
+        <target state="translated">已經為媒體播放程式指定時鐘時，無法執行此操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PackURIsAreNotSupported">
+        <source>Only site-of-origin pack URIs are supported for media.</source>
+        <target state="translated">只支援媒體的來源網站封包 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlayerIsClosed">
+        <source>No operations are valid on a closed media player except open and close.</source>
+        <target state="translated">除了開啟與關閉之外，所有操作在已關閉的媒體播放程式上都是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlaylistFormatNotSupported">
+        <source>Unrecognized playlist file format.</source>
+        <target state="translated">無法識別的播放清單檔案格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_StreamClosed">
+        <source>Cannot access the stream after it is closed.</source>
+        <target state="translated">當資料流關閉之後，即無法存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UninitializedResource">
+        <source>Accessed an uninitialized media resource.</source>
+        <target state="translated">已存取未初始化的媒體資源。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UnknownChannelType">
+        <source>Channel type is not recognized.</source>
+        <target state="translated">通道類型無法識別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UnknownMediaExecption">
+        <source>An unknown media error occurred.</source>
+        <target state="translated">發生不明的媒體錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UriNotSpecified">
+        <source>Must specify URI.</source>
+        <target state="translated">必須指定 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodCallNotAllowed">
+        <source>The '{0}' method cannot be called at this time.</source>
+        <target state="translated">目前無法呼叫 '{0}' 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MilErr_UnsupportedVersion">
+        <source>Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</source>
+        <target state="translated">不相符的 PresentationCore.dll、Milcore.dll、WindowsCodecs.dll 或 D3d9.dll 版本。請確定這些 DLL 的來源是否相同。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Mismatched_RoutedEvent">
+        <source>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</source>
+        <target state="translated">RoutedEventArgs 與 EventRoute 中的 RoutedEvent 不相符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveDownKeyDisplayString">
+        <source>Down</source>
+        <target state="translated">Down</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveDownText">
+        <source>Move Down</source>
+        <target state="translated">下移</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusBackKeyDisplayString">
+        <source>Ctrl+Left</source>
+        <target state="translated">Ctrl+Left</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusBackText">
+        <source>Move Focus Back</source>
+        <target state="translated">移動選取項目 - 往前</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusDownKeyDisplayString">
+        <source>Ctrl+Down</source>
+        <target state="translated">Ctrl+Down</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusDownText">
+        <source>Move Focus Down</source>
+        <target state="translated">移動選取項目 - 往下</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusForwardKeyDisplayString">
+        <source>Ctrl+Right</source>
+        <target state="translated">Ctrl+Right</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusForwardText">
+        <source>Move Focus Forward</source>
+        <target state="translated">移動選取項目 - 往後</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageDownKeyDisplayString">
+        <source>Ctrl+PageDown</source>
+        <target state="translated">Ctrl+PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageDownText">
+        <source>Move Focus Page Down</source>
+        <target state="translated">移動選取項目 - 下一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageUpKeyDisplayString">
+        <source>Ctrl+PageUp</source>
+        <target state="translated">Ctrl+PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageUpText">
+        <source>Move Focus Page Up</source>
+        <target state="translated">移動選取項目 - 上一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusUpKeyDisplayString">
+        <source>Ctrl+Up</source>
+        <target state="translated">Ctrl+Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusUpText">
+        <source>Move Focus Up</source>
+        <target state="translated">移動選取項目 - 往上</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveLeftKeyDisplayString">
+        <source>Left</source>
+        <target state="translated">Left</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveLeftText">
+        <source>Move Left</source>
+        <target state="translated">左移</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveRightKeyDisplayString">
+        <source>Right</source>
+        <target state="translated">Right</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveRightText">
+        <source>Move Right</source>
+        <target state="translated">又移</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToEndKeyDisplayString">
+        <source>End</source>
+        <target state="translated">結束</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToEndText">
+        <source>Move To End</source>
+        <target state="translated">移到結尾</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToHomeKeyDisplayString">
+        <source>Home</source>
+        <target state="translated">首頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToHomeText">
+        <source>Move To Home</source>
+        <target state="translated">移到開頭</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageDownKeyDisplayString">
+        <source>PageDown</source>
+        <target state="translated">PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageDownText">
+        <source>Move To Page Down</source>
+        <target state="translated">移動到下一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageUpKeyDisplayString">
+        <source>PageUp</source>
+        <target state="translated">PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageUpText">
+        <source>Move To Page Up</source>
+        <target state="translated">移動到上一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveUpKeyDisplayString">
+        <source>Up</source>
+        <target state="translated">上移</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveUpText">
+        <source>Move Up</source>
+        <target state="translated">上移</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultiSingleton">
+        <source>Cannot have more than one '{0}' instance in the same AppDomain.</source>
+        <target state="translated">相同的 AppDomain 中不能有多個 '{0}' 執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NavigateJournalText">
+        <source>Navigate Journal</source>
+        <target state="translated">巡覽日誌</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NewKeyDisplayString">
+        <source>Ctrl+N</source>
+        <target state="translated">Ctrl+N</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NewText">
+        <source>New</source>
+        <target state="translated">新增</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NextPageText">
+        <source>Next Page</source>
+        <target state="translated">下一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonCLSException">
+        <source>Text formatting engine encountered a non-CLS exception.</source>
+        <target state="translated">文字格式設定引擎發現非 CLS 例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
+        <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
+        <target state="translated">不支援的 URI 語法。方法預期應有相對 URI 或 pack://application:,,,/ 格式的絕對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonWhiteSpaceInAddText">
+        <source>Text content is not allowed on this element. Cannot add the text '{0}'.</source>
+        <target state="translated">此項目不允許文字內容。無法新增文字 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotACommandText">
+        <source>Not a Command</source>
+        <target state="translated">不是命令</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAllowedPackageUri">
+        <source>The package URI is not allowed in the package store.</source>
+        <target state="translated">封裝存放區中不允許封裝 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAllowedToAccessStagingArea">
+        <source>Only PreProcessInput and PostProcessInput events can access InputManager staging area.</source>
+        <target state="translated">只有 PreProcessInput 與 PostProcessInput 事件可以存取 InputManager 集結區域。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotInInitialization">
+        <source>The object is not being initialized.</source>
+        <target state="translated">物件未在初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullBaseUriParam">
+        <source>'{0}' parameter cannot be null unless '{1}' is an absolute URI.</source>
+        <target state="translated">除非 '{1}' 是絕對 URI，否則 '{0}' 參數不可為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullHwnd">
+        <source>Hwnd of zero is not valid.</source>
+        <target state="translated">零值的 Hwnd 是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OffsetNegative">
+        <source>Offset must be non-negative.</source>
+        <target state="translated">位移必須是非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleRegisterDragDropFailure">
+        <source>OleRegisterDragDrop failed with return code '{0}' and window handle '{1}'.</source>
+        <target state="translated">OleRegisterDragDrop 失敗，傳回碼是 '{0}'，而視窗控制代碼是 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleRevokeDragDropFailure">
+        <source>OleRevokeDragDrop failed with return code '{0}' and window handle '{1}'.</source>
+        <target state="translated">OleRevokeDragDrop 失敗，傳回碼是 '{0}'，而視窗控制代碼是 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleServicesContext_ThreadMustBeSTA">
+        <source>Current thread must be set to single thread apartment (STA) mode before OLE calls can be made.</source>
+        <target state="translated">目前的執行緒必須設定為單一執行緒 Apartment (STA) 模式，才能執行 OLE 呼叫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleServicesContext_oleInitializeFailure">
+        <source>OleInitialize failed for '{0}'.</source>
+        <target state="translated">'{0}' 的 OleInitialize 失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyAcceptsKeyMessages">
+        <source>Keyboard processing can only process keyboard messages.</source>
+        <target state="translated">鍵盤處理只能處理鍵盤訊息。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyOneInitialization">
+        <source>The object is already initialized and cannot be initialized again.</source>
+        <target state="translated">物件已初始化，且無法再初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenKeyDisplayString">
+        <source>Ctrl+O</source>
+        <target state="translated">Ctrl+O</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenText">
+        <source>Open</source>
+        <target state="translated">[開啟]</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OptimalParagraphMustWrap">
+        <source>Paragraph must be allowed to wrap in total-fit formatting.</source>
+        <target state="translated">在完全調整格式設定中，必須允許段落自動換行。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackWebRequestCachePolicyIllegal">
+        <source>Cache policy is not valid.</source>
+        <target state="translated">快取原則無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageAlreadyExists">
+        <source>A package with the same URI is already in the package store.</source>
+        <target state="translated">封裝存放區中已有相同 URI 的封裝。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PaginatorMissingContentPosition">
+        <source>Specified ContentPosition is not valid for this element.</source>
+        <target state="translated">指定的 ContentPosition 對於此項目而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PaginatorNegativePageNumber">
+        <source>Page number cannot be negative.</source>
+        <target state="translated">頁碼不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeGreaterThan">
+        <source>The parameter value cannot be greater than '{0}'.</source>
+        <target state="translated">參數值不能大於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeLessThan">
+        <source>The parameter value cannot be less than '{0}'.</source>
+        <target state="translated">參數值不能小於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">參數必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeBetween">
+        <source>The parameter value must be between '{0}' and '{1}'.</source>
+        <target state="translated">參數值必須介於 '{0}' 到 '{1}' 之間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeGreaterThanZero">
+        <source>The parameter value must be greater than zero.</source>
+        <target state="translated">參數值必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeInfinity">
+        <source>The parameter value must be finite.</source>
+        <target state="translated">參數值必須有限制。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeNaN">
+        <source>The parameter value must be a number.</source>
+        <target state="translated">參數值必須是數字。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeNegative">
+        <source>'{0}' parameter value cannot be negative.</source>
+        <target state="translated">'{0}' 參數值不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueMustBeGreaterThanZero">
+        <source>'{0}' parameter value must be greater than zero.</source>
+        <target state="translated">'{0}' 參數值必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_BadForm">
+        <source>Incorrect form '{0}' found parsing '{1}' string.</source>
+        <target state="translated">剖析 '{1}' 字串時發現不正確的格式 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_Empty">
+        <source>Empty string not allowed.</source>
+        <target state="translated">不允許空字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_UnexpectedToken">
+        <source>Unexpected token '{0}' encountered at position '{1}'.</source>
+        <target state="translated">在位置 '{1}' 發現未預期的語彙基元 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken">
+        <source>Token is not valid.</source>
+        <target state="translated">語彙基元無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken_250_Chars">
+        <source>Token is not valid because it is more than 250 characters.</source>
+        <target state="translated">語彙基元無效，因為它超過 250 個字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PasteKeyDisplayString">
+        <source>Ctrl+V;Shift+Insert</source>
+        <target state="translated">Ctrl+V;Shift+Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PasteText">
+        <source>Paste</source>
+        <target state="translated">貼上</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathGeometry_InternalReadBackError">
+        <source>Internal error in newly produced path figures.</source>
+        <target state="translated">在新產生的路徑圖表中發生內部錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathTooLongExceptionWithFileName">
+        <source>'{0}' file name is longer than the system-defined maximum length.</source>
+        <target state="translated">'{0}' 檔案名稱超過系統定義的長度上限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenImcDllVerificationFailed">
+        <source>{0} failed to load from static constructor.</source>
+        <target state="translated">{0} 無法從靜態建構函式載入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenImcSxSRegistrationFailed">
+        <source>SxS COM registration of {0} failed.</source>
+        <target state="translated">{0} 的 SxS COM 登錄失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_InvalidPacketData">
+        <source>Unexpected size of packet from pen service.</source>
+        <target state="translated">從畫筆服務收到未預期的封包大小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_WindowAlreadyRegistered">
+        <source>The window is already registered for stylus input.</source>
+        <target state="translated">視窗已針對手寫筆輸入登錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_WindowNotRegistered">
+        <source>The window is not registered for stylus input.</source>
+        <target state="translated">視窗未針對手寫筆輸入登錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Penservice_Disposed">
+        <source>Cannot access a disposed pen service.</source>
+        <target state="translated">無法存取已處置的畫筆服務。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PreviousPageText">
+        <source>Previous Page</source>
+        <target state="translated">上一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintKeyDisplayString">
+        <source>Ctrl+P</source>
+        <target state="translated">Ctrl+P</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintPreviewKeyDisplayString">
+        <source>Ctrl+F2</source>
+        <target state="translated">Ctrl+F2</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintPreviewText">
+        <source>Print Preview</source>
+        <target state="translated">預覽列印</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintText">
+        <source>Print</source>
+        <target state="translated">列印</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertiesKeyDisplayString">
+        <source>F4</source>
+        <target state="translated">F4</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertiesText">
+        <source>Properties</source>
+        <target state="translated">屬性</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyCannotBeNegative">
+        <source>'{0}' property value must be greater than or equal to zero.</source>
+        <target state="translated">'{0}' 屬性值必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyMustBeGreaterThanZero">
+        <source>'{0}' property value must be greater than zero.</source>
+        <target state="translated">'{0}' 屬性值必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassCannotBeGreaterThan">
+        <source>'{0}' property of the '{1}' class must be less than or equal to '{2}'.</source>
+        <target state="translated">'{1}' 類別的 '{0}' 屬性必須小於或等於 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassCannotBeNull">
+        <source>'{0}' property of the '{1}' class cannot be null.</source>
+        <target state="translated">'{1}' 類別的 '{0}' 屬性不可為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassMustBeGreaterThanZero">
+        <source>'{0}' property of the '{1}' class must be greater than zero.</source>
+        <target state="translated">'{1}' 類別的 '{0}' 屬性必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyValueCannotBeNaN">
+        <source>'{0}' property value cannot be NaN.</source>
+        <target state="translated">'{0}' 屬性值不能是 NaN。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Quaternion_ZeroAxisSpecified">
+        <source>Zero axis of rotation specified.</source>
+        <target state="translated">已指定零轉動軸。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QueryLineFailure">
+        <source>Text formatting engine cannot query text information due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法查詢文字資訊: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadCountNegative">
+        <source>Count of bytes to read cannot be negative.</source>
+        <target state="translated">要讀取的位元組計數不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyInputGesturesCollection">
+        <source>Operation not supported on a read-only InputGestureCollection.</source>
+        <target state="translated">唯讀的 InputGestureCollection 上不支援操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect3D_CannotCallMethod">
+        <source>Cannot call the method.</source>
+        <target state="translated">無法呼叫方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect3D_CannotModifyEmptyRect">
+        <source>Cannot modify this property on the Empty Rect3D.</source>
+        <target state="translated">無法在 Empty Rect3D 上修改此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_Empty">
+        <source>Rectangle cannot be empty.</source>
+        <target state="translated">矩形不能是空白的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RedoKeyDisplayString">
+        <source>Ctrl+Y</source>
+        <target state="translated">Ctrl+Y</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RedoText">
+        <source>Redo</source>
+        <target state="translated">取消復原</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReentrantVisualTreeChangeError">
+        <source>The visual tree has been changed during a '{0}' event.</source>
+        <target state="translated">此視覺化樹狀結構在 '{0}' 事件期間已有所變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReentrantVisualTreeChangeWarning">
+        <source>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</source>
+        <target state="translated">警告: 此視覺化樹狀結構在 '{0}' 事件期間已有所變更。生產應用程式不支援此狀況。請務必在應用程式出貨之前更正此問題。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RefreshKeyDisplayString">
+        <source>F5</source>
+        <target state="translated">F5</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RefreshText">
+        <source>Refresh</source>
+        <target state="translated">重新整理</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelievePenaltyResourceFailure">
+        <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法釋放懲罰 (penalty) 資源: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReplaceKeyDisplayString">
+        <source>Ctrl+H</source>
+        <target state="translated">Ctrl+H</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReplaceText">
+        <source>Replace</source>
+        <target state="translated">取代</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestAlreadyStarted">
+        <source>The operation is not allowed after the first request is made.</source>
+        <target state="translated">在發出的一個要求之後，不允許此操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiresSTA">
+        <source>The calling thread must be STA, because many UI components require this.</source>
+        <target state="translated">發出呼叫的執行緒必須是 STA，因為許多 UI 元件都這樣要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceNotFoundUnderCacheOnlyPolicy">
+        <source>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</source>
+        <target state="translated">目前的 CachePolicy 是 CacheOnly，但要求的資源不存在於快取中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
+        <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
+        <target state="translated">每個 RoutedEventArgs 都必須有關聯的非空值 RoutedEvent。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventCannotChangeWhileRouting">
+        <source>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</source>
+        <target state="translated">路由 RoutedEvent 時，無法變更 RoutedEvent 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCDataChanged">
+        <source>The Strokes have changed.</source>
+        <target state="translated">Strokes 已變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCErasePath">
+        <source>Path of erasing stroke cannot be null.</source>
+        <target state="translated">筆劃清除路徑不能是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCEraseShape">
+        <source>Erasing Shape cannot be null.</source>
+        <target state="translated">清除 Shape 不能是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveAsText">
+        <source>Save As</source>
+        <target state="translated">另存新檔</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveKeyDisplayString">
+        <source>Ctrl+S</source>
+        <target state="translated">Ctrl+S</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveText">
+        <source>Save</source>
+        <target state="translated">[儲存]</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaInvalidForTransport">
+        <source>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</source>
+        <target state="translated">無法解析目前的內部要求 URI 配置。只有使用例如 http、ftp 或 file 等可解析的結構描述時，才能略過快取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScopeMustBeUIElementOrContent">
+        <source>The scope must be a UIElement or ContentElement.</source>
+        <target state="translated">範圍必須是 UIElement 或 ContentElement。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollByLineText">
+        <source>Scroll By Line</source>
+        <target state="translated">依行捲動</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageDownKeyDisplayString">
+        <source>PageDown</source>
+        <target state="translated">PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageDownText">
+        <source>Scroll Page Down</source>
+        <target state="translated">向下捲動一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageLeftText">
+        <source>Scroll Page Left</source>
+        <target state="translated">向左捲動一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageRightText">
+        <source>Scroll Page Right</source>
+        <target state="translated">向右捲動一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageUpKeyDisplayString">
+        <source>PageUp</source>
+        <target state="translated">PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageUpText">
+        <source>Scroll Page Up</source>
+        <target state="translated">向上捲動一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchKey">
+        <source>F3</source>
+        <target state="translated">F3</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchKeyDisplayString">
+        <source>F3</source>
+        <target state="translated">F3</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchText">
+        <source>Search</source>
+        <target state="translated">搜尋</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">在部分信任的情況下，無法將 SandboxExternalContent 設定為 True。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNegative">
+        <source>Cannot set seek pointer to a negative position.</source>
+        <target state="translated">無法搜尋負值位置的指標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekOriginInvalid">
+        <source>SeekOrigin value is not valid.</source>
+        <target state="translated">SeekOrigin 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectAllKeyDisplayString">
+        <source>Ctrl+A</source>
+        <target state="translated">Ctrl+A</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectAllText">
+        <source>Select All</source>
+        <target state="translated">全選</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToEndKeyDisplayString">
+        <source>Shift+End</source>
+        <target state="translated">Shift+End</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToEndText">
+        <source>Select To End</source>
+        <target state="translated">選取到結尾</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToHomeKeyDisplayString">
+        <source>Shift+Home</source>
+        <target state="translated">Shift+Home</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToHomeText">
+        <source>Select To Home</source>
+        <target state="translated">選取到開頭</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageDownKeyDisplayString">
+        <source>Shift+PageDown</source>
+        <target state="translated">Shift+PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageDownText">
+        <source>Select To PageDown</source>
+        <target state="translated">選取到下一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageUpKeyDisplayString">
+        <source>Shift+PageUp</source>
+        <target state="translated">Shift+PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageUpText">
+        <source>Select To PageUp</source>
+        <target state="translated">選取到上一頁</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetBreakingFailure">
+        <source>Text formatting engine cannot set breaking conditions due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定中斷條件: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetDocFailure">
+        <source>Text formatting engine cannot set document context due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定文件內容: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>The target element cannot receive focus.</source>
+        <target state="translated">目標項目無法接收焦點。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetLengthNotSupported">
+        <source>Stream does not support SetLength.</source>
+        <target state="translated">Stream 不支援 SetLength。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTabsFailure">
+        <source>Text formatting engine cannot set tab stop due to error: '{0}'.</source>
+        <target state="translated">由於發生下列錯誤，文字格式設定引擎無法設定定位停駐點: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SidewaysRTLTextIsNotSupported">
+        <source>Sideways right to left text is not supported.</source>
+        <target state="translated">不支援左邊文字的右邊區域。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size3D_CannotModifyEmptySize">
+        <source>Cannot modify this property on the Empty Size3D.</source>
+        <target state="translated">無法修改 Empty Size3D 上的此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size3D_DimensionCannotBeNegative">
+        <source>Cannot set a negative dimension.</source>
+        <target state="translated">無法設定負值尺寸。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceNotSet">
+        <source>Must set Source in RoutedEventArgs before building event route or invoking handlers.</source>
+        <target state="translated">建置事件路由或叫用處理常式時，必須先在 RoutedEventArgs 中設定 Source。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SpecificNumberCultureRequired">
+        <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
+        <target state="translated">用於數字取代的 CultureInfo 物件必須具有特定的文化特性，而非中性文化特性或 InvariantCulture。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StopKeyDisplayString">
+        <source>Esc</source>
+        <target state="translated">Esc</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StopText">
+        <source>Stop</source>
+        <target state="translated">停止</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamGeometry_NeedBeginFigure">
+        <source>BeginFigure must be called before this API.</source>
+        <target state="translated">必須再呼叫此應用程式開發介面之前先呼叫 BeginFigure。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">參數不能是零長度字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeCollectionCountTooBig">
+        <source>Maximum number of strokes is two.</source>
+        <target state="translated">筆劃數目上限是二。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeCollectionIsReadOnly">
+        <source>The specified StrokeCollection is read-only.</source>
+        <target state="translated">指定的 StrokeCollection 是唯讀的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeIsDuplicated">
+        <source>A duplicate stroke cannot be added to StrokeCollection.</source>
+        <target state="translated">無法新增重複的筆劃到 StrokeCollection。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokesNotContiguously">
+        <source>The strokes being replaced must exist contiguously in the current StrokeCollection.</source>
+        <target state="translated">要取代的筆劃必須連續存在於目前的 StrokeCollection 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_CanOnlyCallForDownMoveOrUp">
+        <source>NotifyWhenProcessed can be called only during OnStylusDown, OnStylusMove, or OnStylusUp.</source>
+        <target state="translated">僅在 OnStylusDown、OnStylusMove 或 OnStylusUp 中無法呼叫 NotifyWhenProcessed。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_EnumeratorFailure">
+        <source>No current object to return.</source>
+        <target state="translated">沒有可傳回的目前物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_IndexOutOfRange">
+        <source>'{0}' is not a valid index in the collection.</source>
+        <target state="translated">'{0}' 不是集合中的有效索引。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_InvalidMax">
+        <source>'{0}' must be greater than or equal to '{1}'.</source>
+        <target state="translated">{0} 必須大於或等於 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_MatrixNotInvertable">
+        <source>Matrix is not invertible.</source>
+        <target state="translated">Matrix 不是可反轉的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_MustBeDownToCallReset">
+        <source>Stylus or Mouse must be in the down state when calling Reset.</source>
+        <target state="translated">呼叫 Reset 時，Stylus 或 Mouse 必須是已關閉狀態。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PenContextFailure">
+        <source>Stylus input encountered an error.</source>
+        <target state="translated">手寫筆輸入發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsDuplicated">
+        <source>'{0}' already exists in the collection.</source>
+        <target state="translated">'{0}' 已存在於集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsNull">
+        <source>'{0}' must be non-null.</source>
+        <target state="translated">'{0}' 必須是非空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInNotExist">
+        <source>'{0}' does not exist in the collection.</source>
+        <target state="translated">'{0}' 不存在於集合中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_StylusPointsCantBeEmpty">
+        <source>Count of points must be greater than zero.</source>
+        <target state="translated">點數計數必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextBreakpointHasBeenDisposed">
+        <source>Text breakpoint was previously disposed.</source>
+        <target state="translated">文字中斷點先前已處置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_NoInputManager">
+        <source>'{0}' does not have a valid InputManager.</source>
+        <target state="translated">'{0}' 沒有有效的 InputManager。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionHasDone">
+        <source>'{0}' has already finished.</source>
+        <target state="translated">'{0}' 已完成。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionHasStarted">
+        <source>'{0}' has already started.</source>
+        <target state="translated">'{0}' 已啟動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionNotStarted">
+        <source>'{0}' has not yet started.</source>
+        <target state="translated">'{0}' 尚未啟動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextComposition_NullResultText">
+        <source>Result text cannot be null.</source>
+        <target state="translated">結果文字不能是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextFormatterReentranceProhibited">
+        <source>Cannot reenter Text formatting engine during optimal paragraph formatting.</source>
+        <target state="translated">設定最佳段落格式時，無法重新輸入文字格式設定引擎。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextLineHasBeenDisposed">
+        <source>Text line was previously disposed.</source>
+        <target state="translated">文字行之前已處置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextObjectMetrics_WidthOutOfRange">
+        <source>The return value of TextEmbeddedObject.Format contains an out-of-range value for the Width property.</source>
+        <target state="translated">TextEmbeddedObject.Format 的傳回值包含超出範圍的 Width 屬性值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextPenaltyModuleHasBeenDisposed">
+        <source>Text penalty module was previously disposed.</source>
+        <target state="translated">文字懲罰 (penalty) 模組先前已處置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextProvider_InvalidChild">
+        <source>'{0}' parameter value is not a valid child element of the text provider.</source>
+        <target state="translated">'{0}' 參數值不是文字提供者的有效子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextRangeProvider_InvalidRangeProvider">
+        <source>'{0}' parameter value is not a valid ITextRangeProvider.</source>
+        <target state="translated">'{0}' 參數值不是有效的 ITextRangeProvider。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextRunPropertiesCannotBeNull">
+        <source>The Properties member of this text run cannot be null.</source>
+        <target state="translated">此文字執行的 Properties 成員不能是空值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_AccelAndDecelGreaterThanOne">
+        <source>The sum of AccelerationRatio and DecelerationRatio must be less than or equal to one.</source>
+        <target state="translated">AccelerationRatio 與 DecelerationRatio 的加總必須小於或等於一。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_CanSlipOnlyOnSimpleTimelines">
+        <source>CanSlip is supported only on timelines without AutoReverse, AccelerationRatio, or DecelerationRatio.</source>
+        <target state="translated">只有在不包含 AutoReverse、AccelerationRatio 或 DecelerationRatio 的時間表上才支援 CanSlip。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_ChildMustBeTimeline">
+        <source>A child of a Timeline in "XAML" must also be a Timeline or a class that derives from Timeline.</source>
+        <target state="translated">"XAML" 中 Timeline 的子項目必須也是 Timeline 或從 Timeline 衍生的類別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_CreateClockMustReturnNewClock">
+        <source>The {0}.CreateClock method returned a pre-existing object, rather than a new object inheriting from TimelineClock.</source>
+        <target state="translated">{0}.CreateClock 方法傳回已存在的物件，而非從 TimelineClock 繼承的新物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_DifferentThreads">
+        <source>The specified timeline belongs to a different thread than this timeline.</source>
+        <target state="translated">指定的時間表屬於與此時間表不同的執行緒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_EnumeratorInvalidated">
+        <source>The enumeration is no longer valid because the collection it enumerates has changed.</source>
+        <target state="translated">列舉已無效，因為列舉的集合已變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_EnumeratorOutOfRange">
+        <source>The enumerator is out of range.</source>
+        <target state="translated">列舉程式超出範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgAccelAndDecel">
+        <source>Property value must be between 0.0 and 1.0.</source>
+        <target state="translated">屬性值必須介於 0.0 到 1.0 之間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgFiniteNonNegative">
+        <source>Property value must be finite and greater than or equal to zero.</source>
+        <target state="translated">屬性值必須有限制，而且必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgFinitePositive">
+        <source>Property value must be finite and greater than zero.</source>
+        <target state="translated">屬性值必須有限制，而且必須大於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgNonNegative">
+        <source>Property value must be greater than or equal to zero or indefinite.</source>
+        <target state="translated">屬性值必須大於或等於零，或沒有限制。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgPositive">
+        <source>Property value must be greater than zero or indefinite.</source>
+        <target state="translated">屬性值必須大於零，或沒有限制。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_NoTextChildren">
+        <source>Timeline objects cannot have text objects as children.</source>
+        <target state="translated">Timeline 物件不能使用文字物件做為子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_NotTimeSpan">
+        <source>Unable to return a TimeSpan property value for a Duration value of '{0}'. Check the HasTimeSpan property before requesting the TimeSpan property value from a Duration.</source>
+        <target state="translated">無法傳回 Duration 值 '{0}' 的 TimeSpan 屬性值。從 Duration 要求 TimeSpan 屬性值之前，請先檢查 HasTimeSpan 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_OperationEnqueuedOutOfOrder">
+        <source>A timing operation has been not been queued in the appropriate order.</source>
+        <target state="translated">計時操作未以正確的順序排入佇列中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorInvalidIterationCount">
+        <source>'{0}' is not a valid IterationCount value for a RepeatBehavior structure. An IterationCount value must represent a number that is greater than or equal to zero but not infinite.</source>
+        <target state="translated">'{0}' 不是 RepeatBehavior 結構的有效 IterationCount 值。IterationCount 值必須是大於或等於零的數字，而且不能沒有限制。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorInvalidRepeatDuration">
+        <source>'{0}' is not a valid RepeatDuration value for a RepeatBehavior structure. A RepeatDuration value must be a TimeSpan value greater than or equal to zero ticks.</source>
+        <target state="translated">'{0}' RepeatBehavior 結構的有效 RepeatDuration 值。RepeatDuration 值必須是大於或等於零 tick 的 TimeSpan 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorNotIterationCount">
+        <source>'{0}' RepeatBehavior does not represent an iteration count and does not have an IterationCount value.</source>
+        <target state="translated">'{0}' RepeatBehavior 不是有效的反覆運算計數，而且沒有 IterationCount 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorNotRepeatDuration">
+        <source>'{0}' RepeatBehavior does not represent a repeat duration and does not have a RepeatDuration value.</source>
+        <target state="translated">'{0}' RepeatBehavior 不是重複的持續時間，而且沒有 RepeatDuration 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationAmbiguousDueToSlip">
+        <source>The ClockController.Seek method was called with arguments that describe a seek destination that seeks a child with Slip but no defined duration. It is unclear if we are seeking the child or seeking past the child's duration.</source>
+        <target state="translated">ClockController.Seek 方法已使用引數呼叫，此引數說明搜尋目標，會使用 Slip 搜尋子項目，但並未定義持續時間。無法判斷要搜尋子項目，或是搜尋超過子項目的持續時間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationIndefinite">
+        <source>The ClockController.Seek method was called using TimeSeekOrigin.Duration as the seekOrigin parameter for a Clock that has a duration of Forever. Clocks that have duration of Forever must use TimeSeekOrigin.BeginTime.</source>
+        <target state="translated">ClockController.Seek 方法已使用 TimeSeekOrigin.Duration 做為 Clock 的 seekOrigin 參數呼叫，該時鐘具有持續時間 Forever。具有持續時間 Forever 的 Clock 必須使用 TimeSeekOrigin.BeginTime。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationNegative">
+        <source>The ClockController.Seek method was called with arguments that describe a seek destination with a negative value. The seek destination must be a time greater than or equal to zero.</source>
+        <target state="translated">ClockController.Seek method 已使用引數呼叫，此引數說明搜尋具有負值的目標。搜尋目標必須是大於或等於零的時間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SkipToFillDestinationIndefinite">
+        <source>Cannot call the ClockController.SkipToFill method for a Clock that has a Duration or RepeatDuration of Forever, because this Clock will never reach its fill period.</source>
+        <target state="translated">無法針對 Forever 為 Duration 或 RepeatDuration 的 Clock 呼叫 ClockController.SkipToFill 方法，因為此 Clock 永遠不會到達此填滿期間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SlipBehavior_SlipOnlyOnSimpleTimelines">
+        <source>SlipBehavior.Slip is supported only on root ParallelTimelines that do not reverse, accelerate, decelerate, or have a RepeatBehavior specified as a Duration.</source>
+        <target state="translated">只有在 [Duration] 不是指定為 reverse、accelerate、decelerate 或 RepeatBehavior 的根 ParallelTimelines 上，才支援 SlipBehavior.Slip。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SlipBehavior_SyncOnlyWithSimpleParents">
+        <source>Clocks with CanSlip cannot have parents or ancestors with AutoReverse, AccelerationRatio, or DecelerationRatio.</source>
+        <target state="translated">具有 CanSlip 的時鐘不能使用具有 AutoReverse、AccelerationRatio 或 DecelerationRatio 的做為父項目或上階。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，位置 {0} 出現空的語彙基元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，位置 {0} 出現額外的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時遺失結尾引號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時發現字串過早結束。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyGlyphRuns">
+        <source>Too many glyph runs in the scene to render.</source>
+        <target state="translated">場景中有太多圖像需要轉譯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyRoutedEvents">
+        <source>RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.</source>
+        <target state="translated">已超過 RoutedEvent/EventPrivateKey 限制。CLR 的路由事件或 EventPrivateKey 通常是使用欄位初始設定程式或靜態建構函式登錄的靜態類別成員。在此情況中，路由事件或 EventPrivateKeys 可能會在執行個體建構函式中初始化，而導致超過限制。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_Category">
+        <source>Touch</source>
+        <target state="translated">觸控</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_DeviceAlreadyActivated">
+        <source>The TouchDevice is already activated.</source>
+        <target state="translated">TouchDevice 已經啟動了。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_DeviceNotActivated">
+        <source>The TouchDevice is not activated.</source>
+        <target state="translated">TouchDevice 未啟動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeLoop">
+        <source>Potential cycle in tree found while building the event route.</source>
+        <target state="translated">建置事件路由時，在樹狀結構中發現可能的循環。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">當屬性中繼資料與屬性關聯時，即無法變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_InfinityArrange">
+        <source>Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.</source>
+        <target state="translated">無法在大小不受限或 NaN 的 UIElement 上呼叫 Arrange。類型 '{0}' 的父系叫用的是 UIElement。已在類型為 '{1}' 的項目上呼叫 Arrange。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_NaNMeasure">
+        <source>UIElement.Measure(availableSize) cannot be called with NaN size.</source>
+        <target state="translated">無法呼叫具有 NaN 大小的 UIElement.Measure(availableSize)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_NaNReturned">
+        <source>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</source>
+        <target state="translated">項目 '{0}' 的配置度量覆寫不能傳回 NaN 值做為其 DesiredSize。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_PositiveInfinityReturned">
+        <source>Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.</source>
+        <target state="translated">即使已傳遞 Infinity 做為可用大小，項目 '{0}' 的配置度量覆寫也不能傳回 PositiveInfinity 做為其 DesiredSize。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnauthorizedAccessExceptionWithFileName">
+        <source>Access denied to the path '{0}'.</source>
+        <target state="translated">存取路徑 '{0}' 時遭拒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UndoKeyDisplayString">
+        <source>Ctrl+Z</source>
+        <target state="translated">Ctrl+Z</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UndoText">
+        <source>Undo</source>
+        <target state="translated">復原</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">參數是非預期的類型 '{0}'。類型應為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedStroke">
+        <source>Unexpected Stroke in PropertyDataChangedEventArgs.Owner.</source>
+        <target state="translated">在 PropertyDataChangedEventArgs.Owner 中發現未預期的 Stroke。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownPathOperationType">
+        <source>Unknown path operation attempted.</source>
+        <target state="translated">已嘗試不明的路徑操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke">
+        <source>Unrecognized Stroke in PropertyDataChangedEventArgs.Owner.</source>
+        <target state="translated">在 PropertyDataChangedEventArgs.Owner 中發現未預期的 Stroke。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke1">
+        <source>Unrecognized Stroke in Stroke.Invalidated event arguments.</source>
+        <target state="translated">在 Stroke.Invalidated event 引數中發現無法識別的 Stroke。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke3">
+        <source>Unrecognized Stroke in StrokeCollectionChangedEventArgs.Removed.</source>
+        <target state="translated">在 StrokeCollectionChangedEventArgs.Removed 中發現無法識別的 Stroke。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedGestureConstructionException">
+        <source>Failed to initialize GestureRecognizer.</source>
+        <target state="translated">無法初始化 GestureRecognizer。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedGestureException">
+        <source>Gesture recognition failed.</source>
+        <target state="translated">筆勢辨識失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedSetEnabledGesturesException">
+        <source>Failed to set enabled gestures.</source>
+        <target state="translated">無法設定已啟用的筆勢。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_MouseAction">
+        <source>Unsupported MouseAction '{0}'.</source>
+        <target state="translated">不支援的 MouseAction '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriMustBeAbsolute">
+        <source>URI must be absolute. Relative URIs are not supported.</source>
+        <target state="translated">URI 必須是絕對 URI。不支援相對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriMustBeFileOrPack">
+        <source>Font family Uri should have either file:// or pack://application: scheme.</source>
+        <target state="translated">字型家族 Uri 必須有 file:// 或 pack://application: 配置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotAbsolute">
+        <source>URI must be absolute.</source>
+        <target state="translated">URI 必須是絕對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriSchemeMismatch">
+        <source>This factory supports only URIs with the '{0}' scheme.</source>
+        <target state="translated">此 factory 只支援具有 '{0}' 配置的 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsesPerPixelOpacityIsObsolete">
+        <source>UsesPerPixelOpacity is obsolete and should not be set when using UsesPerPixelTransparency</source>
+        <target state="translated">UsesPerPixelOpacity 已過時，在使用 UsesPerPixelTransparency 時不應加以設定</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueNotValidForGuid">
+        <source>Value is not valid for the specified GUID.</source>
+        <target state="translated">該值對於指定的 GUID 而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial">
+        <source>MaterialGroup cannot be an interactive Material (IsVisualHostMaterial is true).</source>
+        <target state="translated">MaterialGroup 不可以是互動式材質 (IsVisualHostMaterial 為 true)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Viewport2DVisual3D_MultipleInteractiveMaterials">
+        <source>Viewport2DVisual3D supports only one interactive Material.</source>
+        <target state="translated">Viewport2DVisual3D 只支援一個互動式材質。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCannotBeDetached">
+        <source>Specified Visual cannot be detached.</source>
+        <target state="translated">指定的 Visual 無法中斷。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_EntryInUse">
+        <source>Specified index is already in use. Disconnect the Visual child at the specified index first.</source>
+        <target state="translated">指定的索引已在使用中。請先將位於指定索引的 Visual 子項目中斷連線。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_NotEnoughCapacity">
+        <source>Number of entries exceeds specified capacity of the VisualCollection.</source>
+        <target state="translated">項目數目超出 VisualCollection 的指定容量。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_ReadOnly">
+        <source>This VisualCollection is read only and cannot be modified.</source>
+        <target state="translated">此 VisualCollection 是唯讀的，且無法修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_VisualHasParent">
+        <source>Specified Visual is already a child of another Visual or the root of a CompositionTarget.</source>
+        <target state="translated">指定的 Visual 已經是另一個 Visual 的子項目，或是 CompositionTarget 的根。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualTarget_AnotherTargetAlreadyConnected">
+        <source>Another target is already connected to this HostVisual.</source>
+        <target state="translated">其他目標已連線到此 HostVisual。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">指定的索引超出範圍，或位於索引的子項目是 null 值。如果 VisualChildrenCount 傳回零 (表示 Visual 沒有子項目)，請勿呼叫此方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_CannotTransformPoint">
+        <source>This Visual cannot transform the given point.</source>
+        <target state="translated">此 Visual 無法轉換指定的點。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_HasParent">
+        <source>Must disconnect specified child from current parent Visual before attaching to new parent Visual.</source>
+        <target state="translated">附加到新的父 Visual 之前，必須先從目前的父 Visual 將指定的子項目中斷連線。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NoCommonAncestor">
+        <source>The specified Visual and this Visual do not share a common ancestor, so there is no valid transformation between the two Visuals.</source>
+        <target state="translated">指定的 Visual 與此 Visual 並未共用通用上階，因此兩個 Visual 之間沒有有效的轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NoPresentationSource">
+        <source>This Visual is not connected to a PresentationSource.</source>
+        <target state="translated">此 Visual 並未連線到 PresentationSource。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotA3DVisual">
+        <source>'{0}' is not a Visual3D.</source>
+        <target state="translated">'{0}' 不是 Visual3D。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotADescendant">
+        <source>The specified Visual is not a descendant of this Visual.</source>
+        <target state="translated">指定的 Visual 不是此 Visual 的子系。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotAVisual">
+        <source>'{0}' is not a Visual or Visual3D.</source>
+        <target state="translated">'{0}' 不是 Visual 或 Visual3D。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotAnAncestor">
+        <source>The specified Visual is not an ancestor of this Visual.</source>
+        <target state="translated">指定的 Visual 不是此 Visual 的上階。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotChild">
+        <source>Specified Visual is not a child of this Visual.</source>
+        <target state="translated">指定的 Visual 不是此 Visual 的子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WIC_NotInitialized">
+        <source>Object must be initialized before operation can be performed.</source>
+        <target state="translated">執行此操作之前，物件必須先初始化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebRequestTimeout">
+        <source>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</source>
+        <target state="translated">WebRequest 逾時。指定的 Timeout 時間過後尚未收到回應。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponseCloseFailure">
+        <source>Error closing the WebResponse.</source>
+        <target state="translated">關閉 WebResponse 時發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponseFailure">
+        <source>Error processing WebResponse.</source>
+        <target state="translated">處理 WebResponse 時發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponsePartNotFound">
+        <source>Requested PackagePart not found in target resource.</source>
+        <target state="translated">在目標資源中找不到要求的 PackagePart。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteNotSupported">
+        <source>Stream does not support writing.</source>
+        <target state="translated">資料流不支援寫入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongFirstSegment">
+        <source>The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.</source>
+        <target state="translated">包含 ";component" 之 URI 的樣式必須為 "AssemblyName;Vxxxx;PublicKey;component"，其中 Vxxxx 是組件版本，而 PublicKey 是 16 個字元的字串 (代表組件公開金鑰語彙基元)。Vxxxx 與 PublicKey 是可省略的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangGetCultureFailure">
+        <source>There is no registered CultureInfo with the IetfLanguageTag '{0}'.</source>
+        <target state="translated">沒有具有 IetfLanguageTag '{0}' 且已登錄的 CultureInfo。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangGetSpecificCulture">
+        <source>Cannot find non-neutral culture related to '{0}'.</source>
+        <target state="translated">找不到與 '{0}' 相關的非中性文化特性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangMalformed">
+        <source>'{0}' language tag must be empty or must conform to grammar defined in IETF RFC 3066.</source>
+        <target state="translated">'{0}' 語言標記必須是空的，或者必須符合在 IETF RFC 3066 中定義的文法要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomText">
+        <source>Zoom</source>
+        <target state="translated">顯示比例</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

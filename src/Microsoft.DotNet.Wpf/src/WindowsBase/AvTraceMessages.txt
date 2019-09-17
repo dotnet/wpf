@@ -1,0 +1,79 @@
+;
+;  This file contains trace information used to generate wrapper
+;  classes.
+;
+;  The format of the info is a set of sections, where each section
+;  contains:
+;
+;      [TraceName,TraceArea,WrapperClassName]
+;      Trace1=1,,{"Base message 1","Param1","Param2"}
+;      Trace2=,,{"Base message 2","Param1","Param2"}
+;      Trace3=AUTO,,{"Base message 3","InParam1","InParam2"}
+;      Trace4=PREVIOUS,,{"Base message 4","OutParam1","OutParam2"}
+;      Trace5=,FORMAT,{"{0} is broken","Param1","Param2"}
+;      ...
+;      [end]
+;
+;  These sections break down as follows ...
+;
+;  TraceName:  This is the name of the trace source, and the name that you use to enable
+;  this group of traces in the .config file.  This should be named with the appropriate
+;  CLR namespace for the feature area.  If the feature area doesn't have its own namespace,
+;  e.g. the code is in the root System.Windows namespace, either use a class name, or
+;  what the namespace would be if it had one.
+;
+;  TraceArea: This is the name of the area and is used to construct the static property
+;  names for the PresenationTraceSources class.
+;
+;  WrapperClassName: This is the name of a class that will be generated to wrap
+;  the trace messages that follow.  By convention, this should start with "Trace".
+;
+;  Trace detail:
+;      In the trace details, the first comma-delimited value is the trace ID (integer),
+;      and each trace ID should generally be unique within the section.
+;      The keyword 'AUTO' may be used to auto-generate the id: (= max_id_in_section + 1)
+;      The keyword 'PREVIOUS' will repeat the last used id.  Blank is the same as 'AUTO'.
+;      Trace strings with hard-coded ID should be listed before the AUTO ones to avoid duplicate ID.
+;
+;      The second value indicates whether the message should be treated as a format string:
+;      blank or '0' means NOT a format string.
+;
+;      The remainder is a string array:
+;      The first string in the array is the basic message, and the remaining strings correspond 
+;      to the variable argument list in the trace call.
+;
+;
+;  Example:
+;
+;  [System.Windows,Area,TraceClass]
+;  TraceBasic=,,{"basic msg", "data1", "data2"}
+;  TraceFormat=,FORMAT,{"{0} is doing something to {1}.", "data1", "data2"}
+;  [end]
+;
+;  In code, the TraceClass is used like this:
+;
+;  // basic message
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceBasic, data1, data2 );
+;
+;  // message with format string
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceFormat( arg1, arg2 ), data1, data2 );
+;  
+
+[System.Windows.DependencyProperty,DependencyProperty,TraceDependencyProperty]
+ApplyTemplateContent=,,{ "Apply template", "Element", "Template" }
+Register=,,{ "Registered DependencyProperty", "DP", "OwnerType" }
+UpdateEffectiveValueStart=,,{ "Update effective DP value (Start)", "DependencyObject", "DP", "DpOwnerType", "Value", "ValueSource" }
+UpdateEffectiveValueStop=,,{ "Update effective DP value (Stop)", "DependencyObject", "DP", "DpOwnerType", "Value", "ValueSource" }
+[end]
+
+[System.Windows.Freezable,Freezable,TraceFreezable]
+UnableToFreezeExpression=,,{"CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is an expression", "Freezable", "DP", "DpOwnerType"}
+UnableToFreezeDispatcherObjectWithThreadAffinity=,,{"CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a DispatcherObject with thread affinity", "Freezable", "DP", "DpOwnerType", "Value" }
+UnableToFreezeFreezableSubProperty=,,{"CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a Freezable that has also returned false from CanFreeze", "Freezable", "DP", "DpOwnerType" }
+UnableToFreezeAnimatedProperties=,,{"CanFreeze is returning false because at least one DependencyProperty on the Freezable is animated.", "Freezable" }
+[end]
+
+[System.Windows.NameScope,NameScope,TraceNameScope]
+RegisterName=,,{"Name has been registered on INameScope", "NameScope", "Name", "Object"}
+UnregisterName=,,{"Name has been un-registered on INameScope", "NameScope", "Name"}
+[end]

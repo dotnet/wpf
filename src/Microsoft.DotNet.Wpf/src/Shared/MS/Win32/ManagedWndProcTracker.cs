@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.Interop;
 using System.Security;
-using System.Security.Permissions;
 
 // The SecurityHelper class differs between assemblies and could not actually be
 //  shared, so it is duplicated across namespaces to prevent name collision.
@@ -32,12 +31,6 @@ namespace MS.Win32
 {
     internal static class ManagedWndProcTracker
     {
-        /// <SecurityNote>
-        ///     Critical: This code calls into Link demanded methods to attach handlers
-        ///     TreatAsSafe: This code does not take any parameter or return state.
-        ///     It simply attaches private call back.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static ManagedWndProcTracker()
         {
             // Listen for ProcessExit so we can detach ourselves when the CLR shuts down
@@ -45,10 +38,6 @@ namespace MS.Win32
             ManagedWndProcTrackerShutDownListener listener = new ManagedWndProcTrackerShutDownListener();
         }
 
-        /// <SecurityNote>
-        ///     Critical: Uses critical member _hwndList
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void TrackHwndSubclass(HwndSubclass subclass, IntPtr hwnd)
         {
             lock (_hwndList)
@@ -66,10 +55,6 @@ namespace MS.Win32
 #endif
         }
 
-        /// <SecurityNote>
-        ///     Critical: Uses critical member _hwndList
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void UnhookHwndSubclass(HwndSubclass subclass)
         {
             // if exiting the AppDomain, ignore this call.  This avoids changing
@@ -83,12 +68,6 @@ namespace MS.Win32
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical performs an elevation to call HookUpDefWindowProc.
-        ///     TreatAsSafe - net effect of this is to remove our already registered WndProc's on domain shutdown.
-        ///                          safe - as you had to elevate to add these already. Removing them is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnAppDomainProcessExit()
         {
             // AppDomain is exiting -- if anyone tries to call back into managed code
@@ -102,60 +81,44 @@ namespace MS.Win32
 
             lock (_hwndList)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert:
-                try
+                foreach (DictionaryEntry entry in _hwndList)
                 {
-                    foreach (DictionaryEntry entry in _hwndList)
+                    IntPtr hwnd = (IntPtr)entry.Value;
+
+                    int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_STYLE);
+                    if((windowStyle & NativeMethods.WS_CHILD) != 0)
                     {
-                        IntPtr hwnd = (IntPtr)entry.Value;
+                        // Tell all the HwndSubclass WndProcs for WS_CHILD windows
+                        // to detach themselves. This is particularly important when
+                        // the parent hwnd belongs to a separate AppDomain in a
+                        // cross AppDomain hosting scenario. In this scenario it is
+                        // possible that the host has subclassed the WS_CHILD window
+                        // and hence it is important to notify the host before we set the
+                        // WndProc to DefWndProc. Also note that we do not want to make a
+                        // blocking SendMessage call to all the subclassed Hwnds in the
+                        // AppDomain because this can lead to slow shutdown speed.
+                        // Eg. Consider a MessageOnlyHwnd created and subclassed on a
+                        // worker thread which is no longer responsive. The SendMessage
+                        // call in this case will block. To avoid this we limit the conversation
+                        // only to WS_CHILD windows. We understand that this solution is
+                        // not foolproof but it is the best outside of re-designing the cleanup
+                        // of Hwnd subclasses.
 
-                        int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_STYLE);
-                        if((windowStyle & NativeMethods.WS_CHILD) != 0)
-                        {
-                            // Tell all the HwndSubclass WndProcs for WS_CHILD windows
-                            // to detach themselves. This is particularly important when
-                            // the parent hwnd belongs to a separate AppDomain in a
-                            // cross AppDomain hosting scenario. In this scenario it is
-                            // possible that the host has subclassed the WS_CHILD window
-                            // and hence it is important to notify the host before we set the
-                            // WndProc to DefWndProc. Also note that we do not want to make a
-                            // blocking SendMessage call to all the subclassed Hwnds in the
-                            // AppDomain because this can lead to slow shutdown speed.
-                            // Eg. Consider a MessageOnlyHwnd created and subclassed on a
-                            // worker thread which is no longer responsive. The SendMessage
-                            // call in this case will block. To avoid this we limit the conversation
-                            // only to WS_CHILD windows. We understand that this solution is
-                            // not foolproof but it is the best outside of re-designing the cleanup
-                            // of Hwnd subclasses.
-
-                            UnsafeNativeMethods.SendMessage(hwnd, HwndSubclass.DetachMessage,
-                                                                IntPtr.Zero /* wildcard */,
-                                                                (IntPtr) 2 /* force and forward */);
-                        }
-
-                        // the last WndProc on the chain might be managed as well
-                        // (see HwndSubclass.SubclassWndProc for explanation).
-                        // Just in case, restore the DefaultWindowProc.
-                        HookUpDefWindowProc(hwnd);
+                        UnsafeNativeMethods.SendMessage(hwnd, HwndSubclass.DetachMessage,
+                                                            IntPtr.Zero /* wildcard */,
+                                                            (IntPtr) 2 /* force and forward */);
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
 
-            }
+                    // the last WndProc on the chain might be managed as well
+                    // (see HwndSubclass.SubclassWndProc for explanation).
+                    // Just in case, restore the DefaultWindowProc.
+                    HookUpDefWindowProc(hwnd);
+                }
+}
         }
 
-        /// <SecurityNote>
-        ///  TreatAsSafe:  Demands for unmanaged code
-        ///  Critical: Elevates by calling an unverifieds UnsafeNativeMethod call
-        ///</SecurityNote>
-        [SecurityTreatAsSafe, SecurityCritical]
         private static void HookUpDefWindowProc(IntPtr hwnd)
         {
-
-            SecurityHelper.DemandUnmanagedCode();
 
 #if LOGGING
             LogFinishHWND(hwnd, "Core HookUpDWP");
@@ -176,8 +139,7 @@ namespace MS.Win32
                 try
                 {
                     result = UnsafeNativeMethods.SetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_WNDPROC, defWindowProc);
-
-                }
+}
                 catch(System.ComponentModel.Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
@@ -223,34 +185,20 @@ namespace MS.Win32
             }
         }
 
-        ///<SecurityNote>
-        ///  SecurityCritical: elevates via a call to unsafe native methods
-        ///  SecurityTreatAsSafe: Demands unmgd code permission via SecurityHelper
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static IntPtr GetUser32ProcAddress(string export)
         {
-
-            SecurityHelper.DemandUnmanagedCode();
             IntPtr hModule = UnsafeNativeMethods.GetModuleHandle(ExternDll.User32);
 
 
             if (hModule != IntPtr.Zero)
             {
                 return UnsafeNativeMethods.GetProcAddress(new HandleRef(null, hModule), export);
-
-            }
+}
             return IntPtr.Zero;
         }
 
         private sealed class ManagedWndProcTrackerShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public ManagedWndProcTrackerShutDownListener()
                 : base(null, ShutDownEvents.AppDomain)
             {
@@ -309,10 +257,6 @@ namespace MS.Win32
         private static IntPtr _cachedDefWindowProcA = IntPtr.Zero;
         private static IntPtr _cachedDefWindowProcW = IntPtr.Zero;
 
-        ///<SecurityNote>
-        ///     Critical - used as input to unsafe calls
-        ///</SecurityNote>
-        [SecurityCritical]
         private static Hashtable _hwndList = new Hashtable(10);
         private static bool _exiting = false;
     }

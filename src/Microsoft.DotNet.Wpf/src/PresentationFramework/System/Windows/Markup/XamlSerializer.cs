@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   XamlSerializer is used to persist an object instance to xaml markup
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -18,7 +16,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using System.Security.Permissions;
 
 using MS.Utility;
 
@@ -59,7 +56,6 @@ namespace System.Windows.Markup
         ///   out by a record writer.  The context gives mapping information.
         /// </summary>
 #if !PBTCOMPILER
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
 #endif        
         internal virtual void ConvertXamlToBaml (
             XamlReaderHelper          tokenReader,
@@ -76,7 +72,6 @@ namespace System.Windows.Markup
         ///   Convert from Xaml read by a token reader into a live
         ///   object tree.  The context gives mapping information.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal virtual void ConvertXamlToObject (
             XamlReaderHelper             tokenReader,
             ReadWriteStreamManager streamManager,
@@ -92,7 +87,6 @@ namespace System.Windows.Markup
         ///   The context gives mapping information.  Return the number of
         ///   baml records processed.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal virtual void ConvertBamlToObject (
             BamlRecordReader    reader,       // Current reader that is processing records
             BamlRecord          bamlRecord,   // Record read in that triggered serializer
@@ -132,7 +126,6 @@ namespace System.Windows.Markup
         ///   individual serializer.  By default, there is no key retrieved.
         /// </summary>
 #if !PBTCOMPILER
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
 #endif        
         internal virtual object GetDictionaryKey(
             BamlRecord    bamlRecord, 

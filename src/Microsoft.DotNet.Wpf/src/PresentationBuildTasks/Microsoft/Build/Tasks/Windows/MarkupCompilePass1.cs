@@ -14,7 +14,6 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Globalization;
 using System.Diagnostics;
@@ -102,7 +101,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.MarkupCompilePass1Task));
+            TaskHelper.DisplayLogo(Log, nameof(MarkupCompilePass1));
 
             bool bSuccess = true;
 

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
+    <body>
+      <trans-unit id="ArgumentOutOfRange">
+        <source>Value of {0} is outside of the allowed range.</source>
+        <target state="translated">{0} 的值不在允许的范围内。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeParameterDuringInertia">
+        <source>The value of {0} cannot be changed while the inertia processor is running.</source>
+        <target state="translated">运行 Inertia 处理器时无法更改 {0} 的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalPivotRadius">
+        <source>Value of {0} must be either NaN, or a finite value greater than or equal to 1.</source>
+        <target state="translated">{0} 的值必须是 NaN 或者是大于或等于 1 的有限值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified1and2">
+        <source>Either {0}, or {1} and {2}, needs to be specified.</source>
+        <target state="translated">需要指定 {0} 或指定 {1} 和 {2}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified2">
+        <source>Either {0} or {1} needs to be specified.</source>
+        <target state="translated">需要指定 {0} 或 {1}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaProcessorInvalidRadius">
+        <source>InitialRadius should be a finite number, greater than or equal to 1.</source>
+        <target state="translated">InitialRadius 应是大于或等于 1 的有限数。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTimestamp">
+        <source>Timestamp values must not decrease.</source>
+        <target state="translated">时间戳值不得减小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoInertiaVelocitiesSpecified">
+        <source>At least one of the following must be specified: linear velocity ({0} or {1}), angular velocity ({2}), or expansion velocity ({3} or {4}).</source>
+        <target state="translated">必须至少指定下列值之一: 线性速度({0} 或 {1})、角速度({2})或扩展速度({3} 或 {4})。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyProportionalExpansionSupported">
+        <source>Currently, only proportional expansion is supported. {0} must equal {1}.</source>
+        <target state="translated">当前仅支持比例扩展。{0} 必须等于 {1}。</target>
+        <note>{0} and {1} are the names of arguments.</note>
+      </trans-unit>
+      <trans-unit id="ValueMustBeFinite">
+        <source>Value of {0} must be finite.</source>
+        <target state="translated">{0} 的值必须是有限的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteNonNegative">
+        <source>Value of {0} must be finite and non-negative.</source>
+        <target state="translated">{0} 的值必须是有限的且不为负数。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteOrNaN">
+        <source>Value of {0} must be finite or NaN.</source>
+        <target state="translated">{0} 的值必须是有限的或为 NaN。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

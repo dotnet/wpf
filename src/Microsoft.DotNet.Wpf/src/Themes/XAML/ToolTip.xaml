@@ -1,0 +1,184 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+
+ <!--=================================================================
+        ToolTip
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ToolTipBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#E4E5F0"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="{x:Type ToolTip}"
+           TargetType="{x:Type ToolTip}">
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="BorderBrush"
+                Value="#767676"/>
+        <Setter Property="Background"
+                Value="{StaticResource ToolTipBackground}"/>
+        <Setter Property="Foreground"
+                Value="#575757"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}"/>
+        <Setter Property="Padding"
+                Value="5,1,5,4"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="HasDropShadow"
+                Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"/>
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <theme:SystemDropShadowChrome Name="Shdw"
+                                                  Color="Transparent"
+                                                  SnapsToDevicePixels="true"
+                                                  CornerRadius="2">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Classic, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+     <!--=================================================================
+        ToolTip
+    ==================================================================-->
+    <Style x:Key="{x:Type ToolTip}"
+           TargetType="{x:Type ToolTip}">
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}"/>
+        <Setter Property="Padding"
+                Value="1,1,3,1"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="HasDropShadow"
+                Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"/>
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <theme:SystemDropShadowChrome Name="Shdw"
+                                                  Color="Transparent"
+                                                  SnapsToDevicePixels="True">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor, Aero2.NormalColor]] -->
+
+    <SolidColorBrush x:Key="ToolTip.Background" Color="#FFF1F2F7" />
+    <SolidColorBrush x:Key="ToolTip.Border" Color="#FF767676" />
+    <SolidColorBrush x:Key="ToolTip.Foreground" Color="#FF575757" />
+
+    <Style x:Key="{x:Type ToolTip}" TargetType="ToolTip">
+        <Setter Property="Background" Value="{StaticResource ToolTip.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ToolTip.Border}" />
+        <Setter Property="Foreground" Value="{StaticResource ToolTip.Foreground}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}"/>
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Name="Border" 
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter 
+                            Margin="{TemplateBinding Padding}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

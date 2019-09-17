@@ -27,14 +27,14 @@ namespace DrtXaml.Tests
             return tests;
         }
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]  // In the future, we should validate the tree to confirm the Ctor/Factor was called correctly
         public const string SimpleFactoryAttribute = @"
 <t:FactoryMade    x:FactoryMethod='Create'
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
           xmlns:t='clr-namespace:Test.Elements;assembly=XamlTestClasses'/>
 ";
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]  // In the future, we should validate the tree to confirm the Ctor/Factor was called correctly
         public const string SimpleCtorArgsPE = @"
 <t:FactoryMade
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
@@ -82,7 +82,7 @@ namespace DrtXaml.Tests
             Assert.AreEqual(42, obj.Value.Value);
         }
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]  // In the future, we should validate the tree to confirm the Ctor/Factor was called correctly
         public const string SimpleFactoryAttrWithArgsPE = @"
 <t:FactoryMade
          xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
@@ -94,7 +94,7 @@ namespace DrtXaml.Tests
 </t:FactoryMade>
 ";
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]  // In the future, we should validate the tree to confirm the Ctor/Factor was called correctly
         public const string SimpleFactoryPEAndArgsPE = @"
 <t:FactoryMade
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
@@ -108,14 +108,14 @@ namespace DrtXaml.Tests
 </t:FactoryMade>
 ";
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]// In the future, we  should validate the tree to confirm the Ctor/Factor was called correctly
         public const string AttachedCreate = @"
 <FactoryMade   x:FactoryMethod='FactoryProvider.Create'
           xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
           xmlns='clr-namespace:Test.Elements;assembly=XamlTestClasses'/>
 ";
 
-        [TestXaml]  // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]// In the future, we  should validate the tree to confirm the Ctor/Factor was called correctly
         public const string OtherAttachedCreate = @"
 <FactoryMade    x:FactoryMethod='c:OtherFactoryProvider.Create'
           xmlns='clr-namespace:Test.Elements;assembly=XamlTestClasses'
@@ -123,7 +123,7 @@ namespace DrtXaml.Tests
           xmlns:c='clr-namespace:Test.Elements2;assembly=XamlTestClasses'/>
 ";
 
-        [TestXaml] // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]// In the future, we  should validate the tree to confirm the Ctor/Factor was called correctly
         public const string OutOfOrderTest = @"
 <FactoryMade IntProp='55'
           xmlns='clr-namespace:Test.Elements;assembly=XamlTestClasses'
@@ -132,7 +132,7 @@ namespace DrtXaml.Tests
 </FactoryMade>
 ";
 
-        [TestXaml] // TODO should validate the tree to confirm the Ctor/Factor was called correctly
+        [TestXaml]// In the future, we  should validate the tree to confirm the Ctor/Factor was called correctly
         public const string OutOfOrderNestedTest = @"
 <ElementListHolder
           xmlns='clr-namespace:Test.Elements;assembly=XamlTestClasses'

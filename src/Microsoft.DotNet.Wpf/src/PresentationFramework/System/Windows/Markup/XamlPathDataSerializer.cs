@@ -41,8 +41,6 @@ namespace System.Windows.Markup
 
     internal class XamlPathDataSerializer : XamlSerializer
     {
-
-
 #region Construction
 
         /// <summary>

@@ -736,7 +736,7 @@ namespace DrtXaml
   </ResourceWithNameableKey>
 </OrderedDictionary>";
 
-        // TODO, 555215, enable this test once the XamlObjectWriter supports directives that come after other members
+        // enable this test once the XamlObjectWriter supports directives that come after other members
         [TestXaml, TestTreeValidator("Validator5")]
         [TestKnownFailure("dglick")]
         const string KeyRefInElementFormWithinItem = @"

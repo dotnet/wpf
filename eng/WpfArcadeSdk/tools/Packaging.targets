@@ -5,10 +5,15 @@
   <PropertyGroup>
     <!-- Projects can override the name of the 'lib' folder to something else - for e.g., 'tools'-->
     <LibFolder Condition="'$(LibFolder)'==''">lib</LibFolder>
+    
+    <!-- 
+      Architecture-specific assemblies go under runtimes\<rid>\native\ 
+      https://docs.microsoft.com/en-us/nuget/create-packages/supporting-multiple-target-frameworks
+    -->
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageName Condition="'$(CreateArchNeutralPackage)'!='true'">$(PackageRuntimeIdentifierPrefix).$(PackageName)</PackageName>
+    <PackageName Condition="'$(CreateArchNeutralPackage)'!='true' And '$(PackageName)'!=''">$(PackageRuntimeIdentifierPrefix).$(PackageName)</PackageName>
     <NormalizedPackageName>$(PackageName.Replace('$(PackageRuntimeIdentifierPrefix).',''))</NormalizedPackageName>
     <NuspecPackageId>$(PackageName)</NuspecPackageId>
     <DevelopmentDependency Condition="'$(MsBuildSdkPackage)'=='true'">true</DevelopmentDependency>
@@ -56,24 +61,38 @@ $(PreparePackageAssetsDependsOn):
    -->
   <Target Name="PreparePackageAssets"
           AfterTargets="Build"
-          DependsOnTargets="$(PreparePackageAssetsDependsOn)"
+          DependsOnTargets="$(PreparePackageAssetsDependsOn);IdentifyPackageAssets;CopyPackageAssets"
+          Condition="'$(PackageName)'!=''" />
+
+  <Target Name="CopyPackageAssets"
+          Inputs="@(PackageAsset)"
+          Outputs="@(PackageAsset->'%(RelativePath)\%(Filename)%(Extension)')"
           Condition="'$(PackageName)'!=''">
-    
-    <!-- Identify $(TargetFrameworkOrRuntimeIdentifier) property -->
+    <MakeDir Condition="!Exists('%(PackageAsset.RelativePath')" Directories="@(PackageAsset->'%(RelativePath)')" />
+    <Copy Condition="(@(PackageAsset->Count()) &gt; 0)"
+          SourceFiles="@(PackageAsset)"
+          DestinationFolder="%(PackageAsset.RelativePath)" 
+          SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="IdentifyPackageAssets"
+          Returns="@(PackageAsset)"
+          Condition="'$(PackageName)'!=''">
+
     <PropertyGroup>
-      <TargetFrameworkOrRuntimeIdentifier Condition="'$(TargetFrameworkOrRuntimeIdentifier)'=='' and '$(TargetFramework)'!=''">$(TargetFramework)</TargetFrameworkOrRuntimeIdentifier>
+      <DestinationSubFolder Condition="'$(DestinationSubFolder)'=='' and '$(TargetFramework)'!=''">$(LibFolder)\$(TargetFramework)\</DestinationSubFolder>
     </PropertyGroup>
-    
-    <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(TargetFrameworkOrRuntimeIdentifier)'==''">
-      <TargetFrameworkOrRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">win-x86</TargetFrameworkOrRuntimeIdentifier>
-      <TargetFrameworkOrRuntimeIdentifier Condition="'$(Platform)'=='x64'">win-x64</TargetFrameworkOrRuntimeIdentifier>
+
+    <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(DestinationSubFolder)'==''">
+      <DestinationSubFolder Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">runtimes\win-x86\native\</DestinationSubFolder>
+      <DestinationSubFolder Condition="'$(Platform)'=='x64'">runtimes\win-x64\native\</DestinationSubFolder>
     </PropertyGroup>
 
     <!--
-        Instead of showing an error when $(TargetFrameworkOrRuntimeIdentifier) cannot be identified
+        Instead of showing an error when $(TargetFramework) or $(RuntimeIdentifier) cannot be identified
         we simply do no further work
 
-        Include all the DLL's, EXE's and PDB's under lib\
+        Include all the DLL's, EXE's and PDB's under $(DestinationSubFolder), i.e., either under lib\$(TargetFramework) or runtimes\$(RuntimeIdentifier)\native
         Include all reference assemblies under ref\
         Include all content files under content\
 
@@ -82,39 +101,49 @@ $(PreparePackageAssetsDependsOn):
     
     The CreateItem tasks below is equivalent to this: 
     
-    <ItemGroup Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true'">
-      <PackageAsset Include="$(OutDir)*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"/>
-      <PackageAsset Include="$(OutDir)*.exe" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"/>
-      <PackageAsset Include="$(OutDir)*.pdb" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\lib\$(TargetFrameworkOrRuntimeIdentifier)"/>
-      <PackageAsset Include="$(ReferenceAssemblyDir)*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\ref\$(TargetFrameworkOrRuntimeIdentifier)"/>
+    <ItemGroup Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true'">
+      <PackageAsset Include="$(OutDir)*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
+      <PackageAsset Include="$(OutDir)*.exe" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
+      <PackageAsset Include="$(OutDir)*.pdb" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
+      
+      <PackageAsset Include="$(ReferenceAssemblyDir)*.dll" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
+      <PackageAsset Include="$(ReferenceAssemblyDir)*.xml" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
     </ItemGroup>
     -->
-    <CreateItem Include="$(OutDir)*.dll" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+    <CreateItem Include="$(OutDir)*.dll"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    <CreateItem Include="$(OutDir)*.exe" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+    <CreateItem Include="$(OutDir)*.exe"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    <CreateItem Include="$(OutDir)*.pdb" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
+    <CreateItem Include="$(OutDir)*.pdb"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    <CreateItem Include="$(ReferenceAssemblyDir)*.dll" 
-                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFrameworkOrRuntimeIdentifier)"
-                Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
+    
+    <CreateItem Include="$(ReferenceAssemblyDir)*.dll"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
+                Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+    
+    <!-- Intellisense XML's bundled alongwith ref-pack content -->
+    <CreateItem Include="$(ReferenceAssemblyDir)*.xml"
+            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
+            Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 
     <CreateItem Include="$(OutDir)%(PackagingAssemblyContent.Identity)"
-            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)"
-            Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'!=''">
+            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+            Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'!=''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
-    </CreateItem>
+    </CreateItem>   
     <!-- 
         $(XlfLanguages) is defined by XliffTasks.
         The conversion of .resx files to .xlf files, and the building of resource assemblies (.resources.dll) and 
@@ -127,19 +156,20 @@ $(PreparePackageAssetsDependsOn):
     <ItemGroup Condition="'$(XlfLanguages)'!=''">
       <PackageAssetCultures Remove="$(PackageAssetCultures)" />
       <PackageAssetCultures Include="$(XlfLanguages)" />
-      
-      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll" RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\$(TargetFrameworkOrRuntimeIdentifier)\%(PackageAssetCultures.Identity)" />
+
+      <PackageAsset Include="$(OutDir)%(PackageAssetCultures.Identity)\*.dll"
+                    RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)\%(PackageAssetCultures.Identity)" />
     </ItemGroup>
-    
-    <ItemGroup Condition="'$(TargetFrameworkOrRuntimeIdentifier)'!=''">
+
+    <ItemGroup Condition="'$(DestinationSubFolder)'!=''">
 
       <!-- %(PackagingContent.SubFolder) not StartsWith 'root' -->
       <PackageAsset Condition="'%(PackagingContent.SubFolder)'!='' And !$([System.String]::Copy(&quot;%(PackagingContent.SubFolder)&quot;).StartsWith(&quot;root&quot;))"
               Include="%(PackagingContent.Identity)"
               RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content\%(PackagingContent.SubFolder)"/>
-      
-      <PackageAsset Condition="'%(PackagingContent.SubFolder)'==''" 
-                    Include="%(PackagingContent.Identity)" 
+
+      <PackageAsset Condition="'%(PackagingContent.SubFolder)'==''"
+                    Include="%(PackagingContent.Identity)"
                     RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content"/>
 
       <!-- 
@@ -173,11 +203,6 @@ $(PreparePackageAssetsDependsOn):
         <PackageName>$(NormalizedPackageName)</PackageName>
       </PackagingRootFolderSubFolders>
     </ItemGroup>
-
-    <MakeDir Condition="!Exists('%(PackageAsset.RelativePath')" Directories="@(PackageAsset->'%(RelativePath)')" />
-    <Copy Condition="(@(PackageAsset->Count()) &gt; 0) And !Exists('%(PackageAsset.RelativePath)\%(PackageAsset.Filename)%(PackageAsset.Extension)')"
-          SourceFiles="@(PackageAsset)" 
-          DestinationFolder="%(PackageAsset.RelativePath)" />
   </Target>
 
   <!-- Target:  CreateContentFolder -->
@@ -264,7 +289,31 @@ $(PreparePackageAssetsDependsOn):
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>
 
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.dll"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+        <Pack>true</Pack>
+        <PackagePath>runtimes</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.exe"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+        <Pack>true</Pack>
+        <PackagePath>runtimes</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.pdb"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+        <Pack>true</Pack>
+        <PackagePath>runtimes</PackagePath>
+      </Content>
+
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\**\*.dll"
+         Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')">
+        <Pack>true</Pack>
+        <PackagePath>ref</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\**\*.xml"
          Condition="Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\')">
         <Pack>true</Pack>
         <PackagePath>ref</PackagePath>
@@ -323,12 +372,9 @@ $(PreparePackageAssetsDependsOn):
         Ensure that SourceRevisionId is obtained if it has not already been read in 
         Reuse tasks from Microsoft.Build.Tasks.Git.targets
     --> 
-    <Microsoft.Build.Tasks.Git.LocateRepository Directory="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
-      <Output TaskParameter="Id" PropertyName="_GitRepositoryRoot" />
-    </Microsoft.Build.Tasks.Git.LocateRepository>
-    <Microsoft.Build.Tasks.Git.GetSourceRevisionId Root="$(_GitRepositoryRoot)" Condition="'$(SourceRevisionId)' == ''">
+    <Microsoft.Build.Tasks.Git.LocateRepository Path="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
       <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
-    </Microsoft.Build.Tasks.Git.GetSourceRevisionId>
+    </Microsoft.Build.Tasks.Git.LocateRepository>
     <ItemGroup>
       <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
       <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />

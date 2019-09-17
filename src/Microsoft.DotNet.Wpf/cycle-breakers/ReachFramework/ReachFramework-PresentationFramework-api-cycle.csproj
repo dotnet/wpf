@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ReachFramework</AssemblyName>
+    <PackageId>ReachFramework-PresentationFramework-api-cycle</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
+    <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
+    <!-- don't sign nor binplace this non-shipping assembly -->
+    <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="System.Printing.PrintTicket.cs" />
+    <Compile Include="System.Windows.Xps.Serialization.PrintTicketLevel.cs" />
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+  </ItemGroup>
+</Project>

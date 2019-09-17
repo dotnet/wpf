@@ -89,19 +89,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd>
-    <!-- Also update in global.json -->
-    <MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>
-    <MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>
-    <MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">true</UsePrivateCppTools>
   </PropertyGroup>
+  <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
   
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">
-    <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(MsvcurtNetCoreLib)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-
   <!-- Set up standard libraries for Native C++ projects -->
   <PropertyGroup>
     <!-- Explicitly set up CRT and VC runtime libraries -->
@@ -244,12 +235,6 @@
       <!-- WPF builds have historically used StdCall by default for all x86 native C++ builds -->
       <CallingConvention Condition="('$(ManagedCxx)'=='false') And ('$(Architecture)'=='x86')">StdCall</CallingConvention>
 
-
-      <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
-
-      <ForcedIncludeFiles>ddbanned.h</ForcedIncludeFiles>
-      
       <!-- See https://developercommunity.visualstudio.com/content/problem/297504/all-cppwinrt-code-fails-to-build-from-abi-and-to-a.html -->
       <!--<AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>-->
       <!--<ConformanceMode>false</ConformanceMode>-->

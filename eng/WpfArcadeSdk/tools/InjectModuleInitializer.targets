@@ -1,0 +1,440 @@
+<Project>
+  <Choose>
+    <!-- 
+        Use the IL Tools that are compiled and distributed with .NET Core.  WPF doesn't currently use these as default because they do not
+        support generating debugging information in the re-assembled binary.
+    -->
+    <When Condition="'$(UseNetCoreILTools)'=='true'">
+
+      <ItemGroup>
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILDAsm" Version="MicrosoftNETCoreILDAsmVersion" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.ILAsm" Version="MicrosoftNETCoreILAsmVersion" GeneratePathProperty="true" />
+        <PackageReference Include="$(PackageRuntimeIdentifierPrefix).Microsoft.NETCore.Runtime.CoreCLR" Version="MicrosoftNETCoreRuntimeCoreCLRVersion" GeneratePathProperty="true" />
+      </ItemGroup>
+
+      <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
+        <ILDAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x86_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x86_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
+        <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
+
+      </PropertyGroup>
+
+      <PropertyGroup>
+        <ILToolsPath>$(ArtifactsTmpDir)\iltools\$(PackageRuntimeIdentifierPrefix)\</ILToolsPath>
+        <ILDAsm>$(ILToolsPath)ildasm.exe</ILDAsm>
+        <ILAsm>$(ILToolsPath)ilasm.exe</ILAsm>
+      </PropertyGroup>
+
+    </When>
+  </Choose>
+
+  <PropertyGroup>
+    <TaskFactory>RoslynCodeTaskFactory</TaskFactory>
+    <TaskFactoryAssemblyFile>$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TaskFactoryReference Include="mscorlib" />
+    <TaskFactoryReference Include="netstandard" />
+  </ItemGroup>
+
+  <!--
+      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
+  -->
+  <UsingTask TaskName="FindDotNetFrameworkILToolsTask"
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <ILAsm ParameterType="System.String" Output="true"/>
+      <ILDAsm ParameterType="System.String" Output="true"/>
+      <DotNetBitness ParameterType="System.String" Required="true"/>
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="fragment" Language="cs">
+        <![CDATA[
+          try
+          {
+            var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
+            ILAsm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ILAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+            ILDAsm = ToolLocationHelper.GetPathToDotNetFrameworkSdkFile("ILDAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
+          }
+          catch(Exception e)
+          {
+            Log.LogError("FindDotNetFrameworkILToolsTask: Could not find .NET Framework IL Tools: " + e.ToString());
+          }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Call into the supplied ILDAsm. -->
+  <UsingTask TaskName="ILDasmTask"
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+
+      <ILDAsm ParameterType="System.String" Required="true" />
+
+      <!-- The assembly to disassemble -->
+      <Assembly ParameterType="System.String" Required="true" />
+
+      <Out ParameterType="System.String" Required="true" Output="true" />
+
+      <!-- Output in HTML format -->
+      <Html ParameterType="System.Boolean" Required="false" />
+      <!--  Output in rich text format -->
+      <Rtf ParameterType="System.Boolean" Required="false" />
+
+      <!--  Show actual bytes (in hex) as instruction comments -->
+      <Bytes ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show exception handling clauses in raw form -->
+      <RawEH ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show metadata tokens of classes and members -->
+      <Tokens ParameterType="System.Boolean" Required="false" />
+
+      <!-- Show original source lines as comments -->
+      <Source ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include references to original source lines -->
+      <LineNum ParameterType="System.Boolean" Required="false" />
+
+      <!-- =<vis>[+<vis>...]    Only disassemble the items with specified
+          visibility. (<vis> = PUB | PRI | FAM | ASM | FAA | FOA | PSC)
+       -->
+      <Visibility ParameterType="System.String" Required="false" />
+
+      <!-- Only disassemble the public items (same as /VIS=PUB) -->
+      <PubOnly ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include all names into single quotes -->
+      <QuoteAllNames ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress output of custom attributes -->
+      <NoCA ParameterType="System.Boolean" Required="false" />
+
+      <!-- Output CA blobs in verbal form (default - in binary form) -->
+      <CAVerbal ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress disassembly progress bar window pop-up -->
+      <NoBar ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use UTF-8 encoding for output (default - ANSI) -->
+      <Utf8 ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use UNICODE encoding for output -->
+      <Unicode ParameterType="System.Boolean" Required="false" />
+
+      <!-- Suppress IL assembler code output -->
+      <NoIL ParameterType="System.Boolean" Required="false" />
+
+      <!-- Use forward class declaration -->
+      <Forward ParameterType="System.Boolean" Required="false" />
+
+      <!-- Output full list of types (to preserve type ordering in round-trip) -->
+      <TypeList ParameterType="System.Boolean" Required="false" />
+
+      <!-- Display .NET projection view if input is a .winmd file -->
+      <Project ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include file headers information in the output -->
+      <Headers ParameterType="System.Boolean" Required="false" />
+
+      <!-- =<class>[::<method>[(<sig>)]  Disassemble the specified item only -->
+      <Item ParameterType="System.String" Required="false" />
+
+      <!-- Include statistics on the image -->
+      <Stats ParameterType="System.Boolean" Required="false" />
+
+      <!-- Include list of classes defined in the module -->
+      <ClassList ParameterType="System.Boolean" Required="false" />
+
+      <!-- Combination of /HEADER,/BYTES,/STATS,/CLASSLIST,/TOKENS -->
+      <All ParameterType="System.Boolean" Required="false" />
+
+      <!--  
+      Options for EXE,DLL,OBJ and LIB files:
+      /METADATA[=<specifier>] Show MetaData, where <specifier> is:
+          MDHEADER    Show MetaData header information and sizes.
+          HEX         Show more things in hex as well as words.
+          CSV         Show the record counts and heap sizes.
+          UNREX       Show unresolved externals.
+          SCHEMA      Show the MetaData header and schema information.
+          RAW         Show the raw MetaData tables.
+          HEAPS       Show the raw heaps.
+          VALIDATE    Validate the consistency of the metadata.
+      -->
+      <Metadata ParameterType="System.String" Required="false" />
+
+      <!-- 
+        Options for LIB files only:
+        /OBJECTFILE=<obj_file_name> Show MetaData of a single object file in library
+      -->
+      <ObjectFile ParameterType="System.String" Required="false" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(WpfArcadeSdkToolsDir)InjectModuleInitializer\ILDAsmTask.cs" />
+    </Task>
+  </UsingTask>
+
+  <!-- Call into the supplied ILAsm. -->
+  <UsingTask TaskName="ILAsmTask"
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <ILAsm ParameterType="System.String" Required="true" />
+      <SourceFile ParameterType="System.String" Required="true" />
+      <Out ParameterType="System.String" Required="true" Output="true" />
+
+      <!-- /NOLOGO         Don't type the logo -->
+      <NoLogo ParameterType="System.Boolean" Required="false" />
+
+      <!--/QUIET          Don't report assembly progress -->
+      <Quiet ParameterType="System.Boolean" Required="false" />
+
+      <!--/NOAUTOINHERIT  Disable inheriting from System.Object by default-->
+      <NoAutoInherit ParameterType="System.Boolean" Required="false" />
+
+      <!--/DLL            Compile to .dll-->
+      <Dll ParameterType="System.Boolean" Required="false" />
+
+      <!--/EXE            Compile to .exe (default)-->
+      <Exe ParameterType="System.Boolean" Required="false" />
+
+      <!--/PDB            Create the PDB file without enabling debug info tracking-->
+      <Pdb ParameterType="System.Boolean" Required="false" />
+
+      <!--/APPCONTAINER           Create an AppContainer exe or dll-->
+      <AppContainer ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG                  Disable JIT optimization, create PDB file, use sequence points from PDB-->
+      <Debug ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG=IMPL             Disable JIT optimization, create PDB file, use implicit sequence points-->
+      <DebugDisableJitOptimization ParameterType="System.Boolean" Required="false" />
+
+      <!--/DEBUG=OPT              Enable JIT optimization, create PDB file, use implicit sequence points -->
+      <DebugEnableJitOptimization ParameterType="System.Boolean" Required="false" />
+
+      <!--/OPTIMIZE               Optimize long instructions to short-->
+      <Optimize ParameterType="System.Boolean" Required="false" />
+
+      <!--/FOLD                   Fold the identical method bodies into one-->
+      <Fold ParameterType="System.Boolean" Required="false" />
+
+      <!--/CLOCK                  Measure and report compilation times-->
+      <Clock ParameterType="System.Boolean" Required="false" />
+
+      <!--/RESOURCE=<res_file>    Link the specified resource file (*.res) into resulting .exe or .dll -->
+      <Resource ParameterType="System.String" Required="false" />
+
+      <!--/CVRES=<path_to_file>   Set path to cvtres tool: /CVR=cvtres.exe /CVR=tool\cvtres.cmd /CVR=D:\tool\-->
+      <CvRes ParameterType="System.String" Required="false" />
+
+      <!--/KEY=<keyfile>          Compile with strong signature 
+            (<keyfile> contains private key)-->
+      <KeyFile ParameterType="System.String" Required="false" />
+
+      <!--/KEY=@<keysource>       Compile with strong signature 
+        (<keysource> is the private key source name)-->
+      <KeySource ParameterType="System.String" Required="false" />
+
+      <!--/INCLUDE=<path>         Set path to search for #include'd files-->
+      <Include ParameterType="System.String" Required="false" />
+
+      <!--/SUBSYSTEM=<int>        Set Subsystem value in the NT Optional header-->
+      <SubSystem ParameterType="System.String" Required="false" />
+
+      <!--/SSVER=<int>.<int>      Set Subsystem version number in the NT Optional header-->
+      <SubSystemVersion ParameterType="System.String" Required="false" />
+
+      <!--/FLAGS=<int>            Set CLR ImageFlags value in the CLR header-->
+      <Flags ParameterType="System.String" Required="false" />
+
+      <!--/ALIGNMENT=<int>        Set FileAlignment value in the NT Optional header-->
+      <Alignment ParameterType="System.String" Required="false" />
+
+      <!--/BASE=<int>             Set ImageBase value in the NT Optional header (max 2GB for 32-bit images)-->
+      <Base ParameterType="System.String" Required="false" />
+
+      <!--/STACK=<int>            Set SizeOfStackReserve value in the NT Optional header-->
+      <Stack ParameterType="System.String" Required="false" />
+
+      <!--/MDV=<version_string>   Set Metadata version string-->
+      <MetadataVersion ParameterType="System.String" Required="false" />
+
+      <!--/MSV=<int>.<int>        Set Metadata stream version (<major>.<minor>)-->
+      <MetadataStreamVersion ParameterType="System.String" Required="false" />
+
+      <!--/PE64                   Create a 64bit image (PE32+)-->
+      <PE64 ParameterType="System.String" Required="false" />
+
+      <!--/HIGHENTROPYVA          Set High Entropy Virtual Address capable PE32+ images (default for /APPCONTAINER)-->
+      <HighEntropyVirtualAddress ParameterType="System.String" Required="false" />
+
+      <!--/NOCORSTUB              Suppress generation of CORExeMain stub-->
+      <NoCorStub ParameterType="System.String" Required="false" />
+
+      <!--/STRIPRELOC             Indicate that no base relocations are needed-->
+      <StripReLoc ParameterType="System.String" Required="false" />
+
+      <!--/ITANIUM                Target processor: Intel Itanium-->
+      <Itanium ParameterType="System.String" Required="false" />
+
+      <!--/X64                    Target processor: 64bit AMD processor-->
+      <X64 ParameterType="System.String" Required="false" />
+
+      <!--/ARM                    Target processor: ARM processor-->
+      <Arm ParameterType="System.String" Required="false" />
+
+      <!--/32BITPREFERRED         Create a 32BitPreferred image (PE32)-->
+      <Prefer32Bit ParameterType="System.String" Required="false" />
+
+      <!--/ENC=<file>             Create Edit-and-Continue deltas from specified source file-->
+      <ENC ParameterType="System.String" Required="false" />
+
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(WpfArcadeSdkToolsDir)InjectModuleInitializer\ILAsmTask.cs" />
+    </Task>
+  </UsingTask>
+
+  <!-- Add a module initializer to the supplied IL file. -->
+  <UsingTask TaskName="AddModuleConstructorTask"
+             TaskFactory="$(TaskFactory)"
+             AssemblyFile="$(TaskFactoryAssemblyFile)">
+    <ParameterGroup>
+      <ILFile ParameterType="System.String" Required="true" Output="true"/>
+      <MsCorLibAssemblySectionIL ParameterType="System.String" Required="true" Output="true"/>
+      <ModuleConstructorIL ParameterType="System.String" Required="true" Output="true"/>
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Language="cs" Source="$(WpfArcadeSdkToolsDir)InjectModuleInitializer\AddModuleConstructorTask.cs" />
+    </Task>
+  </UsingTask>
+
+  <!-- 
+       In order to run ILDAsm and ILAsm from .NET Core, we need both the IL* executables and the corresponding version 
+       of CoreCLR in the same directory.  This target ensures that for every project using module initializer
+       injection.
+       
+       See: https://github.com/dotnet/coreclr/issues/23840 and https://github.com/dotnet/coreclr/issues/15059
+  -->
+  <Target Name="CopyILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'=='true'">
+    <ItemGroup>
+      <ILDAsm_Files Include="$(ILDAsmPath)*"/>
+      <ILAsm_Files Include="$(ILAsmPath)*"/>
+      <CoreCLR_Files Include="$(CoreCLRPath)*"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(ILToolsPath)" Condition="!Exists($(ILToolsPath))"/>
+
+    <Copy SourceFiles="@(ILDAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(ILAsm_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <!--
+      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
+  -->
+  <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
+    <PropertyGroup>
+      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">Bitness64</DotNetFrameworkBitness>
+      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">Bitness32</DotNetFrameworkBitness>
+    </PropertyGroup>
+    <FindDotNetFrameworkILToolsTask DotNetBitness="$(DotNetFrameworkBitness)">
+      <Output TaskParameter="ILDAsm" PropertyName="ILDAsm" />
+      <Output TaskParameter="ILAsm" PropertyName="ILAsm" />
+    </FindDotNetFrameworkILToolsTask>
+  </Target>
+
+  <!-- Disassemble the target binary. -->
+  <Target Name="DeconstructDll"
+        AfterTargets="CreateSatelliteAssemblies"
+        Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))"
+        Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))">
+    <PropertyGroup>
+      <InFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</InFile>
+      <OutFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</OutFile>
+    </PropertyGroup>
+
+    <Delete Files="$(OutFile)"
+            Condition="Exists('$(OutFile)')" />
+
+    <ILDasmTask ILDAsm="$(ILDAsm)"
+                Assembly="$(InFile)"
+                Condition="Exists('$(InFile)')"
+                LineNum="true"
+                Out="$(OutFile)"
+                NoBar="true" />
+
+  </Target>
+
+  <!-- Inject the module initializer into the target IL. -->
+  <Target Name="AddModuleConstructor"
+          AfterTargets="DeconstructDll">
+    <PropertyGroup>
+      <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
+      <ModuleInitializer>$(WpfArcadeSdkToolsDir)InjectModuleInitializer\ModuleInitializer.il</ModuleInitializer>
+      <MsCorLibAssemblySection>$(WpfArcadeSdkToolsDir)InjectModuleInitializer\MsCorLibAssemblySection.il</MsCorLibAssemblySection>
+    </PropertyGroup>
+
+    <AddModuleConstructorTask ILFile="$(ILFile)"
+                              MsCorLibAssemblySectionIL="$(ModuleInitializer)"
+                              ModuleConstructorIL="$(MsCorLibAssemblySection)"/>
+
+  </Target>
+
+  <!-- Re-assembly the target binary. -->
+  <Target Name="ReconstituteDll"
+          AfterTargets="AddModuleConstructor"
+          Inputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))"
+          Outputs="$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))">
+    <PropertyGroup>
+      <TargetFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName)$(TargetExt)'))</TargetFile>
+      <ResourceFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).res'))</ResourceFile>
+      <ILFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)$(AssemblyName).il'))</ILFile>
+    </PropertyGroup>
+
+    <!-- Ensures the DebuggableAttribute has the appropriate optimizations enabled. -->
+    <PropertyGroup>
+      <DebugEnableJitOptimization>false</DebugEnableJitOptimization>
+      <DebugEnableJitOptimization Condition="'$(Configuration)' == 'Release'">true</DebugEnableJitOptimization>
+    </PropertyGroup>
+
+    <!-- 
+      Make a backup before overwriting $(TargetFile) 
+    -->
+    <Copy SourceFiles="$(TargetFile)"
+          DestinationFiles="$(TargetFile).bak"
+          Condition="Exists('$(TargetFile)')" />
+
+    <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="!Exists('$(ResourceFile)')"
+               SourceFile="$(ILFile)"
+               Out="$(TargetFile)"
+               Dll="true"
+               Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
+               Quiet="true" />
+
+    <ILAsmTask ILAsm="$(ILAsm)"
+               Condition="Exists('$(ResourceFile)')"
+               SourceFile="$(ILFile)"
+               Resource="$(ResourceFile)"
+               Out="$(TargetFile)"
+               Dll="true"
+               Debug="true"
+               DebugEnableJitOptimization="$(DebugEnableJitOptimization)"
+               Quiet="true" />
+  </Target>
+
+</Project>

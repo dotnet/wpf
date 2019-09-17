@@ -1,0 +1,337 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; US-EN String Table
+; Default Resource (used for English and non-represented locales)
+;
+; This table includes the following sections:
+;       UI Strings
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                          UI Strings
+;
+; The following section is for all strings that will be seen by our users.
+; e.g., button labels, UA Text, tooltips, etc.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;UILanguage specification
+WPF_UILanguage=en
+
+;Progress bar UI strings
+ProgressBarPercentageStringFormat={0}%
+ProgressBarKiloBytesStringFormat={0} KB
+
+;DigitalSignatureWarnError
+DigitalSignatureWarnErrorSigningErrorTitle=XPS Document Signing Error
+DigitalSignatureWarnErrorRMSigningMessage=You do not have permission to sign this document.
+DigitalSignatureWarnErrorReadOnlyInputError=Requested signer and reason for signing must be entered before adding this requested signature.
+DigitalSignatureWarnErrorReadOnlyNoMoreRequest=This document has been signed already and cannot be signed again.
+DigitalSignatureWarnErrorRMSigningMessageNoCerts=Signing process failed. To sign this document, you need to obtain a digital certificate.
+DigitalSignatureNoFixedDocumentSequence=The document does not contain a valid FixedDocumentSequence.
+DigitalSignatureWarnErrorGeneric=The following error occurred while signing the document:\r\n{0}
+
+;DigitalSignatureMessage
+DigitalSignatureMessageSignNowTitle=Sign XPS Document
+DigitalSignatureMessageSignNow=Do you want to sign this document now?\r\n\r\nYou have just defined information about who is required to sign this document. You should digitally sign the document to ensure tamper evidence if someone tries to modify it. If you still want to modify this document then you should not sign it now.
+DigitalSignatureMessageSignPending=You have not selected any of the pending signatures requested by the publisher of this document. Are you sure you want to continue?
+DigitalSignatureMessageSignNoPending=This document has no pending signatures. Are you sure you want to sign it anyway?
+DigitalSignatureMessageActionInvalidatesSignature=The changes that you selected will invalidate one or more signatures that are applied to this document.\r\n\r\nAre you sure you want to continue?
+DigitalSignatureMessageDocumentNotSignable=This document cannot be signed because it contains content that cannot be displayed.
+DigitalSignatureMessageDocumentNotSignableTitle=Digital Signatures
+DigitalSignatureMessageAddRequestsBeforeSigning=You are about to apply the first digital signature to this document.\r\n\r\nIf this document must be signed by other users, you need to request their signatures before you sign by using the Digital Signatures menu.\r\n\r\nAfter you sign this document, changes to the document will invalidate your signature.  Are you sure you want to continue?
+DigitalSignatureMessageAddRequestsBeforeSigningTitle=Digital Signatures - Document Is Not Signed
+
+;DigitalSignatureSummary Dialog
+DigSigSumTitle=Digital Signature Summary
+DigSigRequestTitle=Request Digital Signatures
+DigSigSumSign=&Sign...
+DigSigSumViewCert=View &Certificate...
+DigSigSumDone=&Done
+DigSigSumRequestAdd=&Add...
+DigSigSumRequestDelete=De&lete
+
+;SignatureResources
+SignatureResourcesFormatForAccessibility=Summary: {0} Name: {1} Intent: {2} Locale: {3} Sign By: {4}
+
+;DigSigSumColumnHeader
+DigSigSumColumnHeaderSignatureStatus=Signature Status:
+DigSigSumColumnHeaderIntent=Intent:
+DigSigSumColumnHeaderLocale=Locale:
+DigSigSumColumnHeaderName=Name:
+DigSigSumColumnHeaderSignBy=Sign By:
+
+;DigSigIntentStrings
+DigSigIntentString1=<None>
+DigSigIntentString2=I am the author of this document.
+DigSigIntentString3=I have reviewed the contents of this document.
+DigSigIntentString4=I have reviewed and approve the contents of this document.
+DigSigIntentString5=I agree with the terms defined in this document.
+DigSigIntentString6=I attest to the accuracy and integrity of this document.
+
+;RequestSignatureDialog
+RequestSignatureDialogAdd=&Add
+RequestSignatureDialogCancel=Cancel
+RequestSignatureDialogRequestSignerNameLabel=Requested signer's name or role:
+RequestSignatureDialogIntentLabel=Reason for signing this document (choose one or create your own):
+RequestSignatureDialogLocationLabel=Location (for example, city name):
+RequestSignatureDialogSignatureAppliedByDateLabel=Signature must be applied by:
+RequestSignatureDialogTitle=Add Requested Signature
+
+;DocumentSignatureManager strings
+DocumentSignatureManagerUndetermined=This document contains digital signatures that will be checked when the download is complete. Click here to verify the signer's identity...
+DocumentSignatureManagerValid=This document is signed. All signatures are valid. Click here to view the signer's identity...
+DocumentSignatureManagerInvalid=This document is signed. However, there are problems with one or more signatures. Click here for more information...
+DocumentSignatureManagerAppliedToolTip=Click here to verify the signer's identity.
+DocumentSignatureManagerDefaultToolTip=Sign this document using a digital signature.
+
+;Certificate Selection Dialog
+CertSelectionDialogTitle=Digital Signature
+CertSelectionDialogMessage=Select a certificate
+
+;SigningDialog
+SigningDialogSignerlabel=Signing as '{0}'
+SigningDialogReasonLabel=Reason for signing this document (choose one or create your own): 
+SigningDialogLocationLabel=Location (for example, city name):
+SigningDialogActionlabel=The following will invalidate your signature:
+SigningDialogAddDocPropCheckBox=Add or modify document &properties (for example, author or keywords)
+SigningDialogAddDigSigCheckBox=Apply additional &digital signatures to this document
+SigningDialogCancelButton=Cancel
+SigningDialogSignButton=&Sign and Save
+SigningDialogSignSaveAsButton=Sign and Save &As...
+SigningDialogTitle=Signing XPS Document
+SigningDialogNA=N/A
+
+;Signing Progress
+SigningProgressLabel=Signing XPS document.
+SigningProgressTitle=Signing
+
+;Validation Progress
+ValidationProgressLabel=Validating content. Please wait.
+ValidationProgressTitle=Digital Signatures
+
+;SignatureResourceHelper
+SignatureResourceHelperSummaryBreakLine={0}\r\n
+SignatureResourceHelperSummaryFormat={0}{1}Signed by {2} on {3:d}\r\n{4}
+SignatureResourceHelperCertificateStatusOk=Certificate is valid
+SignatureResourceHelperCertificateStatusCorrupted=Certificate is corrupted
+SignatureResourceHelperCertificateStatusCannotBeVerified=Certificate cannot be verified
+SignatureResourceHelperCertificateStatusIssuerNotTrusted=Certificate issuer is not trusted
+SignatureResourceHelperCertificateStatusRevoked=Certificate has been revoked
+SignatureResourceHelperCertificateStatusExpired=Certificate has expired
+SignatureResourceHelperCertificateStatusNoCertificate=Certificate is missing
+SignatureResourceHelperCertificateStatusVerifying=Certificate is being verified
+SignatureResourceHelperSignatureStatusValid=Signature is valid
+SignatureResourceHelperSignatureStatusValidCertInvalid=Document has not been modified since signed
+SignatureResourceHelperSignatureStatusInvalid=Document has been modified since signed
+SignatureResourceHelperSignatureStatusUnverifiable=Not all signed content can be displayed
+SignatureResourceHelperValidSigSummaryPending=Signature pending:\r\n{0}\r\nSign by {1:d}\r\n{2}
+SignatureResourceHelperNone=<none>
+SignatureResourceHelperMissingCertificate=The certificate was null, which is not valid for the current certificate status.
+
+;RightsManagementWarnError
+RightsManagementWarnErrorTitle=XPS Document Rights Management Error
+RightsManagementWarnErrorGenericFailure=Failed to initialize rights management. Contact your network administrator or support personnel.
+RightsManagementWarnErrorNoAddress=Enter a valid e-mail address for whom to add rights.
+RightsManagementWarnErrorNoReferralAddress=Enter a valid e-mail address to contact for permissions.
+RightsManagementWarnErrorFailedToRemoveUser=Cannot remove this account because it is in use.
+RightsManagementWarnErrorRMNotInstalled=The Windows Rights Management Services Client (RMS) is required in order for you to be able to open and create XPS documents with restricted permissions. Do you want to download and install Windows RMS Client now?
+RightsManagementWarnErrorNoPermission=You do not have permission to open this document with this account. Would you like to use a different account or create a new account?
+RightsManagementWarnErrorTemporaryActivationNotSupported=The server does not support temporary activation.
+RightsManagementWarnErrorExpiredPermission=Cannot open this document because your permissions have expired.
+RightsManagementWarnErrorClockModified=Cannot open this document because the system clock has been modified.
+RightsManagementWarnErrorInvalidContent=Cannot open this document with restricted permissions because the content is invalid or corrupted.
+RightsManagementWarnErrorServerError=Cannot verify your permissions to this document because the server that manages permissions for this document is not available.
+RightsManagementWarnErrorDebuggerDetected=Cannot open or publish documents with restricted permissions because a debugging application has been detected.
+RightsManagementWarnErrorConfigurationError=This application has detected a problem with your Rights Management configuration. Contact your network administrator or support personnel.
+RightsManagementWarnErrorInvalidTemplate=Cannot sign with the requested template. Select a different template and contact your network administrator or support personnel.
+RightsManagementWarnErrorFailedToLoadTemplate=Cannot load the requested template. Select a different template and contact your network administrator or support personnel.
+
+;RMEnrollment
+RMEnrollmentTitle=Rights Management Configuration
+RMEnrollmentNext=&Next
+RMEnrollmentCancel=Cancel
+
+;RMCredManagement
+RMCredManagementCancel=Cancel
+RMCredManagementOk=OK
+RMCredManagementAdd=&Add...
+RMCredManagementRemove=&Remove
+RMCredManagementInstruction=Select one of the following user accounts to create or open content with restricted permission. To use an account not listed below, click Add.
+RMCredManagementDialog=User Accounts
+RMCredManagementWindowsAccount={0}
+RMCredManagementPassportAccount={0} (Passport)
+RMCredManagementUnknownAccount={0} (Unknown)
+
+RMEnrollmentPage1a=To publish or access XPS documents with restricted permissions, you need a user account.
+RMEnrollmentPage1b=You can use your network credentials (the account you use to log on to your company network) or your .NET Passport.
+RMEnrollmentPage1c=Privacy Statement: 
+RMEnrollmentPage1d=Each time you set up a user account to publish or access XPS documents with restricted permissions, computers that certify user accounts and manage permissions to the document check your user name and e-mail address. Your account password is not used during this process.
+RMEnrollmentPage1e=To continue, click Next.
+
+RMEnrollmentPage2a=Choose the account you want to use to open protected documents.
+RMEnrollmentPage2b=In the future, this account will be used automatically to open protected documents. You can change this setting later. Your document may need to be reloaded to use the new account.
+RMEnrollmentPage2c=N&etwork user account
+RMEnrollmentPage2e=.NET &Passport account
+
+RMEnrollmentPage3b=Please wait while we finish setting up your account.
+RMEnrollmentPage3c=Activating your account
+
+;RMPermissions
+RMPermissionsTitle=Permissions
+RMPermissionsAuthenticatedAs=You have permission to view this document as:
+RMPermissionsHavePermissions=You have the following permissions:
+RMPermissionsExpiresOn=This document expires on: 
+RMPermissionsNoExpiration=This document never expires
+RMPermissionsRequestFrom=Request additional permissions from:
+RMPermissionsUnknownOwner=Unknown
+RMPermissionsViewPermission=View
+RMPermissionsPrintPermission=Print
+RMPermissionsCopyPermission=Copy
+RMPermissionsSignPermission=Sign
+RMPermissionsAnnotatePermission=Annotate
+RMPermissionsOwnerPermission=Owner
+RMPermissionsCloseButton=&Close
+
+;RMPublishing
+RMPublishingTitle=Permissions
+RMPublishingUnrestrictedRadio=Do not apply permissions
+RMPublishingPermissionsRadio=Apply permissions
+RMPublishingTemplateRadio=Apply permissions using a template
+RMPublishingMainContentGroupLabel=Details
+RMPublishingUnrestrictedText=All users can view this document, digitally sign it, or change permissions. To decide who can access the document and for how long, apply permissions. You can apply permissions to this version of the document, or save a copy of the document and then apply changes to the copy only.
+RMPublishingSelectTemplate=Select one of your company's predefined templates:
+RMPublishingPeoplePickerButton=People Picker
+RMPublishingPeoplePickerButtonToolTip=Find users, contacts, and groups.
+RMPublishingAddUserButton=&Add User
+RMPublishingAddUserButtonToolTip=Type an e-mail address, and then add the user to the list so you can apply permissions.
+RMPublishingAnyoneButton=Everyone
+RMPublishingAnyoneButtonToolTip=Allow all users to read the document, or apply other permissions for all users.
+RMPublishingUserHeader=User
+RMPublishingReadHeader=Read
+RMPublishingCopyHeader=Copy
+RMPublishingPrintHeader=Print
+RMPublishingSignHeader=Sign
+RMPublishingOwnerHeader=All
+RMPublishingRemoveButton=Remove
+RMPublishingRemoveButtonToolTip=Remove permissions for selected users, contacts, or groups.
+RMPublishingExpiresOn=Permissions e&xpire on
+RMPublishingRequestPermissionsFrom=Users can re&quest additional permissions from:
+RMPublishingSaveButton=&Save
+RMPublishingSaveButtonToolTip=Apply selected permissions to the current document.
+RMPublishingSaveAsButton=Sa&ve As...
+RMPublishingSaveAsButtonToolTip=Save a copy of the document and apply selected permissions to the copy only.
+RMPublishingCancelButton=Cancel
+RMPublishingAnyoneUserDisplay=Everyone
+RMPublishingUserSeparator=;
+ServerSideTemplateDisplayNone=<none>
+
+;Document RMStatus Strings
+RMProtected=This document is restricted. Click here to view your permissions...
+RMAppliedToolTip=View my permissions for this document.
+RMDefaultToolTip=Choose who can view or manage this document and for how long.
+
+;RightsManagementProvider exceptions
+RMProviderExceptionNoPublishLicense=Document protected with rights management does not have publish license.
+RMProviderExceptionNoPackageToDecrypt=No encrypted package to decrypt.
+RMProviderExceptionNoRightsToDocument=The current user does not have permission to access the document.
+RMProviderExceptionNotOwnerOfDocument=Only the owner of a document is allowed to publish it.
+RMProviderExceptionNoUseLicense=The current user has no use license for the document.
+RightsManagementExceptionNoRightsForOperation=The user does not have sufficient rights to perform the operation.
+
+;DocumentApplicationDocumentViewer
+DocumentApplicationDocumentViewerSignCommand=Sign this document
+DocumentApplicationDocumentViewerRequestSignersCommand=Request signatures
+DocumentApplicationDocumentViewerShowSignatureSummaryCommand=View signature details
+DocumentApplicationDocumentViewerShowRMPublishingUICommand=Set permissions
+DocumentApplicationDocumentViewerShowRMPermissionsCommand=View my permissions
+DocumentApplicationDocumentViewerShowRMCredentialManagerCommand=Restrict permission as...
+DocumentApplicationDocumentViewerFocusToolBarCommand=Give focus to the main toolbar.
+ZoomPercentageConverterStringFormat={0:0.##}%
+
+;PageTextBox
+PageTextBoxToolTip=Type the number of the page that you want to view.
+
+;ZoomComboBox
+ZoomComboBoxToolTip=Select a zoom percentage or type a zoom percent.
+ZoomComboBoxItem400=400%
+ZoomComboBoxItem250=250%
+ZoomComboBoxItem150=150%
+ZoomComboBoxItem100=100%
+ZoomComboBoxItem75=75%
+ZoomComboBoxItem50=50%
+ZoomComboBoxItem25=25%
+
+;DocumentPropertiesDialog Strings
+DocumentPropertiesDialogTitle=XPS Document Properties
+DocumentPropertiesDialogSummaryLabel=Content
+DocumentPropertiesDialogTitleLabel=Title:
+DocumentPropertiesDialogAuthorLabel=Author:
+DocumentPropertiesDialogSubjectLabel=Subject:
+DocumentPropertiesDialogDescriptionLabel=Description:
+DocumentPropertiesDialogKeywordsLabel=Keywords:
+DocumentPropertiesDialogCategoryLabel=Category:
+DocumentPropertiesDialogLanguageLabel=Language:
+DocumentPropertiesDialogContentLabel=Content:
+DocumentPropertiesDialogStatusLabel=Status:
+DocumentPropertiesDialogVersionLabel=Version:
+DocumentPropertiesDialogIdentifierLabel=Identifier:
+DocumentPropertiesDialogOkButtonLabel=&Close
+DocumentPropertiesDialogInfoLabel=File
+DocumentPropertiesDialogSizeLabel=Size:
+DocumentPropertiesDialogDocumentDetailBoxLabel=Authoring Information
+DocumentPropertiesDialogLastSavedByLabel=Last Saved By:
+DocumentPropertiesDialogRevisionLabel=Revision:
+DocumentPropertiesDialogDocumentCreatedLabel=Published:
+DocumentPropertiesDialogDocumentModifiedLabel=Edited:
+DocumentPropertiesDialogDocumentPrintedLabel=Printed:
+DocumentPropertiesDialogFileSystemBoxLabel=File System
+DocumentPropertiesDialogFileCreatedLabel=Created:
+DocumentPropertiesDialogFileModifiedLabel=Modified:
+DocumentPropertiesDialogFileAccessedLabel=Accessed:
+DocumentPropertiesDialogDateFormat={0:F}
+DocumentPropertiesDialogFileSizeFormat={{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})
+DocumentPropertiesDialogFileSizeBytesUnit=bytes
+DocumentPropertiesDialogFileSizeKBUnit=KB
+DocumentPropertiesDialogFileSizeMBUnit=MB
+DocumentPropertiesDialogDocumentPropertiesMustExist=DocumentProperties must exist.
+DocumentPropertiesDialogNotAvailable=Not Available
+
+;FileManagement
+FileManagementSaveFilter=Document (*.xps)|*.xps
+FileManagementSaveExt=.xps
+FileManagementTitleError=File Access Error
+FileManagementNoAccessToDestination=Cannot save to the target location.
+FileManagementNoAccessToSource=Cannot open from the target location.
+FileManagementNoTemporaryFileAccess=Cannot create a temporary file; some features will not be available.
+FileManagementDestinationIsReadOnly=Cannot save to this file because it is read-only.
+FileManagementStreamProxyIsReadOnly=Cannot change target because stream proxy is read-only.
+
+;TransactionalPackage
+PackagingWriteableDelegateGaveNullPart=Delegate returned a null writing part.
+PackagingWriteableDelegateGaveNullStream=Delegate returned a null writing stream.
+PackagingCircularReference=Value returned from writeable factory delegate refers to self.
+PackagingWriteNotSupported=This instance cannot perform write operations.
+
+;RestrictedTransactionalPackage
+PackagePartTypeNotWritable=Writing to parts with the provided content type is not supported.
+
+;DocumentStream
+DocumentStreamMustBeXpsFile=Only XPS documents are supported.
+DocumentStreamMustBeFileSource=Operation valid only on file based sources.
+DocumentStreamMustBeTemporary=Operation valid only on temporary documents.
+DocumentStreamCanNoLongerOpen=Can no longer open file.
+
+;PackageController
+PackageControllerStreamCorruption=Source and destination cannot be same stream.
+
+;PeoplePickerWrapper
+PeoplePickerErrorConditionFromOpenQueryWindow=An error was returned from OpenQueryWindow while invoking the Find Users, Contacts, and Groups dialog box, HRESULT={0}.
+PeoplePickerInvalidParentWindow=The parent HWND passed to the Find Users, Contacts, and Groups dialog box is not valid.
+
+;XpsViewerException
+XpsViewerGenericException=There has been an exception in this application.
+XpsViewerRightsManagementException=An XPS viewer rights management operation failed.

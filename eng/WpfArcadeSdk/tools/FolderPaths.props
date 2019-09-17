@@ -1,7 +1,10 @@
 <Project>
   <PropertyGroup>
     <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
+    <WpfApiCompatBaselineDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\ApiCompat\Baselines\</WpfApiCompatBaselineDir>
     <WpfSourceDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\</WpfSourceDir>
-    <WpfSharedDir>$(WpfSourceDir)shared\</WpfSharedDir>
+    <WpfGraphicsPath>$(WpfSourceDir)WpfGfx\</WpfGraphicsPath>
+    <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>
+    <WpfPresentationNativeDir>$(WpfSourceDir)PresentationNative\</WpfPresentationNativeDir>
   </PropertyGroup>
 </Project>

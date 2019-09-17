@@ -1,0 +1,5 @@
+Compat issues with assembly WindowsFormsIntegration:
+CannotRemoveAttribute : Attribute 'System.ComponentModel.DesignerAttribute' exists on 'System.Windows.Forms.Integration.ElementHost' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.Design.Serialization.DesignerSerializerAttribute' exists on 'System.Windows.Forms.Integration.ElementHost' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Security.SecurityCriticalAttribute' exists on 'System.Windows.Forms.Integration.PropertyMap' in the contract but not the implementation.
+Total Issues: 3

@@ -1965,8 +1965,7 @@ namespace System.Windows.Markup
                     _names[elementName] = null; // we don't care about value, just key
                 }
             }
-
-        }
+}
 
         class PreserveItemSet
         {

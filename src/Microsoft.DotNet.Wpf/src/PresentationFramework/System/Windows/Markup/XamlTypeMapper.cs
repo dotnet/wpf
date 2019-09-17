@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //  Maps namespaceURI and LocalName to appropriate element, properties, and events.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Xml;
@@ -49,7 +47,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     ///<summary>
     /// Handles mapping between XML NamepaceURI and .NET namespace types
     ///</summary>
@@ -479,7 +476,6 @@ namespace System.Windows.Markup
                 as RoutedEvent;
 
             return Event;
-
         }
 
 #endif
@@ -1197,9 +1193,9 @@ namespace System.Windows.Markup
         private bool IsInternalTypeAllowedInFullTrust(Type type)
         {
             bool isAllowed = false;
-            // If caller has Full Trust and the type is internal, then allow them to participate
+            // If the type is internal, then allow them to participate
             // in deciding if that internal type should be accessible.
-            if (ReflectionHelper.IsInternalType(type) && MS.Internal.SecurityHelper.IsFullTrustCaller())
+            if (ReflectionHelper.IsInternalType(type))
             {
                 isAllowed = AllowInternalType(type);
             }
@@ -1367,7 +1363,6 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-
                             // See if attached property first - start from a Setter
                             memberInfo = objectType.GetMethod("Set" + localName,
                                 defaultBinding |
@@ -1679,7 +1674,6 @@ namespace System.Windows.Markup
                     else
                     {
                         memInfo = DependencyProperty.FromName(localName, baseType);
-
                     }
 
                     if (null != memInfo)
@@ -2096,7 +2090,6 @@ namespace System.Windows.Markup
         /// </summary>
         internal static string GetPropertyName(object propertyMember)
         {
-
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
             if (dp != null)
@@ -2137,7 +2130,6 @@ namespace System.Windows.Markup
             }
             else
             {
-
 #if !PBTCOMPILER
                 Debug.Assert( propertyMember is DependencyProperty);
                 validType = ((DependencyProperty)propertyMember).OwnerType;
@@ -2249,7 +2241,6 @@ namespace System.Windows.Markup
 
             // Didn't find a match, so return null.
             return null;
-
        }
 #endif
 
@@ -2415,7 +2406,6 @@ namespace System.Windows.Markup
                 string    xmlNamespace,     // xml namespace for the type
                 string    localName)        // local name of the type without any '.'
         {
-
             Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
             Debug.Assert(null != localName,"null value passed for localName");
 
@@ -2455,7 +2445,6 @@ namespace System.Windows.Markup
                 string    localName,        // local name of the type without any '.'
                 object    dpOrPiorMi)       // property associated with the type
         {
-
             Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
             Debug.Assert(null != localName,"null value passed for localName");
 
@@ -2649,7 +2638,6 @@ namespace System.Windows.Markup
                     try
                     {
                         type = assembly.GetType(fullTypeName);
-
                     }
                     catch (Exception e)
                     {
@@ -2772,53 +2760,20 @@ namespace System.Windows.Markup
             return ith;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create instances of
-        /// allowed\accessible internal types. If permission is granted, the parser will directly
-        /// use reflection to create the internal instance. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt creating the internal
-        /// instance using the user app's security context.
-        /// </SecurityNote>
         internal static object CreateInternalInstance(ParserContext pc, Type type)
         {
-            object instance = null;
-            // if caller has member access reflection permission, use reflection directly
-            if (SecurityHelper.CallerHasMemberAccessReflectionPermission())
-            {
-                instance = Activator.CreateInstance(type,
-                                                    BindingFlags.Public |
-                                                    BindingFlags.NonPublic |
-                                                    BindingFlags.Instance |
-                                                    BindingFlags.CreateInstance,
-                                                    null,
-                                                    null,
-                                                    TypeConverterHelper.InvariantEnglishUS);
-            }
-            else
-            {
-                // else this must be an accessible internal type in PT --- call the generated InternalTypeHelper
-                // in the caller's secuirty context.
-
-                // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current
-                // stream being read was created from. So even if the internal type were not legitimate, the call
-                // to create it via ith.CreateInstance would fail in PT.
-                InternalTypeHelper ith = XamlTypeMapper.GetInternalTypeHelperFromAssembly(pc);
-                if (ith != null)
-                {
-                    instance = ith.CreateInstance(type, TypeConverterHelper.InvariantEnglishUS);
-                }
-            }
+            object instance = Activator.CreateInstance(type,
+                                                BindingFlags.Public |
+                                                BindingFlags.NonPublic |
+                                                BindingFlags.Instance |
+                                                BindingFlags.CreateInstance,
+                                                null,
+                                                null,
+                                                TypeConverterHelper.InvariantEnglishUS);
 
             return instance;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to get an allowed\accessible
-        /// internal property value on an allowed\accessible type. If permission is granted, the parser
-        /// will directly use reflection to get the property value. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt getting the internal property
-        /// value using the user app's security context.
-        /// </SecurityNote>
         internal static object GetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target)
         {
             object propValue = null;
@@ -2828,36 +2783,12 @@ namespace System.Windows.Markup
 
             if (isAllowedProperty)
             {
-                // if public getter on internal type or caller has member access permission, use reflection directly
-                if (isPublicProperty || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    propValue = pi.GetValue(target, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
-                }
-                else
-                {
-                    // else this must be an internal property getter on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current stream
-                    // being read was created from. So even if the internal property were not legitimate, the call
-                    // to access it via ith.GetPropertyValue would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        propValue = ith.GetPropertyValue(pi, target, TypeConverterHelper.InvariantEnglishUS);
-                    }
-                }
+                propValue = pi.GetValue(target, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
             }
 
             return propValue;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to set an allowed\accessible internal
-        /// property value on an allowed\accessible type. If permission is granted, the parser will directly use
-        /// reflection to set the property value. If not, it will call a method on a generated class in the user's
-        /// code context in order to attempt setting the internal property value using the user app's security context.
-        /// </SecurityNote>
         internal static bool SetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target, object value)
         {
             bool isPublicProperty = false;
@@ -2866,38 +2797,13 @@ namespace System.Windows.Markup
 
             if (isAllowedProperty)
             {
-                // if public setter on internal type or caller has member access permission, use reflection directly
-                if (isPublicProperty || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    pi.SetValue(target, value, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
-                    return true;
-                }
-                else
-                {
-                    // else this must be an internal property setter on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current stream
-                    // being read was created from. So even if the internal property were not legitimate, the call
-                    // to set it via ith.SetPropertyValue would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        ith.SetPropertyValue(pi, target, value, TypeConverterHelper.InvariantEnglishUS);
-                        return true;
-                    }
-                }
+                pi.SetValue(target, value, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
+                return true;
             }
 
             return false;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create an accessible delegate for a
-        /// non public event handler method. If permission is granted, the parser will directly use reflection
-        /// to create the delegate. If not, it will call a method on a generated class in the user's code context
-        /// in order to attempt creating the delegate using the user app's security context.
-        /// </SecurityNote>
         internal static Delegate CreateDelegate(ParserContext pc, Type delegateType, object target, string handler)
         {
             Delegate d = null;
@@ -2905,36 +2811,12 @@ namespace System.Windows.Markup
 
             if (isAllowedDelegateType)
             {
-                if (SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    d = Delegate.CreateDelegate(delegateType, target, handler);
-                }
-                else
-                {
-                    // target is always the root generated element. Check to see if it is in the
-                    // same assembly as the one from which the currently processed stream was created,
-                    // as an added precaution.
-                    if (target.GetType().Assembly == pc.StreamCreatedAssembly)
-                    {
-                        InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                        if (ith != null)
-                        {
-                            d = ith.CreateDelegate(delegateType, target, handler);
-                        }
-                    }
-                }
+                 d = Delegate.CreateDelegate(delegateType, target, handler);
             }
 
             return d;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to add a delegate handler for an
-        /// allowed\accessible internal event on an allowed\accessible type. If permission is granted, the
-        /// parser will directly use reflection to add the event handler delegate. If not, it will call a
-        /// method on a generated class in the user's code context in order to attempt adding the internal
-        /// event handler delegate using the user app's security context.
-        /// </SecurityNote>
         internal static bool AddInternalEventHandler(ParserContext pc, object rootElement, EventInfo eventInfo, object target, Delegate handler)
         {
             bool isPublicEvent = false;
@@ -2943,27 +2825,8 @@ namespace System.Windows.Markup
 
             if (isAllowedEvent)
             {
-                // if public event on internal type or caller has member access permission, use reflection directly
-                if (isPublicEvent || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    eventInfo.AddEventHandler(target, handler);
-                    return true;
-                }
-                else
-                {
-                    // else this must be an internal event on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current
-                    // stream being read was created from. So even if the internal event ere not legitimate, the call
-                    // to add a handler to it via ith.AddEventHandler would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        ith.AddEventHandler(eventInfo, target, handler);
-                        return true;
-                    }
-                }
+                eventInfo.AddEventHandler(target, handler);
+                return true;
             }
 
             return false;
@@ -3408,7 +3271,6 @@ namespace System.Windows.Markup
                 // now walk through any using statements we got and add them
                 if (null != namespaceAssemblyPair)
                 {
-
                     for (int j = 0; j < namespaceAssemblyPair.Count; j++)
                     {
                         ClrNamespaceAssemblyPair mapping = namespaceAssemblyPair[j];
@@ -3558,7 +3420,6 @@ namespace System.Windows.Markup
         internal static List<ClrNamespaceAssemblyPair> GetClrNamespacePairFromCache(
                 string namespaceUri)
         {
-
             List<ClrNamespaceAssemblyPair> mappingArray = null;
 
             if (_xmlnsCache == null)
@@ -4360,7 +4221,6 @@ namespace System.Windows.Markup
     public class NamespaceMapEntry
 #endif
     {
-
         #region Constructors
 
         ///<summary>
@@ -4534,7 +4394,6 @@ namespace System.Windows.Markup
         string   _clrNamespace;
 
 #endregion Data
-
     }
 
     // This is a convenience holder for all the possible IDs that Xaml understands which could
@@ -4552,7 +4411,6 @@ namespace System.Windows.Markup
     // class for getting and setting mapping defaults.
     internal static class XmlParserDefaults
     {
-
 #region Methods
 
         /// <summary>
@@ -4604,7 +4462,6 @@ namespace System.Windows.Markup
 #endregion Data
     }
 #endregion XmlParserDefaults Class
-
 }
 
 

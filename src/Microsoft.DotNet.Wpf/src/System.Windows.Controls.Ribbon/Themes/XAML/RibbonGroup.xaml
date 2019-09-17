@@ -1,0 +1,635 @@
+<!-- [[Generic]] -->
+
+<!--=================================================================
+            RibbonGroup
+    ==================================================================-->
+    
+<SolidColorBrush x:Key="RibbonGroupCollapsedInnerIconBorderBackgroundKey" Color="#50FFFFFF"/>
+
+<RadialGradientBrush x:Key="RibbonGroupCollapsedButtonLabelBackgroundKey" GradientOrigin="0.5,1" Center="0.5,0.5"  RadiusX="1" RadiusY="0.5">
+    <GradientStop Offset="0" Color="#30FFFFFF"/>
+    <GradientStop Offset="1" Color="#08808080"/>
+</RadialGradientBrush>
+
+<RadialGradientBrush x:Key="RibbonGroupCollpasedButtonPressedLabelBackgroundKey" GradientOrigin="0.5,0.95" Center="0.5,1"  RadiusX="0.9" RadiusY="0.5">
+    <GradientStop Offset="0" Color="#AAFFFFFF"/>
+    <GradientStop Offset="1" Color="#40BBBBBB"/>
+</RadialGradientBrush>
+
+<SolidColorBrush x:Key="RibbonGroupCollapsedMouseOverBackgroundKey" Color="#40FFFFFF" />
+
+<LinearGradientBrush x:Key="RibbonGroupCollapsedOuterIconBorderBackgroundKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Color="#88FFFFFF" Offset="0.0"/>
+    <GradientStop Color="#88DBE7F4" Offset="1.0"/>
+</LinearGradientBrush>
+<SolidColorBrush x:Key="RibbonGroupCollapsedOuterIconBorderBrushKey" Color="#AEBECF" />
+<SolidColorBrush x:Key="RibbonGroupCollapsedInnerIconBorderBrushKey" Color="#FCFCFC" />
+
+<LinearGradientBrush x:Key="RibbonGroupBackgroundBrushIsMouseOverKey" StartPoint="0.0,0.5" EndPoint="1.0,0.5">
+    <GradientStop Color="#01FFFFFF" Offset="0.0"></GradientStop>
+    <GradientStop Color="#80FFFFFF" Offset="0.5"></GradientStop>
+    <GradientStop Color="#01FFFFFF" Offset="1.0"></GradientStop>
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="RibbonGroupSeparatorBorderBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Color="#F5F9FD" Offset="0" />
+    <GradientStop Color="#EDF1F5" Offset="1" />
+</LinearGradientBrush>
+    
+<LinearGradientBrush x:Key="QATRibbonGroupToggleButtonMouseOverBackgroundKey" StartPoint="0,0" EndPoint="1,1">
+    <GradientStop Offset="0" Color="#80FFFFFF"/>
+    <GradientStop Offset="0.5" Color="#60FFFFFF"/>
+    <GradientStop Offset="1" Color="#40808080"/>
+</LinearGradientBrush>
+<LinearGradientBrush x:Key="QATRibbonGroupToggleButtonCheckedBackgroundKey" StartPoint="0,0" EndPoint="1,1">
+    <GradientStop Offset="0" Color="#80808080"/>
+    <GradientStop Offset="1" Color="#80FFFFFF"/>
+</LinearGradientBrush>
+
+<!--
+    Collapsed RibbonGroup is structed as RibbonGroup => RibbonToggleButton + Popup.  This is the
+    Style for that RibbonToggleButton.
+-->
+<Style x:Key="CollapsedRibbonGroupToggleButtonStyle" TargetType="{x:Type ribbon:RibbonToggleButton}">
+    <Setter Property="Focusable" Value="True"/>
+    <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonGroup}}, Path=BorderBrush}"/>
+    <Setter Property="MouseOverBorderBrush" Value="Transparent"/>
+    <Setter Property="MouseOverBackground" Value="{StaticResource RibbonGroupCollapsedMouseOverBackgroundKey}"/>
+    <Setter Property="FocusedBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.FocusedBackground}" />
+    <Setter Property="FocusedBorderBrush" Value="Transparent" />
+    <Setter Property="CheckedBackground" Value="Transparent"/>
+    <Setter Property="CheckedBorderBrush" Value="Transparent"/>
+    <Setter Property="ClickMode" Value="Press"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:RibbonToggleButton}">
+                <ControlTemplate.Resources>
+                    <DataTemplate DataType="{x:Type system:String}">
+                        <ribbon:RibbonTwoLineText Text="{Binding}"
+                                                  Margin="2,4,2,0"
+                                                  TextAlignment="Center"
+                                                  VerticalAlignment="Top"
+                                                  LineHeight="13px"
+                                                  LineStackingStrategy="BlockLineHeight"
+                                                  HasTwoLines="{TemplateBinding ribbon:RibbonTwoLineText.HasTwoLines}"
+                                                  PathFill="{TemplateBinding TextElement.Foreground}"
+                                                  PathData="{TemplateBinding ribbon:RibbonTwoLineText.PathData}" />
+                    </DataTemplate>
+                </ControlTemplate.Resources>
+                <Grid x:Name="MainGrid"
+                      SnapsToDevicePixels="True">
+                    <Border x:Name="ButtonInnerBorder" 
+                            CornerRadius="2" 
+                            BorderThickness="1" 
+                            Margin="1" 
+                            BorderBrush="#EAF1FB" />
+                    <Border x:Name="ButtonOuterBorder" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="2"
+                            BorderThickness="1" />
+                    <Border x:Name="PART_HotBackground"
+                            Opacity="0"
+                            CornerRadius="2"
+                            BorderThickness="1"
+                            Background="{TemplateBinding MouseOverBackground}"
+                            BorderBrush="{TemplateBinding MouseOverBorderBrush}" />
+                    <Grid Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" 
+                                x:Name="ImageOuterBorder">
+                            <Border x:Name="ImageMiddleBorder"  
+                                    Margin="3"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center"
+                                    BorderBrush="{StaticResource RibbonGroupCollapsedOuterIconBorderBrushKey}"
+                                    BorderThickness="0"
+                                    Width="32"
+                                    Height="32"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <Border x:Name="ImageInnerBorder" 
+                                            BorderBrush="{StaticResource RibbonGroupCollapsedInnerIconBorderBrushKey}"
+                                            BorderThickness="0"
+                                            CornerRadius="3" />
+                                    <Image x:Name="GroupImage" Source="{TemplateBinding LargeImageSource}"
+                                           Width="32"
+                                           Height="32"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                </Grid>
+                            </Border>
+                        </Border>
+                        <Border x:Name="LabelBorder" 
+                                Grid.Row="1" 
+                                Grid.RowSpan="2" 
+                                Background="{StaticResource RibbonGroupCollapsedButtonLabelBackgroundKey}">
+                            <ContentPresenter ribbon:RibbonTwoLineText.HasTwoLines="True"
+                                              ribbon:RibbonTwoLineText.PathData="{StaticResource DownArrowGeometryKey}"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="LargeImageSource" Value="{x:Null}">
+                        <Setter TargetName="GroupImage" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SmallImageSource}"/>
+                        <Setter TargetName="GroupImage" Property="Width" Value="16"/>
+                        <Setter TargetName="GroupImage" Property="Height" Value="16"/>
+                        <Setter TargetName="ImageMiddleBorder" Property="BorderThickness" Value="1"/>
+                        <Setter TargetName="ImageMiddleBorder" Property="Background" Value="{StaticResource RibbonGroupCollapsedOuterIconBorderBackgroundKey}"/>
+                        <Setter TargetName="ImageInnerBorder" Property="BorderThickness" Value="1"/>
+                        <Setter TargetName="ImageInnerBorder" Property="Background" Value="{StaticResource RibbonGroupCollapsedInnerIconBorderBackgroundKey}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="GroupImage" Property="Opacity" Value="0.5" />
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}"/>
+                    </Trigger>
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                        <Setter TargetName="ImageMiddleBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="ImageMiddleBorder" Property="BorderThickness" Value="0"/>
+                        <Setter TargetName="ImageInnerBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="ImageInnerBorder" Property="BorderThickness" Value="0"/>
+                        <Setter TargetName="PART_HotBackground" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="LabelBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="ButtonOuterBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="ButtonOuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <Setter TargetName="ButtonOuterBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="ButtonInnerBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="ButtonInnerBorder" Property="BorderThickness" Value="0,1,0,0"/>
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="ButtonInnerBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        <Setter TargetName="ButtonInnerBorder" Property="BorderThickness" Value="1"/>
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="ButtonInnerBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        <Setter TargetName="ButtonInnerBorder" Property="BorderThickness" Value="1"/>
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="ButtonOuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                    </MultiDataTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True"></Condition>
+                            <Condition Property="IsChecked" Value="False"></Condition>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="PART_HotBackground" Property="Opacity" Value="1"/>
+                    </MultiTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}" Value="True"/>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="PART_HotBackground" Property="Opacity" Value="1"/>
+                        <Setter TargetName="PART_HotBackground" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBackground}"/>
+                        <Setter TargetName="PART_HotBackground" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBorderBrush}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="PART_HotBackground" Property="Opacity" Value="1"/>
+                        <Setter TargetName="PART_HotBackground" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBackground}"/>
+                        <Setter TargetName="PART_HotBackground" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBorderBrush}"/>
+                        <Setter TargetName="ImageOuterBorder" Property="Background" Value="#20BBBBBB"/>
+                        <Setter TargetName="LabelBorder" Property="Background" Value="{StaticResource RibbonGroupCollpasedButtonPressedLabelBackgroundKey}"/>
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+    
+<Style x:Key="QATRibbonGroupToggleButtonStyle" TargetType="{x:Type ribbon:RibbonToggleButton}">
+    <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+    <Setter Property="Focusable" Value="True"/>
+    <Setter Property="BorderBrush" Value="#80808080"/>
+    <Setter Property="Background" Value="#AAFFFFFF"/>
+    <Setter Property="MouseOverBorderBrush" Value="Transparent"/>
+    <Setter Property="MouseOverBackground" Value="{StaticResource QATRibbonGroupToggleButtonMouseOverBackgroundKey}"/>
+    <Setter Property="FocusedBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.FocusedBackground}" />
+    <Setter Property="FocusedBorderBrush" Value="Transparent" />
+    <Setter Property="CheckedBackground" Value="{StaticResource QATRibbonGroupToggleButtonCheckedBackgroundKey}"/>
+    <Setter Property="CheckedBorderBrush" Value="Transparent"/>
+    <Setter Property="Margin" Value="0,-1,0,0"/>
+    <Setter Property="ClickMode" Value="Press"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:RibbonToggleButton}">
+                <Border Name="OuterBorder" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="1" 
+                        CornerRadius="3"  
+                        Background="{TemplateBinding Background}">
+                    <Grid>
+                        <Border Name="InnerBorder" 
+                                CornerRadius="3" 
+                                Background="{TemplateBinding MouseOverBackground}"
+                                BorderBrush="{TemplateBinding MouseOverBorderBrush}"
+                                Opacity="0"/>
+                        <Image Margin="3,2" Name="GroupImage" Source="{TemplateBinding SmallImageSource}"
+                                               Width="16"
+                                               Height="16"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               RenderOptions.BitmapScalingMode="{TemplateBinding RenderOptions.BitmapScalingMode}" />
+                    </Grid>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="GroupImage" Property="Opacity" Value="0.5" />
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding Path=Background, RelativeSource={RelativeSource Self}}" Value="Transparent"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.Background}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="1"/>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="Transparent"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}" Value="True"/>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="1"/>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBackground}"/>
+                        <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBorderBrush}"/>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="Transparent"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBackground}"/>
+                        <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBorderBrush}"/>
+                        <Setter TargetName="InnerBorder" Property="Opacity" Value="1"/>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="#AA808080"/>
+                    </MultiDataTrigger>
+                    
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="OuterBorder" Property="CornerRadius" Value="0"/>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        <Setter TargetName="OuterBorder" Property="Background" Value="Transparent"/>
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<ControlTemplate x:Key="RibbonGroupTemplate" TargetType="{x:Type ribbon:RibbonGroup}">
+    <Border Name="GroupBorder"
+            Background="{TemplateBinding Background}"
+            Margin="1,2,0,0">
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="16" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Name="PART_HotBackground"
+                        Background="{TemplateBinding MouseOverBackground}"
+                        BorderBrush="{TemplateBinding MouseOverBorderBrush}"
+                        Opacity="0"
+                        Grid.RowSpan="3"
+                        CornerRadius="2"
+                        BorderThickness="1"
+                        SnapsToDevicePixels="True"/>
+            <Border Name="SeparatorBorder" Background="{TemplateBinding BorderBrush}"
+                        Grid.Column="1"
+                        Grid.RowSpan="3"
+                        Height="75"
+                        Width="1"
+                        VerticalAlignment="Center"
+                        SnapsToDevicePixels="True" />
+            <Border Margin="2,1,2,0" Padding="3,0,3,0">
+                <Grid>
+                    <ItemsPresenter Name="ItemsPresenter"/>
+                    <ContentControl Name="PART_TemplateContentControl" Visibility="Collapsed" Focusable="False"/>
+                </Grid>
+            </Border>
+            <Border Name="LabelSeparatorBorder" 
+                    Grid.Row="1"
+                    Height="1"
+                    Margin="5,1,5,-1"/>
+            <Grid Margin="2,0,2,0" Grid.Row="2">
+                <ContentPresenter Name="PART_Header"
+                                  TextElement.Foreground="{StaticResource RibbonDisabledForegroundBrushKey}"
+                                  ContentSource="Header"
+                                  Margin="2,0,2,0"
+                                  MaxHeight="16"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Border>
+    <ControlTemplate.Triggers>
+        <Trigger Property="IsEnabled" Value="False">
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}"/>
+        </Trigger>
+
+#ifdef Net45
+        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+            <Setter TargetName="PART_HotBackground" Property="Background" Value="Transparent"/>
+            <Setter TargetName="SeparatorBorder" Property="Visibility" Value="Collapsed"/>
+            <Setter TargetName="GroupBorder" Property="BorderThickness" Value="1"/>
+            <Setter TargetName="GroupBorder" Property="Background" Value="Transparent"/>
+            <Setter TargetName="GroupBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+            <Setter TargetName="LabelSeparatorBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+        </DataTrigger>
+
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+            </MultiDataTrigger.Conditions>
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+        </MultiDataTrigger>
+    </ControlTemplate.Triggers>
+</ControlTemplate>
+
+<ControlTemplate x:Key="CollapsedRibbonGroupTemplate" TargetType="{x:Type ribbon:RibbonGroup}">
+    <Grid x:Name="MainGrid">
+        <ribbon:RibbonToggleButton x:Name="PART_ToggleButton" 
+                                                   Margin="0,3,0,0"
+                                                   Style="{StaticResource CollapsedRibbonGroupToggleButtonStyle}"
+                                                   Content="{TemplateBinding Header}"
+                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                   Background="{TemplateBinding Background}"
+                                                   LargeImageSource="{TemplateBinding LargeImageSource}"
+                                                   SmallImageSource="{TemplateBinding SmallImageSource}"
+                                                   IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="true"
+                               Placement="Bottom"                               
+                               PlacementTarget="{Binding ElementName=PART_ToggleButton}"
+                               IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Focusable="false"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+            <classic:SystemDropShadowChrome Name="Shdw" 
+                                            Color="Transparent" 
+                                            SnapsToDevicePixels="true" 
+                                            CornerRadius="2" 
+                                            Focusable="True" 
+                                            FocusVisualStyle="{x:Null}"
+                                            controls:KeyTipService.IsKeyTipScope="True"
+#ifdef Net40
+                                            RenderOptions.ClearTypeHint="Enabled"
+#endif
+                                            >
+                <Grid Name="PART_PopupGrid" Height="{TemplateBinding ActualHeight}" Margin="0,1.5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" MinHeight="16" />
+                    </Grid.RowDefinitions>
+                    <Border Name="PopupBorder" Grid.RowSpan="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.BorderBrush}"
+                            BorderThickness="1"/>
+                    <Border Name="PART_HotBackground"
+                            Background="{TemplateBinding MouseOverBackground}"
+                            BorderBrush="{TemplateBinding MouseOverBorderBrush}"
+                            Opacity="0"
+                            Grid.RowSpan="2"
+                            CornerRadius="2"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="True"/>
+                    <Border Margin="2,3.5,2,0" Padding="3,0,3,0">
+                        <Grid>
+                            <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.TabNavigation="Cycle"
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                    SnapsToDevicePixels="True"
+                                                    Grid.IsSharedSizeScope="true"/>
+                            <ContentControl Name="PART_TemplateContentControl" Visibility="Collapsed" Focusable="False"/>
+                        </Grid>
+                    </Border>
+                    <Grid Margin="2,0,2,1" Grid.Row="1">
+                        <ContentPresenter Name="PART_Header"
+                                          TextElement.Foreground="{StaticResource RibbonDisabledForegroundBrushKey}"
+                                          ContentSource="Header"
+                                          Margin="2,0,2,0"
+                                          MaxHeight="15"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </classic:SystemDropShadowChrome>
+        </Popup>
+    </Grid>
+    <ControlTemplate.Triggers>
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+#ifdef Net45
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                <Condition Binding="{Binding Path=Background, RelativeSource={RelativeSource Self}}" Value="Transparent"/>
+            </MultiDataTrigger.Conditions>
+            <Setter TargetName="PopupBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.Background}"/>
+        </MultiDataTrigger>
+        <Trigger Property="IsEnabled" Value="False">
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}"/>
+        </Trigger>
+
+#ifdef Net45
+        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+            <Setter TargetName="PART_HotBackground" Property="Background" Value="Transparent"/>
+            <Setter TargetName="PART_Popup" Property="PopupAnimation"  Value="None" />
+            <Setter TargetName="PopupBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+            <Setter TargetName="PopupBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter TargetName="Shdw" Property="CornerRadius" Value="0"/>
+        </DataTrigger>
+
+        <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="true">
+            <Setter TargetName="Shdw" Property="Margin" Value="0,0,5,5"/>
+            <Setter TargetName="Shdw" Property="Color" Value="{StaticResource RibbonShadowColorKey}"/>
+        </Trigger>
+
+        <Trigger SourceName="PART_Popup" Property="Popup.IsOpen" Value="False">
+            <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+        </Trigger>
+
+        <Trigger Property="IsInQuickAccessToolBar" Value="True">
+            <Setter TargetName="PART_PopupGrid" Property="Height" Value="{StaticResource RibbonHeight}"/>
+            <Setter TargetName="PART_ToggleButton" Property="Style" Value="{StaticResource QATRibbonGroupToggleButtonStyle}"/>
+            <Setter TargetName="PART_ToggleButton" Property="Margin" Value="0"/>
+        </Trigger>
+
+        <Trigger Property="IsDropDownOpen" Value="True">
+            <Setter TargetName="MainGrid" Property="ToolTipService.IsEnabled" Value="False" />
+        </Trigger>
+
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+            </MultiDataTrigger.Conditions>
+            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+        </MultiDataTrigger>
+    </ControlTemplate.Triggers>
+</ControlTemplate>
+
+<Style x:Key="{x:Type ribbon:RibbonGroup}" TargetType="{x:Type ribbon:RibbonGroup}">
+    <Setter Property="Margin" Value="1" />
+    <Setter Property="Padding" Value="3,0,3,0" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template" Value="{StaticResource RibbonGroupTemplate}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.BorderBrush}" />
+    <Setter Property="MouseOverBackground" Value="{StaticResource RibbonGroupBackgroundBrushIsMouseOverKey}"/>
+    <Setter Property="MouseOverBorderBrush" Value="Transparent"/>
+    <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource RibbonToolTipInitialShowDelayKey}" />
+    <Setter Property="ToolTipService.ShowDuration" Value="{StaticResource RibbonToolTipShowDurationKey}" />
+    <Setter Property="ToolTipService.BetweenShowDelay" Value="{StaticResource RibbonToolTipBetweenShowDelayKey}" />
+    <Style.Triggers>
+        <Trigger Property="IsCollapsed" Value="True">
+            <Setter Property="Template" Value="{StaticResource CollapsedRibbonGroupTemplate}" />
+        </Trigger>
+    </Style.Triggers>
+</Style>

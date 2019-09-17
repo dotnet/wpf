@@ -13,7 +13,6 @@ using System.Text;
 namespace System.Windows.Markup
 #endif
 {
-
     //+--------------------------------------------------------------------------------------
     // 
     //  DateTimeConverter2

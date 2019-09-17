@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
-    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.0;netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp5.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
@@ -51,16 +51,16 @@
       <Link>Common\WPF\MS\Utility\FrugalList.cs</Link>
     </Compile>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
-        <Link>Common\System\SR.cs</Link>
+      <Link>Common\System\SR.cs</Link>
     </Compile>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Remove="System\Xaml\XamlProperty.cs" />
-    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'=='net461' OR '$(TargetFramework)'=='netcoreapp3.0'" />
+    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" Condition="'$(TargetFramework)'=='net461' OR '$(TargetFramework)'=='netcoreapp5.0'" />
     <Compile Remove="System\Xaml\Schema\ClrProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ImplicitProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ClrAttachableEvent.cs" />
@@ -83,32 +83,38 @@
     <Compile Remove="System\Xaml\Context\HashSet.cs" />
     <Compile Remove="System\Xaml\MS\Impl\ConcurrentDictionary.cs" />
     <Compile Remove="System\Xaml\MS\Impl\XamlPropertyInfoKey.cs" />
-    
-   </ItemGroup>
-    
+    <!-- Do not include reference assembly files. -->
+    <Compile Remove="ref\System.Xaml.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.Concurrent" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.Collections.Specialized" />    
+    <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Diagnostics.Debug" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Globalization" />
+    <NetCoreReference Include="System.IO" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Reflection.Emit.ILGeneration" />
     <NetCoreReference Include="System.Reflection.Emit.Lightweight" />
-    <NetCoreReference Include="System.Reflection.Primitives" />    
+    <NetCoreReference Include="System.Reflection.Primitives" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />    
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Reflection" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
+    <NetCoreReference Include="System.Text.Encoding" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Tasks" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
     <NetCoreReference Include="System.Xml" />
@@ -116,5 +122,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+    <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 </Project>

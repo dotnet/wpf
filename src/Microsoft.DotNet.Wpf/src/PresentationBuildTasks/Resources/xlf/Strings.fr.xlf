@@ -1,0 +1,1202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="fr" original="../Strings.resx">
+    <body>
+      <trans-unit id="AnalysisResult">
+        <source>Analysis Result : '{0}'.</source>
+        <target state="translated">Résultat de l'analyse : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AppDefIsNotRequired">
+        <source>MC1002: Library project file cannot specify ApplicationDefinition element.</source>
+        <target state="translated">MC1002 : le fichier de projet de bibliothèque ne peut pas spécifier un élément ApplicationDefinition.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationDefinitionFile">
+        <source>Input: Markup ApplicationDefinition file: '{0}'.</source>
+        <target state="translated">Entrée : fichier ApplicationDefinition de balisage : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeNotAllowedOnCodeTag">
+        <source>MC6015: '{0}' cannot be set on the '{1}:{2}' tag.</source>
+        <target state="translated">MC6015 : impossible de définir '{0}' sur la balise '{1}:{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadUidTask">
+        <source>UM1001: Unrecognized UidManager task name '{0}'.</source>
+        <target state="translated">UM1001 : nom de tâche UidManager non reconnu '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CheckingUids">
+        <source>Checking Uids in file '{0}' ...</source>
+        <target state="translated">Contrôle des Uid du fichier '{0}' ...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerated">
+        <source>Generated localization directives file: '{0}' .</source>
+        <target state="translated">Fichier de directives de localisation généré : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerating">
+        <source>Generating localization directives file: '{0}' ...</source>
+        <target state="translated">Génération du fichier de directives de localisation : '{0}' ...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompilationDone">
+        <source>Markup compilation is done.</source>
+        <target state="translated">Compilation du balisage terminée.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass1">
+        <source>MarkupCompilePass1 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass1 a généré avec succès les fichiers BAML ou de code source.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass2">
+        <source>MarkupCompilePass2 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass2 a généré avec succès les fichiers BAML ou de code source.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainingTagNotGeneric">
+        <source>MC6011: '{0}' event has a generic event handler delegate type '{1}'. The type parameters of '{1}' cannot be bound with an appropriate type argument because the containing tag '{2}' is not a generic type.</source>
+        <target state="translated">MC6011 : l'événement '{0}' possède un type délégué de gestionnaires d'événements générique '{1}'. Les paramètres type de '{1}' ne peuvent pas être liés à un argument type approprié car la balise contenante '{2}' n'est pas un type générique.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentDirectory">
+        <source>Current project directory is '{0}'.</source>
+        <target state="translated">Le répertoire projet actuel est '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionAttributeNotAllowed">
+        <source>MC6022: Only a root tag can specify attribute '{0}:{1}'.</source>
+        <target state="translated">MC6022 : seule une balise racine peut spécifier l'attribut '{0}:{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionTagNotAllowedAtRoot">
+        <source>MC6010: '{0}:{1}' cannot be specified as the root element.</source>
+        <target state="translated">MC6010 : impossible de spécifier '{0}:{1}' comme élément racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefnTagsCannotBeNested">
+        <source>MC6004: '{0}:{1}' contains '{2}'. '{0}:{1}' can contain only a CDATA or text section.</source>
+        <target state="translated">MC6004 : '{0}:{1}' contient '{2}'. '{0}:{1}' ne peut contenir qu'une section CDATA ou texte.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DoCompilation">
+        <source>Started the markup compilation.</source>
+        <target state="translated">Démarrage de la compilation du balisage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyEventStringNotAllowed">
+        <source>MC6030: {0}="{1}" is not valid. '{0}' event attribute value cannot be a string that is empty or has only white space.</source>
+        <target state="translated">MC6030 : {0}="{1}" n'est pas valide. La valeur de l'attribut d'événement '{0}' ne peut pas être une chaîne vide ou ne comportant que des espaces.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FieldModifierNotAllowed">
+        <source>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</source>
+        <target state="translated">MC6021 : {0}:FieldModifier ne peut pas être spécifié sur cette balise car il n'a pas d'attribut {0}:Name ou Name défini, ou la balise est localement définie et possède un attribut Name défini, ce qui n'est pas autorisé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFound">
+        <source>BG1002: File '{0}' cannot be found.</source>
+        <target state="translated">BG1002 : impossible de trouver le fichier '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileResolved">
+        <source>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</source>
+        <target state="translated">Résolution du fichier d'entrée '{0}' en nouveau chemin relatif '{1}' au répertoire '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesFailedUidCheck">
+        <source>UM1004: {0} files failed Uid check.</source>
+        <target state="translated">UM1004 : échec du contrôle des Uid des fichiers {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesPassedUidCheck">
+        <source>Uids valid in {0} files.</source>
+        <target state="translated">Uid valides dans les fichiers {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesRemovedUid">
+        <source>Uids removed from {0} files.</source>
+        <target state="translated">Uid supprimées des fichiers {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesUpdatedUid">
+        <source>Uids updated in {0} files.</source>
+        <target state="translated">Uid mises à jour dans les fichiers {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">Fichier BAML généré : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedCodeFile">
+        <source>Generated code file: '{0}'.</source>
+        <target state="translated">Fichier code généré : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalCDataTextScoping">
+        <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
+        <target state="translated">MC6003 : '{0}:{1}' contient '{2}'. '{0}:{1}' ne peut pas comporter un contenu imbriqué.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IntermediateDirectoryError">
+        <source>UM1006: '{0}' directory does not exist and cannot be created.</source>
+        <target state="translated">UM1006 : le répertoire '{0}' n'existe pas et ne peut pas être créé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InternalTypeHelperNotRequired">
+        <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
+        <target state="translated">Classe InternalTypeHelper non obligatoire pour ce projet, fichier Make '{0}' vide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassName">
+        <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
+        <target state="translated">MC6018 : nom de classe '{0}' non valide pour l'élément racine XAML défini localement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassNamespace">
+        <source>MC6019: '{0}' namespace is not valid for the locally defined XAML root element '{1}'.</source>
+        <target state="translated">MC6019 : espace de noms '{0}' non valide pour l'élément racine XAML défini localement '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClassName">
+        <source>MC6027: {0}:{1}="{2}" is not valid. '{2}' is not a valid {3}class name.</source>
+        <target state="translated">MC6027 : {0}:{1}="{2}" non valide. '{2}' n'est pas un nom de classe {3} valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCulture">
+        <source>FC1001: The UICulture value '{0}' set in the project file is not valid.</source>
+        <target state="translated">FC1001 : la valeur UICulture '{0}' définie dans le fichier projet n'est pas valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCustomSerialize">
+        <source>MC4402: Serializer does not support custom BAML serialization operations.</source>
+        <target state="translated">MC4402 : le sérialiseur ne prend pas en charge les opérations de sérialisation BAML personnalisées.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDeSerialize">
+        <source>MC4401: Serializer does not support Convert operations.</source>
+        <target state="translated">MC4401 : le sérialiseur ne prend pas en charge les opérations Convert.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDefaultCLRNamespace">
+        <source>MC6029: '{0}' name is not valid in the default namespace '{1}'. Correct the RootNamespace tag value in the project file.</source>
+        <target state="translated">MC6029 : nom '{0}' non valide dans l'espace de noms par défaut '{1}'. Corrigez la valeur de la balise RootNamespace dans le fichier projet.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEventHandlerName">
+        <source>MC6005: {0}="{1}" is not valid. '{1}' is not a valid event handler method name. Only instance methods on the generated or code-behind class are valid.</source>
+        <target state="translated">MC6005 : {0}="{1}" n'est pas valide. '{1}' n'est pas un nom valide de méthode de gestionnaire d'événement. Seules les méthodes d'instance de la classe générée ou code-behind sont valides.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentTarget">
+        <source>LC1001: Localization comment target property is not valid in string '{0}'.</source>
+        <target state="translated">LC1001 : la propriété cible des commentaires de localisation n'est pas valide dans la chaîne '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentValue">
+        <source>LC1002: Localization comment value is not valid for target property '{0}' in string '{1}'.</source>
+        <target state="translated">LC1002 : la valeur des commentaires de localisation n'est pas valide pour la propriété cible '{0}' de la chaîne '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocalizabilityValue">
+        <source>LC1004: Localizability attribute setting '{0}' is not valid.</source>
+        <target state="translated">LC1004 : paramétrage de l'attribut Localizability '{0}' non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMarkupFile">
+        <source>MC6001: Markup file is not valid. Specify a source markup file with an .xaml extension.</source>
+        <target state="translated">MC6001 : fichier de balisage non valide. Spécifiez un fichier de balisage source avec une extension .xaml.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeName">
+        <source>MC6028: {0}:TypeArguments="{1}" is not valid. '{2}' is not a valid type name reference for the generic argument at position '{3}'.</source>
+        <target state="translated">MC6028: {0}:TypeArguments="{1}" n'est pas valide. '{2}' n'est pas une référence de nom de type valide pour l'argument générique à la position '{3}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXml">
+        <source>MC3000: '{0}' XML is not valid.</source>
+        <target state="translated">MC3000 : XML '{0}' non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalNamePropertyNotAllowed">
+        <source>MC6023: Because '{0}' is implemented in the same assembly, you must set the {1}:Name attribute rather than the Name attribute.</source>
+        <target state="translated">MC6023 : comme '{0}' est implémenté dans le même assembly, vous devez définir l'attribut {1}:Name à la place de l'attribut Name.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefAppDefFile">
+        <source>Input: Local reference markup ApplicationDefinition file is '{0}'.</source>
+        <target state="translated">Entrée : le fichier ApplicationDefinition de balisage de référence local est '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefGeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">Fichier BAML généré : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefMarkupPage">
+        <source>Input: Local reference markup Page file: '{0}'.</source>
+        <target state="translated">Entrée : fichier Page de balisage de référence local : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MatchingTypeArgsNotFoundInRefType">
+        <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
+        <target state="translated">MC6012 : l'événement '{0}' possède un type délégué de gestionnaires d'événements générique '{1}'. Le paramètre type '{2}' de '{1}' ne correspond pas aux paramètres type de la balise générique contenante '{3}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForCodeTag">
+        <source>MC6026: '{0}' root element requires a {1}:Class attribute because '{2}' contains a {1}:Code tag. Either remove {1}:Code and its contents, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6026 : l'élément racine '{0}' nécessite un attribut {1}:Class car '{2}' contient une balise {1}:Code. Supprimez {1}:Code et son contenu, ou ajoutez un attribut {1}:Class à l'élément racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForEvent">
+        <source>MC6024: '{0}' root element requires a {1}:Class attribute to support event handlers in the XAML file. Either remove the event handler for the {2} event, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6024 : l'élément racine '{0}' nécessite un attribut {1}:Class pour prendre en charge les gestionnaires d'événements du fichier XAML. Supprimez le gestionnaire d'événements de l'événement {2} ou ajoutez un attribut {1}:Class à l'élément racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForTypeArgs">
+        <source>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</source>
+        <target state="translated">MC6025 : l'élément racine '{0}' est un type générique et nécessite un attribut {1}:Class pour prendre en charge l'attribut {1}:TypeArguments spécifié sur la balise de l'élément racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithFieldModifier">
+        <source>MC6031: {0}:FieldModifier attribute cannot be specified because a {0}:Class attribute is also required to generate a Name field with the specified access modifier. Either add a {0}:Class attribute on the root tag or remove the {0}:FieldModifier attribute.</source>
+        <target state="translated">MC6031 : l'attribut {0}:FieldModifier ne peut pas être spécifié car un attribut {0}:Class est également obligatoire pour générer un champ Name avec le modificateur d'accès spécifié. Ajoutez un attribut {0}:Class sur la balise racine ou supprimez l'attribut {0}:FieldModifier.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithModifier">
+        <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
+        <target state="translated">MC6009 : l'attribut {0}:ClassModifier ne peut pas être spécifié sur la balise racine car un attribut {0}:Class est également obligatoire. Ajoutez un attribut {0}:Class sur la balise racine ou supprimez l'attribut {0}:ClassModifier.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithSubClass">
+        <source>MC6016: {0}:Class attribute is missing. It is required when a {0}:Subclass attribute is specified.</source>
+        <target state="translated">MC6016 : l'attribut {0}:Class est manquant. Il est obligatoire quand un attribut {0}:Subclass est spécifié.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreResourcesFiles">
+        <source>RG1002: ResourcesGenerator can generate only one .resources file at a time. The OutputResourcesFile property in the project file must be set to one file.</source>
+        <target state="translated">RG1002 : ResourcesGenerator ne peut générer qu'un seul fichier .resources à la fois. La propriété OutputResourcesFile du fichier projet doit être définie avec un seul fichier.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSplashScreenImages">
+        <source>MC1004: Project file cannot specify more than one SplashScreen element.</source>
+        <target state="translated">MC1004 : le fichier projet ne peut pas spécifier plus d'un élément SplashScreen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleUidUse">
+        <source>UM1002: Uid "{0}" for element '{1}' is not unique.</source>
+        <target state="translated">UM1002 : l'Uid "{0}" de l'élément '{1}' n'est pas unique.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MutlipleApplicationFiles">
+        <source>MC1003: Project file cannot specify more than one ApplicationDefinition element.</source>
+        <target state="translated">MC1003 : le fichier projet ne peut pas spécifier plusieurs éléments ApplicationDefinition.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedResDictItemWarning">
+        <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
+        <target state="translated">Un '{0}' est appelé '{1}'. N'attribuez pas de nom au contenu ResourceDictionary, car son installation est différée.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonClsError">
+        <source>BG1001: Unknown CLS exception.</source>
+        <target state="translated">BG1001 : exception CLS inconnue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OutputType">
+        <source>OutputType is '{0}'.</source>
+        <target state="translated">OutputType est '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAbandonedTypeConverterText">
+        <source>MC3001: TypeConverter syntax error encountered while processing initialization string '{0}'. Property elements are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3001: erreur de syntaxe TypeConverter rencontrée lors du traitement de la chaîne d'initialisation '{0}'. Les éléments de propriété ne sont pas autorisés sur les objets créés via TypeConverter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>MC3099: Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">MC3099 : impossible de charger l'assembly '{0}', car une autre version du même assembly est chargée '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAsyncOnRoot">
+        <source>MC3002: The AsyncRecords attribute must be set on the root tag.</source>
+        <target state="translated">MC3002 : l'attribut AsyncRecords doit être défini sur la balise racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttachedPropInheritError">
+        <source>MC3015: The attached property '{0}' is not defined on '{1}' or one of its base classes.</source>
+        <target state="translated">MC3015 : la propriété jointe '{0}' n'est pas définie sur '{1}' ou l'une de ses classes de base.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>MC3003: There are too many attributes specified for '{0}'.</source>
+        <target state="translated">MC3003 : trop d'attributs spécifiés pour '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>MC3004: There are not enough attributes specified for '{0}'.</source>
+        <target state="translated">MC3004 : nombre d'attributs spécifié pour '{0}' insuffisant.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeNamespaceMisMatch">
+        <source>MC3005: The property '{0}' must be in the default namespace or in the element namespace '{1}'.</source>
+        <target state="translated">MC3005 : la propriété '{0}' doit être dans l'espace de noms par défaut ou dans l'espace de noms de l'élément '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyName">
+        <source>MC3006: Mapper.SetAssemblyPath cannot accept an empty assemblyName.</source>
+        <target state="translated">MC3006 : Mapper.SetAssemblyPath ne peut pas accepter un assemblyName vide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyPath">
+        <source>MC3007: Mapper.SetAssemblyPath cannot accept an empty assemblyPath.</source>
+        <target state="translated">MC3007 : Mapper.SetAssemblyPath ne peut pas accepter un assemblyPath vide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadChild">
+        <source>MC3008: An element of type '{0}' cannot be set on the complex property '{1}'. They are not compatible types.</source>
+        <target state="translated">MC3008 : un élément de type '{0}' ne peut pas être défini sur la propriété complexe '{1}'. Les types ne sont pas compatibles.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadConstructorParams">
+        <source>MC3009: Cannot find a public constructor for '{0}' that takes {1} arguments.</source>
+        <target state="translated">MC3009 : impossible de trouver un constructeur public pour '{0}' qui accepte {1} arguments.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadKey">
+        <source>MC3012: A key for a dictionary cannot be of type '{0}'. Only String, TypeExtension, and StaticExtension are supported.</source>
+        <target state="translated">MC3012 : une clé de dictionnaire ne peut pas être de type '{0}'. Seuls les types String, TypeExtension et StaticExtension sont pris en charge.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadMemberReference">
+        <source>MC3029: '{0}' member is not valid because it does not have a qualifying type name.</source>
+        <target state="translated">MC3029 : le membre '{0}' n'est pas valide, car il ne possède pas un nom de type qualifiant.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadName">
+        <source>MC3010: '{0}' Name property value is not valid. Name must start with a letter or an underscore and can contain only letters, digits, and underscores.</source>
+        <target state="translated">MC3010 : valeur '{0}' de la propriété Name non valide. Name doit commencer par une lettre ou un trait de soulignement et ne peut contenir que des lettres, des chiffres ou des traits de soulignement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadString">
+        <source>MC3094: Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">MC3094 : impossible de convertir la valeur de chaîne '{0}' en type '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadSyncMode">
+        <source>MC3013: SynchronousMode property value is not valid. Valid values are Async and Sync.</source>
+        <target state="translated">MC3013 : la valeur de la propriété SynchronousMode n'est pas valide. Les valeurs valides sont Async et Sync.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadTypeInArrayProperty">
+        <source>MC3014: The object being added to an array property is not a valid type. The array is of type '{0}' but the object being added is of type '{1}'.</source>
+        <target state="translated">MC3014 : le type de l'objet ajouté à une propriété de tableau n'est pas valide. Le tableau est de type '{0}' alors que l'objet ajouté est de type '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadUidOrNameME">
+        <source>MC3079: MarkupExtensions are not allowed for Uid or Name property values, so '{0}' is not valid.</source>
+        <target state="translated">MC3079 : les expressions MarkupExtension n'étant pas autorisées pour les valeurs des propriétés Uid ou Name, '{0}' n'est pas valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCanOnlyHaveOneChild">
+        <source>MC3089: The object '{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.</source>
+        <target state="translated">MC3089 : l'objet '{0}' possède déjà un enfant et ne peut pas ajouter '{1}'. '{0}' ne peut accepter qu'un seul enfant.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCannotAddAnyChildren">
+        <source>MC3028: Cannot add content to object of type '{0}'.</source>
+        <target state="translated">MC3028 : impossible d'ajouter un contenu à un objet de type '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantGetProperty">
+        <source>MC3081: '{0}' is a read-only property of type IList or IDictionary and cannot be set because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3081 : '{0}' est une propriété en lecture seule de type IList ou IDictionary et ne peut pas être définie car elle ne possède pas d'accesseur get public ou interne.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetAttribute">
+        <source>MC3080: The {0} '{1}' cannot be set because it does not have an accessible {2} accessor.</source>
+        <target state="translated">MC3080 : impossible de définir {0} '{1}' en l'absence d'un accesseur {2} accessible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetContentProperty">
+        <source>MC3087: Cannot set content property '{0}' on element '{1}'. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3087 : impossible de définir la propriété de contenu '{0}' sur l'élément '{1}'. '{0}' possède un niveau d'accès incorrect ou son assembly n'autorise pas l'accès.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetTriggerCondition">
+        <source>MC3082: '{0}' cannot be set as the value of a Trigger's Property attribute because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3082 : impossible de définir '{0}' comme valeur de l'attribut Property d'un Trigger, car il ne possède pas un accesseur get public ou interne.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCompatDuplicate">
+        <source>MC3016: Two new namespaces cannot be compatible with the same old namespace using an XmlnsCompatibility attribute.�'{0}' namespace is already marked compatible with '{1}'.</source>
+        <target state="translated">MC3016 : deux nouveaux espaces de noms ne peuvent pas être compatibles avec le même espace de noms antérieur à l'aide d'un attribut XmlnsCompatibility.� L'espace de noms '{0}' est déjà marqué comme compatible avec '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserContentMustBeContiguous">
+        <source>MC3088: Property elements cannot be in the middle of an element's content.  They must be before or after the content.</source>
+        <target state="translated">MC3088 : les éléments de propriétés ne peuvent pas se trouver au milieu du contenu d'un élément. Ils doivent se trouver avant ou après le contenu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefTag">
+        <source>MC3017: 'Code' tag from xaml namespace found in XAML file. To load this file, you must compile it.</source>
+        <target state="translated">MC3017 : balise 'Code' d'un espace de noms xaml trouvée dans le fichier XAML. Pour charger ce fichier, vous devez le compiler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefaultConverterElement">
+        <source>MC3061: The Element type '{0}' does not have an associated TypeConverter to parse the string '{1}'.</source>
+        <target state="translated">MC3061 : le type Element '{0}' n'a pas de TypeConverter associé pour analyser la chaîne '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDictionarySealed">
+        <source>MC3018: Cannot modify data in a sealed XmlnsDictionary.</source>
+        <target state="translated">MC3018 : impossible de modifier les données d'un XmlnsDictionary de type sealed.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDupDictionaryKey">
+        <source>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</source>
+        <target state="translated">MC3020 : clé de dictionnaire '{0}' déjà utilisée. Les attributs Key sont utilisés en tant que clés lors de l'insertion d'objets dans un dictionnaire et doivent être uniques.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateMarkupExtensionProperty">
+        <source>MC3033: The property '{0}' has already been set on this markup extension and can only be set once.</source>
+        <target state="translated">MC3033 : la propriété '{0}' a déjà été définie sur cette extension de balisage et ne peut être définie qu'une seule fois.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty1">
+        <source>MC3024: '{0}' property has already been set and can be set only once.</source>
+        <target state="translated">MC3024 : la propriété '{0}' a déjà été définie et ne peut l'être qu'une seule fois.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty2">
+        <source>MC3025: Property '{0}' and '{1}' refer to the same property. Duplicate property settings are not allowed.</source>
+        <target state="translated">MC3025 : '{0}' et '{1}' font référence à la même propriété. Les valeurs de propriété en double ne sont pas autorisées.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEmptyComplexProp">
+        <source>MC3026: '{0}' property element cannot be empty. It must contain child elements or text.</source>
+        <target state="translated">MC3026 : l'élément de propriété '{0}' ne peut pas être vide. Il doit contenir des éléments enfants ou du texte.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEntityReference">
+        <source>MC3027: The EntityReference &amp;{0}; is not recognized.</source>
+        <target state="translated">MC3027 : EntityReference &amp;{0}; non reconnue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEventDelegateTypeNotAccessible">
+        <source>MC3083: Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3083 : impossible d'accéder au type délégué '{0}' pour l'événement '{1}'. '{0}' possède un niveau d'accès incorrect ou son assembly n'autorise pas l'accès.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserIEnumerableIAddChild">
+        <source>MC3030: '{0}' property is a read-only IEnumerable property, which means that '{1}' must implement IAddChild.</source>
+        <target state="translated">MC3030 : la propriété '{0}' est une propriété IEnumerable en lecture seule, ce qui signifie que '{1}' doit implémenter IAddChild.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidContentPropertyAttribute">
+        <source>MC3078: Invalid ContentPropertyAttribute on type '{0}', property '{1}' not found.</source>
+        <target state="translated">MC3078 : ContentPropertyAttribute non valide sur le type '{0}', propriété '{1}' introuvable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidKnownType">
+        <source>Known type value {0}='{1}' is not a valid known type.</source>
+        <target state="translated">La valeur de type connu {0}='{1}' n'est pas un type connu valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidStaticMember">
+        <source>MC3011: Cannot find the static member '{0}' on the type '{1}'.</source>
+        <target state="translated">MC3011 : impossible de trouver le membre statique '{0}' sur le type '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserKeysAreStrings">
+        <source>MC3031: Keys and values in XmlnsDictionary must be strings.</source>
+        <target state="translated">MC3031 : les clés et les valeurs de XmlnsDictionary doivent être des chaînes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserLineAndOffset">
+        <source>Line {0} Position {1}</source>
+        <target state="translated">Ligne {0} Position {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMapPIMissingKey">
+        <source>MC3037: Missing XmlNamespace, Assembly or ClrNamespace in Mapping instruction.</source>
+        <target state="translated">MC3037 : XmlNamespace, Assembly ou ClrNamespace absent de l'instruction Mapping.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMappingUriInvalid">
+        <source>'{0}' mapping URI is not valid.</source>
+        <target state="translated">URI de mappage '{0}' non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadConstructorParam">
+        <source>MC3040: Format is not valid for MarkupExtension that specifies constructor arguments in '{0}'.</source>
+        <target state="translated">MC3040 : format non valide pour MarkupExtension qui spécifie les arguments du constructeur dans '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadDelimiter">
+        <source>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</source>
+        <target state="translated">MC3041 : les extensions de balisage nécessitent un seul signe '=' entre le nom et la valeur et une seule ',' entre les paramètres du constructeur et les paires nom / valeur. Les arguments '{0}' ne sont pas valides.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
+        <source>MC3091: '{0}' is not valid. Markup extensions require only spaces between the markup extension name and the first parameter. Cannot have comma or equals sign before the first parameter.</source>
+        <target state="translated">MC3091 : '{0}' n'est pas valide. Les extensions de balisage nécessitent uniquement des espaces entre le nom de l'extension de balisage et le premier paramètre. Impossible d'avoir une virgule ou un signe '=' avant le premier paramètre.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionInvalidClosingBracketCharacers">
+        <source>MC8001: Encountered a closing BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">MC8001 : BracketCharacter fermant '{0}' détecté au numéro de ligne '{1}' et à la position de ligne '{2}' sans correspondance avec un BracketCharacter ouvrant.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionMalformedBracketCharacers">
+        <source>MC8002: BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">MC8002 : le BracketCharacter '{0}' détecté au numéro de ligne '{1}' et à la position de ligne '{2}' ne correspond à aucun BracketCharacter ouvrant/fermant.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoEndCurlie">
+        <source>MC3038: MarkupExtension expressions must end with a '}'.</source>
+        <target state="translated">MC3038 : les expressions MarkupExtension doivent se terminer par une '}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoNameValue">
+        <source>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</source>
+        <target state="translated">MC3042 : les paires nom / valeur d'une expression MarkupExtensions doivent obéir au format 'Name = Value' et chaque paire doit être séparée par une virgule. '{0}' ne respecte pas ce format.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoQuotesInName">
+        <source>MC3043: Names and Values in a MarkupExtension cannot contain quotes. The MarkupExtension arguments '{0}' are not valid.</source>
+        <target state="translated">MC3043 : les noms et valeurs d'une expression MarkupExtension ne peuvent pas contenir de guillemets. Les arguments '{0}' de MarkupExtension ne sont pas valides.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionTrailingGarbage">
+        <source>MC3044: The text '{1}' is not allowed after the closing '{0}' of a MarkupExtension expression.</source>
+        <target state="translated">MC3044 : texte '{1}' non autorisé après la fermeture '{0}' d'une expression MarkupExtension.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionUnknownAttr">
+        <source>MC3045: Unknown property '{0}' for type '{1}' encountered while parsing a Markup Extension.</source>
+        <target state="translated">MC3045 : propriété '{0}' inconnue pour le type '{1}' rencontrée lors de l'analyse d'une expression Markup Extension.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMetroUnknownAttribute">
+        <source>MC3046: Unknown attribute '{0}' in the '{1}' namespace. Note that only the Key attribute is currently supported in this namespace.</source>
+        <target state="translated">MC3046 : attribut '{0}' inconnu dans l'espace de noms '{1}'. Notez que seul l'attribut Key est actuellement pris en charge dans cet espace de noms.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMultiBamls">
+        <source>MC3047: Internal parser error - Cannot use multiple writable BAML records at the same time.</source>
+        <target state="translated">MC3047 : erreur d'analyse interne - impossible d'utiliser en même temps plusieurs enregistrements BAML accessibles en écriture.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNestedComplexProp">
+        <source>'{0}' property element cannot be nested directly inside another property element.</source>
+        <target state="translated">L'élément de propriété '{0}' ne peut pas être imbriqué directement dans un autre élément de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoAttrArray">
+        <source>MC3049: Cannot place attributes on Array tags.</source>
+        <target state="translated">MC3049 : impossible de placer des attributs sur les balises Array.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoBamlAsync">
+        <source>MC3021: Asynchronous loading is not supported when compiling a XAML file, so a SynchronousMode of '{0}' is not allowed.</source>
+        <target state="translated">MC3021 : le chargement asynchrone n'étant pas pris en charge lors de la compilation d'un fichier XAML, un SynchronousMode égal à '{0}' n'est pas autorisé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoChildrenTag">
+        <source>MC3051: The type '{0}' does not support element content.</source>
+        <target state="translated">MC3051 : le type '{0}' ne prend pas en charge le contenu de l'élément.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryKey">
+        <source>MC3022: All objects added to an IDictionary must have a Key attribute or some other type of key associated with them.</source>
+        <target state="translated">MC3022 : tous les objets ajoutés à un IDictionary doivent avoir un attribut Key ou un autre type de clé associé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryName">
+        <source>MC3023: The Key attribute can only be used on a tag contained in a Dictionary (such as a ResourceDictionary).</source>
+        <target state="translated">MC3023 : l'attribut Key ne peut pas être utilisé sur une balise contenue dans un Dictionary (comme ResourceDictionary).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDigitEnums">
+        <source>MC3032: '{1}' cannot be used as a value for '{0}'. Numbers are not valid enumeration values.</source>
+        <target state="translated">MC3032 : '{1}' ne peut pas être utilisé comme valeur de '{0}'. Les nombres ne sont pas des valeurs d'énumération valides.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEventTag">
+        <source>MC3053: Cannot use property element syntax to specify event handler '{0}'.</source>
+        <target state="translated">MC3053 : impossible d'utiliser la syntaxe de l'élément de propriété pour spécifier le gestionnaire d'événements '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEvents">
+        <source>MC3052: XAML file that contains events must be compiled.</source>
+        <target state="translated">MC3052 : le fichier XAML qui contient les événements doit être compilé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameOnType">
+        <source>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</source>
+        <target state="translated">MC3054 : le type '{0}' ne peut pas avoir d'attribut Name. Les types valeur et les types sans constructeur par défaut peuvent être utilisés comme éléments au sein d'un ResourceDictionary.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameUnderDefinitionScopeType">
+        <source>MC3093: Cannot set Name attribute value '{0}' on element '{1}'. '{1}' is under the scope of element '{2}', which already had a name registered when it was defined in another scope.</source>
+        <target state="translated">MC3093 : impossible de définir la valeur de l'attribut Name '{0}' sur l'élément '{1}'. '{1}' se trouve sous la portée de l'élément '{2}', qui avait déjà un nom inscrit quand il a été défini dans une autre portée.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNamespace">
+        <source>MC3056: No NamespaceURI is defined for the object '{0}'.</source>
+        <target state="translated">MC3056 : aucune définition de NamespaceURI pour l'objet '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNestedXmlDataIslands">
+        <source>MC3084: Cannot nest XML data islands.</source>
+        <target state="translated">MC3084 : impossible d'imbriquer des îlots de données XML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoPropOnComplexProp">
+        <source>MC3057: Cannot set properties on property elements.</source>
+        <target state="translated">MC3057 : impossible de définir des propriétés sur les éléments de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSerializer">
+        <source>MC3058: Cannot find a custom serializer for '{0}' so it cannot be parsed.</source>
+        <target state="translated">MC3058 : comme il est impossible de trouver un sérialiseur personnalisé pour '{0}', il ne peut pas être analysé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSetterChild">
+        <source>MC3059: Style setters do not support child elements. A tag of type '{0}' is not allowed.</source>
+        <target state="translated">MC3059 : les Style Setters ne prennent pas en charge les éléments enfants. Une balise de type '{0}' n'est pas autorisée.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoType">
+        <source>MC3050: Cannot find the type '{0}'. Note that type names are case sensitive.</source>
+        <target state="translated">MC3050 : impossible de trouver le type '{0}'. Notez que les noms de type respectent la casse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNotMarkupExtension">
+        <source>MC3048: '{0}' value is not a valid MarkupExtension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be a subclass of MarkupExtension.</source>
+        <target state="translated">MC3048 : la valeur '{0}' n'est pas une expression MarkupExtension valide. Impossible de résoudre '{1}' en espace de noms '{2}'. '{1}' doit être une sous-classe de MarkupExtension.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSElement">
+        <source>MC3062: '{0}' XML namespace prefix does not map to a NamespaceURI, so element '{1}' cannot be resolved.</source>
+        <target state="translated">MC3062 : comme le préfixe de l'espace de noms XML '{0}' ne correspond pas à un NamespaceURI, l'élément '{1}' ne peut pas être résolu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSProperty">
+        <source>MC3100: '{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve property '{1}'.</source>
+        <target state="translated">MC3100 : comme le préfixe d'espace de noms '{0}' ne correspond pas à un URI d'espace de noms, la résolution de la propriété '{1}' n'est pas possible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPropNoValue">
+        <source>MC3063: Property '{0}' does not have a value.</source>
+        <target state="translated">MC3063 : la propriété '{0}' n'a pas de valeur.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPublicType">
+        <source>MC3064: Only public or internal classes can be used within markup. '{0}' type is not public or internal.</source>
+        <target state="translated">MC3064 : seules les classes publiques ou internes peuvent être utilisées au sein du balisage. Le type '{0}' n'est ni public ni interne.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserReadOnlyProp">
+        <source>MC3065: '{0}' property is read-only and cannot be set from markup.</source>
+        <target state="translated">MC3065 : la propriété '{0}' est en lecture seule et ne peut pas être définie à partir du balisage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserResourceKeyType">
+        <source>MC3066: The type reference cannot find a public type named '{0}'.</source>
+        <target state="translated">MC3066 : la référence de type ne peut pas trouver un type public nommé '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserStaticMemberNotAllowed">
+        <source>MC3019: Cannot reference the static member '{0}' on the type '{1}' as it is not accessible.</source>
+        <target state="translated">MC3019 : impossible de référencer le membre statique '{0}' sur le type '{1}' car il n'est pas accessible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserSyncOnRoot">
+        <source>MC3067: SynchronousMode attribute must be on the root tag.</source>
+        <target state="translated">MC3067 : l'attribut SynchronousMode doit se trouver sur la balise racine.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInComplexProp">
+        <source>MC3069: Cannot have both the text '{0}' and the child element '{1}' within a property element.</source>
+        <target state="translated">MC3069 : impossible d'avoir à la fois le texte '{0}' et l'élément enfant '{1}' dans un élément de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInvalidInArrayOrDictionary">
+        <source>MC3068: Text is not valid under an IDictionary or Array property.</source>
+        <target state="translated">MC3068 : texte non valide sous une propriété IDictionary ou Array.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTooManyAssemblies">
+        <source>MC3070: A single XAML file cannot reference more than 4,096 different assemblies.</source>
+        <target state="translated">MC3070 : un même fichier XAML ne peut pas référencer plus de 4 096 assemblys différents.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextNeedsEndElement">
+        <source>MC3095: Close tag must immediately follow TypeConverter initialization string '{0}'.</source>
+        <target state="translated">MC3095 : la balise de fermeture doit suivre immédiatement la chaîne d'initialisation TypeConverter '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextUnusable">
+        <source>MC3090: TypeConverter syntax error encountered while processing initialization string '{0}'.  Element attributes are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3090 : erreur de syntaxe TypeConverter rencontrée lors du traitement de la chaîne d'initialisation '{0}'. Les attributs d'élément ne sont pas autorisés sur les objets créés via TypeConverter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUndeclaredNS">
+        <source>MC3071: '{0}' is an undeclared namespace.</source>
+        <target state="translated">MC3071 : '{0}' est un espace de noms non déclaré.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownAttribute">
+        <source>MC3072: The property '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3072 : la propriété '{0}' n'existe pas dans l'espace de noms XML '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownDefAttribute">
+        <source>MC3073: The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.</source>
+        <target state="translated">MC3073 : l'attribut '{0}' n'existe pas dans l'espace de noms XML 'http://schemas.microsoft.com/winfx/2006/xaml'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownTag">
+        <source>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3074 : la balise '{0}' n'existe pas dans l'espace de noms XML '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownXmlType">
+        <source>MC3075: Unrecognized XML node type '{0}' found when determining if the current tag is a property element.</source>
+        <target state="translated">MC3075 : type de nœud XML non identifié '{0}' rencontré pendant l'analyse visant à déterminer si la balise en cours est un élément de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandMissing">
+        <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
+        <target state="translated">MC3086 : l'élément parent ou la propriété '{0}' nécessite un îlot de données XML. Pour distinguer un îlot XML du XAML environnant, incluez dans un wrapper l'îlot de données XML dans &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandUnexpected">
+        <source>MC3085: '{0}' element or property cannot contain an XML data island.</source>
+        <target state="translated">MC3085 : la propriété ou l'élément '{0}' ne peut pas contenir d'îlot de données XML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlLangPropertyValueInvalid">
+        <source>MC3092: XmlLangProperty attribute must specify a property name.</source>
+        <target state="translated">MC3092 : l'attribut XmlLangProperty doit spécifier un nom de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlReaderNoLineInfo">
+        <source>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</source>
+        <target state="translated">MC3077 : la classe '{0}' n'implémente pas IXmlLineInfo. Cette implémentation est obligatoire pour obtenir les informations de position du XAML en cours d'analyse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_UnexpectedToken">
+        <source>MC3098: Unexpected token '{0}' at position '{1}'.</source>
+        <target state="translated">MC3098 : jeton inattendu '{0}' à la position '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken">
+        <source>MC3096: Token is not valid.</source>
+        <target state="translated">MC3096 : jeton non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PreparingCompile">
+        <source>Preparing for the markup compilation...</source>
+        <target state="translated">Préparation de la compilation du balisage...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
+        <target state="translated">MC4301 : le nom de type '{0}' n'a pas le format attendu, 'className, assembly'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadResourceFile">
+        <source>Reading Resource file: '{0}'...</source>
+        <target state="translated">Lecture du fichier Resource : '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RecompiledXaml">
+        <source>Recompiled XAML file : '{0}'.</source>
+        <target state="translated">Fichier XAML recompilé : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceFile">
+        <source>Input: Assembly Reference file: '{0}'.</source>
+        <target state="translated">Entrée : fichier Reference d'assembly : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceId">
+        <source>Resource ID is '{0}'.</source>
+        <target state="translated">L'ID de ressource est '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceTooBig">
+        <source>RG1001: Input resource file '{0}' exceeds maximum size of {1} bytes.</source>
+        <target state="translated">RG1001 : le fichier de ressources en entrée '{0}' dépasse la taille maximale ({1} octets).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerated">
+        <source>Generated .resources file: '{0}'.</source>
+        <target state="translated">Fichier .resources généré : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerating">
+        <source>Generating .resources file: '{0}'...</source>
+        <target state="translated">Génération du fichier .resources : '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventNotRegistered">
+        <source>MC6006: {0}.{1}="{2}" is not valid. '{1}' must be a RoutedEvent registered with a name that ends with the keyword "Event".</source>
+        <target state="translated">MC6006 : {0}.{1}="{2}" n'est pas valide. '{1}' doit être un événement RoutedEvent inscrit avec un nom qui se termine par le mot clé "Event".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceFileNameNeeded">
+        <source>UM1005: You must pass markup files to the task.</source>
+        <target state="translated">UM1005 : vous devez passer les fichiers de balisage à la tâche.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceNameNotSupportedForStyleTriggers">
+        <source>MC4110: SourceName property cannot be set within Style.Triggers section.</source>
+        <target state="translated">MC4110 : la propriété SourceName ne peut pas être définie au sein de la section Style.Triggers.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleImpliedAndComplexChildren">
+        <source>MC4001: Style does not support both {0} tags and Style.{1} property tags for a single Style. Use one or the other.</source>
+        <target state="translated">MC4001 : Style ne prend pas en charge à la fois les balises {0} et les balises de propriété Style.{1} pour un même Style. Utilisez l'une ou l'autre solution.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleKnownTagWrongLocation">
+        <source>MC4002: The Style property tag '{0}' can only be specified directly under a Style tag.</source>
+        <target state="translated">MC4002 : la balise de propriété Style '{0}' ne peut être spécifiée directement que sous une balise Style.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoPropOrEvent">
+        <source>MC4005: Cannot find the Style {0} '{1}' on the type '{2}'.</source>
+        <target state="translated">MC4005 : impossible de trouver le Style {0} '{1}' sur le type '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTarget">
+        <source>MC4003: Cannot resolve the Style {0} '{1}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the {0}.</source>
+        <target state="translated">MC4003 : impossible de résoudre le Style {0} '{1}'. Vérifiez que le type propriétaire est le TargetType de Style ou utilisez la syntaxe Class.Property pour spécifier le {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTopLevelElement">
+        <source>MC4004: Style cannot contain child '{0}'. Style child must be a Setter because it is added to the Setters collection.</source>
+        <target state="translated">MC4004 : Style ne peut pas contenir d'enfant '{0}'. L'enfant Style doit être une méthode Setter car il est ajouté à la collection Setters.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTagNotSupported">
+        <source>MC4006: Tags of type '{0}' are not supported in Style sections.</source>
+        <target state="translated">MC4006 : les balises de type '{0}' ne sont pas prises en charge dans les sections Style.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTargetNoEvents">
+        <source>MC4007: The event '{0}' cannot be specified on a Target tag in a Style. Use an EventSetter instead.</source>
+        <target state="translated">MC4007 : l'événement '{0}' ne peut pas être spécifié sur la balise Target d'un Style. Utilisez à la place un EventSetter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTextNotSupported">
+        <source>MC4008: The text '{0}' is not allowed at this location within a Style section.</source>
+        <target state="translated">MC4008 : le texte '{0}' n'est pas autorisé à cet emplacement au sein d'une section Style.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleUnknownProp">
+        <source>MC4009: The property '{0}' cannot be set on Style.</source>
+        <target state="translated">MC4009 : la propriété '{0}' ne peut pas être définie sur Style.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SubSubClassingNotAllowed">
+        <source>MC6017: '{0}' cannot be the root of a XAML file because it was defined using XAML.</source>
+        <target state="translated">MC6017 : '{0}' ne peut pas être la racine d'un fichier XAML, car sa définition a été faite à l'aide de XAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetIsNotSupported">
+        <source>BG1004: Target Type '{0}' is not supported by this task.</source>
+        <target state="translated">BG1004 : type Target '{0}' non pris en charge par cette tâche.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNameNotSupportedForStyleSetters">
+        <source>MC4011: TargetName property cannot be set on a Style Setter.</source>
+        <target state="translated">MC4011 : la propriété TargetName ne peut pas être définie sur un Style Setter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskLogo">
+        <source>Microsoft (R) Build Task '{0}' Version '{1}'.</source>
+        <target state="translated">Microsoft (R) Build Task '{0}' Version '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskRight">
+        <source>Copyright (C) Microsoft Corporation 2005. All rights reserved.</source>
+        <target state="translated">Copyright (C) Microsoft Corporation 2005. Tous droits réservés.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateDupName">
+        <source>MC4101: The Name '{0}' has already been defined. Names must be unique.</source>
+        <target state="translated">MC4101 : le Name '{0}' a déjà été défini. Chaque Name doit être unique.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateInvalidRootElementTag">
+        <source>MC4108: The root of a Template content section cannot contain an element of type '{0}'. Only FrameworkElement and FrameworkContentElement types are valid.</source>
+        <target state="translated">MC4108 : la racine d'une section de contenu Template ne peut pas contenir un élément de type '{0}'. Seuls les types FrameworkElement et FrameworkContentElement sont valides.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateKnownTagWrongLocation">
+        <source>MC4103: The template property tag '{0}' can only be specified immediately after a ControlTemplate tag.</source>
+        <target state="translated">MC4103 : la balise de propriété du modèle '{0}' ne peut être spécifiée qu'immédiatement après une balise ControlTemplate.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoMultipleRoots">
+        <source>MC4107: A template can have only a single root element. '{0}' is not allowed.</source>
+        <target state="translated">MC4107 : un modèle ne peut avoir qu'un seul élément racine. '{0}' n'est pas autorisé.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoProp">
+        <source>MC4109: Cannot find the Template Property '{0}' on the type '{1}'.</source>
+        <target state="translated">MC4109 : impossible de trouver la propriété de modèle '{0}' sur le type '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTarget">
+        <source>MC4106: Cannot resolve the Template Property '{0}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the property.</source>
+        <target state="translated">MC4106 : impossible de résoudre la propriété de modèle '{0}'. Vérifiez que le type propriétaire est le TargetType de Style ou utilisez la syntaxe Class.Property pour spécifier la propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTriggerTarget">
+        <source>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</source>
+        <target state="translated">MC4111 : impossible de trouver la cible Trigger '{0}'. (La cible doit figurer avant toute méthode Setter, Trigger ou Condition qui l'utilise.)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTagNotSupported">
+        <source>MC4102: Tags of type '{0}' are not supported in template sections.</source>
+        <target state="translated">MC4102 : les balises de type '{0}' ne sont pas prises en charge dans les sections de modèle.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTextNotSupported">
+        <source>MC4105: The text '{0}' is not allowed at this location within a template section.</source>
+        <target state="translated">MC4105 : le texte '{0}' n'est pas autorisé à cet emplacement au sein d'une section de modèle.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateUnknownProp">
+        <source>MC4104: The property '{0}' cannot be set as a property element on template. Only Triggers and Storyboards are allowed as property elements.</source>
+        <target state="translated">MC4104 : la propriété '{0}' ne peut pas être définie comme élément de propriété d'un modèle. Seuls les éléments Triggers et Storyboards sont autorisés comme éléments de propriété.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>MC7004: Empty token encountered while parsing.</source>
+        <target state="translated">MC7004 : jeton vide rencontré lors de l'analyse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>MC7003: Extra data encountered after token while parsing.</source>
+        <target state="translated">MC7003 : données supplémentaires rencontrées après l'analyse du jeton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>MC7002: Missing end quote encountered while parsing token.</source>
+        <target state="translated">MC7002 : absence de guillemet fermant rencontrée lors de l'analyse du jeton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>MC7001: Premature string termination encountered.</source>
+        <target state="translated">MC7001 : fin de chaîne prématurée rencontrée.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UidMissing">
+        <source>UM1003: Uid is missing for element '{0}'.</source>
+        <target state="translated">UM1003 : absence d'Uid pour l'élément '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownBuildError">
+        <source>Unknown build error, '{0}' </source>
+        <target state="translated">Erreur de build inconnue, '{0}' </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownClassModifier">
+        <source>MC6013: {0}:ClassModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6013 : {0}:ClassModifier="{1}" non valide pour le langage {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDefinitionTag">
+        <source>MC6002: Unrecognized tag '{0}:{1}' in namespace 'http://schemas.microsoft.com/winfx/2006/xaml'. Note that tag names are case sensitive.</source>
+        <target state="translated">MC6002 : balise '{0}:{1}' non reconnue dans l'espace de noms 'http://schemas.microsoft.com/winfx/2006/xaml'. Notez que les noms de balise respectent la casse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownEventAttribute">
+        <source>MC6007: '{1}' is not valid. '{0}' is not an event on '{2}'.</source>
+        <target state="translated">MC6007 : '{1}' n'est pas valide. '{0}' n'est pas un événement sur '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownFieldModifier">
+        <source>MC6014: {0}:FieldModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6014 : {0}:FieldModifier="{1}" n'est pas valide pour le langage {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownGenericType">
+        <source>MC6020: {0}:TypeArguments='{1}' is not valid on the tag '{2}'. Either '{2}' is not a generic type or the number of Type arguments in the attribute is wrong. Remove the {0}:TypeArguments attribute because it is allowed only on generic types, or fix its value to match the arity of the generic type '{2}'.</source>
+        <target state="translated">MC6020 : {0}:TypeArguments='{1}' n'est pas valide sur la balise '{2}'. '{2}' n'est pas un type générique ou le nombre d'arguments Type dans l'attribut est erroné. Supprimez l'attribut {0} :TypeArguments parce qu'il n'est autorisé que sur les types génériques ou corrigez sa valeur pour qu'elle corresponde à la parité du type générique '{2}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownLanguage">
+        <source>MC6008: '{0}' is not installed properly on this machine. It must be listed in the &lt;compilers&gt; section of machine.config.</source>
+        <target state="translated">MC6008 : '{0}' n'est pas installé correctement sur cet ordinateur. Il doit être répertorié dans la section &lt;compilers&gt; de machine.config.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownPathOperationType">
+        <source>Unknown path operation attempted.</source>
+        <target state="translated">Tentative d'opération de chemin d'accès inconnu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnmatchedLocComment">
+        <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
+        <target state="translated">LC1003 : les commentaires de localisation n'ont pas de valeur définie pour la propriété cible : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>MC4501: Major and minor version number components cannot be negative.</source>
+        <target state="translated">MC4501 : les numéros de version majeure et de version mineure ne peuvent pas être négatifs.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WinFXAssemblyMissing">
+        <source>MC6000: Project file must include the .NET Framework assembly '{0}' in the reference list.</source>
+        <target state="translated">MC6000 : le fichier projet doit inclure l'assembly du .NET Framework '{0}' dans la liste de référence.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongLocalizationPropertySetting_Pass1">
+        <source>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</source>
+        <target state="translated">MC1001 : la valeur de la propriété LocalizationDirectivesToLocFile n'est pas valide et doit être modifiée en None, CommentsOnly ou All pour la tâche MarkupCompilePass1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongPropertySetting">
+        <source>BG1003: The project file contains a property value that is not valid.</source>
+        <target state="translated">BG1003 : le fichier projet contient une valeur de propriété non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>MC4602: Choice cannot follow a Fallback.</source>
+        <target state="translated">MC4602 : un élément Choice ne peut pas suivre un élément Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>MC4606: AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">MC4606 : AlternateContent doit contenir un ou plusieurs éléments Choice.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>MC4601: Choice valid only in AlternateContent.</source>
+        <target state="translated">MC4601 : élément Choice valide uniquement dans AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>MC4640: Namespace '{0}' is marked as compatible with itself using XmlnsCompatibilityAttribute. A namespace cannot directly or indirectly override itself.</source>
+        <target state="translated">MC4640 : l'espace de noms '{0}' est marqué comme compatible avec lui-même à l'aide de XmlnsCompatibilityAttribute. Un espace de noms ne peut pas directement ou indirectement se remplacer lui-même.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>MC4631: Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4631 : déclaration Preserve en double pour l'élément '{1}' de l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>MC4617: Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4617 : déclaration ProcessContent en double pour l'élément '{1}' de l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>MC4633: Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4633 : déclaration Preserve générique en double pour l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>MC4619: Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4619 : déclaration ProcessContent générique en double pour l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>MC4605: Fallback valid only in AlternateContent.</source>
+        <target state="translated">MC4605 : élément Fallback valide uniquement dans AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>MC4610: '{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">MC4610 : l'élément '{0}' n'est pas un enfant valide de AlternateContent. Seuls les éléments Choice et Fallback sont des enfants valides d'un élément AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>MC4608: '{0}' attribute is not valid for element '{1}'.</source>
+        <target state="translated">MC4608 : attribut '{0} non valide pour l'élément '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>MC4611: '{0}' format is not valid.</source>
+        <target state="translated">MC4611 : format '{0}' non valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>MC4632: Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4632 : impossible d'avoir une déclaration Preserve à la fois spécifique et générique pour l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>MC4618: Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4618 : Impossible d'avoir à la fois une déclaration ProcessContent générique et spécifique pour l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>MC4604: Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">MC4604 : l'attribut Requires doit contenir un préfixe d'espace de noms valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>MC4634: '{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">MC4634 : la valeur de l'attribut '{0}' n'est pas un nom XML valide.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>MC4607: AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">MC4607 : AlternateContent ne doit contenir qu'un seul élément Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MC4626: MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">MC4626 : échec de la condition MustUnderstand sur l'espace de noms '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>MC4630: Namespace '{0}' has items declared to be preserved but is not declared ignorable.</source>
+        <target state="translated">MC4630 : l'espace de noms '{0}' possède des éléments déclarés avec Preserve, mais n'est pas déclaré lui-même Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>MC4615: '{0}' namespace is declared ProcessContent but is not declared Ignorable.</source>
+        <target state="translated">MC4615 : l'espace de noms '{0}' est déclaré ProcessContent, mais n'est pas déclaré Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>MC4603: Choice must contain a Requires attribute.</source>
+        <target state="translated">MC4603 : l'élément Choice doit comporter un attribut Requires.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>MC4612: '{0}' prefix is not defined.</source>
+        <target state="translated">MC4612 : le préfixe '{0}' n'est pas défini.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>MC4614: Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">MC4614 : attribut de compatibilité '{0}' non reconnu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>MC4609: Unrecognized compatibility element '{0}'.</source>
+        <target state="translated">MC4609 : élément de compatibilité '{0}' non reconnu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>MC4502: The feature ID string cannot have length 0.</source>
+        <target state="translated">MC4502 : la chaîne d'identification de la fonctionnalité ne peut pas avoir une longueur nulle.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

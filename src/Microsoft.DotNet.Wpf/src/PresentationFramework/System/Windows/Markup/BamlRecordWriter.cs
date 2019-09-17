@@ -36,7 +36,6 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-
     /// <summary>
     /// Class for writing baml to a stream from XamlParser calls
     /// </summary>
@@ -135,7 +134,6 @@ namespace System.Windows.Markup
             // only update if we are allowed to update the parent nodes
             if (UpdateParentNodes)
             {
-
                 Debug.Assert(null != DocumentStartRecord);
                 if (null != DocumentStartRecord)
                 {
@@ -363,7 +361,6 @@ namespace System.Windows.Markup
                                                       xamlElementNode.LineNumber,
                                                       xamlElementNode.LinePosition);
                         }
-
                     }
                     else
                     {
@@ -560,7 +557,6 @@ namespace System.Windows.Markup
         // a Dictionary, but there can be other uses also
         internal void WriteDefAttribute(XamlDefAttributeNode xamlDefNode)
         {
-
             // If we are currently parsing a deferable content section, then check
             // to see if we have a dictionary key value here.  If so, then store it
             // in the keys collection.
@@ -1659,7 +1655,6 @@ namespace System.Windows.Markup
                             xamlNode.LinePosition);
 
             BamlRecordManager.ReleaseWriteRecord(bamlElementEnd);
-
         }
 
         /// <summary>
@@ -1740,7 +1735,6 @@ namespace System.Windows.Markup
 
             private int        _lineNumber;
             private int        _linePosition;
-
         }
 
         private class ValueDeferRecord : DeferRecord

@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
+    <body>
+      <trans-unit id="DoesNotSupportMultipleSelection">
+        <source>Selection container does not support multiple selection.</source>
+        <target state="translated">选择容器不支持多个选择。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EditControlsHaveNoChildren">
+        <source>Win32 edit control cannot have a child element.</source>
+        <target state="translated">Win32 编辑控件不能具有子元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridColumnOutOfRange">
+        <source>Grid column must be set between 0 and column maximum.</source>
+        <target state="translated">为 Grid 列设置的值必须在 0 到列最大值之间。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GridRowOutOfRange">
+        <source>Grid row must be set between 0 and row maximum.</source>
+        <target state="translated">为 Grid 行设置的值必须在 0 到行最大值之间。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameter">
+        <source>Parameter not valid.</source>
+        <target state="translated">参数无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRangeEndpoint">
+        <source>Start or end specified is past the end of the text range.</source>
+        <target state="translated">指定的开头或结尾超过了文本范围的末端。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTextRangeOffset">
+        <source>Character offset not valid in TextRange.</source>
+        <target state="translated">字符偏移在 TextRange 中无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyAlt">
+        <source>Alt</source>
+        <target state="translated">Alt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyControl">
+        <source>Control</source>
+        <target state="translated">控制</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyCtrl">
+        <source>Ctrl</source>
+        <target state="translated">Ctrl</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDel">
+        <source>Del</source>
+        <target state="translated">Delete</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyDelete">
+        <source>Delete</source>
+        <target state="translated">删除</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEnd">
+        <source>End</source>
+        <target state="translated">结束</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyEsc">
+        <source>Esc</source>
+        <target state="translated">Esc</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHelp">
+        <source>Help</source>
+        <target state="translated">帮助</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyHome">
+        <source>Home</source>
+        <target state="translated">主页</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyIns">
+        <source>Ins</source>
+        <target state="translated">Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyInsert">
+        <source>Insert</source>
+        <target state="translated">Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageDown">
+        <source>Page Down</source>
+        <target state="translated">Page Down</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPageUp">
+        <source>Page Up</source>
+        <target state="translated">Page Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPause">
+        <source>Pause</source>
+        <target state="translated">暂停</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyPrtScn">
+        <source>PrtScn</source>
+        <target state="translated">PrtScn</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyScrLk">
+        <source>ScrLk</source>
+        <target state="translated">ScrLk</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyShift">
+        <source>Shift</source>
+        <target state="translated">Shift</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySpace">
+        <source>Space</source>
+        <target state="translated">空间</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeySysRq">
+        <source>SysRq</source>
+        <target state="translated">SysRq</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyTab">
+        <source>Tab</source>
+        <target state="translated">选项卡</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyWinKey">
+        <source>WinKey</source>
+        <target state="translated">WinKey</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeContainer">
+        <source>Container</source>
+        <target state="translated">容器</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDialog">
+        <source>Dialog</source>
+        <target state="translated">对话框</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeGrip">
+        <source>Grip</source>
+        <target state="translated">底框</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeIPAddress">
+        <source>ip address</source>
+        <target state="translated">IP 地址</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeOctet">
+        <source>Octet</source>
+        <target state="translated">Octet</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebar">
+        <source>Rebar</source>
+        <target state="translated">Rebar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRebarBand">
+        <source>Rebar Band</source>
+        <target state="translated">Rebar 带区</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsComboButton">
+        <source>Drop Down Button</source>
+        <target state="translated">下拉按钮</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsHorizontalScrollBar">
+        <source>Horizontal Scroll Bar</source>
+        <target state="translated">水平滚动条</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenu">
+        <source>Menu</source>
+        <target state="translated">菜单</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuBar">
+        <source>Application</source>
+        <target state="translated">应用程序</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsMenuSeparator">
+        <source>separator</source>
+        <target state="translated">分隔符</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsReBarBandItem">
+        <source>Rebar Band</source>
+        <target state="translated">Rebar 带区</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">大幅度后滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsBackBySmallAmount">
+        <source>Back by small amount</source>
+        <target state="translated">小幅度后滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">大幅度前滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardBySmallAmount">
+        <source>Forward by small amount</source>
+        <target state="translated">小幅度前滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsScrollBarBitsThumb">
+        <source>Thumb</source>
+        <target state="translated">缩略</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemBackByLargeAmount">
+        <source>Back by large amount</source>
+        <target state="translated">大幅度后滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemForwardByLargeAmount">
+        <source>Forward by large amount</source>
+        <target state="translated">大幅度前滚</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSliderItemThumb">
+        <source>Thumb</source>
+        <target state="translated">缩略</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemBackward">
+        <source>Backward</source>
+        <target state="translated">后退</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSpinButtonItemForward">
+        <source>Forward</source>
+        <target state="translated">转发</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSysHeader">
+        <source>Header</source>
+        <target state="translated">标题</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuBar">
+        <source>System Menu Bar</source>
+        <target state="translated">系统菜单栏</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsSystemMenuItem">
+        <source>System</source>
+        <target state="translated">系统</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonClose">
+        <source>Close</source>
+        <target state="translated">关闭</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonContextHelp">
+        <source>Context help</source>
+        <target state="translated">上下文帮助</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMaximize">
+        <source>Maximize</source>
+        <target state="translated">最大化</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonMinimize">
+        <source>Minimize</source>
+        <target state="translated">最小化</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonRestore">
+        <source>Restore</source>
+        <target state="translated">还原</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsTitleBarButtonUnknown">
+        <source>Unknown title bar button</source>
+        <target state="translated">未知的标题栏按钮</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsUpDown">
+        <source>Spin</source>
+        <target state="translated">旋转</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedNameWindowsVerticalScrollBar">
+        <source>Vertical Scroll Bar</source>
+        <target state="translated">垂直滚动条</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoITextDocumentFromRichEdit">
+        <source>Cannot obtain ITextDocument from RichEdit control.</source>
+        <target state="translated">无法从 RichEdit 控件中获取 ITextDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidValue">
+        <source>'{0}' is not a valid value for this control.</source>
+        <target state="translated">“{0}”不是此控件的有效值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">无法执行操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMax">
+        <source>Value is greater than Maximum.</source>
+        <target state="translated">值大于 Maximum 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RangeValueMin">
+        <source>Value is less than Minimum.</source>
+        <target state="translated">值小于 Minimum 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RichEditTextPatternHasNoChildren">
+        <source>RangeFromChild method is not supported in this implementation.</source>
+        <target state="translated">此实现中不支持 RangeFromChild 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollBarOutOfRange">
+        <source>ScrollBar percent must be between 0 and 100.</source>
+        <target state="translated">ScrollBar 百分比必须在 0 到 100 之间。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectionRequired">
+        <source>Selection container requires one selection.</source>
+        <target state="translated">选择容器要求一个选择。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">目标元素无法接收焦点。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShouldBeZero">
+        <source>Must be zero.</source>
+        <target state="translated">必须为零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">值为只读。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

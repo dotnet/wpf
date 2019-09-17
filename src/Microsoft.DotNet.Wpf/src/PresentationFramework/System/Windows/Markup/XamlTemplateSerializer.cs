@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Class that serializes and deserializes Templates.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
@@ -20,7 +18,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Security.Permissions;
 using MS.Utility;
 
 #if !PBTCOMPILER
@@ -40,7 +37,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class XamlTemplateSerializer : XamlSerializer
     {
-
 #if PBTCOMPILER
         #region Construction
 
@@ -89,7 +85,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For ControlTemplate, this is the styleTargetType.
         ///   For DataTemplate, this is the DataTemplateKey containing the DataType.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             object     key = null;

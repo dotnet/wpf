@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+    <body>
+      <trans-unit id="Assembly0NotFound">
+        <source>'{0}' assembly not found.</source>
+        <target state="translated">找不到 '{0}' 組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AtLeastOnePropertyMustBeSpecified">
+        <source>Must specify at least one property for AddAutomationPropertyChangedHandler.</source>
+        <target state="translated">至少必須為 AddAutomationPropertyChangedHandler 指定一個屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCanOnlyPopTop">
+        <source>CacheRequest.Pop was called on a CacheRequest that was not the current top-of-stack request.</source>
+        <target state="translated">已在並非目前堆疊頂部要求的 CacheRequest 上呼叫 CacheRequest.Pop。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCantModifyWhileActive">
+        <source>Cannot modify a CacheRequest while it is active on any thread.</source>
+        <target state="translated">若 CacheRequest 在任何執行緒中為作用，則無法修改它。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedCache">
+        <source>Cannot access cached properties on a pattern returned from GetCurrentPattern.</source>
+        <target state="translated">無法在從 GetCurrentPattern 傳回之模式上存取快取的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedElementReference">
+        <source>Cannot perform this operation on an AutomationElement that contains only cached data. The requested operation requires a Full or Lightweight reference.</source>
+        <target state="translated">無法在其中僅含快取資料的 AutomationElement 上執行此作業。要求的作業必須有 Full 或 Lightweight 參考。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedLiveForProperties">
+        <source>Cannot access current properties on a pattern that contains only cached data.</source>
+        <target state="translated">無法在僅含快取資料的模式上存取目前的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CachedPropertyNotRequested">
+        <source>Cannot request a property or pattern that is not cached.</source>
+        <target state="translated">無法要求未快取的屬性或模式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantPrefetchTextPattern">
+        <source>Text pattern cannot be cached.</source>
+        <target state="translated">無法快取文字模式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindRegisterMethodOnType0InAssembly1">
+        <source>Cannot find Register method on type '{0}' in assembly '{1}'.</source>
+        <target state="translated">在組件 '{1}' 的類型 '{0}' 上，找不到 Register 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindType0InAssembly1">
+        <source>Cannot find type '{0}' in assembly '{1}'.</source>
+        <target state="translated">在組件 '{1}' 中找不到類型 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationFocusChanged">
+        <source>eventId not valid. Use AddAutomationFocusChangedEventHandler to listen for focus changes.</source>
+        <target state="translated">eventId 無效。請使用 AddAutomationFocusChangedEventHandler 接聽焦點變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationPropertyChanged">
+        <source>eventId not valid. Use AddAutomationPropertyChangedEventHandler to listen for property changes.</source>
+        <target state="translated">eventId 無效。請使用 AddAutomationPropertyChangedEventHandler 接聽屬性變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeStructureChanged">
+        <source>eventId not valid. Use AddStructureChangedEventHandler to listen for tree structure changes.</source>
+        <target state="translated">eventId 無效。請使用 AddStructureChangedEventHandler 接聽樹狀結構變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GenericInvalidArgument">
+        <source>'{0}' is not a valid type or is not a valid value.</source>
+        <target state="translated">'{0}' 不是有效的型別或有效的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndMustBeNonNULL">
+        <source>hwnd cannot be IntPtr.Zero or null.</source>
+        <target state="translated">hwnd 不可以是 IntPtr.Zero 或 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IgnoreCaseRequiresString">
+        <source>IgnoreCase flag can only be used with string arguments.</source>
+        <target state="translated">IgnoreCase 旗標只能搭配字串引數使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LogicalElementNoClickablePoint">
+        <source>The AutomationElement has no clickable point.</source>
+        <target state="translated">AutomationElement 沒有可選的點。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeAtLeastTwoConditions">
+        <source>Must specify at least two conditions.</source>
+        <target state="translated">必須指定至少兩個條件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonclientClassnameCannotBeUsedWithFlagsOrImagename">
+        <source>#nonclient classname cannot be used with flags or image name.</source>
+        <target state="translated">#nonclient 類別名稱不可以搭配旗標或影像名稱使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">無法執行作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParamsNotApplicableToWindowClosedEvent">
+        <source>WindowClosed event is only applicable to RootElement and TreeScope.Subtree or an element that implements WindowPattern.</source>
+        <target state="translated">WindowClosed 事件只適用於 RootElement 和 TreeScope.Subtree，或適用於會實作 WindowPattern 的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyConditionIncorrectType">
+        <source>PropertyCondition value for property '{0}' must be '{1}'.</source>
+        <target state="translated">屬性 '{0}' 的 PropertyCondition 值必須為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScreenCoordinatesOutsideBoundingRect">
+        <source>Screen coordinate is outside the bounding rectangle.</source>
+        <target state="translated">螢幕座標在周框矩形的外面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">目標項目無法接收焦點。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextAttributeValueWrongType">
+        <source>'{0}' text attribute value is type '{1}', but expected type '{2}'.</source>
+        <target state="translated">'{0}' 文字屬性值是類型 '{1}'，但應為類型 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextMustNotBeNullOrEmpty">
+        <source>Text argument cannot be a null or empty string.</source>
+        <target state="translated">文字引數不可以是 null 或空字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeElementChildrenDescendantsOnly">
+        <source>Only TreeScope.Element, TreeScope.Children, and TreeScope.Descendants are valid for this call.</source>
+        <target state="translated">對此呼叫而言，只有 TreeScope.Element、TreeScope.Children 和 TreeScope.Descendants 有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeNeedAtLeastOne">
+        <source>Must specify at least one of TreeScope.Element, TreeScope.Children, or TreeScope.Descendants.</source>
+        <target state="translated">至少必須指定 TreeScope.Element、TreeScope.Children 或 TreeScope.Descendants 其中一個值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedWindowState">
+        <source>Unrecognized WindowVisualState value.</source>
+        <target state="translated">無法辨認的 WindowVisualState 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownCoreAPIError">
+        <source>Unrecognized error.</source>
+        <target state="translated">無法辨認的錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedAttribute">
+        <source>Unsupported TextAttribute.</source>
+        <target state="translated">不支援的 TextAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedPattern">
+        <source>Unsupported Pattern.</source>
+        <target state="translated">不支援的模式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedProperty">
+        <source>Unsupported Property.</source>
+        <target state="translated">不支援的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">值是唯讀的。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

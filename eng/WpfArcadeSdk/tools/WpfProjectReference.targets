@@ -1,17 +1,21 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" 
-                      Version="$(MicrosoftDotNetWpfGitHubVersion)" 
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)"
+                      Version="$(MicrosoftDotNetWpfGitHubVersion)"
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'"/>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
   </ItemGroup>
-
   <ItemGroup>
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <WpfProjectPath Include="PresentationCore-CommonResources" ProjectPath="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
-    <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj" />
+    <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
     <WpfProjectPath Include="System.Windows.Input.Manipulations" ProjectPath="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <WpfProjectPath Include="WindowsFormsIntegration" ProjectPath="$(WpfSourceDir)WindowsFormsIntegration\WindowsFormsIntegration.csproj" />
 
@@ -19,7 +23,9 @@
     <WpfProjectPath Include="PresentationFramework" ProjectPath="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
     <WpfProjectPath Include="PresentationUI" ProjectPath="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />
     <WpfProjectPath Include="ReachFramework" ProjectPath="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
-    <WpfProjectPath Include="System.Printing" ProjectPath="$(WpfSourceDir)System.Printing\System.Printing.csproj" />
+    <WpfProjectPath Include="System.Printing" ProjectPath="$(WpfSourceDir)System.Printing\System.Printing.csproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
     <WpfProjectPath Include="System.Windows.Controls.Ribbon" ProjectPath="$(WpfSourceDir)System.Windows.Controls.Ribbon\System.Windows.Controls.Ribbon.csproj" />
     <WpfProjectPath Include="System.Windows.Presentation" ProjectPath="$(WpfSourceDir)System.Windows.Presentation\System.Windows.Presentation.csproj" />
 

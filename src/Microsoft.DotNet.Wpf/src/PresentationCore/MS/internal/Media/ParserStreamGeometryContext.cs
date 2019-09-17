@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // This class is used to compress a Path to BAML.
 //
@@ -13,7 +12,6 @@
 //  Via this compression - we reduce the time spent parsing at startup, we create smaller baml,
 //  and we reduce creation of temporary strings.
 //
-//---------------------------------------------------------------------------
 
 using MS.Internal;
 
@@ -21,7 +19,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 using MS.Utility;
 
@@ -389,8 +386,7 @@ namespace MS.Internal.Media
             fillRule = BoolToFillRule(boolFillRule);
 
             geometry.FillRule = fillRule;
-
-        }
+}
 
         private static void DeserializeBeginFigure(BinaryReader br, Byte firstByte, StreamGeometryContext sc)
         {

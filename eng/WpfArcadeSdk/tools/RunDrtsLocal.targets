@@ -1,0 +1,12 @@
+<Project>
+  <!--
+  This .targets file is included by the Arcade extension point AfterSolutionBuild.targets. Arcade doesn't
+  include any of the custom MSBuild properties that get set during the regular build. So the $(WpfArcadeSdkPath)
+  properties aren't available to us.
+  -->
+  <!-- The internal and external repos each define their own drts to add that need running. -->
+  <Import Project="$(MSBuildThisFileDirectory)AddDrtsToPayload.targets" Condition="Exists('$(MSBuildThisFileDirectory)AddDrtsToPayload.targets')" />
+  <Target Name="RunDrts" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)'!='True'">
+    <Exec Command="$(RepoRoot)\artifacts\test\$(Configuration)\$(Platform)\runtests.cmd"/>
+  </Target>
+</Project>

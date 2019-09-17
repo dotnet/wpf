@@ -1,0 +1,135 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{D242FDF9-F132-4154-BB9F-3F85C39F6F4C}</ProjectGuid>
+    <Platforms>AnyCPU;x64</Platforms>
+    <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\Resources\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+      <Link>Common\System\SR.cs</Link>
+    </Compile>
+    <Compile Include="MS\Internal\AutomationProxies\Accessible.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\ClickablePoint.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\CodeQuality_Approved.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\CommonGetThemePartSize.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\CommonRemoteMemoryBlock.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\CommonXSendMessage.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\EmptyElement.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\EventManager.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\Input.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\Main.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\Misc.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\MSAAEventDispatcher.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\MSAANativeProvider.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\MSAAWinEventWrap.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\NonClientArea.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\OleObject.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\ProxyFragment.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\ProxyHwnd.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\ProxySimple.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\QueueProcessor.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\SafeCoTaskMem.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\SafeProcessHandle.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\SafeThemeHandle.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\Tom.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsAltTab.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsButton.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsComboBox.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsContainer.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsEditBox.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsEditBoxRange.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsFormsHelpers.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsFormsLinkLabel.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsGrip.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsHyperlink.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsIPAddress.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListBox.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListView.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewGroup.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewGroupHelper.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewGroupSubsetLink.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewItem.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewItemCheckBox.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewItemStartMenu.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewScroll.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsListViewSubItem.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsMenu.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsNonControl.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsProgressbar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsRebar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsRichEdit.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsRichEditRange.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsScroll.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsScrollBar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsScrollBarBits.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsSlider.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsSpinner.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsStartMenu.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsStatic.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsStatusBar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsSysHeader.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsTab.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsTitleBar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsToolbar.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsToolbarAsMenu.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsToolbarItemAsMenuItem.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsTooltip.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsTreeView.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WindowsUpDown.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WinEventTracker.cs" />
+    <Compile Include="MS\Internal\AutomationProxies\WinFormsSpinner.cs" />
+    <!-- currently not in use 
+    <Compile Include="MS\Internal\AutomationProxies\WordBreaker.cs" />
+    <Compile Include="MS\Internal\UnsupportedAutomationProxies\SuperGridProvider.cs" />
+    <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsCalendar.cs" />
+    <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsDateTimePicker.cs" />
+    <Compile Include="MS\Internal\UnsupportedAutomationProxies\windowspager.cs" /> 
+    -->
+    <Compile Include="MS\Win32\externdll.cs" />
+    <Compile Include="MS\Win32\NativeMethods.cs" />
+    <Compile Include="MS\Win32\SafeNativeMethods.cs" />
+    <Compile Include="MS\Win32\UnsafeNativeMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\ref\UIAutomationClientSideProviders-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.StackTrace" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Net.Primitives" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+  </ItemGroup>
+</Project>

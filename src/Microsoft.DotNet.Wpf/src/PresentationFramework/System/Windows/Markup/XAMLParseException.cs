@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // Description:
 //   Parser exceptions
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.Xml;
@@ -20,7 +18,6 @@ using System.Globalization;
 using System.ComponentModel;
 using System.Security;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Internal;
 
@@ -43,7 +40,6 @@ namespace System.Windows.Markup
     public class XamlParseException : SystemException
 #endif
     {
-
         #region Public
 
         #region Constructors
@@ -233,7 +229,6 @@ namespace System.Windows.Markup
         /// as well as a means for serialization to retain that context and an
         /// additional caller-defined context.
         /// </param>
-        //CASRemoval:[SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
         protected XamlParseException(
             SerializationInfo info,
             StreamingContext context
@@ -254,15 +249,9 @@ namespace System.Windows.Markup
         /// The destination for this serialization.
         /// </param>
         ///
-        ///<SecurityNote>
-        ///     Critical: calls Exception.GetObjectData which LinkDemands
-        ///</SecurityNote>
-        [SecurityCritical]
 
 #if ! PBTCOMPILER
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 #else
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -327,7 +316,6 @@ namespace System.Windows.Markup
                                                 XamlObjectIds xamlObjectIds,
                                                 Type objectType)
         {
-
             string message = " ";
             string xamlFile = GetMarkupFilePath(baseUri);
             string simpleObjectId = null;
@@ -432,7 +420,6 @@ namespace System.Windows.Markup
                                             Type objectType
                                             )
         {
-
             // If there's an inner exception, we'll append its message to our own.
 
             if (innerException != null && innerException.Message != null)

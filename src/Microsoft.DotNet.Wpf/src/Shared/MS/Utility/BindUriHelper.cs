@@ -17,7 +17,6 @@ using MS.Win32;
 #endif
 
 using System.Security;
-using System.Security.Permissions;
 // The functionality in this class is shared across framework and core. The functionality in core
 // is a subset of the functionality in framework, so rather than create a dependency from core to
 // framework we have choses to duplicate this chunk of  code.
@@ -77,16 +76,12 @@ namespace MS.Internal.Utility
         
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
-        /// <SecurityNote>
-        /// Critical: as it sets the baseUri
-        /// </SecurityNote>
         static internal Uri BaseUri
         {
             get
             {
                 return BaseUriHelper.BaseUri;
             }
-            [SecurityCritical]
             set
             {
                  BaseUriHelper.BaseUri = BaseUriHelper.FixFileUri(value);
@@ -133,7 +128,7 @@ namespace MS.Internal.Utility
 
                 Debug.Assert(baseuri.OriginalString == BaseUriHelper.FixFileUri(baseuri).OriginalString, "Base Uri is legacy file Uri and may not resolve relative uris correctly. This method should be updated");
 
-                // ToDo (younggk): PS# 25616 Once we move to PackUri, we don't need a special way
+                // Once we move to PackUri, we don't need a special way
                 //  of resolving Uri. We can use the regurlar one.
                 if (isContainer)
                 {
@@ -167,8 +162,8 @@ namespace MS.Internal.Utility
             Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
             if (sourceUri != null)
             {
-                SecurityZone sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
-                SecurityZone targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
+                int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
+                int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
 
                 // We don't send any referer when crossing zone
                 if (sourceZone == targetZone)

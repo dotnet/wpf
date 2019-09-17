@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 //
-//  Microsoft Windows Client Platform
 //
 //
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
@@ -27,12 +26,12 @@ namespace MS.Internal.Markup
 #elif WINDOWS_BASE
 using MS.Utility;
 using MS.Internal.WindowsBase;
+
 namespace System.Windows.Markup
 #else
 namespace System.Xaml
 #endif
 {
-
     /// <summary>
     /// Class that provides helper functions for the parser to reflect on types, properties,
     /// custom attributes and load assemblies.
@@ -127,10 +126,6 @@ namespace System.Xaml
                         // If we can't get the type, just return null (fall-through).
                     }
                     catch (ArgumentException)
-                    {
-                        a = null;
-                    }
-                    catch (System.Security.SecurityException)
                     {
                         a = null;
                     }
@@ -460,7 +455,6 @@ namespace System.Xaml
                 {
                     if (!String.IsNullOrEmpty(assemblyPath))
                     {
-
                         // assemblyPath is set, Load the assembly from this specified place.
                         // the path must be full file path which contains directory, file name and extension.
                         Debug.Assert(!assemblyPath.EndsWith("\\", StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");

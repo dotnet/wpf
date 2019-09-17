@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="../Strings.resx">
+    <body>
+      <trans-unit id="Assembly0NotFound">
+        <source>'{0}' assembly not found.</source>
+        <target state="translated">Сборка "{0}" не найдена.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AtLeastOnePropertyMustBeSpecified">
+        <source>Must specify at least one property for AddAutomationPropertyChangedHandler.</source>
+        <target state="translated">Необходимо указать хотя бы одну характеристику для AddAutomationPropertyChangedHandler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCanOnlyPopTop">
+        <source>CacheRequest.Pop was called on a CacheRequest that was not the current top-of-stack request.</source>
+        <target state="translated">Вызван метод CacheRequest.Pop для объекта CacheRequest, который на тот момент не являлся первым в стеке запросов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheReqestCantModifyWhileActive">
+        <source>Cannot modify a CacheRequest while it is active on any thread.</source>
+        <target state="translated">Не удается изменить CacheRequest, когда он активен в каком-либо потоке.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedCache">
+        <source>Cannot access cached properties on a pattern returned from GetCurrentPattern.</source>
+        <target state="translated">Не удается получить доступ к кэшированным свойствам в схеме, возвращаемой из метода GetCurrentPattern.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedElementReference">
+        <source>Cannot perform this operation on an AutomationElement that contains only cached data. The requested operation requires a Full or Lightweight reference.</source>
+        <target state="translated">Не удается выполнить данную операцию на AutomationElement, содержащем только кэшированные данные. Для запрошенной операции требуется ссылка Full или Lightweight.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CacheRequestNeedLiveForProperties">
+        <source>Cannot access current properties on a pattern that contains only cached data.</source>
+        <target state="translated">Не удается получить текущие свойства в схеме, которая содержит только кэшированные данные.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CachedPropertyNotRequested">
+        <source>Cannot request a property or pattern that is not cached.</source>
+        <target state="translated">Не удается выполнить запрос некэшированного свойства или шаблона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CantPrefetchTextPattern">
+        <source>Text pattern cannot be cached.</source>
+        <target state="translated">Не удается кэшировать текстовый шаблон.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindRegisterMethodOnType0InAssembly1">
+        <source>Cannot find Register method on type '{0}' in assembly '{1}'.</source>
+        <target state="translated">Не удается найти метод Register типа "{0}" в сборке "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CouldNotFindType0InAssembly1">
+        <source>Cannot find type '{0}' in assembly '{1}'.</source>
+        <target state="translated">Не удается найти тип "{0}" в сборке "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationFocusChanged">
+        <source>eventId not valid. Use AddAutomationFocusChangedEventHandler to listen for focus changes.</source>
+        <target state="translated">Недопустимый идентификатор eventId. Используйте AddAutomationFocusChangedEventHandler для ожидания изменения фокуса.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeAutomationPropertyChanged">
+        <source>eventId not valid. Use AddAutomationPropertyChangedEventHandler to listen for property changes.</source>
+        <target state="translated">Недопустимый идентификатор eventId. Используйте AddAutomationPropertyChangedEventHandler для ожидания изменения свойства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventIdMustNotBeStructureChanged">
+        <source>eventId not valid. Use AddStructureChangedEventHandler to listen for tree structure changes.</source>
+        <target state="translated">Недопустимый идентификатор eventId. Используйте AddStructureChangedEventHandler для ожидания изменения древовидной структуры.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GenericInvalidArgument">
+        <source>'{0}' is not a valid type or is not a valid value.</source>
+        <target state="translated">"{0}" не является допустимым типом или допустимым значением.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndMustBeNonNULL">
+        <source>hwnd cannot be IntPtr.Zero or null.</source>
+        <target state="translated">hwnd не может иметь значение IntPtr.Zero или null.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IgnoreCaseRequiresString">
+        <source>IgnoreCase flag can only be used with string arguments.</source>
+        <target state="translated">Флаг IgnoreCase может использоваться только со строковыми аргументами.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LogicalElementNoClickablePoint">
+        <source>The AutomationElement has no clickable point.</source>
+        <target state="translated">Элемент AutomationElement не имеет области щелчка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeAtLeastTwoConditions">
+        <source>Must specify at least two conditions.</source>
+        <target state="translated">Необходимо указать по крайней мере два условия.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonclientClassnameCannotBeUsedWithFlagsOrImagename">
+        <source>#nonclient classname cannot be used with flags or image name.</source>
+        <target state="translated">Имя класса #nonclient не может использоваться с флагами или именем изображения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationCannotBePerformed">
+        <source>Operation cannot be performed.</source>
+        <target state="translated">Не удается выполнить операцию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParamsNotApplicableToWindowClosedEvent">
+        <source>WindowClosed event is only applicable to RootElement and TreeScope.Subtree or an element that implements WindowPattern.</source>
+        <target state="translated">Событие WindowClosed применимо только к классам RootElement и TreeScope.Subtree либо элементу, который реализует WindowPattern.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyConditionIncorrectType">
+        <source>PropertyCondition value for property '{0}' must be '{1}'.</source>
+        <target state="translated">Значение PropertyCondition для свойства "{0}" должно быть "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScreenCoordinatesOutsideBoundingRect">
+        <source>Screen coordinate is outside the bounding rectangle.</source>
+        <target state="translated">Экранные координаты находятся вне прямоугольника границ.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>Target element cannot receive focus.</source>
+        <target state="translated">Конечному элементу не удается получить фокус.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextAttributeValueWrongType">
+        <source>'{0}' text attribute value is type '{1}', but expected type '{2}'.</source>
+        <target state="translated">Значение текстового атрибута "{0}" имеет тип "{1}", но ожидается тип "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextMustNotBeNullOrEmpty">
+        <source>Text argument cannot be a null or empty string.</source>
+        <target state="translated">Текстовый аргумент не может иметь значение null или быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeElementChildrenDescendantsOnly">
+        <source>Only TreeScope.Element, TreeScope.Children, and TreeScope.Descendants are valid for this call.</source>
+        <target state="translated">Для данного вызова допустимы только Only TreeScope.Element, TreeScope.Children и TreeScope.Descendants.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeScopeNeedAtLeastOne">
+        <source>Must specify at least one of TreeScope.Element, TreeScope.Children, or TreeScope.Descendants.</source>
+        <target state="translated">Необходимо указать хотя бы один из TreeScope.Element, TreeScope.Children или TreeScope.Descendants.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedWindowState">
+        <source>Unrecognized WindowVisualState value.</source>
+        <target state="translated">Нераспознанное значение WindowVisualState.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownCoreAPIError">
+        <source>Unrecognized error.</source>
+        <target state="translated">Нераспознанная ошибка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedAttribute">
+        <source>Unsupported TextAttribute.</source>
+        <target state="translated">Неподдерживаемый атрибут TextAttribute.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedPattern">
+        <source>Unsupported Pattern.</source>
+        <target state="translated">Неподдерживаемый шаблон.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedProperty">
+        <source>Unsupported Property.</source>
+        <target state="translated">Неподдерживаемое свойство.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueReadonly">
+        <source>Value is read-only.</source>
+        <target state="translated">Значение доступно только для чтения.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

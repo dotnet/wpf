@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
+    <body>
+      <trans-unit id="ElementNotAvailable">
+        <source>The target element corresponds to UI that is no longer available (for example, the parent window has closed).</source>
+        <target state="translated">ターゲット要素が、使用できない UI に対応しています (親ウィンドウが閉じている場合など)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ElementNotEnabled">
+        <source>The operation is not allowed on a nonenabled element.</source>
+        <target state="translated">有効化されていない要素では、この操作は許可されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeButton">
+        <source>button</source>
+        <target state="translated">ボタン</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeCalendar">
+        <source>calendar</source>
+        <target state="translated">カレンダー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeCheckBox">
+        <source>check box</source>
+        <target state="translated">チェック ボックス</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeComboBox">
+        <source>combo box</source>
+        <target state="translated">コンボ ボックス</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeCustom">
+        <source>custom</source>
+        <target state="translated">カスタム</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDataGrid">
+        <source>datagrid</source>
+        <target state="translated">データグリッド</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDataItem">
+        <source>dataitem</source>
+        <target state="translated">データ項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeDocument">
+        <source>document</source>
+        <target state="translated">ドキュメント</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeEdit">
+        <source>edit</source>
+        <target state="translated">編集</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeGroup">
+        <source>group</source>
+        <target state="translated">グループ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeHeader">
+        <source>header</source>
+        <target state="translated">ヘッダー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeHeaderItem">
+        <source>header item</source>
+        <target state="translated">ヘッダー項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeHyperlink">
+        <source>hyperlink</source>
+        <target state="translated">hyperlink</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeImage">
+        <source>image</source>
+        <target state="translated">image</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeListItem">
+        <source>list item</source>
+        <target state="translated">リスト項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeListView">
+        <source>list view</source>
+        <target state="translated">リスト ビュー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeMenu">
+        <source>menu</source>
+        <target state="translated">メニュー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeMenuBar">
+        <source>menu bar</source>
+        <target state="translated">メニュー バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeMenuItem">
+        <source>menu item</source>
+        <target state="translated">メニュー項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypePane">
+        <source>pane</source>
+        <target state="translated">ペイン</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeProgressBar">
+        <source>progress bar</source>
+        <target state="translated">進行状況バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeRadioButton">
+        <source>radio button</source>
+        <target state="translated">オプション ボタン</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeScrollBar">
+        <source>scroll bar</source>
+        <target state="translated">スクロール バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeSeparator">
+        <source>separator</source>
+        <target state="translated">区切り記号</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeSlider">
+        <source>slider</source>
+        <target state="translated">スライダー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeSpinner">
+        <source>spinner</source>
+        <target state="translated">スピン ボタン</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeSplitButton">
+        <source>split button</source>
+        <target state="translated">分割ボタン</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeStatusBar">
+        <source>status bar</source>
+        <target state="translated">ステータス バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTab">
+        <source>tab</source>
+        <target state="translated">タブ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTabItem">
+        <source>tab item</source>
+        <target state="translated">タブ項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTable">
+        <source>table</source>
+        <target state="translated">表</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeText">
+        <source>text</source>
+        <target state="translated">テキスト</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeThumb">
+        <source>thumb</source>
+        <target state="translated">縮小表示</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTitleBar">
+        <source>title bar</source>
+        <target state="translated">タイトル バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeToolBar">
+        <source>tool bar</source>
+        <target state="translated">ツール バー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeToolTip">
+        <source>tool tip</source>
+        <target state="translated">ヒント</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTreeView">
+        <source>tree view</source>
+        <target state="translated">ツリー ビュー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeTreeViewItem">
+        <source>tree view item</source>
+        <target state="translated">ツリー ビュー項目</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalizedControlTypeWindow">
+        <source>window</source>
+        <target state="translated">ウィンドウ</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

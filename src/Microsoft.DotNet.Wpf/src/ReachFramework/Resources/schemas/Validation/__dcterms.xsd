@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" targetNamespace="http://purl.org/dc/terms/" xmlns="http://purl.org/dc/terms/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace">
+  </xs:import>
+
+   <xs:import namespace="http://purl.org/dc/elements/1.1/" />
+
+   <xs:import namespace="http://purl.org/dc/dcmitype/" />
+
+   <xs:element name="alternative" substitutionGroup="dc:title" />
+
+   <xs:element name="tableOfContents" substitutionGroup="dc:description" />
+   <xs:element name="abstract" substitutionGroup="dc:description" />
+
+   <xs:element name="created" substitutionGroup="dc:date" />
+   <xs:element name="valid" substitutionGroup="dc:date" />
+   <xs:element name="available" substitutionGroup="dc:date" />
+   <xs:element name="issued" substitutionGroup="dc:date" />
+   <xs:element name="modified" substitutionGroup="dc:date" />
+   <xs:element name="dateAccepted" substitutionGroup="dc:date" />
+   <xs:element name="dateCopyrighted" substitutionGroup="dc:date" />
+   <xs:element name="dateSubmitted" substitutionGroup="dc:date" />
+
+   <xs:element name="extent" substitutionGroup="dc:format" />
+   <xs:element name="medium" substitutionGroup="dc:format" />
+
+   <xs:element name="isVersionOf" substitutionGroup="dc:relation" />
+   <xs:element name="hasVersion" substitutionGroup="dc:relation" />
+   <xs:element name="isReplacedBy" substitutionGroup="dc:relation" />
+   <xs:element name="replaces" substitutionGroup="dc:relation" />
+   <xs:element name="isRequiredBy" substitutionGroup="dc:relation" />
+   <xs:element name="requires" substitutionGroup="dc:relation" />
+   <xs:element name="isPartOf" substitutionGroup="dc:relation" />
+   <xs:element name="hasPart" substitutionGroup="dc:relation" />
+   <xs:element name="isReferencedBy" substitutionGroup="dc:relation" />
+   <xs:element name="references" substitutionGroup="dc:relation" />
+   <xs:element name="isFormatOf" substitutionGroup="dc:relation" />
+   <xs:element name="hasFormat" substitutionGroup="dc:relation" />
+   <xs:element name="conformsTo" substitutionGroup="dc:relation" />
+
+   <xs:element name="spatial" substitutionGroup="dc:coverage" />
+   <xs:element name="temporal" substitutionGroup="dc:coverage" />
+
+   <xs:element name="audience" substitutionGroup="dc:any" />
+
+   <xs:element name="mediator" substitutionGroup="audience" />
+   <xs:element name="educationLevel" substitutionGroup="audience" />
+
+   <xs:element name="accessRights" substitutionGroup="dc:rights" />
+
+   <xs:element name="bibliographicCitation" substitutionGroup="dc:identifier" />
+
+  <xs:complexType name="LCSH">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MESH">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DDC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="LCC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="UDC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Period">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="W3CDTF">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+           <xs:union memberTypes="xs:gYear xs:gYearMonth xs:date xs:dateTime" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType> 
+
+  <xs:complexType name="DCMIType">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="dcmitype:DCMIType" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="IMT">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="URI">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:anyURI" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType> 
+
+  <xs:complexType name="ISO639-2">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="RFC1766">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:language" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="RFC3066">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:language" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Point">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ISO3166">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Box">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TGN">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string" />
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited" />
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:group name="elementsAndRefinementsGroup">
+  	<xs:sequence>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+	<xs:element ref="dc:any" />
+    </xs:choice>
+  </xs:sequence>
+  </xs:group>	
+
+  <xs:complexType name="elementOrRefinementContainer">
+  	<xs:choice>
+      <xs:group ref="elementsAndRefinementsGroup" />
+    </xs:choice>
+  </xs:complexType>
+
+
+</xs:schema>

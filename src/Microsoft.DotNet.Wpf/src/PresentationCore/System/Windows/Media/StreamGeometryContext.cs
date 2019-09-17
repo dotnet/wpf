@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 // This class is used by the StreamGeometry class to generate an inlined,
 // flattened geometry stream.
 //
-//---------------------------------------------------------------------------
 
 using MS.Internal;
 
@@ -15,7 +13,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 
 
 #if !PBTCOMPILER 
@@ -44,7 +41,6 @@ using MS.Internal.Markup;
 namespace MS.Internal.Markup
 #endif 
 {
-
     /// <summary>
     ///     StreamGeometryContext
     /// </summary>    

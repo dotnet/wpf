@@ -2,13 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
 //
 //
 // Description:
 //   Class that serializes and deserializes Styles.
 //
-//---------------------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
@@ -21,7 +19,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Security.Permissions;
 using MS.Utility;
 
 #if !PBTCOMPILER
@@ -39,7 +36,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class XamlStyleSerializer : XamlSerializer
     {
-
 #if PBTCOMPILER 
 
         #region Construction
@@ -90,7 +86,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For Style, this is the type of the first element record
         ///   in the record collection, skipping over the Style element itself.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             Type       styleTargetType = Style.DefaultTargetType;

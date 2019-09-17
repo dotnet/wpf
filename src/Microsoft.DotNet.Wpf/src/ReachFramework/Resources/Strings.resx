@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Converter_ConvertFromNotSupported" xml:space="preserve">
+    <value>Cannot convert from type.</value>
+  </data>
+  <data name="Converter_ConvertToNotSupported" xml:space="preserve">
+    <value>Cannot convert to type.</value>
+  </data>
+  <data name="MustBeOfType" xml:space="preserve">
+    <value>'{0}' must be of type '{1}'.</value>
+  </data>
+  <data name="PTProvider_InvalidDevModeBytes" xml:space="preserve">
+    <value>Invalid DEVMODE bytes</value>
+  </data>
+  <data name="PTProvider_VerifyAccess" xml:space="preserve">
+    <value>The calling thread cannot access this object because a different thread owns it.</value>
+  </data>
+  <data name="ReachPackaging_AlreadyHasRootSequenceOrDocument" xml:space="preserve">
+    <value>Package already has a root DocumentSequence or FixedDocument.</value>
+  </data>
+  <data name="ReachPackaging_AlreadyHasStartingPart" xml:space="preserve">
+    <value>Container already has Starting Part.</value>
+  </data>
+  <data name="ReachPackaging_AlreadyHasThumbnail" xml:space="preserve">
+    <value>PackagePart already has associated Thumbnail.</value>
+  </data>
+  <data name="ReachPackaging_CannotModifyReadOnlyContainer" xml:space="preserve">
+    <value>Cannot modify read-only container.</value>
+  </data>
+  <data name="ReachPackaging_CommitCountPolicyLessThan1" xml:space="preserve">
+    <value>CommitCountPolicy must be greater than zero.</value>
+  </data>
+  <data name="ReachPackaging_DependantsNotCommitted" xml:space="preserve">
+    <value>Not all opened dependents were committed.</value>
+  </data>
+  <data name="ReachPackaging_DocumentWasClosed" xml:space="preserve">
+    <value>XPS document was closed.</value>
+  </data>
+  <data name="ReachPackaging_InvalidContentType" xml:space="preserve">
+    <value>'{0}' ContentType is not valid.</value>
+  </data>
+  <data name="ReachPackaging_InvalidDocUri" xml:space="preserve">
+    <value>Document PackagePart URI is not valid.</value>
+  </data>
+  <data name="ReachPackaging_InvalidStartingPart" xml:space="preserve">
+    <value>Starting Part is not a valid Package root.</value>
+  </data>
+  <data name="ReachPackaging_InvalidType" xml:space="preserve">
+    <value>String passed for type is not valid.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneDocStructure" xml:space="preserve">
+    <value>FixedDocument has more than one related document structure.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneMetaDataParts" xml:space="preserve">
+    <value>Container has more than one Core Properties relationship.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOnePrintTicketPart" xml:space="preserve">
+    <value>PackagePart has more than one Print Ticket relationship.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneSigDefParts" xml:space="preserve">
+    <value>Document has more than one Signature Definition relationship.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneSigOriginParts" xml:space="preserve">
+    <value>Container has more than one Signature Origin relationship.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneStartingParts" xml:space="preserve">
+    <value>Container has more than one Starting Part relationship.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneStoryFragment" xml:space="preserve">
+    <value>FixedPage has more than one related story fragment.</value>
+  </data>
+  <data name="ReachPackaging_MoreThanOneThumbnailPart" xml:space="preserve">
+    <value>Document has more than one Thumbnail relationship.</value>
+  </data>
+  <data name="ReachPackaging_NotAFixedDocument" xml:space="preserve">
+    <value>PackagePart URI does not correspond to a FixedDocument.</value>
+  </data>
+  <data name="ReachPackaging_NotAFixedDocumentSequence" xml:space="preserve">
+    <value>PackagePart URI does not correspond to a FixedDocumentSequence.</value>
+  </data>
+  <data name="ReachPackaging_NotAFixedPage" xml:space="preserve">
+    <value>PackagePart URI does not correspond to a FixedPage.</value>
+  </data>
+  <data name="ReachPackaging_NotAPrintTicket" xml:space="preserve">
+    <value>Property is not a valid instance of PrintTicket.</value>
+  </data>
+  <data name="ReachPackaging_NotOpenForReading" xml:space="preserve">
+    <value>Package is not open for reading.</value>
+  </data>
+  <data name="ReachPackaging_NotSignatureDefinitionElement" xml:space="preserve">
+    <value>ReadXML method expects reader to have just parsed start element.</value>
+  </data>
+  <data name="ReachPackaging_NotValidSignatureDefinitionAttribute" xml:space="preserve">
+    <value>'{0}' is not a valid attribute.</value>
+  </data>
+  <data name="ReachPackaging_NotValidSignatureDefinitionElement" xml:space="preserve">
+    <value>'{0}' is not a valid element.</value>
+  </data>
+  <data name="ReachPackaging_ObfucatedFontNeedGuid" xml:space="preserve">
+    <value>Obfuscated font resources require valid GUID file name.</value>
+  </data>
+  <data name="ReachPackaging_OnlyWriters" xml:space="preserve">
+    <value>Only writers can call this method.</value>
+  </data>
+  <data name="ReachPackaging_OpenDocOrElementAlreadyCalled" xml:space="preserve">
+    <value>OpenDocument or OpenElement already called.</value>
+  </data>
+  <data name="ReachPackaging_PackageUriNull" xml:space="preserve">
+    <value>XpsDocument URI is null. Use XpsDocument constructor that takes URI parameter.</value>
+  </data>
+  <data name="ReachPackaging_PanelOrSequenceAlreadyOpen" xml:space="preserve">
+    <value>Current DocumentSequence, FixedDocument, or FixedPage not completed.</value>
+  </data>
+  <data name="ReachPackaging_PartFromDifferentContainer" xml:space="preserve">
+    <value>PackagePart belongs to a different container.</value>
+  </data>
+  <data name="ReachPackaging_PartNotFound" xml:space="preserve">
+    <value>Package must contain an XPS PackagePart.</value>
+  </data>
+  <data name="ReachPackaging_PrintTicketAlreadyCommitted" xml:space="preserve">
+    <value>PrintTicket was already committed.</value>
+  </data>
+  <data name="ReachPackaging_SequenceCntMustBe1" xml:space="preserve">
+    <value>Count must be 1 when CommitPolicies is set to CommitEntireSequence.</value>
+  </data>
+  <data name="ReachPackaging_ServiceTypeAlreadyAdded" xml:space="preserve">
+    <value>'{0}' service type already added.</value>
+  </data>
+  <data name="ReachPackaging_SigningDoesNotMeetPolicy" xml:space="preserve">
+    <value>Document does not meet the signing policy.</value>
+  </data>
+  <data name="ReachPackaging_SpotIDRequiredAttribute" xml:space="preserve">
+    <value>SpotId is required for a valid XpsSignatureDefinition.</value>
+  </data>
+  <data name="ReachPackaging_UnsupportedImageType" xml:space="preserve">
+    <value>XPS supports only JPG, TIF, WDP, and PNG image types.</value>
+  </data>
+  <data name="ReachPackaging_UnsupportedThumbnailImageType" xml:space="preserve">
+    <value>Thumbnails support only JPG and PNG image types.</value>
+  </data>
+  <data name="ReachSerializationAsync_NoNgcType" xml:space="preserve">
+    <value>Manager not of type NgcSerializationManagerAsync.</value>
+  </data>
+  <data name="ReachSerializationAsync_NoType" xml:space="preserve">
+    <value>Manager not of type XpsSerializationManagerAsync.</value>
+  </data>
+  <data name="ReachSerialization_CannotReleaseXmlWriter" xml:space="preserve">
+    <value>Cannot release XmlWriter because it was already released.</value>
+  </data>
+  <data name="ReachSerialization_CycleDetectedInSerialization" xml:space="preserve">
+    <value>Cycle detected. Object was already on the stack.</value>
+  </data>
+  <data name="ReachSerialization_ExpectedFixedDocument" xml:space="preserve">
+    <value>SerializeObject expected FixedDocument.</value>
+  </data>
+  <data name="ReachSerialization_ExpectedFixedDocumentSequence" xml:space="preserve">
+    <value>SerializeObject expected FixedDocumentSequence.</value>
+  </data>
+  <data name="ReachSerialization_ExpectedFixedPage" xml:space="preserve">
+    <value>SerializeObject expected FixedPage.</value>
+  </data>
+  <data name="ReachSerialization_FixedDocumentInDocument" xml:space="preserve">
+    <value>FixedDocument cannot contain another FixedDocument.</value>
+  </data>
+  <data name="ReachSerialization_FixedDocumentInPage" xml:space="preserve">
+    <value>FixedPage cannot contain a FixedDocument.</value>
+  </data>
+  <data name="ReachSerialization_FixedPageInPage" xml:space="preserve">
+    <value>FixedPage cannot contain another FixedPage.</value>
+  </data>
+  <data name="ReachSerialization_MustHaveSerializationManager" xml:space="preserve">
+    <value>Must have serialization manager.</value>
+  </data>
+  <data name="ReachSerialization_NoFixedDocuments" xml:space="preserve">
+    <value>FixedDocumentSequence must contain at least one FixedDocument.</value>
+  </data>
+  <data name="ReachSerialization_NoFixedPages" xml:space="preserve">
+    <value>FixedDocument must contain at least one FixedPage.</value>
+  </data>
+  <data name="ReachSerialization_NoFixedPageWriter" xml:space="preserve">
+    <value>No fixed page is being written to.</value>
+  </data>
+  <data name="ReachSerialization_NoFontService" xml:space="preserve">
+    <value>No font service is registered with resource policy.</value>
+  </data>
+  <data name="ReachSerialization_NoImageService" xml:space="preserve">
+    <value>No image service is registered with resource policy.</value>
+  </data>
+  <data name="ReachSerialization_NoSerializer" xml:space="preserve">
+    <value>Cannot find the appropriate serializer.</value>
+  </data>
+  <data name="ReachSerialization_NotSupported" xml:space="preserve">
+    <value>Serialization of this type of object is not supported.</value>
+  </data>
+  <data name="ReachSerialization_NotXpsSerializationManagerAsync" xml:space="preserve">
+    <value>SerializationManager passed to XpsSerializerAsync is not XpsSerializationManagerAsync.</value>
+  </data>
+  <data name="ReachSerialization_TargetNotPrintTicket" xml:space="preserve">
+    <value>Target must be a PrintTicket.</value>
+  </data>
+  <data name="ReachSerialization_UnableToInstantiateSerializer" xml:space="preserve">
+    <value>Cannot instantiate a serializer of the given type.</value>
+  </data>
+  <data name="ReachSerialization_WrongPackagingPolicy" xml:space="preserve">
+    <value>SerializationManager returned packaging policy that was not an XpsPackagingPolicy.</value>
+  </data>
+  <data name="ReachSerialization_WrongPropertyTypeForFixedDocument" xml:space="preserve">
+    <value>Serialized FixedDocument is not a complex property.</value>
+  </data>
+  <data name="ReachSerialization_WrongPropertyTypeForFixedPage" xml:space="preserve">
+    <value>Serialized FixedPage is not a complex property.</value>
+  </data>
+  <data name="ReachSerialization_WrongPropertyTypeForPageContent" xml:space="preserve">
+    <value>Serialized PageContent is not a complex property.</value>
+  </data>
+  <data name="XpsSerializerFactory_DisplayName" xml:space="preserve">
+    <value>XPS Serializer</value>
+  </data>
+  <data name="XpsSerializerFactory_ManufacturerName" xml:space="preserve">
+    <value>Microsoft</value>
+  </data>
+  <data name="XpsSerializerFactory_ManufacturerWebsite" xml:space="preserve">
+    <value>http://www.microsoft.com</value>
+  </data>
+  <data name="XpsSerializerFactory_WriterIsClosed" xml:space="preserve">
+    <value>SerializerWriter was closed.</value>
+  </data>
+</root>

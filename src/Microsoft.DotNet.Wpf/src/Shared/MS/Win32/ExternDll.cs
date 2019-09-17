@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+
 namespace MS.Win32
 {
     internal static class ExternDll
@@ -31,7 +32,6 @@ namespace MS.Win32
         public const string Olepro32 = "olepro32.dll";
         public const string Penimc ="PenIMC_cor3.dll";
         public const string PresentationCore = "PresentationCore.dll";
-        public const string PresentationCoreCommonResources = "PresentationCore-CommonResources.dll";        
         public const string PresentationFramework = "PresentationFramework.dll";
         public const string PresentationHostDll = "PresentationHost_cor3.dll";
         public const string PresentationNativeDll = "PresentationNative_cor3.dll";

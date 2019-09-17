@@ -2,26 +2,17 @@
   <PropertyGroup>
     <NativeVersionFile Condition="'$(NativeVersionFile)'==''">$(IntermediateOutputPath)NativeVersion.rc</NativeVersionFile>
     <NativeVersionFileDirectory>$([System.IO.Path]::GetDirectoryName($(NativeVersionFile)))</NativeVersionFileDirectory>
+    <NativeResourceFileWithVersionInformation Condition="'$(NativeResourceFileWithVersionInformation)' == ''">$(IntermediateOutputPath)ExtendedNativeVersion.rc</NativeResourceFileWithVersionInformation>
   </PropertyGroup>
 
-
-  <PropertyGroup>
-    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native32Bit'">$(MsvcurtC1xxToolsPath)HostX86\c1xx.dll</FrontEndPath>
-    <FrontEndPath Condition="'$(VCToolArchitecture)'=='Native64Bit'">$(MsvcurtC1xxToolsPath)HostX64\c1xx.dll</FrontEndPath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' And '$(FrontEndPath)'!=''">
-    <ClCompile>
-      <AdditionalOptions>%(AdditionalOptions) /Bx"$(FrontEndPath)"</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <AdditionalOptions>%(AdditionalOptions) /fe:"$(FrontEndPath)"</AdditionalOptions>
-    </Link>
-  </ItemDefinitionGroup>
-
-
+  <Import Project="Wpf.Cpp.PrivateTools.targets" Condition="Exists('Wpf.Cpp.PrivateTools.targets') And '$(UsePrivateCppTools)'=='true'"/>
+  
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory);$(WpfTracingDir)native\</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(WpfSharedDir)inc\ddbanned.h</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
@@ -57,9 +48,124 @@
              Importance="high" />
   </Target>
 
+  <PropertyGroup>
+    <BeforeClCompileTargets>
+      CreateNativeVersionFile;
+      $(BeforeClCompileTargets)
+    </BeforeClCompileTargets>
+  </PropertyGroup>
 
-  <Target Name="CreateNativeVersionFile" BeforeTargets="ResourceCompile" Outputs="$(NativeVersionFile)" Condition="!Exists('$(NativeVersionFile)')">
+  <Target Name="CreateNativeVersionFile" 
+          BeforeTargets="ResourceCompile"
+          Outputs="$(NativeVersionFile)" 
+          Condition="!Exists('$(NativeVersionFile)')">
     <CallTarget Targets="GenerateNativeVersionFile" />
+  </Target>
+
+  <!-- Target only runs for projects that already include .rc files in their build -->
+  <Target Name="CreateNativeResourceFileWithVersionInformation"
+          AfterTargets="CreateNativeVersionFile"
+          BeforeTargets="ResourceCompile"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformationFromSourceControlManager"
+          Outputs="$(NativeResourceFileWithVersionInformation)"
+          Returns="@(ResourceCompile)"
+          Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(IsRedistProject)' != 'true'">
+
+    <PropertyGroup>
+      <_NativeVersionHeader>$([System.IO.Path]::Combine('$(NativeVersionFileDirectory)', '_version.h'))</_NativeVersionHeader>
+    </PropertyGroup>
+
+    <Copy SourceFiles="$(NativeVersionFile)" DestinationFiles="$(_NativeVersionHeader)" SkipUnchangedFiles="true" />
+    
+    <PropertyGroup>
+      <_WindowsFileVersion>$(FileVersion.Replace('.', ','))</_WindowsFileVersion>
+      <_SourceBuildInfo> %40Commit: $(SourceRevisionId)</_SourceBuildInfo>
+
+      <!-- Values from documentation for VS_FIXEDFILEINFO structure -->
+      <_VFT_APP>0x00000001</_VFT_APP>
+      <_VFT_DLL>0x00000002</_VFT_DLL>
+      <_VFT_UNKNOWN>0x00000000</_VFT_UNKNOWN>
+      
+      <_VOS_NT_WINDOWS32>0x00040004</_VOS_NT_WINDOWS32>
+      
+      <_VS_FF_DEBUG>0x00000001</_VS_FF_DEBUG>
+      
+      <_VerFileTypeValue>$(_VFT_UNKNOWN)</_VerFileTypeValue>
+      <_VerFileTypeValue Condition="'$(ConfigurationType)' =='Application'">$(_VFT_APP)</_VerFileTypeValue>
+      <_VerFileTypeValue Condition="'$(ConfigurationType)' =='DynamicLibrary'">$(_VFT_DLL)</_VerFileTypeValue>
+      
+      <_ExtendedNativeVersionFileContents>
+        <![CDATA[
+
+#include <winres.h>
+#include "_version.h"
+
+#ifndef _DEBUG
+  #define VER_VER_DEBUG             $(_VS_FF_DEBUG)
+#else
+  #define VER_VER_DEBUG             0
+#endif
+
+#ifndef VER_FILEFLAGS
+#define VER_FILEFLAGS   VER_VER_DEBUG
+#endif
+
+#ifndef VER_FILEOS
+#define VER_FILEOS  $(_VOS_NT_WINDOWS32)
+#endif
+
+#ifndef VER_FILETYPE
+#define VER_FILETYPE $(_VerFileTypeValue)
+#endif
+
+
+/////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION        VER_FILEVERSION
+ PRODUCTVERSION     VER_PRODUCTVERSION
+ FILEFLAGSMASK      0x3fL
+ FILEFLAGS          VER_FILEFLAGS
+ FILEOS             VER_FILEOS
+ FILETYPE           VER_FILETYPE
+ FILESUBTYPE        0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription",  VER_FILEDESCRIPTION_STR "\0"
+            VALUE "FileVersion",      VER_FILEVERSION_STR "\0"
+            VALUE "InternalName",     VER_INTERNALNAME_STR "\0"
+            VALUE "LegalCopyright",   VER_LEGALCOPYRIGHT_STR "\0"
+            VALUE "OriginalFilename", VER_ORIGINALFILENAME_STR "\0"
+            VALUE "ProductName",      VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",   VER_PRODUCTVERSION_STR "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+        ]]>
+      </_ExtendedNativeVersionFileContents>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ExtendenNativeVersionFileLines Include="$(_ExtendedNativeVersionFileContents)" />
+    </ItemGroup>
+    
+    <WriteLinesToFile Lines="@(_ExtendenNativeVersionFileLines)"
+                      File="$(NativeResourceFileWithVersionInformation)"
+                      Overwrite="true" />
+
+    <ItemGroup>
+      <ResourceCompile Remove="$(NativeResourceFileWithVersionInformation)" />
+      <ResourceCompile Include="$(NativeResourceFileWithVersionInformation)" />
+    </ItemGroup>
   </Target>
 
   <!--
@@ -208,7 +314,7 @@ using namespace System::Runtime::Versioning;
     </PropertyGroup>
 
     <ItemGroup>
-      <CppClrSupportProject Include="Project">
+      <CppClrSupportProject Include="ProjectHeader">
         <!-- 
             In the CDATA section that follows, 
               %40 ~= @
@@ -220,15 +326,30 @@ using namespace System::Runtime::Versioning;
           <![CDATA[
 <Project Sdk="Microsoft.NET.Sdk" InitialTargets="EnumerateAdditionalNugetReference">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <Platforms>AnyCPU%3Bx64</Platforms>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
+  ]]>
+        </Text>
+      </CppClrSupportProject>
+
+      <!-- 
+        We need a reference to Microsoft.DotNet.Wpf.GitHub when building from dotnet-wpf-int. 
+        When building from dotnet/wpf, this refernece is not needed.
+      -->
+      <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
+        <Text>
+          <![CDATA[
+   <ItemGroup>
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
   </ItemGroup>
-  
-  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run -->
+  ]]>
+        </Text>
+      </CppClrSupportProject>
+      <CppClrSupportProject Include="ProjectBody">
+        <Text>
+          <![CDATA[
+  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
   <PropertyGroup>
     <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
   </PropertyGroup>
@@ -258,7 +379,7 @@ using namespace System::Runtime::Versioning;
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.DotNet.Wpf.Github'"/>
+      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Github'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"
@@ -279,9 +400,11 @@ using namespace System::Runtime::Versioning;
     <MakeDir Condition="!Exists('$(IntermediateOutputPath)CppCliSupport\')"
              Directories="$(IntermediateOutputPath)CppCliSupport\" />
 
+    <Delete Files="$(CppCliHelperProject)" Condition="Exists('$(CppCliHelperProject)')" />
+    
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
                       File="$(CppCliHelperProject)" 
-                      Overwrite="true"/>
+                      Overwrite="false"/>
 
     <!-- 
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information

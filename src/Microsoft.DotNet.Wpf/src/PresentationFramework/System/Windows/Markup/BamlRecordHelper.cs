@@ -10,6 +10,7 @@ using System.Diagnostics;
 namespace MS.Internal.Markup
 #else
 using System.Windows;
+
 namespace System.Windows.Markup
 #endif
 {

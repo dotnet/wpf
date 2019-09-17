@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ja" original="../Strings.resx">
+    <body>
+      <trans-unit id="Converter_ConvertFromNotSupported">
+        <source>Cannot convert from type.</source>
+        <target state="translated">型から変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertToNotSupported">
+        <source>Cannot convert to type.</source>
+        <target state="translated">型に変換できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' の型は '{1}' でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_InvalidDevModeBytes">
+        <source>Invalid DEVMODE bytes</source>
+        <target state="translated">無効な DEVMODE バイト</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">このオブジェクトは別のスレッドに所有されているため、呼び出しスレッドはこのオブジェクトにアクセスできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasRootSequenceOrDocument">
+        <source>Package already has a root DocumentSequence or FixedDocument.</source>
+        <target state="translated">Package には、既にルート DocumentSequence または FixedDocument があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasStartingPart">
+        <source>Container already has Starting Part.</source>
+        <target state="translated">コンテナーには既に Starting Part があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasThumbnail">
+        <source>PackagePart already has associated Thumbnail.</source>
+        <target state="translated">PackagePart には既に、関連付けられている Thumbnail があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CannotModifyReadOnlyContainer">
+        <source>Cannot modify read-only container.</source>
+        <target state="translated">読み取り専用コンテナーを変更することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CommitCountPolicyLessThan1">
+        <source>CommitCountPolicy must be greater than zero.</source>
+        <target state="translated">CommitCountPolicy は、0 より大きくする必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DependantsNotCommitted">
+        <source>Not all opened dependents were committed.</source>
+        <target state="translated">一部の開かれた参照先は、コミットされませんでした。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DocumentWasClosed">
+        <source>XPS document was closed.</source>
+        <target state="translated">XPS ドキュメントが閉じられました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidContentType">
+        <source>'{0}' ContentType is not valid.</source>
+        <target state="translated">'{0}' ContentType は無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidDocUri">
+        <source>Document PackagePart URI is not valid.</source>
+        <target state="translated">ドキュメント PackagePart URI が無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidStartingPart">
+        <source>Starting Part is not a valid Package root.</source>
+        <target state="translated">Starting Part は有効な Package ルートではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidType">
+        <source>String passed for type is not valid.</source>
+        <target state="translated">型について渡された文字列が無効です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneDocStructure">
+        <source>FixedDocument has more than one related document structure.</source>
+        <target state="translated">FixedDocument には、複数の関連するドキュメント構造があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneMetaDataParts">
+        <source>Container has more than one Core Properties relationship.</source>
+        <target state="translated">コンテナーには、複数の Core Properties relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOnePrintTicketPart">
+        <source>PackagePart has more than one Print Ticket relationship.</source>
+        <target state="translated">PackagePart には、複数の Print Ticket relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigDefParts">
+        <source>Document has more than one Signature Definition relationship.</source>
+        <target state="translated">ドキュメントには、複数の Signature Definition relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigOriginParts">
+        <source>Container has more than one Signature Origin relationship.</source>
+        <target state="translated">コンテナーには、複数の Signature Origin relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStartingParts">
+        <source>Container has more than one Starting Part relationship.</source>
+        <target state="translated">コンテナーには、複数の Starting Part relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStoryFragment">
+        <source>FixedPage has more than one related story fragment.</source>
+        <target state="translated">FixedPage には、複数の関連するストーリー フラグメントがあります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneThumbnailPart">
+        <source>Document has more than one Thumbnail relationship.</source>
+        <target state="translated">ドキュメントには、複数の Thumbnail relationship があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocument">
+        <source>PackagePart URI does not correspond to a FixedDocument.</source>
+        <target state="translated">PackagePart URI は、FixedDocument に対応していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocumentSequence">
+        <source>PackagePart URI does not correspond to a FixedDocumentSequence.</source>
+        <target state="translated">PackagePart URI は、FixedDocumentSequence に対応していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedPage">
+        <source>PackagePart URI does not correspond to a FixedPage.</source>
+        <target state="translated">PackagePart URI は、FixedPage に対応していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAPrintTicket">
+        <source>Property is not a valid instance of PrintTicket.</source>
+        <target state="translated">プロパティは、PrintTicket の有効なインスタンスではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotOpenForReading">
+        <source>Package is not open for reading.</source>
+        <target state="translated">Package は読み取り用に開かれていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotSignatureDefinitionElement">
+        <source>ReadXML method expects reader to have just parsed start element.</source>
+        <target state="translated">ReadXML メソッドでは、リーダーが開始要素を解析したとものと想定されます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionAttribute">
+        <source>'{0}' is not a valid attribute.</source>
+        <target state="translated">'{0}' は有効な属性ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionElement">
+        <source>'{0}' is not a valid element.</source>
+        <target state="translated">'{0}' は有効な要素ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ObfucatedFontNeedGuid">
+        <source>Obfuscated font resources require valid GUID file name.</source>
+        <target state="translated">あいまいなフォント リソースには、有効な GUID ファイル名が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OnlyWriters">
+        <source>Only writers can call this method.</source>
+        <target state="translated">このメソッドを呼び出せるのは作成者のみです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OpenDocOrElementAlreadyCalled">
+        <source>OpenDocument or OpenElement already called.</source>
+        <target state="translated">OpenDocument または OpenElement は既に呼び出されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PackageUriNull">
+        <source>XpsDocument URI is null. Use XpsDocument constructor that takes URI parameter.</source>
+        <target state="translated">XpsDocument URI は NULL です。URI パラメーターを取る XpsDocument コンストラクターを使用してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PanelOrSequenceAlreadyOpen">
+        <source>Current DocumentSequence, FixedDocument, or FixedPage not completed.</source>
+        <target state="translated">現在の DocumentSequence、FixedDocument、および FixedPage は完了していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartFromDifferentContainer">
+        <source>PackagePart belongs to a different container.</source>
+        <target state="translated">PackagePart は別のコンテナーに属しています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartNotFound">
+        <source>Package must contain an XPS PackagePart.</source>
+        <target state="translated">Package に、XPS PackagePart が含まれている必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PrintTicketAlreadyCommitted">
+        <source>PrintTicket was already committed.</source>
+        <target state="translated">PrintTicket は既にコミットされています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SequenceCntMustBe1">
+        <source>Count must be 1 when CommitPolicies is set to CommitEntireSequence.</source>
+        <target state="translated">CommitPolicies が CommitEntireSequence に設定されている場合は、カウントが 1 である必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ServiceTypeAlreadyAdded">
+        <source>'{0}' service type already added.</source>
+        <target state="translated">サービスの型 '{0}' は既に追加されています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SigningDoesNotMeetPolicy">
+        <source>Document does not meet the signing policy.</source>
+        <target state="translated">ドキュメントは、署名ポリシーを満たしていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SpotIDRequiredAttribute">
+        <source>SpotId is required for a valid XpsSignatureDefinition.</source>
+        <target state="translated">有効な XpsSignatureDefinition には、SpotId が必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedImageType">
+        <source>XPS supports only JPG, TIF, WDP, and PNG image types.</source>
+        <target state="translated">XPS でサポートされているイメージの種類は、JPG、TIF、WDP、および PNG のみです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedThumbnailImageType">
+        <source>Thumbnails support only JPG and PNG image types.</source>
+        <target state="translated">縮小表示でサポートされているイメージの種類は、JPG および PNG のみです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoNgcType">
+        <source>Manager not of type NgcSerializationManagerAsync.</source>
+        <target state="translated">Manager は、NgcSerializationManagerAsync の種類のものではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoType">
+        <source>Manager not of type XpsSerializationManagerAsync.</source>
+        <target state="translated">Manager は、XpsSerializationManagerAsync の種類のものではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CannotReleaseXmlWriter">
+        <source>Cannot release XmlWriter because it was already released.</source>
+        <target state="translated">XmlWriter は既に解放されているため、解放できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CycleDetectedInSerialization">
+        <source>Cycle detected. Object was already on the stack.</source>
+        <target state="translated">サイクルが検出されました。オブジェクトは既にスタック上にあります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocument">
+        <source>SerializeObject expected FixedDocument.</source>
+        <target state="translated">SerializeObject は FixedDocument を予測していました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocumentSequence">
+        <source>SerializeObject expected FixedDocumentSequence.</source>
+        <target state="translated">SerializeObject は FixedDocumentSequence を予測していました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedPage">
+        <source>SerializeObject expected FixedPage.</source>
+        <target state="translated">SerializeObject は FixedPage を予測していました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInDocument">
+        <source>FixedDocument cannot contain another FixedDocument.</source>
+        <target state="translated">FixedDocument に別の FixedDocument を含めることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInPage">
+        <source>FixedPage cannot contain a FixedDocument.</source>
+        <target state="translated">FixedPage に FixedDocument を含めることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedPageInPage">
+        <source>FixedPage cannot contain another FixedPage.</source>
+        <target state="translated">FixedPage に別の FixedPage を含めることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_MustHaveSerializationManager">
+        <source>Must have serialization manager.</source>
+        <target state="translated">シリアル化マネージャーが必要です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedDocuments">
+        <source>FixedDocumentSequence must contain at least one FixedDocument.</source>
+        <target state="translated">FixedDocumentSequence には、少なくとも 1 つの FixedDocument を含める必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPageWriter">
+        <source>No fixed page is being written to.</source>
+        <target state="translated">書き込みが行われている固定レイアウトのページはありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPages">
+        <source>FixedDocument must contain at least one FixedPage.</source>
+        <target state="translated">FixedDocument には、少なくとも 1 つの FixedPage を含める必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFontService">
+        <source>No font service is registered with resource policy.</source>
+        <target state="translated">リソース ポリシーに登録されているフォント サービスはありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoImageService">
+        <source>No image service is registered with resource policy.</source>
+        <target state="translated">リソース ポリシーに登録されているイメージ サービスはありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoSerializer">
+        <source>Cannot find the appropriate serializer.</source>
+        <target state="translated">適切なシリアライザーが見つかりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotSupported">
+        <source>Serialization of this type of object is not supported.</source>
+        <target state="translated">この型のオブジェクトのシリアル化はサポートされていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotXpsSerializationManagerAsync">
+        <source>SerializationManager passed to XpsSerializerAsync is not XpsSerializationManagerAsync.</source>
+        <target state="translated">XpsSerializerAsync に渡された SerializationManager は XpsSerializationManagerAsync ではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_TargetNotPrintTicket">
+        <source>Target must be a PrintTicket.</source>
+        <target state="translated">ターゲットは PrintTicket でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_UnableToInstantiateSerializer">
+        <source>Cannot instantiate a serializer of the given type.</source>
+        <target state="translated">指定の種類のシリアライザーをインスタンス化することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPackagingPolicy">
+        <source>SerializationManager returned packaging policy that was not an XpsPackagingPolicy.</source>
+        <target state="translated">SerializationManager により、XpsPackagingPolicy ではなかったパッケージング ポリシーが戻されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedDocument">
+        <source>Serialized FixedDocument is not a complex property.</source>
+        <target state="translated">シリアル化された FixedDocument は複合プロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedPage">
+        <source>Serialized FixedPage is not a complex property.</source>
+        <target state="translated">シリアル化された FixedPage は複合プロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForPageContent">
+        <source>Serialized PageContent is not a complex property.</source>
+        <target state="translated">シリアル化された PageContent は複合プロパティではありません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_DisplayName">
+        <source>XPS Serializer</source>
+        <target state="translated">XPS シリアライザー</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerName">
+        <source>Microsoft</source>
+        <target state="translated">Microsoft</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerWebsite">
+        <source>http://www.microsoft.com</source>
+        <target state="translated">http://www.microsoft.com</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_WriterIsClosed">
+        <source>SerializerWriter was closed.</source>
+        <target state="translated">SerializerWriter が閉じられました。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 ﻿// This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
@@ -18,7 +22,6 @@ using System.Diagnostics.CodeAnalysis;
 #endregion
 
 #region Microsoft.Performance suppressions
-[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.Xaml.Schema.SafeReflectionInvoker.#DemandMemberAccessPermission()", Justification = "Retained per servicing policy.")]
 [assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "MS.Internal.Xaml.Context.ObjectWriterFrame")]
 
 // Need this public Ctor Override that takes an InnerExcepetion.
@@ -117,11 +120,4 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", Scope = "member", Target = "System.Xaml.Schema.ClrNamespace.#ParseClrNamespaceUri(System.String)", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Justification = "Back compat.")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Scope = "member", Target = "System.Xaml.ReflectionHelper.#LoadAssemblyHelper(System.String,System.String)")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#ResolveAssembly(System.String)", Justification = "Need to support load of assemblies from GAC by short name.")]
-#endregion
-
-#region Microsoft.Security Suppressions
-[module: SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Scope = "member", Target = "System.Xaml.Permissions.XamlLoadPermission.#Copy()", Justification = "Reviewed by senior CLR security developer.")]
-[module: SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity", Scope = "member", Target = "MS.Internal.Xaml.Runtime.DynamicMethodRuntime.#.ctor(MS.Internal.Xaml.Runtime.XamlRuntimeSettings,System.Xaml.XamlSchemaContext,System.Xaml.Permissions.XamlAccessLevel)", Justification = "Reviewed by Microsoft.")]
-[module: SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope = "member", Target = "System.Xaml.XamlObjectReader+ObjectMarkupInfo.#GetInstanceDescriptorInfo(System.ComponentModel.Design.Serialization.InstanceDescriptor,System.Reflection.MemberInfo&,System.Collections.ICollection&,System.Boolean&)", Justification = "Non-issue since C# 2.0. LinkDemand is FullDemand by default without a SecurityCritical attribute.")]
-[module: SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts", Scope = "member", Target = "MS.Internal.Utility.PerfServiceProxy.#InitializeGetId()", Justification = "Doesn't make sense with security transparency system. Reviewed by Microsoft")]
 #endregion

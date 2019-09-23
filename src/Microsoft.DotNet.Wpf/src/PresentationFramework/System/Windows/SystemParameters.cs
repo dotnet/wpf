@@ -1872,7 +1872,7 @@ namespace System.Windows
                         }
 #else
                         // the OS doesn't scale SPI_GETCARETWIDTH to the primary monitor's DPI,
-                        // so we should not apply the ConvertPixel adjustment [DDVSO 973208].
+                        // so we should not apply the ConvertPixel adjustment.
                         // Call SPI in "unaware" mode;  this ensures we won't break
                         // if the OS decides to "fix" their anomalous behavior.
                         using (DpiUtil.WithDpiAwarenessContext(MS.Utility.DpiAwarenessContextValue.Unaware))

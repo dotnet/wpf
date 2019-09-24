@@ -3,12 +3,12 @@
   <!-- Branding information -->
   <PropertyGroup>
     <VersionPrefix>4.8.0</VersionPrefix>
-    <PreReleaseVersionLabel>rc2</PreReleaseVersionLabel>
+    <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <!--
         When StabilizePackageVersion is set to 'true', this branch will produce stable outputs for 'Shipping' packages
     -->
-    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">true</StabilizePackageVersion>                                                                                             
+    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">false</StabilizePackageVersion>                                                                                             
     <DotNetFinalVersionKind Condition="'$(StabilizePackageVersion)' == 'true'">release</DotNetFinalVersionKind>
   </PropertyGroup>
   

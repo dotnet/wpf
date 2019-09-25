@@ -8,10 +8,9 @@
     <!--
         When StabilizePackageVersion is set to 'true', this branch will produce stable outputs for 'Shipping' packages
     -->
-    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">false</StabilizePackageVersion>                                                                                             
+    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">false</StabilizePackageVersion>
     <DotNetFinalVersionKind Condition="'$(StabilizePackageVersion)' == 'true'">release</DotNetFinalVersionKind>
   </PropertyGroup>
-  
   <!-- NuGet Package Versions -->
   <PropertyGroup>
     <MicrosoftPrivateWinformsVersion>4.8.0-rc2.19462.10</MicrosoftPrivateWinformsVersion>
@@ -47,9 +46,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19461.7</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19461.7</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19461.7</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19474.3</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19474.3</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19474.3</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

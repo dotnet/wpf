@@ -869,7 +869,7 @@ namespace System.Windows.Xps.Packaging
         /// of URIs with the specified certificate.
         /// </summary>
         /// <param name="partList">
-        /// A collection of URI to pakage parts to be signed.
+        /// A collection of URI to package parts to be signed.
         /// </param>
         /// <param name="certificate">
         /// The certificate used for signing.  If this is null then

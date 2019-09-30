@@ -5,10 +5,6 @@
 #include "Utils.hxx"
 #include <shlwapi.h>
 
-#if _MANAGED
-using namespace System::Security;
-#endif
-
 // These constants are cloned in
 // wpf\src\Shared\MS\Internal\Registry.cs
 // Should these reg keys change the above file should be also modified to reflect that.
@@ -30,8 +26,6 @@ namespace WPFUtils {
 // If the function succeeds, the return value is ERROR_SUCCESS.
 // If the function fails, the return value is a nonzero error code defined in Winerror.h
 //
-#if _MANAGED
-#endif
 LONG ReadRegistryString(__in HKEY rootKey, __in LPCWSTR keyName, __in LPCWSTR valueName,
                                      __out LPWSTR value, size_t cchMax)
 {

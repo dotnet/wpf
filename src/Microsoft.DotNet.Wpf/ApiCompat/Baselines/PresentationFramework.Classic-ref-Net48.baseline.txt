@@ -1,0 +1,5 @@
+Compat issues with assembly PresentationFramework.Classic:
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.ClassicBorderDecorator' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.DataGridHeaderBorder' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.SystemDropShadowChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+Total Issues: 3

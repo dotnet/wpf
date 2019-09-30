@@ -89,30 +89,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- 
-      If there is ever need to use a private C++ compiler front-end, use the logic in the commented section below,
-      and update global.json with the corresponding version of msvcurt-c1xx
-      
-      There is also a corresponding section (also commented out) in Wpf.Cpp.targets.
-      
-      msvcurt-c1xx should reference a blob hosted in azure storage that contains
-      msvcurt[d]_netcore.lib and c1xx.dll (and optionally, c2.dll)
-    -->
-    <!-- Start optional section -->
-    <!-- Also in global.json -->
-    <MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>
-    <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd>  
-    <MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>
-    <MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>
-    <!-- End optional section -->
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">true</UsePrivateCppTools>
   </PropertyGroup>
+  <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
   
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">
-    <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(MsvcurtNetCoreLib)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-
   <!-- Set up standard libraries for Native C++ projects -->
   <PropertyGroup>
     <!-- Explicitly set up CRT and VC runtime libraries -->

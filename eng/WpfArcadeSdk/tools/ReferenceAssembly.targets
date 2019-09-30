@@ -42,12 +42,11 @@
   </Target>
 
   <Target Name="CopyIntellisenseXmls"
-          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
-                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')"
+          Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'"
           Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
     <PropertyGroup>
       <!-- Also in global.json -->
-      <DotNetApiDocsNetCoreApp30>0.0.0.1</DotNetApiDocsNetCoreApp30>
+      <DotNetApiDocsNetCoreApp30>0.0.0.2</DotNetApiDocsNetCoreApp30>
       <IntellisenseXmlDir>$(RepositoryToolsDir)native\bin\dotnet-api-docs_netcoreapp3.0\$(DotNetApiDocsNetCoreApp30)\_intellisense\netcore-3.0\</IntellisenseXmlDir>
     </PropertyGroup>
     
@@ -77,8 +76,7 @@
   -->
   <Target Name="CopyHandCraftedReferenceProjectsToRefDir" 
           AfterTargets="PrepareForRun"
-          Condition="('$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf')
-                     or ('$(ReferenceProjectRepoLocation)'=='Internal' and '$(RepositoryName)'=='dotnet-wpf-int')">
+          Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'">
     <Copy SourceFiles="$(TargetPath)"
           Condition="Exists('$(TargetPath)')"
           DestinationFolder="$(ReferenceAssemblyDir)"

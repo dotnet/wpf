@@ -7,7 +7,7 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ProjectGuid>{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}</ProjectGuid>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -40,6 +40,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\Registry.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\CompoundFile\ContainerFlags.cs " />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\PackagePartExtensions.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\PackagingUtilities.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\ReaderWriterLockSlimWrapper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\ReaderWriterLockWrapper.cs" />

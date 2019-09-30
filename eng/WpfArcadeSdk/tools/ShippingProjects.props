@@ -18,9 +18,6 @@
       PresentationFramework-SystemDrawing;
       PresentationFramework-SystemXml;
       PresentationFramework-SystemXmlLinq;
-    </ExternalShippingProjects>
-
-    <InternalShippingProjects>
       PresentationUI;
       System.Printing;
       System.Windows.Controls.Ribbon;
@@ -32,6 +29,9 @@
       PresentationFramework.Luna;
       PresentationFramework.Royale;
       WindowsFormsIntegration;
+    </ExternalShippingProjects>
+
+    <InternalShippingProjects>
       PenImc;
       PresentationNative;
       WpfGfx;
@@ -82,25 +82,26 @@
       UIAutomationProvider-ref;
       UIAutomationTypes-ref;
       WindowsBase-ref;
-    </ExternalHandCraftedReferenceProjects>
-
-    <InternalHandCraftedReferenceProjects>
       PresentationFramework.Aero-ref;
       PresentationFramework.Aero2-ref;
       PresentationFramework.AeroLite-ref;
       PresentationFramework.Classic-ref;
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale-ref;
+      PresentationUI-ref;
       System.Printing-ref;
       System.Windows.Controls.Ribbon-ref;
       System.Windows.Presentation-ref;
       WindowsFormsIntegration-ref;
-    </InternalHandCraftedReferenceProjects>
+    </ExternalHandCraftedReferenceProjects>
+
+    <HandCraftedReferenceProjects>
+      $(ExternalHandCraftedReferenceProjects);
+    </HandCraftedReferenceProjects>
 
     <HelperProjects>
       $(CycleBreakerProjects);
-      $(ExternalHandCraftedReferenceProjects);
-      $(InternalHandCraftedReferenceProjects);
+      $(HandCraftedReferenceProjects);
     </HelperProjects>
 
     <!--

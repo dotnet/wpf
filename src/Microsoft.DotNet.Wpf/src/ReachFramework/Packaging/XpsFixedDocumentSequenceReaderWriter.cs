@@ -546,28 +546,31 @@ namespace System.Windows.Xps.Packaging
         void
         ParseDocuments()
         {
-            Stream stream = _metroPart.GetStream(FileMode.Open);
-            //
-            // If the stream is empty there are no documents to parse
-            //
-            if( stream.Length > 0 )
+            using (Stream stream = _metroPart.GetStream(FileMode.Open))
             {
-                XmlTextReader reader = new XmlTextReader(stream);
-
-                while( reader.Read() )
+                //
+                // If the stream is empty there are no documents to parse
+                //
+                if (stream.Length > 0)
                 {
-                    if( reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.DocumentReference)
+                    XmlTextReader reader = new XmlTextReader(stream);
+
+                    while (reader.Read())
                     {
-                        string attribute = reader.GetAttribute(XmlTags.Source);
-                        if( attribute != null )
+                        if (reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.DocumentReference)
                         {
-                          Uri relativeUri =  new Uri(attribute, UriKind.Relative);
-                          //This routine properly adds DocumentReaderWriter to the _documentCache
-                          AddDocumentToCache(PackUriHelper.ResolvePartUri( Uri, relativeUri));
+                            string attribute = reader.GetAttribute(XmlTags.Source);
+                            if (attribute != null)
+                            {
+                                Uri relativeUri = new Uri(attribute, UriKind.Relative);
+                                //This routine properly adds DocumentReaderWriter to the _documentCache
+                                AddDocumentToCache(PackUriHelper.ResolvePartUri(Uri, relativeUri));
+                            }
                         }
                     }
                 }
             }
+             
         }
 
         /// <summary>

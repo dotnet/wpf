@@ -102,8 +102,16 @@ array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int file
         Mem_Free(puchDestBuffer);
     }
 
-    if (errCode != NO_ERROR)
+    // If subsetting would grow the font, just use the original one as it's the best we can do.
+    if (errCode == ERR_WOULD_GROW)
+    {
+        retArray = gcnew array<System::Byte>(fileSize);
+        System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)fontData, retArray, 0, fileSize);
+    }
+    else if (errCode != NO_ERROR)
+    {
         throw gcnew FileFormatException(sourceUri);
+    }
 
     return retArray;
 }

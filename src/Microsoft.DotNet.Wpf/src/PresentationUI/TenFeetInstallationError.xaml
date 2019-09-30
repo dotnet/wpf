@@ -1,0 +1,108 @@
+﻿<!--
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+
+Description: Download App Error Page.
+-->
+<Page x:Uid="Grid_1"  xml:lang="en-US"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    x:Class="Microsoft.Internal.DeploymentUI.TenFeetInstallationError" x:ClassModifier="internal">
+
+    <Page.Resources>
+
+        <!-- Button Text -->
+
+        <Style x:Uid="Style_1" TargetType="{x:Type TextBlock}">
+          <Setter x:Uid="Setter_1" Property="FontFamily" Value="Segoe SemiBold" />
+          <Setter x:Uid="Setter_2" Property="Foreground" Value="white" />
+          <Setter x:Uid="Setter_3" Property="FontSize" Value="18pt" />
+          <Setter x:Uid="Setter_4" Property="Margin" Value="0,0,0,0" />
+        </Style>
+
+    </Page.Resources>
+
+    <Page.Background>
+      <LinearGradientBrush x:Uid="LinearGradientBrush_1" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop x:Uid="GradientStop_1" Color="#2072B8" Offset="0" />
+        <GradientStop x:Uid="GradientStop_2" Color="#093A66" Offset="1" />
+      </LinearGradientBrush>
+    </Page.Background>
+
+  <Grid x:Uid="Grid_5"   Name="Grid_2" MinHeight="300">
+
+    <Grid.Resources>
+      <ResourceDictionary x:Uid="ResourceDictionary_1">
+        <ResourceDictionary.MergedDictionaries>
+          <ResourceDictionary Source="themes\MediaCenterTheme.xaml" x:Uid="ResourceDictionary_2"/>
+        </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+    </Grid.Resources>
+
+    <Grid.RowDefinitions>
+      <RowDefinition x:Uid="RowDefinition_1" Height="*" />
+      <RowDefinition x:Uid="RowDefinition_2" Height="Auto" />
+      <RowDefinition x:Uid="RowDefinition_3" Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition x:Uid="ColumnDefinition_9" Width="10" />
+      <ColumnDefinition x:Uid="ColumnDefinition_10" Width="*"/>
+      <ColumnDefinition x:Uid="ColumnDefinition_11" Width="10" />
+    </Grid.ColumnDefinitions>
+
+
+    <Border x:Uid="Border_1" Grid.Column="1" Grid.Row="1" CornerRadius="4" Background="#33FFFFFF" />
+
+    <Border x:Uid="Border_2" Grid.Column="1" Grid.Row="1" Margin="7" Padding="20" CornerRadius="3" >
+      <Border.Background>
+        <LinearGradientBrush x:Uid="LinearGradientBrush_2" StartPoint="0,0" EndPoint="1,0">
+          <GradientStop x:Uid="GradientStop_3" Color="#5292BF" Offset="0" />
+          <GradientStop x:Uid="GradientStop_4" Color="#264B79" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+
+	<StackPanel x:Uid="StackPanel_1">
+
+        <!-- Please, no text placeholders in TextBlock elements, as these get unnecessarily localized. -->
+        
+	    <!-- Title -->
+        <TextBlock Margin="0,0,0,0" x:Uid="Title" FontFamily="Segoe SemiBold" FontSize="22pt" Foreground="#152a4f" Name="txtTitle" TextWrapping="WrapWithOverflow">
+        </TextBlock>
+
+        <TextBlock Margin="0,4,0,0" x:Uid="Text" FontFamily="Segoe SemiBold" FontSize="19pt" Foreground="#FFFFFF" Name="Text" TextWrapping="WrapWithOverflow">
+        </TextBlock>
+
+        <TextBlock Margin="0,8,0,0" x:Uid="SupportUri" FontFamily="Segoe SemiBold" FontSize="15pt" Foreground="#FFFFFF" Name="SupportUriText" TextWrapping="WrapWithOverflow" Visibility="Collapsed" >
+            More information about this application can be found by visiting the site  
+            <Hyperlink Name="SupportHyperLink" Foreground="#95D7FE" x:Uid="SupportHyperLink" >here</Hyperlink>
+        </TextBlock>
+
+        <StackPanel x:Uid="ButtonsPanel" Name="ButtonsPanel" Margin="0,20,0,0" Orientation="Horizontal" >
+            <StackPanel.Resources>
+                <Style x:Uid="Style_2" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter x:Uid="Setter_5" Property="Visibility" Value="Collapsed" />
+                    <Setter x:Uid="Setter_6" Property="MinWidth" Value="264" />
+                    <Setter x:Uid="Setter_7" Property="Margin" Value="0,0,10,0" />
+                    <Setter x:Uid="Setter_8" Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </StackPanel.Resources>
+            <Button x:Uid="LogFileButton" Name="LogFileButton" Click="OnShowLog">
+                <TextBlock x:Uid="LogFileButtonText" Margin="5">Open Error Log</TextBlock>
+            </Button>
+            <Button x:Uid="RetryButton" Name="RetryButton" Click="OnRetry">
+                <TextBlock x:Uid="RetryButtonText" Margin="5">Retry</TextBlock>
+            </Button>
+            <Button x:Uid="GetWinFXButton" Name="GetWinFXButton" Click="OnGetWinFX">
+                <!-- Change to ".NET" after v1 -->
+                <TextBlock x:Uid="GetWinFXText" Margin="5">Install .Net Framework</TextBlock>
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+
+    </Border>
+
+  </Grid>
+</Page>

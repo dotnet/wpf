@@ -45,6 +45,18 @@ The port from WPF for .NET Framework is still in progress.  All components appli
     * [PresentationFramework-SystemDrawing](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemDrawing)
     * [PresentationFramework-SystemXml](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXml)
     * [PresentationFramework-SystemXmlLinq](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXmlLinq)
+  * [WindowsFormsIntegrations](src/Microsoft.DotNet.Wpf/src/WindowsFormsIntegration)
+  * [System.Windows.Controls.Ribbon](src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon)
+  * [WPF Themes](src/Microsoft.DotNet.Wpf/src/Themes)
+    * [PresentationFramework-Aero](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Aero)
+    * [PresentationFramework-Aero2](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Aero2)
+    * [PresentationFramework-AeroLite](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.AeroLite)
+    * [PresentationFramework-Classic](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Classic)
+    * [PresentationFramework-Luna](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Luna)
+    * [PresentationFramework-Royale](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Royale)
+  * [System.Windows.Presentation](src/Microsoft.DotNet.Wpf/src/System.Windows.Presentation)
+  * [PresentationUI](src/Microsoft.DotNet.Wpf/src/PresentationUI)
+  * [System.Printing](src/Microsoft.DotNet.Wpf/src/System.Printing)
   
 * Tests:
   * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)
@@ -52,17 +64,6 @@ The port from WPF for .NET Framework is still in progress.  All components appli
 ### In Progress
 Note: This list is in rough priority order and may change.
 * Components: 
-  * `WindowsFormsIntegration`
-  * `System.Windows.Controls.Ribbon`
-  * `WPF Themes`
-    * `PresentationFramework-Aero`
-    * `PresentationFramework-Aero2`
-    * `PresentationFramework-AeroLite`
-    * `PresentationFramework-Classic`
-    * `PresentationFramework-Luna`
-    * `PresentationFramework-Royale`
-  * `System.Windows.Presentation`
-  * `PresentationUI`
-  * `System.Printing`
+
   * `PenIMC_cor3`
   * `WpfGfx_cor3`

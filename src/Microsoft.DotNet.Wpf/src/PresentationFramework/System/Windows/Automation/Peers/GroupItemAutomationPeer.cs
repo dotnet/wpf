@@ -130,14 +130,7 @@ namespace System.Windows.Automation.Peers
                 ItemsControlAutomationPeer itemsControlAP = itemsControl.CreateAutomationPeer() as ItemsControlAutomationPeer;
                 if (itemsControlAP != null)
                 {
-                    Panel itemsHost = owner.ItemsHost;
-
-                    if (itemsHost == null)
-                        return null;
-
-                    IList childItems = itemsHost.Children;
-                    List<AutomationPeer> children = new List<AutomationPeer>(childItems.Count);
-                    ItemPeersStorage<ItemAutomationPeer> addedChildren = new ItemPeersStorage<ItemAutomationPeer>();
+                    List<AutomationPeer> children = new List<AutomationPeer>();
                     bool useNetFx472CompatibleAccessibilityFeatures = AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures;
 
                     if (!useNetFx472CompatibleAccessibilityFeatures && owner.Expander != null)
@@ -152,6 +145,24 @@ namespace System.Windows.Automation.Peers
                             _expanderPeer.GetChildren();
                         }
                     }
+                    Panel itemsHost = owner.ItemsHost;
+
+                    if (itemsHost == null)
+                    {
+                        if (_expanderPeer == null)
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            children.Add(_expanderPeer);
+                            return children;
+                        }
+                    }
+                        
+                    IList childItems = itemsHost.Children;
+                    ItemPeersStorage<ItemAutomationPeer> addedChildren = new ItemPeersStorage<ItemAutomationPeer>();
+                    
 
                     foreach (UIElement child in childItems)
                     {

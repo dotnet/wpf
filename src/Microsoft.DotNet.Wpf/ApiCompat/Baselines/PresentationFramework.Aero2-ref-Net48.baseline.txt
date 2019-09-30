@@ -1,0 +1,8 @@
+Compat issues with assembly PresentationFramework.Aero2:
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.BulletChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.ButtonChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.DataGridHeaderBorder' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.ListBoxChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.ScrollChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Microsoft.Windows.Themes.SystemDropShadowChrome' does not inherit from base type 'System.Windows.DependencyObject' in the implementation but it does in the contract.
+Total Issues: 6

@@ -31,10 +31,18 @@
         {
           "choice": "netcoreapp3.0",
           "description": "Target netcoreapp3.0"
-        }
+        },
+        {
+          "choice": "netcoreapp3.1",
+          "description": "Target netcoreapp3.1"
+        },
+        {
+          "choice": "netcoreapp5.0",
+          "description": "Target netcoreapp5.0"
+        }        
       ],
-      "replaces": "netcoreapp3.0",
-      "defaultValue": "netcoreapp3.0"
+      "replaces": "netcoreapp5.0",
+      "defaultValue": "netcoreapp5.0"
     },
     "langVersion": {
       "type": "parameter",
@@ -59,6 +67,10 @@
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "MainWindow.xaml.cs"
+    },
+    { 
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "MainWindow.xaml"
     }
   ],
   "defaultName": "WpfApp1",
@@ -74,11 +86,11 @@
     },
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "description": "Opens MainWindow.xaml.cs in the editor",
+      "description": "Opens MainWindow.xaml in the editor",
       "manualInstructions": [ ],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
-        "files": "1"
+        "files": "1;2"
       },
       "continueOnError": true
     }

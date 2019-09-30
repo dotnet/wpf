@@ -277,6 +277,7 @@
     <Compile Include="Ms\Internal\MarkupCompiler\CompilationUnit.cs" />
     <Compile Include="Ms\Internal\MarkupCompiler\FileUnit.cs" />
     <Compile Include="Ms\Internal\MarkupCompiler\MarkupCompiler.cs" />
+    <Compile Include="Ms\Internal\MarkupCompiler\NETFrameworkGetRelativePath.cs" />
     <Compile Include="Ms\Internal\MarkupCompiler\ParserExtension.cs" />
     <Compile Include="MS\Internal\Shared\SourceFileInfo.cs" />
     <Compile Include="MS\Internal\Tasks\Shared.cs" />
@@ -314,6 +315,7 @@
       Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
     -->
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
+    
   </ItemGroup>
 
 </Project>

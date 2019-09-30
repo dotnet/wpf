@@ -273,20 +273,30 @@ namespace MS.Internal
         /// <summary>
         /// Gets the count of common characters from the left optionally ignoring case
         /// </summary>
-        internal static int EqualStartingCharacterCount(string first, string second, bool ignoreCase)
+        internal static unsafe int EqualStartingCharacterCount(string first, string second, bool ignoreCase)
         {
             if (string.IsNullOrEmpty(first) || string.IsNullOrEmpty(second)) return 0;
 
-            // Current index
-            int index = 0; 
+            int commonChars = 0;
 
-            while (index != first.Length && index != second.Length &&
-                    first[index] == second[index] || (ignoreCase && char.ToUpperInvariant(first[index]) == char.ToUpperInvariant(second[index])))
+            fixed (char* f = first)
+            fixed (char* s = second)
             {
-               index++;
+                char* l = f;
+                char* r = s;
+                char* leftEnd = l + first.Length;
+                char* rightEnd = r + second.Length;
+
+                while (l != leftEnd && r != rightEnd
+                    && (*l == *r || (ignoreCase && char.ToUpperInvariant((*l)) == char.ToUpperInvariant((*r)))))
+                {
+                    commonChars++;
+                    l++;
+                    r++;
+                }
             }
 
-            return index;
+            return commonChars;
         }
 
             /// <summary>

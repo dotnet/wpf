@@ -1568,19 +1568,12 @@ namespace MS.Internal
         {
             get
             {
-                string parentFolderPrefix = string.Empty;
-                if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
-                {
-                    string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
-                    relPath += SourceFileInfo.RelativeSourceFilePath;
-                    string[] dirs = relPath.Split(new Char[] { ESCAPED_BACKSLASH_CHAR });
-                    for (int i = 1; i < dirs.Length; i++)
-                    {
-                        parentFolderPrefix += PARENTFOLDER;
-                    }
-                }
+#if NETFX && !NETCOREAPP
+                return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
+#else
 
-                return parentFolderPrefix;
+                return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath);
+#endif
             }
         }
 

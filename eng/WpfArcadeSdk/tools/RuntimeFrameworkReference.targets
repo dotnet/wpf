@@ -13,7 +13,11 @@
                                 Condition="'$(ManagedCxx)'=='true'"/>
     
     <FrameworkReference Update="Microsoft.NETCore.App"
-                      Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true' And $(TargetFramework.StartsWith('netcoreapp3.')) And '$(MSBuildProjectExtension)'!='.vcxproj'">
+                      Condition="'$(MicrosoftNETCoreAppVersion)'!='' 
+                             And '$(NoTargets)'!='true' 
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1') 
+                             And '$(MSBuildProjectExtension)'!='.vcxproj'">
       <TargetingPackVersion>$(MicrosoftNETCoreAppVersion)</TargetingPackVersion>
     </FrameworkReference>
 
@@ -25,7 +29,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <!-- If TargetFramework is not netcoreapp3.x, then reset RuntimeFrameworkVersion -->
-    <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('netcoreapp3.'))" />
+    <!-- If TargetFramework is not one of the supported .NET Core versions, then reset RuntimeFrameworkVersion -->
+    <RuntimeFrameworkVersion Condition="('$(TargetFrameworkIdentifier)' != '.NETCoreApp') Or ('$(TargetFrameworkVersion)' != 'v3.0' And '$(TargetFrameworkVersion)' != 'v3.1')" />
   </PropertyGroup>
 </Project>

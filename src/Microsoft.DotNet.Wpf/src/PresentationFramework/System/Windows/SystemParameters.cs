@@ -1858,6 +1858,9 @@ namespace System.Windows
 
                         int caretWidth = 0;
 
+#if NEVER
+                        // this code would work if the OS treated SPI_GETCARETWIDTH
+                        // like all the other metrics, scaling it to the primary monitor's DPI
                         if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETCARETWIDTH, 0, ref caretWidth, 0))
                         {
                             _caretWidth = ConvertPixel(caretWidth);
@@ -1867,6 +1870,24 @@ namespace System.Windows
                             _cacheValid[(int)CacheSlot.CaretWidth] = false;
                             throw new Win32Exception();
                         }
+#else
+                        // the OS doesn't scale SPI_GETCARETWIDTH to the primary monitor's DPI,
+                        // so we should not apply the ConvertPixel adjustment.
+                        // Call SPI in "unaware" mode;  this ensures we won't break
+                        // if the OS decides to "fix" their anomalous behavior.
+                        using (DpiUtil.WithDpiAwarenessContext(MS.Utility.DpiAwarenessContextValue.Unaware))
+                        {
+                            if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETCARETWIDTH, 0, ref caretWidth, 0))
+                            {
+                                _caretWidth = (double)caretWidth;
+                            }
+                            else
+                            {
+                                _cacheValid[(int)CacheSlot.CaretWidth] = false;
+                                throw new Win32Exception();
+                            }
+                        }
+#endif
                     }
                 }
 

@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,6 +20,8 @@
     <DefineConstants Condition="$(TargetFramework.Equals('net472'))">$(DefineConstants);NET472</DefineConstants>
     
     <DefineConstants Condition="$(TargetFramework.Equals('netcoreapp3.0'))">$(DefineConstants);NETCOREAPP3_0</DefineConstants>
+    <DefineConstants Condition="$(TargetFramework.Equals('netcoreapp3.1'))">$(DefineConstants);NETCOREAPP3_1</DefineConstants>
+
   </PropertyGroup>
   
   <ItemGroup Condition="'$(TargetFramework)'!='net35'">

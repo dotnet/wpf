@@ -5,9 +5,10 @@
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
                       Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
-                                 And $(TargetFramework.StartsWith('netcoreapp3')) 
-                                 And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
-                                 And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1')
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
   </ItemGroup>
   <ItemGroup>
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />

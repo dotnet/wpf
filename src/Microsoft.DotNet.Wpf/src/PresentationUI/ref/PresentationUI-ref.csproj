@@ -3,7 +3,7 @@
     <AssemblyName>PresentationUI</AssemblyName>
     <PackageId>PresentationUI-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>

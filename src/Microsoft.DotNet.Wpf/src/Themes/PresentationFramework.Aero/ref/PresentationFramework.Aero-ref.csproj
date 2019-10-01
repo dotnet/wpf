@@ -5,7 +5,7 @@
     <AssemblyName>PresentationFramework.Aero</AssemblyName>
     <PackageId>PresentationFramework.Aero-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>netcoreapp3.0</TargetFramework>  
+    <TargetFramework>netcoreapp3.1</TargetFramework>  
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>

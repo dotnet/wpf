@@ -326,7 +326,7 @@ using namespace System::Runtime::Versioning;
           <![CDATA[
 <Project Sdk="Microsoft.NET.Sdk" InitialTargets="EnumerateAdditionalNugetReference">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU%3Bx64</Platforms>
   </PropertyGroup>
   ]]>

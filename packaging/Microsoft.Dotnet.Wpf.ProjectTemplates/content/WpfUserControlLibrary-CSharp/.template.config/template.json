@@ -7,7 +7,7 @@
   "description": "A project for creating a user control library for .NET Core WPF Applications",
   "groupIdentity": "Microsoft.Common.WPF.Control",
   "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.Control.CSharp.3.0",
+  "identity": "Microsoft.Common.WPF.Control.CSharp.3.1",
   "shortName": "wpfusercontrollib",
   "tags": {
     "language": "C#",
@@ -31,10 +31,14 @@
         {
           "choice": "netcoreapp3.0",
           "description": "Target netcoreapp3.0"
-        }
+        },
+        {
+          "choice": "netcoreapp3.1",
+          "description": "Target netcoreapp3.1"
+        }     
       ],
-      "replaces": "netcoreapp3.0",
-      "defaultValue": "netcoreapp3.0"
+      "replaces": "netcoreapp3.1",
+      "defaultValue": "netcoreapp3.1"
     },
     "langVersion": {
       "type": "parameter",

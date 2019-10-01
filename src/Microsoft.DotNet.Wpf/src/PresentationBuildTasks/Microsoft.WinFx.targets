@@ -1,10 +1,13 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
 
     <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">netcoreapp2.1</_PresentationBuildTasksTfm>
     <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_PresentationBuildTasksTfm>
     <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$(MSBuildThisFileDirectory)..\tools\$(_PresentationBuildTasksTfm)\PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
+    
+    <!-- The .NET Framework version of Microsoft.WinFX.Targets uses BuildTasksAssembly to define the path to PresentationBuildTasks.dll. Override that definition here --> 
+    <BuildTaskAssembly>$([System.IO.Path]::GetFullPath('$(_PresentationBuildTasksAssembly)'))</BuildTaskAssembly>
 
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
 

@@ -3,7 +3,6 @@
     <ProjectGuid>{440d06b8-e3de-4c0d-ad25-cd4f43d836e1}</ProjectGuid>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <IsShippingPackage>true</IsShippingPackage>
     <VersionPrefix>3.1.0</VersionPrefix>
   </PropertyGroup>
 

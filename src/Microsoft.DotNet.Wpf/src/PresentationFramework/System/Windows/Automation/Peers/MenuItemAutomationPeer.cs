@@ -94,13 +94,20 @@ namespace System.Windows.Automation.Peers
         override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
+            MenuItem owner = (MenuItem)Owner;
+            ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
             if (sizeOfSet == AutomationProperties.AutomationSizeOfSetDefault)
             {
-                MenuItem owner = (MenuItem)Owner;
-                ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
-
                 sizeOfSet = ItemAutomationPeer.GetSizeOfSetFromItemsControl(parent, owner);
+            }
+
+            foreach (var item in parent.Items)
+            {
+                if (item is Separator)
+                {
+                    sizeOfSet -= 1;
+                }
             }
 
             return sizeOfSet;
@@ -118,12 +125,24 @@ namespace System.Windows.Automation.Peers
         override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
+            MenuItem owner = (MenuItem)Owner;
+            ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
             if (positionInSet == AutomationProperties.AutomationPositionInSetDefault)
             {
-                MenuItem owner = (MenuItem)Owner;
-                ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
                 positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
+            }
+
+            foreach (var item in parent.Items)
+            {
+                if (item == owner)
+                {
+                    break;
+                }
+                if (item is Separator)
+                {
+                    positionInSet -= 1;
+                }
             }
 
             return positionInSet;

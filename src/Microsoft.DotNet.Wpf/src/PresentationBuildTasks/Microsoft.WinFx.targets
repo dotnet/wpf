@@ -1,4 +1,4 @@
- <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
 
@@ -7,7 +7,7 @@
     <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$(MSBuildThisFileDirectory)..\tools\$(_PresentationBuildTasksTfm)\PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
     
     <!-- The .NET Framework version of Microsoft.WinFX.Targets uses BuildTasksAssembly to define the path to PresentationBuildTasks.dll. Override that definition here --> 
-    <BuildTaskAssembly>$([System.IO.Path]::GetFullPath('$(_PresentationBuildTasksAssembly)'))</BuildTaskAssembly>
+    <BuildTaskAssembly Condition="'$(BuildTaskAssembly)' != ''">$([System.IO.Path]::GetFullPath('$(_PresentationBuildTasksAssembly)'))</BuildTaskAssembly>
 
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
 
@@ -17,13 +17,14 @@
 
   </PropertyGroup>
 
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass1" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.UidManager" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.ResourcesGenerator" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <!-- Do not define these tasks if they have been defined previously by .NET Framework version of Microsoft.WinFx.targets -->
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass1" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''"/>
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.UidManager" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.ResourcesGenerator" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" Condition="'$(BuildTaskAssembly)' == ''" />
 
 
   <!-- Some Default Settings -->

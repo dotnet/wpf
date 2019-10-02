@@ -12,6 +12,6 @@ namespace System.Windows.Markup
             XamlSetTypeConverterHandler = xamlSetTypeConverterHandler;
         }
 
-        public string XamlSetTypeConverterHandler { get; private set; }
+        public string XamlSetTypeConverterHandler { get; }
     }
 }

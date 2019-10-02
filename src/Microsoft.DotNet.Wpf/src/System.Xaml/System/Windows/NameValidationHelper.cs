@@ -10,7 +10,7 @@ using System.Globalization;
 namespace System.Xaml
 {
     /// <summary>
-    ///     The string used in RuntimeNameProperty is expected to follow certain
+    /// The string used in RuntimeNameProperty is expected to follow certain
     /// rules.  IsValidIdentifierName checks the given string against the rules.
     /// NameValidationCallback extends to all object types and is in the right
     /// format to be used as a DependencyProperty ValidateValueCallback

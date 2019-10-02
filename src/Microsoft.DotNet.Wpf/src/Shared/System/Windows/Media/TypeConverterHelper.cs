@@ -2,26 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using System;
 using System.Diagnostics;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Runtime.InteropServices;
-using System.Windows.Navigation;
 
 namespace System.Windows.Media
 {
-    #region UriHolder
-
     /// <summary>
-    /// UriHolder
     /// Holds Original and Base Uris
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     internal struct UriHolder
     {
-
         /// <summary>
         /// BaseUri
         /// <remarks>Can be null</remarks>
@@ -32,11 +24,7 @@ namespace System.Windows.Media
         /// OriginalUri
         /// </summary>
         internal Uri OriginalUri;
-    };
-
-    #endregion
-
-    #region TypeConverterHelper
+    }
 
     /// <summary>
     ///     This helper method is used primarily by type converters to resolve their uri
@@ -75,25 +63,20 @@ namespace System.Windows.Media
 
             if (uriHolder.OriginalUri.IsAbsoluteUri == false)
             {
-                //Debug.Assert (context != null, "Context should not be null");
                 if (context != null)
                 {
                     IUriContext iuc = (IUriContext)context.GetService(typeof(IUriContext));
-
-                    //Debug.Assert (iuc != null, "IUriContext should not be null here");
                     if (iuc != null)
                     {
-                        // the base uri is NOT ""
                         if (iuc.BaseUri != null)
                         {
-
                             uriHolder.BaseUri = iuc.BaseUri;
 
                             if (!uriHolder.BaseUri.IsAbsoluteUri)
                             {
                                 uriHolder.BaseUri = new Uri(BaseUriHelper.BaseUri, uriHolder.BaseUri);
                             }
-                        } // uriHolder.BaseUriString != ""
+                        }
                         else
                         {
                             // if we reach here, the base uri we got from IUriContext is ""
@@ -101,13 +84,11 @@ namespace System.Windows.Media
                             // application's base
                             uriHolder.BaseUri = BaseUriHelper.BaseUri;
                         }
-                    } // iuc != null
-                } // context!= null
-            } // uriHolder.OriginalUri.IsAbsoluteUri == false
+                    }
+                }
+            }
 
             return uriHolder;
         }
     }
-
-#endregion
 }

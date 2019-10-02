@@ -2,15 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents:  Converter to convert TypeExtensions to InstanceDescriptors
-
-//  Created:   04/28/2005 Microsoft
-//
-
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -18,7 +9,10 @@ using System.Security;
 
 namespace System.Windows.Markup
 {
-    class TypeExtensionConverter : TypeConverter
+    /// <summary>
+    /// Converter to convert TypeExtensions to InstanceDescriptors
+    /// </summary>
+    internal class TypeExtensionConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
@@ -26,6 +20,7 @@ namespace System.Windows.Markup
             {
                 return true;
             }
+
             return base.CanConvertTo(context, destinationType);
         }
 
@@ -33,14 +28,17 @@ namespace System.Windows.Markup
         {
             if (destinationType == typeof(InstanceDescriptor))
             {
-                TypeExtension typeExtension = value as TypeExtension;
-                if (typeExtension == null)
+                if (!(value is TypeExtension typeExtension))
                 {
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TypeExtension")); 
+                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, nameof(value), nameof(TypeExtension))); 
                 }
-                return new InstanceDescriptor(typeof(TypeExtension).GetConstructor(new Type[] { typeof(Type) }),
-                                              new object[] { typeExtension.Type });
+
+                return new InstanceDescriptor(
+                    typeof(TypeExtension).GetConstructor(new Type[] { typeof(Type) }),
+                    new object[] { typeExtension.Type }
+                );
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }

@@ -11,7 +11,7 @@ namespace System.Windows.Markup
 {
     public class PropertyDefinition : MemberDefinition
     {
-        private IList<Attribute> attributes;
+        private IList<Attribute> _attributes;
 
         public override string Name { get; set; }
 
@@ -23,14 +23,7 @@ namespace System.Windows.Markup
 
         public IList<Attribute> Attributes
         {
-            get
-            {
-                if (attributes == null)
-                {
-                    attributes = new List<Attribute>();
-                }
-                return attributes;
-            }
+            get => _attributes ?? (_attributes = new List<Attribute>());
         }
     }
 }

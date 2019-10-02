@@ -2,21 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents:  An attribute that allows declaring that one property
-//             depends on the value of another property. The serialization
-//             system will ensure that the listed property is serialized
-//             prior to the property that this attribute is set on.
-//             Care must be taken to avoid circular dependencies. They
-//             are only detected when writing all the properties in the
-//             cycle.
-//
-//  Created:   04/28/2005 Microsoft
-//
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -44,14 +29,9 @@ namespace System.Windows.Markup
         }
 
         /// <summary>
-        /// Override of Attribute.TypeId
+        /// Override to ensure AttributeCollection perserves all instances
         /// </summary>
-        public override object TypeId
-        {
-            // this allows multiple DependsOn attributes to show up in the
-            // PropertyDescriptor.Attributes collection.
-            get => this;
-        }
+        public override object TypeId => this;
 
         /// <summary>
         /// The name of the property that is declared to depend on

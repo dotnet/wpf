@@ -2,22 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents:  An attribute to declare that this property can be 
-//             initialized using the classes constructor of the name
-//             provided.
-//
-//  Created:   05/06/2005 Microsoft
-//
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
-
     /// <summary>
     /// Attribute to declare that this associated property can be initialized by a 
     /// constructor parameter and should be ignored for serialization if the constructor

@@ -8,10 +8,10 @@ namespace System.Windows.Markup
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
     public class AcceptedMarkupExtensionExpressionTypeAttribute: Attribute
     {
-        public Type Type {get; set; }
+        public Type Type { get; set; }
 
         public AcceptedMarkupExtensionExpressionTypeAttribute(Type type)
-	{
+	    {
             Type = type;
         }
     }

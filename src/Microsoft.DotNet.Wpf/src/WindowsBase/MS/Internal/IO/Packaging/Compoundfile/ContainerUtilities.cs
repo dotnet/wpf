@@ -336,7 +336,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             // A null string will get a null array
             if ((null == backSlashPath) || (0 == backSlashPath.Length))
-                return new string[0];
+                return Array.Empty<string>();
 
             // Reject leading/trailing whitespace
             if (Char.IsWhiteSpace(backSlashPath[0]) ||

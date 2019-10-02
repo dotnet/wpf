@@ -327,7 +327,7 @@ namespace System.Windows.Markup.Primitives
         {
             get
             {
-                return new MarkupObject[0];
+                return Array.Empty<MarkupObject>();
             }
         }
 

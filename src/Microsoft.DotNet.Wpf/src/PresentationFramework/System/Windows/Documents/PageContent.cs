@@ -459,7 +459,7 @@ namespace System.Windows.Documents
 
                 if (child == null)
                 {
-                    children = new FixedPage[0];
+                    children = Array.Empty<FixedPage>();
                 }
                 else
                 {

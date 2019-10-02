@@ -94,7 +94,7 @@ namespace MS.Internal.Automation
             ITextView textView = GetUpdatedTextView();
             if (textView == null)
             {
-                return new Rect[0];
+                return Array.Empty<Rect>();
             }
 
             // If start/end positions are not in the visible range, move them to the first/last visible positions.
@@ -112,7 +112,7 @@ namespace MS.Internal.Automation
             }
             if (!textView.Contains(start) || !textView.Contains(end))
             {
-                return new Rect[0];
+                return Array.Empty<Rect>();
             }
 
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
@@ -125,7 +125,7 @@ namespace MS.Internal.Automation
                 // If clipping into view and visible rect is empty, return.
                 if (visibleRect.IsEmpty)
                 {
-                    return new Rect[0];
+                    return Array.Empty<Rect>();
                 }
             }
 

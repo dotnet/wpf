@@ -733,8 +733,8 @@ namespace MS.Internal.Globalization
             internal ElementComments()
             {
                 ElementId = null;
-                LocalizationAttributes = new PropertyComment[0];
-                LocalizationComments = new PropertyComment[0];
+                LocalizationAttributes = Array.Empty<PropertyComment>();
+                LocalizationComments = Array.Empty<PropertyComment>();
             }
         }
     }

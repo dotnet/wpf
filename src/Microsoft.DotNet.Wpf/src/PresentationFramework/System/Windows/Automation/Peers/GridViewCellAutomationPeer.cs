@@ -105,7 +105,7 @@ namespace System.Windows.Automation.Peers
         IRawElementProviderSimple[] ITableItemProvider.GetRowHeaderItems()
         {
             //If there are no row headers, return an empty array 
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         IRawElementProviderSimple[] ITableItemProvider.GetColumnHeaderItems()
@@ -124,7 +124,7 @@ namespace System.Windows.Automation.Peers
                     }
                 }
             }
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         #endregion

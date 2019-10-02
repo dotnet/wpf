@@ -176,7 +176,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new FixedElement.ElementType[0];
+                return Array.Empty<FixedElement.ElementType>();
             }
         }
 

@@ -183,7 +183,7 @@ namespace System.Windows.Automation.Peers
 
             if (selection == null)
             {
-                selection = new IRawElementProviderSimple[0];
+                selection = Array.Empty<IRawElementProviderSimple>();
             }
 
             return selection;

@@ -1062,7 +1062,7 @@ namespace System.Windows.Markup.Primitives
 
         public override IEnumerable<Type> TypeReferences
         {
-            get { return new Type[0]; }
+            get { return Array.Empty<Type>(); }
         }
 
         private object _value;

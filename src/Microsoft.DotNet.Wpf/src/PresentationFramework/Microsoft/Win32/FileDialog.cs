@@ -1124,7 +1124,7 @@ namespace Microsoft.Win32
             {
                 if (_fileNames == null)
                 {
-                    return new string[0];
+                    return Array.Empty<string>();
                 }
                 else
                 {

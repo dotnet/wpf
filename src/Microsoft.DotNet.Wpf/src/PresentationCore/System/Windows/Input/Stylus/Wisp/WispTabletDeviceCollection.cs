@@ -702,7 +702,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        TabletDevice[]          _tablets = new TabletDevice[0];
+        TabletDevice[]          _tablets = Array.Empty<TabletDevice>();
         uint                    _indexMouseTablet = UInt32.MaxValue;
         bool                    _inUpdateTablets;       // detect re-entrancy
         bool                    _hasUpdateTabletsBeenCalledReentrantly;

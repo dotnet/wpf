@@ -220,7 +220,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames = new XmlQualifiedName[0];
+        private static readonly XmlQualifiedName[] LocatorPartTypeNames = Array.Empty<XmlQualifiedName>();
 
         #endregion Private Fields        
     }

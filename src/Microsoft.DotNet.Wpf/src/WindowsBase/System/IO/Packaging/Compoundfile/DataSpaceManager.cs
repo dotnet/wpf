@@ -459,7 +459,7 @@ internal class DataSpaceManager
 
         // Initialize internal data structures.
         _dataSpaceMap = new SortedList();
-        _mapTableHeaderPreservation = new byte[0];
+        _mapTableHeaderPreservation = Array.Empty<byte>();
         _dataSpaceDefinitions = new Hashtable(CU.StringCaseInsensitiveComparer);
         _transformDefinitions = new Hashtable(CU.StringCaseInsensitiveComparer);
         _transformedStreams = new ArrayList();

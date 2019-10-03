@@ -55,7 +55,7 @@ namespace MS.Internal.Data
 
         public override ParameterInfo[] GetIndexParameters()
         {
-            return new ParameterInfo[0];
+            return Array.Empty<ParameterInfo>();
         }
 
         public override MethodInfo GetSetMethod(bool nonPublic)

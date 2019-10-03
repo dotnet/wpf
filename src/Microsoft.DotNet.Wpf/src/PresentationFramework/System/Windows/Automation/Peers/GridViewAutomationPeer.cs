@@ -168,7 +168,7 @@ namespace System.Windows.Automation.Peers
         IRawElementProviderSimple[] ITableProvider.GetRowHeaders()
         {
             //If there are no row headers, return an empty array
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         #endregion

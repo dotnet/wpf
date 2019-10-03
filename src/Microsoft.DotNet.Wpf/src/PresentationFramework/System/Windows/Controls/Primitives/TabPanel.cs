@@ -235,7 +235,7 @@ namespace System.Windows.Controls.Primitives
             Dock tabAlignment = TabStripPlacement;
             bool isMultiRow = _numRows > 1;
             int activeRow = 0;
-            int[] solution = new int[0];
+            int[] solution = Array.Empty<int>();
             Vector childOffset = new Vector();
             double[] headerSize = GetHeadersSize();
 
@@ -435,7 +435,7 @@ namespace System.Windows.Controls.Primitives
 
             // If everithing fit in 1 row then exit (no separators needed)
             if (currentRowIndex == 0)
-                return new int[0];
+                return Array.Empty<int>();
 
             // Add the last row
             rowWidth[currentRowIndex] = currentRowWidth;

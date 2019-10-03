@@ -222,7 +222,7 @@ namespace System.Windows.Ink
             }
             else
             {
-                return new Guid[0];
+                return Array.Empty<Guid>();
             }
         }
 

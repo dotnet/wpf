@@ -394,7 +394,7 @@ namespace MS.Internal.Data
         ArrayList _al = new ArrayList();
         const char NullChar = Char.MinValue;
         const char EscapeChar = '^';
-        static SourceValueInfo[] EmptyInfo = new SourceValueInfo[0];
+        static SourceValueInfo[] EmptyInfo = Array.Empty<SourceValueInfo>();
         static string SpecialChars = @"./[]";
     }
 }

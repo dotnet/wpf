@@ -3,7 +3,7 @@
     <AssemblyName>PresentationFramework</AssemblyName>
     <PackageId>PresentationFramework-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;COMMONDPS;PRESENTATIONFRAMEWORK_ONLY;PRESENTATIONFRAMEWORK;RIBBON_IN_FRAMEWORK</DefineConstants>
+    <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;COMMONDPS;PRESENTATIONFRAMEWORK_ONLY;PRESENTATIONFRAMEWORK;RIBBON_IN_FRAMEWORK;PRESENTATION_FRAMEWORK_REF</DefineConstants>
     <DefineConstants Condition="'$(WeakEventTelemetry)'=='true'">$(DefineConstants);WeakEventTelemetry</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
@@ -17,6 +17,7 @@
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+    <Compile Include="$(WpfSourceDir)PresentationFramework\OtherAssemblyAttrs.cs" />
   </ItemGroup>
 
   <ItemGroup>

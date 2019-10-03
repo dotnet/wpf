@@ -15,5 +15,6 @@ using System.Windows.Markup;
 
 [assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlAccessLevel))]
 [assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlLoadPermission))]
+[assembly: TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
 
 [assembly:XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]

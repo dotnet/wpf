@@ -106,7 +106,7 @@
   <Target Name="DesignTimeMarkupCompilation">
 
         <!-- Only if we are not actually performing a compile i.e. we are in design mode -->
-        <CallTarget Condition="'$(BuildingProject)' != 'true'"
+        <CallTarget Condition="'$(BuildingProject)' != 'true' Or $(DesignTimeBuild) == 'true'"
                 Targets="MarkupCompilePass1" />
   </Target>
 

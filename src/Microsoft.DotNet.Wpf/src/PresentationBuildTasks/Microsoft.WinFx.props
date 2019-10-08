@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">netcoreapp2.1</_PresentationBuildTasksTfm>
+    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_PresentationBuildTasksTfm>
+    <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\$(_PresentationBuildTasksTfm)\PresentationBuildTasks.dll'))</_PresentationBuildTasksAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass1" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.UidManager" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.ResourcesGenerator" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  
+</Project>

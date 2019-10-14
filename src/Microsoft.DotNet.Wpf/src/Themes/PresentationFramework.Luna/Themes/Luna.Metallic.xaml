@@ -119,6 +119,7 @@ To automatically copy the files, set the environment variable
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
                     <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
+                    <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="false"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
             </MultiDataTrigger>

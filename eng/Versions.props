@@ -40,9 +40,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19461.7</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19461.7</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19461.7</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>5.0.0-beta.19515.1</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>5.0.0-beta.19515.1</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>5.0.0-beta.19515.1</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>
@@ -112,6 +112,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>5.0.0-alpha1.19513.4</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>5.0.0-alpha1.19514.10</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

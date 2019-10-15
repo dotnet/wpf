@@ -20,7 +20,12 @@ using System.Windows.Markup;
 [assembly:TypeForwardedTo(typeof(System.Windows.Markup.NullExtension))]
 [assembly:TypeForwardedTo(typeof(System.Windows.Markup.StaticExtension))]
 [assembly:TypeForwardedTo(typeof(System.Windows.Markup.TypeExtension))]
+
+// IProvidePropertyFallback is an internal interface and not included in the PresentationCore reference assembly.
+// Therefore we need to ensure it's not included in the PresentationFramework reference assembly as it won't be defined there.
+#if !PRESENTATION_FRAMEWORK_REF
 [assembly:TypeForwardedTo(typeof(System.Windows.Markup.IProvidePropertyFallback))]
+#endif
 
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkRoyale)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkLuna)]

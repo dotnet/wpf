@@ -2,7 +2,9 @@
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
 #
 
-if (Test-Path variable:global:properties)
+# It is possible that $properties has not yet been defined here if this script is not being called with
+# build.ps1 as an ancestor.  In that case, we should not do anything related to the properties variable.
+if ((Get-Variable -Name 'properties' -Scope Script -ErrorAction Ignore))
 {
     # This repo uses C++/CLI /clr:pure (or /clr:netcore) switches during compilation, which are 
     # deprecated. Ensure that this warning is always suppressed during build.

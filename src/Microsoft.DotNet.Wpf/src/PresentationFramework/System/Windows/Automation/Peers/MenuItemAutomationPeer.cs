@@ -94,19 +94,20 @@ namespace System.Windows.Automation.Peers
         override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
-            MenuItem owner = (MenuItem)Owner;
-            ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
-
+            
             if (sizeOfSet == AutomationProperties.AutomationSizeOfSetDefault)
             {
-                sizeOfSet = ItemAutomationPeer.GetSizeOfSetFromItemsControl(parent, owner);
-            }
+                MenuItem owner = (MenuItem)Owner;
+                ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
-            foreach (var item in parent.Items)
-            {
-                if (item is Separator)
+                sizeOfSet = ItemAutomationPeer.GetSizeOfSetFromItemsControl(parent, owner);
+
+                foreach (var item in parent.Items)
                 {
-                    sizeOfSet -= 1;
+                    if (item is Separator)
+                    {
+                        sizeOfSet -= 1;
+                    }
                 }
             }
 
@@ -125,23 +126,24 @@ namespace System.Windows.Automation.Peers
         override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
-            MenuItem owner = (MenuItem)Owner;
-            ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
-
+            
             if (positionInSet == AutomationProperties.AutomationPositionInSetDefault)
             {
-                positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
-            }
+                MenuItem owner = (MenuItem)Owner;
+                ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
-            foreach (var item in parent.Items)
-            {
-                if (item == owner)
+                positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
+                
+                foreach (var item in parent.Items)
                 {
-                    break;
-                }
-                if (item is Separator)
-                {
-                    positionInSet -= 1;
+                    if (item == owner)
+                    {
+                        break;
+                    }
+                    if (item is Separator)
+                    {
+                        positionInSet -= 1;
+                    }
                 }
             }
 

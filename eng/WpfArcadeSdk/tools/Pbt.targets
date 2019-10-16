@@ -17,6 +17,14 @@
      Also see additional note in Pbt.props
     -->
     <UseWpf Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)')"></UseWpf>
+    
+    <!-- 
+        When markup compilation is involved, WPF generates .g.cs files via the GenerateTemporaryTargetAssembly task. 
+        These do not always have the correct full-paths to their respective .xaml files annotated in them in the #line directives.
+        This can cause compile errors if these files are included in Source Link. 
+        https://github.com/dotnet/wpf/issues/1718
+    --> 
+    <EmbedUntrackedSources Condition="'$(InternalMarkupCompilation)'=='true'">false</EmbedUntrackedSources>
   </PropertyGroup>
   <!-- 
     Internal PBT compilation requires that we use <NetCoreReference> 
@@ -110,5 +118,7 @@
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
           Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"
           Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') "/>
+          
+   <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="BuildOnlySettings;ResolveKeySource;_GenerateResxSource;CoreCompile" />
 
 </Project>

@@ -29,6 +29,9 @@
       PresentationFramework.Luna;
       PresentationFramework.Royale;
       WindowsFormsIntegration;
+      PenImc;
+      D3DCompiler;
+      VCRuntime
     </ExternalShippingProjects>
 
     <InternalShippingLibProjects>
@@ -37,11 +40,8 @@
 
     <InternalShippingProjects>
     $(InternalShippingLibProjects);
-      PenImc;
       PresentationNative;
       WpfGfx;
-      D3DCompiler;
-      VCRuntime
     </InternalShippingProjects>
 
     <ShippingProjects>

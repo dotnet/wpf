@@ -240,6 +240,7 @@
       <!--<ConformanceMode>false</ConformanceMode>-->
 
       <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /clr:netcore</AdditionalOptions>
+      <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

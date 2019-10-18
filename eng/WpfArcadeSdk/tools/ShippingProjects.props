@@ -30,20 +30,21 @@
       PresentationFramework.Royale;
       WindowsFormsIntegration;
       PenImc;
+      WpfGfx;
       D3DCompiler;
       VCRuntime
     </ExternalShippingProjects>
 
     <InternalShippingLibProjects>
       $(InternalShippingLibProjects);
+      bilinearspan
     </InternalShippingLibProjects>
-
+    
     <InternalShippingProjects>
     $(InternalShippingLibProjects);
       PresentationNative;
-      WpfGfx;
     </InternalShippingProjects>
-
+    
     <ShippingProjects>
       $(ExternalShippingProjects);
       $(InternalShippingProjects)

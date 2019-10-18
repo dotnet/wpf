@@ -15,14 +15,14 @@ if ((Get-Variable -Name 'properties' -Scope Script -ErrorAction Ignore))
     # This repo treats Solution/Project platform 'Any CPU' as ~= 'x86', and 
     # defaults to 'Any CPU'/x86. 
     if (($properties -eq $null) -or (-not ($properties -ilike '/p:Platform=*'))) {
-        if (-not $platform) {
+        if ((Get-Variable -Name 'platform' -Scope Script -ErrorAction Ignore) -and -not $platform) {
             $platform='x86'
         }
     }
 
     # Make sure that Nuget restore doesn't hit the cache when running CI builds
     # See https://github.com/NuGet/Home/issues/3116
-    if ($ci) {
+    if ((Get-Variable -Name 'ci' -Scope Script -ErrorAction Ignore) -and $ci) {
         if (($properties -eq $null) -or (-not ($properties -icontains '/p:RestoreNoCache=true'))) {
             $properties = @('/p:RestoreNoCache=true') + $properties
         }

@@ -204,4 +204,6 @@
     
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
+
+  <Import Project="Microsoft.WinFX.props" />
 </Project>

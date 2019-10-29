@@ -2660,6 +2660,8 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = null;
                 }
 
+                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
+
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
                 if (targetPIC != null && rawStylusInputReport.RawStylusInput == null)
@@ -2668,7 +2670,7 @@ namespace System.Windows.Input.StylusWisp
                     //    The transformTabletToView matrix and plugincollection rects though can change based
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.StylusDevice.CriticalActiveSource, rawStylusInputReport.StylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(targetPIC.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
 
@@ -2676,8 +2678,6 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = rawStylusInput;
                     sendRawStylusInput = true;
                 }
-
-                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
 
                 // Now fire the confirmed enter/leave events as necessary.
                 StylusPlugInCollection currentTarget = stylusDevice.CurrentVerifiedTarget;

@@ -556,7 +556,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        internal HwndSource InputSource { get { return _inputSource?.Value; } }
+        internal HwndSource InputSource { get { return _inputSource.Value; } }
 
         /////////////////////////////////////////////////////////////////////
 

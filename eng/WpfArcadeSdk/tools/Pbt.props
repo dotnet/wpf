@@ -55,8 +55,13 @@
   -->
   <Import Project="$(WpfSourceDir)PresentationBuildTasks\Microsoft.WinFX.props"
           Condition="Exists('$(LocalMicrosoftWinFXProps)') "/>
-  
+
+  <!-- 
+      Make sure WinFx.props exists when including - we sometimes include Pbt.props 
+      from non-WPF projects (for e.g., C++ .vxproj) where this is a meaningless idea 
+      -->
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
         Project="../targets/Microsoft.WinFx.props"
-        Condition="!Exists('$(LocalMicrosoftWinFXProps)')"/>
+        Condition="!Exists('$(LocalMicrosoftWinFXProps)')  And 
+                   Exists('../targets/Microsoft.WinFx.props')"/>
 </Project>

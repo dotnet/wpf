@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-alpha.1.19528.7">
+    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-alpha.1.19528.8">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>90a60c2881a6e204b5b81be4b852bd23a62b8b5e</Sha>
+      <Sha>031f00d788958b1fbfdacae47147e93b8c7148dd</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

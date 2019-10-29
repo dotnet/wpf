@@ -1510,7 +1510,7 @@ namespace System.Windows.Controls.Primitives
             // cascading failure.
             if (PopupInitialPlacementHelper.IsPerMonitorDpiScalingActive)
             {
-                DestroyWindow();
+                DestroyWindowImpl();
                 _positionInfo = null;
                 makeNewWindow = true;
             }
@@ -1601,18 +1601,40 @@ namespace System.Windows.Controls.Primitives
             _secHelper.BuildWindow(origin.x, origin.y, targetVisual, IsTransparent, PopupFilterMessage, OnWindowResize, OnDpiChanged);
         }
 
-        private void DestroyWindow()
+        /// <summary>
+        /// Destroys the underlying window (HWND) if it is alive
+        /// </summary>
+        /// <returns>true if the window was destroyed, otherwise false</returns>
+        private bool DestroyWindowImpl()
         {
             if (_secHelper.IsWindowAlive())
             {
                 _secHelper.DestroyWindow(PopupFilterMessage, OnWindowResize, OnDpiChanged);
-                ReleasePopupCapture();
+                return true;
+            }
 
-                // Raise closed event after popup has actually closed
-                OnClosed(EventArgs.Empty);
+            return false;
+        }
 
-                // When closing, clear the placement target registration
-                UpdatePlacementTargetRegistration(PlacementTarget, null);
+        /// <summary>
+        /// Destroys the window, and does additional book-keeping
+        /// like releasing the capture, raising Closed event, and
+        /// clearing placement-target registration
+        /// </summary>
+        private void DestroyWindow()
+        {
+            if (_secHelper.IsWindowAlive())
+            {
+                if (DestroyWindowImpl())
+                {
+                    ReleasePopupCapture();
+
+                    // Raise closed event after popup has actually closed
+                    OnClosed(EventArgs.Empty);
+
+                    // When closing, clear the placement target registration
+                    UpdatePlacementTargetRegistration(PlacementTarget, null);
+                }
             }
         }
 

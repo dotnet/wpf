@@ -512,7 +512,7 @@ namespace System.Windows.Input
                 ptTablet = ptTablet * stylusDevice.TabletDevice.TabletDeviceImpl.TabletToScreen;
                 ptTablet.X = (int)Math.Round(ptTablet.X); // Make sure we snap to whole window pixels.
                 ptTablet.Y = (int)Math.Round(ptTablet.Y);
-                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(ptTablet); // change to measured units now.
+                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(stylusDevice.CriticalActiveSource, ptTablet); // change to measured units now.
 
                 pic = HittestPlugInCollection(ptTablet); // Use cached rectangles for UIElements.
             }
@@ -555,6 +555,8 @@ namespace System.Windows.Input
 
             return null;
         }
+
+        internal HwndSource InputSource { get { return _inputSource?.Value; } }
 
         /////////////////////////////////////////////////////////////////////
 

@@ -3109,16 +3109,7 @@ namespace System.Windows.Input.StylusWisp
         {
             HwndSource hwndSource = (HwndSource)inputSource;
 
-            // Query the transform from HwndTarget when the first window is created.
-            if (!_transformInitialized)
-            {
-                if (hwndSource != null && hwndSource.CompositionTarget != null)
-                {
-                    _transformToDevice = hwndSource.CompositionTarget.TransformToDevice;
-                    Debug.Assert(_transformToDevice.HasInverse);
-                    _transformInitialized = true;
-                }
-            }
+            GetAndCacheToDeviceMatrix(hwndSource);
 
             // Keep track so we don't bother looking for changes if someone happened to query this before
             // an Avalon window was created where we get TabletAdd/Removed notification.
@@ -3563,14 +3554,38 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
+        private Matrix GetAndCacheToDeviceMatrix(HwndSource hwndSource)
+        {
+            Matrix toDevice = Matrix.Identity;
+
+            // If we have not yet seen this DPI, store the matrix for it.
+            if (hwndSource?.CompositionTarget != null)
+            {
+                if (!_toDeviceTransformMatrices.ContainsKey(hwndSource.CompositionTarget.CurrentDpiScale))
+                {
+                    _toDeviceTransformMatrices[hwndSource.CompositionTarget.CurrentDpiScale] = hwndSource.CompositionTarget.TransformToDevice;
+                    Debug.Assert(_toDeviceTransformMatrices[hwndSource.CompositionTarget.CurrentDpiScale].HasInverse);
+                }
+
+                toDevice = _toDeviceTransformMatrices[hwndSource.CompositionTarget.CurrentDpiScale];
+            }
+
+            return toDevice;
+        }
+
         internal Matrix GetTabletToViewTransform(TabletDevice tabletDevice)
+        {
+            return GetTabletToViewTransform(_currentStylusDevice.CriticalActiveSource as HwndSource, tabletDevice);
+        }
+
+        internal Matrix GetTabletToViewTransform(HwndSource hwndSource, TabletDevice tabletDevice)
         {
             // Inking is offset under 120 DPI
             // Changet the TabletToViewTransform matrix to take DPI into account. The default
             // value is 96 DPI in Avalon. The device DPI value is cached after the first call
             // to this function.
 
-            Matrix matrix = _transformToDevice;
+            Matrix matrix = GetAndCacheToDeviceMatrix(hwndSource);
             matrix.Invert();
             return matrix * tabletDevice.As<TabletDeviceBase>().TabletToScreen;
         }
@@ -3582,7 +3597,17 @@ namespace System.Windows.Input.StylusWisp
         /// <returns>The point in device coordinates</returns>
         internal override Point DeviceUnitsFromMeasureUnits(Point measurePoint)
         {
-            Point pt = measurePoint * _transformToDevice;
+            return DeviceUnitsFromMeasureUnits(_currentStylusDevice.CriticalActiveSource as HwndSource, measurePoint);
+        }
+
+        /// <summary>
+        /// Transforms a point in measure units to a point in device coordinates
+        /// </summary>
+        /// <param name="measurePoint">The point to transform, in measure units</param>
+        /// <returns>The point in device coordinates</returns>
+        internal Point DeviceUnitsFromMeasureUnits(HwndSource hwndSource, Point measurePoint)
+        {
+            Point pt = measurePoint * GetAndCacheToDeviceMatrix(hwndSource);
             pt.X = (int)Math.Round(pt.X); // Make sure we return whole numbers (pixels are whole numbers)
             pt.Y = (int)Math.Round(pt.Y);
             return pt;
@@ -3595,7 +3620,17 @@ namespace System.Windows.Input.StylusWisp
         /// <returns>The point in device coordinates</returns>
         internal override Point MeasureUnitsFromDeviceUnits(Point measurePoint)
         {
-            Matrix matrix = _transformToDevice;
+            return MeasureUnitsFromDeviceUnits(_currentStylusDevice.CriticalActiveSource as HwndSource, measurePoint);
+        }
+
+        /// <summary>
+        /// Transforms a point in measure units to a point in device coordinates
+        /// </summary>
+        /// <param name="measurePoint">The point to transform, in measure units</param>
+        /// <returns>The point in device coordinates</returns>
+        internal Point MeasureUnitsFromDeviceUnits(HwndSource hwndSource, Point measurePoint)
+        {
+            Matrix matrix = GetAndCacheToDeviceMatrix(hwndSource);
             matrix.Invert();
             return measurePoint * matrix;
         }
@@ -3647,11 +3682,6 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private Matrix _transformToDevice = Matrix.Identity;
-        private bool _transformInitialized;
-
-        /////////////////////////////////////////////////////////////////////
-        
         private SecurityCriticalData<InputManager> _inputManager;
 
         DispatcherOperationCallback _dlgInputManagerProcessInput;
@@ -3726,6 +3756,8 @@ namespace System.Windows.Input.StylusWisp
         /// PenThreads if the initial PenThread fills up with PenContexts.
         /// </summary>
         object _coalesceLock = new object();
+
+        Dictionary<DpiScale2, Matrix> _toDeviceTransformMatrices = new Dictionary<DpiScale2, Matrix>();
 
 #if !MULTICAPTURE
         IInputElement _stylusCapture;

@@ -68,6 +68,7 @@
     <ClCompile Include="dllentry.cpp" />
   </ItemGroup>
 
+
   <ItemGroup>
     <ResourceCompile Include="milcore.rc" />
   </ItemGroup>
@@ -79,79 +80,80 @@
     <ProjectReference Include="$(WpfSourceDir)Shared\OSVersionHelper\OSVersionHelper.vcxproj" Condition="!Exists('$(WpfSharedDir)\OSVersionHelper\OSVersionHelper.vcxproj')">
       <Project>{0C0C3C2A-5395-41EC-90AA-19565D988FAE}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\fxjit\Compiler\Compiler.vcxproj">
+    <ProjectReference Include="$(WpfGraphicsPath)core\fxjit\Compiler\Compiler.vcxproj">
       <Project>{ae5d4cfe-d301-49e0-aa6b-e22f07238ba8}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\fxjit\Collector\Collector.vcxproj ">
+    <ProjectReference Include="$(WpfGraphicsPath)core\fxjit\Collector\Collector.vcxproj ">
       <Project>{dec6b122-7619-471f-a87e-f594e011c059}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\fxjit\PixelShader\PixelShader.vcxproj  ">
+    <ProjectReference Include="$(WpfGraphicsPath)core\fxjit\PixelShader\PixelShader.vcxproj  ">
       <Project>{c1c84336-c109-433c-a439-3c17bdc7585e}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\fxjit\Platform\Platform.vcxproj  ">
+    <ProjectReference Include="$(WpfGraphicsPath)core\fxjit\Platform\Platform.vcxproj  ">
       <Project>{129beea2-3636-49ee-b38c-8a72c0c8c5ec}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\api\api.vcxproj">
+    <ProjectReference Include="$(WpfGraphicsPath)core\api\api.vcxproj">
       <Project>{B223A106-1959-4C59-8A8F-844DE370A589}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\common\common.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\common\common.vcxproj" >
       <Project>{19f853cb-c936-40be-8f9d-e6bed3cf8a3d}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\control\util\util.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\control\util\util.vcxproj" >
       <Project>{51bd2bfd-44c4-431e-a5db-b4ba6665b672}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\resources\resources.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\resources\resources.vcxproj" >
       <Project>{b3e8407e-5529-456f-9039-edcc65e1c2dc}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\av\av.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\av\av.vcxproj" >
       <Project>{a55f3ac3-b56b-4958-890f-d0eba02da390}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\geometry\Geometry.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\geometry\Geometry.vcxproj" >
       <Project>{c5391057-4b69-4560-ac30-d269d862a5b2}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\shared\debug\DebugLib\DebugLib.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)shared\debug\DebugLib\DebugLib.vcxproj" >
       <Project>{ac8e779f-c95f-4855-839d-25efa1651337}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\shared\util\DllUtil\DllUtil.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)shared\util\DllUtil\DllUtil.vcxproj" >
       <Project>{73bc0730-8d78-495d-a7f6-d2c45c268d0f}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\common\DynamicCall\DynamicCall.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)common\DynamicCall\DynamicCall.vcxproj" >
       <Project>{d57d0aa9-1452-46e6-b105-24a15038566f}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\common\effects\effects.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)common\effects\effects.vcxproj" >
       <Project>{904e36d2-a7f7-41d9-8685-e703714c7cab}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\hw\hw.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\hw\hw.vcxproj" >
       <Project>{a27af0f3-ca2a-42cf-a962-a3f3b0e83d35}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\glyph\glyph.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\glyph\glyph.vcxproj" >
       <Project>{11b3469f-3d04-40e2-b322-32b1d29f4a6f}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\meta\meta.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\meta\meta.vcxproj" >
       <Project>{a97154b3-d1cb-4ce3-8a4d-d985c7571cfe}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\common\scanop\scanop.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)common\scanop\scanop.vcxproj" >
       <Project>{9afd2bd4-5662-4004-b29c-5d0085b34506}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\common\shared\shared.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)common\shared\shared.vcxproj" >
       <Project>{73f780df-9216-4691-bb7e-1518878098db}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\sw\swlib\sw.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\sw\swlib\sw.vcxproj" >
       <Project>{cc977117-523f-48b7-b012-01e61b1f8328}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\sw\bilinearspan\bilinearspan.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\sw\bilinearspan\bilinearspan.vcxproj" >
       <Project>{3a6a5d23-cb65-4685-aac9-0969054701ea}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\targets\targets.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)core\targets\targets.vcxproj" >
       <Project>{4ed31e2c-bb2c-4888-8725-6bb7527ed0c5}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\shared\util\UtilLib\UtilLib.vcxproj" >
+    <ProjectReference Include="$(WpfGraphicsPath)shared\util\UtilLib\UtilLib.vcxproj" >
       <Project>{b802113c-ea89-406c-9af1-9808caa0f0ad}</Project>
     </ProjectReference>
-    <ProjectReference Include="$(WpfGraphicsPath)\core\uce\uce.vcxproj">
+    <ProjectReference Include="$(WpfGraphicsPath)core\uce\uce.vcxproj">
       <Project>{d5e56af3-ea01-49ec-beb1-1bb6bb272a84}</Project>
     </ProjectReference>
   </ItemGroup>
+
 
   <!-- Define definitions input and output for use with GenerateModuleDefinitionFile.targets -->
   <PropertyGroup>

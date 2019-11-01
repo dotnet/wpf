@@ -31,7 +31,7 @@
       WindowsFormsIntegration;
     </ExternalShippingProjects>
 
-    <InternalShippingLibProjects Condition="'$(InternalShippingLibProjects)'!=''" />
+    <InternalShippingLibProjects Condition="'$(InternalShippingLibProjects)'==''" />
 
     <InternalShippingProjects>
     $(InternalShippingLibProjects);

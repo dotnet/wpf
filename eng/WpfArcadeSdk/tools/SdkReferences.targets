@@ -119,6 +119,7 @@
     Name="ResolveMicrosoftDotNetWpfGitHubReferences"
     Returns="@(ReferencePath)"
     Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' 
+           And '$(MSBuildProjectExtension)' != '.vcxproj'
            And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
            And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
            and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
@@ -145,6 +146,7 @@
       </Reference>
     </ItemGroup>
   </Target>
+
 
 
   <!-- 

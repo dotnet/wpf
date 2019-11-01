@@ -31,7 +31,10 @@
       WindowsFormsIntegration;
     </ExternalShippingProjects>
 
+    <InternalShippingLibProjects />
+
     <InternalShippingProjects>
+    $(InternalShippingLibProjects);
       PenImc;
       PresentationNative;
       WpfGfx;
@@ -43,6 +46,10 @@
       $(ExternalShippingProjects);
       $(InternalShippingProjects)
     </ShippingProjects>
+
+    <ShippingLibProjects>
+      $(InternalShippingLibProjects);
+    </ShippingLibProjects>
 
     <ExcludeFromXlfLocalization>
       D3DCompiler;
@@ -177,6 +184,8 @@
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
     <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+
+    <IncludeLibFilesInPackaging Condition="$(ShippingLibProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IncludeLibFilesInPackaging>
   </PropertyGroup>
 
 </Project>

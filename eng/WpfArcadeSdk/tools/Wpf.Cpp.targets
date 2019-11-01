@@ -436,6 +436,145 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
+
+  <PropertyGroup Condition="'$(ManagedCxx)'!='true'">
+    <ResolveReferencesDependsOn>
+      CppHelper;
+      $(ResolveReferencesDependsOn)
+    </ResolveReferencesDependsOn>
+    <EnsureWpfProjectReferenceDependsOn>
+      $(EnsureWpfProjectReferenceDependsOn);
+      CppHelper
+    </EnsureWpfProjectReferenceDependsOn>
+  </PropertyGroup>
+
+  <!-- 
+    Helper for building C++ projects that may require references from Microsoft.DotNet.Wpf.DncEng
+    transport package
+    
+    C++ does not have NuGet support for build on .NET Core
+    We use existing support for C# to discover Nuget packages, and pass it along to
+    the C++ compiler. 
+    
+    A simple C# project is generated dynamically. It contains PackageReferences for requested packages
+    that are used in WPF's C++. 
+ 
+    The NuGet references are requested like this: 
+      <AdditionalPackageReference Include="Microsoft.Win32.Registry" Version="<version>" />
+      
+    No default packages are included. 
+    Every included package gets GeneratePathProperty=true
+  -->
+  <Target Name="CppHelper"
+          Returns="@(Reference)"
+          Condition="'$(ManagedCxx)' != 'true' and '$(RepoLocation)' == 'External'">
+
+    <PropertyGroup>
+      <CppHelperProject>$(IntermediateOutputPath)CppSupport\CppSupport_$(MSBuildProjectName).csproj</CppHelperProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <CppSupportProject Include="ProjectHeader">
+        <!-- 
+            In the CDATA section that follows, 
+              %40 ~= @
+              %25 ~= % 
+              %3B ~= ;
+              %24 ~= $
+          -->
+        <Text>
+          <![CDATA[
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU%3Bx64</Platforms>
+  </PropertyGroup>
+  ]]>
+        </Text>
+      </CppSupportProject>
+      
+      <!-- 
+        We need a reference to Microsoft.DotNet.Wpf.GitHub 
+      -->
+      <CppSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference">
+        <Text>
+          <![CDATA[
+   <ItemGroup>
+      <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.DncEng"
+                      Version="$(MicrosoftDotNetWpfDncEngVersion)" 
+                      GeneratePathProperty="true" />
+  </ItemGroup>
+  ]]>
+        </Text>
+      </CppSupportProject>
+      
+      <CppSupportProject Include="ProjectBody">
+        <Text>
+          <![CDATA[
+  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
+  <PropertyGroup>
+    <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
+  </PropertyGroup>
+  
+<Target
+    Name="IdentifyNuGetReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="%40(NuGetReferencesForCpp)">
+
+   <PropertyGroup>
+      <WpfDncEngRidSpecificPackagePath Condition="'%24(RuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)</WpfDncEngRidSpecificPackagePath>
+      <WpfDncEngRidSpecificPackagePath Condition="'%24(RuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)</WpfDncEngRidSpecificPackagePath>
+   </PropertyGroup>
+<!-- Save Microsoft.NETCore.App assemblies and return them -->
+    <ItemGroup>
+      <NuGetReferencesForCpp Remove="%40(NuGetReferencesForCpp)" />
+      <NuGetReferencesForCpp Include="%24(WpfDncEngRidSpecificPackagePath)\runtimes\%24(RuntimeIdentifier)\native\**\*.*" />
+    </ItemGroup>
+  </Target>
+</Project>
+        ]]>
+        </Text>
+      </CppSupportProject>
+    </ItemGroup>
+
+    <MakeDir Condition="!Exists('$(IntermediateOutputPath)CppSupport\')"
+             Directories="$(IntermediateOutputPath)CppSupport\" />
+
+    <Delete Files="$(CppHelperProject)" Condition="Exists('$(CppHelperProject)')" />
+
+    <WriteLinesToFile Lines="%(CppSupportProject.Text)"
+                      File="$(CppHelperProject)"
+                      Overwrite="false"/>
+
+    <!-- 
+    Do not build - just ask IdentifyNetCoreReferences for the information
+    we are looking for, namely the list of .NET Core Sdk references. 
+    -->
+    <ItemGroup>
+      <ProjectToBuild Remove="@(ProjectToBuild)" />
+      <ProjectToBuild Include="$(CppHelperProject)" />
+    </ItemGroup>
+    <PropertyGroup>
+      <TfmForBuild>$(TargetFramework)</TfmForBuild>
+      <TfmForBuild Condition="'$(TfmForBuild)'==''">netcoreapp5.0</TfmForBuild>
+    </PropertyGroup>
+    <!-- Restore, then IdentifyNuGetReferences -->
+    <MSBuild Projects="@(ProjectToBuild)" UnloadProjectsOnCompletion="true"
+             Targets="Restore"
+             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)" />
+    
+    <MSBuild Projects="@(ProjectToBuild)"
+         Targets="Restore;IdentifyNuGetReferences"
+         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
+      <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
+    </MSBuild>
+
+    <ItemGroup>
+      <Link Include="@(NuGetReferencesForCpp)"
+            Condition="'%(NuGetReferencesForCpp.Extension)'=='.lib'" />
+    </ItemGroup>
+  </Target>
+
   <PropertyGroup Condition="'$(LinkRepro)'=='true'">
     <BeforeLinkTargets>
       $(BeforeLinkTargets);

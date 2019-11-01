@@ -30,7 +30,7 @@
       PresentationFramework.Royale;
       WindowsFormsIntegration;
       PenImc;
-      WpfGfx;
+      wpfgfx;
       D3DCompiler;
       VCRuntime
     </ExternalShippingProjects>

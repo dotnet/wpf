@@ -553,7 +553,7 @@ using namespace System::Runtime::Versioning;
 <!-- Save Microsoft.NETCore.App assemblies and return them -->
     <ItemGroup>
       <NuGetReferencesForCpp Remove="%40(NuGetReferencesForCpp)" />
-      <NuGetReferencesForCpp Include="%24(WpfDncEngRidSpecificPackagePath)\runtimes\%24(RuntimeIdentifier)\native\**\*.*" />
+      <NuGetReferencesForCpp Include="%24(WpfDncEngRidSpecificLibPath)**\*.*" />
     </ItemGroup>
   </Target>
 </Project>
@@ -586,17 +586,19 @@ using namespace System::Runtime::Versioning;
     <!-- Restore, then IdentifyNuGetReferences -->
     <MSBuild Projects="@(ProjectToBuild)" UnloadProjectsOnCompletion="true"
              Targets="Restore"
-             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)" />
+             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture);IsRestoring=true" />
     
     <MSBuild Projects="@(ProjectToBuild)"
-         Targets="Restore;IdentifyNuGetReferences"
+         Targets="IdentifyNuGetReferences"
          Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
       <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
     </MSBuild>
 
+    <!-- Update with file path -->
     <ItemGroup>
-      <Link Include="@(NuGetReferencesForCpp)"
-            Condition="'%(NuGetReferencesForCpp.Extension)'=='.lib'" />
+      <NugetReferencesForCpp Update="@(NuGetReferencesForCpp)">
+        <FilePath>%(NuGetReferencesForCpp.FullPath)</FilePath>
+      </NugetReferencesForCpp>
     </ItemGroup>
   </Target>
 

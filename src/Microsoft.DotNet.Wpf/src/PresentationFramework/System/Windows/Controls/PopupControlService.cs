@@ -578,8 +578,12 @@ namespace System.Windows.Controls
                             if (_ownToolTip)
                                 BindingOperations.ClearBinding(_currentToolTip, ToolTip.ContentProperty);
                         }
-                        _currentToolTip.FromKeyboard = false;
-                        _currentToolTip = null;
+
+                        if (_currentToolTip != null)
+                        {
+                            _currentToolTip.FromKeyboard = false;
+                            _currentToolTip = null;
+                        }
                     }
                 }
             }

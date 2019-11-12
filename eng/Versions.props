@@ -4,40 +4,40 @@
     <VersionPrefix>5.0.0</VersionPrefix>
     <PreReleaseVersionLabel>alpha</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>5.0.0-alpha.1.19525.3</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>5.0.0-alpha.1.19525.3</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>5.0.0-alpha.1.19556.7</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>5.0.0-alpha.1.19556.7</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>5.0.0-alpha.1.19530.3</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>5.0.0-alpha.1.19561.7</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
-    <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19525.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>5.0.0-alpha1.19525.1</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>5.0.0-alpha1.19525.1</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19559.4</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>5.0.0-alpha1.19559.4</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>5.0.0-alpha1.19559.4</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>5.0.0-alpha.1.19528.5</MicrosoftNETCoreAppVersion>
-    <MicrosoftNETCorePlatformsVersion>5.0.0-alpha.1.19525.3</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>5.0.0-alpha.1.19525.3</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>5.0.0-alpha.1.19525.3</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>5.0.0-alpha.1.19525.3</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppVersion>5.0.0-alpha.1.19559.5</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCorePlatformsVersion>5.0.0-alpha.1.19556.7</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>5.0.0-alpha.1.19556.7</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>5.0.0-alpha.1.19556.7</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>5.0.0-alpha.1.19556.7</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>5.0.0-alpha.1.19525.3</MicrosoftWin32RegistryPackageVersion>
-    <SystemCodeDomPackageVersion>5.0.0-alpha.1.19525.3</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>5.0.0-alpha.1.19525.3</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>5.0.0-alpha.1.19525.3</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19525.3</SystemReflectionEmitPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>5.0.0-alpha.1.19556.7</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>5.0.0-alpha.1.19556.7</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>5.0.0-alpha.1.19556.7</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>5.0.0-alpha.1.19556.7</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19556.7</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>5.0.0-alpha.1.19525.3</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>5.0.0-alpha.1.19525.3</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>5.0.0-alpha.1.19525.3</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>5.0.0-alpha.1.19525.3</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>5.0.0-alpha.1.19525.3</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>5.0.0-alpha.1.19556.7</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>5.0.0-alpha.1.19556.7</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>5.0.0-alpha.1.19556.7</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>5.0.0-alpha.1.19556.7</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>5.0.0-alpha.1.19556.7</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

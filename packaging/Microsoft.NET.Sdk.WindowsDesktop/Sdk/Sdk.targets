@@ -11,10 +11,6 @@ Copyright (c) .NET Foundation. All rights reserved.
 -->
 <Project>
 
-  <PropertyGroup>
-    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
-  </PropertyGroup>
-
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
   
   <Import Project="$(MicrosoftWindowsDesktopSdkPath)\Microsoft.NET.Sdk.WindowsDesktop.targets "/>

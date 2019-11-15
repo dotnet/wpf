@@ -475,13 +475,12 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="measurePoint">The point in measure units</param>
         /// <returns>The point in device units</returns>
-        internal override Point DeviceUnitsFromMeasureUnits(Point measurePoint)
+        internal override Point DeviceUnitsFromMeasureUnits(PresentationSource source, Point measurePoint)
         {
-            
             // We can possibly get here with no current device.  This happens from a certain order of mouse capture.
             // In that case, default to identity matrix as the capture units are going to be from the mouse.
             // Otherwise, transform using the tablet for the current stylus device.
-            Point pt = measurePoint * (_currentStylusDevice?.ActiveSource?.CompositionTarget?.TransformToDevice ?? Matrix.Identity);
+            Point pt = measurePoint * GetAndCacheTransformToDeviceMatrix(source);
 
             // Make sure we return whole numbers (pixels are whole numbers)
             return new Point(Math.Round(pt.X), Math.Round(pt.Y));
@@ -492,13 +491,12 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="devicePoint">The point in device units</param>
         /// <returns>The point in measure units</returns>
-        internal override Point MeasureUnitsFromDeviceUnits(Point devicePoint)
+        internal override Point MeasureUnitsFromDeviceUnits(PresentationSource source, Point devicePoint)
         {
-            
             // We can possibly get here with no current device.  This happens from a certain order of mouse capture.
             // In that case, default to identity matrix as the capture units are going to be from the mouse.
             // Otherwise, transform using the tablet for the current stylus device.
-            Point pt = devicePoint * (_currentStylusDevice?.ActiveSource?.CompositionTarget?.TransformFromDevice ?? Matrix.Identity);
+            Point pt = devicePoint * GetAndCacheTransformToDeviceMatrix(source);
 
             // Make sure we return whole numbers (pixels are whole numbers)
             return new Point(Math.Round(pt.X), Math.Round(pt.Y));
@@ -1273,7 +1271,7 @@ namespace System.Windows.Input.StylusPointer
 
                 int elapsedTime = Math.Abs(unchecked(stylusDownEventArgs.Timestamp - _lastTapTimeTicks));
 
-                Point ptPixels = DeviceUnitsFromMeasureUnits(ptClient);
+                Point ptPixels = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
 
                 Size doubleTapSize = stylusDevice.PointerTabletDevice.DoubleTapSize;
 

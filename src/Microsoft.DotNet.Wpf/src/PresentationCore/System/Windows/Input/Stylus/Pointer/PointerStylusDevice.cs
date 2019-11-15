@@ -1097,7 +1097,7 @@ namespace System.Windows.Input.StylusPointer
                         // See if we need to update over for subtree mode.
                         if (CapturedMode == CaptureMode.SubTree && _inputSource != null && _inputSource.Value != null)
                         {
-                            Point pt = _pointerLogic.DeviceUnitsFromMeasureUnits(GetPosition(null));
+                            Point pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, GetPosition(null));
                             inputElementHit = FindTarget(_inputSource.Value, pt);
                         }
 
@@ -1109,7 +1109,7 @@ namespace System.Windows.Input.StylusPointer
                         if (_inputSource != null && _inputSource.Value != null)
                         {
                             Point pt = GetPosition(null); // relative to window (root element)
-                            pt = _pointerLogic.DeviceUnitsFromMeasureUnits(pt); // change back to device coords.
+                            pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, pt); // change back to device coords.
                             IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, pt);
                             ChangeStylusOver(currentOver);
                         }

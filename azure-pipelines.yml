@@ -49,6 +49,7 @@ pr:
     - master
     - release/3.0
     - release/3.0-preview9 
+    - internal/release/3.*
   paths:
     exclude:
     - Documentation/*

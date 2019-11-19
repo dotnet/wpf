@@ -24,13 +24,13 @@ jobs:
     - job: Windows_NT
       timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool:
-        # For public or PR jobs, use the hosted pool.  For internal jobs use the internal pool.
+        # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-        ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: NetCorePublic-Pool
           queue: BuildPool.Windows.10.Amd64.VS2019.Pre.Open
-        ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCoreInternal-Pool
           queue: buildpool.windows.10.amd64.vs2019.pre
       variables:

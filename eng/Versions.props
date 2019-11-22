@@ -38,6 +38,7 @@
     <SystemIOPackagingVersion>4.6.0-rc2.19460.1</SystemIOPackagingVersion>
     <SystemReflectionEmitPackageVersion>4.6.0-rc2.19460.1</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>4.6.0-rc2.19460.1</SystemResourcesExtensionsVersion>
     <SystemSecurityAccessControlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>4.6.0-rc2.19460.1</SystemSecurityPermissionsPackageVersion>
@@ -46,9 +47,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19461.7</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19461.7</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19461.7</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19569.2</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19569.2</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19569.2</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>
@@ -74,19 +75,11 @@
     This is the version of the test infrastructure package is compiled against. This should be
     removed as part of https://github.com/dotnet/wpf/issues/816 
     -->
-    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
+    <runtimewinx86MicrosoftDotNetWpfTestVersion>4.8.0-rc2.19570.8</runtimewinx86MicrosoftDotNetWpfTestVersion>
+    <MicrosoftDotNetWpfTestPackageVersion>$(runtimewinx86MicrosoftDotNetWpfTestVersion)</MicrosoftDotNetWpfTestPackageVersion>
     <!-- These versions are specified in global.json -->
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RestoreSources>
-      $(RestoreSources);
-      https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-coreclr/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json;
-    </RestoreSources>
   </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>
@@ -118,6 +111,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-servicing.19571.4</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-servicing.19571.6</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

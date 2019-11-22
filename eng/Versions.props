@@ -38,7 +38,7 @@
     <SystemIOPackagingVersion>4.6.0-rc2.19460.1</SystemIOPackagingVersion>
     <SystemReflectionEmitPackageVersion>4.6.0-rc2.19460.1</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>4.6.0-rc1.19420.10</SystemResourcesExtensionsVersion>
+    <SystemResourcesExtensionsVersion>4.6.0-rc2.19460.1</SystemResourcesExtensionsVersion>
     <SystemSecurityAccessControlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>4.6.0-rc2.19460.1</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>4.6.0-rc2.19460.1</SystemSecurityPermissionsPackageVersion>
@@ -75,7 +75,7 @@
     This is the version of the test infrastructure package is compiled against. This should be
     removed as part of https://github.com/dotnet/wpf/issues/816 
     -->
-    <runtimewinx86MicrosoftDotNetWpfTestVersion>4.8.0-rc2.19476.1</runtimewinx86MicrosoftDotNetWpfTestVersion>
+    <runtimewinx86MicrosoftDotNetWpfTestVersion>4.8.0-rc2.19570.8</runtimewinx86MicrosoftDotNetWpfTestVersion>
     <MicrosoftDotNetWpfTestPackageVersion>$(runtimewinx86MicrosoftDotNetWpfTestVersion)</MicrosoftDotNetWpfTestPackageVersion>
     <!-- These versions are specified in global.json -->
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
@@ -111,6 +111,6 @@
       It is worth reiterating that this package *should not* be consumed to build the product.
   -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>4.8.0-servicing.19570.4</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>4.8.0-servicing.19571.6</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

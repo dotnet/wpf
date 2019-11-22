@@ -75,9 +75,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>1f43072465d4be9920ab04a3c3ad91f82144de4e</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-servicing.19570.4">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="4.8.0-servicing.19571.6">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>650e0570cd32888ee0807598f5448d389dbf1512</Sha>
+      <Sha>d86ebb748f49197bbf4f25ac4c6e9b74346d1030</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="4.6.0-rc2.19460.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -107,13 +107,13 @@
       <Uri>https://github.com/dotnet/arcade</Uri>
       <Sha>e34d933e18ba1cd393bbafcb6018e0f858d3e89e</Sha>
     </Dependency>
-    <Dependency Name="runtime.win-x86.Microsoft.DotNet.Wpf.Test" Version="4.8.0-rc2.19476.1">
+    <Dependency Name="runtime.win-x86.Microsoft.DotNet.Wpf.Test" Version="4.8.0-rc2.19570.8">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-test</Uri>
-      <Sha>1ccfd5a80e9957d9eb355fe44ed02ae192c5153a</Sha>
+      <Sha>4ce0ddb571f5fde3d6f1c605f5536d8b04c58ddc</Sha>
     </Dependency>
-    <Dependency Name="System.Resources.Extensions" Version="4.6.0-rc1.19420.10" CoherentParentDependency="Microsoft.NETCore.App">
+    <Dependency Name="System.Resources.Extensions" Version="4.6.0-rc2.19460.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>d341fd37dcb2c22e382adccdc06770cf8f160577</Sha>
+      <Sha>1f43072465d4be9920ab04a3c3ad91f82144de4e</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

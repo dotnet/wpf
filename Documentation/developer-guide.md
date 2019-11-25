@@ -49,7 +49,7 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 
 *Note: To run a specific test, you can pass the name of the test like this: `/name=DrtXaml`. The names of these tests are contained in DrtList.xml.*
 
-**NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816. **
+*NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816.*
 
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,

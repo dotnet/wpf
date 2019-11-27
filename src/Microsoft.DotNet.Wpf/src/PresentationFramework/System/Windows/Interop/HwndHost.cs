@@ -308,7 +308,7 @@ namespace System.Windows.Interop
         protected virtual bool HasFocusWithinCore()
         {
             HandleRef hwndFocus = new HandleRef(this, UnsafeNativeMethods.GetFocus());
-            if (_hwnd.Handle != IntPtr.Zero && (hwndFocus.Handle == _hwnd.Handle || UnsafeNativeMethods.IsChild(_hwnd, hwndFocus)))
+            if (Handle != IntPtr.Zero && (hwndFocus.Handle == _hwnd.Handle || UnsafeNativeMethods.IsChild(_hwnd, hwndFocus)))
             {
                 return true;
             }
@@ -423,7 +423,7 @@ namespace System.Windows.Interop
             get
             {
                 if (!_hasDpiAwarenessContextTransition) return 1;
-                DpiScale2 dpi = DpiUtil.GetWindowDpi(_hwnd.Handle, fallbackToNearestMonitorHeuristic: false);
+                DpiScale2 dpi = DpiUtil.GetWindowDpi(Handle, fallbackToNearestMonitorHeuristic: false);
                 DpiScale2 dpiParent = DpiUtil.GetWindowDpi(UnsafeNativeMethods.GetParent(_hwnd), fallbackToNearestMonitorHeuristic: false);
 
                 if (dpi == null || dpiParent == null)
@@ -734,7 +734,7 @@ namespace System.Windows.Interop
         {
             DrawingGroup drawingGroup = null;
 
-            if(_hwnd.Handle != IntPtr.Zero && UnsafeNativeMethods.IsWindow(_hwnd))
+            if(Handle != IntPtr.Zero)
             {
                 NativeMethods.RECT rc = new NativeMethods.RECT();
                 SafeNativeMethods.GetWindowRect(_hwnd, ref rc);
@@ -976,7 +976,7 @@ namespace System.Windows.Interop
                         UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null,hwndParent));
                     }
                 }
-                else if (_hwnd.Handle != IntPtr.Zero)
+                else if (Handle != IntPtr.Zero)
                 {
                     // Reparent the window to notification-only window provided by SystemResources
                     // This keeps the child window around, but it is not visible.  We can reparent the 

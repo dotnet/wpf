@@ -35,9 +35,8 @@ trigger:
   branches:
     include: 
     - master
-    - release/3.0
-    - release/3.0-preview9
-    # - arcade
+    - release/3.*
+    - internal/release/3.*
   paths:
     exclude:
     - Documentation/*
@@ -47,8 +46,7 @@ pr:
   branches:
     include:
     - master
-    - release/3.0
-    - release/3.0-preview9 
+    - release/3.*
     - internal/release/3.*
   paths:
     exclude:

@@ -73,7 +73,7 @@ namespace System.Windows.Controls
         /// Initializes a new instance of RichTextBox control.
         /// </summary>
         /// <remarks>
-        /// Creates implicit instance of a FlowDocument as its oinitial content.
+        /// Creates implicit instance of a FlowDocument as its initial content.
         /// The initial document will contain one Paragraph with an empty Run in it.
         /// </remarks>
         public RichTextBox() 
@@ -82,7 +82,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of RichTextBox control ans specifies a FlowDocument as its content
+        /// Initializes a new instance of RichTextBox control and specifies a FlowDocument as its content
         /// </summary>
         /// <param name="document">
         /// A FlowDocument specified as a content for this instance of RichTextBox.

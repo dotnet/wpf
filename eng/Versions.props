@@ -47,9 +47,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19572.3</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19572.3</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19572.3</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>1.0.0-beta.19577.5</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.19577.5</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>1.0.0-beta.19577.5</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

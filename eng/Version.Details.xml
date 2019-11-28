@@ -63,13 +63,13 @@
       <Uri>https://github.com/dotnet/core-setup</Uri>
       <Sha>4421cfb105df112492038e5c5a70c24bce48e72f</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19572.3">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19577.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>0e0d227c57e69c03427d6e668716d62cf4ceb36e</Sha>
+      <Sha>99c6b59a8afff97fe891341b39abe985f1d3c565</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19572.3">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="1.0.0-beta.19577.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>0e0d227c57e69c03427d6e668716d62cf4ceb36e</Sha>
+      <Sha>99c6b59a8afff97fe891341b39abe985f1d3c565</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="3.0.0-rc2.19460.1" CoherentParentDependency="Microsoft.NETCore.App">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -95,17 +95,17 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>1533d6a5db52179c23a552878cd227fb2e7448bf</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19572.3">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19577.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>0e0d227c57e69c03427d6e668716d62cf4ceb36e</Sha>
+      <Sha>99c6b59a8afff97fe891341b39abe985f1d3c565</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19572.3">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="1.0.0-beta.19577.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>0e0d227c57e69c03427d6e668716d62cf4ceb36e</Sha>
+      <Sha>99c6b59a8afff97fe891341b39abe985f1d3c565</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="1.0.0-beta.19572.3">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="1.0.0-beta.19577.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>0e0d227c57e69c03427d6e668716d62cf4ceb36e</Sha>
+      <Sha>99c6b59a8afff97fe891341b39abe985f1d3c565</Sha>
     </Dependency>
     <Dependency Name="runtime.win-x86.Microsoft.DotNet.Wpf.Test" Version="4.8.0-rc2.19570.8">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-test</Uri>

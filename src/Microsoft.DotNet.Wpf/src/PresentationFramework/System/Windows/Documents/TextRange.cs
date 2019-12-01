@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser
+using MS.Internal.PresentationFramework.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -87,6 +88,14 @@ namespace System.Windows.Documents
             ValidationHelper.VerifyPosition(position1.TextContainer, position2, "position2");
 
             TextRangeBase.Select(this, position1, position2);
+        }
+
+        // useRestrictiveXamlXmlReader - false by default
+        // set to true to disable external xaml loading in specific scenarios like StickyNotes annotation loading
+        internal TextRange(TextPointer position1, TextPointer position2, bool useRestrictiveXamlXmlReader) :
+            this((ITextPointer)position1, (ITextPointer)position2)
+        {
+            _useRestrictiveXamlXmlReader = useRestrictiveXamlXmlReader;
         }
 
         #endregion Constructors   
@@ -1366,7 +1375,7 @@ namespace System.Windows.Documents
                 try
                 {
                     // Parse the fragment into a separate subtree
-                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(value)));
+                    object xamlObject = XamlReaderProxy.Load(new XmlTextReader(new System.IO.StringReader(value)), _useRestrictiveXamlXmlReader);
                     TextElement fragment = xamlObject as TextElement;
 
                     if (fragment != null)
@@ -1899,6 +1908,9 @@ namespace System.Windows.Documents
 
         // Boolean flags, set with Flags enum.
         private Flags _flags;
+
+        //boolean flag, set to true via constructor when you want to use the restrictive xamlxmlreader  
+        private bool _useRestrictiveXamlXmlReader;
 
         #endregion Private Fields
     }

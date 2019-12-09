@@ -564,7 +564,7 @@ using namespace System::Runtime::Versioning;
     <MSBuild Projects="@(ProjectToBuild)"
          Targets="IdentifyNuGetReferences"
          Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
-      <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
+      <Output TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
     </MSBuild>
 
     <!-- Update with file path -->

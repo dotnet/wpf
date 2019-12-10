@@ -395,7 +395,7 @@ namespace MS.Internal.Tasks
                     // still exists in the Page blob prior to queuing it up for recompilation.
                     HashSet<string> localMarkupPages = new HashSet<string>(_mcPass1.PageMarkup.Select(x => x.GetMetadata(SharedStrings.FullPath)), StringComparer.OrdinalIgnoreCase);
 
-                    for (int i = 0; i < CompilerLocalReference.LocalMarkupPages.Length; i++)
+                    for (int i = 0; i < numLocalTypeXamls; i++)
                     {
                         LocalReferenceFile localRefFile = CompilerLocalReference.LocalMarkupPages[i];
 

@@ -31,7 +31,12 @@
       WindowsFormsIntegration;
     </ExternalShippingProjects>
 
+    <InternalShippingLibProjects>
+      $(InternalShippingLibProjects);
+    </InternalShippingLibProjects>
+
     <InternalShippingProjects>
+    $(InternalShippingLibProjects);
       PenImc;
       PresentationNative;
       WpfGfx;
@@ -43,6 +48,10 @@
       $(ExternalShippingProjects);
       $(InternalShippingProjects)
     </ShippingProjects>
+
+    <ShippingLibProjects>
+      $(InternalShippingLibProjects);
+    </ShippingLibProjects>
 
     <ExcludeFromXlfLocalization>
       D3DCompiler;
@@ -172,11 +181,13 @@
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(NormalizedMSBuildProjectName)'))">true</EnableXlfLocalization>
 
-    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
-    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
+    <RepoLocation Condition="'$(RepoLocation)' == '' And $(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
+    <RepoLocation Condition="'$(RepoLocation)' == '' And $(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
-    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+    <RepoLocation Condition="'$(RepoLocation)' == '' And $(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+
+    <IncludeLibFilesInPackaging Condition="$(ShippingLibProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IncludeLibFilesInPackaging>
   </PropertyGroup>
 
 </Project>

@@ -59,7 +59,7 @@
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </WpfProjectPath>
-    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="@(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
+    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

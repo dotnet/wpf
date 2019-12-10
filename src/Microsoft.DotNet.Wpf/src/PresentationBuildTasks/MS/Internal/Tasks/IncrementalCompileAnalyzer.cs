@@ -393,7 +393,7 @@ namespace MS.Internal.Tasks
                     // Under incremental builds of SDK projects, we can have a state where the cache contains some XAML files but the Page blob
                     // no longer contains them.  To avoid attempting to recompile a file that no longer exists, ensure that any cached XAML file
                     // still exists in the Page blob prior to queuing it up for recompilation.
-                    HashSet<string> localMarkupPages = new HashSet<string>(_mcPass1.PageMarkup.Select(x => x.GetMetadata(SharedStrings.FullPath)));
+                    HashSet<string> localMarkupPages = new HashSet<string>(_mcPass1.PageMarkup.Select(x => x.GetMetadata(SharedStrings.FullPath)), StringComparer.OrdinalIgnoreCase);
 
                     for (int i = 0; i < CompilerLocalReference.LocalMarkupPages.Length; i++)
                     {

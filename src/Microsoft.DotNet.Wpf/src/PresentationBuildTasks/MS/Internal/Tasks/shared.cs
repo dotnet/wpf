@@ -44,6 +44,7 @@ namespace MS.Internal.Tasks
         internal const string       Localizable="Localizable";
         internal const string       Link="Link";
         internal const string       LogicalName="LogicalName";
+        internal const string       FullPath = "FullPath";
 
         // 
         // externs for generated files

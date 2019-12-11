@@ -16,7 +16,6 @@ WPF requires the following workloads and  components be selected when installing
 * Required Individual Components:
   * C++/CLI support
   * Windows 10 SDK
-  * .NET 4.6.1 SDK or .NET 4.6.2 SDK (see [#2298](https://github.com/dotnet/wpf/issues/2298))
 
 ## Workflow
 

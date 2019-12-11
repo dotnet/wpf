@@ -32,6 +32,18 @@
       </PropertyGroup>
 
     </When>
+    <Otherwise>
+      <PropertyGroup>
+        <!-- 
+        We use blob storage to ensure that all machines we build on have the .NET Framework 4.7.2 IL Tools.
+        This allows us to sidestep a requirement to have the .NET 4.7.2 Dev Pack installed and prevents mismatched IL(D)Asm utilities.
+        Note that we do not use .NET 4.8 tools here due to this round-tripping issue: https://developercommunity.visualstudio.com/content/problem/545431/ildasmexe-regression-with-infinum-floating-point-v.html
+        -->
+        <Net472IlToolsDir>$(RepositoryToolsDir)native\bin\net-framework-472-iltools\$(NetFramework472IlToolsVersion)\</Net472IlToolsDir>
+        <ILDAsm>$(Net472IlToolsDir)ildasm.exe</ILDAsm>
+        <ILAsm>$(Net472IlToolsDir)ilasm.exe</ILAsm>
+      </PropertyGroup>
+    </Otherwise>
   </Choose>
 
   <PropertyGroup>
@@ -43,36 +55,6 @@
     <TaskFactoryReference Include="mscorlib" />
     <TaskFactoryReference Include="netstandard" />
   </ItemGroup>
-
-  <!--
-      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
-  -->
-  <UsingTask TaskName="FindDotNetFrameworkILToolsTask"
-             TaskFactory="$(TaskFactory)"
-             AssemblyFile="$(TaskFactoryAssemblyFile)">
-    <ParameterGroup>
-      <ILAsm ParameterType="System.String" Output="true"/>
-      <ILDAsm ParameterType="System.String" Output="true"/>
-      <DotNetBitness ParameterType="System.String" Required="true"/>
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="Microsoft.Build.Utilities" />
-      <Code Type="fragment" Language="cs">
-        <![CDATA[
-          try
-          {
-            var bitness = (DotNetFrameworkArchitecture)Enum.Parse(typeof(DotNetFrameworkArchitecture), DotNetBitness);
-            ILAsm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ILAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
-            ILDAsm = ToolLocationHelper.GetPathToDotNetFrameworkSdkFile("ILDAsm.exe", TargetDotNetFrameworkVersion.VersionLatest, bitness);
-          }
-          catch(Exception e)
-          {
-            Log.LogError("FindDotNetFrameworkILToolsTask: Could not find .NET Framework IL Tools: " + e.ToString());
-          }
-        ]]>
-      </Code>
-    </Task>
-  </UsingTask>
 
   <!-- Call into the supplied ILDAsm. -->
   <UsingTask TaskName="ILDasmTask"
@@ -342,20 +324,6 @@
     <Copy SourceFiles="@(CoreCLR_Files)" DestinationFolder="$(ILToolsPath)" SkipUnchangedFiles="true"/>
   </Target>
 
-  <!--
-      Locate the IL tools included with the highest version of .NET Framework and the .NET Framework SDK installed on the machine.
-  -->
-  <Target Name="FindNetFrameworkILTools" BeforeTargets="DeconstructDll" Condition="'$(UseNetCoreILTools)'!='true'">
-    <PropertyGroup>
-      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">Bitness64</DotNetFrameworkBitness>
-      <DotNetFrameworkBitness Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">Bitness32</DotNetFrameworkBitness>
-    </PropertyGroup>
-    <FindDotNetFrameworkILToolsTask DotNetBitness="$(DotNetFrameworkBitness)">
-      <Output TaskParameter="ILDAsm" PropertyName="ILDAsm" />
-      <Output TaskParameter="ILAsm" PropertyName="ILAsm" />
-    </FindDotNetFrameworkILToolsTask>
-  </Target>
-
   <!-- Disassemble the target binary. -->
   <Target Name="DeconstructDll"
         AfterTargets="CreateSatelliteAssemblies"
@@ -388,8 +356,8 @@
     </PropertyGroup>
 
     <AddModuleConstructorTask ILFile="$(ILFile)"
-                              MsCorLibAssemblySectionIL="$(ModuleInitializer)"
-                              ModuleConstructorIL="$(MsCorLibAssemblySection)"/>
+                              MsCorLibAssemblySectionIL="$(MsCorLibAssemblySection)"
+                              ModuleConstructorIL="$(ModuleInitializer)"/>
 
   </Target>
 

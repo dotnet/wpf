@@ -356,8 +356,8 @@
     </PropertyGroup>
 
     <AddModuleConstructorTask ILFile="$(ILFile)"
-                              MsCorLibAssemblySectionIL="$(ModuleInitializer)"
-                              ModuleConstructorIL="$(MsCorLibAssemblySection)"/>
+                              MsCorLibAssemblySectionIL="$(MsCorLibAssemblySection)"
+                              ModuleConstructorIL="$(ModuleInitializer)"/>
 
   </Target>
 

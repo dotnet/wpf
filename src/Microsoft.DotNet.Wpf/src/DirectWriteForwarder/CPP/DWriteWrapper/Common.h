@@ -12,7 +12,19 @@ using namespace System::Security;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface { namespace Native
 {    
 #include "DWrite.h"
-#include "CorError.h"
+
+// --Begin-- Copied from CorError.h, 
+// which is not visible to WPF .NetCore builds without installing .NET 4.6.1 SDK
+#ifndef FACILITY_URT
+#define FACILITY_URT            0x13
+#endif
+#ifndef EMAKEHR
+#define SMAKEHR(val) MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_URT, val)
+#define EMAKEHR(val) MAKE_HRESULT(SEVERITY_ERROR, FACILITY_URT, val)
+#endif
+
+#define COR_E_INVALIDOPERATION EMAKEHR(0x1509)
+// --End-- copy from CorError.h
 
 private ref class Util sealed
 {

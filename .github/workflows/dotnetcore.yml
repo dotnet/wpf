@@ -9,5 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+      
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      
     - name: Build
       run: .\build.cmd

@@ -186,7 +186,7 @@
     <RepoLocation Condition="'$(RepoLocation)' == '' And $(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
-    <RepoLocation Condition="'$(RepoLocation)' == '' And $(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+    <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
 
     <IncludeLibFilesInPackaging Condition="$(ShippingLibProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IncludeLibFilesInPackaging>
   </PropertyGroup>

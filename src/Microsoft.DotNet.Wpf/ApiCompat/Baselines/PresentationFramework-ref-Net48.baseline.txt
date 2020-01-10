@@ -9,6 +9,10 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.StyleTypedPropertyAttribu
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplatePartAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplateVisualStateAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ThemeInfoAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.Annotation' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.AnnotationResource' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocator' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocatorGroup' in the contract but not the implementation.
 MembersMustExist : Member 'System.Windows.Automation.Peers.ContentTextAutomationPeer.GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer, System.Windows.Documents.ITextPointer)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'System.Windows.Automation.Peers.TextAutomationPeer.GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer, System.Windows.Documents.ITextPointer)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Controls.PrintDialogException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
@@ -20,4 +24,4 @@ TypesMustExist : Type 'System.Windows.Interop.DocObjHost' does not exist in the 
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-Total Issues: 21
+Total Issues: 25

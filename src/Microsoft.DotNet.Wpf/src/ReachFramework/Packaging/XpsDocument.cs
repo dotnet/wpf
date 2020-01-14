@@ -31,8 +31,9 @@ using System.Threading;
 using System.Xml;
 using System.Security;
 using MS.Internal;
-using MS.Internal.Security;
 using MS.Internal.IO.Packaging;
+using MS.Internal.ReachFramework.Markup;
+using MS.Internal.Security;
 
 using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
@@ -629,7 +630,7 @@ namespace System.Windows.Xps.Packaging
 
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
-            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext);
+            object fixedObject = XamlReaderProxy.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader:true);
             if (!(fixedObject is FixedDocumentSequence) )
             {
                  throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedDocumentSequence));

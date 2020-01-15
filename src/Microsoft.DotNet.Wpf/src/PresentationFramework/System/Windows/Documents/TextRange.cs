@@ -67,6 +67,24 @@ namespace System.Windows.Documents
         {
         }
 
+        /// <summary>
+        /// Creates a new TextRange instance.
+        /// </summary>
+        /// <param name="position1">
+        /// </param>
+        /// TextPointer specifying the static end of the new TextRange.
+        /// <param name="position2">
+        /// TextPointer specifying the dynamic end of the new TextRange.
+        /// </param>
+        /// <param name="useRestrictiveXamlXmlReader">
+        /// Boolean flag. False by default, set to true to disable external xaml loading in specific scenarios like StickyNotes annotation loading
+        /// </param>
+        internal TextRange(TextPointer position1, TextPointer position2, bool useRestrictiveXamlXmlReader) :
+            this((ITextPointer)position1, (ITextPointer)position2)
+        {
+            _useRestrictiveXamlXmlReader = useRestrictiveXamlXmlReader;
+        }
+
         // ignoreTextUnitBoundaries - true if normalization should ignore text
         // normalization (surrogates, combining marks, etc).
         // Used for fine-grained control by IMEs.
@@ -1366,7 +1384,7 @@ namespace System.Windows.Documents
                 try
                 {
                     // Parse the fragment into a separate subtree
-                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(value)));
+                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(value)), _useRestrictiveXamlXmlReader);
                     TextElement fragment = xamlObject as TextElement;
 
                     if (fragment != null)
@@ -1899,6 +1917,9 @@ namespace System.Windows.Documents
 
         // Boolean flags, set with Flags enum.
         private Flags _flags;
+
+        // Boolean flag, set to true via constructor when you want to use the RestrictiveXamlXmlReader  
+        private bool _useRestrictiveXamlXmlReader;
 
         #endregion Private Fields
     }

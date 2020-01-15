@@ -51,9 +51,22 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xaml is parsed</returns>
         public static object Parse(string xamlText)
         {
+            return Parse(xamlText, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Reads XAML using the passed xamlText string, building an object tree and returning the
+        /// root of that tree.
+        /// </summary>
+        /// <param name="xamlText">XAML text as a string</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xaml is parsed</returns>
+        public static object Parse(string xamlText, bool useRestrictiveXamlReader)
+        {
             StringReader stringReader = new StringReader(xamlText);
             XmlReader xmlReader = XmlReader.Create(stringReader);
-            return Load(xmlReader);
+            return Load(xmlReader, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -65,8 +78,22 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xaml is parsed</returns>
         public static object Parse(string xamlText, ParserContext parserContext)
         {
+            return Parse(xamlText, parserContext, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Reads XAML using the passed xamlText, building an object tree and returning the
+        /// root of that tree.
+        /// </summary>
+        /// <param name="xamlText">XAML text as a string</param>
+        /// <param name="parserContext">parser context</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xaml is parsed</returns>
+        public static object Parse(string xamlText, ParserContext parserContext, bool useRestrictiveXamlReader)
+        {
             Stream xamlStream = new MemoryStream(UTF8Encoding.Default.GetBytes(xamlText));
-            return Load(xamlStream, parserContext);
+            return Load(xamlStream, parserContext, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -77,12 +104,20 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            return Load(stream, null, useRestrictiveXamlReader: false);
+        }
 
-            return Load(stream, null);
+        /// <summary>
+        /// Reads XAML from the passed stream,building an object tree and returning the
+        /// root of that tree.
+        /// </summary>
+        /// <param name="stream">input as stream</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        public static object Load(Stream stream, bool useRestrictiveXamlReader)
+        {
+            return Load(stream, null, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -93,12 +128,25 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(XmlReader reader)
         {
+            return Load(reader, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Reads XAML using the passed XmlReader, building an object tree and returning the
+        /// root of that tree.
+        /// </summary>
+        /// <param name="reader">Reader of xml content.</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        public static object Load(XmlReader reader, bool useRestrictiveXamlReader)
+        {
             if (reader == null)
             {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return Load(reader, null, XamlParseMode.Synchronous);
+            return Load(reader, null, XamlParseMode.Synchronous, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -110,6 +158,20 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(Stream stream, ParserContext parserContext)
         {
+            return Load(stream, parserContext, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Reads XAML from the passed stream, building an object tree and returning the
+        /// root of that tree.
+        /// </summary>
+        /// <param name="stream">input as stream</param>
+        /// <param name="parserContext">parser context</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        public static object Load(Stream stream, ParserContext parserContext, bool useRestrictiveXamlReader )
+        {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
@@ -119,7 +181,10 @@ namespace System.Windows.Markup
                 parserContext = new ParserContext();
             }
 
-            return Load(stream, parserContext, useRestrictiveXamlReader: false);
+            XmlReader reader = XmlReader.Create(stream, null, parserContext);
+            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader);
+            stream.Close();
+            return tree;
         }
 
         /// <summary>
@@ -134,6 +199,23 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream)
         {
+            return LoadAsync(stream, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Loads XAML from the given stream, building an object tree.
+        /// The load operation will be done asynchronously if the
+        /// markup specifies x:SynchronousMode="async".
+        /// </summary>
+        /// <param name="stream">stream for the xml content</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        /// <remarks>
+        /// Notice that this is an instance method
+        /// </remarks>
+        public object LoadAsync(Stream stream, bool useRestrictiveXamlReader)
+        {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
@@ -146,7 +228,7 @@ namespace System.Windows.Markup
                 throw new InvalidOperationException(SR.Get(SRID.ParserCannotReuseXamlReader));
             }
 
-            return LoadAsync(stream, null);
+            return LoadAsync(stream, null, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -161,12 +243,30 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(XmlReader reader)
         {
+
+
+            return LoadAsync(reader, null, useRestrictiveXamlReader: false);
+        }
+
+        /// <summary>
+        /// Reads XAML using the given XmlReader, building an object tree.
+        /// The load operation will be done asynchronously if the markup
+        /// specifies x:SynchronousMode="async".
+        /// </summary>
+        /// <param name="reader">Reader for xml content.</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        /// <remarks>
+        /// Notice that this is an instance method
+        /// </remarks>
+        public object LoadAsync(XmlReader reader, bool useRestrictiveXamlReader)
+        {
             if (reader == null)
             {
                 throw new ArgumentNullException(nameof(reader));
             }
-
-            return LoadAsync(reader, null);
+            return LoadAsync(reader, null, useRestrictiveXamlReader);
         }
 
         /// <summary>
@@ -176,11 +276,30 @@ namespace System.Windows.Markup
         /// </summary>
         /// <param name="stream">stream for the xml content</param>
         /// <param name="parserContext">parser context</param>
+        /// <param name="useRestrictiveXamlReader">boolean flag to restrict xaml loading</param>
         /// <returns>object root generated after xml parsed</returns>
         /// <remarks>
         /// Notice that this is an instance method
         /// </remarks>
         public object LoadAsync(Stream stream, ParserContext parserContext)
+        {
+            return LoadAsync(stream, parserContext, useRestrictiveXamlReader:false);
+        }
+
+        /// <summary>
+        /// Loads XAML from the given stream, building an object tree.
+        /// The load operation will be done asynchronously if the
+        /// markup specifies x:SynchronousMode="async".
+        /// </summary>
+        /// <param name="stream">stream for the xml content</param>
+        /// <param name="parserContext">parser context</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <returns>object root generated after xml parsed</returns>
+        /// <remarks>
+        /// Notice that this is an instance method
+        /// </remarks>
+        public object LoadAsync(Stream stream, ParserContext parserContext , bool useRestrictiveXamlReader)
         {
             if (stream == null)
             {
@@ -201,7 +320,7 @@ namespace System.Windows.Markup
 
             XmlTextReader reader = new XmlTextReader(stream, XmlNodeType.Document, parserContext);
             reader.DtdProcessing = DtdProcessing.Prohibit;
-            return LoadAsync(reader, parserContext);
+            return LoadAsync(reader, parserContext, useRestrictiveXamlReader);
         }
 
         internal static bool ShouldReWrapException(Exception e, Uri baseUri)
@@ -215,8 +334,13 @@ namespace System.Windows.Markup
             // Not an XPE, so we need to wrap it
             return true;
         }
-        
+
         private object LoadAsync(XmlReader reader, ParserContext parserContext)
+        {
+            return LoadAsync(reader, parserContext, useRestrictiveXamlReader: false);
+        }
+
+        private object LoadAsync(XmlReader reader, ParserContext parserContext, bool useRestrictiveXamlReader)
         {
             if (reader == null)
             {
@@ -253,7 +377,8 @@ namespace System.Windows.Markup
 
             try
             {
-                _textReader = new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
+                _textReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings) :
+                                                           new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
 
                 _stack = new XamlContextStack<WpfXamlFrame>(() => new WpfXamlFrame());
 
@@ -672,44 +797,7 @@ namespace System.Windows.Markup
         }
 
         /// <summary>
-        /// Reads XAML from the passed stream, building an object tree and returning the
-        /// root of that tree.
-        /// </summary>
-        /// <param name="stream">input as stream</param>
-        /// <param name="parserContext">parser context</param>
-        /// <returns>object root generated after xml parsed</returns>
-        internal static object Load(Stream stream, ParserContext parserContext, bool useRestrictiveXamlReader)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            if (parserContext == null)
-            {
-                parserContext = new ParserContext();
-            }
 
-            XmlReader reader = XmlReader.Create(stream, null, parserContext);
-            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader);
-            stream.Close();
-            return tree;
-        }
-
-        /// <summary>
-        /// Reads XAML using the passed XmlReader, building an object tree and returning the
-        /// root of that tree.
-        /// </summary>
-        /// <param name="reader">Reader of xml content.</param>
-        /// <returns>object root generated after xml parsed</returns>
-        internal static object Load(XmlReader reader, bool useRestrictiveXamlReader = false)
-        {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return Load(reader, null, XamlParseMode.Synchronous, useRestrictiveXamlReader);
-        }
 
         /// <summary>
         /// Reads XAML from the passed stream, building an object tree and returning the
@@ -753,7 +841,7 @@ namespace System.Windows.Markup
                 parseMode == XamlParseMode.Asynchronous)
             {
                 XamlReader xamlReader = new XamlReader();
-                return xamlReader.LoadAsync(reader, parserContext);
+                return xamlReader.LoadAsync(reader, parserContext, useRestrictiveXamlReader);
             }
 
             if (parserContext == null)

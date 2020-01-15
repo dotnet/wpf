@@ -234,7 +234,7 @@ namespace MS.Internal.Controls.StickyNote
                 RichTextBox richTextBox = (RichTextBox)InnerControl;
 
                 FlowDocument document = new FlowDocument();
-                TextRange rtbRange = new TextRange(document.ContentStart, document.ContentEnd);
+                TextRange rtbRange = new TextRange(document.ContentStart, document.ContentEnd, useRestrictiveXamlXmlReader: true);
                 using (MemoryStream buffer = new MemoryStream(Convert.FromBase64String(node.InnerText)))
                 {
                     rtbRange.Load(buffer, DataFormats.Xaml);

@@ -629,7 +629,7 @@ namespace System.Windows.Xps.Packaging
 
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
-            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext);
+            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
             if (!(fixedObject is FixedDocumentSequence) )
             {
                  throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedDocumentSequence));

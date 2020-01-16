@@ -2,7 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Branding information -->
   <PropertyGroup>
+    <!-- 
+      Primary version prefix for this repo - usually changes only once per major release
+    -->
     <VersionPrefix>4.8.0</VersionPrefix>
+    <!-- 
+      Version prefix used by a few projects like Project Templates
+      Revision portion of Major.Minor.Revision usually updated every release
+    -->
+    <TraditionalVersionPrefix>3.0.3</TraditionalVersionPrefix>
     <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <!--

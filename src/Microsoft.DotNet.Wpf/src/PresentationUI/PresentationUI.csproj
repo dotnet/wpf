@@ -253,6 +253,9 @@
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
+
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />

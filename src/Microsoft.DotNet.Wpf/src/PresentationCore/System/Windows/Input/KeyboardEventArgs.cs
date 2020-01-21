@@ -21,7 +21,7 @@ namespace System.Windows.Input
         ///     The logical keyboard device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         public KeyboardEventArgs(KeyboardDevice keyboard, int timestamp) : base(keyboard, timestamp)
         {

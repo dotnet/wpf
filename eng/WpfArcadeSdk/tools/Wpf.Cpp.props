@@ -209,6 +209,14 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       
       <!-- 
+        Workaround for https://github.com/dotnet/arcade/issues/4763
+        Embed PDB's into the .lib files directly using /Z7 when building out of 
+        dotnet-wpf-int repo
+      -->
+      <DebugInformationFormat Condition="'$(ManagedCxx)' != 'true' and 
+                                         '$(RepoLocation)' == 'Internal'">oldStyle</DebugInformationFormat>
+      
+      <!-- 
         Disambiguate the PDB produced by the compiler with a -compile suffix, so that the PDB
         produced by the linker is not accidentally clobbered by this one.
       -->

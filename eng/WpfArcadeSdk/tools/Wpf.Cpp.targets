@@ -499,8 +499,9 @@ using namespace System::Runtime::Versioning;
           <![CDATA[
    <ItemGroup>
       <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.DncEng"
-                      Version="$(MicrosoftDotNetWpfDncEngVersion)" 
-                      GeneratePathProperty="true" />
+                        Condition="'$(MicrosoftDotNetWpfDncEngVersion)' != ''"
+                        Version="$(MicrosoftDotNetWpfDncEngVersion)" 
+                        GeneratePathProperty="true" />
   </ItemGroup>
   ]]>
         </Text>

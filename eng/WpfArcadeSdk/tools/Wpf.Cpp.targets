@@ -462,10 +462,15 @@ using namespace System::Runtime::Versioning;
    The main purpose of this target is to restore the package with PathProperty=true. As a side-effect, 
    we will also generate an Item @(NuGetReferencesForCpp) from IdentifyNuGetReferences target, which
    will be used by ResolveMicrosoftDotNetWpfDncEngReferencesForCpp
+
+   Note: 
+    Test for "$(RepoLocation) != Internal" rather than "$(RepoLocation) == External"
+    The former form is more reliable. 
+
   -->
   <Target Name="CppHelper"
           Returns="@(NuGetReferencesForCpp)"
-          Condition="'$(ManagedCxx)' != 'true' and '$(RepoLocation)' == 'External'">
+          Condition="'$(ManagedCxx)' != 'true' and '$(RepoLocation)' != 'Internal'">
 
     <PropertyGroup>
       <CppHelperProject>$(IntermediateOutputPath)CppSupport\CppSupport_$(MSBuildProjectName).csproj</CppHelperProject>
@@ -499,8 +504,9 @@ using namespace System::Runtime::Versioning;
           <![CDATA[
    <ItemGroup>
       <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.DncEng"
-                      Version="$(MicrosoftDotNetWpfDncEngVersion)" 
-                      GeneratePathProperty="true" />
+                        Condition="'$(MicrosoftDotNetWpfDncEngVersion)' != ''"
+                        Version="$(MicrosoftDotNetWpfDncEngVersion)" 
+                        GeneratePathProperty="true" />
   </ItemGroup>
   ]]>
         </Text>
@@ -521,7 +527,7 @@ using namespace System::Runtime::Versioning;
 
    <PropertyGroup>
       <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
    </PropertyGroup>
 <!-- Save Microsoft.NETCore.App assemblies and return them -->
     <ItemGroup>
@@ -564,7 +570,7 @@ using namespace System::Runtime::Versioning;
     <MSBuild Projects="@(ProjectToBuild)"
          Targets="IdentifyNuGetReferences"
          Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
-      <Output TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
+      <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
     </MSBuild>
 
     <!-- Update with file path -->

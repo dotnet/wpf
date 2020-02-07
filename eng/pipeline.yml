@@ -115,7 +115,6 @@ jobs:
           Build_Debug_x86:
             _BuildConfig: Debug
             # override some variables for debug
-            _PublishType: none
             _SignType: test
             _DotNetPublishToBlobFeed : false
           Build_Release_x86:
@@ -123,7 +122,6 @@ jobs:
           Build_Debug_x64:
             _BuildConfig: Debug
             # override some variables for debug
-            _PublishType: none
             _SignType: test
             _DotNetPublishToBlobFeed : false
             _Platform: x64

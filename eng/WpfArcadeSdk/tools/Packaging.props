@@ -22,13 +22,22 @@
     <PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)'!=''">false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
+  <!-- 
+    Add a ".Debug" suffix to transport package names
+  -->
   <PropertyGroup>
-    <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
-    <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
+    <TransportPackageNameSuffix Condition="'$(Configuration)'=='Debug'">.$(Configuration)</TransportPackageNameSuffix>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub$(TransportPackageNameSuffix)</GitHubTransportPackageName>
+    <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng$(TransportPackageNameSuffix)</DncEngTransportPackageName>
 
     <!-- When ready to go live, remove .private suffix -->
-    <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
+    <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop$(TransportPackageNameSuffix)</WindowsDesktopSdkPackageName>
   </PropertyGroup>
+
+
 
   <!-- 
       $(RepoLocation) is defined in ShippingProjects.props 

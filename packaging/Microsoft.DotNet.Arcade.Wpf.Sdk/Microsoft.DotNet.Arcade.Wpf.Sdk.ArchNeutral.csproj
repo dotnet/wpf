@@ -17,7 +17,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
     <PackageDescription>WPF Build props/targets transport package shared between dotnet/wpf and dotnet-wpf-int</PackageDescription>
   </PropertyGroup>

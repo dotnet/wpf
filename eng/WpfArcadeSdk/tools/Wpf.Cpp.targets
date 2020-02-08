@@ -525,14 +525,14 @@ using namespace System::Runtime::Versioning;
     AfterTargets="ResolveAssemblyReferences"
     Returns="%40(NuGetReferencesForCpp)">
 
-   <PropertyGroup Condition="'%24(Configuration)' != 'Debug'">
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
+   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
    </PropertyGroup>
    
-   <PropertyGroup Condition="'%24(Configuration)' == 'Debug'">
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
+   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
    </PropertyGroup>
    
 <!-- Save Microsoft.NETCore.App assemblies and return them -->

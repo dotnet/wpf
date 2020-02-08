@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="Version.props"/>
+  <Import Project="Versions.props"/>
   
   <!-- 
     Publishing.props from WPF's build props will be imported here directly during publishing

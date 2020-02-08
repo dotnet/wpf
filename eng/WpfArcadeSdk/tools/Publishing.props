@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PublishDependsOnTargets>
       ReconfigureAssetManifestFileName;
-      $(PublishPackagesToBlobFeedDependsOn);
+      $(PublishDependsOnTargets);
     </PublishDependsOnTargets>
   </PropertyGroup>
 </Project>

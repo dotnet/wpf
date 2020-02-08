@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <PublishPackagesToBlobFeedDependsOn>
+      ReconfigureAssetManifestFileName;
+      $(PublishPackagesToBlobFeedDependsOn);
+    </PublishPackagesToBlobFeedDependsOn>
+  </PropertyGroup>
+</Project>

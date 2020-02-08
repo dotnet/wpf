@@ -10,7 +10,7 @@
           Version="$(MicrosoftDotNetArcadeWpfSdk)"
           Project="Sdk.props"
           Condition="'$(MicrosoftDotNetArcadeWpfSdk)' != ''"/>
-=  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
           Version="$(MicrosoftDotNetArcadeWpfSdk)"
           Project="Sdk.targets"
           Condition="'$(MicrosoftDotNetArcadeWpfSdk)' != ''"/>

@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)"
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
                       Version="$(MicrosoftDotNetWpfGitHubVersion)"
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
@@ -10,7 +10,7 @@
                              And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
                              And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
 
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)"
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
                   Version="$(MicrosoftDotNetWpfGitHubVersion)"
                   ExcludeAssets="All"
                   GeneratePathProperty="True"

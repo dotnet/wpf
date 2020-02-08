@@ -341,7 +341,7 @@ using namespace System::Runtime::Versioning;
         <Text>
           <![CDATA[
    <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
   </ItemGroup>
   ]]>
         </Text>
@@ -379,7 +379,7 @@ using namespace System::Runtime::Versioning;
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
       <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Github'"/>
+      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).$(GitHubTransportPackageName)'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"
@@ -503,7 +503,7 @@ using namespace System::Runtime::Versioning;
         <Text>
           <![CDATA[
    <ItemGroup>
-      <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.DncEng"
+      <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(DncEngTransportPackageName)"
                         Condition="'$(MicrosoftDotNetWpfDncEngVersion)' != ''"
                         Version="$(MicrosoftDotNetWpfDncEngVersion)" 
                         GeneratePathProperty="true" />
@@ -525,10 +525,16 @@ using namespace System::Runtime::Versioning;
     AfterTargets="ResolveAssemblyReferences"
     Returns="%40(NuGetReferencesForCpp)">
 
-   <PropertyGroup>
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
-      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\%24(RuntimeIdentifier)\native\</WpfDncEngRidSpecificLibPath>
+   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
    </PropertyGroup>
+   
+   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
+   </PropertyGroup>
+   
 <!-- Save Microsoft.NETCore.App assemblies and return them -->
     <ItemGroup>
       <NuGetReferencesForCpp Remove="%40(NuGetReferencesForCpp)" />

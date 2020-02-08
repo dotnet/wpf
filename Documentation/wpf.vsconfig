@@ -4,7 +4,6 @@
     "Microsoft.Component.CodeAnalysis.SDK",
     "Microsoft.Component.MSBuild",
     "Microsoft.Component.VC.Runtime.UCRTSDK",
-    "Microsoft.Net.Component.4.6.2.SDK",
     "Microsoft.Net.Component.4.7.2.TargetingPack",
     "Microsoft.NetCore.Component.DevelopmentTools",
     "Microsoft.NetCore.Component.SDK",

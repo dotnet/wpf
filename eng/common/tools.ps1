@@ -425,6 +425,13 @@ function LocateVisualStudio([object]$vsRequirements = $null){
   $vsInfo =& $vsWhereExe $args | ConvertFrom-Json
 
   if ($lastExitCode -ne 0) {
+    # Identify the missing components
+    foreach ($component in $vsRequirements.components) {
+        if ($lastExitCode -ne 0) {
+            Write-Warning "Not Found: $component"
+        }
+    }
+
     return $null
   }
 

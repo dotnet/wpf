@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk">
+  <!-- Publishing.props from WPF's build props will be imported here directly during publishing -->
+</Project>

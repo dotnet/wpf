@@ -423,20 +423,37 @@ function LocateVisualStudio([object]$vsRequirements = $null){
   }
 
   $vsInfo =& $vsWhereExe $args | ConvertFrom-Json
-
   if ($LastExitCode -ne 0 -or $vsInfo -eq $null) {
+    $missingComponents = @()
     # Identify the missing components
     foreach ($component in $vsRequirements.components) {
+        & $vsWhereExe --requires $component
         if ($LastExitCode -ne 0) {
+            $missingComponents += $component
             Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "Required VS Component Not Found: $component"
         }
+    }
+
+    Write-Host "Missing Components: "
+    $missingComponents | % {
+        $component = $_
+        Write-Host $component
+        Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "Required VS Component Not Found: $component"
     }
 
     return $null
   }
 
+  $match = $vsInfo[0]
+  Write-Host "Found Matching Visual Studio: $match"
+  $vsRequirements.components | %{
+    $component = $_
+     Write-Host ("`t" + $component)
+  }
+  Write-Host
+
   # use first matching instance
-  return $vsInfo[0]
+  return $match
 }
 
 function InitializeBuildTool() {

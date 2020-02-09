@@ -428,7 +428,7 @@ function LocateVisualStudio([object]$vsRequirements = $null){
     # Identify the missing components
     foreach ($component in $vsRequirements.components) {
         if ($lastExitCode -ne 0) {
-            Write-Warning "Not Found: $component"
+            Write-PipelineTelemetryError -Category 'LocateVisualStudio' -Message "Required VS Component Not Found: $component"
         }
     }
 

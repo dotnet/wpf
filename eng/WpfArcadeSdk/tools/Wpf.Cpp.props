@@ -57,20 +57,6 @@
       <TargetFrameworkSDKToolsDirectory Condition="'$(Platform)' == 'x64'">$(TargetFrameworkSDKToolsDirectory)$(Platform)\</TargetFrameworkSDKToolsDirectory>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <LinkIncremental>true</LinkIncremental>
-    <LinkIncremental Condition="'$(ManagedCxx)'=='true'">false</LinkIncremental>
-    <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <LinkIncremental>false</LinkIncremental>
-    <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(ManagedCxx)'=='true'">
     <!-- Works around a bug in the C++ compiler where we get the error
          'System::ReadOnlySpan::default': could not import member. -->
@@ -207,14 +193,6 @@
       <PreprocessorDefinitions Condition="'$(Architecture)'=='arm64'">%(PreprocessorDefinitions);_ARM64_;</PreprocessorDefinitions>
 
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      
-      <!-- 
-        Workaround for https://github.com/dotnet/arcade/issues/4763
-        Embed PDB's into the .lib files directly using /Z7 when building out of 
-        dotnet-wpf-int repo
-      -->
-      <DebugInformationFormat Condition="'$(ManagedCxx)' != 'true' and 
-                                         '$(RepoLocation)' == 'Internal'">oldStyle</DebugInformationFormat>
       
       <!-- 
         Disambiguate the PDB produced by the compiler with a -compile suffix, so that the PDB

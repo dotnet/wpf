@@ -5,6 +5,20 @@
     <NativeResourceFileWithVersionInformation Condition="'$(NativeResourceFileWithVersionInformation)' == ''">$(IntermediateOutputPath)ExtendedNativeVersion.rc</NativeResourceFileWithVersionInformation>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental Condition="'$(ManagedCxx)'=='true'">false</LinkIncremental>
+    <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+    <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+  </PropertyGroup>
+
   <Import Project="Wpf.Cpp.PrivateTools.targets" Condition="Exists('Wpf.Cpp.PrivateTools.targets') And '$(UsePrivateCppTools)'=='true'"/>
   
   <ItemDefinitionGroup>
@@ -13,6 +27,14 @@
       <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory);$(WpfTracingDir)native\</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(WpfSharedDir)inc\ddbanned.h</ForcedIncludeFiles>
+
+      <!-- 
+        Workaround for https://github.com/dotnet/arcade/issues/4763
+        Embed PDB's into the .lib files directly using /Z7 when building out of 
+        dotnet-wpf-int repo
+      -->
+      <DebugInformationFormat Condition="'$(ManagedCxx)' != 'true' and 
+                                         '$(RepoLocation)' == 'Internal'">oldStyle</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>

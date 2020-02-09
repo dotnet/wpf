@@ -424,10 +424,10 @@ function LocateVisualStudio([object]$vsRequirements = $null){
 
   $vsInfo =& $vsWhereExe $args | ConvertFrom-Json
 
-  if ($lastExitCode -ne 0) {
+  if ($LastExitCode -ne 0 -or $vsInfo -eq $null) {
     # Identify the missing components
     foreach ($component in $vsRequirements.components) {
-        if ($lastExitCode -ne 0) {
+        if ($LastExitCode -ne 0) {
             Write-PipelineTelemetryError -Category 'LocateVisualStudio' -Message "Required VS Component Not Found: $component"
         }
     }

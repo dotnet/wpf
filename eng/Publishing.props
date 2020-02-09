@@ -7,16 +7,16 @@
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
           Version="$(MicrosoftDotNetArcadeWpfSdk)"
           Project="..\tools\Publishing.props"
-          Condition="'$(MicrosoftDotNetArcadeWpfSdk)' != ''"/>
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' != ''"/>
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
           Version="$(MicrosoftDotNetArcadeWpfSdk)"
           Project="..\tools\Publishing.targets"
-          Condition="'$(MicrosoftDotNetArcadeWpfSdk)' != ''"/>
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' != ''"/>
 
   <Import Project="WpfArcadeSdk\tools\Publishing.props"
-          Condition="'$(MicrosoftDotNetArcadeWpfSdk)' == '' And 
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' == '' And 
                       Exists('WpfArcadeSdk\Sdk\Sdk.props') And Exists('WpfArcadeSdk\Sdk\Sdk.targets')"/>
   <Import Project="WpfArcadeSdk\tools\Publishing.targets"
-        Condition="'$(MicrosoftDotNetArcadeWpfSdk)' == '' And 
+        Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' == '' And 
                       Exists('WpfArcadeSdk\Sdk\Sdk.props') And Exists('WpfArcadeSdk\Sdk\Sdk.targets')"/>
 </Project>

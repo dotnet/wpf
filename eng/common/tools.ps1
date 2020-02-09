@@ -445,6 +445,10 @@ function LocateVisualStudio([object]$vsRequirements = $null){
   }
 
   $match = $vsInfo[0]
+  if (-not $match) {
+    $match = $vsInfo
+  }
+  
   Write-Host "Found Matching Visual Studio: $match"
   $vsRequirements.components | %{
     $component = $_

@@ -19,7 +19,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>5.0.0-alpha1.19514.1</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppInternalVersion>5.0.0-alpha1.19514.1</MicrosoftNETCoreAppInternalVersion>
     <MicrosoftNETCorePlatformsVersion>5.0.0-alpha1.19512.1</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>5.0.0-alpha1.19512.1</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>5.0.0-alpha1.19512.1</SystemDirectoryServicesVersion>
@@ -41,9 +41,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>5.0.0-beta.20110.11</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>5.0.0-beta.20110.11</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>5.0.0-beta.20110.11</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>5.0.0-beta.20110.5</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>5.0.0-beta.20110.5</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>5.0.0-beta.20110.5</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>
@@ -96,26 +96,7 @@
     <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
-  <!-- 
-    This is a toolset dependency added for use *only* by tests 
-    
-      !!!This dependency creates a cycle in the dependency-graph, but only in the 'toolset' portion of the graph. !!!
-
-      Note: Also see [Dependency graph](https://github.com/dotnet/arcade/blob/master/Documentation/Darc.md#viewing-the-dependency-graph)
-
-     - https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int consumes Microsoft.DotNet.Wpf.GitHub published by dotnet/wpf (this repo)
-     - https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int produces Microsoft.DotNet.Wpf.DncEng
-       - Microsoft.DotNet.Wpf.DncEng should, normally, be passed further along (and be consumed back by dotnet/wpf)
-     - Many WPF tests are non-trivial integration tests which require references to the whole WPF stack. 
-     - In order to satisfy these references, we consume Microsoft.DotNet.Wpf.DncEng for tests-only. 
-     - This is added as a DARC subscription that 
-       - (a) Updates EveryDay
-       - (b) Updates *only* in ".NET Core 3 Dev" channel
-       - (c) Does not update in ".NET Core 3 Release" channel
-
-      It is worth reiterating that this package *should not* be consumed to build the product.
-  -->
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>5.0.0-preview.1.20111.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>5.0.0-preview.1.20109.8</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

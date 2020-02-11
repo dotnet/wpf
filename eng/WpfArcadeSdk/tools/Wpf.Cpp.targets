@@ -11,6 +11,10 @@
     <ClCompile>
       <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
+
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfTransportedSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfTransportedSharedDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfTransportedCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfTransportedCommonDir)inc\</AdditionalIncludeDirectories>
+
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory);$(WpfTracingDir)native\</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(WpfSharedDir)inc\ddbanned.h</ForcedIncludeFiles>
 
@@ -20,12 +24,15 @@
         dotnet-wpf-int repo
       -->
       <DebugInformationFormat Condition="'$(ManagedCxx)' != 'true' and 
-                                         '$(RepoLocation)' == 'Internal'">oldStyle</DebugInformationFormat>
+                                         '$(ConfigurationType)' == '$(StaticLibrary)' and
+                                         '$(RepositoryName)' == 'dotnet-wpf-int'">oldStyle</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  
+  
 
   <!-- 
     Support for /linkrepro
@@ -605,6 +612,24 @@ using namespace System::Runtime::Versioning;
   <Target Name="EnsureLinkReproFolder">
     <RemoveDir Condition="Exists('$(IntermediateOutputPath)LinkRepro\')" Directories="$(IntermediateOutputPath)LinkRepro\" />
     <MakeDir Directories="$(IntermediateOutputPath)LinkRepro\" />
+  </Target>
+
+  <PropertyGroup>
+    <BeforeClCompileTargets>
+      UseOldStyleDebugInformationFormat;
+      $(BeforeClCompileTargets)
+    </BeforeClCompileTargets>
+  </PropertyGroup>
+  
+  <Target Name="UseOldStyleDebugInformationFormat"
+          Condition="'$(RepositoryName)'=='dotnet-wpf-int'    And
+                     '$(ConfigurationType)' =='StaticLibrary' And
+                     '$(ManagedCxx)' != 'true'">
+    <ItemGroup>
+      <ClCompile Update="@(ClCompile)">
+        <DebugInformationFormat>oldStyle</DebugInformationFormat>
+      </ClCompile>
+    </ItemGroup>
   </Target>
 
   <!-- Disable the portions of MSBuild that insist on a targeting pack directory to represent a target framework -->

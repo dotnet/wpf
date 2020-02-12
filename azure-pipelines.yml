@@ -38,6 +38,7 @@ trigger:
     - release/3.0
     - release/3.0-preview9
     - release/3.1
+    - experimental/*
     # - arcade
   paths:
     exclude:
@@ -53,6 +54,7 @@ pr:
     - internal/release/3.*
     - release/3.1
     - internal/release/*
+    - experimental/*
   paths:
     exclude:
     - Documentation/*

@@ -1,0 +1,10 @@
+<Project>
+  <!-- 
+    IsRedistProject=true should be set prior to importing Directory.Build.props from ancestor folders 
+  -->
+  <PropertyGroup>
+    <IsRedistProject>true</IsRedistProject>
+  </PropertyGroup>
+  
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

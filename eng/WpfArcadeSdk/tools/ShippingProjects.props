@@ -29,21 +29,22 @@
       PresentationFramework.Luna;
       PresentationFramework.Royale;
       WindowsFormsIntegration;
+      PenImc;
+      wpfgfx;
+      D3DCompiler;
+      VCRuntime
     </ExternalShippingProjects>
 
     <InternalShippingLibProjects>
       $(InternalShippingLibProjects);
+      bilinearspan
     </InternalShippingLibProjects>
-
+    
     <InternalShippingProjects>
     $(InternalShippingLibProjects);
-      PenImc;
       PresentationNative;
-      WpfGfx;
-      D3DCompiler;
-      VCRuntime
     </InternalShippingProjects>
-
+    
     <ShippingProjects>
       $(ExternalShippingProjects);
       $(InternalShippingProjects)

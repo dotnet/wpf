@@ -238,12 +238,12 @@ namespace MS.Internal.Documents
             //state of the ShowPageBorders property.
             if (ShowPageBorders)
             {
-                _documentContainer.SetCurrentValue(DefaultStyleKeyProperty,
-                    new ComponentResourceKey(typeof(FrameworkElement), "DocumentGridPageContainerWithBorder"));
+                var key = new ComponentResourceKey(typeof(FrameworkElement), "DocumentGridPageContainerWithBorder");
+                _documentContainer.SetCurrentValue(StyleProperty, TryFindResource(key));
             }
             else
             {
-                _documentContainer.SetCurrentValue(DefaultStyleKeyProperty, null);
+                _documentContainer.SetCurrentValue(StyleProperty, TryFindResource(typeof(ContentControl)));
             }
 
             //Measure our children.

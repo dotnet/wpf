@@ -898,12 +898,12 @@ To automatically copy the files, set the environment variable
                             <ColumnDefinition Width="5" />
                         </Grid.ColumnDefinitions>
 
-                        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Border Background="White" BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
                             <ContentPresenter />
                         </Border>
 
-                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" />
-                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" />
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="1" />
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -80,7 +80,7 @@ namespace dxlayer
             return DirectX::XMLoadFloat4x4(&xmFloat4x4);
         }
 
-        inline operator DirectX::XMFLOAT4X4() const
+        inline operator const DirectX::XMFLOAT4X4() const
         {
             return DirectX::XMFLOAT4X4
             (

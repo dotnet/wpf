@@ -110,7 +110,7 @@ namespace dxlayer
             return{ x, y, z, w };
         }
 
-        operator DirectX::XMFLOAT4() const
+        operator const DirectX::XMFLOAT4() const
         {
             return{ x, y, z, w };
         }

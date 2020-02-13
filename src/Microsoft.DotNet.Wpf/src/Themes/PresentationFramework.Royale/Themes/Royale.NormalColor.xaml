@@ -1214,6 +1214,7 @@ To automatically copy the files, set the environment variable
 
                         <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" />
                         <Rectangle Fill="Black" Opacity="0.35" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

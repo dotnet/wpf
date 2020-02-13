@@ -229,9 +229,6 @@ namespace MS.Internal.Documents
 
             if (!hasAddedChildren)
             {
-                _documentContainer = new ContentControl();
-                _documentContainer.Content = _pageBorder;
-
                 this.AddVisualChild(_documentContainer);
 
                 hasAddedChildren = true;
@@ -299,9 +296,9 @@ namespace MS.Internal.Documents
             _documentPageView.StretchDirection = StretchDirection.Both;
             _documentPageView.PageNumber = int.MaxValue;
 
-            //Create the border that contains the page content.
-            _pageBorder = new Border();
-            _pageBorder.Child = _documentPageView;
+            //Create the content control that contains the page content.
+            _documentContainer = new ContentControl();
+            _documentContainer.Content = _documentPageView;
 
             _loaded = false;
         }
@@ -397,7 +394,6 @@ namespace MS.Internal.Documents
         private bool hasAddedChildren;
         private DocumentPaginator _paginator;
         private DocumentPageView _documentPageView;
-        private Border _pageBorder;
         private ContentControl _documentContainer;
 
         private bool _showPageBorders;

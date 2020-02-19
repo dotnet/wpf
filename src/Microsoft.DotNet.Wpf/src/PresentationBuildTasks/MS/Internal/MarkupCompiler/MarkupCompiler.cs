@@ -2598,8 +2598,6 @@ namespace MS.Internal
 
             bool wildcardUsed = false;
 
-            string explicitAssemblyVersion = AssemblyVersion;
-                        
             // If we have an actual version string, try to detect wildcards.
             if (!string.IsNullOrEmpty(AssemblyVersion))
             {
@@ -2609,11 +2607,11 @@ namespace MS.Internal
 
                 if (wildcardUsed && (splitVersion.Length != 3 || splitVersion.Length != 4))
                 {
-                    // Bad wildcard, localized error.
+                    // TODO: Bad wildcard, localized error.
                 }
 
                 // Trim to explicit version parts and verify.
-                explicitAssemblyVersion = (wildcardUsed) ? AssemblyVersion.Substring(0, AssemblyVersion.LastIndexOf('.')) : AssemblyVersion;
+                var explicitAssemblyVersion = (wildcardUsed) ? AssemblyVersion.Substring(0, AssemblyVersion.LastIndexOf('.')) : AssemblyVersion;
 
                 if (!Version.TryParse(explicitAssemblyVersion, out Version parsedVersion))
                 {
@@ -2624,7 +2622,7 @@ namespace MS.Internal
             // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
             // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a
             // wildcard version string via AssemblyVersionAttribute and use an empty string.
-            string version = (String.IsNullOrEmpty(explicitAssemblyVersion) || wildcardUsed) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
+            string version = (String.IsNullOrEmpty(AssemblyVersion) || wildcardUsed) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
             string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) ? String.Empty : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 

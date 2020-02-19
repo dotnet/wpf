@@ -2596,7 +2596,35 @@ namespace MS.Internal
 
             string uriPart = string.Empty;
 
-            string version = String.IsNullOrEmpty(AssemblyVersion) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
+            bool wildcardUsed = false;
+
+            string explicitAssemblyVersion = AssemblyVersion;
+                        
+            // If we have an actual version string, try to detect wildcards.
+            if (!string.IsNullOrEmpty(AssemblyVersion))
+            {
+                var splitVersion = AssemblyVersion.Split('.');
+
+                wildcardUsed = splitVersion[splitVersion.Length - 1] == "*";
+
+                if (wildcardUsed && (splitVersion.Length != 3 || splitVersion.Length != 4))
+                {
+                    // Bad wildcard, localized error.
+                }
+
+                // Trim to explicit version parts and verify.
+                explicitAssemblyVersion = (wildcardUsed) ? AssemblyVersion.Substring(0, AssemblyVersion.LastIndexOf('.')) : AssemblyVersion;
+
+                if (!Version.TryParse(explicitAssemblyVersion, out Version parsedVersion))
+                {
+                    // TODO: Bad explicit version, we need a localized error here (or we could just call regular Version.Parse and let it bubble instead).
+                }
+            }
+
+            // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
+            // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a
+            // wildcard version string via AssemblyVersionAttribute and use an empty string.
+            string version = (String.IsNullOrEmpty(explicitAssemblyVersion) || wildcardUsed) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
             string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) ? String.Empty : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 

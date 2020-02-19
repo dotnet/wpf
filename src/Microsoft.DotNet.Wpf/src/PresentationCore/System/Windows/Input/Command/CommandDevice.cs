@@ -302,7 +302,7 @@ namespace System.Windows.Input
         ///     Initializes a new instance of this class.
         /// </summary>
         /// <param name="commandDevice">The logical CommandDevice associated with this event.</param>
-        /// <param name="timestamp">The time when the input occured.</param>
+        /// <param name="timestamp">The time when the input occurred.</param>
         /// <param name="command">Command associated with this event.</param>
         internal CommandDeviceEventArgs(CommandDevice commandDevice, int timestamp, ICommand command)
             : base(commandDevice, timestamp)

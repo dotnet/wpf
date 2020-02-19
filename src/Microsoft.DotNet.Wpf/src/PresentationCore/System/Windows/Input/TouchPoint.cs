@@ -32,7 +32,7 @@ namespace System.Windows.Input
         ///     The coordinate space of this parameter is defined by the caller and should be
         ///     consistent with the position parameter.</param>
         /// <param name="action">
-        ///     Indicates the last action that occured by this device at this location.
+        ///     Indicates the last action that occurred by this device at this location.
         /// </param>
         public TouchPoint(TouchDevice device, Point position, Rect bounds, TouchAction action)
         {

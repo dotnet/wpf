@@ -38,5 +38,10 @@
   <ItemGroup>
     <PackagingContent Include="$(WpfSharedDir)**\*" SubFolder="root\Src\Shared\%(RecursiveDir)" />
     <PackagingContent Include="$(WpfCommonDir)**\*" SubFolder="root\Src\Common\%(RecursiveDir)" />
+    
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.h*" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.inl" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.h*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.in*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
   </ItemGroup>
 </Project>

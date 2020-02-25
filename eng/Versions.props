@@ -53,7 +53,6 @@
   <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
   <PropertyGroup>
     <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
-    <SystemMemoryPackageVersionForPresentationBuildTasks>4.5.2</SystemMemoryPackageVersionForPresentationBuildTasks>
   </PropertyGroup>
   <!-- Other Packages that require manual updating-->
   <PropertyGroup>

@@ -59,13 +59,13 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>8d21b79b924d29088dbde46d42737a657d466b5e</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.20124.3">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.20125.9">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>03bd0e0cefb81d33d08c4853fa5d6a8057c34d94</Sha>
+      <Sha>e6c7061dacf795792aa7d1213dba0e532bbd85bd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.20124.3">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.20125.9">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>03bd0e0cefb81d33d08c4853fa5d6a8057c34d94</Sha>
+      <Sha>e6c7061dacf795792aa7d1213dba0e532bbd85bd</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="5.0.0-alpha1.19512.1" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/corefx</Uri>
@@ -91,17 +91,17 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>b415b57a15b0c6ba77e63df901823bb46b8aafda</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.20124.3">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.20125.9">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>03bd0e0cefb81d33d08c4853fa5d6a8057c34d94</Sha>
+      <Sha>e6c7061dacf795792aa7d1213dba0e532bbd85bd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20124.3">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20125.9">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>03bd0e0cefb81d33d08c4853fa5d6a8057c34d94</Sha>
+      <Sha>e6c7061dacf795792aa7d1213dba0e532bbd85bd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.20124.3">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.20125.9">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>03bd0e0cefb81d33d08c4853fa5d6a8057c34d94</Sha>
+      <Sha>e6c7061dacf795792aa7d1213dba0e532bbd85bd</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="5.0.0-alpha1.19512.1" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/corefx</Uri>

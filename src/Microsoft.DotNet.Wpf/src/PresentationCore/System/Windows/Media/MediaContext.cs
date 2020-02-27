@@ -194,8 +194,10 @@ namespace System.Windows.Media
         /// when inside a SCM service. 
         /// </remarks>
         internal static bool ShouldRenderEvenWhenNoDisplayDevicesAreAvailable { get; } =
-            !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...  
-                !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override 
+            // Temporary workaround for https://github.com/dotnet/runtime/issues/32929
+            // Do not merge into master 
+            // !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...  
+            //    !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override 
                 CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable;   // ELSE do not render by default, allow ShouldRender AppContext override
 
 

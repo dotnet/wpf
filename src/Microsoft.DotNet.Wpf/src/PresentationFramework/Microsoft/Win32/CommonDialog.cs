@@ -72,10 +72,13 @@ namespace Microsoft.Win32
 
             // Don't allow file dialogs to be shown if not in interactive mode
             // (for example, if we're running as a service)
-            if (!Environment.UserInteractive)
-            {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
-            }
+            
+            // Temporary workaround for https://github.com/dotnet/runtime/issues/32929
+            // Do not merge into master 
+            // if (!Environment.UserInteractive)
+            // {
+            //    throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+            // }
 
             // Call GetActiveWindow to retrieve the window handle to the active window
             // attached to the calling thread's message queue.  We'll set the owner of
@@ -149,10 +152,13 @@ namespace Microsoft.Win32
 
             // Don't allow file dialogs to be shown if not in interactive mode
             // (for example, if we're running as a service)
-            if (!Environment.UserInteractive)
-            {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
-            }
+            
+            // Temporary workaround for https://github.com/dotnet/runtime/issues/32929
+            // Do not merge into master
+            // if (!Environment.UserInteractive)
+            // {
+                // throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+            // }
 
             // Get the handle of the owner window using WindowInteropHelper.
             IntPtr hwndOwner = (new WindowInteropHelper(owner)).CriticalHandle;

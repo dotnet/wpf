@@ -28,7 +28,9 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppVersion>3.1.3-servicing.20120.1</MicrosoftNETCoreAppVersion>
+    <MicrosoftNETCoreAppRuntimewinx64PackageVersion>3.1.3</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
+    <MicrosoftNETCoreAppInternalPackageVersion>3.1.3-servicing.20120.1</MicrosoftNETCoreAppInternalPackageVersion>
+    <MicrosoftNETCoreAppRefPackageVersion>3.1.0</MicrosoftNETCoreAppRefPackageVersion>
     <MicrosoftNETCorePlatformsVersion>3.1.0</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.7.0</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>4.7.0</SystemDirectoryServicesVersion>

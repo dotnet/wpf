@@ -10,7 +10,7 @@
 
     <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
 
-    <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
+    <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppRuntimewinx64PackageVersion)\</NETCoreAppPayloadPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,7 +36,7 @@
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
       <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-machine.ps1" />
-      <MicrosoftNetCoreAppContents Include="$(LocalDotnetLocation)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
+      <MicrosoftNetCoreAppContents Include="$(LocalDotnetLocation)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppRuntimewinx64PackageVersion)\**\*.*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"

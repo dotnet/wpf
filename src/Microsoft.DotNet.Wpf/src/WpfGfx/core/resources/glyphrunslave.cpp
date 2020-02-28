@@ -995,11 +995,12 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
                 }
                 else
                 {
-                    // If DWrite choose a symmetric anti-aliasing algorithm and the developer
+                    // If DWrite chose a symmetric anti-aliasing algorithm and the developer
                     // has explicitly chosen ClearType rendering, choose the corresponding
                     // symmetric ClearType algorithm.
-                    if (*pDWriteRenderingMode == DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC
-                        || *pDWriteRenderingMode == DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC)
+                    if (textRenderingMode == MilTextRenderingMode::ClearType
+                        && (*pDWriteRenderingMode == DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC 
+                            || *pDWriteRenderingMode == DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC))
                     {
                         *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC;
                     }

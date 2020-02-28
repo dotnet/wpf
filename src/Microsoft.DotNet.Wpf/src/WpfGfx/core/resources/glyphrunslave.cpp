@@ -943,6 +943,20 @@ Cleanup:
 // Determines which DWRITE_RENDERING_MODE we want to use when creating an IDWriteGlyphRunAnalysis. 
 // The determination for which blend mode we will use happens separately.
 //
+// The decision of which DWRITE_RENDERING_MODE to use depends on TextOptions.TextFormattingMode and TextOptions.TextRenderingMode.
+//
+// TextRenderingMode | TextFormattingMode | DWRITE_RENDERING_MODE
+// --------------------------------------------------------------
+// Auto              | Display            | DWrite's Choice
+// Auto              | Ideal              | DWrite's Choice
+// Aliased           | Display            | DWRITE_RENDERING_MODE_ALIASED
+// Aliased           | Ideal              | DWrite's Choice
+// ClearType         | Display            | DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC
+// ClearType         | Ideal              | DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC if DWrite chose symmetric, otherwise DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL
+// Grayscale         | Display            | DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC
+// Grayscale         | Ideal              | DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL
+//
+// The exception to the above is when fAnimationQuality is true and we are in Ideal mode.  In this case, DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC is used.
 //============================================================================================================================
 void
 CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace,
@@ -1012,6 +1026,8 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
             }
             else
             {
+                // This assert is here for an equivalence check with .NET Framework 
+                // when allowing DWrite to choose our rendering mode directly.
                 Assert((textRenderingMode == MilTextRenderingMode::Auto)
                     || ((textRenderingMode == MilTextRenderingMode::Aliased)
                         && !IsDisplayMeasured()));

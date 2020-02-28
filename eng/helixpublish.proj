@@ -5,7 +5,7 @@
     <IncludeDotNetCli>true</IncludeDotNetCli>
 
     <!--
-    Ideally we could use $(MicrosoftNetCoreAppVersion) for DotNetCliVersion and 'runtime' for DotNetCliPackageType.
+    Ideally we could use $(MicrosoftNETCoreAppRuntimewinx64PackageVersion) for DotNetCliVersion and 'runtime' for DotNetCliPackageType.
     However, we need a full install on the Helix machine that includes the WindowsDesktop SDK since QV is dependent on it.
     Once we move it into the open we can put these back to how they should be. See https://github.com/dotnet/wpf/issues/816 
     for any more details.
@@ -14,7 +14,7 @@
     issue is fixed.
 
     <DotNetCliPackageType>runtime</DotNetCliPackageType>
-    <DotNetCliVersion>$(MicrosoftNetCoreAppVersion)</DotNetCliVersion>
+    <DotNetCliVersion>$(MicrosoftNETCoreAppRuntimewinx64PackageVersion)</DotNetCliVersion>
     -->
     <DotNetCliPackageType>sdk</DotNetCliPackageType>
     <DotNetCliVersion>$(DotNetCliVersion)</DotNetCliVersion>

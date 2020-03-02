@@ -2598,7 +2598,13 @@ namespace MS.Internal
 
             // If we have an actual version string, try to detect wildcards.  Note that this is required to be at least major.minor.
             // Prior to markup compilation, this will have been validated by the C# compiler.
-            bool wildcardUsed = (string.IsNullOrEmpty(AssemblyVersion)) ? false : AssemblyVersion.Split('.')[splitVersion.Length - 1] == "*";
+            bool wildcardUsed = false;
+
+            if (string.IsNullOrEmpty(AssemblyVersion))
+            {
+                var splitVersion = AssemblyVersion.Split('.');
+                wildcardUsed = splitVersion[splitVersion.Length - 1] == "*";
+            }
 
             // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
             // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a

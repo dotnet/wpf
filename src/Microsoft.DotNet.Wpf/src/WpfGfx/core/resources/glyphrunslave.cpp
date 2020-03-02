@@ -31,6 +31,7 @@ const double CGlyphRunResource::c_minAnimationDetectionBar = 0.9;
 // The time between composition passes that we request if there's no other work to do
 // is a wait for approximately ~16ms. So 3 frames worth is about 48ms, a reasonable time
 // to wait to see if an animation has terminated. Previously, when text animation completed 
+// there was a noticeable delay before we snapped in high quality realizations, approximately
 // 400ms. 50ms is less noticeable.
 //
 const int CGlyphRunResource::c_frameCountBeforeRealizationCallback = 2;

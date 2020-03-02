@@ -2596,28 +2596,9 @@ namespace MS.Internal
 
             string uriPart = string.Empty;
 
-            bool wildcardUsed = false;
-
-            // If we have an actual version string, try to detect wildcards.
-            if (!string.IsNullOrEmpty(AssemblyVersion))
-            {
-                var splitVersion = AssemblyVersion.Split('.');
-
-                wildcardUsed = splitVersion[splitVersion.Length - 1] == "*";
-
-                if (wildcardUsed && (splitVersion.Length != 3 || splitVersion.Length != 4))
-                {
-                    // TODO: Bad wildcard, localized error.
-                }
-
-                // Trim to explicit version parts and verify.
-                var explicitAssemblyVersion = (wildcardUsed) ? AssemblyVersion.Substring(0, AssemblyVersion.LastIndexOf('.')) : AssemblyVersion;
-
-                if (!Version.TryParse(explicitAssemblyVersion, out Version parsedVersion))
-                {
-                    // TODO: Bad explicit version, we need a localized error here (or we could just call regular Version.Parse and let it bubble instead).
-                }
-            }
+            // If we have an actual version string, try to detect wildcards.  Note that this is required to be at least major.minor.
+            // Prior to markup compilation, this will have been validated by the C# compiler.
+            bool wildcardUsed = (string.IsNullOrEmpty(AssemblyVersion)) ? false : AssemblyVersion.Split('.')[splitVersion.Length - 1] == "*";
 
             // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
             // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a

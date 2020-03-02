@@ -967,7 +967,7 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
                                           __out DWRITE_RENDERING_MODE *pDWriteRenderingMode
                                           )
 {
-    if (   textRenderingMode == MilTextRenderingMode::Aliased 
+    if (textRenderingMode == MilTextRenderingMode::Aliased 
         && IsDisplayMeasured())
     {
         *pDWriteRenderingMode = DWRITE_RENDERING_MODE_ALIASED;
@@ -989,47 +989,54 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
             }
             else
             {
-                // We defer to DWrite for this decision in some cases
-                // The scaleFactor is used in conjunction with the muSize to calculate the
-                // actual rendered size of this glyph run.
-                if (FAILED((pIDWriteFontFace->GetRecommendedRenderingMode(
-                    m_muSize,
-                    scaleFactor,
-                    m_measuringMethod,
-                    pDisplaySettings->pIDWriteRenderingParams,
-                    pDWriteRenderingMode
-                    ))))
+                if (textRenderingMode == MilTextRenderingMode::Grayscale)
                 {
-                    //
-                    // Default to CT natural/ideal in failure case, since failure of this
-                    // call is non fatal for our purposes.
-                    //
-                    *pDWriteRenderingMode = IsDisplayMeasured() ? DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC :
-                        DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
-                }
-
-                if (textRenderingMode == MilTextRenderingMode::ClearType)
-                {
-                    // If DWrite chose a symmetric anti-aliasing algorithm and the developer
-                    // has explicitly chosen ClearType rendering, choose the corresponding
-                    // symmetric ClearType algorithm.
-                    if (*pDWriteRenderingMode == DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC
-                        || *pDWriteRenderingMode == DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC)
-                    {
-                        *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC;
-                    }
-                    else
-                    {
-                        *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
-                    }
+                    *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
                 }
                 else
                 {
-                    // This assert is here for an equivalence check with .NET Framework 
-                    // when allowing DWrite to choose our rendering mode directly.
-                    Assert((textRenderingMode == MilTextRenderingMode::Auto)
-                        || ((textRenderingMode == MilTextRenderingMode::Aliased)
-                            && !IsDisplayMeasured()));
+                    // We defer to DWrite for this decision in some cases
+                    // The scaleFactor is used in conjunction with the muSize to calculate the
+                    // actual rendered size of this glyph run.
+                    if (FAILED((pIDWriteFontFace->GetRecommendedRenderingMode(
+                        m_muSize,
+                        scaleFactor,
+                        m_measuringMethod,
+                        pDisplaySettings->pIDWriteRenderingParams,
+                        pDWriteRenderingMode
+                        ))))
+                    {
+                        //
+                        // Default to CT natural/ideal in failure case, since failure of this
+                        // call is non fatal for our purposes.
+                        //
+                        *pDWriteRenderingMode = IsDisplayMeasured() ? DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC :
+                            DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                    }
+
+                    if (textRenderingMode == MilTextRenderingMode::ClearType)
+                    {
+                        // If DWrite chose a symmetric anti-aliasing algorithm and the developer
+                        // has explicitly chosen ClearType rendering, choose the corresponding
+                        // symmetric ClearType algorithm.
+                        if (*pDWriteRenderingMode == DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC
+                            || *pDWriteRenderingMode == DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC)
+                        {
+                            *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC;
+                        }
+                        else
+                        {
+                            *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                        }
+                    }
+                    else
+                    {
+                        // This assert is here for an equivalence check with .NET Framework 
+                        // when allowing DWrite to choose our rendering mode directly.
+                        Assert((textRenderingMode == MilTextRenderingMode::Auto)
+                            || ((textRenderingMode == MilTextRenderingMode::Aliased)
+                                && !IsDisplayMeasured()));
+                    }
                 }
             }
         }

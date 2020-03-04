@@ -2600,7 +2600,7 @@ namespace MS.Internal
             // Prior to markup compilation, this will have been validated by the C# compiler.
             bool wildcardUsed = false;
 
-            if (string.IsNullOrEmpty(AssemblyVersion))
+            if (!string.IsNullOrEmpty(AssemblyVersion))
             {
                 var splitVersion = AssemblyVersion.Split('.');
                 wildcardUsed = splitVersion[splitVersion.Length - 1] == "*";

@@ -1178,11 +1178,11 @@ namespace System.Windows.Controls
             {
                 if (isRows)
                 {
-                    minSizes[PrivateCells[i].RowIndex] = DefinitionsV[PrivateCells[i].RowIndex].MinSize;
+                    minSizes[PrivateCells[i].RowIndex] = DefinitionsV[PrivateCells[i].RowIndex].RawMinSize;
                 }
                 else
                 {
-                    minSizes[PrivateCells[i].ColumnIndex] = DefinitionsU[PrivateCells[i].ColumnIndex].MinSize;
+                    minSizes[PrivateCells[i].ColumnIndex] = DefinitionsU[PrivateCells[i].ColumnIndex].RawMinSize;
                 }
 
                 i = PrivateCells[i].Next;

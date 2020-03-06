@@ -152,11 +152,6 @@
         <target state="translated">该项目不需要 InternalTypeHelper 类，使文件“{0}”为空。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidAssemblyVersion">
-        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidBaseClassName">
         <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
         <target state="translated">MC6018:“{0}”类名对本地定义的 XAML 根元素无效。</target>

@@ -152,11 +152,6 @@
         <target state="translated">InternalTypeHelper sınıfı bu proje için gerekli değil, '{0}' dosyasını boşaltın.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidAssemblyVersion">
-        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidBaseClassName">
         <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
         <target state="translated">MC6018: '{0}' sınıf adı yerel olarak tanımlanmış XAML kök öğesi için geçerli değil.</target>

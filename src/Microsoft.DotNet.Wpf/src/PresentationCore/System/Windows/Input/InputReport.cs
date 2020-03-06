@@ -37,7 +37,7 @@ namespace System.Windows.Input
         ///     The mode in which the input is being reported.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
@@ -74,7 +74,7 @@ namespace System.Windows.Input
         public InputMode Mode {get {return _mode;}}
 
         /// <summary>
-        ///     Read-only access to the time when the input occured.
+        ///     Read-only access to the time when the input occurred.
         /// </summary>
         public int Timestamp {get {return _timestamp;}}
 

@@ -30,7 +30,7 @@ const double CGlyphRunResource::c_minAnimationDetectionBar = 0.9;
 //
 // The time between composition passes that we request if there's no other work to do
 // is a wait for approximately ~16ms. So 3 frames worth is about 48ms, a reasonable time
-// to wait to see if an animation has terminated. Previously, when text animation completed
+// to wait to see if an animation has terminated. Previously, when text animation completed 
 // there was a noticeable delay before we snapped in high quality realizations, approximately
 // 400ms. 50ms is less noticeable.
 //
@@ -943,6 +943,20 @@ Cleanup:
 // Determines which DWRITE_RENDERING_MODE we want to use when creating an IDWriteGlyphRunAnalysis. 
 // The determination for which blend mode we will use happens separately.
 //
+// The decision of which DWRITE_RENDERING_MODE to use depends on TextOptions.TextFormattingMode and TextOptions.TextRenderingMode.
+//
+// TextRenderingMode | TextFormattingMode | DWRITE_RENDERING_MODE
+// --------------------------------------------------------------
+// Auto              | Display            | DWrite's Choice
+// Auto              | Ideal              | DWrite's Choice
+// Aliased           | Display            | DWRITE_RENDERING_MODE_ALIASED
+// Aliased           | Ideal              | DWrite's Choice
+// ClearType         | Display            | DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC
+// ClearType         | Ideal              | DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC if DWrite chose symmetric, otherwise DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL
+// Grayscale         | Display            | DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC
+// Grayscale         | Ideal              | DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL
+//
+// The exception to the above is when fAnimationQuality is true and we are in Ideal mode.  In this case, DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC is used.
 //============================================================================================================================
 void
 CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace,
@@ -953,7 +967,7 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
                                           __out DWRITE_RENDERING_MODE *pDWriteRenderingMode
                                           )
 {
-    if (   textRenderingMode == MilTextRenderingMode::Aliased 
+    if (textRenderingMode == MilTextRenderingMode::Aliased 
         && IsDisplayMeasured())
     {
         *pDWriteRenderingMode = DWRITE_RENDERING_MODE_ALIASED;
@@ -966,37 +980,63 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
             *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC;
         }
         else
-        {      
-            if (   (textRenderingMode == MilTextRenderingMode::Grayscale)
-                || (textRenderingMode == MilTextRenderingMode::ClearType))
+        {
+            if (IsDisplayMeasured()
+                && (textRenderingMode == MilTextRenderingMode::Grayscale
+                    || textRenderingMode == MilTextRenderingMode::ClearType))
             {
-                *pDWriteRenderingMode = IsDisplayMeasured() ? 
-                                        DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC :
-                                        DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC;
             }
             else
             {
-                Assert((textRenderingMode == MilTextRenderingMode::Auto)
-                       || (   (textRenderingMode == MilTextRenderingMode::Aliased)
-                           && !IsDisplayMeasured()));
-
-                // We defer to DWrite for this decision                
-                // The scaleFactor is used in conjunction with the muSize to calculate the
-                // actual rendered size of this glyph run.
-                if (FAILED((pIDWriteFontFace->GetRecommendedRenderingMode(
-                                            m_muSize,
-                                            scaleFactor,
-                                            m_measuringMethod,
-                                            pDisplaySettings->pIDWriteRenderingParams,
-                                            pDWriteRenderingMode
-                                            ))))
+                if (textRenderingMode == MilTextRenderingMode::Grayscale)
                 {
-                    //
-                    // Default to CT natural/ideal in failure case, since failure of this
-                    // call is non fatal for our purposes.
-                    //
-                    *pDWriteRenderingMode = IsDisplayMeasured() ? DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC : 
-                                                                  DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                    *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                }
+                else
+                {
+                    // We defer to DWrite for this decision in some cases
+                    // The scaleFactor is used in conjunction with the muSize to calculate the
+                    // actual rendered size of this glyph run.
+                    if (FAILED((pIDWriteFontFace->GetRecommendedRenderingMode(
+                        m_muSize,
+                        scaleFactor,
+                        m_measuringMethod,
+                        pDisplaySettings->pIDWriteRenderingParams,
+                        pDWriteRenderingMode
+                        ))))
+                    {
+                        //
+                        // Default to CT natural/ideal in failure case, since failure of this
+                        // call is non fatal for our purposes.
+                        //
+                        *pDWriteRenderingMode = IsDisplayMeasured() ? DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC :
+                            DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                    }
+
+                    if (textRenderingMode == MilTextRenderingMode::ClearType)
+                    {
+                        // If DWrite chose a symmetric anti-aliasing algorithm and the developer
+                        // has explicitly chosen ClearType rendering, choose the corresponding
+                        // symmetric ClearType algorithm.
+                        if (*pDWriteRenderingMode == DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC
+                            || *pDWriteRenderingMode == DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC)
+                        {
+                            *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC;
+                        }
+                        else
+                        {
+                            *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
+                        }
+                    }
+                    else
+                    {
+                        // This assert is here for an equivalence check with .NET Framework 
+                        // when allowing DWrite to choose our rendering mode directly.
+                        Assert((textRenderingMode == MilTextRenderingMode::Auto)
+                            || ((textRenderingMode == MilTextRenderingMode::Aliased)
+                                && !IsDisplayMeasured()));
+                    }
                 }
             }
         }

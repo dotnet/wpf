@@ -1,16 +1,16 @@
 # Set default behavior to automatically normalize line endings.
 * text=auto
 
-*.doc  diff=astextplain
-*.DOC	diff=astextplain
-*.docx	diff=astextplain
-*.DOCX	diff=astextplain
-*.dot	diff=astextplain
-*.DOT	diff=astextplain
-*.pdf	diff=astextplain
-*.PDF	diff=astextplain
-*.rtf	diff=astextplain
-*.RTF	diff=astextplain
+*.doc   binary
+*.DOC	binary
+*.docx	binary
+*.DOCX	binary
+*.dot	binary
+*.DOT	binary
+*.pdf	binary
+*.PDF	binary
+*.rtf	binary
+*.RTF	binary
 
 *.jpg  	binary
 *.png 	binary

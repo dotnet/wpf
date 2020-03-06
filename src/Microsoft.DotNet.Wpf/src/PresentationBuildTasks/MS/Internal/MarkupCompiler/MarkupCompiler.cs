@@ -2596,20 +2596,20 @@ namespace MS.Internal
 
             string uriPart = string.Empty;
 
-            // If we have an actual version string, try to detect wildcards.  Note that this is required to be at least major.minor.
-            // Prior to markup compilation, this will have been validated by the C# compiler.
-            bool wildcardUsed = false;
+            bool hasWildcard = false;
 
-            if (!string.IsNullOrEmpty(AssemblyVersion))
+            // Attempt to parse out the AssemblyVersion if it exists.  This validates that we can either use an empty version string (wildcards exist)
+            // or we can utilize the passed in string (valid parse).
+            if (!string.IsNullOrEmpty(AssemblyVersion)
+                && !VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, out Version _, out hasWildcard))
             {
-                var splitVersion = AssemblyVersion.Split('.');
-                wildcardUsed = splitVersion[splitVersion.Length - 1] == "*";
+                throw new Exception(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
             }
 
             // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
             // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a
             // wildcard version string via AssemblyVersionAttribute and use an empty string.
-            string version = (String.IsNullOrEmpty(AssemblyVersion) || wildcardUsed) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
+            string version = (hasWildcard || String.IsNullOrEmpty(AssemblyVersion)) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
             string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) ? String.Empty : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 

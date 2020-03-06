@@ -152,6 +152,11 @@
         <target state="translated">이 프로젝트에 InternalTypeHelper 클래스가 필요하지 않습니다. '{0}' 파일을 비우십시오.</target>
         <note />
       </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="InvalidBaseClassName">
         <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
         <target state="translated">MC6018: 로컬에 정의된 XAML 루트 요소에 '{0}' 클래스 이름을 사용할 수 없습니다.</target>

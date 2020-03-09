@@ -762,6 +762,13 @@ namespace MS.Internal
 
         internal void OnError(Exception e)
         {
+            // Don't treat an AssemblyVersion parsing error as a XamlParseException.
+            // Throw it back to the task execution.
+            if(e is AssemblyVersionParseException)
+            {
+                throw e;
+            }
+
             if (Error != null)
             {
                 XamlParseException xe = e as XamlParseException;
@@ -2603,7 +2610,7 @@ namespace MS.Internal
             if (!string.IsNullOrEmpty(AssemblyVersion)
                 && !VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, out Version _, out hasWildcard))
             {
-                throw new Exception(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
+                throw new AssemblyVersionParseException(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
             }
 
             // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.

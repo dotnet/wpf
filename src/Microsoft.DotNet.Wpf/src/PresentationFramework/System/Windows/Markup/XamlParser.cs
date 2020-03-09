@@ -69,7 +69,7 @@ namespace System.Windows.Markup
     internal class XamlParser
     {
 #if PBTCOMPILER
-    #region Constructors
+        #region Constructors
 
         /// <summary>
         /// Constructor that takes a stream and creates an XmlCompatibilityReader on it.
@@ -96,7 +96,7 @@ namespace System.Windows.Markup
             // entity expansion technique. In System.Xml V2.0, in order to provide protection against DTD DoS attacks there
             // is the capability of turning off DTD parsing through the use of the ProhibitDtd property.
 
-#pragma warning disable 0618 
+#pragma warning disable 0618
             // CS0618: A class member was marked with the Obsolete attribute, such that a warning 
             // will be issued when the class member is referenced. 
             textReader.ProhibitDtd = true;
@@ -123,9 +123,9 @@ namespace System.Windows.Markup
         {
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-    #region PublicMethods
+        #region PublicMethods
 
 
         /// <summary>
@@ -203,6 +203,13 @@ namespace System.Windows.Markup
                 }
                 else
                 {
+                    // Don't treat an AssemblyVersion parsing error as a XamlParseException.
+                    // Throw it back to the task execution.
+                    if(e is AssemblyVersionParseException)
+                    {
+                        throw e;
+                    }
+
                     if (e is XamlParseException)
                     {
                         throw;
@@ -531,9 +538,9 @@ namespace System.Windows.Markup
 
        }
 
-#endregion // PublicMethods
+        #endregion // PublicMethods
 
-    #region Virtuals
+        #region Virtuals
 
         /// <summary>
         /// Called when parsing begins
@@ -1099,7 +1106,7 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Virtuals
+        #endregion Virtuals
 
 
         /// <summary>
@@ -1156,7 +1163,7 @@ namespace System.Windows.Markup
             WriteDefAttribute(xamlDefAttributeNode);
         }
 
-    #region Methods
+        #region Methods
 
         // virtuals to override the default implementation. used by the compiler
         // for internal virtuals review why not public as the others?
@@ -1272,9 +1279,9 @@ namespace System.Windows.Markup
                     TokenReader.IsXmlDataIsland();
             }
         }
-#endregion Methods
+        #endregion Methods
 
-    #region Properties
+        #region Properties
 
         /// <summary>
         /// TokenReader that is being used.
@@ -1380,9 +1387,9 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Properties
+        #endregion Properties
 
-    #region Data
+        #region Data
 
 
 
@@ -1407,7 +1414,7 @@ namespace System.Windows.Markup
             XamlReaderHelper.DefaultNamespaceURI,
             XamlReaderHelper.DefinitionMetroNamespaceURI
         };
-    #endregion Data
+        #endregion Data
 
 #endif
 

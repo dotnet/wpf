@@ -275,6 +275,7 @@
 
     <Compile Include="MS\Internal\Localization\LocalizationDirectivesToLocFile.cs" />
     <Compile Include="MS\Internal\Localization\LocalizationParserHooks.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\AssemblyVersionParseException.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\CompilationUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\FileUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\MarkupCompiler.cs" />

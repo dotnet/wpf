@@ -766,7 +766,7 @@ namespace MS.Internal
             // Throw it back to the task execution.
             if(e is AssemblyVersionParseException)
             {
-                throw e;
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
             }
 
             if (Error != null)

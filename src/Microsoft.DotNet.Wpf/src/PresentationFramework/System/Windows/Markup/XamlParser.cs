@@ -207,7 +207,7 @@ namespace System.Windows.Markup
                     // Throw it back to the task execution.
                     if(e is AssemblyVersionParseException)
                     {
-                        throw e;
+                        throw;
                     }
 
                     if (e is XamlParseException)

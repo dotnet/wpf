@@ -854,12 +854,23 @@ namespace System.Windows.Documents
 
         #region Private Types
 
-        private struct TextRange: SpellerInteropBase.ITextRange
+        internal struct TextRange: SpellerInteropBase.ITextRange
         {
             public TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
             {
                 _length = (int)textSegment.Length;
                 _start = (int)textSegment.StartPosition;
+            }
+
+            public TextRange(int start, int length)
+            {
+                _start = start;
+                _length = length;
+            }
+
+            public TextRange(ITextRange textRange) : 
+                this(textRange.Start, textRange.Length)
+            {
             }
 
             public static explicit operator TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
@@ -886,16 +897,18 @@ namespace System.Windows.Documents
         }
 
         [DebuggerDisplay("SubSegments.Count = {SubSegments.Count} TextRange = {TextRange.Start},{TextRange.Length}")]
-        private class SpellerSegment: ISpellerSegment
+        internal class SpellerSegment: ISpellerSegment
         {
             #region Constructor
 
-            public SpellerSegment(WordSegment segment, SpellChecker spellChecker, WinRTSpellerInterop owner)
+            public SpellerSegment(string sourceString, ITextRange textRange, SpellChecker spellChecker, WinRTSpellerInterop owner)
             {
-                _segment = segment;
                 _spellChecker = spellChecker;
                 _suggestions = null;
-                _owner = owner;
+                Owner = owner;
+
+                SourceString = sourceString;
+                TextRange = textRange;
             }
 
             static SpellerSegment()
@@ -920,9 +933,9 @@ namespace System.Windows.Documents
 
                 List<SpellChecker.SpellingError> spellingErrors = null;
 
-                using (new SpellerCOMActionTraceLogger(_owner, SpellerCOMActionTraceLogger.Actions.ComprehensiveCheck))
+                using (new SpellerCOMActionTraceLogger(Owner, SpellerCOMActionTraceLogger.Actions.ComprehensiveCheck))
                 {
-                    spellingErrors = _spellChecker.ComprehensiveCheck(_segment.Text);
+                    spellingErrors = Text != null ? _spellChecker.ComprehensiveCheck(Text) : null;
                 }
 
                 if (spellingErrors == null)
@@ -948,6 +961,16 @@ namespace System.Windows.Documents
             #region SpellerInteropBase.ISpellerSegment
 
             /// <summary>
+            /// <inheritdoc/>
+            /// </summary>
+            public string SourceString { get; }
+
+            /// <summary>
+            /// <inheritdoc/>
+            /// </summary>
+            public string Text => SourceString?.Substring(TextRange.Start, TextRange.Length);
+
+            /// <summary>
             /// Returns a read-only list of sub-segments of this segment
             /// WinRT word-segmenter doesn't really support sub-segments,
             ///   so we always return an empty list
@@ -960,13 +983,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            public ITextRange TextRange
-            {
-                get
-                {
-                    return new TextRange(_segment.SourceTextSegment);
-                }
-            }
+            public ITextRange TextRange { get; }
 
             public IReadOnlyList<string> Suggestions
             {
@@ -994,6 +1011,13 @@ namespace System.Windows.Documents
                 }
             }
 
+            /// <remarks>
+            /// This field is used only to support TraceLogging telemetry
+            /// logged using <see cref="SpellerCOMActionTraceLogger"/>. It
+            /// has no other functional use.
+            /// </remarks>
+            internal WinRTSpellerInterop Owner { get; }
+
             public void EnumSubSegments(EnumTextSegmentsCallback segmentCallback, object data)
             {
                 bool result = true;
@@ -1008,20 +1032,12 @@ namespace System.Windows.Documents
 
             #region Private Fields
 
-            private WordSegment _segment;
 
             SpellChecker _spellChecker;
             private IReadOnlyList<string> _suggestions;
             private bool? _isClean = null;
 
             private static readonly IReadOnlyList<ISpellerSegment> _empty;
-
-            /// <remarks>
-            /// This field is used only to support TraceLogging telemetry
-            /// logged using <see cref="SpellerCOMActionTraceLogger"/>. It
-            /// has no other functional use.
-            /// </remarks>
-            private WinRTSpellerInterop _owner;
 
             #endregion Private Fields
         }
@@ -1046,14 +1062,7 @@ namespace System.Windows.Documents
                 {
                     if (_segments == null)
                     {
-                        List<SpellerSegment> segments = new List<SpellerSegment>();
-
-                        foreach (var wordSegment in _wordBreaker.GetTokens(_sentence))
-                        {
-                            segments.Add(new SpellerSegment(wordSegment, _spellChecker, _owner));
-                        }
-
-                        _segments = segments.AsReadOnly();
+                        _segments = _wordBreaker.ComprehensiveGetTokens(_sentence, _spellChecker, _owner);
                     }
 
                     return _segments;

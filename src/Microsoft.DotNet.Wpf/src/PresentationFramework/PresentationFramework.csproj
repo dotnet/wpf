@@ -1086,6 +1086,7 @@
     <Compile Include="System\Windows\Documents\ValidationHelper.cs" />
     <Compile Include="System\Windows\Documents\WinEventHandler.cs" />
     <Compile Include="System\Windows\Documents\WinRTSpellerInterop.cs" />
+    <Compile Include="System\Windows\Documents\WinRTSpellerInteropExtensions.cs" />
     <Compile Include="System\Windows\Documents\WpfPayload.cs" />
     <Compile Include="System\Windows\Documents\XamlAttribute.cs" />
     <Compile Include="System\Windows\Documents\XamlRtfConverter.cs" />

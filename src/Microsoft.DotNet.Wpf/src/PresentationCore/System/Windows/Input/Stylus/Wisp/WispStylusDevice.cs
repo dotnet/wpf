@@ -1556,10 +1556,11 @@ namespace System.Windows.Input.StylusWisp
                     // Otherwise we just use the last stylus mouse location to figure out a PresenationSource.
                     if (penContextsOfPoints != null)
                     {
-                        // TODO:  How do we call this when we don't have a valid source?
-                        // TODO:  TopLeft helper in WIndow might have a possible solution.
-                        // TODO:  For now, attempt to use the source that corresponds to the PenContexts.  This should at least give us screen coords from the last point seen.
+                        // We could potentially get here with an invalid source.  This is fine as all we are interested in is the last
+                        // snapshot of the source's DpiScale2.  This is preserved through disposal and will be the correct scale to 
+                        // associate with points that originated from the disposed source.
                         ptScreen = _stylusLogic.DeviceUnitsFromMeasureUnits(penContextsOfPoints.InputSource, (Point)stylusPoints[0]);
+
                         // map from window to screen (ie - add the window location).
                         ptScreen.Offset(penContextsOfPoints.DestroyedLocation.X, penContextsOfPoints.DestroyedLocation.Y);
                     }

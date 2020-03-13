@@ -1552,13 +1552,10 @@ namespace System.Windows.Input.StylusWisp
                 {
                     Point ptScreen;
 
-                    // If we have the last penContext then we can remap the coordinates properly.
+                    // If we have the last penContext and a valid CompositionTarget, then we can remap the coordinates properly.
                     // Otherwise we just use the last stylus mouse location to figure out a PresenationSource.
-                    if (penContextsOfPoints != null)
+                    if (penContextsOfPoints?.InputSource?.CompositionTarget != null)
                     {
-                        // We could potentially get here with an invalid source.  This is fine as all we are interested in is the last
-                        // snapshot of the source's DpiScale2.  This is preserved through disposal and will be the correct scale to 
-                        // associate with points that originated from the disposed source.
                         ptScreen = _stylusLogic.DeviceUnitsFromMeasureUnits(penContextsOfPoints.InputSource, (Point)stylusPoints[0]);
 
                         // map from window to screen (ie - add the window location).

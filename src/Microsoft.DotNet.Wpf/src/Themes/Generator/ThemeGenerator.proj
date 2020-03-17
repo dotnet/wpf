@@ -69,7 +69,7 @@
   <Target Name="GenerateThemes" 
        Inputs="@(StyleXaml);@(ThemeXaml)"
        Outputs="@(ThemeXaml)">
-     <Exec Command="$(PerlCommand) ThemeGenerator.pl %(ThemeXaml.Identity).sdk %(ThemeXaml.Identity) %(ThemeXaml.Identity) @(StyleXaml, ' ')"
+     <Exec Command="$(PerlCommand) ThemeGenerator.pl %(ThemeXaml.RelativeDir)%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk %(ThemeXaml.Identity) %(ThemeXaml.Identity) @(StyleXaml, ' ')"
         Outputs="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk;%(ThemeXaml.Identity)" 
         StandardOutputImportance="normal" />
   </Target>

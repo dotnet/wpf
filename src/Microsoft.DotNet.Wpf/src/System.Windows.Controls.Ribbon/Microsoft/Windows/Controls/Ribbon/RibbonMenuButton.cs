@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -30,11 +30,11 @@ namespace Microsoft.Windows.Controls.Ribbon
     using Microsoft.Windows.Controls.Ribbon.Primitives;
 #endif
     using MS.Internal;
-    
+
     #endregion
 
     /// <summary>
-    ///   RibbonMenuButton is an ItemsControl which on clicking displays a Menu. Its Items could be either RibbonMenuItems, RibbonGallerys or Separators. 
+    ///   RibbonMenuButton is an ItemsControl which on clicking displays a Menu. Its Items could be either RibbonMenuItems, RibbonGallerys or Separators.
     /// </summary>
     [TemplatePart(Name = RibbonMenuButton.ResizeThumbTemplatePartName, Type = typeof(Thumb))]
     [TemplatePart(Name = RibbonMenuButton.ToggleButtonTemplatePartName, Type = typeof(RibbonToggleButton))]
@@ -592,9 +592,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.ClearContainerForItemOverride(element, item);
 
-            // RibbonComboBox containers are pre-generated. 
-            // When dropdown is opened for the first time ever and ItemContainerGenerator 
-            // is hooked up to ItemsPanel, existing containers are cleared, causing _galleryCount to be -ve. 
+            // RibbonComboBox containers are pre-generated.
+            // When dropdown is opened for the first time ever and ItemContainerGenerator
+            // is hooked up to ItemsPanel, existing containers are cleared, causing _galleryCount to be -ve.
             // Hence the check for _galleryCount > 0
             if (element is RibbonGallery && _galleryCount > 0)
             {
@@ -672,7 +672,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public override void OnApplyTemplate()
         {
-            // If a new template has just been generated then 
+            // If a new template has just been generated then
             // be sure to clear any stale ItemsHost references
             if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
             {
@@ -824,7 +824,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         if (itemNavigateFromCurrentFocused)
                         {
-                            // event could have bubbled up from MenuItem 
+                            // event could have bubbled up from MenuItem
                             // when it could not navigate to the next item (for eg. gallery)
                             handled = RibbonHelper.NavigateToNextMenuItemOrGallery(this, focusedIndex, BringIndexIntoView);
                         }
@@ -841,7 +841,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         if (itemNavigateFromCurrentFocused)
                         {
-                            // event could have bubbled up from MenuItem 
+                            // event could have bubbled up from MenuItem
                             // when it could not navigate to the previous item (for eg. gallery)
                             handled = RibbonHelper.NavigateToPreviousMenuItemOrGallery(this, focusedIndex, BringIndexIntoView);
                         }
@@ -1015,7 +1015,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         }
 
         /// <summary>
-        /// Called from UIA Peers. 
+        /// Called from UIA Peers.
         /// </summary>
         /// <param name="newWidth"></param>
         /// <param name="newHeight"></param>
@@ -1079,11 +1079,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal virtual void OnIsDropDownOpenChanged(DependencyPropertyChangedEventArgs e)
         {
             // If the drop down is closed due to
-            // an action of context menu or if the 
-            // ContextMenu for a parent (Ribbon) 
-            // was opened by right clicking this 
-            // RibbonMenuButton (RibbonApplicationMenu) 
-            // then ContextMenuClosed event is never raised. 
+            // an action of context menu or if the
+            // ContextMenu for a parent (Ribbon)
+            // was opened by right clicking this
+            // RibbonMenuButton (RibbonApplicationMenu)
+            // then ContextMenuClosed event is never raised.
             // Hence reset the flag.
             InContextMenu = false;
 
@@ -1098,7 +1098,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 BaseOnIsKeyboardFocusWithin();
                 OnDropDownOpened(EventArgs.Empty);
 
-                // Clear local values 
+                // Clear local values
                 // so that when DropDown opens it shows in it original size and PlacementMode
                 RibbonDropDownHelper.ClearLocalValues(_itemsPresenter, _popup);
 
@@ -1110,7 +1110,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
 
                 // IsDropDownPositionedAbove is updated asynchronously.
-                // As a result the resize thumb would change position and we could see a visual artifact of this change after Popup opens. 
+                // As a result the resize thumb would change position and we could see a visual artifact of this change after Popup opens.
                 Dispatcher.BeginInvoke(new DispatcherOperationCallback(UpdateDropDownPosition), DispatcherPriority.Loaded, new object[] { null });
             }
             else
@@ -1200,15 +1200,15 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RibbonHelper.SetDropDownHeight(menuButton._itemsPresenter, (bool)e.NewValue, menuButton.DropDownHeight);
             }
 
-            // Note that when the HasGallery property changes we expect that the 
-            // VerticalScrollBarVisibilityProperty for the primary _submenuScrollViewer 
-            // that hosts galleries and/or menu items is updated. Even though this 
-            // property is marked AffectsMeasure it doesn't exactly cause the additonal 
-            // call to ScrollViewer.MeasureOverrider because HasGallery is typically 
-            // updated during a Measure pass when PrepareContainerForItemOverride is 
-            // called and thus the invalidation noops. To ensure that we call 
-            // ScrollViewer.MeasureOverride another time after this property has been 
-            // updated, we need to wait for the current Measure pass to subside and 
+            // Note that when the HasGallery property changes we expect that the
+            // VerticalScrollBarVisibilityProperty for the primary _submenuScrollViewer
+            // that hosts galleries and/or menu items is updated. Even though this
+            // property is marked AffectsMeasure it doesn't exactly cause the additonal
+            // call to ScrollViewer.MeasureOverrider because HasGallery is typically
+            // updated during a Measure pass when PrepareContainerForItemOverride is
+            // called and thus the invalidation noops. To ensure that we call
+            // ScrollViewer.MeasureOverride another time after this property has been
+            // updated, we need to wait for the current Measure pass to subside and
             // then InvalidateMeasure on the _submenuScrollViewer.
 
             RibbonHelper.InvalidateScrollBarVisibility(menuButton._submenuScrollViewer);
@@ -1281,7 +1281,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Cache the screen bounds of the monitor in which the dropdown is opened
             _screenBounds = RibbonDropDownHelper.GetScreenBounds(_itemsPresenter, _popup);
-            
+
             // Also cache the PopupRoot if opened for the first time
             if (_popupRoot == null && _itemsPresenter != null)
             {
@@ -1394,7 +1394,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         }
 
         /// <summary>
-        /// base exits MenuMode on any Mouse clicks. We want to prevent that. 
+        /// base exits MenuMode on any Mouse clicks. We want to prevent that.
         /// </summary>
         /// <param name="e"></param>
         protected override void HandleMouseButton(MouseButtonEventArgs e)
@@ -1471,9 +1471,9 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
         {
-            // If IsKeyboardFocusWithin has become true, then do not 
+            // If IsKeyboardFocusWithin has become true, then do not
             // call base.OnIsKeyboardFocusWithinChanged right away.
-            // Defer the bases call until DropDown gets opened or 
+            // Defer the bases call until DropDown gets opened or
             // one of the descendants get focus.
             if (!IsKeyboardFocusWithin)
             {
@@ -1513,7 +1513,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // Call base.OnIsKeyboardFocusWithinChanged only if the new focus
             // is not a direct descendant of menu button.
+            // It's possible to get here when disabled, which can lead to a
+            // focus war resulting in StackOverflow. Don't start the war.
             if (e.OriginalSource != this &&
+                this.IsEnabled &&
                 !TreeHelper.IsVisualAncestorOf(this, e.OriginalSource as DependencyObject))
             {
                 BaseOnIsKeyboardFocusWithin();
@@ -1528,13 +1531,19 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (ribbonCurrentSelection != null &&
                 IsDropDownOpen)
             {
+                // If the drop down is open and the ribbonCurrentSelection is valid
+                // but still popup doesnt have focus within,
+                // then focus the current selection.
+                // It's possible to get here when disabled, or when an app explicitly
+                // moves focus in a GotKeyboardFocus handler called earlier in the
+                // bubbling route.  Either of these can lead to a
+                // focus war resulting in StackOverflow. Don't start the war
                 UIElement popupChild = _popup.TryGetChild();
                 if (popupChild != null &&
+                    this.IsEnabled &&
+                    this.IsKeyboardFocusWithin &&
                     !popupChild.IsKeyboardFocusWithin)
                 {
-                    // If the drop down is open and the ribbonCurrentSelection is valid
-                    // but still popup doesnt have focus within,
-                    // then focus the current selection.
                     ribbonCurrentSelection.Focus();
                 }
             }

@@ -1202,7 +1202,7 @@ See the LICENSE file in the project root for more information.
         </Setter>
     </Style>
 
-    <!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Royale.NormalColor, Luna.NormalColor, Luna.Metallic, Luna.Homestead, Classic ]] -->
+    <!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Royale.NormalColor, Luna.NormalColor, Luna.Metallic, Luna.Homestead, Classic]] -->
 
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentGridPageContainerWithBorder}"
            TargetType="ContentControl" BasedOn="{x:Null}">

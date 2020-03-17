@@ -1237,7 +1237,7 @@ namespace System.Windows.Controls
 
                                 // don't delve into non-VSP panels - the result is
                                 // inconsistent with FindScrollOffset, and causes
-                                // infinite loops 
+                                // infinite loops
                                 innerPanel = innerPanel as VirtualizingStackPanel;
 
                                 if (innerPanel != null && innerPanel.IsVisible)
@@ -2279,7 +2279,7 @@ namespace System.Windows.Controls
                                 // final size (e.g. when content arrives via bindings
                                 // that don't activate until after layout), as it
                                 // causes a lot of extra measure passes, where "a lot"
-                                // can be as bad as "infinite".  
+                                // can be as bad as "infinite".
                                 //
                                 // To avoid this waste, exclude a proportional part
                                 // of the normal viewport as well.
@@ -2812,7 +2812,7 @@ namespace System.Windows.Controls
                             // If there were a collection changed between the BringIndexIntoView call
                             // and the current Measure then it is possible that the item for the
                             // _bringIntoViewContainer has been removed from the collection and so
-                            // has the container. We need to guard against this scenario. 
+                            // has the container. We need to guard against this scenario.
                             _bringIntoViewContainer = null;
                         }
                         else
@@ -4609,7 +4609,7 @@ namespace System.Windows.Controls
 
             // if the viewport is empty in the scrolling direction, force the
             // cache to be empty also.   This avoids an infinite loop re- and
-            // de-virtualizing the last item 
+            // de-virtualizing the last item
             if (IsViewportEmpty(isHorizontal, viewport))
             {
                 cacheLength = new VirtualizationCacheLength(0, 0);
@@ -5550,7 +5550,7 @@ namespace System.Windows.Controls
             bool areContainersUniformlySized,
             double uniformOrAverageContainerSize)
         {
-            if (firstContainer == null)
+            if (firstContainer == null || IsViewportEmpty(isHorizontal, viewport))
             {
                 return -1.0;    // undefined if no children in view
             }
@@ -6149,7 +6149,7 @@ namespace System.Windows.Controls
                 // into non-uniform mode just because the pixel heights are different,
                 // and a good reason to avoid it:  it requires looping through all
                 // containers to compute an average size, which breaks third-party's
-                // attempts to do data virtualization 
+                // attempts to do data virtualization
                 bool ignoreContainerPixelSize = IsPixelBased || (IsScrolling && !hasVirtualizingChildren);
 
                 if (isHorizontal)
@@ -9526,7 +9526,7 @@ namespace System.Windows.Controls
                     //
                     // We do not want the cache measure pass to affect the visibility
                     // of the scrollbars because this makes bad user experience and
-                    // is also the source of scrolling bugs. 
+                    // is also the source of scrolling bugs.
                     //
 
                     stackPixelSize.Width = _scrollData._extent.Width;
@@ -9641,7 +9641,7 @@ namespace System.Windows.Controls
                         offsetForScrollViewerRemeasure.X = newOffset;
 
                         // adjust the persisted viewports too, in case the next use
-                        // occurs before a measure, e.g. adding item to Items 
+                        // occurs before a measure, e.g. adding item to Items
                         _viewport.X = newOffset;
                         _extendedViewport.X += delta;
 
@@ -9666,7 +9666,7 @@ namespace System.Windows.Controls
                         offsetForScrollViewerRemeasure.Y = newOffset;
 
                         // adjust the persisted viewports too, in case the next use
-                        // occurs before a measure, e.g. adding item to Items 
+                        // occurs before a measure, e.g. adding item to Items
                         _viewport.Y = newOffset;
                         _extendedViewport.Y += delta;
 

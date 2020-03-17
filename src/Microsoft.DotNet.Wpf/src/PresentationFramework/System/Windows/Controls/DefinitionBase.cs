@@ -83,7 +83,7 @@ namespace System.Windows.Controls
         {
             if (_sharedState == null)
             {
-                //  start with getting SharedSizeGroup value. 
+                //  start with getting SharedSizeGroup value.
                 //  this property is NOT inhereted which should result in better overall perf.
                 string sharedSizeGroupId = SharedSizeGroup;
                 if (sharedSizeGroupId != null)
@@ -167,8 +167,8 @@ namespace System.Windows.Controls
                         parentGrid.Invalidate();
                     }
                     else
-                    {   
-                        parentGrid.InvalidateMeasure();     
+                    {
+                        parentGrid.InvalidateMeasure();
                     }
                 }
             }
@@ -412,6 +412,14 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// Returns min size, never taking into account shared state.
+        /// </summary>
+        internal double RawMinSize
+        {
+            get { return _minSize; }
+        }
+
+        /// <summary>
         /// Offset.
         /// </summary>
         internal double FinalOffset
@@ -426,7 +434,7 @@ namespace System.Windows.Controls
         internal GridLength UserSizeValueCache
         {
             get
-            { 
+            {
                 return (GridLength) GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.WidthProperty :
@@ -442,8 +450,8 @@ namespace System.Windows.Controls
             get
             {
                 return (double) GetValue(
-                        _isColumnDefinition ? 
-                        ColumnDefinition.MinWidthProperty : 
+                        _isColumnDefinition ?
+                        ColumnDefinition.MinWidthProperty :
                         RowDefinition.MinHeightProperty);
             }
         }
@@ -504,7 +512,7 @@ namespace System.Windows.Controls
         private static void OnSharedSizeGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DefinitionBase definition = (DefinitionBase) d;
-            
+
             if (definition.InParentLogicalTree)
             {
                 string sharedSizeGroupId = (string) e.NewValue;
@@ -516,13 +524,13 @@ namespace System.Windows.Controls
                     definition._sharedState.RemoveMember(definition);
                     definition._sharedState = null;
                 }
-                
+
                 if ((definition._sharedState == null) && (sharedSizeGroupId != null))
                 {
                     SharedSizeScope privateSharedSizeScope = definition.PrivateSharedSizeScope;
                     if (privateSharedSizeScope != null)
                     {
-                        //  if definition is not registered and both: shared size group id AND private shared scope 
+                        //  if definition is not registered and both: shared size group id AND private shared scope
                         //  are available, then register definition.
                         definition._sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
                         definition._sharedState.AddMember(definition);
@@ -604,7 +612,7 @@ namespace System.Windows.Controls
                     string sharedSizeGroup = definition.SharedSizeGroup;
                     if (sharedSizeGroup != null)
                     {
-                        //  if definition is not registered and both: shared size group id AND private shared scope 
+                        //  if definition is not registered and both: shared size group id AND private shared scope
                         //  are available, then register definition.
                         definition._sharedState = privateSharedSizeScope.EnsureSharedState(definition.SharedSizeGroup);
                         definition._sharedState.AddMember(definition);
@@ -670,7 +678,7 @@ namespace System.Windows.Controls
         private double _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
 
         private SharedSizeState _sharedState;           //  reference to shared state object this instance is registered with
-        
+
         internal const bool ThisIsColumnDefinition = true;
         internal const bool ThisIsRowDefinition = false;
 
@@ -872,7 +880,7 @@ namespace System.Windows.Controls
                 //  accumulate min size of all participating definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
                 {
-                    sharedMinSize = Math.Max(sharedMinSize, _registry[i].MinSize);
+                    sharedMinSize = Math.Max(sharedMinSize, _registry[i]._minSize);
                 }
 
                 bool sharedMinSizeChanged = !DoubleUtil.AreClose(_minSize, sharedMinSize);
@@ -882,31 +890,65 @@ namespace System.Windows.Controls
                 {
                     DefinitionBase definitionBase = _registry[i];
 
-                    if (sharedMinSizeChanged ||  definitionBase.LayoutWasUpdated)
-                    {
-                        //  if definition's min size is different, then need to re-measure
-                        if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.MinSize))
-                        {
-                            Grid parentGrid = (Grid)definitionBase.Parent;
-                            parentGrid.InvalidateMeasure();
-                            definitionBase.UseSharedMinimum = true;
-                        }
-                        else
-                        {
-                            definitionBase.UseSharedMinimum = false;
-                            
-                            //  if measure is valid then also need to check arrange.
-                            //  Note: definitionBase.SizeCache is volatile but at this point 
-                            //  it contains up-to-date final size
-                            if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
-                            {
-                                Grid parentGrid = (Grid)definitionBase.Parent;
-                                parentGrid.InvalidateArrange();
-                            }
-                        }
+                    // we'll set d.UseSharedMinimum to maintain the invariant:
+                    //      d.UseSharedMinimum iff d._minSize < this.MinSize
+                    // i.e. iff d is not a "long-pole" definition.
+                    //
+                    // Measure/Arrange of d's Grid uses d._minSize for long-pole
+                    // definitions, and max(d._minSize, shared size) for
+                    // short-pole definitions.  This distinction allows us to react
+                    // to changes in "long-pole-ness" more efficiently and correctly,
+                    // by avoiding remeasures when a long-pole definition changes.
+                    bool useSharedMinimum = !DoubleUtil.AreClose(definitionBase._minSize, sharedMinSize);
 
-                        definitionBase.LayoutWasUpdated = false;
+                    // before doing that, determine whether d's Grid needs to be remeasured.
+                    // It's important _not_ to remeasure if the last measure is still
+                    // valid, otherwise infinite loops are possible
+                    bool measureIsValid;
+                    if (!definitionBase.UseSharedMinimum)
+                    {
+                        // d was a long-pole.  measure is valid iff it's still a long-pole,
+                        // since previous measure didn't use shared size.
+                        measureIsValid = !useSharedMinimum;
                     }
+                    else if (useSharedMinimum)
+                    {
+                        // d was a short-pole, and still is.  measure is valid
+                        // iff the shared size didn't change
+                        measureIsValid = !sharedMinSizeChanged;
+                    }
+                    else
+                    {
+                        // d was a short-pole, but is now a long-pole.  This can
+                        // happen in several ways:
+                        //  a. d's minSize increased to or past the old shared size
+                        //  b. other long-pole definitions decreased, leaving
+                        //      d as the new winner
+                        // In the former case, the measure is valid - it used
+                        // d's new larger minSize.  In the latter case, the
+                        // measure is invalid - it used the old shared size,
+                        // which is larger than d's (possibly changed) minSize
+                        measureIsValid = (definitionBase.LayoutWasUpdated &&
+                                        DoubleUtil.GreaterThanOrClose(definitionBase._minSize, this.MinSize));
+                    }
+
+                    if (!measureIsValid)
+                    {
+                        Grid parentGrid = (Grid)definitionBase.Parent;
+                        parentGrid.InvalidateMeasure();
+                    }
+                    else if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
+                    {
+                        //  if measure is valid then also need to check arrange.
+                        //  Note: definitionBase.SizeCache is volatile but at this point
+                        //  it contains up-to-date final size
+                        Grid parentGrid = (Grid)definitionBase.Parent;
+                        parentGrid.InvalidateArrange();
+                    }
+
+                    // now we can restore the invariant, and clear the layout flag
+                    definitionBase.UseSharedMinimum = useSharedMinimum;
+                    definitionBase.LayoutWasUpdated = false;
                 }
 
                 _minSize = sharedMinSize;
@@ -916,7 +958,7 @@ namespace System.Windows.Controls
 
                 _broadcastInvalidation = true;
             }
-            
+
             private readonly SharedSizeScope _sharedSizeScope;  //  the scope this state belongs to
             private readonly string _sharedSizeGroupId;         //  Id of the shared size group this object is servicing
             private readonly List<DefinitionBase> _registry;    //  registry of participating definitions

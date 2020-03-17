@@ -19,7 +19,7 @@ namespace System.Windows.Input
         ///     The Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="delta">
         ///     How much the mouse wheel turned.

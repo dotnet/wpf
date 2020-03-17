@@ -226,7 +226,7 @@ namespace dxlayer
         }
 
     public:
-        inline operator DirectX::XMFLOAT3() const
+        inline operator const DirectX::XMFLOAT3() const
         {
             return DirectX::XMFLOAT3(x, y, z);
         }

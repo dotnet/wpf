@@ -71,9 +71,9 @@
       <Uri>https://github.com/dotnet/corefx</Uri>
       <Sha>8d21b79b924d29088dbde46d42737a657d466b5e</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-preview.3.20170.4">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-preview.3.20171.3">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>59319d5ba77885169a38db4491623c5563adb916</Sha>
+      <Sha>c5020d5765a35ed9891e0ddff090ff1f47cbed5f</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="5.0.0-alpha1.19512.1" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/corefx</Uri>

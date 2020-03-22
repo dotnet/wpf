@@ -15,8 +15,8 @@
     "version": "5.0.100-alpha1-015515"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20170.4",
-    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20170.4"
+    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20171.1",
+    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20171.1"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",

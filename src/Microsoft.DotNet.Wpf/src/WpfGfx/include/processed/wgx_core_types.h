@@ -1034,7 +1034,7 @@ END_MILENUM
 //      MilMatrix3x2D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilMatrix3x2D
 {
     DOUBLE S_11;
     DOUBLE S_12;
@@ -1042,7 +1042,7 @@ typedef struct
     DOUBLE S_22;
     DOUBLE DX;
     DOUBLE DY;
-} MilMatrix3x2D;
+};
 
 #define _MilMatrix3x2D_DEFINED
 
@@ -1054,11 +1054,11 @@ typedef struct
 //      MilPoint2F
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2F
 {
     FLOAT X;
     FLOAT Y;
-} MilPoint2F;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1066,13 +1066,13 @@ typedef struct
 //      MilColorI
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilColorI
 {
     INT r;
     INT g;
     INT b;
     INT a;
-} MilColorI;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1080,12 +1080,12 @@ typedef struct
 //      MilPoint3F
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint3F
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Z;
-} MilPoint3F;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1093,13 +1093,13 @@ typedef struct
 //      MilQuaternionF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilQuaternionF
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Z;
     FLOAT W;
-} MilQuaternionF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1107,7 +1107,7 @@ typedef struct
 //      MilMatrix4x4D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilMatrix4x4D
 {
     DOUBLE M_11;
     DOUBLE M_12;
@@ -1125,7 +1125,7 @@ typedef struct
     DOUBLE M_42;
     DOUBLE M_43;
     DOUBLE M_44;
-} MilMatrix4x4D;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1136,7 +1136,7 @@ typedef struct
 //      Description of a display or display set's graphics capabilities.
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGraphicsAccelerationCaps
 {
     //
     // Tier value
@@ -1187,7 +1187,7 @@ typedef struct
     // Maximum number of instruction slots, if pixel shader 3.0 is supported
     //
     UINT MaxPixelShader30InstructionSlots;
-} MilGraphicsAccelerationCaps;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1200,11 +1200,11 @@ typedef struct
 //      display machine.
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGraphicsAccelerationAssessment
 {
     UINT VideoMemoryBandwidth;
     UINT VideoMemorySize;
-} MilGraphicsAccelerationAssessment;
+};
 
 
 //
@@ -1219,11 +1219,11 @@ typedef struct
 //      MilPoint2L
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2L
 {
     INT X;
     INT Y;
-} MilPoint2L;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1231,11 +1231,11 @@ typedef struct
 //      MilPoint2D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2D
 {
     DOUBLE X;
     DOUBLE Y;
-} MilPoint2D;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1243,13 +1243,13 @@ typedef struct
 //      MilPointAndSizeL
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeL
 {
     INT X;
     INT Y;
     INT Width;
     INT Height;
-} MilPointAndSizeL;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1257,13 +1257,13 @@ typedef struct
 //      MilPointAndSizeF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeF
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Width;
     FLOAT Height;
-} MilPointAndSizeF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1271,13 +1271,13 @@ typedef struct
 //      MilRectF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRectF
 {
     FLOAT left;
     FLOAT top;
     FLOAT right;
     FLOAT bottom;
-} MilRectF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1285,13 +1285,13 @@ typedef struct
 //      MilPointAndSizeD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeD
 {
     DOUBLE X;
     DOUBLE Y;
     DOUBLE Width;
     DOUBLE Height;
-} MilPointAndSizeD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1299,13 +1299,13 @@ typedef struct
 //      MilRectD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRectD
 {
     DOUBLE left;
     DOUBLE top;
     DOUBLE right;
     DOUBLE bottom;
-} MilRectD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1313,11 +1313,11 @@ typedef struct
 //      MilSizeD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilSizeD
 {
     DOUBLE Width;
     DOUBLE Height;
-} MilSizeD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1325,11 +1325,11 @@ typedef struct
 //      MilGradientStop
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGradientStop
 {
     DOUBLE Position;
     MilColorF Color;
-} MilGradientStop;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1337,14 +1337,14 @@ typedef struct
 //      MilPathGeometry
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPathGeometry
 {
     DWORD Size;
     DWORD Flags;
     MilRectD Bounds;
     UINT FigureCount;
     DWORD ForcePacking;
-} MilPathGeometry;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1352,7 +1352,7 @@ typedef struct
 //      MilPathFigure
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPathFigure
 {
     DWORD BackSize;
     DWORD Flags;
@@ -1365,7 +1365,7 @@ typedef struct
     // See ForcePacking comment at beginning of this file.
     //
     UINT ForcePacking;
-} MilPathFigure;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1373,12 +1373,12 @@ typedef struct
 //      MilSegment
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilSegment
 {
     MilSegmentType::Enum Type;
     DWORD Flags;
     DWORD BackSize;
-} MilSegment;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1386,7 +1386,7 @@ typedef struct
 //      MilSegmentLine
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentLine : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1394,7 +1394,7 @@ typedef struct : MilSegment
     UINT ForcePacking;
 
     MilPoint2D Point;
-} MilSegmentLine;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1402,7 +1402,7 @@ typedef struct : MilSegment
 //      MilSegmentBezier
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentBezier : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1412,7 +1412,7 @@ typedef struct : MilSegment
     MilPoint2D Point1;
     MilPoint2D Point2;
     MilPoint2D Point3;
-} MilSegmentBezier;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1420,7 +1420,7 @@ typedef struct : MilSegment
 //      MilSegmentQuadraticBezier
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentQuadraticBezier : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1429,7 +1429,7 @@ typedef struct : MilSegment
 
     MilPoint2D Point1;
     MilPoint2D Point2;
-} MilSegmentQuadraticBezier;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1437,7 +1437,7 @@ typedef struct : MilSegment
 //      MilSegmentArc
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentArc : MilSegment
 {
     UINT LargeArc;
     MilPoint2D Point;
@@ -1449,7 +1449,7 @@ typedef struct : MilSegment
     // See ForcePacking comment at beginning of this file.
     //
     UINT ForcePacking;
-} MilSegmentArc;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1457,10 +1457,10 @@ typedef struct : MilSegment
 //      MilSegmentPoly
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentPoly : MilSegment
 {
     UINT Count;
-} MilSegmentPoly;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1468,7 +1468,7 @@ typedef struct : MilSegment
 //      MilPenData
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPenData
 {
     DOUBLE Thickness;
     DOUBLE MiterLimit;
@@ -1478,7 +1478,7 @@ typedef struct
     MilPenCap::Enum DashCap;
     MilPenJoin::Enum LineJoin;
     UINT DashArraySize;
-} MilPenData;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1486,7 +1486,7 @@ typedef struct
 //      MilRenderOptions
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRenderOptions
 {
     MilRenderOptionFlags::Flags Flags;
     MilEdgeMode::Enum EdgeMode;
@@ -1495,7 +1495,7 @@ typedef struct
     MilClearTypeHint::Enum ClearTypeHint;
     MilTextRenderingMode::Enum TextRenderingMode;
     MilTextHintingMode::Enum TextHintingMode;
-} MilRenderOptions;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1504,11 +1504,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgCompositionDeviceStateChangeData
 {
     MilCompositionDeviceState::Enum deviceStateOld;
     MilCompositionDeviceState::Enum deviceStateNew;
-} MilMsgCompositionDeviceStateChangeData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1518,10 +1518,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSyncFlushReplyData
 {
     HRESULT hr;
-} MilMsgSyncFlushReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1531,10 +1531,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgVersionReplyData
 {
     UINT SupportedVersionsCount;
-} MilMsgVersionReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1544,7 +1544,7 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgTierData
 {
     //
     // Is this caps description specific to the primary display or is it the minimum 
@@ -1560,7 +1560,7 @@ typedef struct
 
     MilGraphicsAccelerationCaps Caps;
     MilGraphicsAccelerationAssessment Assessment;
-} MilMsgTierData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1570,10 +1570,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgPartitionIsZombieData
 {
     HRESULT hrFailureCode;
-} MilMsgPartitionIsZombieData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1583,10 +1583,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSyncModeStatusData
 {
     HRESULT hrEnabled;
-} MilMsgSyncModeStatusData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1596,12 +1596,12 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgPresentedData
 {
     MilPresentationResults::Enum presentationResults;
     UINT refreshRate;
     LARGE_INTEGER presentationTime;
-} MilMsgPresentedData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1611,11 +1611,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSysMemUsageData
 {
     UINT percentSystemMemoryUsed;
     size_t totalClientSystemMemory;
-} MilMsgSysMemUsageData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1625,11 +1625,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgAsyncFlushReplyData
 {
     UINT responseToken;
     HRESULT hrCode;
-} MilMsgAsyncFlushReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1639,10 +1639,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgRenderStatusData
 {
     HRESULT hrCode;
-} MilMsgRenderStatusData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1652,7 +1652,7 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MIL_MESSAGE
 {
     MilMessageClass::Enum type;
     DWORD dwReserved;
@@ -1669,7 +1669,7 @@ typedef struct
         MilMsgAsyncFlushReplyData asyncFlushData;
         MilMsgRenderStatusData renderStatusData;
     };
-} MIL_MESSAGE;
+};
 #pragma pack(pop)
 
 #endif // MILCORE_KERNEL_COMPONENT
@@ -1978,270 +1978,270 @@ typedef enum
 
 
 
-typedef struct
+struct MILCMD_TRANSPORT_SYNCFLUSH
 {
     MILCMD Type;
-} MILCMD_TRANSPORT_SYNCFLUSH;
+};
 
-typedef struct
+struct MILCMD_TRANSPORT_DESTROYRESOURCESONCHANNEL
 {
     MILCMD Type;
     HMIL_CHANNEL hChannel;
-} MILCMD_TRANSPORT_DESTROYRESOURCESONCHANNEL;
+};
 
-typedef struct
+struct MILCMD_PARTITION_REGISTERFORNOTIFICATIONS
 {
     MILCMD Type;
     BOOL Enable;
-} MILCMD_PARTITION_REGISTERFORNOTIFICATIONS;
+};
 
-typedef struct
+struct MILCMD_CHANNEL_REQUESTTIER
 {
     MILCMD Type;
     BOOL ReturnCommonMinimum;
-} MILCMD_CHANNEL_REQUESTTIER;
+};
 
-typedef struct
+struct MILCMD_PARTITION_SETVBLANKSYNCMODE
 {
     MILCMD Type;
     BOOL Enable;
-} MILCMD_PARTITION_SETVBLANKSYNCMODE;
+};
 
-typedef struct
+struct MILCMD_PARTITION_NOTIFYPRESENT
 {
     MILCMD Type;
     UINT64 FrameTime;
-} MILCMD_PARTITION_NOTIFYPRESENT;
+};
 
-typedef struct
+struct MILCMD_CHANNEL_CREATERESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MIL_RESOURCE_TYPE resType;
-} MILCMD_CHANNEL_CREATERESOURCE;
+};
 
-typedef struct
+struct MILCMD_CHANNEL_DELETERESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MIL_RESOURCE_TYPE resType;
-} MILCMD_CHANNEL_DELETERESOURCE;
+};
 
-typedef struct
+struct MILCMD_CHANNEL_DUPLICATEHANDLE
 {
     MILCMD Type;
     HMIL_RESOURCE Original;
     HMIL_CHANNEL TargetChannel;
     HMIL_RESOURCE Duplicate;
-} MILCMD_CHANNEL_DUPLICATEHANDLE;
+};
 
-typedef struct
+struct MILCMD_D3DIMAGE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT64 pInteropDeviceBitmap;
     UINT64 pSoftwareBitmap;
-} MILCMD_D3DIMAGE;
+};
 
-typedef struct
+struct MILCMD_D3DIMAGE_PRESENT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT64 hEvent;
-} MILCMD_D3DIMAGE_PRESENT;
+};
 
-typedef struct
+struct MILCMD_BITMAP_SOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     IWICBitmapSource* pIBitmap;
-} MILCMD_BITMAP_SOURCE;
+};
 
-typedef struct
+struct MILCMD_BITMAP_INVALIDATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     BOOL UseDirtyRect;
     RECT DirtyRect;
-} MILCMD_BITMAP_INVALIDATE;
+};
 
-typedef struct
+struct MILCMD_DOUBLERESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE Value;
-} MILCMD_DOUBLERESOURCE;
+};
 
-typedef struct
+struct MILCMD_COLORRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF Value;
-} MILCMD_COLORRESOURCE;
+};
 
-typedef struct
+struct MILCMD_POINTRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPoint2D Value;
-} MILCMD_POINTRESOURCE;
+};
 
-typedef struct
+struct MILCMD_RECTRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPointAndSizeD Value;
-} MILCMD_RECTRESOURCE;
+};
 
-typedef struct
+struct MILCMD_SIZERESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilSizeD Value;
-} MILCMD_SIZERESOURCE;
+};
 
-typedef struct
+struct MILCMD_MATRIXRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilMatrix3x2D Value;
-} MILCMD_MATRIXRESOURCE;
+};
 
-typedef struct
+struct MILCMD_POINT3DRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPoint3F Value;
-} MILCMD_POINT3DRESOURCE;
+};
 
-typedef struct
+struct MILCMD_VECTOR3DRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPoint3F Value;
-} MILCMD_VECTOR3DRESOURCE;
+};
 
-typedef struct
+struct MILCMD_QUATERNIONRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilQuaternionF Value;
-} MILCMD_QUATERNIONRESOURCE;
+};
 
-typedef struct
+struct MILCMD_MEDIAPLAYER
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT64 pMedia;
     BOOL notifyUceDirect;
-} MILCMD_MEDIAPLAYER;
+};
 
-typedef struct
+struct MILCMD_RENDERDATA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT cbData;
-} MILCMD_RENDERDATA;
+};
 
-typedef struct
+struct MILCMD_ETWEVENTRESOURCE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT id;
-} MILCMD_ETWEVENTRESOURCE;
+};
 
-typedef struct
+struct MILCMD_VISUAL_CREATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
-} MILCMD_VISUAL_CREATE;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETOFFSET
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE offsetX;
     DOUBLE offsetY;
-} MILCMD_VISUAL_SETOFFSET;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETTRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hTransform;
-} MILCMD_VISUAL_SETTRANSFORM;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETEFFECT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hEffect;
-} MILCMD_VISUAL_SETEFFECT;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETCACHEMODE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hCacheMode;
-} MILCMD_VISUAL_SETCACHEMODE;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETCLIP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hClip;
-} MILCMD_VISUAL_SETCLIP;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETALPHA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE alpha;
-} MILCMD_VISUAL_SETALPHA;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETRENDEROPTIONS
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilRenderOptions renderOptions;
-} MILCMD_VISUAL_SETRENDEROPTIONS;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETCONTENT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hContent;
-} MILCMD_VISUAL_SETCONTENT;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETALPHAMASK
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hAlphaMask;
-} MILCMD_VISUAL_SETALPHAMASK;
+};
 
-typedef struct
+struct MILCMD_VISUAL_REMOVEALLCHILDREN
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
-} MILCMD_VISUAL_REMOVEALLCHILDREN;
+};
 
-typedef struct
+struct MILCMD_VISUAL_REMOVECHILD
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hChild;
-} MILCMD_VISUAL_REMOVECHILD;
+};
 
-typedef struct
+struct MILCMD_VISUAL_INSERTCHILDAT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hChild;
     UINT index;
-} MILCMD_VISUAL_INSERTCHILDAT;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETGUIDELINECOLLECTION
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2249,73 +2249,73 @@ typedef struct
     UINT16 UINT16Padding0;
     WORD countY;
     UINT16 UINT16Padding1;
-} MILCMD_VISUAL_SETGUIDELINECOLLECTION;
+};
 
-typedef struct
+struct MILCMD_VISUAL_SETSCROLLABLEAREACLIP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPointAndSizeD Clip;
     BOOL IsEnabled;
-} MILCMD_VISUAL_SETSCROLLABLEAREACLIP;
+};
 
-typedef struct
+struct MILCMD_VIEWPORT3DVISUAL_SETCAMERA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hCamera;
-} MILCMD_VIEWPORT3DVISUAL_SETCAMERA;
+};
 
-typedef struct
+struct MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPointAndSizeD Viewport;
-} MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT;
+};
 
-typedef struct
+struct MILCMD_VIEWPORT3DVISUAL_SET3DCHILD
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hChild;
-} MILCMD_VIEWPORT3DVISUAL_SET3DCHILD;
+};
 
-typedef struct
+struct MILCMD_VISUAL3D_SETCONTENT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hContent;
-} MILCMD_VISUAL3D_SETCONTENT;
+};
 
-typedef struct
+struct MILCMD_VISUAL3D_SETTRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hTransform;
-} MILCMD_VISUAL3D_SETTRANSFORM;
+};
 
-typedef struct
+struct MILCMD_VISUAL3D_REMOVEALLCHILDREN
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
-} MILCMD_VISUAL3D_REMOVEALLCHILDREN;
+};
 
-typedef struct
+struct MILCMD_VISUAL3D_REMOVECHILD
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hChild;
-} MILCMD_VISUAL3D_REMOVECHILD;
+};
 
-typedef struct
+struct MILCMD_VISUAL3D_INSERTCHILDAT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hChild;
     UINT index;
-} MILCMD_VISUAL3D_INSERTCHILDAT;
+};
 
-typedef struct
+struct MILCMD_HWNDTARGET_CREATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2332,16 +2332,16 @@ typedef struct
     INT DpiAwarenessContext;
     DOUBLE DpiX;
     DOUBLE DpiY;
-} MILCMD_HWNDTARGET_CREATE;
+};
 
-typedef struct
+struct MILCMD_HWNDTARGET_SUPPRESSLAYERED
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     BOOL Suppress;
-} MILCMD_HWNDTARGET_SUPPRESSLAYERED;
+};
 
-typedef struct
+struct MILCMD_TARGET_UPDATEWINDOWSETTINGS
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2355,9 +2355,9 @@ typedef struct
     MilColorF colorKey;
     UINT disableCookie;
     BOOL gdiBlt;
-} MILCMD_TARGET_UPDATEWINDOWSETTINGS;
+};
 
-typedef struct
+struct MILCMD_GENERICTARGET_CREATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2366,46 +2366,46 @@ typedef struct
     UINT width;
     UINT height;
     UINT dummy;
-} MILCMD_GENERICTARGET_CREATE;
+};
 
-typedef struct
+struct MILCMD_TARGET_SETROOT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hRoot;
-} MILCMD_TARGET_SETROOT;
+};
 
-typedef struct
+struct MILCMD_TARGET_SETCLEARCOLOR
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF clearColor;
-} MILCMD_TARGET_SETCLEARCOLOR;
+};
 
-typedef struct
+struct MILCMD_TARGET_INVALIDATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     RECT rc;
-} MILCMD_TARGET_INVALIDATE;
+};
 
-typedef struct
+struct MILCMD_TARGET_SETFLAGS
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT flags;
-} MILCMD_TARGET_SETFLAGS;
+};
 
-typedef struct
+struct MILCMD_HWNDTARGET_DPICHANGED
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE DpiX;
     DOUBLE DpiY;
     BOOL AfterParent;
-} MILCMD_HWNDTARGET_DPICHANGED;
+};
 
-typedef struct
+struct MILCMD_GLYPHRUN_CREATE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2421,30 +2421,30 @@ typedef struct
     UINT16 UINT16Padding2;
     WORD DWriteTextMeasuringMethod;
     UINT16 UINT16Padding3;
-} MILCMD_GLYPHRUN_CREATE;
+};
 
-typedef struct
+struct MILCMD_DOUBLEBUFFEREDBITMAP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT64 SwDoubleBufferedBitmap;
     BOOL UseBackBuffer;
-} MILCMD_DOUBLEBUFFEREDBITMAP;
+};
 
-typedef struct
+struct MILCMD_DOUBLEBUFFEREDBITMAP_COPYFORWARD
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT64 CopyCompletedEvent;
-} MILCMD_DOUBLEBUFFEREDBITMAP_COPYFORWARD;
+};
 
-typedef struct
+struct MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE
 {
     MILCMD Type;
     BOOL ShouldRenderEvenWhenNoDisplayDevicesAreAvailable;
-} MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE;
+};
 
-typedef struct
+struct MILCMD_AXISANGLEROTATION3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2452,17 +2452,17 @@ typedef struct
     MilPoint3F axis;
     HMIL_RESOURCE hAxisAnimations;
     HMIL_RESOURCE hAngleAnimations;
-} MILCMD_AXISANGLEROTATION3D;
+};
 
-typedef struct
+struct MILCMD_QUATERNIONROTATION3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilQuaternionF quaternion;
     HMIL_RESOURCE hQuaternionAnimations;
-} MILCMD_QUATERNIONROTATION3D;
+};
 
-typedef struct
+struct MILCMD_PERSPECTIVECAMERA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2479,9 +2479,9 @@ typedef struct
     HMIL_RESOURCE hLookDirectionAnimations;
     HMIL_RESOURCE hUpDirectionAnimations;
     HMIL_RESOURCE hFieldOfViewAnimations;
-} MILCMD_PERSPECTIVECAMERA;
+};
 
-typedef struct
+struct MILCMD_ORTHOGRAPHICCAMERA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2498,35 +2498,35 @@ typedef struct
     HMIL_RESOURCE hLookDirectionAnimations;
     HMIL_RESOURCE hUpDirectionAnimations;
     HMIL_RESOURCE hWidthAnimations;
-} MILCMD_ORTHOGRAPHICCAMERA;
+};
 
-typedef struct
+struct MILCMD_MATRIXCAMERA
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     D3DMATRIX viewMatrix;
     D3DMATRIX projectionMatrix;
     HMIL_RESOURCE htransform;
-} MILCMD_MATRIXCAMERA;
+};
 
-typedef struct
+struct MILCMD_MODEL3DGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE htransform;
     UINT32 ChildrenSize;
-} MILCMD_MODEL3DGROUP;
+};
 
-typedef struct
+struct MILCMD_AMBIENTLIGHT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF color;
     HMIL_RESOURCE htransform;
     HMIL_RESOURCE hColorAnimations;
-} MILCMD_AMBIENTLIGHT;
+};
 
-typedef struct
+struct MILCMD_DIRECTIONALLIGHT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2535,9 +2535,9 @@ typedef struct
     HMIL_RESOURCE htransform;
     HMIL_RESOURCE hColorAnimations;
     HMIL_RESOURCE hDirectionAnimations;
-} MILCMD_DIRECTIONALLIGHT;
+};
 
-typedef struct
+struct MILCMD_POINTLIGHT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2554,9 +2554,9 @@ typedef struct
     HMIL_RESOURCE hConstantAttenuationAnimations;
     HMIL_RESOURCE hLinearAttenuationAnimations;
     HMIL_RESOURCE hQuadraticAttenuationAnimations;
-} MILCMD_POINTLIGHT;
+};
 
-typedef struct
+struct MILCMD_SPOTLIGHT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2579,9 +2579,9 @@ typedef struct
     HMIL_RESOURCE hDirectionAnimations;
     HMIL_RESOURCE hOuterConeAngleAnimations;
     HMIL_RESOURCE hInnerConeAngleAnimations;
-} MILCMD_SPOTLIGHT;
+};
 
-typedef struct
+struct MILCMD_GEOMETRYMODEL3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2589,9 +2589,9 @@ typedef struct
     HMIL_RESOURCE hgeometry;
     HMIL_RESOURCE hmaterial;
     HMIL_RESOURCE hbackMaterial;
-} MILCMD_GEOMETRYMODEL3D;
+};
 
-typedef struct
+struct MILCMD_MESHGEOMETRY3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2599,49 +2599,49 @@ typedef struct
     UINT32 NormalsSize;
     UINT32 TextureCoordinatesSize;
     UINT32 TriangleIndicesSize;
-} MILCMD_MESHGEOMETRY3D;
+};
 
-typedef struct
+struct MILCMD_MATERIALGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT32 ChildrenSize;
-} MILCMD_MATERIALGROUP;
+};
 
-typedef struct
+struct MILCMD_DIFFUSEMATERIAL
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF color;
     MilColorF ambientColor;
     HMIL_RESOURCE hbrush;
-} MILCMD_DIFFUSEMATERIAL;
+};
 
-typedef struct
+struct MILCMD_SPECULARMATERIAL
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF color;
     DOUBLE specularPower;
     HMIL_RESOURCE hbrush;
-} MILCMD_SPECULARMATERIAL;
+};
 
-typedef struct
+struct MILCMD_EMISSIVEMATERIAL
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilColorF color;
     HMIL_RESOURCE hbrush;
-} MILCMD_EMISSIVEMATERIAL;
+};
 
-typedef struct
+struct MILCMD_TRANSFORM3DGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT32 ChildrenSize;
-} MILCMD_TRANSFORM3DGROUP;
+};
 
-typedef struct
+struct MILCMD_TRANSLATETRANSFORM3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2651,9 +2651,9 @@ typedef struct
     HMIL_RESOURCE hOffsetXAnimations;
     HMIL_RESOURCE hOffsetYAnimations;
     HMIL_RESOURCE hOffsetZAnimations;
-} MILCMD_TRANSLATETRANSFORM3D;
+};
 
-typedef struct
+struct MILCMD_SCALETRANSFORM3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2669,9 +2669,9 @@ typedef struct
     HMIL_RESOURCE hCenterXAnimations;
     HMIL_RESOURCE hCenterYAnimations;
     HMIL_RESOURCE hCenterZAnimations;
-} MILCMD_SCALETRANSFORM3D;
+};
 
-typedef struct
+struct MILCMD_ROTATETRANSFORM3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2682,25 +2682,25 @@ typedef struct
     HMIL_RESOURCE hCenterYAnimations;
     HMIL_RESOURCE hCenterZAnimations;
     HMIL_RESOURCE hrotation;
-} MILCMD_ROTATETRANSFORM3D;
+};
 
-typedef struct
+struct MILCMD_MATRIXTRANSFORM3D
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     D3DMATRIX matrix;
-} MILCMD_MATRIXTRANSFORM3D;
+};
 
-typedef struct
+struct MILCMD_PIXELSHADER
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     ShaderEffectShaderRenderMode::Enum ShaderRenderMode;
     UINT32 PixelShaderBytecodeSize;
     BOOL CompileSoftwareShader;
-} MILCMD_PIXELSHADER;
+};
 
-typedef struct
+struct MILCMD_IMPLICITINPUTBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2708,9 +2708,9 @@ typedef struct
     HMIL_RESOURCE hOpacityAnimations;
     HMIL_RESOURCE hTransform;
     HMIL_RESOURCE hRelativeTransform;
-} MILCMD_IMPLICITINPUTBRUSH;
+};
 
-typedef struct
+struct MILCMD_BLUREFFECT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2718,9 +2718,9 @@ typedef struct
     HMIL_RESOURCE hRadiusAnimations;
     MilKernelType::Enum KernelType;
     MilEffectRenderingBias::Enum RenderingBias;
-} MILCMD_BLUREFFECT;
+};
 
-typedef struct
+struct MILCMD_DROPSHADOWEFFECT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2735,9 +2735,9 @@ typedef struct
     HMIL_RESOURCE hOpacityAnimations;
     HMIL_RESOURCE hBlurRadiusAnimations;
     MilEffectRenderingBias::Enum RenderingBias;
-} MILCMD_DROPSHADOWEFFECT;
+};
 
-typedef struct
+struct MILCMD_SHADEREFFECT
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2755,23 +2755,23 @@ typedef struct
     UINT32 DependencyPropertyBoolValuesSize;
     UINT32 ShaderSamplerRegistrationInfoSize;
     UINT32 DependencyPropertySamplerValuesSize;
-} MILCMD_SHADEREFFECT;
+};
 
-typedef struct
+struct MILCMD_DRAWINGIMAGE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hDrawing;
-} MILCMD_DRAWINGIMAGE;
+};
 
-typedef struct
+struct MILCMD_TRANSFORMGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT32 ChildrenSize;
-} MILCMD_TRANSFORMGROUP;
+};
 
-typedef struct
+struct MILCMD_TRANSLATETRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2779,9 +2779,9 @@ typedef struct
     DOUBLE Y;
     HMIL_RESOURCE hXAnimations;
     HMIL_RESOURCE hYAnimations;
-} MILCMD_TRANSLATETRANSFORM;
+};
 
-typedef struct
+struct MILCMD_SCALETRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2793,9 +2793,9 @@ typedef struct
     HMIL_RESOURCE hScaleYAnimations;
     HMIL_RESOURCE hCenterXAnimations;
     HMIL_RESOURCE hCenterYAnimations;
-} MILCMD_SCALETRANSFORM;
+};
 
-typedef struct
+struct MILCMD_SKEWTRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2807,9 +2807,9 @@ typedef struct
     HMIL_RESOURCE hAngleYAnimations;
     HMIL_RESOURCE hCenterXAnimations;
     HMIL_RESOURCE hCenterYAnimations;
-} MILCMD_SKEWTRANSFORM;
+};
 
-typedef struct
+struct MILCMD_ROTATETRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2819,17 +2819,17 @@ typedef struct
     HMIL_RESOURCE hAngleAnimations;
     HMIL_RESOURCE hCenterXAnimations;
     HMIL_RESOURCE hCenterYAnimations;
-} MILCMD_ROTATETRANSFORM;
+};
 
-typedef struct
+struct MILCMD_MATRIXTRANSFORM
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilMatrix3x2D Matrix;
     HMIL_RESOURCE hMatrixAnimations;
-} MILCMD_MATRIXTRANSFORM;
+};
 
-typedef struct
+struct MILCMD_LINEGEOMETRY
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2838,9 +2838,9 @@ typedef struct
     HMIL_RESOURCE hTransform;
     HMIL_RESOURCE hStartPointAnimations;
     HMIL_RESOURCE hEndPointAnimations;
-} MILCMD_LINEGEOMETRY;
+};
 
-typedef struct
+struct MILCMD_RECTANGLEGEOMETRY
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2851,9 +2851,9 @@ typedef struct
     HMIL_RESOURCE hRadiusXAnimations;
     HMIL_RESOURCE hRadiusYAnimations;
     HMIL_RESOURCE hRectAnimations;
-} MILCMD_RECTANGLEGEOMETRY;
+};
 
-typedef struct
+struct MILCMD_ELLIPSEGEOMETRY
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2864,18 +2864,18 @@ typedef struct
     HMIL_RESOURCE hRadiusXAnimations;
     HMIL_RESOURCE hRadiusYAnimations;
     HMIL_RESOURCE hCenterAnimations;
-} MILCMD_ELLIPSEGEOMETRY;
+};
 
-typedef struct
+struct MILCMD_GEOMETRYGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hTransform;
     MilFillMode::Enum FillRule;
     UINT32 ChildrenSize;
-} MILCMD_GEOMETRYGROUP;
+};
 
-typedef struct
+struct MILCMD_COMBINEDGEOMETRY
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2883,18 +2883,18 @@ typedef struct
     MilCombineMode::Enum GeometryCombineMode;
     HMIL_RESOURCE hGeometry1;
     HMIL_RESOURCE hGeometry2;
-} MILCMD_COMBINEDGEOMETRY;
+};
 
-typedef struct
+struct MILCMD_PATHGEOMETRY
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hTransform;
     MilFillMode::Enum FillRule;
     UINT32 FiguresSize;
-} MILCMD_PATHGEOMETRY;
+};
 
-typedef struct
+struct MILCMD_SOLIDCOLORBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2904,9 +2904,9 @@ typedef struct
     HMIL_RESOURCE hTransform;
     HMIL_RESOURCE hRelativeTransform;
     HMIL_RESOURCE hColorAnimations;
-} MILCMD_SOLIDCOLORBRUSH;
+};
 
-typedef struct
+struct MILCMD_LINEARGRADIENTBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2922,9 +2922,9 @@ typedef struct
     UINT32 GradientStopsSize;
     HMIL_RESOURCE hStartPointAnimations;
     HMIL_RESOURCE hEndPointAnimations;
-} MILCMD_LINEARGRADIENTBRUSH;
+};
 
-typedef struct
+struct MILCMD_RADIALGRADIENTBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2944,9 +2944,9 @@ typedef struct
     HMIL_RESOURCE hRadiusXAnimations;
     HMIL_RESOURCE hRadiusYAnimations;
     HMIL_RESOURCE hGradientOriginAnimations;
-} MILCMD_RADIALGRADIENTBRUSH;
+};
 
-typedef struct
+struct MILCMD_IMAGEBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2968,9 +2968,9 @@ typedef struct
     MilVerticalAlignment::Enum AlignmentY;
     MilCachingHint::Enum CachingHint;
     HMIL_RESOURCE hImageSource;
-} MILCMD_IMAGEBRUSH;
+};
 
-typedef struct
+struct MILCMD_DRAWINGBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -2992,9 +2992,9 @@ typedef struct
     MilVerticalAlignment::Enum AlignmentY;
     MilCachingHint::Enum CachingHint;
     HMIL_RESOURCE hDrawing;
-} MILCMD_DRAWINGBRUSH;
+};
 
-typedef struct
+struct MILCMD_VISUALBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -3016,9 +3016,9 @@ typedef struct
     MilVerticalAlignment::Enum AlignmentY;
     MilCachingHint::Enum CachingHint;
     HMIL_RESOURCE hVisual;
-} MILCMD_VISUALBRUSH;
+};
 
-typedef struct
+struct MILCMD_BITMAPCACHEBRUSH
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -3028,18 +3028,18 @@ typedef struct
     HMIL_RESOURCE hRelativeTransform;
     HMIL_RESOURCE hBitmapCache;
     HMIL_RESOURCE hInternalTarget;
-} MILCMD_BITMAPCACHEBRUSH;
+};
 
-typedef struct
+struct MILCMD_DASHSTYLE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE Offset;
     HMIL_RESOURCE hOffsetAnimations;
     UINT32 DashesSize;
-} MILCMD_DASHSTYLE;
+};
 
-typedef struct
+struct MILCMD_PEN
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -3052,44 +3052,44 @@ typedef struct
     MilPenCap::Enum DashCap;
     MilPenJoin::Enum LineJoin;
     HMIL_RESOURCE hDashStyle;
-} MILCMD_PEN;
+};
 
-typedef struct
+struct MILCMD_GEOMETRYDRAWING
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hBrush;
     HMIL_RESOURCE hPen;
     HMIL_RESOURCE hGeometry;
-} MILCMD_GEOMETRYDRAWING;
+};
 
-typedef struct
+struct MILCMD_GLYPHRUNDRAWING
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     HMIL_RESOURCE hGlyphRun;
     HMIL_RESOURCE hForegroundBrush;
-} MILCMD_GLYPHRUNDRAWING;
+};
 
-typedef struct
+struct MILCMD_IMAGEDRAWING
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPointAndSizeD Rect;
     HMIL_RESOURCE hImageSource;
     HMIL_RESOURCE hRectAnimations;
-} MILCMD_IMAGEDRAWING;
+};
 
-typedef struct
+struct MILCMD_VIDEODRAWING
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     MilPointAndSizeD Rect;
     HMIL_RESOURCE hPlayer;
     HMIL_RESOURCE hRectAnimations;
-} MILCMD_VIDEODRAWING;
+};
 
-typedef struct
+struct MILCMD_DRAWINGGROUP
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -3103,18 +3103,18 @@ typedef struct
     MilEdgeMode::Enum EdgeMode;
     MilBitmapScalingMode::Enum bitmapScalingMode;
     MilClearTypeHint::Enum ClearTypeHint;
-} MILCMD_DRAWINGGROUP;
+};
 
-typedef struct
+struct MILCMD_GUIDELINESET
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
     UINT32 GuidelinesXSize;
     UINT32 GuidelinesYSize;
     BOOL IsDynamic;
-} MILCMD_GUIDELINESET;
+};
 
-typedef struct
+struct MILCMD_BITMAPCACHE
 {
     MILCMD Type;
     HMIL_RESOURCE Handle;
@@ -3122,7 +3122,7 @@ typedef struct
     HMIL_RESOURCE hRenderAtScaleAnimations;
     BOOL SnapsToDevicePixels;
     BOOL EnableClearType;
-} MILCMD_BITMAPCACHE;
+};
 
 
 struct MILCMD_DRAW_LINE

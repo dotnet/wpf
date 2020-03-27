@@ -27,7 +27,6 @@
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="System" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Diagnostics.Debug" />

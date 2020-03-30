@@ -337,7 +337,7 @@ namespace System.Windows.Media
             private Dictionary<TValue, List<TKey>> revDictionary; 
         }
 
-        private static TwoWayDictionary<SolidColorBrush, string> s_knownSolidColorBrushStringCache = new TwoWayDictionary<SolidColorBrush, string>(ReferenceEqualityComparer.Instance);
+        private static TwoWayDictionary<SolidColorBrush, string> s_knownSolidColorBrushStringCache = new TwoWayDictionary<SolidColorBrush, string>(keyComparer: ReferenceEqualityComparer.Instance);
 #endif 
     }
 }

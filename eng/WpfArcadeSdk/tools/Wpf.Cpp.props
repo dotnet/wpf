@@ -49,6 +49,22 @@
     <ManagedCxx Condition="'$(CLRSupport)'=='true'">true</ManagedCxx>
     <ManagedCxx Condition="'$(CLRSupport)'=='pure'">true</ManagedCxx>
   </PropertyGroup>
+  
+  <!-- 
+    Enable IDE support for C++/CLI .NET Core builds
+    -->
+  <PropertyGroup>
+    <CLRSupport Condition="'$(CLRSupport)' == 'pure'">NetCore</CLRSupport>
+  </PropertyGroup>
+  
+  <!-- 
+    When building C++/CLI..
+      ... Disable C# CoreGenerateSatelliteAssemblies target
+  -->
+  <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
+    <GenerateSatelliteAssembliesForCore>false</GenerateSatelliteAssembliesForCore>
+  </PropertyGroup>
+
 
   <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
       <!-- This is usually set by the Microsoft.NETFramework.CurrentVersion.props file, 
@@ -149,7 +165,7 @@
             linking to a privatized copy of vcruntime140d.dll here. Such build should simply copy over the debug version of vcruntime DLL's 
             to the appropriate location for testing purposes.
     -->
-    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
+    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure' or '$(CLRSupport)' == 'NetCore') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
 
 
     <StandardLibrariesForNativeCpp Condition="'$(ManagedCxx)'=='false'">$(StaticUCRTLibrary);$(StaticVCRTLibrary);$(StaticCRTStartupLibrary);$(StaticStandardCppLibrary);$(DynamicUCRTLibrary);$(DynamicVCRTLibrary);$(DynamicCRTStartupLibrary);$(DynamicStandardCppLibrary)</StandardLibrariesForNativeCpp>
@@ -158,7 +174,7 @@
     <!-- These runtime libs should not have their default lib requests included during link. Instead, just use the explicitly intended libraries from this section -->
     <NoDefaultLibClauseForRuntimeLibs>$(NoDefaultLibClauseForRuntimeLibs) /nodefaultlib:ucrt$(LibSuffix).lib /nodefaultlib:libucrt$(LibSuffix).lib /nodefaultlib:msvcrt$(LibSuffix).lib /nodefaultlib:libcmt$(LibSuffix).lib</NoDefaultLibClauseForRuntimeLibs>
 
-	  <!-- Disable managed incremental builds to disable MetaGen task, which currently fails -->
+    <!-- Disable managed incremental builds to disable MetaGen task, which currently fails -->
     <EnableManagedIncrementalBuild Condition="'$(ManagedCxx)'=='true'">false</EnableManagedIncrementalBuild>
 
     <!-- Do not enable this - see GenerateTargetFrameworkMonikerAttribute2 target in Wpf.Cpp.targets for additional information -->
@@ -174,13 +190,6 @@
 
     <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
     <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ComputeCompileInputsTargets Condition="$(ManagedCxx) == 'true'">
-      $(ComputeCompileInputsTargets);
-      SetMscorlibAdditionalUsingDirectory;
-    </ComputeCompileInputsTargets>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

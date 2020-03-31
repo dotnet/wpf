@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppVersion)'!='' And 
+    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppInternalVersion)'!='' And 
                                         '$(NoTargets)'!='true' And 
                                          '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And 
-                                         ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')">$(MicrosoftNETCoreAppVersion)</RuntimeFrameworkVersion>
+                                         ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')">$(MicrosoftNETCoreAppInternalVersion)</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <!-- workaround for package downgrade in Microsoft.NetCore.Platforms -->

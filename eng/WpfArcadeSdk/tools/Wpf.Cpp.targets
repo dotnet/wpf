@@ -186,13 +186,13 @@ END
   <!--
    This target is a replacement for GenerateTargetFrameworkMonikerAttribute defined in Microsoft.BuildSteps.Targets
    We needed to ensure a few preconditions for this target, which necessitated a custom version to be written
-      - this  target has to execute prior to SetMscorlibAdditionalUsingDirectory
+      - this  target has to execute prior to ResolveAssemblyReferences
       InitializeAssemblyAttributeInformation (defined in ExtendedAssemblyInfo.targets) must run prior to this target, to ensure that $(FileVersion) is populated
       Additional assembly scope attributes besides TargetFrameworkAttribute are added here 
   -->
   <Target Name="GenerateTargetFrameworkMonikerAttribute2"
       Condition="'$(ManagedCxx)'=='true'"
-          BeforeTargets="SetMscorlibAdditionalUsingDirectory"
+          BeforeTargets="ResolveAssemblyReferences"
           DependsOnTargets="PrepareForBuild;GetReferenceAssemblyPaths;InitializeAssemblyAttributeInformation"
           Outputs="$(TargetFrameworkMonikerAssemblyAttributesPath)">
 
@@ -264,33 +264,6 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
-  <!-- Remove mscorlib from AdditionalExplicitAssemblyReferences -->
-  <Target Name="RemoveMscoreLib"
-          AfterTargets="_PrepareForReferenceResolution"
-          DependsOnTargets="$(RemoveMscoreLibDependsOn)"
-          Condition="('$(ManagedCxx)'=='true') and $(TargetFramework.StartsWith('netcoreapp'))">
-    <ItemGroup>
-      <_AdditionalExplicitAssemblyReferences Include="$(AdditionalExplicitAssemblyReferences)" />
-      <_AdditionalExplicitAssemblyReferences Remove="mscorlib" />
-    </ItemGroup>
-    <PropertyGroup>
-      <AdditionalExplicitAssemblyReferences>@(_AdditionalExplicitAssemblyReferences)</AdditionalExplicitAssemblyReferences>
-    </PropertyGroup>
-  </Target>
-
-  <!-- Add the directory where mscorlib is located to AdditionalUsingDirectories -->
-  <Target Name="SetMscorlibAdditionalUsingDirectory" DependsOnTargets="ResolveAssemblyReferences"
-          Condition="('$(ManagedCxx)'=='true') and ('$(SetMscorlibAdditionalUsingDirectory)' != 'true')" >
-    <PropertyGroup>
-      <_mscorlibDirectory Condition="'%(ReferencePath.FileName)%(ReferencePath.Extension)' == 'mscorlib.dll'">%(ReferencePath.RootDir)%(ReferencePath.Directory)</_mscorlibDirectory>
-    </PropertyGroup>
-    <Error Condition="'$(_mscorlibDirectory)' == ''" Text="Could not locate mscorlib.dll" />
-    <ItemGroup>
-      <CLCompile>
-        <AdditionalUsingDirectories>%(CLCompile.AdditionalUsingDirectories);$(_mscorlibDirectory)</AdditionalUsingDirectories>
-      </CLCompile>
-    </ItemGroup>
-  </Target>
 
   <PropertyGroup Condition="'$(ManagedCxx)'=='true'">
     <ResolveReferencesDependsOn>
@@ -348,26 +321,11 @@ using namespace System::Runtime::Versioning;
         </Text>
       </CppClrSupportProject>
 
-      <!-- 
-        We need a reference to Microsoft.DotNet.Wpf.GitHub when building from dotnet-wpf-int. 
-        When building from dotnet/wpf, this refernece is not needed.
-      -->
-      <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
-        <Text>
-          <![CDATA[
-   <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
-  </ItemGroup>
-  ]]>
-        </Text>
-      </CppClrSupportProject>
+
       <CppClrSupportProject Include="ProjectBody">
         <Text>
           <![CDATA[
-  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
-  <PropertyGroup>
-    <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
-  </PropertyGroup>
+
   
   <Target Name="EnumerateAdditionalNugetReference"
           BeforeTargets="_GenerateRestoreGraph"
@@ -393,8 +351,6 @@ using namespace System::Runtime::Versioning;
 <!-- Save Microsoft.NETCore.App assemblies and return them -->
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).$(GitHubTransportPackageName)'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"
@@ -632,9 +588,6 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
-  <!-- Disable the portions of MSBuild that insist on a targeting pack directory to represent a target framework -->
-  <Import Project="..\targets\Microsoft.NET.DisableStandardFrameworkResolution.targets" Sdk="Microsoft.NET.Sdk"
-          Condition="'$(ManagedCxx)'=='true'" />
 
   <Import Project="$(MSBuildThisFileDirectory)ResourceLinking.targets" />
 </Project>

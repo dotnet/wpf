@@ -2610,15 +2610,15 @@ namespace MS.Internal
                 throw new AssemblyVersionParseException(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
             }
 
-            // In .NET Framework, the process to use a wildcard AssemblyVersion is to do the following:
+            // In .NET Framework (non-SDK-style projects), the process to use a wildcard AssemblyVersion is to do the following:
             //   - Modify the AssemblyVersionAttribute to a wildcard string (e.g. "1.2.*")
             //   - Set Deterministic to false in the build
             // During MarkupCompilation, the AssemblyVersion property would not be set and WPF would correctly generate a resource URI without a version.
-            // In .NET Core/5, the same process can be used if GenerateAssemblyVersionAttribute is set to false in the build.  However, this isn't really the
-            // idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the AssemblyVersion build property.
-            // If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use that as part of the URI here.
-            // This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have when the developer sets a
-            // wildcard version string via AssemblyVersionAttribute and use an empty string.
+            // In .NET Core/5 (or .NET Framework SDK-style projects), the same process can be used if GenerateAssemblyVersionAttribute is set to false in 
+            // the build.  However, this isn't really the idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the 
+            // AssemblyVersion build property.  If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use 
+            // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have 
+            // when the developer sets a wildcard version string via AssemblyVersionAttribute and use an empty string.
             string version = hasWildcard || String.IsNullOrEmpty(AssemblyVersion)
                 ? String.Empty 
                 : COMPONENT_DELIMITER + VER + AssemblyVersion;

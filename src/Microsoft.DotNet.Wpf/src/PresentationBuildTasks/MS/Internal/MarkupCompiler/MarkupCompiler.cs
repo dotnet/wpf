@@ -2605,7 +2605,8 @@ namespace MS.Internal
 
             // Attempt to parse out the AssemblyVersion if it exists.  This validates that we can either use an empty version string (wildcards exist)
             // or we can utilize the passed in string (valid parse).
-            if (!VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, version: out _, out bool hasWildcard))
+            if (!VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, version: out _, out bool hasWildcard)
+                && !string.IsNullOrWhiteSpace(AssemblyVersion))
             {
                 throw new AssemblyVersionParseException(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
             }

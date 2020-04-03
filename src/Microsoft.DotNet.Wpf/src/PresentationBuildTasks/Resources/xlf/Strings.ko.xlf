@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
+        <target state="translated">MC1005: 잘못된 AssemblyVersion {0}이(가) 검색되었습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -779,7 +779,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">MC3086: 부모 요소 또는 '{0}' 속성에는 XML 데이터 아일랜드가 있어야 합니다. XML 아일랜드를 주변 XAML과 구별하려면 &lt;x:XData&gt; ... &lt;/x:XData&gt;에서 XML 데이터 아일랜드를 줄 바꿈 합니다.</target>
+        <target state="translated">MC3086: 부모 요소 또는 '{0}' 속성에는 XML 데이터 아일랜드가 있어야 합니다. XML 아일랜드를 주변 XAML과 구별하려면 &lt;x:XData&gt; ... &lt;/x:XData&gt;에서 XML 데이터 아일랜드를 래핑합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">

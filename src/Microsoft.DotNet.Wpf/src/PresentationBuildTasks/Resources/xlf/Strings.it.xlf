@@ -94,7 +94,7 @@
       </trans-unit>
       <trans-unit id="FieldModifierNotAllowed">
         <source>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</source>
-        <target state="translated">MC6021: impossibile specificare {0}:FieldModifier in questo tag perché non è impostato l'attributo {0}:Name o Name oppure il tag è definito localmente con un attributo Name impostato e questa condizione non è consentita.</target>
+        <target state="translated">MC6021: non è possibile specificare {0}:FieldModifier in questo tag perché non è impostato l'attributo {0}:Name o Name oppure il tag è definito in locale con un attributo Name impostato e questa condizione non è consentita.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFound">
@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
+        <target state="translated">MC1005: la versione dell'assembly rilevata {0} non è valida.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -274,7 +274,7 @@
       </trans-unit>
       <trans-unit id="MissingClassWithModifier">
         <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
-        <target state="translated">MC6009: impossibile specificare l'attributo {0}:ClassModifier nel tag radice perché è necessario anche un attributo {0}:Class. Aggiungere un attributo {0}:Class o rimuovere l'attributo {0}:ClassModifier.</target>
+        <target state="translated">MC6009: non è possibile specificare l'attributo {0}:ClassModifier nel tag radice perché è necessario anche un attributo {0}:Class. Aggiungere un attributo {0}:Class o rimuovere l'attributo {0}:ClassModifier.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassWithSubClass">
@@ -304,7 +304,7 @@
       </trans-unit>
       <trans-unit id="NamedResDictItemWarning">
         <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
-        <target state="translated">Un elemento '{0}' è denominato '{1}'. Non assegnare al contenuto il nome ResourceDictionary perché la relativa creazione dell'istanza è posticipata.</target>
+        <target state="translated">Un elemento '{0}' è denominato '{1}'. Non assegnare al contenuto il nome ResourceDictionary perché la relativa creazione di un'istanza è posticipata.</target>
         <note />
       </trans-unit>
       <trans-unit id="NonClsError">
@@ -779,7 +779,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">MC3086: per l'elemento o la proprietà padre '{0}' è necessaria un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, includere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">MC3086: per l'elemento o la proprietà padre '{0}' è necessaria un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, racchiudere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">

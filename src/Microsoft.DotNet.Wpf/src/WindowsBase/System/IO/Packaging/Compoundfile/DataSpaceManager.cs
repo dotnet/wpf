@@ -828,7 +828,7 @@ internal class DataSpaceManager
             {
                 targetInstance.transformPrimaryStream =
                     new DirtyStateTrackingStream (new MemoryStream
-                            (new byte[0], 
+                            (Array.Empty<byte>(), 
                             false /* Not writable */));
             }
             else

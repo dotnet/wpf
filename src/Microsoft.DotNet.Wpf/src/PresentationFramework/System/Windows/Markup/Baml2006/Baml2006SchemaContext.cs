@@ -29,7 +29,7 @@ namespace System.Windows.Baml2006
         }
 
         internal Baml2006SchemaContext(Assembly localAssembly, XamlSchemaContext parentSchemaContext)
-            : base(new Assembly[0])
+            : base(Array.Empty<Assembly>())
         {
             _localAssembly = localAssembly;
             _parentSchemaContext = parentSchemaContext;

@@ -57,7 +57,7 @@ namespace MS.Internal.Annotations
             Invariant.Assert(_attribute != null, "Internal Serializer used for a type with no XmlRootAttribute.");
 
             // Get the default constructor for the type
-            _ctor = type.GetConstructor(new Type[0]);
+            _ctor = type.GetConstructor(Array.Empty<Type>());
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace MS.Internal.Annotations
         {
             Invariant.Assert(reader != null);
 
-            IXmlSerializable serializable = (IXmlSerializable)_ctor.Invoke(new object[0]);
+            IXmlSerializable serializable = (IXmlSerializable)_ctor.Invoke(Array.Empty<object>());
 
             // If this is a brand-new stream we need to jump into it
             if (reader.ReadState == ReadState.Initial)

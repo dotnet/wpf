@@ -99,7 +99,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal Rect GetBounds()
         {
-            return IsValid ? _operations.GetNodeBounds(_thisNode) : Rect.Empty;
+            return IsValid ? _operations.GetNodeBounds(in _thisNode) : Rect.Empty;
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal Rect GetBoundsConnected()
         {
-            return IsValid ? Rect.Union(_operations.GetNodeBounds(_thisNode), ConnectingQuad.Bounds) : Rect.Empty;
+            return IsValid ? Rect.Union(_operations.GetNodeBounds(in _thisNode), ConnectingQuad.Bounds) : Rect.Empty;
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace MS.Internal.Ink
                 Quad quad = ConnectingQuad;
                 if (IsEllipse)
                 {
-                    Rect startNodeBounds = _operations.GetNodeBounds(_lastNode);
+                    Rect startNodeBounds = _operations.GetNodeBounds(in _lastNode);
 
                     //add instructions to arc from D to A
                     abPoints.Add(quad.D);
@@ -225,7 +225,7 @@ namespace MS.Internal.Ink
                 {
                     //we're interested in the A, D points as well as the 
                     //nodecountour points between them
-                    Rect endNodeRect = _operations.GetNodeBounds(_thisNode);
+                    Rect endNodeRect = _operations.GetNodeBounds(in _thisNode);
 
 #if DEBUG_RENDERING_FEEDBACK
                     if (showFeedback)
@@ -439,9 +439,9 @@ namespace MS.Internal.Ink
                     {
                         if (IsEllipse)
                         {
-                            Rect node1Bounds = _operations.GetNodeBounds(previous._lastNode);
-                            Rect node2Bounds = _operations.GetNodeBounds(_lastNode);
-                            Rect node3Bounds = _operations.GetNodeBounds(_thisNode);
+                            Rect node1Bounds = _operations.GetNodeBounds(in previous._lastNode);
+                            Rect node2Bounds = _operations.GetNodeBounds(in _lastNode);
+                            Rect node3Bounds = _operations.GetNodeBounds(in _thisNode);
 #if DEBUG_RENDERING_FEEDBACK
                             if (showFeedback)
                             {
@@ -660,7 +660,7 @@ namespace MS.Internal.Ink
                             }
 #endif
 
-                            Rect node3Rect = _operations.GetNodeBounds(_thisNode);
+                            Rect node3Rect = _operations.GetNodeBounds(in _thisNode);
                             //take care of a-b first
                             if (indexA == indexB)
                             {
@@ -684,7 +684,7 @@ namespace MS.Internal.Ink
                             else
                             {
                                 Point intersection = GetIntersection(quad1.A, quad1.B, quad2.A, quad2.B);
-                                Rect node12 = Rect.Union(_operations.GetNodeBounds(previous._lastNode), _operations.GetNodeBounds(_lastNode));
+                                Rect node12 = Rect.Union(_operations.GetNodeBounds(in previous._lastNode), _operations.GetNodeBounds(in _lastNode));
                                 node12.Inflate(1.0, 1.0);
                                 //make sure we're not off in space
                                 if (node12.Contains(intersection))
@@ -729,7 +729,7 @@ namespace MS.Internal.Ink
                             else
                             {
                                 Point intersection = GetIntersection(quad1.D, quad1.C, quad2.D, quad2.C);
-                                Rect node12 = Rect.Union(_operations.GetNodeBounds(previous._lastNode), _operations.GetNodeBounds(_lastNode));
+                                Rect node12 = Rect.Union(_operations.GetNodeBounds(in previous._lastNode), _operations.GetNodeBounds(in _lastNode));
                                 node12.Inflate(1.0, 1.0);
                                 //make sure we're not off in space
                                 if (node12.Contains(intersection))
@@ -859,7 +859,7 @@ namespace MS.Internal.Ink
 
             IEnumerable<ContourSegment> hittingContour = hitNode.GetContourSegments();
 
-            return _operations.HitTest(_lastNode, _thisNode, ConnectingQuad, hittingContour);
+            return _operations.HitTest(in _lastNode, in _thisNode, ConnectingQuad, hittingContour);
         }
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace MS.Internal.Ink
 
             // If the node contours intersect, the result is a pair of findices
             // this segment should be cut at to let the hitNode's contour through it.
-            StrokeFIndices cutAt = _operations.CutTest(_lastNode, _thisNode, ConnectingQuad, hittingContour);
+            StrokeFIndices cutAt = _operations.CutTest(in _lastNode, in _thisNode, ConnectingQuad, hittingContour);
 
             return (_index == 0) ? cutAt : BindFIndices(cutAt);
         }
@@ -900,7 +900,7 @@ namespace MS.Internal.Ink
 
             // If the node contours intersect, the result is a pair of findices
             // this segment should be cut at to let the hitNode's contour through it.
-            StrokeFIndices cutAt = _operations.CutTest(_lastNode, _thisNode, ConnectingQuad, begin, end);
+            StrokeFIndices cutAt = _operations.CutTest(in _lastNode, in _thisNode, ConnectingQuad, begin, end);
 
             System.Diagnostics.Debug.Assert(!double.IsNaN(cutAt.BeginFIndex) && !double.IsNaN(cutAt.EndFIndex));
 
@@ -1009,7 +1009,7 @@ namespace MS.Internal.Ink
 
                 if (_isQuadCached == false)
                 {
-                    _connectingQuad = _operations.GetConnectingQuad(_lastNode, _thisNode);
+                    _connectingQuad = _operations.GetConnectingQuad(in _lastNode, in _thisNode);
                     _isQuadCached = true;
                 }
                 return _connectingQuad;
@@ -1029,7 +1029,7 @@ namespace MS.Internal.Ink
             if (IsEllipse)
             {
                 // ISSUE-2004/06/15- temporary workaround to avoid hit-testing with ellipses
-                return _operations.GetNonBezierContourSegments(_lastNode, _thisNode);
+                return _operations.GetNonBezierContourSegments(in _lastNode, in _thisNode);
             }
             return  _operations.GetContourSegments(_thisNode, ConnectingQuad);
         }

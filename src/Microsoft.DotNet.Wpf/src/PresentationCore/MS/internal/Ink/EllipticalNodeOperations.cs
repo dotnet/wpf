@@ -197,7 +197,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal override IEnumerable<ContourSegment> GetNonBezierContourSegments(in StrokeNodeData beginNode, in StrokeNodeData endNode)
         {
-            Quad quad = beginNode.IsEmpty ? Quad.Empty : base.GetConnectingQuad(beginNode, endNode);
+            Quad quad = beginNode.IsEmpty ? Quad.Empty : base.GetConnectingQuad(in beginNode, in endNode);
             return base.GetContourSegments(endNode, quad);
         }
 

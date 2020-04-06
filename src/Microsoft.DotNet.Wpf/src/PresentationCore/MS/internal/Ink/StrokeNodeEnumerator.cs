@@ -245,7 +245,7 @@ namespace MS.Internal.Ink
                 }
 
                 //we use previousIndex+1 because index can skip ahead
-                return new StrokeNode(_operations, previousIndex + 1, nodeData, lastNodeData, index == _stylusPoints.Count - 1 /*Is this the last node?*/);
+                return new StrokeNode(_operations, previousIndex + 1, in nodeData, in lastNodeData, index == _stylusPoints.Count - 1 /*Is this the last node?*/);
             }
         }
 

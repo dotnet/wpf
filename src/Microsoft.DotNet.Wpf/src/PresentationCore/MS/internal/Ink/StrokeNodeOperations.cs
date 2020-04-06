@@ -565,7 +565,7 @@ namespace MS.Internal.Ink
         {
             if (beginNode.IsEmpty)
             {
-                if (HitTest(beginNode, endNode, quad, hitContour) == true)
+                if (HitTest(in beginNode, in endNode, quad, hitContour) == true)
                 {
                     return StrokeFIndices.Full;
                 }

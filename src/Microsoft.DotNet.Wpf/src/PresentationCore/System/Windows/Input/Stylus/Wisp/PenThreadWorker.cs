@@ -1128,13 +1128,7 @@ namespace System.Windows.Input
                 
                 // Release the PenIMC object only when we are assured that the
                 // context was removed from the list of waiting handles.
-                
-                // Restrict COM releases to Win7 as this can cause issues with later versions
-                // of PenIMC and WISP due to using a context after it is released.
-                if (!OSVersionHelper.IsOsWindows8OrGreater)
-                {
-                    Marshal.ReleaseComObject(penContext._pimcContext.Value);
-                }
+                Marshal.ReleaseComObject(penContext._pimcContext.Value);
             }
 
             return removed;

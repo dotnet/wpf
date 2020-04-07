@@ -243,6 +243,9 @@
   <data name="MultipleSplashScreenImages" xml:space="preserve">
     <value>MC1004: Project file cannot specify more than one SplashScreen element.</value>
   </data>
+  <data name="InvalidAssemblyVersion" xml:space="preserve">
+    <value>MC1005: Invalid AssemblyVersion detected: {0}.</value>
+  </data>
   <data name="InvalidCulture" xml:space="preserve">
     <value>FC1001: The UICulture value '{0}' set in the project file is not valid.</value>
   </data>

@@ -111,6 +111,7 @@ $(PreparePackageAssetsDependsOn):
     </ItemGroup>
     -->
     <CreateItem Include="$(OutDir)*.dll"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
@@ -123,17 +124,20 @@ $(PreparePackageAssetsDependsOn):
         </PropertyGroup>
     -->
     <CreateItem Include="$(OutDir)*.lib"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
             AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
             Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(IncludeLibFilesInPackaging)' == 'true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     
     <CreateItem Include="$(OutDir)*.exe"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>

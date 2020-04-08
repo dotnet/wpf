@@ -313,16 +313,10 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
 
-
     <!-- 
       Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
     -->
     <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersionForPresentationBuildTasks)" />
-    
-    <!-- Workaround for https://github.com/dotnet/runtime/issues/31672 --> 
-    <PackageReference Include="System.Memory" Version="$(SystemMemoryPackageVersionForPresentationBuildTasks)" Condition="'$(TargetFramework)' == 'net472'">
-      <NoWarn>$(NoWarn);NU1605</NoWarn>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

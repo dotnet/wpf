@@ -42,6 +42,16 @@ namespace System.Windows.Documents
         ///             previousToken + missingFragment[0..LEN-1], where LEN = LEN(missingFragment)
         ///             
         ///  - Select the first candidate token that is free of spelling errors, and replace 'previousToken' with it. 
+        ///  - For performance reasons, we choose a constant MAXLEN = 4 such that when LEN > MAXLEN, only MAXLEN
+        ///     tokens are considered. 
+        ///     - MAXLEN = 4 is a somewhat arbitrary choice, though it seems more than sufficient to address common 
+        ///       problems this heuristic is intended to help with. 
+        ///       
+        ///     - Typical word-breaking problems that have been observed empirically involve only one missed character,
+        ///       for which MAXLEN=1 would be sufficient. MAXLEN=4 is chosen as a sufficiently-large tradeoff between
+        ///       correctness and performance. 
+        ///       
+        ///     - Also see https://github.com/dotnet/wpf/pull/2753#issuecomment-602120768 for a discussion related to this. 
         /// </remarks>
         public static IReadOnlyList<SpellerSegment> ComprehensiveGetTokens(
             this WordsSegmenter segmenter,
@@ -130,12 +140,18 @@ namespace System.Windows.Documents
         /// <param name="lastToken">Previous token immediately preceding <paramref name="missingFragment"/></param>
         /// <param name="missingFragment">The missing-fragment identified immediately after <paramref name="lastToken"/></param>
         /// <returns></returns>
+        /// <remarks>
+        /// See note about MAXLEN in <see cref="ComprehensiveGetTokens(WordsSegmenter, string, SpellChecker, WinRTSpellerInterop)"/>
+        /// which explains the rationale behind the value of the constant AlternateFormsMaximumCount. 
+        /// </remarks>
         private static WinRTSpellerInterop.TextRange? GetSpellCheckCleanSubstitutionToken( 
             SpellChecker spellChecker, 
             string documentText,
             SpellerSegment lastToken,
             SpellerSegment missingFragment)
         {
+            const int AlternateFormsMaximumCount = 4;
+
             if (string.IsNullOrWhiteSpace(missingFragment?.Text) ||
                 string.IsNullOrWhiteSpace(lastToken?.Text) ||
                 string.IsNullOrWhiteSpace(documentText))
@@ -143,12 +159,13 @@ namespace System.Windows.Documents
                 return null;
             }
 
+            int altFormsCount = Math.Min(missingFragment.TextRange.Length, AlternateFormsMaximumCount);
             var spellingErrors = spellChecker?.ComprehensiveCheck(lastToken.Text);
             if (spellingErrors?.Count != 0)
             {
                 // One of the substring-permutations of the missingFragment - when concatenated with 'lastToken' - could be a viable
                 // replacement for 'lastToken'
-                for (int i = 1; i <= missingFragment.TextRange.Length; i++)
+                for (int i = 1; i <= altFormsCount; i++)
                 {
                     var altForm = documentText.Substring(lastToken.TextRange.Start, lastToken.TextRange.Length + i).TrimEnd();
                     if (spellChecker?.ComprehensiveCheck(altForm)?.Count == 0)

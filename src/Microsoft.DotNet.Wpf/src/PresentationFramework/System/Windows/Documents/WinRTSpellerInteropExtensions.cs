@@ -62,10 +62,16 @@ namespace System.Windows.Documents
             IReadOnlyList<WordSegment> tokens = segmenter?.GetTokens(text) ?? new List<WordSegment>().AsReadOnly();
             var allTokens = new List<SpellerSegment>();
 
+            if (tokens.Count == 0)
+            {
+                return allTokens.AsReadOnly();
+            }
+
             int predictedNextTokenStartPosition = 0;
             for (int i = 0; i < tokens.Count; i++)
             {
                 int nextTokenStartPosition = (int)tokens[i].SourceTextSegment.StartPosition;
+                int nextTokenLength = (int)tokens[i].SourceTextSegment.Length;
 
                 if (spellChecker != null)
                 {
@@ -93,15 +99,16 @@ namespace System.Windows.Documents
                     }
                 }
 
+                
                 allTokens.Add(
                     new SpellerSegment(
                         text,
                         new WinRTSpellerInterop.TextRange(
                             nextTokenStartPosition,
-                            (int)tokens[i].SourceTextSegment.Length),
+                            nextTokenLength),
                         spellChecker,
                         owner));
-                predictedNextTokenStartPosition = (int)(tokens[i].SourceTextSegment.StartPosition + tokens[i].SourceTextSegment.Length);
+                predictedNextTokenStartPosition = nextTokenStartPosition + nextTokenLength;
             }
 
             if (tokens.Count > 0 &&

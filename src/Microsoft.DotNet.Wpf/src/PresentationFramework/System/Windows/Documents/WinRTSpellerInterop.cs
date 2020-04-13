@@ -852,9 +852,9 @@ namespace System.Windows.Documents
 
         #endregion Private Fields
 
-        #region Private Types
+        #region Internal Types
 
-        internal struct TextRange: SpellerInteropBase.ITextRange
+        internal readonly struct TextRange: SpellerInteropBase.ITextRange
         {
             public TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
             {
@@ -1041,6 +1041,10 @@ namespace System.Windows.Documents
 
             #endregion Private Fields
         }
+
+        #endregion Internal Types
+
+        #region Private Types
 
         [DebuggerDisplay("Sentence = {_sentence}")]
         private class SpellerSentence: ISpellerSentence

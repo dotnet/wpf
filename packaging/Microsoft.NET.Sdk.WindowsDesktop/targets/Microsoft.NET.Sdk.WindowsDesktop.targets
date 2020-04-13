@@ -23,7 +23,7 @@
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
   
-  <Import Project="Microsoft.WinFX.targets" />
+  <Import Project="Microsoft.WinFx.targets" />
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">

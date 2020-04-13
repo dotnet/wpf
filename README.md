@@ -20,16 +20,9 @@ See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and 
 
 ## Status
 
-We are in the process of doing four projects with WPF:
-
-* Port WPF to .NET Core.
-* Publish source to GitHub.
-* Publish (and in some cases write) tests to GitHub and enable automated testing infrastructure.
-* Enable the Visual Studio WPF designer to work with WPF running on .NET Core.
-
-We have completed porting WPF to .NET Core as part of .NET Core 3.0, you can learn more about what was done [here](https://github.com/dotnet/wpf/issues/1936).
-
-We have published the vast majority of the WPF source. We will continue to publish WPF components through the rest of 2019. 
+- We are currently in planning for .NET 5. 
+- We have completed publishing WPF sources. You can learn more about this at https://github.com/dotnet/wpf/issues/2554. 
+- We have completed porting WPF to .NET Core as part of .NET Core 3.0, you can learn more about what was done [here](https://github.com/dotnet/wpf/issues/1936).
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 

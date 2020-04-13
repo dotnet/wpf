@@ -1,6 +1,6 @@
 {
   "tools": {
-    "dotnet": "5.0.100-alpha1-015515",
+    "dotnet": "5.0.100-preview.1.20155.7",
     "runtimes": {
       "dotnet": [
         "2.1.7",
@@ -8,21 +8,21 @@
       ]
     },
     "vs": {
-      "version": "16.1"
+      "version": "16.5"
     }
   },
-  "sdk": {
-    "version": "5.0.100-alpha1-015515"
-  },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20161.5",
-    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20161.5"
+    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20201.2",
+    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20201.2"
+  },
+  "sdk": {
+    "version": "5.0.100-preview.1.20155.7"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",
     "net-framework-48-ref-assemblies": "0.0.0.1",
     "dotnet-api-docs_netcoreapp3.0": "0.0.0.2",
-    "msvcurt-c1xx": "0.0.0.8",
+    "msvcurt-c1xx": "0.0.1.2",
     "net-framework-472-iltools": "0.0.0.1"
   }
 }

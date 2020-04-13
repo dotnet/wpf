@@ -10,12 +10,8 @@ Follow the [Building CoreFX on Windows](https://github.com/dotnet/corefx/blob/ma
 
 WPF requires the following workloads and  components be selected when installing Visual Studio:
 
-* Required Workloads:
-  * .NET Desktop Development
-  * Desktop development with C++
-* Required Individual Components:
-  * C++/CLI support
-  * Windows 10 SDK
+* Required Workloads: [wpf.vsconfig](wpf.vsconfig)
+    *  Also see [Import or export installation configurations](https://docs.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2019)
 
 ## Workflow
 

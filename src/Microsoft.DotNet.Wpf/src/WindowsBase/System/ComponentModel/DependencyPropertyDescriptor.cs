@@ -616,11 +616,11 @@ namespace System.ComponentModel
         // Synchronized by "_cache"
         private static Dictionary<object, DependencyPropertyDescriptor> _cache = 
             new Dictionary<object, DependencyPropertyDescriptor>(
-                new ReferenceEqualityComparer()
+                ReferenceEqualityComparer.Instance
             );
         private static Dictionary<object, DependencyPropertyDescriptor> _ignorePropertyTypeCache =
             new Dictionary<object, DependencyPropertyDescriptor>(
-                new ReferenceEqualityComparer()
+                ReferenceEqualityComparer.Instance
             );
 
         #endregion Private Fields

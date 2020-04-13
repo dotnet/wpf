@@ -337,23 +337,7 @@ namespace System.Windows.Media
             private Dictionary<TValue, List<TKey>> revDictionary; 
         }
 
-        // An IEqualityComparer<T> used to compare objects by reference.
-        internal class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
-        {
-            internal static ReferenceEqualityComparer<T> Singleton = new ReferenceEqualityComparer<T>();
-
-            public override bool Equals(T x, T y)
-            {
-                return object.ReferenceEquals(x, y);
-            }
-
-            public override int GetHashCode(T obj)
-            {
-                return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
-            }
-        }
-
-        private static TwoWayDictionary<SolidColorBrush, string> s_knownSolidColorBrushStringCache = new TwoWayDictionary<SolidColorBrush, string>(ReferenceEqualityComparer<string>.Singleton);
+        private static TwoWayDictionary<SolidColorBrush, string> s_knownSolidColorBrushStringCache = new TwoWayDictionary<SolidColorBrush, string>(keyComparer: ReferenceEqualityComparer.Instance);
 #endif 
     }
 }

@@ -643,14 +643,10 @@ namespace System.Windows.Documents
 
             #region SpellerInteropBase.ISpellerSegment
 
-            /// <summary>
             /// <inheritdoc/>
-            /// </summary>
             public string SourceString { get; }
 
-            /// <summary>
             /// <inheritdoc/>
-            /// </summary>
             public string Text => SourceString?.Substring(TextRange.Start, TextRange.Length);
 
             /// <summary>

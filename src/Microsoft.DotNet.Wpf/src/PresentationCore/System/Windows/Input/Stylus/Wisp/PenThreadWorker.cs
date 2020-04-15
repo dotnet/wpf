@@ -1153,6 +1153,7 @@ namespace System.Windows.Input
         {
             Thread.CurrentThread.Name = "Stylus Input";
 
+
             try
             {
                 //
@@ -1164,7 +1165,12 @@ namespace System.Windows.Input
                     Debug.WriteLine(String.Format("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop"));
 #endif
 
-                    WorkerOperation [] workerOps = null;
+                    // We need to ensure that the PenIMC COM objects can be used from this thread.
+                    // Try this every outer loop since we're, generally, about to do management
+                    // operations.
+                    MS.Win32.Penimc.UnsafeNativeMethods.EnsurePenImcClassesActivated();
+
+                    WorkerOperation[] workerOps = null;
 
                     lock(_workerOperationLock)
                     {

@@ -1153,7 +1153,6 @@ namespace System.Windows.Input
         {
             Thread.CurrentThread.Name = "Stylus Input";
 
-
             try
             {
                 //

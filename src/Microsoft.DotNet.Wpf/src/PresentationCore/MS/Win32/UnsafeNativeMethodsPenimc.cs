@@ -608,7 +608,7 @@ namespace MS.Win32.Penimc
         /// <param name="iid">Identifier of the Interface</param>
         /// <returns>Returns the COM object created by CoCreateInstance</returns>
         [return: MarshalAs(UnmanagedType.Interface)]
-        [DllImport(ExternDll.Ole32, ExactSpelling=true, PreserveSig=false)]
+        [DllImport(ExternDll.Ole32, ExactSpelling = true, PreserveSig = false)]
         private static extern object CoCreateInstance(
             [In]
             ref Guid clsid,
@@ -618,6 +618,16 @@ namespace MS.Win32.Penimc
             [In]
             ref Guid iid);
 
+        /// <summary>
+        /// Deactivates the specified Activation Context.
+        /// </summary>
+        /// <remarks>
+        /// See: https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-deactivateactctx
+        /// </remarks>
+        /// <param name="flags">Flags that indicate how the deactivation is to occur.</param>
+        /// <param name="activationCtxCookie">The ULONG_PTR that was passed into the call to ActivateActCtx.
+        /// This value is used as a cookie to identify a specific activated activation context.</param>
+        /// <returns>True on success, false otherwise.</returns>
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, PreserveSig = false)]
         private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);

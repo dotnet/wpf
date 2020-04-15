@@ -92,7 +92,16 @@ namespace MS.Win32.Penimc
 
         /// <summary>
         /// Make sure we load penimc.dll from WPF's installed location to avoid two instances of it.
+        /// 
+        /// Add an activation context to the thread's stack to ensure the registration-free COM objects
+        /// are available.
         /// </summary>
+        /// <remarks>
+        /// PenIMC COM objects are only directly used (functions called on their interfaces) from inside the
+        /// PenThread.  As such, the PenThreads need to create the activation context.  The various Dispatcher
+        /// threads need not do so as they merely pass the RCWs around in manged objects and will only use
+        /// them via operations queued on their associated PenThread.
+        /// </remarks>
         internal static void EnsurePenImcClassesActivated()
         {
             if (_pimcActCtxCookie == IntPtr.Zero)

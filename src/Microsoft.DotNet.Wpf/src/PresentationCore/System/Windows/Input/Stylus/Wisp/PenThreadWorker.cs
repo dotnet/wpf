@@ -1289,6 +1289,9 @@ namespace System.Windows.Input
                     _pimcContexts[i].ShutdownComm();
                 }
 
+                // Ensure that any activation contexts used on this thread are cleaned.
+                MS.Win32.Penimc.UnsafeNativeMethods.DeactivatePenImcClasses();
+
                 // Make sure the _pimcResetHandle is still valid after Dispose is called and before
                 // our thread exits.
                 GC.KeepAlive(this);

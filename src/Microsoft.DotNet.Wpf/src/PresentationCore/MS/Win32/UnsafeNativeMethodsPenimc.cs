@@ -75,6 +75,12 @@ namespace MS.Win32.Penimc
         [ThreadStatic]
         private static IPimcManager3 _pimcManagerThreadStatic;
 
+        /// <summary>
+        /// The cookie for the PenIMC activation context.
+        /// </summary>
+        [ThreadStatic]
+        private static IntPtr _pimcActCtxCookie = IntPtr.Zero;
+
         #endregion
 
         #region PenIMC
@@ -87,25 +93,40 @@ namespace MS.Win32.Penimc
         /// <summary>
         /// Make sure we load penimc.dll from WPF's installed location to avoid two instances of it.
         /// </summary>
-        static UnsafeNativeMethods()
+        private static void EnsurePenImcClassesActivated()
         {
-            // Register PenIMC for SxS COM for the lifetime of the process. No need to store the 
-            // cookie; PenIMC's ActivationContext will never be removed from the ActivationContext 
-            // stack.
-            //
-            // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
-            // succeeds, or IntPtr.Zero if SxS registration fails.
-            if (IntPtr.Zero == RegisterDllForSxSCOM())
+            if (_pimcActCtxCookie == IntPtr.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                // Register PenIMC for SxS COM for the lifetime of the thread.
+                //
+                // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
+                // succeeds, or IntPtr.Zero if SxS registration fails.
+                if ((_pimcActCtxCookie = RegisterDllForSxSCOM()) == IntPtr.Zero)
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                }
+
+                // Ensure PenIMC loaded from the correct location.
+                var uncheckedDlls = WpfDllVerifier.VerifyWpfDllSet(ExternDll.Penimc);
+
+                if (uncheckedDlls.Contains(ExternDll.Penimc))
+                {
+                    throw new DllNotFoundException(SR.Get(SRID.PenImcDllVerificationFailed, ExternDll.Penimc));
+                }
             }
+        }
 
-            // Ensure PenIMC loaded from the correct location.
-            var uncheckedDlls = WpfDllVerifier.VerifyWpfDllSet(ExternDll.Penimc);
-
-            if (uncheckedDlls.Contains(ExternDll.Penimc))
+        /// <summary>
+        /// Deactivates the activation context for PenIMC objects.
+        /// </summary>
+        internal static void DeactivatePenImcClasses()
+        {
+            if (_pimcActCtxCookie != IntPtr.Zero)
             {
-                throw new DllNotFoundException(SR.Get(SRID.PenImcDllVerificationFailed, ExternDll.Penimc));
+                if(DeactivateActCtx(0, _pimcActCtxCookie))
+                {
+                    _pimcActCtxCookie = IntPtr.Zero;
+                }
             }
         }
 
@@ -129,6 +150,8 @@ namespace MS.Win32.Penimc
         /// </summary>
         private static IPimcManager3 CreatePimcManager()
         {
+            EnsurePenImcClassesActivated();
+
             // Instantiating PimcManager using "new PimcManager()" results
             // in calling CoCreateInstanceForApp from an immersive process
             // (like designer). Such a call would fail because PimcManager is not
@@ -157,6 +180,8 @@ namespace MS.Win32.Penimc
         {
             if (OSVersionHelper.IsOsWindows8OrGreater)
             {
+                EnsurePenImcClassesActivated();
+
                 if (!LockWispObjectFromGit(gitKey))
                 {
                     throw new InvalidOperationException();
@@ -173,6 +198,8 @@ namespace MS.Win32.Penimc
         {
             if (OSVersionHelper.IsOsWindows8OrGreater)
             {
+                EnsurePenImcClassesActivated();
+
                 if (!UnlockWispObjectFromGit(gitKey))
                 {
                     throw new InvalidOperationException();
@@ -192,6 +219,7 @@ namespace MS.Win32.Penimc
         /// <param name="manager">The manager to release the lock for.</param>'
         private static void ReleaseManagerExternalLockImpl(IPimcManager3 manager)
         {
+            EnsurePenImcClassesActivated();
             IPimcTablet3 unused = null;
             manager.GetTablet(ReleaseManagerExt, out unused);
         }
@@ -205,6 +233,7 @@ namespace MS.Win32.Penimc
         {
             if (_pimcManagerThreadStatic != null)
             {
+                EnsurePenImcClassesActivated();
                 ReleaseManagerExternalLockImpl(_pimcManagerThreadStatic);
             }
         }
@@ -215,6 +244,7 @@ namespace MS.Win32.Penimc
         /// <param name="tablet">The tablet to call through</param>
         internal static void SetWispManagerKey(IPimcTablet3 tablet)
         {
+            EnsurePenImcClassesActivated();
             UInt32 latestKey = QueryWispKeyFromTablet(GetWispManagerKey, tablet);
 
             // Assert here to ensure that every call through to this specific manager has the same
@@ -233,6 +263,7 @@ namespace MS.Win32.Penimc
         {
             if (!_wispManagerLocked && _wispManagerKey.HasValue)
             {
+                EnsurePenImcClassesActivated();
                 CheckedLockWispObjectFromGit(_wispManagerKey.Value);
                 _wispManagerLocked = true;
             }
@@ -245,6 +276,7 @@ namespace MS.Win32.Penimc
         {
             if (_wispManagerLocked && _wispManagerKey.HasValue)
             {
+                EnsurePenImcClassesActivated();
                 CheckedUnlockWispObjectFromGit(_wispManagerKey.Value);
                 _wispManagerLocked = false;
             }
@@ -263,6 +295,8 @@ namespace MS.Win32.Penimc
         {
             int unused = 0;
 
+            EnsurePenImcClassesActivated();
+
             // Call through with special param to release the external lock on the tablet.
             tablet.GetCursorButtonCount(LockTabletExt, out unused);
         }
@@ -275,6 +309,8 @@ namespace MS.Win32.Penimc
         internal static void ReleaseTabletExternalLock(IPimcTablet3 tablet)
         {
             int unused = 0;
+
+            EnsurePenImcClassesActivated();
 
             // Call through with special param to release the external lock on the tablet.
             tablet.GetCursorButtonCount(ReleaseTabletExt, out unused);
@@ -289,6 +325,8 @@ namespace MS.Win32.Penimc
         private static UInt32 QueryWispKeyFromTablet(int keyType, IPimcTablet3 tablet)
         {
             int key = 0;
+
+            EnsurePenImcClassesActivated();
 
             tablet.GetCursorButtonCount(keyType, out key);
 
@@ -307,6 +345,8 @@ namespace MS.Win32.Penimc
         /// <returns>The GIT key for the WISP Tablet</returns>
         internal static UInt32 QueryWispTabletKey(IPimcTablet3 tablet)
         {
+            EnsurePenImcClassesActivated();
+
             return QueryWispKeyFromTablet(GetWispTabletKey, tablet);
         }
 
@@ -586,7 +626,8 @@ namespace MS.Win32.Penimc
         /// <param name="context">Context in which the newly created object will run</param>
         /// <param name="iid">Identifier of the Interface</param>
         /// <returns>Returns the COM object created by CoCreateInstance</returns>
-        [return: MarshalAs(UnmanagedType.Interface)][DllImport(ExternDll.Ole32, ExactSpelling=true, PreserveSig=false)]
+        [return: MarshalAs(UnmanagedType.Interface)]
+        [DllImport(ExternDll.Ole32, ExactSpelling=true, PreserveSig=false)]
         private static extern object CoCreateInstance(
             [In]
             ref Guid clsid,
@@ -595,6 +636,10 @@ namespace MS.Win32.Penimc
             int context,
             [In]
             ref Guid iid);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(ExternDll.Kernel32, ExactSpelling = true, PreserveSig = false)]
+        private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);
     }
 
 #if OLD_ISF

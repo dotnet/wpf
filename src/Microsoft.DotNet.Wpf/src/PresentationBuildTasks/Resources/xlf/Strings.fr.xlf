@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
+        <target state="translated">MC1005 : AssemblyVersion non valide détecté : {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -779,7 +779,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">MC3086 : l'élément parent ou la propriété '{0}' nécessite un îlot de données XML. Pour distinguer un îlot XML du XAML environnant, incluez dans un wrapper l'îlot de données XML dans &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">MC3086 : l'élément parent ou la propriété '{0}' nécessite un îlot de données XML. Pour distinguer un îlot XML du XAML environnant, enveloppez l'îlot de données XML dans &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">

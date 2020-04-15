@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="new">MC1005: Invalid AssemblyVersion detected: {0}.</target>
+        <target state="translated">MC1005：偵測到無效的 AssemblyVersion: {0}。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -304,7 +304,7 @@
       </trans-unit>
       <trans-unit id="NamedResDictItemWarning">
         <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
-        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為執行個體化已延後。</target>
+        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為具現化已延後。</target>
         <note />
       </trans-unit>
       <trans-unit id="NonClsError">

@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="translated">MC1005: la versione dell'assembly rilevata {0} non è valida.</target>
+        <target state="translated">MC1005: il valore di AssemblyVersion rilevato non è valido: {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">

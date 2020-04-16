@@ -181,7 +181,7 @@ namespace System.Windows.Input
         private static bool? _isPointerStackEnabled = null;
 
         // Caches TransformToDevice matrices per DpiScale2
-        Dictionary<DpiScale2, Matrix> _transformToDeviceMatrices = new Dictionary<DpiScale2, Matrix>();
+        private readonly Dictionary<DpiScale2, Matrix> _transformToDeviceMatrices = new Dictionary<DpiScale2, Matrix>();
 
         #endregion
 

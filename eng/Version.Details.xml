@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-preview.4.20221.5">
+    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-preview.4.20222.3">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>a952e17bb0d3e6d1c795697419fc41c2ca3be430</Sha>
+      <Sha>8c3de4c0ab12cb006515a234b0ef828d498f8b4a</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-preview.4.20220.4">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>

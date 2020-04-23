@@ -29,20 +29,30 @@
       PresentationFramework.Luna;
       PresentationFramework.Royale;
       WindowsFormsIntegration;
-    </ExternalShippingProjects>
-
-    <InternalShippingProjects>
       PenImc;
-      PresentationNative;
-      WpfGfx;
+      wpfgfx;
       D3DCompiler;
       VCRuntime
-    </InternalShippingProjects>
+    </ExternalShippingProjects>
 
+    <InternalShippingLibProjects>
+      $(InternalShippingLibProjects);
+      bilinearspan
+    </InternalShippingLibProjects>
+    
+    <InternalShippingProjects>
+    $(InternalShippingLibProjects);
+      PresentationNative;
+    </InternalShippingProjects>
+    
     <ShippingProjects>
       $(ExternalShippingProjects);
       $(InternalShippingProjects)
     </ShippingProjects>
+
+    <ShippingLibProjects>
+      $(InternalShippingLibProjects);
+    </ShippingLibProjects>
 
     <ExcludeFromXlfLocalization>
       D3DCompiler;
@@ -172,11 +182,13 @@
     <EnableXlfLocalization>false</EnableXlfLocalization>
     <EnableXlfLocalization Condition="'$(IsShipping)'=='true' And !$(ExcludeFromXlfLocalization.Contains('$(NormalizedMSBuildProjectName)'))">true</EnableXlfLocalization>
 
-    <RepoLocation Condition="$(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
-    <RepoLocation Condition="$(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
+    <RepoLocation Condition="'$(RepoLocation)' == '' And $(InternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">Internal</RepoLocation>
+    <RepoLocation Condition="'$(RepoLocation)' == '' And $(ExternalShippingProjects.Contains('$(NormalizedMSBuildProjectName)'))">External</RepoLocation>
  
     <!-- WindowsDesktopSdk overrides Internal, External etc. -->
     <RepoLocation Condition="$(WindowsDesktopSdkProject.Contains('$(NormalizedMSBuildProjectName)'))">WindowsDesktopSdk</RepoLocation>
+
+    <IncludeLibFilesInPackaging Condition="$(ShippingLibProjects.Contains('$(NormalizedMSBuildProjectName)'))">true</IncludeLibFilesInPackaging>
   </PropertyGroup>
 
 </Project>

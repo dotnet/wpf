@@ -1,7 +1,7 @@
 Compat issues with assembly WindowsBase:
 CannotRemoveBaseTypeOrInterface : Type 'System.ComponentModel.PropertyFilterAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.IO.FileFormatException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-MembersMustExist : Member 'System.IO.Packaging.Package..ctor(System.IO.FileAccess, System.Boolean)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'protected void System.IO.Packaging.Package..ctor(System.IO.FileAccess, System.Boolean)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.MediaPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.WebBrowserPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.RightsManagement.RightsManagementException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.

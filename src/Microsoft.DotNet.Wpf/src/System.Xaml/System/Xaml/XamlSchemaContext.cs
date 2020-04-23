@@ -513,7 +513,7 @@ namespace System.Xaml
             get
             {
                 if (_masterTypeList == null)
-                    Interlocked.CompareExchange(ref _masterTypeList, CreateDictionary<Type, XamlType>(ReferenceEqualityComparer<Type>.Singleton), null);
+                    Interlocked.CompareExchange(ref _masterTypeList, CreateDictionary<Type, XamlType>(ReferenceEqualityComparer.Instance), null);
                 return _masterTypeList;
             }
         }
@@ -728,7 +728,7 @@ namespace System.Xaml
             get
             {
                 if (_xmlnsInfo == null)
-                    Interlocked.CompareExchange(ref _xmlnsInfo, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer<Assembly>.Singleton), null);
+                    Interlocked.CompareExchange(ref _xmlnsInfo, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 return _xmlnsInfo;
             }
         }
@@ -766,7 +766,7 @@ namespace System.Xaml
             {
                 if (_xmlnsInfoForUnreferencedAssemblies == null)
                 {
-                    Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer<Assembly>.Singleton), null);
+                    Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 }
                 return _xmlnsInfoForUnreferencedAssemblies;
             }

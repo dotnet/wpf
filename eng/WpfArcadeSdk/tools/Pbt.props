@@ -58,5 +58,6 @@
   
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
         Project="../targets/Microsoft.WinFx.props"
-        Condition="!Exists('$(LocalMicrosoftWinFXProps)')"/>
+        Condition="!Exists('$(LocalMicrosoftWinFXProps)') And 
+                    Exists('../targets/Microsoft.WinFx.props')"/>
 </Project>

@@ -7,6 +7,27 @@
     <TaskFactoryAssemblyToUse Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll</TaskFactoryAssemblyToUse>
   </PropertyGroup>
   
+  <!-- 
+    Summary:
+      Selects @(Item2) items that are present in @(Item1). In effect, calculates 
+      set subtraction:
+      
+              Result = Item2 - Item1
+
+    Parameters:
+      @(Item1)                ITaskItem[]   Required
+      PreserveItem1Metadata   Bool          Optional    Preserves item-metadata from @(Item1) in @(Result)
+      
+      @(Item2)                ITaskItem[]   Required
+      Metadata2               String        Required
+      PreserveItem2Metadata   Bool          Optional    Preserves item-metadata from @(Item2) in @(Result)
+      
+      TreatItemsAsPaths       Bool          Optional
+      
+    Outputs:
+      @(Result)               ITaskItem[]
+      @(UnmatchedReferences)  ITaskItem[]
+  --> 
   <UsingTask TaskName="FilterItem1ByItem2"
                TaskFactory="$(TaskFactoryToUse)"
                AssemblyFile="$(TaskFactoryAssemblyToUse)">

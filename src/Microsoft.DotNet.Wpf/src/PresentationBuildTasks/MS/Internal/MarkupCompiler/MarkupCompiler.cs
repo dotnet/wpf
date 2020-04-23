@@ -762,6 +762,13 @@ namespace MS.Internal
 
         internal void OnError(Exception e)
         {
+            // Don't treat an AssemblyVersion parsing error as a XamlParseException.
+            // Throw it back to the task execution.
+            if(e is AssemblyVersionParseException)
+            {
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
+            }
+
             if (Error != null)
             {
                 XamlParseException xe = e as XamlParseException;
@@ -2596,8 +2603,31 @@ namespace MS.Internal
 
             string uriPart = string.Empty;
 
-            string version = String.IsNullOrEmpty(AssemblyVersion) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
-            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) ? String.Empty : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
+            // Attempt to parse out the AssemblyVersion if it exists.  This validates that we can either use an empty version string (wildcards exist)
+            // or we can utilize the passed in string (valid parse).
+            if (!VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, version: out _, out bool hasWildcard)
+                && !string.IsNullOrWhiteSpace(AssemblyVersion))
+            {
+                throw new AssemblyVersionParseException(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
+            }
+
+            // In .NET Framework (non-SDK-style projects), the process to use a wildcard AssemblyVersion is to do the following:
+            //   - Modify the AssemblyVersionAttribute to a wildcard string (e.g. "1.2.*")
+            //   - Set Deterministic to false in the build
+            // During MarkupCompilation, the AssemblyVersion property would not be set and WPF would correctly generate a resource URI without a version.
+            // In .NET Core/5 (or .NET Framework SDK-style projects), the same process can be used if GenerateAssemblyVersionAttribute is set to false in 
+            // the build.  However, this isn't really the idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the 
+            // AssemblyVersion build property.  If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use 
+            // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have 
+            // when the developer sets a wildcard version string via AssemblyVersionAttribute and use an empty string.
+            string version = hasWildcard || String.IsNullOrEmpty(AssemblyVersion)
+                ? String.Empty 
+                : COMPONENT_DELIMITER + VER + AssemblyVersion;
+
+            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) 
+                ? String.Empty 
+                : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
+            
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 
             //

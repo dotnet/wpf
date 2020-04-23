@@ -86,7 +86,6 @@
     <Compile Include="MS\Internal\ComponentModel\PropertyChangeTracker.cs" />
     <Compile Include="MS\Internal\ComponentModel\PropertyDescriptorComparer.cs" />
     <Compile Include="MS\Internal\ComponentModel\PropertyKey.cs" />
-    <Compile Include="MS\Internal\ComponentModel\ReferenceEqualityComparer.cs" />
     <Compile Include="MS\Internal\ContentType.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CriticalExceptions.cs " />
     <Compile Include="MS\Internal\DefaultValueFactory.cs" />

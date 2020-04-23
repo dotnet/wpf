@@ -33,3 +33,8 @@ if ((Get-Variable -Name 'properties' -Scope Script -ErrorAction Ignore))
 $binaryLog = $true
 $DoNotAbortNativeToolsInstallationOnFailure = $true
 $DoNotDisplayNativeToolsInstallationWarnings =$true
+
+if ((Get-Variable -Name 'platform' -Scope Script -ErrorAction Ignore)) {
+    $platformSuffix = if ($platform) { "$platform" } else { '' }
+    $LogDir = (Join-Path $LogDir $platformSuffix)
+}

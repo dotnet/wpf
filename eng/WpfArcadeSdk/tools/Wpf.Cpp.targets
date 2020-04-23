@@ -11,13 +11,28 @@
     <ClCompile>
       <AdditionalIncludeDirectories Condition="Exists('$(WpfSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfSharedDir)inc\</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="Exists('$(WpfCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfCommonDir)inc\</AdditionalIncludeDirectories>
+
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfTransportedSharedDir)inc\')">%(AdditionalIncludeDirectories);$(WpfTransportedSharedDir)inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="Exists('$(WpfTransportedCommonDir)inc\')">%(AdditionalIncludeDirectories);$(WpfTransportedCommonDir)inc\</AdditionalIncludeDirectories>
+
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory);$(WpfTracingDir)native\</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(WpfSharedDir)inc\ddbanned.h</ForcedIncludeFiles>
+
+      <!-- 
+        Workaround for https://github.com/dotnet/arcade/issues/4763
+        Embed PDB's into the .lib files directly using /Z7 when building out of 
+        dotnet-wpf-int repo
+      -->
+      <DebugInformationFormat Condition="'$(ManagedCxx)' != 'true' and 
+                                         '$(ConfigurationType)' == '$(StaticLibrary)' and
+                                         '$(RepositoryName)' == 'dotnet-wpf-int'">oldStyle</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  
+  
 
   <!-- 
     Support for /linkrepro
@@ -171,13 +186,13 @@ END
   <!--
    This target is a replacement for GenerateTargetFrameworkMonikerAttribute defined in Microsoft.BuildSteps.Targets
    We needed to ensure a few preconditions for this target, which necessitated a custom version to be written
-      - this  target has to execute prior to SetMscorlibAdditionalUsingDirectory
+      - this  target has to execute prior to ResolveAssemblyReferences
       InitializeAssemblyAttributeInformation (defined in ExtendedAssemblyInfo.targets) must run prior to this target, to ensure that $(FileVersion) is populated
       Additional assembly scope attributes besides TargetFrameworkAttribute are added here 
   -->
   <Target Name="GenerateTargetFrameworkMonikerAttribute2"
       Condition="'$(ManagedCxx)'=='true'"
-          BeforeTargets="SetMscorlibAdditionalUsingDirectory"
+          BeforeTargets="ResolveAssemblyReferences"
           DependsOnTargets="PrepareForBuild;GetReferenceAssemblyPaths;InitializeAssemblyAttributeInformation"
           Outputs="$(TargetFrameworkMonikerAssemblyAttributesPath)">
 
@@ -249,33 +264,6 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
-  <!-- Remove mscorlib from AdditionalExplicitAssemblyReferences -->
-  <Target Name="RemoveMscoreLib"
-          AfterTargets="_PrepareForReferenceResolution"
-          DependsOnTargets="$(RemoveMscoreLibDependsOn)"
-          Condition="('$(ManagedCxx)'=='true') and $(TargetFramework.StartsWith('netcoreapp'))">
-    <ItemGroup>
-      <_AdditionalExplicitAssemblyReferences Include="$(AdditionalExplicitAssemblyReferences)" />
-      <_AdditionalExplicitAssemblyReferences Remove="mscorlib" />
-    </ItemGroup>
-    <PropertyGroup>
-      <AdditionalExplicitAssemblyReferences>@(_AdditionalExplicitAssemblyReferences)</AdditionalExplicitAssemblyReferences>
-    </PropertyGroup>
-  </Target>
-
-  <!-- Add the directory where mscorlib is located to AdditionalUsingDirectories -->
-  <Target Name="SetMscorlibAdditionalUsingDirectory" DependsOnTargets="ResolveAssemblyReferences"
-          Condition="('$(ManagedCxx)'=='true') and ('$(SetMscorlibAdditionalUsingDirectory)' != 'true')" >
-    <PropertyGroup>
-      <_mscorlibDirectory Condition="'%(ReferencePath.FileName)%(ReferencePath.Extension)' == 'mscorlib.dll'">%(ReferencePath.RootDir)%(ReferencePath.Directory)</_mscorlibDirectory>
-    </PropertyGroup>
-    <Error Condition="'$(_mscorlibDirectory)' == ''" Text="Could not locate mscorlib.dll" />
-    <ItemGroup>
-      <CLCompile>
-        <AdditionalUsingDirectories>%(CLCompile.AdditionalUsingDirectories);$(_mscorlibDirectory)</AdditionalUsingDirectories>
-      </CLCompile>
-    </ItemGroup>
-  </Target>
 
   <PropertyGroup Condition="'$(ManagedCxx)'=='true'">
     <ResolveReferencesDependsOn>
@@ -333,26 +321,11 @@ using namespace System::Runtime::Versioning;
         </Text>
       </CppClrSupportProject>
 
-      <!-- 
-        We need a reference to Microsoft.DotNet.Wpf.GitHub when building from dotnet-wpf-int. 
-        When building from dotnet/wpf, this refernece is not needed.
-      -->
-      <CppClrSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference" Condition="'$(RepoLocation)'=='Internal'">
-        <Text>
-          <![CDATA[
-   <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(MicrosoftDotNetWpfGitHubPackage)" Version="$(MicrosoftDotNetWpfGitHubVersion)" />
-  </ItemGroup>
-  ]]>
-        </Text>
-      </CppClrSupportProject>
+
       <CppClrSupportProject Include="ProjectBody">
         <Text>
           <![CDATA[
-  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
-  <PropertyGroup>
-    <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
-  </PropertyGroup>
+
   
   <Target Name="EnumerateAdditionalNugetReference"
           BeforeTargets="_GenerateRestoreGraph"
@@ -378,8 +351,6 @@ using namespace System::Runtime::Versioning;
 <!-- Save Microsoft.NETCore.App assemblies and return them -->
     <ItemGroup>
       <NugetReferencesForCppCli Remove="%40(NugetReferencesForCppCli)" />
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='Microsoft.NETCore.App'"/>
-      <NugetReferencesForCppCli Include="%40(ReferencePath)" Condition="'%25(ReferencePath.NuGetPackageId)'=='runtime.%24(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Github'"/>
     </ItemGroup>
     <FilterItem1ByItem2 Item1="%40(ReferencePath->'%25(NuGetPackageId)')"
                         PreserveItem1Metadata="true"
@@ -436,6 +407,157 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
   </Target>
 
+
+  <PropertyGroup Condition="'$(ManagedCxx)'!='true'">
+    <ResolveReferencesDependsOn>
+      CppHelper;
+      $(ResolveReferencesDependsOn)
+    </ResolveReferencesDependsOn>
+    <EnsureWpfProjectReferenceDependsOn>
+      $(EnsureWpfProjectReferenceDependsOn);
+      CppHelper
+    </EnsureWpfProjectReferenceDependsOn>
+  </PropertyGroup>
+
+  <!-- 
+    Helper for building C++ projects that may require references from Microsoft.DotNet.Wpf.DncEng
+    transport package
+    
+    C++ does not have NuGet support for build on .NET Core
+    We use existing support for C# to discover Nuget packages, and pass it along to
+    the C++ compiler. 
+    
+    A simple C# project is generated dynamically. It contains a PackageReference for RID specific
+    Microsoft.DotNet.Wpf.DncEng package. 
+
+   The main purpose of this target is to restore the package with PathProperty=true. As a side-effect, 
+   we will also generate an Item @(NuGetReferencesForCpp) from IdentifyNuGetReferences target, which
+   will be used by ResolveMicrosoftDotNetWpfDncEngReferencesForCpp
+
+   Note: 
+    Test for "$(RepoLocation) != Internal" rather than "$(RepoLocation) == External"
+    The former form is more reliable. 
+
+  -->
+  <Target Name="CppHelper"
+          Returns="@(NuGetReferencesForCpp)"
+          Condition="'$(ManagedCxx)' != 'true' and '$(RepoLocation)' != 'Internal'">
+
+    <PropertyGroup>
+      <CppHelperProject>$(IntermediateOutputPath)CppSupport\CppSupport_$(MSBuildProjectName).csproj</CppHelperProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <CppSupportProject Include="ProjectHeader">
+        <!-- 
+            In the CDATA section that follows, 
+              %40 ~= @
+              %25 ~= % 
+              %3B ~= ;
+              %24 ~= $
+          -->
+        <Text>
+          <![CDATA[
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU%3Bx64</Platforms>
+  </PropertyGroup>
+  ]]>
+        </Text>
+      </CppSupportProject>
+      
+      <!-- 
+        We need a reference to Microsoft.DotNet.Wpf.GitHub 
+      -->
+      <CppSupportProject Include="MicrosoftDotNetWpfGitHubPackageReference">
+        <Text>
+          <![CDATA[
+   <ItemGroup>
+      <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(DncEngTransportPackageName)"
+                        Condition="'$(MicrosoftDotNetWpfDncEngVersion)' != ''"
+                        Version="$(MicrosoftDotNetWpfDncEngVersion)" 
+                        GeneratePathProperty="true" />
+  </ItemGroup>
+  ]]>
+        </Text>
+      </CppSupportProject>
+      
+      <CppSupportProject Include="ProjectBody">
+        <Text>
+          <![CDATA[
+  <!-- Ensure that LimitMicrosoftDotNetWpfGitHubReferences target doesn't run --> 
+  <PropertyGroup>
+    <DoNotLimitMicrosoftDotNetWpfGitHubReferences>true</DoNotLimitMicrosoftDotNetWpfGitHubReferences>
+  </PropertyGroup>
+  
+<Target
+    Name="IdentifyNuGetReferences"
+    AfterTargets="ResolveAssemblyReferences"
+    Returns="%40(NuGetReferencesForCpp)">
+
+   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
+   </PropertyGroup>
+   
+   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x86' Or '%24(WpfRuntimeIdentifier)'=='win-x86'">%24(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x86\native\</WpfDncEngRidSpecificLibPath>
+      <WpfDncEngRidSpecificLibPath Condition="'%24(RuntimeIdentifier)'=='win-x64' Or '%24(WpfRuntimeIdentifier)'=='win-x64'">%24(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\win-x64\native\</WpfDncEngRidSpecificLibPath>
+   </PropertyGroup>
+   
+<!-- Save Microsoft.NETCore.App assemblies and return them -->
+    <ItemGroup>
+      <NuGetReferencesForCpp Remove="%40(NuGetReferencesForCpp)" />
+      <NuGetReferencesForCpp Include="%24(WpfDncEngRidSpecificLibPath)**\*.*" />
+    </ItemGroup>
+  </Target>
+</Project>
+        ]]>
+        </Text>
+      </CppSupportProject>
+    </ItemGroup>
+
+    <MakeDir Condition="!Exists('$(IntermediateOutputPath)CppSupport\')"
+             Directories="$(IntermediateOutputPath)CppSupport\" />
+
+    <Delete Files="$(CppHelperProject)" Condition="Exists('$(CppHelperProject)')" />
+
+    <WriteLinesToFile Lines="%(CppSupportProject.Text)"
+                      File="$(CppHelperProject)"
+                      Overwrite="false"/>
+
+    <!-- 
+    Do not build - just ask IdentifyNetCoreReferences for the information
+    we are looking for, namely the list of .NET Core Sdk references. 
+    -->
+    <ItemGroup>
+      <ProjectToBuild Remove="@(ProjectToBuild)" />
+      <ProjectToBuild Include="$(CppHelperProject)" />
+    </ItemGroup>
+    <PropertyGroup>
+      <TfmForBuild>$(TargetFramework)</TfmForBuild>
+      <TfmForBuild Condition="'$(TfmForBuild)'==''">netcoreapp5.0</TfmForBuild>
+    </PropertyGroup>
+    <!-- Restore, then IdentifyNuGetReferences -->
+    <MSBuild Projects="@(ProjectToBuild)" UnloadProjectsOnCompletion="true"
+             Targets="Restore"
+             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture);IsRestoring=true" />
+    
+    <MSBuild Projects="@(ProjectToBuild)"
+         Targets="IdentifyNuGetReferences"
+         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
+      <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
+    </MSBuild>
+
+    <!-- Update with file path -->
+    <ItemGroup>
+      <NugetReferencesForCpp Update="@(NuGetReferencesForCpp)">
+        <FilePath>%(NuGetReferencesForCpp.FullPath)</FilePath>
+      </NugetReferencesForCpp>
+    </ItemGroup>
+  </Target>
+
   <PropertyGroup Condition="'$(LinkRepro)'=='true'">
     <BeforeLinkTargets>
       $(BeforeLinkTargets);
@@ -448,9 +570,24 @@ using namespace System::Runtime::Versioning;
     <MakeDir Directories="$(IntermediateOutputPath)LinkRepro\" />
   </Target>
 
-  <!-- Disable the portions of MSBuild that insist on a targeting pack directory to represent a target framework -->
-  <Import Project="..\targets\Microsoft.NET.DisableStandardFrameworkResolution.targets" Sdk="Microsoft.NET.Sdk"
-          Condition="'$(ManagedCxx)'=='true'" />
+  <PropertyGroup>
+    <BeforeClCompileTargets>
+      UseOldStyleDebugInformationFormat;
+      $(BeforeClCompileTargets)
+    </BeforeClCompileTargets>
+  </PropertyGroup>
+  
+  <Target Name="UseOldStyleDebugInformationFormat"
+          Condition="'$(RepositoryName)'=='dotnet-wpf-int'    And
+                     '$(ConfigurationType)' =='StaticLibrary' And
+                     '$(ManagedCxx)' != 'true'">
+    <ItemGroup>
+      <ClCompile Update="@(ClCompile)">
+        <DebugInformationFormat>oldStyle</DebugInformationFormat>
+      </ClCompile>
+    </ItemGroup>
+  </Target>
+
 
   <Import Project="$(MSBuildThisFileDirectory)ResourceLinking.targets" />
 </Project>

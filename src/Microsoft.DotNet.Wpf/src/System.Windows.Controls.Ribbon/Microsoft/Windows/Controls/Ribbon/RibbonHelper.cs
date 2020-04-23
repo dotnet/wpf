@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -1059,7 +1059,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                             // popups when both active source and current captured is
                             // null due to clicking some where else should be handled by
                             // click through event handler.
-                            ReacquireCapture(targetCapture, targetFocus);
+                            if (!ReacquireCapture(targetCapture, targetFocus))
+                            {
+                                // call the setter if we couldn't reacquire capture
+                                setter(false);
+                            }
                             e.Handled = true;
                         }
                         else
@@ -1078,7 +1082,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         // If a descendant of targetCapture is losing capture
                         // then take capture on targetCapture
-                        ReacquireCapture(targetCapture, targetFocus);
+                        if (!ReacquireCapture(targetCapture, targetFocus))
+                        {
+                            // call the setter if we couldn't reacquire capture
+                            setter(false);
+                        }
                         e.Handled = true;
                     }
                     else if (!IsCaptureInSubtree(targetCapture))
@@ -1092,13 +1100,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        private static void ReacquireCapture(UIElement targetCapture, UIElement targetFocus)
+        private static bool ReacquireCapture(UIElement targetCapture, UIElement targetFocus)
         {
-            Mouse.Capture(targetCapture, CaptureMode.SubTree);
-            if (targetFocus != null && !targetFocus.IsKeyboardFocusWithin)
+            bool success = Mouse.Capture(targetCapture, CaptureMode.SubTree);
+            if (success && targetFocus != null && !targetFocus.IsKeyboardFocusWithin)
             {
                 targetFocus.Focus();
             }
+            return success;
         }
 
         public static bool IsMousePhysicallyOver(UIElement element)

@@ -115,17 +115,13 @@ jobs:
           Build_Debug_x86:
             _BuildConfig: Debug
             # override some variables for debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
+            # _SignType has to be real for package publishing to succeed - do not override to test.
           Build_Release_x86:
             _BuildConfig: Release
           Build_Debug_x64:
             _BuildConfig: Debug
             # override some variables for debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
+            # _SignType has to be real for package publishing to succeed - do not override to test.
             _Platform: x64
           Build_Release_x64:
             _BuildConfig: Release

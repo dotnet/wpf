@@ -430,7 +430,7 @@ namespace MS.Win32.Pointer
         }
 
         /// <summary>
-        /// Data about the manipulation that has occured.
+        /// Data about the manipulation that has occurred.
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct MANIPULATION_TRANSFORM
@@ -523,13 +523,13 @@ namespace MS.Win32.Pointer
         #region WM_POINTER
 
         /// <summary>
-        /// Gets the list of pointer devices currently installed on the system.  Analagous to TabletDevice for WPF.
+        /// Gets the list of pointer devices currently installed on the system. Analogous to TabletDevice for WPF.
         /// </summary>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDevices", SetLastError = true)]
         internal static extern bool GetPointerDevices([In, Out] ref UInt32 deviceCount, [In, Out] POINTER_DEVICE_INFO[] devices);
 
         /// <summary>
-        /// Gets the set of cursors (analagous to a StylusDevice for WPF) for a pointer device (TabletDevice).
+        /// Gets the set of cursors (analogous to a StylusDevice for WPF) for a pointer device (TabletDevice).
         /// </summary>
         [DllImport(DllImport.User32, EntryPoint = "GetPointerDeviceCursors", SetLastError = true)]
         internal static extern bool GetPointerDeviceCursors([In] IntPtr device, [In, Out] ref UInt32 cursorCount, [In, Out] POINTER_DEVICE_CURSOR_INFO[] cursors);

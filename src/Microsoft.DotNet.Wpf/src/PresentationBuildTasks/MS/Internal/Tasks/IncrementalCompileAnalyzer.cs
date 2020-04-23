@@ -15,6 +15,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 using Microsoft.Build.Tasks.Windows;
@@ -389,13 +390,22 @@ namespace MS.Internal.Tasks
                 {
                     numLocalTypeXamls = CompilerLocalReference.LocalMarkupPages.Length;
 
-                    for (int i = 0; i < CompilerLocalReference.LocalMarkupPages.Length; i++)
+                    // Under incremental builds of SDK projects, we can have a state where the cache contains some XAML files but the Page blob
+                    // no longer contains them.  To avoid attempting to recompile a file that no longer exists, ensure that any cached XAML file
+                    // still exists in the Page blob prior to queuing it up for recompilation.
+                    HashSet<string> localMarkupPages = new HashSet<string>(_mcPass1.PageMarkup.Select(x => x.GetMetadata(SharedStrings.FullPath)), StringComparer.OrdinalIgnoreCase);
+
+                    for (int i = 0; i < numLocalTypeXamls; i++)
                     {
                         LocalReferenceFile localRefFile = CompilerLocalReference.LocalMarkupPages[i];
-                        recompiledXaml.Add(new FileUnit(
-                                                localRefFile.FilePath, 
-                                                localRefFile.LinkAlias, 
-                                                localRefFile.LogicalName));
+
+                        if (localMarkupPages.Contains(localRefFile.FilePath))
+                        {
+                            recompiledXaml.Add(new FileUnit(
+                                                    localRefFile.FilePath,
+                                                    localRefFile.LinkAlias,
+                                                    localRefFile.LogicalName));
+                        }
                     }
                 }
 

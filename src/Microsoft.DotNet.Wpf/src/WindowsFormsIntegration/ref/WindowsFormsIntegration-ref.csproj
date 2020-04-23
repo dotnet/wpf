@@ -40,7 +40,9 @@
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Threading" />
+    
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
+    <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="$(SystemDrawingCommonPackage)" Version="$(SystemDrawingCommonVersion)" />

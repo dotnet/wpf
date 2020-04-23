@@ -41,7 +41,8 @@
   <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenApi.props" />
-
+  <Import Project="$(WpfArcadeSdkToolsDir)Publishing.props" />
+  
   <PropertyGroup>
     <DebugType>full</DebugType>
     <DebugType Condition="'$(Configuration)'=='Release'">pdbonly</DebugType>

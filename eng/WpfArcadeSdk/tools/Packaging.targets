@@ -111,18 +111,49 @@ $(PreparePackageAssetsDependsOn):
     </ItemGroup>
     -->
     <CreateItem Include="$(OutDir)*.dll"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
+
+    <!--
+      Normally, .lib files are not included in packaging - projects have to opt in by setting   
+        <PropertyGroup>
+          <IncludeLibFilesInPackaging>true<IncludeLibFilesInPackaging>
+        </PropertyGroup>
+    -->
+    <CreateItem Include="$(OutDir)*.lib"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
+            AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+            Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(IncludeLibFilesInPackaging)' == 'true'">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+    
     <CreateItem Include="$(OutDir)*.exe"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     <CreateItem Include="$(OutDir)*.pdb"
+                Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'==''">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+
+    <!-- 
+      Static C++ libraries do not copy their PDB's to $(OutDir) -get it directly from $(IntermediateOutputPath) 
+      Also, normally projects generating .lib files are not included in packaging. Such projects must opt in like this: 
+        <PropertyGroup>
+          <IncludeLibFilesInPackaging>true<IncludeLibFilesInPackaging>
+        </PropertyGroup>
+    -->
+    <CreateItem Include="$(IntermediateOutputPath)*.pdb"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
+                Condition="'$(ConfigurationType)'=='StaticLibrary' and '$(Language)'=='C++' and 
+                          '$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(IncludeLibFilesInPackaging)' == 'true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
     
@@ -290,6 +321,12 @@ $(PreparePackageAssetsDependsOn):
       </Content>
 
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.dll"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+        <Pack>true</Pack>
+        <PackagePath>runtimes</PackagePath>
+      </Content>
+
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.lib"
          Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
         <Pack>true</Pack>
         <PackagePath>runtimes</PackagePath>

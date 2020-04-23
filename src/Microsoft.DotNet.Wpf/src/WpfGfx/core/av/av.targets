@@ -1,0 +1,29 @@
+<Project ToolsVersion="14.0" InitialTargets="TraceWpp" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <WppOutputDirectory>$(IntermediateOutputPath)</WppOutputDirectory>
+    <WppScanConfigurationData>$(MSBuildThisFileDirectory)avtrace.h</WppScanConfigurationData>
+    <WppAdditionalConfigurationFile Condition="'$(Configuration)'=='Release'">$(MSBuildThisFileDirectory)frewpp.ini</WppAdditionalConfigurationFile>
+  </PropertyGroup>
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);RUN_WPP</PreprocessorDefinitions>
+      <!-- Always build with ProgramDatabase (i.e, /Zi, NOT /ZI -->
+      <!-- This is required to ensure that TraceWpp.exe generated macros can be built without any problems -->
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  
+  <Target Name="TraceWpp" BeforeTargets="Build" Inputs="@(ClCompile)" Outputs="@(CLCompile->'$(IntermediateOutputPath)\%(FileName).tmh')">
+    <MakeDir Condition="!Exists('$(IntermeidateOutputPath)')" Directories="$(IntermediateOutputPath)" />
+    <Error Condition="!Exists('$(TraceWpp)')" Text="TraceWpp.exe ($(TraceWpp)) not found" />
+    
+    <PropertyGroup>
+      <WppFlags>-scan:$(WppScanConfigurationData)</WppFlags>
+      <WppFlags Condition="'$(WppAdditionalConfigurationFile)'!=''">$(WppFlags) -ini:$(WppAdditionalConfigurationFile)</WppFlags>
+    </PropertyGroup>
+
+    <Exec Command="&quot;$(TraceWpp)&quot; @(ClCompile, ' ') $(WppFlags) -cfgdir:$(WppConfigDir)rev1\ -odir:$(WppOutputDirectory)" StandardOutputImportance="normal"   />
+  </Target>
+</Project>

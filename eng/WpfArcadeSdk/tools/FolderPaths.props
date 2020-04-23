@@ -1,4 +1,10 @@
 <Project>
+  <PropertyGroup Condition="'$(ArtifactsTmpDir)' != '' And '$(Architecture)' != ''">
+    <!--
+      Append Platform to $(ArtifactsTmpDir)
+    -->
+    <ArtifactsTmpDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsTmpDir)', '$(Architecture)'))</ArtifactsTmpDir>
+  </PropertyGroup>
   <PropertyGroup>
     <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
     <WpfApiCompatBaselineDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\ApiCompat\Baselines\</WpfApiCompatBaselineDir>

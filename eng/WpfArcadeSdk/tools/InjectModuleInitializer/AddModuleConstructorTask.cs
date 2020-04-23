@@ -41,6 +41,7 @@ namespace WpfArcadeSdk.Build.Tasks
                 var moduleConstructorIL = File.ReadAllText(ModuleConstructorIL);
                 var msCorLibAssemblySectionIL = File.ReadAllText(MsCorLibAssemblySectionIL);
                 var sourceIL = File.ReadAllText(ILFile);
+                string ilToInject = msCorLibAssemblySectionIL + Environment.NewLine + moduleConstructorIL;
 
                 using (var outputIL = new StreamWriter(File.Open(ILFile, FileMode.Truncate)))
                 {
@@ -50,22 +51,23 @@ namespace WpfArcadeSdk.Build.Tasks
                         return false;
                     }
 
-                    if (Regex.Match(sourceIL, @"\.assembly extern mscorlib", RegexOptions.Singleline) == Match.Empty)
-                    {
-                        outputIL.WriteLine(msCorLibAssemblySectionIL);
-                    }
-
-                    if (Regex.Match(sourceIL, @"\.class private auto ansi '\<Module\>'.+?\.method private hidebysig specialname rtspecialname static void \.cctor \(\) cil managed ", RegexOptions.Singleline) == Match.Empty)
-                    {
-                        outputIL.WriteLine(moduleConstructorIL);
-                    }
-                    else
+                    if (Regex.Match(sourceIL, @"\.class private auto ansi '\<Module\>'.+?\.method private hidebysig specialname rtspecialname static void \.cctor \(\) cil managed ", RegexOptions.Singleline) != Match.Empty)
                     {
                         Log.LogError("Cannot insert a module initializer into an assembly that already contains one.");
                         return false;
                     }
 
-                    outputIL.WriteLine(sourceIL);
+                    // Attempt to replace an existing mscorlib reference with the reference + module initializer.
+                    string modifiedIL = Regex.Replace(sourceIL, @"\.assembly extern mscorlib.+};", ilToInject, RegexOptions.Singleline);
+
+                    // If we are given the same string back, there was nothing to replace.
+                    // In that case write out the reference and initializer from scratch.
+                    if (object.ReferenceEquals(modifiedIL, sourceIL))
+                    {
+                        outputIL.WriteLine(ilToInject);
+                    }
+
+                    outputIL.WriteLine(modifiedIL);
                 }
 
                 return true;

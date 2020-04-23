@@ -152,6 +152,11 @@
         <target state="translated">對於此專案，InternalTypeHelper 類別不是必要項目，將檔案 '{0}' 清空。</target>
         <note />
       </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005：偵測到無效的 AssemblyVersion: {0}。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="InvalidBaseClassName">
         <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
         <target state="translated">MC6018: 對於 XAML 根項目而言，在本機定義的 '{0}' 類別名稱是無效的。</target>
@@ -299,7 +304,7 @@
       </trans-unit>
       <trans-unit id="NamedResDictItemWarning">
         <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
-        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為執行個體化已延後。</target>
+        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為具現化已延後。</target>
         <note />
       </trans-unit>
       <trans-unit id="NonClsError">

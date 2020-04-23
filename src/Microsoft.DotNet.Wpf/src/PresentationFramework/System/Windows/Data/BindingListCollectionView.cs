@@ -2009,6 +2009,18 @@ namespace System.Windows.Data
                 break;
 
             case ListChangedType.ItemChanged:
+                // if there is no PropertyDescriptor, then ItemChanged refers to a Replace event
+                // (IBindingList indexer set) and not a property change of an item
+                if (args.PropertyDescriptor == null)
+                {
+                    item = InternalList[index];
+                    var oldItem = _cachedList[index];
+                    _cachedList[index] = item;
+                    forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, oldItem, index);
+                    break;
+                }
+                
+                // here ItemChange refers to a property change
                 if (!_itemsRaisePropertyChanged.HasValue)
                 {
                     // check whether individual items raise PropertyChanged events

@@ -96,6 +96,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>5.0.0-preview.4.20220.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>5.0.0-preview.4.20220.4</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

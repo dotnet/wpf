@@ -5,9 +5,9 @@
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>8c3de4c0ab12cb006515a234b0ef828d498f8b4a</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-preview.4.20220.4">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-preview.4.20223.3">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>9ff789c295606423ed96ed08438217fce02a5279</Sha>
+      <Sha>c0ffa864c1270890a8b4d4cee244af12fb93b197</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Internal" Version="5.0.0-preview.4.20221.7" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

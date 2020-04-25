@@ -16,5 +16,8 @@ jobs:
     - name: Build
       run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86
     - name: Push
-      run: nuget push .\artifacts\packages\Release\NonShipping\*.nupkg -Source https://www.myget.org/F/lindexi/api/v2/package -ApiKey d82d56b1-ee09-4dea-a7bb-315d4aa01ff5 -SkipDuplicate -NoSymbols 
-   
+      uses: actions/upload-artifact@v1
+      with:
+        name: WPF
+        path: ./artifacts/packages/Release/NonShipping
+

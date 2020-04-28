@@ -59,13 +59,13 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>dc3c4dc076171bc9a7c27c527d4d814eaae06cb2</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.20221.14">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.20224.11">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>e13ae00db986456a5012f2d9d479d893b3f5aff6</Sha>
+      <Sha>ff09a8a065a615c2fde8df82106bcd1f0fcb32aa</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.20221.14">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.20224.11">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>e13ae00db986456a5012f2d9d479d893b3f5aff6</Sha>
+      <Sha>ff09a8a065a615c2fde8df82106bcd1f0fcb32aa</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="5.0.0-preview.5.20223.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -91,17 +91,17 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>dc3c4dc076171bc9a7c27c527d4d814eaae06cb2</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.20221.14">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.20224.11">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>e13ae00db986456a5012f2d9d479d893b3f5aff6</Sha>
+      <Sha>ff09a8a065a615c2fde8df82106bcd1f0fcb32aa</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20221.14">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20224.11">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>e13ae00db986456a5012f2d9d479d893b3f5aff6</Sha>
+      <Sha>ff09a8a065a615c2fde8df82106bcd1f0fcb32aa</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.20221.14">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.20224.11">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>e13ae00db986456a5012f2d9d479d893b3f5aff6</Sha>
+      <Sha>ff09a8a065a615c2fde8df82106bcd1f0fcb32aa</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="5.0.0-preview.5.20223.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

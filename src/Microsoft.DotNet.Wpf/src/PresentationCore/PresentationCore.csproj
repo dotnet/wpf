@@ -1426,7 +1426,7 @@
   </ItemGroup>
 
   <!-- 
-    Need Microsoft.WinFx.targets to embed *.compositefont 
+    Need Microsoft.WinFX.targets to embed *.compositefont 
     files using MainResourcesGeneration target
   -->
   <PropertyGroup>

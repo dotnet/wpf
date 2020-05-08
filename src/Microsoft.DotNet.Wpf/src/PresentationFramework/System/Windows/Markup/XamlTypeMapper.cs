@@ -2479,7 +2479,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
         private static bool IsFriendAssembly(Assembly assembly)
         {
-            // WinFx assemblies can never be friends of compiled assemblies, so just bail out.
+            // WinFX assemblies can never be friends of compiled assemblies, so just bail out.
             if (assembly == XamlTypeMapper.AssemblyPF ||
                 assembly == XamlTypeMapper.AssemblyPC ||
                 assembly == XamlTypeMapper.AssemblyWB)
@@ -4463,7 +4463,3 @@ namespace System.Windows.Markup
     }
 #endregion XmlParserDefaults Class
 }
-
-
-
-

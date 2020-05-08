@@ -4463,7 +4463,3 @@ namespace System.Windows.Markup
     }
 #endregion XmlParserDefaults Class
 }
-
-
-
-

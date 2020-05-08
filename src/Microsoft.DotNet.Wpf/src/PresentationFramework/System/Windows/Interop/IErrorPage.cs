@@ -8,7 +8,7 @@ using System.Windows.Threading;
 namespace System.Windows.Interop
 {
     /// <summary>
-    /// Interface defines interaction between Xapplauncher and host supplied error page. 
+    /// Interface defines interaction between Xapplauncher and host supplied error page.
     /// </summary>
     public interface IErrorPage
     {

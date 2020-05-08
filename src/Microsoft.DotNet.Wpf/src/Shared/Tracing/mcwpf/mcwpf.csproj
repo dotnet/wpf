@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Dogfood">
 
 <!-- Actually target v3.5 -->
-<!-- This PropertyGroup needs to appear before the Import of Microsoft.DevDiv.Settings.targets 
+<!-- This PropertyGroup needs to appear before the Import of Microsoft.DevDiv.Settings.targets
 	 because it updates TFM and sets AllowCrossTargeting=true -->
   <PropertyGroup>
     <AllowCrossTargeting>true</AllowCrossTargeting>
@@ -10,7 +10,7 @@
     <CrossTargetWinFXRefsVersion>v3.5</CrossTargetWinFXRefsVersion>
     <CrossTargetWinFXToolsVersion>v3.5</CrossTargetWinFXToolsVersion>
   </PropertyGroup>
-  
+
   <!-- Imports -->
   <Import Project="$(_NTDRIVE)$(_NTROOT)\tools\Microsoft.DevDiv.Settings.targets" />
 

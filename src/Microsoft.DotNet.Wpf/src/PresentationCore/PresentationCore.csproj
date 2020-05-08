@@ -11,9 +11,9 @@
     <Platforms>AnyCPU;x64</Platforms>
     <InjectModuleInitializer>true</InjectModuleInitializer>
   </PropertyGroup>
-  
+
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -97,7 +97,7 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Ink\KnownIds.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\Media\TypeConverterHelper.cs" />        
+    <Compile Include="$(WpfSharedDir)\System\Windows\Media\TypeConverterHelper.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\EventSourceActivity.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="MS\Internal\DpiUtil\DpiUtil.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+DpiAwarenessContextHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+DpiAwarenessScope.cs" />
-    <Compile Include="MS\Internal\DpiUtil\DpiUtil+HwndDpiInfo.cs" />    
+    <Compile Include="MS\Internal\DpiUtil\DpiUtil+HwndDpiInfo.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+ProcessDpiAwarenessHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+SystemDpiHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+WindowDpiScaleHelper.cs" />
@@ -1363,13 +1363,13 @@
 
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="netstandard" />    
-    <NetCoreReference Include="System" />    
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Console" />
@@ -1384,7 +1384,7 @@
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
-    <NetCoreReference Include="System.Net.WebHeaderCollection" />    
+    <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
@@ -1397,7 +1397,7 @@
     <NetCoreReference Include="System.Threading.Tasks" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
-    <NetCoreReference Include="System.Threading.Timer" />    
+    <NetCoreReference Include="System.Threading.Timer" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Xml.ReaderWriter" />
@@ -1425,8 +1425,8 @@
     </ProjectReference>
   </ItemGroup>
 
-  <!-- 
-    Need Microsoft.WinFX.targets to embed *.compositefont 
+  <!--
+    Need Microsoft.WinFX.targets to embed *.compositefont
     files using MainResourcesGeneration target
   -->
   <PropertyGroup>
@@ -1448,25 +1448,25 @@
       <XlfInput>false</XlfInput>
       <ManifestResourceName>ColorProfiles</ManifestResourceName>
     </EmbeddedResource>
-    
-    <!-- 
+
+    <!--
         Workaround for https://github.com/dotnet/wpf/issues/1385
-        ReadyToRun images of WPF applications crash 
-        
-        When producing ReadyToRun images, the ILLinker is configured to skip 
-        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
-        https://github.com/mono/linker/pull/658. 
-        
+        ReadyToRun images of WPF applications crash
+
+        When producing ReadyToRun images, the ILLinker is configured to skip
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and
+        https://github.com/mono/linker/pull/658.
+
         In turn, this results in the failure of the dependencies of such assemblies from being
-        identified and included in the ReadyToRun images. 
-        
+        identified and included in the ReadyToRun images.
+
         This linker hint exists to ensure that such dependencies are included. We need
         to place these hints in an assembly that has a reference to the corresponding
-        C++/CLI assembly. 
-        
+        C++/CLI assembly.
+
              PresentationCore -> DirectWriteFowarder
              ReachFramework -> System.Printing
-    -->    
+    -->
     <EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
       <XlfInput>false</XlfInput>
       <LogicalName>$(AssemblyName).xml</LogicalName>
@@ -1475,7 +1475,7 @@
 
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
+       which is modified by the T4 targets, to be overwritten, so the TransformAll target
        doesn’t run before the Build target. -->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />

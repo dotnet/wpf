@@ -401,7 +401,7 @@ namespace System.Windows.Markup
 #if  PBTCOMPILER
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
-        {          
+        {
             if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -1399,7 +1399,7 @@ namespace System.Windows.Markup
 
                                 // If we've found a property info, then the owner had better
                                 // be the same type as or a subclass of the objectType, or
-                                // they are in different inheritance hierarchies.  
+                                // they are in different inheritance hierarchies.
                                 if (memberInfo != null)
                                 {
                                     if (owner != null &&
@@ -2748,7 +2748,7 @@ namespace System.Windows.Markup
 
             return ithType;
         }
-        
+
         private static InternalTypeHelper GetInternalTypeHelperFromAssembly(ParserContext pc)
         {
             InternalTypeHelper ith = null;

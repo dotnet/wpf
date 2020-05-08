@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
+    <_MicrosoftNETSdkWindowsDesktop>true</_MicrosoftNETSdkWindowsDesktop>
     <EnableDefaultPageItems Condition="'$(EnableDefaultPageItems)' == ''">true</EnableDefaultPageItems>
     <EnableDefaultApplicationDefinition Condition="'$(EnableDefaultApplicationDefinition)' == ''">true</EnableDefaultApplicationDefinition>
     <DefaultXamlRuntime Condition="'$(DefaultXamlRuntime)'==''">Wpf</DefaultXamlRuntime>
@@ -152,7 +152,7 @@
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
 
-  <!-- Import WPF Build logic -->
-  <Import Project="Microsoft.WinFX.targets" />
+  <!-- Import WPF Build logic only when we don't import NETFX's WinFX targets -->
+  <Import Project="Microsoft.WinFX.targets" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'"/>
 
 </Project>

@@ -1571,7 +1571,7 @@ namespace System.Windows.Markup
                 return converterType;
             }
 
-            // Reflect for per property type converter , but skip if WinFx props
+            // Reflect for per property type converter , but skip if WinFX props
             Assembly ownerAsm = ownerType.Assembly;
 #if PBTCOMPILER
             if (XamlTypeMapper.AssemblyPF != ownerAsm &&

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <!-- 
-      This should be defined before Microsoft.WinFx.targets in imported.
+      This should be defined before Microsoft.WinFX.targets in imported.
       It's OK if there is no DLL realized at this location - we just need to have the property define. 
       
       It is also OK for a DLL to NOT exist at the time <UsingTask> is encountered against this assembly path. 
@@ -59,7 +59,7 @@
       (a) PresentationBuildTasks.dll is built locally 
       (b) The TFM of the assembly matches the build toolset currently being used (netcore vs netframework)
       (c) The assembly is placed at $(_PresentationBuildTasksAssembly)
-      (d) This is all done prior to the first ever use of a task from within this assembly by Microsoft.WinFx.targets
+      (d) This is all done prior to the first ever use of a task from within this assembly by Microsoft.WinFX.targets
   -->
   <Target Name="EnsurePbtPath"
           Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')"

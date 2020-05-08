@@ -7,8 +7,8 @@
   <PropertyGroup>
     <AllowCrossTargeting>true</AllowCrossTargeting>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <CrossTargetWinFxRefsVersion>v3.5</CrossTargetWinFxRefsVersion>
-    <CrossTargetWinFxToolsVersion>v3.5</CrossTargetWinFxToolsVersion>
+    <CrossTargetWinFXRefsVersion>v3.5</CrossTargetWinFXRefsVersion>
+    <CrossTargetWinFXToolsVersion>v3.5</CrossTargetWinFXToolsVersion>
   </PropertyGroup>
   
   <!-- Imports -->

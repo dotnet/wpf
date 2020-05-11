@@ -60,14 +60,15 @@ namespace System.Windows.Documents
             WinRTSpellerInterop owner)
         {
             IReadOnlyList<WordSegment> tokens = segmenter?.GetTokens(text) ?? new List<WordSegment>().AsReadOnly();
-            var allTokens = new List<SpellerSegment>();
-
+            
             if (tokens.Count == 0)
             {
-                return allTokens.AsReadOnly();
+                return Array.Empty<SpellerSegment>();
             }
 
+            var allTokens = new List<SpellerSegment>();
             int predictedNextTokenStartPosition = 0;
+
             for (int i = 0; i < tokens.Count; i++)
             {
                 int nextTokenStartPosition = (int)tokens[i].SourceTextSegment.StartPosition;

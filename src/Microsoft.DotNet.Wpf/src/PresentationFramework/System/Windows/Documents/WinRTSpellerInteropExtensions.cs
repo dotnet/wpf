@@ -59,8 +59,7 @@ namespace System.Windows.Documents
             SpellChecker spellChecker,
             WinRTSpellerInterop owner)
         {
-            IReadOnlyList<WordSegment> tokens = segmenter?.GetTokens(text) ?? new List<WordSegment>().AsReadOnly();
-            
+            IReadOnlyList<WordSegment> tokens = segmenter?.GetTokens(text) ?? Array.Empty<WordSegment>();
             if (tokens.Count == 0)
             {
                 return Array.Empty<SpellerSegment>();

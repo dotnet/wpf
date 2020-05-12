@@ -60,12 +60,15 @@ namespace System.Windows.Documents
         private object Load(Stream stream, Uri parentUri, ParserContext pc, ContentType mimeType, string rootElement)
         {
             object obj = null;
+            List<Type> safeTypes = new List<Type> { typeof(System.Windows.ResourceDictionary) };
 
             if (!DocumentMode)
             {                       // Loose XAML, just check against schema, don't check content type
                 if (rootElement==null)
                 {
-                    obj = XamlReader.Load(stream, pc);
+                    XmlReader reader = XmlReader.Create(stream, null, pc);
+                    obj = XamlReader.Load(reader, pc, XamlParseMode.Synchronous, true, safeTypes);
+                    stream.Close();
                 }
             }
             else
@@ -151,7 +154,7 @@ namespace System.Windows.Documents
                 {
                     obj = XamlReader.Load(xpsSchemaValidator.XmlReader,
                                     pc,
-                                    XamlParseMode.Synchronous);
+                                    XamlParseMode.Synchronous, true, safeTypes);
                 }
                 _validResources.Pop();
             }

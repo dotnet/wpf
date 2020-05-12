@@ -64,6 +64,20 @@ namespace System.Windows.Markup
         }
 
         /// <summary>
+        /// Builds the restricted set based on RestrictedTypes that have already been loaded but adds the list of Types passed in in safeTypes to the instance of _safeTypesSet
+        /// </summary>
+        internal RestrictiveXamlXmlReader(XmlReader xmlReader, XamlSchemaContext schemaContext, XamlXmlReaderSettings settings, List<Type> safeTypes) : base(xmlReader, schemaContext, settings)
+        {
+            if (safeTypes != null)
+            {
+                foreach (Type safeType in safeTypes)
+                {
+                    _safeTypesSet.Add(safeType);
+                }
+            }
+        }
+        /// <summary>
+
         /// Calls the base Read method to extract a node from the Xaml parser, if it's found to be a StartObject node for a type we want to restrict we skip that node.
         /// </summary>
         /// <returns>

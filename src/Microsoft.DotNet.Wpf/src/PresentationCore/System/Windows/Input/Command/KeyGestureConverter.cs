@@ -84,7 +84,7 @@ namespace System.Windows.Input
             if (source != null && source is string)
             {
                 string fullName = ((string)source).Trim();
-                if (fullName == String.Empty)
+                if (fullName.Length == 0)
                     return new KeyGesture(Key.None);
 
                 string keyToken;

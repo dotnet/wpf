@@ -160,7 +160,7 @@ namespace MS.Internal.IO.Packaging
 
             //We need to make sure that the URI passed to us is not just "/"
             //"/" is a valid relative uri, but is not a valid partname
-            if (partName == String.Empty)
+            if (partName.Length == 0)
                 return new ArgumentException(SR.Get(SRID.PartUriIsEmpty));
 
             if (partName[0] != '/')

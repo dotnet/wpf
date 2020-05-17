@@ -42,12 +42,12 @@ namespace System.Windows
         public void RegisterName(string name, object scopedElement)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (scopedElement == null)
-                throw new ArgumentNullException("scopedElement");
+                throw new ArgumentNullException(nameof(scopedElement));
 
-            if (name == String.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
@@ -74,7 +74,7 @@ namespace System.Windows
                 }   
             }
 
-            if( TraceNameScope.IsEnabled )
+            if (TraceNameScope.IsEnabled)
             {
                 TraceNameScope.TraceActivityItem( TraceNameScope.RegisterName,
                                                   this, 
@@ -90,9 +90,9 @@ namespace System.Windows
         public void UnregisterName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
-            if (name == String.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (_nameMap != null && _nameMap[name] != null)
@@ -104,7 +104,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotFound, name));
             }
 
-            if( TraceNameScope.IsEnabled )
+            if (TraceNameScope.IsEnabled)
             {
                 TraceNameScope.TraceActivityItem( TraceNameScope.UnregisterName,
                                                   this, name );
@@ -118,7 +118,7 @@ namespace System.Windows
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || name == null || name == String.Empty)
+            if (_nameMap == null || String.IsNullOrEmpty(name))
                 return null;
 
             return _nameMap[name];
@@ -166,7 +166,7 @@ namespace System.Windows
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException(nameof(dependencyObject));
             }
 
             dependencyObject.SetValue(NameScopeProperty, value);
@@ -182,7 +182,7 @@ namespace System.Windows
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException(nameof(dependencyObject));
             }
 
             return ((INameScope)dependencyObject.GetValue(NameScopeProperty));

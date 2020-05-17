@@ -55,7 +55,7 @@ namespace System.Windows.Automation.Peers
                 Hyperlink owner = (Hyperlink)Owner;
 
                 if (owner.Text != null)
-                    name = owner.Text
+                    name = owner.Text;
             }
 
             return name;

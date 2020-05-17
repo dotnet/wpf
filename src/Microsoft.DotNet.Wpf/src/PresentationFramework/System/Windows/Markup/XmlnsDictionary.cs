@@ -347,8 +347,7 @@ namespace System.Windows.Markup
                 for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
                 {
                     if ((_nsDeclarations[thisDecl].Prefix == prefix) && 
-                        _nsDeclarations[thisDecl].Uri != null && 
-                        _nsDeclarations[thisDecl].Uri != String.Empty)
+                        !String.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
                     {
                         return _nsDeclarations[thisDecl].Uri;
                     }

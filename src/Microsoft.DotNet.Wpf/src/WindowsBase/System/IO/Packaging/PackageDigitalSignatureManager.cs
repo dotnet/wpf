@@ -221,7 +221,7 @@ namespace System.IO.Packaging
                 if (value == null)
                     throw new ArgumentNullException("value");
 
-                if (value == String.Empty)
+                if (value.Length == 0)
                     throw new ArgumentException(SR.Get(SRID.UnsupportedHashAlgorithm), "value");
 
                 _hashAlgorithmString = value;
@@ -470,7 +470,7 @@ namespace System.IO.Packaging
             VerifySignArguments(parts, certificate, relationshipSelectors, signatureId, signatureObjects, objectReferences);
 
             // substitute default id if none given
-            if ((signatureId == null) || (signatureId == String.Empty))
+            if (String.IsNullOrEmpty(signatureId))
             {
                 signatureId = "packageSignature";   // default
             }
@@ -1006,7 +1006,7 @@ namespace System.IO.Packaging
             }
 
             // ensure id is legal Xml id
-            if ((signatureId != null) && (signatureId != String.Empty))
+            if (!String.IsNullOrEmpty(signatureId))
             {
                 try
                 {

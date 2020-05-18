@@ -347,7 +347,7 @@ namespace System.Windows.Markup
                 for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
                 {
                     if ((_nsDeclarations[thisDecl].Prefix == prefix) && 
-                        !String.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
+                        !string.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
                     {
                         return _nsDeclarations[thisDecl].Uri;
                     }
@@ -776,4 +776,3 @@ namespace System.Windows.Markup
 
     } //XmlNamespaceManager
 }
-

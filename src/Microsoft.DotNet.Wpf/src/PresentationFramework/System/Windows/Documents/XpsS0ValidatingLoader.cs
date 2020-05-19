@@ -61,11 +61,15 @@ namespace System.Windows.Documents
         {
             object obj = null;
 
+            List<Type> safeTypes = new List<Type> { typeof(System.Windows.ResourceDictionary) };
+
             if (!DocumentMode)
             {                       // Loose XAML, just check against schema, don't check content type
                 if (rootElement==null)
                 {
-                    obj = XamlReader.Load(stream, pc);
+                    XmlReader reader = XmlReader.Create(stream, null, pc);
+                    obj = XamlReader.Load(reader, pc, XamlParseMode.Synchronous, true, safeTypes);
+                    stream.Close();
                 }
             }
             else
@@ -150,8 +154,8 @@ namespace System.Windows.Documents
                 else
                 {
                     obj = XamlReader.Load(xpsSchemaValidator.XmlReader,
-                                    pc,
-                                    XamlParseMode.Synchronous);
+                               pc,
+                               XamlParseMode.Synchronous, true, safeTypes);
                 }
                 _validResources.Pop();
             }

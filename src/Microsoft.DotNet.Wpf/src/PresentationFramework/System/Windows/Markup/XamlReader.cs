@@ -14,6 +14,7 @@ using System.IO.Packaging;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -837,6 +838,29 @@ namespace System.Windows.Markup
         XamlParseMode parseMode,
         bool useRestrictiveXamlReader)
         {
+            return Load(reader, parserContext, parseMode, useRestrictiveXamlReader, null);
+        }
+
+        /// <summary>
+        /// Reads XAML from the passed stream, building an object tree and returning the
+        /// root of that tree.  Wrap a CompatibilityReader with another XmlReader that
+        /// uses the passed reader settings to allow validation of xaml.
+        /// </summary>
+        /// <param name="reader">XmlReader to use.  This is NOT wrapped by any
+        ///  other reader</param>
+        /// <param name="context">Optional parser context.  May be null </param>
+        /// <param name="parseMode">Sets synchronous or asynchronous parsing</param>
+        /// <param name="useRestrictiveXamlReader">Whether or not this method should use 
+        /// RestrictiveXamlXmlReader to restrict instantiation of potentially dangerous types</param>
+        /// <param name="safeTypes">List of known safe Types to be allowed through the RestrictiveXamlXmlReader</param>
+        /// <returns>object root generated after xml parsed</returns>
+        internal static object Load(
+            XmlReader reader,
+            ParserContext parserContext,
+            XamlParseMode parseMode,
+            bool useRestrictiveXamlReader,
+            List<Type> safeTypes)
+        {
             if (parseMode == XamlParseMode.Uninitialized ||
                 parseMode == XamlParseMode.Asynchronous)
             {
@@ -893,7 +917,7 @@ namespace System.Windows.Markup
 
                 XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
-                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings):
+                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
                                                                                        new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
                 root = Load(xamlXmlReader, parserContext);
                 reader.Close();

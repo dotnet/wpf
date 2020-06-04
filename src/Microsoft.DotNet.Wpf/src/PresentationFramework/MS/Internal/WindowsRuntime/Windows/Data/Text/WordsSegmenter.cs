@@ -42,7 +42,10 @@ namespace MS.Internal.WindowsRuntime
             /// <exception cref="PlatformNotSupportedException">The OS platform is not supported</exception>
             public static WordsSegmenter Create(string language, bool shouldPreferNeutralSegmenter = false)
             {
-                // TODO check if on supported platform
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version < new Version(10, 0))
+                {
+                    throw new PlatformNotSupportedException();
+                }
                 if (shouldPreferNeutralSegmenter)
                 {
                     if (!ShouldUseDedicatedSegmenter(language))

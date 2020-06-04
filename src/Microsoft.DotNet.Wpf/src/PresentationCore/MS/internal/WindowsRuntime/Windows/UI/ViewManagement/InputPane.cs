@@ -57,6 +57,12 @@ namespace MS.Internal.WindowsRuntime
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             static InputPane()
             {
+                // WinRT types are only available on Win10+
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version < new Version(10, 0))
+                {
+                    _isSupported = false;
+                    return;
+                }
                 // We don't want to throw here - so wrap in try..catch
                 try
                 {

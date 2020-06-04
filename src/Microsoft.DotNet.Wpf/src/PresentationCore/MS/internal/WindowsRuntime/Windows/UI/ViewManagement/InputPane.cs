@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security;
 using System.Windows;
 using System.Windows.Interop;
@@ -33,19 +32,15 @@ namespace MS.Internal.WindowsRuntime
             #region Fields
 
             /// <summary>
-            /// The name of the InputPane WinRT runtime class
+            /// Bool to check if the WinRT input pane is supported
             /// </summary>
-            private static readonly string s_TypeName = "Windows.UI.ViewManagement.InputPane, Windows, ContentType=WindowsRuntime";
+            private static readonly bool _isSupported;
 
-            /// <summary>
-            /// The InputPane Type
-            /// </summary>
-            private static Type s_WinRTType;
 
             /// <summary>
             /// Activation factory to instantiate InputPane RCWs
             /// </summary>
-            private static IActivationFactory _winRtActivationFactory;
+            private static object _winRtActivationFactory;
 
             /// <summary>
             /// The appropriate RCW for calling TryShow/Hide
@@ -65,18 +60,17 @@ namespace MS.Internal.WindowsRuntime
                 // We don't want to throw here - so wrap in try..catch
                 try
                 {
-                    s_WinRTType = Type.GetType(s_TypeName);
-
                     // If we cannot get a new activation factory, then we cannot support
                     // this platform.  As such, null out the type to guard instantiations.
                     if (GetWinRtActivationFactory(forceInitialization: true) == null)
                     {
-                        s_WinRTType = null;
+                        _isSupported = false;
                     }
+                    _isSupported = true;
                 }
                 catch
                 {
-                    s_WinRTType = null;
+                    _isSupported = false;
                 }
             }
 
@@ -86,7 +80,7 @@ namespace MS.Internal.WindowsRuntime
             /// <exception cref="PlatformNotSupportedException"></exception>
             private InputPane(IntPtr? hwnd)
             {
-                if (s_WinRTType == null)
+                if (!_isSupported)
                 {
                     throw new PlatformNotSupportedException();
                 }
@@ -196,15 +190,15 @@ namespace MS.Internal.WindowsRuntime
             /// <param name="forceInitialization">If true, will create a new IActivationFactory.  If false will
             /// only create a new IActivationFactory if there is no valid cached instance available.</param>
             /// <returns>An IActivationFactory of InputPane or null if it fails to instantiate.</returns>
-            private static IActivationFactory GetWinRtActivationFactory(bool forceInitialization = false)
+            private static object GetWinRtActivationFactory(bool forceInitialization = false)
             {
                 if (forceInitialization || _winRtActivationFactory == null)
                 {
                     try
                     {
-                        _winRtActivationFactory = WindowsRuntimeMarshal.GetActivationFactory(s_WinRTType);
+                        _winRtActivationFactory = InputPaneRcw.GetInputPaneActivationFactory();
                     }
-                    catch (Exception e) when (e is TypeLoadException || e is FileNotFoundException)
+                    catch (Exception e) when (e is TypeLoadException || e is FileNotFoundException || e is EntryPointNotFoundException)
                     {
                         // Catch the set of exceptions that are considered activation exceptions as per the public
                         // contract on WindowsRuntimeMarshal.GetActivationFactory.
@@ -213,6 +207,8 @@ namespace MS.Internal.WindowsRuntime
                         // FileNotFoundException during acquisition of the activation factory. We explicitly catch this exception 
                         // here to alleviate this issue.  This is not an ideal solution to the platform bug, but keeps WPF applications 
                         // from being exposed to the issue.
+
+                        // We also catch an EntryPointNotFoundException for when WinRT isn't supported on the platform.
                         _winRtActivationFactory = null;
                     }
                 }

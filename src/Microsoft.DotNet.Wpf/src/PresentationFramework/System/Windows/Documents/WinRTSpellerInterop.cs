@@ -905,8 +905,8 @@ namespace System.Windows.Documents
             {
                 _spellChecker = spellChecker;
                 _suggestions = null;
-                Owner = owner;
 
+                Owner = owner;
                 SourceString = sourceString;
                 TextRange = textRange;
             }

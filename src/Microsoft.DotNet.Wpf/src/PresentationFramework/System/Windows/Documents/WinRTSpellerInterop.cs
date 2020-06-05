@@ -857,9 +857,8 @@ namespace System.Windows.Documents
         internal readonly struct TextRange: SpellerInteropBase.ITextRange
         {
             public TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
+                this((int) textSegment.StartPosition, (int) textSegment.Length)
             {
-                _length = (int)textSegment.Length;
-                _start = (int)textSegment.StartPosition;
             }
 
             public TextRange(int start, int length)

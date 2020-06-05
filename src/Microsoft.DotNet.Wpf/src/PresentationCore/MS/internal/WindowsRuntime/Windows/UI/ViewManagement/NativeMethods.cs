@@ -28,7 +28,7 @@ namespace MS.Internal.WindowsRuntime
             [DllImport(DllImport.ApiSetWinRTString, CallingConvention = CallingConvention.StdCall)]
             internal static extern int WindowsDeleteString(IntPtr hstring);
 
-            [DllImport(DllImport.ApiSetWinRT)]
+            [DllImport(DllImport.ApiSetWinRT, CallingConvention = CallingConvention.StdCall)]
             internal static extern unsafe int RoGetActivationFactory(IntPtr runtimeClassId, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object factory);
         }
     }

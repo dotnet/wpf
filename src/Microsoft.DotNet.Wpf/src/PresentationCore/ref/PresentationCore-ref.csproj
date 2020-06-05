@@ -49,7 +49,6 @@
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.CompilerServices.VisualC" />
     <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices.WindowsRuntime" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
     <NetCoreReference Include="System.Threading" />

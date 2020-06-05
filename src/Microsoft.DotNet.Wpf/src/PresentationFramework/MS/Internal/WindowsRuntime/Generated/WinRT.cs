@@ -236,7 +236,7 @@ namespace WinRT
 
         public BaseActivationFactory(string typeNamespace, string typeFullName)
         {
-            var runtimeClassId = typeFullName.Replace("MS.Internal.WindowsRuntime.", "");
+            var runtimeClassId = TypeExtensions.RemoveNamespacePrefix(typeNamespace);
 
             // Prefer the RoGetActivationFactory HRESULT failure over the LoadLibrary/etc. failure
             int hr;

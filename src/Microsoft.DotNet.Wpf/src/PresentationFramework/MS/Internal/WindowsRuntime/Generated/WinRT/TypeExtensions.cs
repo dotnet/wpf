@@ -24,7 +24,7 @@ namespace WinRT
             string helperTypeName2 = $"MS.Internal.WindowsRuntime.ABI.{type.FullName}";
             if (type.FullName.StartsWith("MS.Internal.WindowsRuntime."))
             {
-                helper = "MS.Internal.WindowsRuntime.ABI." + type.FullName.Substring("MS.Internal.WindowsRuntime.".Length);
+                helper = "MS.Internal.WindowsRuntime.ABI." + RemoveNamespacePrefix(type.FullName);
             }
             return Type.GetType(helper) ?? Type.GetType(helperTypeName2);
         }
@@ -69,6 +69,16 @@ namespace WinRT
         public static bool IsDelegate(this Type type)
         {
             return typeof(Delegate).IsAssignableFrom(type);
+        }
+
+        public static string RemoveNamespacePrefix(string ns)
+        {
+            const string NamespacePrefix = "MS.Internal.WindowsRuntime.";
+            if (ns.StartsWith(NamespacePrefix))
+            {
+                return ns.Substring(NamespacePrefix.Length);
+            }
+            return ns;
         }
     }
 }

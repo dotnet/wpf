@@ -117,7 +117,7 @@ namespace WinRT
                     _ => inspectable
                 };
             }
-            // If the external COM object isn't IInspectable or IWeakReference, we can't handle it.
+            // If the external COM object isn't IInspectable, we can't handle it.
             // If we're registered globally, we want to let the runtime fall back for IUnknown and IDispatch support.
             // Return null so the runtime can fall back gracefully in IUnknown and IDispatch scenarios.
             return null;

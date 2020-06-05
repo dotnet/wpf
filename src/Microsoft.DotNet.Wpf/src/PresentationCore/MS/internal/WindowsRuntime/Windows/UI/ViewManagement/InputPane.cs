@@ -198,10 +198,15 @@ namespace MS.Internal.WindowsRuntime
                     {
                         _winRtActivationFactory = InputPaneRcw.GetInputPaneActivationFactory();
                     }
-                    catch (Exception e) when (e is TypeLoadException || e is FileNotFoundException || e is EntryPointNotFoundException || e is DllNotFoundException)
+                    catch (Exception e) when (e is TypeLoadException
+                                             || e is FileNotFoundException
+                                             || e is EntryPointNotFoundException
+                                             || e is DllNotFoundException
+                                             || e.HResult == NativeMethods.E_NOINTERFACE
+                                             || e.HResult == NativeMethods.REGDB_E_CLASSNOTREG)
                     {
-                        // Catch the set of exceptions that are considered activation exceptions as per the public
-                        // contract on WindowsRuntimeMarshal.GetActivationFactory.
+                        // Catch the set of exceptions that are considered activation exceptions,
+                        // as well as exception with HResults that can be returned from DllGetActivationFactory when it fails.
                         // <see cref="https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.windowsruntime.windowsruntimemarshal.getactivationfactory(v=vs.110).aspx"/>
                         // On some Windows SKUs, notably ServerCore, a failing static dependency in InputPane seems to cause a
                         // FileNotFoundException during acquisition of the activation factory. We explicitly catch this exception 

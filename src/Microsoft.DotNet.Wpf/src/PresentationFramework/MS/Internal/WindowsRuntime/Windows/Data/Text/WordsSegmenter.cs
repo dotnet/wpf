@@ -25,6 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security;
+using MS.Internal.PresentationFramework.Interop;
 
 
 namespace MS.Internal.WindowsRuntime
@@ -42,7 +43,7 @@ namespace MS.Internal.WindowsRuntime
             /// <exception cref="PlatformNotSupportedException">The OS platform is not supported</exception>
             public static WordsSegmenter Create(string language, bool shouldPreferNeutralSegmenter = false)
             {
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version < new Version(10, 0))
+                if (!OSVersionHelper.IsOsWindows8Point1OrGreater)
                 {
                     throw new PlatformNotSupportedException();
                 }

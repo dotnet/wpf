@@ -57,12 +57,6 @@ namespace MS.Internal.WindowsRuntime
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             static InputPane()
             {
-                // WinRT types are only available on Win10+
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version < new Version(10, 0))
-                {
-                    _isSupported = false;
-                    return;
-                }
                 // We don't want to throw here - so wrap in try..catch
                 try
                 {
@@ -204,7 +198,7 @@ namespace MS.Internal.WindowsRuntime
                     {
                         _winRtActivationFactory = InputPaneRcw.GetInputPaneActivationFactory();
                     }
-                    catch (Exception e) when (e is TypeLoadException || e is FileNotFoundException || e is EntryPointNotFoundException)
+                    catch (Exception e) when (e is TypeLoadException || e is FileNotFoundException || e is EntryPointNotFoundException || e is DllNotFoundException)
                     {
                         // Catch the set of exceptions that are considered activation exceptions as per the public
                         // contract on WindowsRuntimeMarshal.GetActivationFactory.
@@ -214,7 +208,7 @@ namespace MS.Internal.WindowsRuntime
                         // here to alleviate this issue.  This is not an ideal solution to the platform bug, but keeps WPF applications 
                         // from being exposed to the issue.
 
-                        // We also catch an EntryPointNotFoundException for when WinRT isn't supported on the platform.
+                        // We also catch an EntryPointNotFoundException and DllNotFoundExceptions for when WinRT isn't supported on the platform.
                         _winRtActivationFactory = null;
                     }
                 }

@@ -19,33 +19,22 @@ namespace MS.Internal.WindowsRuntime
         /// </summary>
         internal static class InputPaneRcw
         {
-            [DllImport("api-ms-win-core-winrt-string-l1-1-0.dll", CallingConvention = CallingConvention.StdCall)]
-            private static extern unsafe int WindowsCreateString([MarshalAs(UnmanagedType.LPWStr)] string sourceString,
-                                                  int length,
-                                                  out IntPtr hstring);
-
-            [DllImport("api-ms-win-core-winrt-string-l1-1-0.dll", CallingConvention = CallingConvention.StdCall)]
-            private static extern int WindowsDeleteString(IntPtr hstring);
-
-            [DllImport("api-ms-win-core-winrt-l1-1-0.dll")]
-            private static extern unsafe int RoGetActivationFactory(IntPtr runtimeClassId, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object factory);
-
             private static readonly Guid IID_IActivationFactory = Guid.Parse("00000035-0000-0000-C000-000000000046");
 
             public static object GetInputPaneActivationFactory()
             {
                 const string typeName = "Windows.UI.ViewManagement.InputPane";
                 IntPtr hstring = IntPtr.Zero;
-                Marshal.ThrowExceptionForHR(WindowsCreateString(typeName, typeName.Length, out hstring));
+                Marshal.ThrowExceptionForHR(NativeMethods.WindowsCreateString(typeName, typeName.Length, out hstring));
                 try
                 {
                     Guid iid = IID_IActivationFactory;
-                    Marshal.ThrowExceptionForHR(RoGetActivationFactory(hstring, ref iid, out object factory));
+                    Marshal.ThrowExceptionForHR(NativeMethods.RoGetActivationFactory(hstring, ref iid, out object factory));
                     return factory;
                 }
                 finally
                 {
-                    Marshal.ThrowExceptionForHR(WindowsDeleteString(hstring));
+                    Marshal.ThrowExceptionForHR(NativeMethods.WindowsDeleteString(hstring));
                 }
             }
 

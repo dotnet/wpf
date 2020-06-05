@@ -110,15 +110,12 @@ namespace WinRT
                 IInspectable inspectable = new IInspectable(inspectableRef);
 
                 string runtimeClassName = inspectable.GetRuntimeClassName(noThrow: true);
-                
-                if (runtimeClassName == null)
+
+                return runtimeClassName switch
                 {
-                    // If the external IInspectable has not implemented GetRuntimeClassName,
-                    // we use the Inspectable wrapper directly.
-                    return inspectable;
-                }
-                // TODO: Hard code this for specific runtime names for WPF.
-                return inspectable;
+                    "Windows.Data.Text.WordSegment" => new MS.Internal.WindowsRuntime.Windows.Data.Text.WordSegment(new MS.Internal.WindowsRuntime.ABI.Windows.Data.Text.IWordSegment(objRef)),
+                    _ => inspectable
+                };
             }
             // If the external COM object isn't IInspectable or IWeakReference, we can't handle it.
             // If we're registered globally, we want to let the runtime fall back for IUnknown and IDispatch support.

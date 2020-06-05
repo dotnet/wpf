@@ -66,8 +66,4 @@ namespace WinRT.Interop
     internal delegate int _get_PropertyAsString(IntPtr thisPtr, out IntPtr value);
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal delegate int _put_PropertyAsString(IntPtr thisPtr, IntPtr value);
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal delegate int _add_EventHandler(IntPtr thisPtr, IntPtr handler, out EventRegistrationToken token);
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal delegate int _remove_EventHandler(IntPtr thisPtr, EventRegistrationToken token);
 }

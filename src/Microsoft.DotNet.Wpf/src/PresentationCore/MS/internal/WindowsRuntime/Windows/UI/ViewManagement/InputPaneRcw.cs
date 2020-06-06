@@ -19,6 +19,25 @@ namespace MS.Internal.WindowsRuntime
         /// </summary>
         internal static class InputPaneRcw
         {
+            private static readonly Guid IID_IActivationFactory = Guid.Parse("00000035-0000-0000-C000-000000000046");
+
+            public static object GetInputPaneActivationFactory()
+            {
+                const string typeName = "Windows.UI.ViewManagement.InputPane";
+                IntPtr hstring = IntPtr.Zero;
+                Marshal.ThrowExceptionForHR(NativeMethods.WindowsCreateString(typeName, typeName.Length, out hstring));
+                try
+                {
+                    Guid iid = IID_IActivationFactory;
+                    Marshal.ThrowExceptionForHR(NativeMethods.RoGetActivationFactory(hstring, ref iid, out object factory));
+                    return factory;
+                }
+                finally
+                {
+                    Marshal.ThrowExceptionForHR(NativeMethods.WindowsDeleteString(hstring));
+                }
+            }
+
             internal enum TrustLevel
             {
                 BaseTrust,

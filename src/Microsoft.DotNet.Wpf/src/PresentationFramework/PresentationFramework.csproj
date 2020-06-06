@@ -407,11 +407,8 @@
     <Compile Include="MS\Internal\WeakHashSet.cs" />
     <Compile Include="MS\Internal\WeakHashtable.cs" />
     <Compile Include="MS\Internal\WeakObjectHashtable.cs" />
-    <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\AlternateWordForm.cs" />
-    <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\TextSegment.cs" />
-    <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\WordSegment.cs" />
+    <Compile Include="MS\Internal\WindowsRuntime\Generated\**\*.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\WordsSegmenter.cs" />
-    <Compile Include="MS\Internal\WindowsRuntime\Windows\Globalization\Language.cs" />
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="SR.cs" />
@@ -1415,6 +1412,7 @@
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Security.Claims" />
     <NetCoreReference Include="System.Security.Cryptography" />
+    <NetCoreReference Include="System.Security.Cryptography.Csp" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
     <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />

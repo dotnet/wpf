@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <vcclr.h>
 
 namespace MS { namespace Internal { namespace FontCache {
 

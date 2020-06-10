@@ -11,6 +11,7 @@
 #include "quaternion_t.hpp"
 
 #include <vector>
+#include <tuple>
 
 namespace dxlayer
 {

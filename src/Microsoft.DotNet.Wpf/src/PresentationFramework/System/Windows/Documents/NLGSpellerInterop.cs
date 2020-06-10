@@ -643,6 +643,12 @@ namespace System.Windows.Documents
 
             #region SpellerInteropBase.ISpellerSegment
 
+            /// <inheritdoc/>
+            public string SourceString { get; }
+
+            /// <inheritdoc/>
+            public string Text => SourceString?.Substring(TextRange.Start, TextRange.Length);
+
             /// <summary>
             /// Returns a read-only list of sub-segments of this segment
             /// </summary>

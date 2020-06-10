@@ -80,7 +80,7 @@
 
   <ItemGroup>
     <Compile Include="SR.cs" />
-    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs" >
       <Link>Common\System\SR.cs</Link>
     </Compile>
 

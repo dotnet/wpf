@@ -1,5 +1,34 @@
 <Project>
-  
+
+  <PropertyGroup>
+    <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
+    <EnableDefaultPageItems Condition="'$(EnableDefaultPageItems)' == ''">true</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinition Condition="'$(EnableDefaultApplicationDefinition)' == ''">true</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+    WindowsDesktop SDK supports WPF and WinForms on 
+      - .NET Core 3.0 and greater
+      - .NET Framework 3.0 and greater
+   
+    Note that on .NET Framework versions < 4.0, additional workarounds may be required to build applications 
+    using the SDK style projects. For e.g., see https://github.com/microsoft/msbuild/issues/1333
+    
+    Irrespective of whether '$(TargetFrameworkIdentifier)' is '.NETCoreApp' or '.NETFramework', 
+    the minimum value of $(_TargetFrameworkVersionValue) we will be testing for is '3.0'
+    
+  -->
+    <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+
+    <!-- 
+      Represents an undefined TFV value. This will be used in comparisons of _TargetFrameworkVersionValue (defined in Microsoft.NET.WindowsDesktop.targets)
+      to identify when a TFV is undefined
+    -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+  </PropertyGroup>
+
+
   <!-- 
     $(TargetFrameworkVersion), $(_TargetFrameworkVersionWithoutV) etc. are defined in 
     Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets. 
@@ -22,6 +51,25 @@
   <PropertyGroup>
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
+
+    <!-- PropertyGroup flags control if Itemgroups in Microsoft.NET.Sdk.WindowsDesktop.props file is being imported -->
+  <PropertyGroup>
+      <_EnableWindowsDesktopGlobbing Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And
+                         ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopGlobbing>
+      <_EnableWindowsDesktopNetCoreFrameworkReferences Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
+                      ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And
+                      ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                      ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopNetCoreFrameworkReferences>
+      <_EnableWindowsDesktopNETFrameworkImplicitReference Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
+                        ('$(TargetFrameworkIdentifier)' == '.NETFramework') And
+                        ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                        ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopNETFrameworkImplicitReference>
+      <_EnableWindowsDesktopSupportUnsupportedTargetFramework Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And
+                        '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And
+                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">true</_EnableWindowsDesktopSupportUnsupportedTargetFramework>
+  </PropertyGroup>
+
   
   <Import Project="Microsoft.WinFX.targets" />
 

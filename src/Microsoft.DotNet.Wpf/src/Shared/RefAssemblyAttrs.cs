@@ -83,6 +83,8 @@ namespace Microsoft.Internal
         internal const string Ole32 = "ole32.dll";
         internal const string User32 = "user32.dll";
         internal const string NInput = "ninput.dll";
+        internal const string ApiSetWinRT = "api-ms-win-core-winrt-l1-1-0.dll";
+        internal const string ApiSetWinRTString = "api-ms-win-core-winrt-string-l1-1-0.dll";
     }
 }
 

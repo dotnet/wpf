@@ -280,6 +280,7 @@
     <Compile Include="MS\Internal\MarkupCompiler\CompilationUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\FileUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\MarkupCompiler.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\NETFrameworkGetRelativePath.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\ParserExtension.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\VersionHelper.cs" />
     <Compile Include="MS\Internal\Shared\SourceFileInfo.cs" />

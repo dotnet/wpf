@@ -139,7 +139,7 @@ namespace System.Windows.Markup
                         probeType.Assembly.FullName == assemblyFullName )
 #else
                     if (probeType.Namespace == clrNamespace)
-#endif  
+#endif
                     {
                         return (short) -probe;
                     }
@@ -1975,5 +1975,3 @@ namespace System.Windows.Markup
 
 
 }
-
-

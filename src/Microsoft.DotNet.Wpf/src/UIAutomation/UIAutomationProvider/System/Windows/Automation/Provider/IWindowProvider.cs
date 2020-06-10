@@ -31,28 +31,28 @@ namespace System.Windows.Automation.Provider
 
         /// <summary>
         /// Non-blocking call to close this non-application window.
-        /// When called on a split pane, it will close the pane (thereby removing a 
-        /// split), it may or may not also close all other panes related to the 
+        /// When called on a split pane, it will close the pane (thereby removing a
+        /// split), it may or may not also close all other panes related to the
         /// document/content/etc. This behavior is application dependent.
         /// </summary>
         void Close();
 
         /// <summary>
-        /// Causes the calling code to block, waiting the specified number of milliseconds, for the 
-        /// associated window to enter an idle state.  
+        /// Causes the calling code to block, waiting the specified number of milliseconds, for the
+        /// associated window to enter an idle state.
         /// </summary>
         /// <remarks>
         /// The implementation is dependent on the underlying application framework therefore this
         /// call may return sometime after the window is ready for user input.  The calling code
-        /// should not rely on this call to understand exactly when the window has become idle. 
-        /// 
+        /// should not rely on this call to understand exactly when the window has become idle.
+        ///
         /// For now this method works reliably for both WinFX and Win32 Windows that are starting
-        /// up.  However, if called at other times on WinFX Windows (e.g. during a long layout) 
+        /// up.  However, if called at other times on WinFX Windows (e.g. during a long layout)
         /// WaitForInputIdle may return true before the Window is actually idle.  Additional work
         /// needs to be done to detect when WinFX Windows are idle.
         /// </remarks>
-        /// <param name="milliseconds">The amount of time, in milliseconds, to wait for the 
-        /// associated process to become idle. The maximum is the largest possible value of a 
+        /// <param name="milliseconds">The amount of time, in milliseconds, to wait for the
+        /// associated process to become idle. The maximum is the largest possible value of a
         /// 32-bit integer, which represents infinity to the operating system
         /// </param>
         /// <returns>
@@ -63,38 +63,38 @@ namespace System.Windows.Automation.Provider
 
 
         /// <summary>Is this window Maximizable</summary>
-        bool Maximizable 
+        bool Maximizable
         {
             [return: MarshalAs(UnmanagedType.Bool)] // Without this, only lower SHORT of BOOL*pRetVal param is updated.
             get;
         }
-        
+
         /// <summary>Is this window Minimizable</summary>
         bool Minimizable
         {
             [return: MarshalAs(UnmanagedType.Bool)] // Without this, only lower SHORT of BOOL*pRetVal param is updated.
             get;
         }
-        
+
         /// <summary>Is this is a modal window.</summary>
         bool IsModal
         {
             [return: MarshalAs(UnmanagedType.Bool)] // Without this, only lower SHORT of BOOL*pRetVal param is updated.
             get;
         }
-        
+
         /// <summary>Is the Window Maximized, Minimized, or Normal (aka restored)</summary>
         WindowVisualState VisualState
         {
             get;
         }
-        
+
         /// <summary>Is the Window Closing, ReadyForUserInteraction, BlockedByModalWindow or NotResponding.</summary>
         WindowInteractionState InteractionState
         {
             get;
         }
-        
+
         /// <summary>Is this window is always on top</summary>
         bool IsTopmost
         {

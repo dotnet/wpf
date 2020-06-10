@@ -37,7 +37,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Uri DeploymentPath
         {
@@ -52,7 +52,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string ErrorTitle
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Internal.DeploymentUI
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string ErrorText
         {
@@ -83,7 +83,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool ErrorFlag
         {
@@ -115,7 +115,7 @@ namespace Microsoft.Internal.DeploymentUI
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string LogFilePath
         {
@@ -131,7 +131,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Uri SupportUri
         {
@@ -151,7 +151,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DispatcherOperationCallback RefreshCallback
         {
@@ -166,7 +166,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DispatcherOperationCallback GetWinFxCallback
         {
@@ -218,7 +218,7 @@ namespace Microsoft.Internal.DeploymentUI
         }
 
         internal void OnShowLog(object sender, RoutedEventArgs e)
-        {            
+        {
             Process Notepad = new Process();
             Notepad.StartInfo.FileName = "Notepad.exe";
             Notepad.StartInfo.Arguments = LogFilePath;

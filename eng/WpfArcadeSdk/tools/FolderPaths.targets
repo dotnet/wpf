@@ -1,20 +1,25 @@
 <Project>
   <PropertyGroup>
     <!-- $(WpfSharedDir) is present in the current repository -->
-    <WpfSharedDir Condition="Exists('$(WpfSourceDir)shared\') And '$(RepositoryName)'!='dotnet-wpf-int'">$(WpfSourceDir)shared\</WpfSharedDir>
+    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfSourceDir)shared\')">$(WpfSourceDir)shared\</WpfSharedDir>
     <!-- Consume from NuGet cache -->
-    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\shared\')">$(WpfArcadeSdkRoot)src\shared\</WpfSharedDir>
+    <WpfTransportedSharedDir Condition="'$(WpfTransportedSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\shared\')">$(WpfArcadeSdkRoot)src\shared\</WpfTransportedSharedDir>
     <!-- Consume from $(WpfTestArcadeWpfSdkPath) -->
-    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\</WpfSharedDir>
+    <WpfTransportedSharedDir Condition="'$(WpfTransportedSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\</WpfTransportedSharedDir>
 
     <!-- $(WpfCommonDir) is present in the current repository -->
-    <WpfCommonDir Condition="Exists('$(WpfSourceDir)Common\') And '$(RepositoryName)'!='dotnet-wpf-int'">$(WpfSourceDir)Common\</WpfCommonDir>
+    <WpfCommonDir Condition="'$(WpfCommonDir)'=='' And Exists('$(WpfSourceDir)Common\') And '$(RepositoryName)'!='dotnet-wpf-int'">$(WpfSourceDir)Common\</WpfCommonDir>
     <!-- Consume from NuGet cache -->
-    <WpfCommonDir Condition="'$(WpfCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\Common\')">$(WpfArcadeSdkRoot)src\Common\</WpfCommonDir>
+    <WpfTransportedCommonDir Condition="'$(WpfTransportedCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\Common\')">$(WpfArcadeSdkRoot)src\Common\</WpfTransportedCommonDir>
     <!-- Consume from $(WpfTestArcadeWpfSdkPath) -->
-    <WpfCommonDir Condition="'$(WpfCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\</WpfCommonDir>
+    <WpfTransportedCommonDir Condition="'$(WpfTransportedCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\</WpfTransportedCommonDir>
 
+    <WpfTransportedGraphicsDir Condition="'$(WpfTransportedGraphicsDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\WpfGfx\')">$(WpfArcadeSdkRoot)src\WpfGfx\</WpfTransportedGraphicsDir>
+    <WpfTransportedGraphicsDir Condition="'$(WpfTransportedGraphicsDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\WpfGfx\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\WpfGfx\</WpfTransportedGraphicsDir>
 
-    <WpfTracingDir>$(WpfSharedDir)Tracing\</WpfTracingDir>
+    <WpfTransportedGraphicsPath>$(WpfTransportedGraphicsDir)</WpfTransportedGraphicsPath>
+
+    <WpfTracingDir Condition="'$(WpfTracingDir)' == '' And Exists('$(WpfSharedDir)Tracing\')">$(WpfSharedDir)Tracing\</WpfTracingDir>
+    <WpfTracingDir Condition="'$(WpfTracingDir)' == '' And Exists('$(WpfTransportedSharedDir)Tracing\')">$(WpfTransportedSharedDir)Tracing\</WpfTracingDir>
   </PropertyGroup>
 </Project>

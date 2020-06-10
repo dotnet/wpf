@@ -519,7 +519,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 System.Diagnostics.Debug.Assert (
                     false, "No selection, the code assumes that there is always one");
-                return new IRawElementProviderSimple [0];
+                return Array.Empty<IRawElementProviderSimple >();
             }
 
             // Single selection
@@ -530,7 +530,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     return BuildSelectionArray (dateSelection, 1, dateVisible [0]);
                 }
 
-                return new IRawElementProviderSimple [0];
+                return Array.Empty<IRawElementProviderSimple >();
             }
 
             // Range selection, expand the dates

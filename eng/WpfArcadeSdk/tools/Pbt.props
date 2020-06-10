@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <LocalMicrosoftWinFXProps>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft.WinFX.props</LocalMicrosoftWinFXProps>
     <LocalMicrosoftWinFXTargets>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft.WinFX.targets</LocalMicrosoftWinFXTargets>
   </PropertyGroup>
 
@@ -34,6 +35,8 @@
             Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.props"
             Condition="!Exists('$(LocalMicrosoftWinFXTargets)') And '$(InternalMarkupCompilation)'=='true'"/>
             
+    We need Microsoft.WinFX.props though, so that's imported here specifically. 
+            
     The use of Microsoft.NET.Sdk.WindowsDesktop doesn't break the source-build promise. 
       - Microsoft.NET.Sdk.WindowsDesktop is built from sources
       - It is used for compilation of assemblies in dotnet-wpf-int (the internal WPF repo), and serves as a 
@@ -42,4 +45,19 @@
         fall back to use local PBT project outputs for their compilation (instead of using WindowsDesktop Sdk package
         as a convenient 'transport package'). 
   -->
+  
+  <!-- 
+    If local PresentationBuildTasks project is present, then import WinFX.props from local sources;
+    otherwise import Microsoft.NET.Sdk.WindowsDesktop.props from Microsoft.NET.Sdk.WindowsDesktop
+    
+    We can not really test for $(InternalMarkupCompilation)==true here. It is usually defined
+    in the csproj - which is included after props (but before targets). 
+  -->
+  <Import Project="$(WpfSourceDir)PresentationBuildTasks\Microsoft.WinFX.props"
+          Condition="Exists('$(LocalMicrosoftWinFXProps)') "/>
+  
+  <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
+        Project="../targets/Microsoft.WinFX.props"
+        Condition="!Exists('$(LocalMicrosoftWinFXProps)') And 
+                    Exists('../targets/Microsoft.WinFX.props')"/>
 </Project>

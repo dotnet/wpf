@@ -110,7 +110,7 @@ namespace System.Windows.Input.StylusPointer
                 // If we fail just return a blank history
                 if (!GetPointerInfoHistory(pointerId, ref _info.historyCount, _history))
                 {
-                    _history = new POINTER_INFO[0];
+                    _history = Array.Empty<POINTER_INFO>();
                 }
 
                 switch (_info.pointerType)

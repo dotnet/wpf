@@ -25,7 +25,7 @@ namespace System.Windows.Input
         ///     The input device to associate with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured. 
+        ///     The time when the input occurred. 
         /// </param>
         public InputEventArgs(InputDevice inputDevice, int timestamp)
         {

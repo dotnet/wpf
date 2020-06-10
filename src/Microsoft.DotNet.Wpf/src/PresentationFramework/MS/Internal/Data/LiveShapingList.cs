@@ -149,7 +149,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                _sortInfos = new LivePropertyInfo[0];
+                _sortInfos = Array.Empty<LivePropertyInfo>();
             }
 
 
@@ -171,7 +171,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                _filterInfos = new LivePropertyInfo[0];
+                _filterInfos = Array.Empty<LivePropertyInfo>();
                 _filterRoot = null;
             }
 
@@ -213,7 +213,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                _groupInfos = new LivePropertyInfo[0];
+                _groupInfos = Array.Empty<LivePropertyInfo>();
             }
 
             _dpFromPath.EndReset();

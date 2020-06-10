@@ -94,6 +94,13 @@ using System.Windows.Markup;
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermission))]
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermissionAttribute))]
 
+[assembly: TypeForwardedTo(typeof(System.Collections.ObjectModel.ReadOnlyObservableCollection<>))]
+[assembly: TypeForwardedTo(typeof(System.Collections.ObjectModel.ObservableCollection<>))]
+[assembly: TypeForwardedTo(typeof(System.Collections.Specialized.NotifyCollectionChangedAction))]
+[assembly: TypeForwardedTo(typeof(System.Collections.Specialized.NotifyCollectionChangedEventArgs))]
+[assembly: TypeForwardedTo(typeof(System.Collections.Specialized.NotifyCollectionChangedEventHandler))]
+[assembly: TypeForwardedTo(typeof(System.Collections.Specialized.INotifyCollectionChanged))]
+
 // XAML namespace definitions
 [assembly:System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows")]
 [assembly:System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.Input")]

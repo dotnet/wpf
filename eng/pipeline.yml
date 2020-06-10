@@ -24,13 +24,13 @@ jobs:
     - job: Windows_NT
       timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool:
-        # For public or PR jobs, use the hosted pool.  For internal jobs use the internal pool.
+        # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-        ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: NetCorePublic-Pool
           queue: BuildPool.Windows.10.Amd64.VS2019.Pre.Open
-        ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCoreInternal-Pool
           queue: buildpool.windows.10.amd64.vs2019.pre
       variables:
@@ -112,21 +112,19 @@ jobs:
 
       strategy:
         matrix:
-          Build_Debug_x86:
-            _BuildConfig: Debug
-            # override some variables for debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_x86:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
           Build_Release_x86:
             _BuildConfig: Release
-          Build_Debug_x64:
-            _BuildConfig: Debug
-            # override some variables for debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
-            _Platform: x64
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_x64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: x64
           Build_Release_x64:
             _BuildConfig: Release
             _Platform: x64

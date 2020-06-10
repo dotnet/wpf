@@ -425,7 +425,7 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.TransformPatternIdentifiers.CanRotateProperty" )]
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.TransformPatternIdentifiers.CanResizeProperty" )]
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.TextPatternIdentifiers.TextChangedEvent")]
-// Reviewed by WinFx team and this case is OK
+// Reviewed by WinFX team and this case is OK
 [module: SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Scope = "type", Target = "System.Windows.Automation.Text.FlowDirections")]
 // Reviewed by atgarch and these enums are OK
 [module: SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames", Scope = "type", Target = "System.Windows.Automation.TreeScope")]

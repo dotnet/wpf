@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+    <Compile Include="$(WpfSourceDir)PresentationUI\OtherAssemblyAttrs.cs" />
   </ItemGroup>
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
@@ -20,6 +21,7 @@
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
     
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\ref\PresentationFramework-ref.csproj" />
   </ItemGroup>
 </Project>

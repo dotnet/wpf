@@ -1023,7 +1023,7 @@ namespace System.Windows
         /// This is the default HWND used to listen for theme-change messages.
         /// 
         /// When <see cref="IsPerMonitorDpiScalingActive"/> is true, additional notification windows are created 
-        /// on-demand by <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/> or <see cref="EnsureResourceChangeListener(DpiUtil.HwndDpiInfo)"/>
+        /// on-demand by <see cref="EnsureResourceChangeListener(DpiUtil.HwndDpiInfo)"/>
         /// as the need arises. For e.g., when <see cref="System.Windows.Interop.HwndHost"/> calls into <see cref="GetDpiAwarenessCompatibleNotificationWindow(HandleRef)"/>,
         /// we would look for a notify-window that matches both (a) DPI Awareness Context and (b) DPI Scale factor of the foreign window from HwndHost to return. If none is found,
         /// we would create one and add it to our list in <see cref="_hwndNotify"/> and return the newly created notify-window.
@@ -1055,27 +1055,6 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Ensures that the notify-window corresponding to a given <paramref name="dpiContextValue"/> has been
-        /// created.
-        /// </summary>
-        /// <param name="dpiContextValue">DPI Awareness Context for which notify-window has to be ensured</param>
-        private static void EnsureResourceChangeListener(DpiAwarenessContextValue dpiContextValue)
-        {
-            EnsureResourceChangeListener();
-            
-            // Test if _hwndNotify has a key that contains dpiContextValue - otherwise create and add a notify-window with 
-            // this DPI Awareness Context
-            if (_hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == dpiContextValue) == null)
-            {
-                var hwndDpiInfo = CreateResourceChangeListenerWindow(dpiContextValue);
-                if (!_dpiAwarenessContextAndDpis.Contains(hwndDpiInfo))
-                {
-                    _dpiAwarenessContextAndDpis.Add(hwndDpiInfo);
-                }
-            }
-        }
-
-        /// <summary>
         /// Ensures that a notify-window corresponding to a given HwndDpiInfo(=DpiAwarenessContextValue + DpiScale) has been
         /// created.
         /// </summary>
@@ -1085,9 +1064,16 @@ namespace System.Windows
         /// whose characteristics we are trying to match, we are guaranteed that the DPI Scale factor of the newly created HWND
         /// would be identical to that of the reference HWND.
         /// </remarks>
-        private static void EnsureResourceChangeListener(DpiUtil.HwndDpiInfo hwndDpiInfo)
+        private static bool EnsureResourceChangeListener(DpiUtil.HwndDpiInfo hwndDpiInfo)
         {
             EnsureResourceChangeListener();
+
+            // It's meaningless to ensure RCL for Invalid DACV
+            if (hwndDpiInfo.DpiAwarenessContextValue == DpiAwarenessContextValue.Invalid)
+            {
+                return false;
+            }
+
             if (!_hwndNotify.ContainsKey(hwndDpiInfo))
             {
                 var hwndDpiInfoKey = 
@@ -1095,13 +1081,15 @@ namespace System.Windows
                         hwndDpiInfo.DpiAwarenessContextValue, 
                         hwndDpiInfo.ContainingMonitorScreenRect.left, 
                         hwndDpiInfo.ContainingMonitorScreenRect.top);
-                Debug.Assert(hwndDpiInfo == hwndDpiInfoKey);
 
-                if (!_dpiAwarenessContextAndDpis.Contains(hwndDpiInfo))
+                if (hwndDpiInfoKey == hwndDpiInfo &&                        // If hwndDpiInfoKey != hwndDpiInfo, something is wrong, abort. 
+                    !_dpiAwarenessContextAndDpis.Contains(hwndDpiInfo))
                 {
                     _dpiAwarenessContextAndDpis.Add(hwndDpiInfo);
                 }
             }
+
+            return _hwndNotify.ContainsKey(hwndDpiInfo);
         }
 
         /// <summary>
@@ -1113,7 +1101,7 @@ namespace System.Windows
         /// <param name="y">y-coordinate position on the screen where the window is to be created</param>
         /// <remarks>
         /// Assumes that <see cref="_hwndNotify"/> and <see cref="_hwndNotifyHook"/> have been initialized. This method
-        /// must only be called by <see cref="EnsureResourceChangeListener"/> or <see cref="EnsureResourceChangeListener(DpiAwarenessContextValue)"/>
+        /// must only be called by <see cref="EnsureResourceChangeListener"/> or <see cref="EnsureResourceChangeListener(DpiUtil.HwndDpiInfo)"/>
         /// </remarks>
         /// <returns><see cref="DpiUtil.HwndDpiInfo"/> of the newly created <see cref="HwndWrapper"/>, which is also a new key added into <see cref="_hwndNotify"/></returns>
         private static DpiUtil.HwndDpiInfo CreateResourceChangeListenerWindow(DpiAwarenessContextValue dpiContextValue, int x = 0, int y = 0, [System.Runtime.CompilerServices.CallerMemberName] string callerName = "")
@@ -1652,8 +1640,12 @@ namespace System.Windows
                 DpiUtil.GetExtendedDpiInfoForWindow(hwnd.Handle, fallbackToNearestMonitorHeuristic: true) :
                 new DpiUtil.HwndDpiInfo(processDpiAwarenessContextValue, GetDpiScaleForUnawareOrSystemAwareContext(processDpiAwarenessContextValue));
 
-            EnsureResourceChangeListener(hwndDpiInfo);
-            return _hwndNotify[hwndDpiInfo].Value;
+            if (EnsureResourceChangeListener(hwndDpiInfo))
+            {
+                return _hwndNotify[hwndDpiInfo].Value;
+            }
+
+            return null;
         }
 
         /// <summary>

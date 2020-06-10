@@ -15,8 +15,8 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
-    <AssemblyName>$(PackageName</AssemblyName>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
     <PackageDescription>WindowsDesktop SDK</PackageDescription>
   </PropertyGroup>
 

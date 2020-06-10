@@ -276,7 +276,7 @@ namespace System.Windows.Media
             else if ((_currentTransform != null) && !_currentTransform.IsIdentity)
             {
                 // Both the current transform and the new one are nontrivial, combine them
-                Matrix combined = _currentTransform.Value * transform.Value;
+                Matrix combined =  transform.Value * _currentTransform.Value;
                 transform = new MatrixTransform(combined);
             }
 

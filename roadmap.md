@@ -17,14 +17,16 @@ As we complete those goals, we'll update our roadmap to include additional featu
 |---|---|
 |Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
 |Roadmap update for feature focus areas|Early 2019|
-|Add adequate tests that enable validating and merging community PRs|Continues thru 2019|
-|Add remaining WPF for .NET Core components to repository|Continues thru 2019|
+|Add remaining WPF for .NET Core components to repository|Early 2020 (See #2554)|
+|Add adequate tests that enable validating and merging community PRs|Continues thru 2020|
+
 
 ## Porting Status
 
-The port from WPF for .NET Framework is still in progress.  All components applicable to WPF for .NET Core will eventually be published to this repository.
+The port from WPF for .NET Framework has been completed. All components applicable to WPF for .NET Core have been published to this repository, with some exceptions described in #2554. 
 
 ### Currently Available
+
 * Components:
   * [System.Xaml](src/Microsoft.DotNet.Wpf/src/System.Xaml)
   * [WindowsBase](src/Microsoft.DotNet.Wpf/src/WindowsBase)
@@ -57,13 +59,10 @@ The port from WPF for .NET Framework is still in progress.  All components appli
   * [System.Windows.Presentation](src/Microsoft.DotNet.Wpf/src/System.Windows.Presentation)
   * [PresentationUI](src/Microsoft.DotNet.Wpf/src/PresentationUI)
   * [System.Printing](src/Microsoft.DotNet.Wpf/src/System.Printing)
+  * Native Components
+    * [PenIMC_Cor3](src/Microsoft.DotNet.Wpf/src/PenImc)
+    * [WpfGfx_Cor3](src/Microsoft.DotNet.Wpf/src/WpfGfx)
   
 * Tests:
   * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)
 
-### In Progress
-Note: This list is in rough priority order and may change.
-* Components: 
-
-  * `PenIMC_cor3`
-  * `WpfGfx_cor3`

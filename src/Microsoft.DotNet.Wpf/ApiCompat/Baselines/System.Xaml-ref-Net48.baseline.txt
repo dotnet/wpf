@@ -16,7 +16,7 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.TrimSurroundingWhi
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.UidPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.UsableDuringInitializationAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-TypesMustExist : Type 'System.Windows.Markup.ValueSerializerAttribute' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.ValueSerializerAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.WhitespaceSignificantCollectionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlDeferLoadAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlSetMarkupExtensionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.

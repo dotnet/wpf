@@ -315,7 +315,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-                _spannedCells = new CellParagraph[0];
+                _spannedCells = Array.Empty<CellParagraph>();
             }
 
             for(int index = 0; index < _spannedCells.Length; index++)

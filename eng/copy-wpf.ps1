@@ -27,13 +27,21 @@ function Print-Usage()
     Write-Host ""
 }
 
+Write-Host "*** Copy WPF files procedure ***"
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $Config = if ($release) { "Release" } else { "Debug" }
+
+Write-Host "Target architecture - configuration: " $arch $Config
 
 function CopyBinariesToLocation($location)
 {
     $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
+    
+    Write-Host "Copy native binaries..."
     CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase 
+    
+    Write-Host "Copy managed binaries..."
     CopyManagedBinariesToLocation $location  $locallyBuiltBinaryLocationBase
 }
 
@@ -43,7 +51,7 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 
     # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\win-x86
     # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\win-x64
-    
+
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
     $BinaryLocationInPackage =  "win-$arch"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
@@ -51,11 +59,11 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
     # Layout of where the managed binaries looks something like this: 
-    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
-    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0
+    # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp5.0
+    # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp5.0
 
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
-    $BinaryLocationInPackage = "netcoreapp3.0"
+    $BinaryLocationInPackage = "netcoreapp5.0"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 
@@ -66,6 +74,13 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
     if (Test-Path $BinLocation)
     {
         Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
+        Write-Host "All files are copied" -ForegroundColor Green
+    }
+    else
+    {
+        Write-Host "Source files location unavailable: " $BinLocation -ForegroundColor Yellow -NoNewline
+        Write-Host "  Skip. No file has been copied."
+        return
     }
 }
 
@@ -138,13 +153,15 @@ elseif($testhost)
 else
 {
     $runtimeIdentifer = "win-$arch"
-    $location = [System.IO.Path]::Combine($destination, "bin\Debug\netcoreapp3.0", $runtimeIdentifer, "publish")
+    $location = [System.IO.Path]::Combine($destination, "bin\Debug\netcoreapp5.0", $runtimeIdentifer, "publish")
     if(![System.IO.Directory]::Exists($location))
     {
-        Write-Host "Location unavailable: " $location -ForegroundColor Red
+        Write-Host "App publishing directory unavailable: " $location -ForegroundColor Red
         return
     }
-    Write-Host "Copying binaries to app published directory"
+    
+    Write-Host "App publishing directory: " $location
+    Write-Host "Copying binaries to app publishing directory..."
     CopyBinariesToLocation $location  
 }
 

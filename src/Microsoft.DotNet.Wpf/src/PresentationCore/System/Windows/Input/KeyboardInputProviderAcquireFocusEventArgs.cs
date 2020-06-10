@@ -20,7 +20,7 @@ namespace System.Windows.Input
         ///     The logical keyboard device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="focusAcquired">
         ///     Whether or not interop focus was acquired.

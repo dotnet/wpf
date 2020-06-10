@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <PublishDependsOnTargets>
+      ReconfigureAssetManifestFileName;
+      $(PublishDependsOnTargets);
+    </PublishDependsOnTargets>
+  </PropertyGroup>
+</Project>

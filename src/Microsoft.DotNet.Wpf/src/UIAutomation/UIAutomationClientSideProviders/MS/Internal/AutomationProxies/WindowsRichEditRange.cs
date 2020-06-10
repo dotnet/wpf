@@ -178,7 +178,7 @@ namespace MS.Internal.AutomationProxies
             int end = Math.Min(_range.End, visibleRange.End);
             if (start > end)
             {
-                return new double[0];
+                return Array.Empty<double>();
             }
 
             // get the client area in screen coordinates.
@@ -392,7 +392,7 @@ namespace MS.Internal.AutomationProxies
         IRawElementProviderSimple[] ITextRangeProvider.GetChildren()
         {
             // if we implement hyperlink, etc. children then this becomes more involved.
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         #endregion Public Properties

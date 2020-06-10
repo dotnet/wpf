@@ -295,6 +295,7 @@
     <Compile Include="MS\Internal\TextFormatting\ThousandthOfEmRealPoints.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPane.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPaneRcw.cs" />
+    <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\NativeMethods.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPenimc.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPointer.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsTablet.cs" />
@@ -1390,7 +1391,6 @@
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.CompilerServices.VisualC" />
     <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices.WindowsRuntime" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
     <NetCoreReference Include="System.Threading" />
@@ -1426,7 +1426,7 @@
   </ItemGroup>
 
   <!-- 
-    Need Microsoft.WinFx.targets to embed *.compositefont 
+    Need Microsoft.WinFX.targets to embed *.compositefont 
     files using MainResourcesGeneration target
   -->
   <PropertyGroup>

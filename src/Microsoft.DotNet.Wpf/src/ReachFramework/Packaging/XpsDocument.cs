@@ -629,7 +629,7 @@ namespace System.Windows.Xps.Packaging
 
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
-            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext);
+            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
             if (!(fixedObject is FixedDocumentSequence) )
             {
                  throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedDocumentSequence));
@@ -894,9 +894,13 @@ namespace System.Windows.Xps.Packaging
             Stream     dataStream
             )
         {
+            // In .NET Core 3.0 System.IO.Compression's ZipArchive does not allow creation of ZipArchiveEntries when
+            // a prior ZipArchiveEntry is still open.  XPS Serialization requires this as part of its implementation.
+            // To get around this, XPS creation should occur in with FileAccess.ReadWrite if the underlying stream
+            // supports it.  This allows multiple ZipArchiveEntries to be open concurrently.
             Package package = Package.Open(dataStream,
                                            FileMode.CreateNew,
-                                           FileAccess.Write);
+                                           (dataStream.CanRead) ? FileAccess.ReadWrite : FileAccess.Write);
             XpsDocument document = new XpsDocument(package);
 
             document.OpcPackage = package;

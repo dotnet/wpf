@@ -245,7 +245,7 @@ namespace MS.Internal.AutomationProxies
             // there is ambiguity at line breaks and some international scenarios.
             if (IsDegenerate)
             {
-                return new double[0];
+                return Array.Empty<double>();
             }
 
             // we'll need to have the text eventually (so we can measure characters) so get it up
@@ -259,7 +259,7 @@ namespace MS.Internal.AutomationProxies
             w32point.y = 0;
             if (!Misc.MapWindowPoints(_provider.WindowHandle, IntPtr.Zero, ref w32point, 1))
             {
-                return new double[0];
+                return Array.Empty<double>();
             }
             Point mapClientToScreen = new Point(w32point.x, w32point.y);
 
@@ -545,7 +545,7 @@ namespace MS.Internal.AutomationProxies
         IRawElementProviderSimple[] ITextRangeProvider.GetChildren()
         {
             // we don't have any children so return an empty array
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         #endregion Public Properties

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <ExcludeFromNuget>true</ExcludeFromNuget>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(WpfCppProps)" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />  
+
+
+
+<PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{cba5dffd-72d0-40c5-a129-cb071da14ce6}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <TargetName>wpfx</TargetName>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precomp.hxx</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory);$(MsBuildThisFileDirectory)\..\DbgXHelper</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <ModuleDefinitionFile>wpfx.def</ModuleDefinitionFile>
+      
+      <!-- Suppress Warning LNK4199:/DELAYLOAD:d3dcompiler_47.dll ignored; no imports found from d3dcompiler_47.dll -->
+      <AdditionalOptions>%(AdditionalOptions) /ignore:4199</AdditionalOptions>
+
+      <AdditionalDependencies>%(AdditionalDependencies);kernel32.lib;dbghelp.lib;ntdll.lib;dbgeng.lib;user32.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  
+
+  <ItemGroup>
+    <ClCompile Include="precomp.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ClCompile Include="DbgXMain.cxx" />
+    <ClCompile Include="milexts.cxx" />
+    <ClCompile Include="cmd.cpp" />
+    <ClCompile Include="help.cxx" />
+    <ClCompile Include="helpers.cxx" />
+    <ClCompile Include="stackcapture.cxx" />
+    <ClCompile Include="argparse.cxx" />
+    <ClCompile Include="dumptable.cxx" />
+    <ClCompile Include="milresource.cxx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfGraphicsPath)\DbgXHelper\DbgXHelper.vcxproj">
+      <Project>{5b21a951-88f4-460c-b6f2-5b3d7edfe13a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfGraphicsPath)\core\common\common.vcxproj">
+      <Project>{19f853cb-c936-40be-8f9d-e6bed3cf8a3d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfGraphicsPath)\shared\util\UtilLib\UtilLib.vcxproj">
+      <Project>{b802113c-ea89-406c-9af1-9808caa0f0ad}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfGraphicsPath)\shared\debug\DebugLib\DebugLib.vcxproj">
+      <Project>{ac8e779f-c95f-4855-839d-25efa1651337}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />  
+  
+</Project>

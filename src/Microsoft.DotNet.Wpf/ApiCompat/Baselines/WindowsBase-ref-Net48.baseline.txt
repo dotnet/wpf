@@ -1,13 +1,7 @@
 Compat issues with assembly WindowsBase:
-TypesMustExist : Type 'System.Collections.ObjectModel.ObservableCollection<T>' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'System.Collections.ObjectModel.ReadOnlyObservableCollection<T>' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'System.Collections.Specialized.INotifyCollectionChanged' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'System.Collections.Specialized.NotifyCollectionChangedAction' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'System.Collections.Specialized.NotifyCollectionChangedEventArgs' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'System.Collections.Specialized.NotifyCollectionChangedEventHandler' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.ComponentModel.PropertyFilterAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.IO.FileFormatException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-MembersMustExist : Member 'System.IO.Packaging.Package..ctor(System.IO.FileAccess, System.Boolean)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'protected void System.IO.Packaging.Package..ctor(System.IO.FileAccess, System.Boolean)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.MediaPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.Permissions.WebBrowserPermissionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Security.RightsManagement.RightsManagementException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
@@ -38,4 +32,4 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsCompatibleWit
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 39
+Total Issues: 33

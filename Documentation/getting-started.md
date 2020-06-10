@@ -6,8 +6,8 @@ This document describes the experience of using WPF on .NET Core. The [Developer
 
 Choose one of these options:
 
-1. [.NET Core 3.0 SDK Preview 1 (recommended)](https://www.microsoft.com/net/download)
-2. [.NET Core 3.0 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/master/daily-builds.md)
+1. [.NET Core 3.1 SDK (recommended)](https://www.microsoft.com/net/download)
+2. [.NET Core 3.1 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/master/daily-builds.md)
 
 ## Creating new applications
 
@@ -34,7 +34,7 @@ For conceptual documentation (architecture, how-tos, etc.) most of the [document
 
 ## Missing features
 
-* To use the XAML Designer for WPF on .NET Core 3 you will need VS 2019 16.2 Preview 1.
+* To use the XAML Designer for WPF on .NET Core 3.1 you will need VS 2019 16.4.
 * [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) are not supported for .NET Core 3. 
 * Not all .NET Framework features are supported for .NET Core 3. You can use the [.NET API Portability Analyzer](https://github.com/microsoft/dotnet-apiport) to see if your existing code can run on .NET Core 3.
 

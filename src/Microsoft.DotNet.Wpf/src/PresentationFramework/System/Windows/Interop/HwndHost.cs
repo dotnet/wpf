@@ -308,7 +308,7 @@ namespace System.Windows.Interop
         protected virtual bool HasFocusWithinCore()
         {
             HandleRef hwndFocus = new HandleRef(this, UnsafeNativeMethods.GetFocus());
-            if (_hwnd.Handle != IntPtr.Zero && (hwndFocus.Handle == _hwnd.Handle || UnsafeNativeMethods.IsChild(_hwnd, hwndFocus)))
+            if (Handle != IntPtr.Zero && (hwndFocus.Handle == _hwnd.Handle || UnsafeNativeMethods.IsChild(_hwnd, hwndFocus)))
             {
                 return true;
             }
@@ -423,7 +423,7 @@ namespace System.Windows.Interop
             get
             {
                 if (!_hasDpiAwarenessContextTransition) return 1;
-                DpiScale2 dpi = DpiUtil.GetWindowDpi(_hwnd.Handle, fallbackToNearestMonitorHeuristic: false);
+                DpiScale2 dpi = DpiUtil.GetWindowDpi(Handle, fallbackToNearestMonitorHeuristic: false);
                 DpiScale2 dpiParent = DpiUtil.GetWindowDpi(UnsafeNativeMethods.GetParent(_hwnd), fallbackToNearestMonitorHeuristic: false);
 
                 if (dpi == null || dpiParent == null)
@@ -734,7 +734,7 @@ namespace System.Windows.Interop
         {
             DrawingGroup drawingGroup = null;
 
-            if(_hwnd.Handle != IntPtr.Zero && UnsafeNativeMethods.IsWindow(_hwnd))
+            if(Handle != IntPtr.Zero)
             {
                 NativeMethods.RECT rc = new NativeMethods.RECT();
                 SafeNativeMethods.GetWindowRect(_hwnd, ref rc);
@@ -976,23 +976,28 @@ namespace System.Windows.Interop
                         UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null,hwndParent));
                     }
                 }
-                else
+                else if (Handle != IntPtr.Zero)
                 {
                     // Reparent the window to notification-only window provided by SystemResources
                     // This keeps the child window around, but it is not visible.  We can reparent the 
                     // window later when a new parent is available
                     var hwnd = SystemResources.GetDpiAwarenessCompatibleNotificationWindow(_hwnd);
-                    UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwnd.Handle));
-                    // ...But we have a potential problem: If the SystemResources listener window gets 
-                    // destroyed ahead of the call to HwndHost.OnDispatcherShutdown(), the HwndHost's window
-                    // will be destroyed too, before the "logical" Dispose has had a chance to do proper
-                    // shutdown. This turns out to be very significant for WebBrowser/ActiveXHost, which shuts
-                    // down the hosted control through the COM interfaces, and the control destroys its
-                    // window internally. Evidently, the WebOC fails to do full, proper cleanup if its
-                    // window is destroyed unexpectedly.
-                    // To avoid this situation, we make sure SystemResources responds to the Dispatcher 
-                    // shutdown event after this HwndHost.
-                    SystemResources.DelayHwndShutdown();
+                    Debug.Assert(hwnd != null);
+                    Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
+                    if (hwnd != null)
+                    {
+                        UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwnd.Handle));
+                        // ...But we have a potential problem: If the SystemResources listener window gets 
+                        // destroyed ahead of the call to HwndHost.OnDispatcherShutdown(), the HwndHost's window
+                        // will be destroyed too, before the "logical" Dispose has had a chance to do proper
+                        // shutdown. This turns out to be very significant for WebBrowser/ActiveXHost, which shuts
+                        // down the hosted control through the COM interfaces, and the control destroys its
+                        // window internally. Evidently, the WebOC fails to do full, proper cleanup if its
+                        // window is destroyed unexpectedly.
+                        // To avoid this situation, we make sure SystemResources responds to the Dispatcher 
+                        // shutdown event after this HwndHost.
+                        SystemResources.DelayHwndShutdown();
+                    }
                 }
             }
             finally

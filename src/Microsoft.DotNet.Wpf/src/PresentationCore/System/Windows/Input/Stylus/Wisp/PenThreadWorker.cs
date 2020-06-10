@@ -40,16 +40,16 @@ namespace System.Windows.Input
         const int MaxContextPerThread  = 31;  // (64 - 1) / 2 = 31.  Max handle limit for MsgWaitForMultipleMessageEx()
         const int EventsFrequency       = 8;
 
-        IntPtr []             _handles = new IntPtr[0];
+        IntPtr []             _handles = Array.Empty<IntPtr>();
 
-        WeakReference []      _penContexts = new WeakReference[0];
+        WeakReference []      _penContexts = Array.Empty<WeakReference>();
 
-        IPimcContext3 []       _pimcContexts = new IPimcContext3[0];
+        IPimcContext3 []       _pimcContexts = Array.Empty<IPimcContext3>();
 
         /// <summary>
         /// A list of all WISP context COM object GIT keys that are locked via this thread.
         /// </summary>
-        UInt32[] _wispContextKeys = new UInt32[0];
+        UInt32[] _wispContextKeys = Array.Empty<UInt32>();
 
         private SecurityCriticalData<IntPtr>   _pimcResetHandle;
         private volatile bool                  __disposed;
@@ -166,7 +166,7 @@ namespace System.Windows.Input
                 }
             }
 
-            TabletDeviceInfo[] _tabletDevicesInfo = new TabletDeviceInfo[0];
+            TabletDeviceInfo[] _tabletDevicesInfo = Array.Empty<TabletDeviceInfo>();
         }
 
         // Class that handles creating a context for a particular tablet device.        
@@ -331,7 +331,7 @@ namespace System.Windows.Input
 
             IPimcTablet3 _pimcTablet;
 
-            StylusDeviceInfo[]  _stylusDevicesInfo = new StylusDeviceInfo[0];
+            StylusDeviceInfo[]  _stylusDevicesInfo = Array.Empty<StylusDeviceInfo>();
         }
 
         // Class that handles getting info about a specific tablet device.
@@ -1128,13 +1128,7 @@ namespace System.Windows.Input
                 
                 // Release the PenIMC object only when we are assured that the
                 // context was removed from the list of waiting handles.
-                
-                // Restrict COM releases to Win7 as this can cause issues with later versions
-                // of PenIMC and WISP due to using a context after it is released.
-                if (!OSVersionHelper.IsOsWindows8OrGreater)
-                {
-                    Marshal.ReleaseComObject(penContext._pimcContext.Value);
-                }
+                Marshal.ReleaseComObject(penContext._pimcContext.Value);
             }
 
             return removed;

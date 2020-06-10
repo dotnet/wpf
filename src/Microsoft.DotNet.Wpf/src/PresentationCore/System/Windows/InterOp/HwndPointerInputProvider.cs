@@ -148,7 +148,7 @@ namespace System.Windows.Interop
             // The data is as wide as the pointer properties and is per history point
             int[] rawPointerData = new int[pointerPropertyCount * pointerData.Info.historyCount];
 
-            int[] data = new int[0];
+            int[] data = Array.Empty<int>();
 
             // Get the raw data formatted to our supported properties
             if (UnsafeNativeMethods.GetRawPointerDeviceData(

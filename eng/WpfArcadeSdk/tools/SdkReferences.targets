@@ -34,6 +34,7 @@
   <PropertyGroup>
     <ResolveAssemblyReferencesDependsOn>
       ResolveMicrosoftDotNetWpfGitHubReferences;
+      ResolveMicrosoftDotNetWpfDncEngReferencesForCpp;
       ResolveWinFormsReferences;
       $(ResolveAssemblyReferencesDependsOn)
     </ResolveAssemblyReferencesDependsOn>
@@ -119,6 +120,7 @@
     Name="ResolveMicrosoftDotNetWpfGitHubReferences"
     Returns="@(ReferencePath)"
     Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' 
+           And '$(MSBuildProjectExtension)' != '.vcxproj'
            And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
            And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
            and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
@@ -135,17 +137,47 @@
     -->
     <PropertyGroup>
       <!-- Since WPF reference assemblies do not carry internals, we need to directly reference the RID-specific lib assemblies from dotnet_wpf_int builds. -->
-      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
-      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub_Debug)</WpfGitHubRidSpecificPackagePath>
+      
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub_Debug)</WpfGitHubRidSpecificPackagePath>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll"
                  Condition="Exists('$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')">
-        <NuGetPackageId>runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.GitHub</NuGetPackageId>
+        <NuGetPackageId>runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)</NuGetPackageId>
       </Reference>
     </ItemGroup>
   </Target>
 
+  <Target
+    Name="ResolveMicrosoftDotNetWpfDncEngReferencesForCpp"
+    Returns="@(Link)"
+    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' 
+           And '$(MSBuildProjectExtension)' == '.vcxproj'
+           and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
+    <!-- 
+      Normally, we would use lib files from RID-specific Microsoft.DotNet.Wpf.DncEng package directly. Since this package 
+      was most likley not restored prior to the start of the build, it had to be restored from with the CppHelper target, and the libs in this package
+      are now enumerated within @(NuGetReferencesForCpp) item. 
+    -->
+    
+    <!-- 
+      Select items from with @(NuGetReferencesForCpp) (which is a proxy for Microsoft.DotNet.Wpf.DncEng's native libs)
+      that were requested in MicrosoftDotNetWpfGitHubReference
+    -->
+    <FilterItem1ByItem2 Item1="@(NuGetReferencesForCpp->'%(FileName)')"
+                        Item2="@(MicrosoftDotNetWpfGitHubReference)" 
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_nugetLibReferencesForCpp" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+    
+    <ItemGroup>
+      <Link Include="@(_nugetLibReferencesForCpp->'%(FilePath)')" />   
+    </ItemGroup>
+  </Target>
 
   <!-- 
     In your project, Add a references to WinForms transport package like this:

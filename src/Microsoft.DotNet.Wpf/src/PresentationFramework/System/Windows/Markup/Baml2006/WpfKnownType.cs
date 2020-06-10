@@ -374,7 +374,7 @@ namespace System.Windows.Baml2006
                 }
                 if (s_EmptyAttributes == null)
                 {
-                    s_EmptyAttributes = new Attribute[0];
+                    s_EmptyAttributes = Array.Empty<Attribute>();
                 }
                 return s_EmptyAttributes;
             }

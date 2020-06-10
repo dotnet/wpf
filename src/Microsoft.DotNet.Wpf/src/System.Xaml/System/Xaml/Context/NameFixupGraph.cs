@@ -41,7 +41,7 @@ namespace MS.Internal.Xaml.Context
 
         public NameFixupGraph()
         {
-            var referenceComparer = ReferenceEqualityComparer<object>.Singleton;
+            var referenceComparer = ReferenceEqualityComparer.Instance;
             _dependenciesByChildObject = new Dictionary<object, NameFixupToken>(referenceComparer);
             _dependenciesByName = new Dictionary<string, FrugalObjectList<NameFixupToken>>(StringComparer.Ordinal);
             _dependenciesByParentObject = new Dictionary<object, FrugalObjectList<NameFixupToken>>(referenceComparer);

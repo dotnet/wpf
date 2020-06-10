@@ -15,7 +15,7 @@
       Only reference Microsoft.DotNet.Wpf.DncEng when building tests in dotnet/wpf
       This references is not needed when building tests in dotnet-wpf-int
     -->
-    <PackageReference Include="runtime.$(RuntimeIdentifier).$(MicrosoftDotNetWpfDncEngPackage)"
+    <PackageReference Include="runtime.$(RuntimeIdentifier).$(DncEngTransportPackageName)"
                       Condition="'$(RepositoryName)'=='wpf'"
                       Version="$(MicrosoftDotNetWpfDncEngVersion)">
       <CopyLocal>true</CopyLocal>
@@ -38,12 +38,20 @@
 
 
     <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-    <None Condition="'$(RuntimeIdentifier)'=='win-x64'"
+    <None Condition="'$(RuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'"
           Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
-    <None Condition="'$(RuntimeIdentifier)'=='win-x86'"
+    <None Condition="'$(RuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'"
+      Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\$(RuntimeIdentifier)\native\*.dll"
+      CopyToOutputDirectory="PreserveNewest"/>
+    
+    
+    <None Condition="'$(RuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'"
            Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
+    <None Condition="'$(RuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'"
+       Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\$(RuntimeIdentifier)\native\*.dll"
+      CopyToOutputDirectory="PreserveNewest"/>
 
     <_wpfProjectsNotWindowsBase Include="@(WpfProjectPath)" Exclude="WindowsBase" />
     <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsWindowsBase)" />

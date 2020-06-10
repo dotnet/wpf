@@ -622,7 +622,7 @@ namespace System.Windows.Ink
             System.Diagnostics.Debug.Assert(path != null);
             if (IEnumerablePointHelper.GetCount(path) == 0)
             {
-                return new StrokeIntersection[0];
+                return Array.Empty<StrokeIntersection>();
             }
 
             ErasingStroke erasingStroke = new ErasingStroke(shape, path);
@@ -641,14 +641,14 @@ namespace System.Windows.Ink
             System.Diagnostics.Debug.Assert(lasso != null);
             if (lasso.IsEmpty)
             {
-                return new StrokeIntersection[0];
+                return Array.Empty<StrokeIntersection>();
             }
 
             // The following will check whether all the points are within the lasso.
             // If yes, return the whole stroke as being hit.
             if (!lasso.Bounds.IntersectsWith(this.GetBounds()))
             {
-                return new StrokeIntersection[0];
+                return Array.Empty<StrokeIntersection>();
             }
             return lasso.HitTest(StrokeNodeIterator.GetIterator(this, this.DrawingAttributes));
         }

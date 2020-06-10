@@ -60,7 +60,7 @@ namespace System.Windows.Controls
 
         static ItemsControl()
         {
-            // Define default style in code instead of in theme files. 
+            // Define default style in code instead of in theme files.
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemsControl), new FrameworkPropertyMetadata(typeof(ItemsControl)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(ItemsControl));
             EventManager.RegisterClassHandler(typeof(ItemsControl), Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotFocus));
@@ -3011,7 +3011,7 @@ namespace System.Windows.Controls
 
             Rect viewPortBounds = new Rect(new Point(), viewPort.RenderSize);
             Rect elementBounds = new Rect(new Point(), element.RenderSize);
-            elementBounds = element.TransformToAncestor(viewPort).TransformBounds(elementBounds);
+            elementBounds = CorrectCatastrophicCancellation(element.TransformToAncestor(viewPort)).TransformBounds(elementBounds);
             bool northSouth = (axis == FocusNavigationDirection.Up || axis == FocusNavigationDirection.Down);
             bool eastWest = (axis == FocusNavigationDirection.Left || axis == FocusNavigationDirection.Right);
 
@@ -3076,6 +3076,46 @@ namespace System.Windows.Controls
                 return ElementViewportPosition.AfterViewport;
             }
             return ElementViewportPosition.None;
+        }
+
+        // in large virtualized hierarchical lists (TreeView or grouping), the transform
+        // returned by element.TransformToAncestor(viewport) is vulnerable to catastrophic
+        // cancellation.  If element is at the top of the viewport, but embedded in
+        // layers of the hierarchy, the contributions of the intermediate elements add
+        // up to a large positive number which should exactly cancel out the large
+        // negative offset of the viewport's direct child to produce net offset of 0.0.
+        // But floating-point drift while accumulating the intermediate offsets and
+        // catastrophic cancellation in the last step may produce a very small
+        // non-zero number instead (e.g. -0.0000000000006548). This can lead to
+        // infinite loops and incorrect decisions in layout.
+        // To mitigate this problem, replace near-zero offsets with zero.
+        private static GeneralTransform CorrectCatastrophicCancellation(GeneralTransform transform)
+        {
+            MatrixTransform matrixTransform = transform as MatrixTransform;
+            if (matrixTransform != null)
+            {
+                bool needNewTransform = false;
+                Matrix matrix = matrixTransform.Matrix;
+
+                if (matrix.OffsetX != 0.0 && LayoutDoubleUtil.AreClose(matrix.OffsetX, 0.0))
+                {
+                    matrix.OffsetX = 0.0;
+                    needNewTransform = true;
+                }
+
+                if (matrix.OffsetY != 0.0 && LayoutDoubleUtil.AreClose(matrix.OffsetY, 0.0))
+                {
+                    matrix.OffsetY = 0.0;
+                    needNewTransform = true;
+                }
+
+                if (needNewTransform)
+                {
+                    transform = new MatrixTransform(matrix);
+                }
+            }
+
+            return transform;
         }
 
         private static bool ElementIntersectsViewport(Rect viewportRect, Rect elementRect)

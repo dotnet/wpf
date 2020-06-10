@@ -41,7 +41,8 @@
   <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenApi.props" />
-
+  <Import Project="$(WpfArcadeSdkToolsDir)Publishing.props" />
+  
   <PropertyGroup>
     <DebugType>full</DebugType>
     <DebugType Condition="'$(Configuration)'=='Release'">pdbonly</DebugType>
@@ -61,8 +62,10 @@
     <!--
       Temporarily suppress NU3027
       https://github.com/dotnet/arcade/issues/2304
+      
+      NU5131, NU5128 - Our transport packages do not conform to the layout NuGet wants.
     -->
-    <NoWarn>$(NoWarn);NU3027</NoWarn>
+    <NoWarn>$(NoWarn);NU3027;NU5131;NU5128</NoWarn>
     
     <!-- 
         Suppress NU1605 (Package downgrade warnings) when building inside Visual Studio

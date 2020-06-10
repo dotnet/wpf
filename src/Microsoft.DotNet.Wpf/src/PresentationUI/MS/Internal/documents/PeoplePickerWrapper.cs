@@ -74,7 +74,7 @@ namespace MS.Internal.Documents
                 //Extract the data from that memory stream.  These will come back as
                 //ActiveDirectory paths in the form 'LDAP://CN=...'                
 
-                String[] ldapPaths = new String[0];
+                String[] ldapPaths = Array.Empty<String>();
                
                 //Get a wrapper for the DsObjectNames object our pointer points to.
                 DsObjectNamesWrapper dsObjects = new DsObjectNamesWrapper(dsObjectStream);               
@@ -95,7 +95,7 @@ namespace MS.Internal.Documents
             }
             else
             {
-                return new String[0];
+                return Array.Empty<String>();
             }
         }
 

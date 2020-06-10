@@ -75,7 +75,7 @@ namespace Microsoft.Win32
 
             // Extract the first filename from the FileNamesInternal list.
             // We can do this safely because FileNamesInternal never returns
-            // null - if _fileNames is null, FileNamesInternal returns new string[0];
+            // null - if _fileNames is null, FileNamesInternal returns Array.Empty<string>();
             string filename = FileNamesInternal.Length > 0 ? FileNamesInternal[0] : null;
 
             // If we got an empty or null filename, throw an exception to

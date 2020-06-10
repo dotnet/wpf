@@ -903,7 +903,6 @@ namespace System.Windows.Forms.Integration
             this.AutoSizeChanged += this.OnPropertyChangedAutoSize;
             this.BindingContextChanged += this.OnPropertyChangedBindingContext;
             this.CausesValidationChanged += this.OnPropertyChangedCausesValidation;
-            this.ContextMenuChanged += this.OnPropertyChangedContextMenu;
             this.ContextMenuStripChanged += this.OnPropertyChangedContextMenuStrip;
             this.DockChanged += this.OnPropertyChangedDock;
             this.LocationChanged += this.OnPropertyChangedLocation;
@@ -981,10 +980,6 @@ namespace System.Windows.Forms.Integration
         private void OnPropertyChangedCausesValidation(object sender, System.EventArgs e)
         {
             OnPropertyChanged("CausesValidation", this.CausesValidation);
-        }
-        private void OnPropertyChangedContextMenu(object sender, System.EventArgs e)
-        {
-            OnPropertyChanged("ContextMenu", this.ContextMenu);
         }
         private void OnPropertyChangedContextMenuStrip(object sender, System.EventArgs e)
         {

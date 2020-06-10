@@ -11407,13 +11407,20 @@ namespace System.Windows.Markup
         public static System.Xaml.XamlSchemaContext GetWpfSchemaContext() { throw null; }
         public static object Load(System.IO.Stream stream) { throw null; }
         public static object Load(System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext) { throw null; }
+        public static object Load(System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) { throw null; }
         public static object Load(System.Xaml.XamlReader reader) { throw null; }
         public static object Load(System.Xml.XmlReader reader) { throw null; }
+        public static object Load(System.Xml.XmlReader reader, bool useRestrictiveXamlReader) { throw null; }
         public object LoadAsync(System.IO.Stream stream) { throw null; }
+        public object LoadAsync(System.IO.Stream stream, bool useRestrictiveXamlReader) { throw null; }
         public object LoadAsync(System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext) { throw null; }
+        public object LoadAsync(System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) { throw null; }
         public object LoadAsync(System.Xml.XmlReader reader) { throw null; }
+        public object LoadAsync(System.Xml.XmlReader reader, bool useRestrictiveXamlReader) { throw null; }
         public static object Parse(string xamlText) { throw null; }
+        public static object Parse(string xamlText, bool useRestrictiveXamlReader) { throw null; }
         public static object Parse(string xamlText, System.Windows.Markup.ParserContext parserContext) { throw null; }
+        public static object Parse(string xamlText, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) { throw null; }
     }
     public partial class XamlTypeMapper
     {

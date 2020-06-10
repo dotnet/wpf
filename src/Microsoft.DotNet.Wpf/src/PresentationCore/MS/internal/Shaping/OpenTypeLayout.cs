@@ -429,7 +429,7 @@ namespace MS.Internal.Shaping
 
                 if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
                 {
-                    Scripts = new TagInfo[0];
+                    Scripts = Array.Empty<TagInfo>();
                     return OpenTypeLayoutResult.Success;
                 }
 

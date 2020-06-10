@@ -17,7 +17,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
     <PackageDescription>WPF Build props/targets transport package shared between dotnet/wpf and dotnet-wpf-int</PackageDescription>
   </PropertyGroup>
@@ -38,5 +38,10 @@
   <ItemGroup>
     <PackagingContent Include="$(WpfSharedDir)**\*" SubFolder="root\Src\Shared\%(RecursiveDir)" />
     <PackagingContent Include="$(WpfCommonDir)**\*" SubFolder="root\Src\Common\%(RecursiveDir)" />
+    
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.h*" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.inl" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.h*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.in*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
   </ItemGroup>
 </Project>

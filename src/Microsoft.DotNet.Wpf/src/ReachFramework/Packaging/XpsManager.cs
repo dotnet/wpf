@@ -139,9 +139,13 @@ namespace System.Windows.Xps.Packaging
             {
                 if( packageAccess == FileAccess.Write )
                 {
+                    // In .NET Core 3.0 System.IO.Compression's ZipArchive does not allow creation of ZipArchiveEntries when
+                    // a prior ZipArchiveEntry is still open.  XPS Serialization requires this as part of its implementation.
+                    // To get around this, XPS creation should occur in with FileAccess.ReadWrite.  This allows multiple
+                    // ZipArchiveEntries to be open concurrently.
                     package = Package.Open(path,
                                            FileMode.Create,
-                                           packageAccess,
+                                           FileAccess.ReadWrite,
                                            FileShare.None);
                     streaming = true;
                 }
@@ -869,7 +873,7 @@ namespace System.Windows.Xps.Packaging
         /// of URIs with the specified certificate.
         /// </summary>
         /// <param name="partList">
-        /// A collection of URI to pakage parts to be signed.
+        /// A collection of URI to package parts to be signed.
         /// </param>
         /// <param name="certificate">
         /// The certificate used for signing.  If this is null then

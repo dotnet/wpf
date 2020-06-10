@@ -86,7 +86,6 @@
     <Compile Include="MS\Internal\ComponentModel\PropertyChangeTracker.cs" />
     <Compile Include="MS\Internal\ComponentModel\PropertyDescriptorComparer.cs" />
     <Compile Include="MS\Internal\ComponentModel\PropertyKey.cs" />
-    <Compile Include="MS\Internal\ComponentModel\ReferenceEqualityComparer.cs" />
     <Compile Include="MS\Internal\ContentType.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CriticalExceptions.cs " />
     <Compile Include="MS\Internal\DefaultValueFactory.cs" />
@@ -152,8 +151,6 @@
     <Compile Include="MS\Internal\WeakEventTable.cs" />
     <Compile Include="MS\Internal\WeakReferenceKey.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
-    <Compile Include="System\Collections\ObjectModel\ObservableCollection.cs" />
-    <Compile Include="System\Collections\ObjectModel\ReadOnlyObservableCollection.cs" />
     <Compile Include="System\Collections\ObjectModel\WeakReadOnlyCollection.cs" />
     <Compile Include="System\ComponentModel\CurrentChangedEventManager.cs" />
     <Compile Include="System\ComponentModel\CurrentChangingEventArgs.cs" />
@@ -173,8 +170,6 @@
     <Compile Include="System\ComponentModel\SortDescription.cs" />
     <Compile Include="System\ComponentModel\SortDescriptionCollection.cs" />
     <Compile Include="System\Collections\Specialized\CollectionChangedEventManager.cs" />
-    <Compile Include="System\Collections\Specialized\INotifyCollectionChanged.cs" />
-    <Compile Include="System\Collections\Specialized\NotifyCollectionChangedEventArgs.cs" />
     <Compile Include="System\Diagnostics\Generated\PresentationTraceSources.cs" />
     <Compile Include="System\Diagnostics\PresentationTraceSources.cs" />
     <Compile Include="System\IO\Packaging\CompoundFile\DataSpaceManager.cs" />

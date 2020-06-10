@@ -43,7 +43,6 @@ namespace Microsoft.Build.Tasks.Windows
     /// </summary>
     public sealed class MarkupCompilePass2  : Task
     {
-
         //------------------------------------------------------
         //
         //  Constructors
@@ -58,7 +57,7 @@ namespace Microsoft.Build.Tasks.Windows
         public MarkupCompilePass2( ) : base(SR.SharedResourceManager)
         {
             // set the source directory
-            _sourceDir = Directory.GetCurrentDirectory() + "\\";
+            _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             _outputType = SharedStrings.WinExe;
 
@@ -253,10 +252,10 @@ namespace Microsoft.Build.Tasks.Windows
                 // Get the relative path based on sourceDir
                 _outputPath= TaskHelper.CreateFullFilePath(filePath, SourceDir);
 
-                // Make sure OutputDir always ends with '\\'.
-                if (!_outputPath.EndsWith("\\", StringComparison.Ordinal))
+                // Make sure OutputDir always ends with Path.DirectorySeparatorChar
+                if (!_outputPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 {
-                    _outputPath += "\\";
+                    _outputPath += Path.DirectorySeparatorChar;
                 }
             }
         }
@@ -372,7 +371,7 @@ namespace Microsoft.Build.Tasks.Windows
             get
             {
                if (_generatedBaml == null)
-                   _generatedBaml = new TaskItem[0];
+                   _generatedBaml = Array.Empty<TaskItem>();
                return _generatedBaml;
             }
 
@@ -546,7 +545,7 @@ namespace Microsoft.Build.Tasks.Windows
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf("\\", StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = TaskHelper.GetRootRelativePath(newSourceDir, fullFilePath);
@@ -569,7 +568,7 @@ namespace Microsoft.Build.Tasks.Windows
             Log.LogMessageFromResources(MessageImportance.Low, SRID.OutputType, OutputType);
 
             // Initialize the output parameters
-            localXamlPageFileList = new FileUnit[0];
+            localXamlPageFileList = Array.Empty<FileUnit>();
             localApplicationFile = FileUnit.Empty;
             referenceList = new ArrayList();
 

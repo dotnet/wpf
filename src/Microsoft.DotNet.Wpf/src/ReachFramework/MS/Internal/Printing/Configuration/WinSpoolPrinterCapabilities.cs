@@ -419,7 +419,7 @@ namespace MS.Internal.Printing.Configuration
 
             if (numOutputs < 1)
             {
-                return new T[0];
+                return Array.Empty<T>();
             }
 
             HGlobalBuffer buffer = new HGlobalBuffer((int)(numOutputs * itemByteSize));

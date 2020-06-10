@@ -2077,7 +2077,7 @@ namespace MS.Internal.TextFormatting
                 if (_plsrunVector == null)
                 {
                     // return empty textspan when the line doesn't contain text runs.
-                    return new TextSpan<TextRun>[0];
+                    return Array.Empty<TextSpan<TextRun>>();
                 }
 
                 IList<TextSpan<TextRun>> lsrunList = new List<TextSpan<TextRun>>(2);

@@ -457,7 +457,7 @@ namespace System.Xaml
                     {
                         // assemblyPath is set, Load the assembly from this specified place.
                         // the path must be full file path which contains directory, file name and extension.
-                        Debug.Assert(!assemblyPath.EndsWith("\\", StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
+                        Debug.Assert(!assemblyPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
 
                         // LoadFile will only override your request only if it is in the GAC
                         retassem = Assembly.LoadFile(assemblyPath);

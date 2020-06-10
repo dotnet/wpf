@@ -40,12 +40,12 @@
 
 
   <!-- 
-    Incorporate Microsoft.WinFx.targets in nuget packages under 
+    Incorporate Microsoft.WinFX.targets in nuget packages under 
     content\targets\ 
   -->
   <ItemGroup>
-    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFx.props" SubFolder="root\targets" />
-    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFx.targets" SubFolder="root\targets" />
+    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.props" SubFolder="root\targets" />
+    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
   </ItemGroup>
 
   <!--
@@ -80,7 +80,7 @@
   
   <ItemGroup>
     <Compile Include="SR.cs" />
-    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs" >
       <Link>Common\System\SR.cs</Link>
     </Compile>
 

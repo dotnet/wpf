@@ -35,7 +35,7 @@
             Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.props"
             Condition="!Exists('$(LocalMicrosoftWinFXTargets)') And '$(InternalMarkupCompilation)'=='true'"/>
             
-    We need Microsoft.WinFx.props though, so that's imported here specifically. 
+    We need Microsoft.WinFX.props though, so that's imported here specifically. 
             
     The use of Microsoft.NET.Sdk.WindowsDesktop doesn't break the source-build promise. 
       - Microsoft.NET.Sdk.WindowsDesktop is built from sources
@@ -57,7 +57,7 @@
           Condition="Exists('$(LocalMicrosoftWinFXProps)') "/>
   
   <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
-        Project="../targets/Microsoft.WinFx.props"
+        Project="../targets/Microsoft.WinFX.props"
         Condition="!Exists('$(LocalMicrosoftWinFXProps)') And 
-                    Exists('../targets/Microsoft.WinFx.props')"/>
+                    Exists('../targets/Microsoft.WinFX.props')"/>
 </Project>

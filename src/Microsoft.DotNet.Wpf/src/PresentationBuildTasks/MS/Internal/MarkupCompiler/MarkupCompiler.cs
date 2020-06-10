@@ -50,7 +50,7 @@ namespace MS.Internal
         public string TargetPath
         {
             get { return _targetPath; }
-            set { _targetPath = value; }
+            set { _targetPath = value;}
         }
 
         /// <summary>
@@ -480,14 +480,14 @@ namespace MS.Internal
                 // Prime the output directory
                 if (TargetPath.Length > 0)
                 {
-                    // check for ending '\'
-                    if (!TargetPath.EndsWith(ESCAPED_BACKSLASH, StringComparison.Ordinal))
+                    // check for ending Path.DirectorySeparatorChar
+                    if (!TargetPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                     {
-                        TargetPath += ESCAPED_BACKSLASH;
+                        TargetPath += Path.DirectorySeparatorChar;
                     }
                 }
 
-                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(ESCAPED_BACKSLASH, StringComparison.Ordinal);
+                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
                 string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
 
                 // Create if not already exists
@@ -712,7 +712,7 @@ namespace MS.Internal
                 if (sourceFileInfo.IsXamlFile)
                 {
                     int fileExtIndex = file.Path.LastIndexOf(DOT, StringComparison.Ordinal);
-
+                    
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
             }
@@ -1580,7 +1580,7 @@ namespace MS.Internal
                 {
                     string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
                     relPath += SourceFileInfo.RelativeSourceFilePath;
-                    string[] dirs = relPath.Split(new Char[] { ESCAPED_BACKSLASH_CHAR });
+                    string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
                     for (int i = 1; i < dirs.Length; i++)
                     {
                         parentFolderPrefix += PARENTFOLDER;
@@ -3545,8 +3545,6 @@ namespace MS.Internal
         private const string            VER = "V";
         private const string            COMPONENT = "component";
         private const char              COMPONENT_DELIMITER = ';';
-        private const string            ESCAPED_BACKSLASH = "\\";
-        private const char              ESCAPED_BACKSLASH_CHAR = '\\';
         private const string            FORWARDSLASH = "/";
         private const string            URISCHEME_PACK = "pack";
         private const string            PARENTFOLDER = @"..\";

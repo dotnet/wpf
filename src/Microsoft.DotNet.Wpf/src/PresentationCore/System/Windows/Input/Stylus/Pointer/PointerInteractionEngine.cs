@@ -272,7 +272,7 @@ namespace System.Windows.Input.StylusPointer
             }
             catch
             {
-}
+            }
         }
 
         #endregion

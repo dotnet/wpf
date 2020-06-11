@@ -27,7 +27,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public DropShadowBitmapEffect()
         {
-}
+        }
 
         /// <summary>
         /// Creates the unmanaged effect handle

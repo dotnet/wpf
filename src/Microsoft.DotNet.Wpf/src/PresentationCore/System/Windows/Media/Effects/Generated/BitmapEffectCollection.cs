@@ -785,7 +785,7 @@ namespace System.Windows.Media.Effects
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.

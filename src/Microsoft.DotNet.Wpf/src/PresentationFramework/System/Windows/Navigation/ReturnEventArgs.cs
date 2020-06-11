@@ -33,7 +33,7 @@ namespace System.Windows.Navigation
         ///</summary>
         public ReturnEventArgs()
         {
-}
+        }
         ///<summary>
         /// ReturnEventArgs constructor. Supplied value is assigned to Result value
         ///</summary>

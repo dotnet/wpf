@@ -469,7 +469,7 @@ namespace System.Windows.Interop
         /// </summary>
         public void NotifyDeactivate()
         {
-}
+        }
 
         #endregion
     }

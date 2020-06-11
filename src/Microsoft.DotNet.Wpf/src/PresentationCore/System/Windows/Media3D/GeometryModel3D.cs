@@ -108,7 +108,7 @@ namespace System.Windows.Media.Media3D
 
         internal void MaterialPropertyChangedHook(DependencyPropertyChangedEventArgs e)
         {
-}
+        }
 
         internal void BackMaterialPropertyChangedHook(DependencyPropertyChangedEventArgs e)
         {

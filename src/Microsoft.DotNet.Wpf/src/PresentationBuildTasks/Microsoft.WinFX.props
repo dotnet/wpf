@@ -1,4 +1,5 @@
 <Project>
+
   <PropertyGroup>
     <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">netcoreapp2.1</_PresentationBuildTasksTfm>
     <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_PresentationBuildTasksTfm>

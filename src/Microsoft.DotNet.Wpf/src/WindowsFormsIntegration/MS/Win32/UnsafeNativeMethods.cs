@@ -20,7 +20,7 @@ namespace MS.Win32
         [ResourceExposure(ResourceScope.None)]
         public static extern IntPtr GetFocus();
 
-        [DllImport("User32", ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         internal static extern IntPtr SetParent(IntPtr hWnd, IntPtr hWndParent);
 

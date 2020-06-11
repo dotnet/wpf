@@ -172,7 +172,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Rotates this matrix about the origin
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in degrees</param>
+        /// <param name='angle'>The angle to rotate specified in degrees</param>
         public void Rotate(double angle)
         {
             angle %= 360.0; // Doing the modulo before converting to radians reduces total error
@@ -182,7 +182,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Prepends a rotation about the origin to "this"
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in degrees</param>
+        /// <param name='angle'>The angle to rotate specified in degrees</param>
         public void RotatePrepend(double angle)
         {
             angle %= 360.0; // Doing the modulo before converting to radians reduces total error
@@ -192,7 +192,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Rotates this matrix about the given point
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in degrees</param>
+        /// <param name='angle'>The angle to rotate specified in degrees</param>
         /// <param name='centerX'>The centerX of rotation</param>
         /// <param name='centerY'>The centerY of rotation</param>
         public void RotateAt(double angle, double centerX, double centerY)
@@ -204,7 +204,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Prepends a rotation about the given point to "this"
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in degrees</param>
+        /// <param name='angle'>The angle to rotate specified in degrees</param>
         /// <param name='centerX'>The centerX of rotation</param>
         /// <param name='centerY'>The centerY of rotation</param>
         public void RotateAtPrepend(double angle, double centerX, double centerY)
@@ -767,7 +767,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Creates a rotation transformation about the given point
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in radians</param>
+        /// <param name='angle'>The angle to rotate specified in radians</param>
         internal static Matrix CreateRotationRadians(double angle)
         {
             return CreateRotationRadians(angle, /* centerX = */ 0, /* centerY = */ 0);
@@ -776,7 +776,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Creates a rotation transformation about the given point
         /// </summary>
-        /// <param name='angle'>The angle to rotate specifed in radians</param>
+        /// <param name='angle'>The angle to rotate specified in radians</param>
         /// <param name='centerX'>The centerX of rotation</param>
         /// <param name='centerY'>The centerY of rotation</param>
         internal static Matrix CreateRotationRadians(double angle, double centerX, double centerY)

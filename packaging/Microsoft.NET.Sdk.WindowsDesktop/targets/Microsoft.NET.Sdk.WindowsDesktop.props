@@ -1,4 +1,5 @@
 <Project>
+
   <PropertyGroup>
     <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
     <EnableDefaultPageItems Condition="'$(EnableDefaultPageItems)' == ''">true</EnableDefaultPageItems> 
@@ -205,5 +206,7 @@
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 
+  <!-- Import WPF Build tasks -->
   <Import Project="Microsoft.WinFX.props" />
+
 </Project>

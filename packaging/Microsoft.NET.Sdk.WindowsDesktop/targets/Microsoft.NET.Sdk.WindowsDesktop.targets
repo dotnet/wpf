@@ -23,7 +23,6 @@
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
   
-  <Import Project="Microsoft.WinFX.targets" />
 
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
@@ -109,4 +108,8 @@
                   ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
+
+  <!-- Import WPF Build logic -->
+  <Import Project="Microsoft.WinFX.targets" />
+
 </Project>

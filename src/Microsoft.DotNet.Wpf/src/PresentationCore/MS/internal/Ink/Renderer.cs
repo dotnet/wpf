@@ -722,7 +722,7 @@ namespace System.Windows.Ink
         // List of visuals attached via AttachIncrementalRendering
         private List<Visual> _attachedVisuals = null;
 
-        // Whhen true, will render in high contrast mode
+        // When true, will render in high contrast mode
         private bool _highContrast;
         private Color _highContrastColor = Colors.White;
 

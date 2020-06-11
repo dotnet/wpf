@@ -206,7 +206,7 @@
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 
-  <!-- Import WPF Build tasks -->
-  <Import Project="Microsoft.WinFX.props" />
+  <!-- Import WPF Build tasks only when we don't import NETFX's WinFX targets -->
+  <Import Project="Microsoft.WinFX.props" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'" />
 
 </Project>

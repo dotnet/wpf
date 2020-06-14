@@ -23,7 +23,6 @@
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
   
-
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
@@ -33,7 +32,6 @@
     -->
     <Page Remove="@(Resource);@(Content)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
-
     <!--
         ApplicationDefinition must also be removed from Page.  Otherwise, PresentationBuildTasks will include the
         generated code for the ApplicationDefinition twice.  We cannot do this in all cases in the props file as
@@ -42,7 +40,6 @@
         in WPF.
     -->
     <Page Remove="@(ApplicationDefinition)" />
-    
     <!--
          The WindowsDesktop props file removes "**/*.xaml" from None if both EnableDefaultApplicationDefinition and 
          EnableDefaultPageItems are true.  This is done so that we remove any implicitly globbed XAML files from None
@@ -80,7 +77,6 @@
       <Page Remove="@(Page)" />
       <Page Include="@(DeduplicatedPageItems)" />
     </ItemGroup>
-
   </Target>
 
   <!-- 

@@ -17,16 +17,13 @@
     
     Irrespective of whether '$(TargetFrameworkIdentifier)' is '.NETCoreApp' or '.NETFramework', 
     the minimum value of $(_TargetFrameworkVersionValue) we will be testing for is '3.0'
-    
   -->
     <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
-
     <!-- 
       Represents an undefined TFV value. This will be used in comparisons of _TargetFrameworkVersionValue (defined in Microsoft.NET.WindowsDesktop.targets)
       to identify when a TFV is undefined
     -->
     <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
-    
     <!--
       Initial/Default value set to 'undefined'. Updated in Microsoft.NET.WindowsDesktop.targets
     --> 
@@ -50,8 +47,6 @@
           Condition="'$(EnableDefaultPageItems)' != 'false'" >
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
-
     <!-- 
       See https://github.com/dotnet/wpf/issues/685
       Visual Studio would prefer that we remove **/*.xaml instead of 
@@ -66,7 +61,6 @@
           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And '$(EnableDefaultPageItems)' != 'false'" />
   </ItemGroup>
 
-  
   <ItemGroup Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
                       ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And
                       ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
@@ -82,14 +76,12 @@
                         Condition="('$(UseWPF)' != 'true') And ('$(UseWindowsForms)' == 'true')"/>
   </ItemGroup>
   
-
   <!--
     Traditionally, Visual Studio has supplied these references for .NET Framework based
     WPF Projects: 
     
     .NET 3.x:   PresentationCore, PresentationFramework, WindowsBase 
     .NET 4.x:   PresentationCore, PresentationFramework, WindowsBase, System.Xaml 
-
 
     Microsoft.NET.WindowsDesktop.SDK will supply the following references to .NET Framework based 
     WPF Projects: 
@@ -102,12 +94,10 @@
     .NET 4.5+:  PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
                 UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
                 System.Windows.Controls.Ribbon
-
   -->
   <ItemGroup Condition="('$(TargetFrameworkIdentifier)' == '.NETFramework') And 
                         ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
-
     <!--
       The following 3 _WpfCommonNetFxReference items normally require Condition="'$(_TargetFrameworkVersionValue)' >= '3.0'", since
       they are supported on .NET Framework 3.0 and above. 
@@ -167,7 +157,6 @@
   <ItemGroup Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And 
                         '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And 
                         '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
-
     <!-- 
         Windows Forms and WPF are supported only on .NET Core 3.0+
     -->

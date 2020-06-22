@@ -30,7 +30,7 @@ Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tr
 
 For WPF API documentation, see the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netcore-3.0).
 
-For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support.
+For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support.
 
 ## Missing features
 

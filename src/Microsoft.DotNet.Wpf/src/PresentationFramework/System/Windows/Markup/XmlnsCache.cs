@@ -325,8 +325,8 @@ namespace System.Windows.Markup
                 {
                     string xmlns = null;
                     string clrns = null;
-                    string assmname = null;
-                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns, out assmname);
+                    string assemblyNameOverride = null;
+                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns, out assemblyNameOverride);
 
                     if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
                     {
@@ -338,7 +338,7 @@ namespace System.Windows.Markup
                         _cacheTable[xmlns] = new List<ClrNamespaceAssemblyPair>();
                     }
                     pairList = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
-                    pairList.Add(new ClrNamespaceAssemblyPair(clrns, assmname ?? assemblyName));
+                    pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyNameOverride ?? assemblyName));
                 }
             }
         }

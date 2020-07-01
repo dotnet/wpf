@@ -1180,8 +1180,8 @@ namespace System.Xaml
                 if (!string.IsNullOrEmpty(xmlnsDef.AssemblyName))
                 {
                     assembly = ResolveAssembly(xmlnsDef.AssemblyName);
-                    if(assembly == null)
-                        return false;
+                    if (assembly == null)
+                        continue;
                 }
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);

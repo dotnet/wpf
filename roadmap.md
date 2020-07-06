@@ -1,68 +1,39 @@
-# WPF for .NET Core Roadmap
+# WPF for .NET 5 Roadmap
+WPF is a .NET Core UI framework for building Windows desktop applications. The ownership of WPF was recently transitioned to our team (Developer Ecosystem and Platform team under Windows).This transition enables investments across UI frameworks namely WINUI and WPF to stay aligned and remain future-proof as new technology trends & devices are introduced in the industry.
 
-This roadmap communicates priorities for evolving and extending the scope of WPF for .NET Core.
+The roadmap below communicates priorities for evolving and extending the scope of WPF for .NET Core through 2020 and into 2021. It will continue to evolve based on market changes and customer feedback, so please note that the plans outlined here are not exhaustive or guaranteed. We welcome your feedback on the roadmap: please feel free to contribute to existing issues or [file a new issue](https://github.com/dotnet/wpf/issues "file a new issue").
 
-At present, our primary focus is enabling the following for .NET Core 3.0:
+### PROPOSED ROADMAP
+| #  | Milestone  |  Target Delivery |
+| :------------: | :------------: | :------------: |
+|1  |Incorpoating .NET Framework servicing fixes  into .NET Core 3.1 and .NET 5 |Ongoing|
+|2  |Ongoing integration with .NET 5 |20H2|
+|3  |Build out Test Infrastructure to add tests to validate and merge community PRs|20H2|
+|4  |Accessibility updates to .NET 5   |21H1|
+|5  |ARM64 Support|21H1|
 
-* Achieve WPF functional and performance parity compared to .NET Framework
-* Publish remaining WPF components to the repo
-* Publish (and write) more WPF tests to the repo
+### Our SLA
+#### TRIAGING GITHUB ISSUES
+We are committed to a 72 hour (3 working days) turn around on triaging and responding to new issues filed on Github starting July 10th.
+Additionally,  Issues filed prior to July 10th are also being triaged. Issues filed in 2020 will be triaged first based on number of reactions/comments, and we expect to complete doing so by the middle of 20H2. Issues filed before 2020 will be triaged after that based on number of reactions/comments.
 
-> Note: There are some specific .NET Framework features will not be supported, such as [XBAPs](https://docs.microsoft.com/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview).
+#### EVALUATING PULL REQUESTS
+In order to enable progress for the community on the WPF project, before the test infrastructure work is completed to enable broader community pull requests, we intend to pick 1-2 code pull requests from the community to manually integrate into the project each month. This is our team's commitment being until our resourcing for WPF ramps-up.
+#### Code PRs considered at this time will be based on:
+•	Recency
+•	Extent of Reactions (Likes, comments)
+•	Fixes to existing issues prioritized over new features
+•	Complexity of the fix
+•	Breadth of impact of the fix
+•	Low potential for regression
+•	Has adequate test coverage
+•	Is not a new feature request
 
-As we complete those goals, we'll update our roadmap to include additional feature/capability areas we will focus on next.
+#### About non-code PRs
+We are committed to a 72 hour (3 working days) turn around on triaging and responding to new non-code PRs filed on Github starting July 10th. These are PRs for documentations bugs, documentation enhancements or a general question not related to source code issues/bugs.
 
-## Timeline for Open Source
-| Milestone | Date |
-|---|---|
-|Initial launch of WPF for .NET Core repository (beginning with System.Xaml)|Dec 4, 2018|
-|Roadmap update for feature focus areas|Early 2019|
-|Add remaining WPF for .NET Core components to repository|Early 2020 (See #2554)|
-|Add adequate tests that enable validating and merging community PRs|Continues thru 2020|
+### COMMUNITY CALLS
+We will host a WPF segment in the existing [WinUI community calls](https://github.com/microsoft/microsoft-ui-xaml#winui-community-calls "WinUI community calls") once every two months (beginning in July 2020).In these calls we’ll discuss the WPF roadmap, our status and your feedback.
 
-
-## Porting Status
-
-The port from WPF for .NET Framework has been completed. All components applicable to WPF for .NET Core have been published to this repository, with some exceptions described in #2554. 
-
-### Currently Available
-
-* Components:
-  * [System.Xaml](src/Microsoft.DotNet.Wpf/src/System.Xaml)
-  * [WindowsBase](src/Microsoft.DotNet.Wpf/src/WindowsBase)
-  * [PresentationCore](src/Microsoft.DotNet.Wpf/src/PresentationCore)
-  * [PresentationFramework](src/Microsoft.DotNet.Wpf/src/PresentationFramework)
-  * [PresentationBuildTasks](src/Microsoft.DotNet.Wpf/src/PresentationBuildTasks)
-  * [DirectWriteForwarder](src/Microsoft.DotNet.Wpf/src/DirectWriteForwarder)
-  * [ReachFramework](src/Microsoft.DotNet.Wpf/src/ReachFramework)
-  * [System.Windows.Input.Manipulations](src/Microsoft.DotNet.Wpf/src/System.Windows.Input.Manipulations)
-  * [UI Automation assemblies](src/Microsoft.DotNet.Wpf/src/UIAutomation)
-    * [UIsAutomationClient](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationClient)
-    * [UIAutomationClientSideProviders](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationClientSideProviders)
-    * [UIAutomationProvider](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationProvider)
-    * [UIAutomationType](src/Microsoft.DotNet.Wpf/src/UIAutomation/UIAutomationTypes)
-  * [WPF Extensions](src/Microsoft.DotNet.Wpf/src/Extensions)
-    * [PresentationFramework-SystemCore](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemCore)
-    * [PresentationFramework-SystemData](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemData)
-    * [PresentationFramework-SystemDrawing](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemDrawing)
-    * [PresentationFramework-SystemXml](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXml)
-    * [PresentationFramework-SystemXmlLinq](src/Microsoft.DotNet.Wpf/src/Extensions/PresentationFramework-SystemXmlLinq)
-  * [WindowsFormsIntegrations](src/Microsoft.DotNet.Wpf/src/WindowsFormsIntegration)
-  * [System.Windows.Controls.Ribbon](src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon)
-  * [WPF Themes](src/Microsoft.DotNet.Wpf/src/Themes)
-    * [PresentationFramework-Aero](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Aero)
-    * [PresentationFramework-Aero2](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Aero2)
-    * [PresentationFramework-AeroLite](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.AeroLite)
-    * [PresentationFramework-Classic](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Classic)
-    * [PresentationFramework-Luna](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Luna)
-    * [PresentationFramework-Royale](src/Microsoft.DotNet.Wpf/src/Themes/PresentationFramework.Royale)
-  * [System.Windows.Presentation](src/Microsoft.DotNet.Wpf/src/System.Windows.Presentation)
-  * [PresentationUI](src/Microsoft.DotNet.Wpf/src/PresentationUI)
-  * [System.Printing](src/Microsoft.DotNet.Wpf/src/System.Printing)
-  * Native Components
-    * [PenIMC_Cor3](src/Microsoft.DotNet.Wpf/src/PenImc)
-    * [WpfGfx_Cor3](src/Microsoft.DotNet.Wpf/src/WpfGfx)
-  
-* Tests:
-  * [DrtXaml](src/Microsoft.DotNet.Wpf/test/DRT/DrtXaml)
-
+### RESOURCING STATUS
+Our team’s management has approved additional resourcing needs for this project. However, the global COVID-19 pandemic has caused hiring to be slower than usual. With the available resources on the current team, the roadmap above is what we are committed to getting scheduled and done in the foreseeable future. Stay tuned for schedule and/or investment updates as soon as we are able to actively expand resourcing for our team.

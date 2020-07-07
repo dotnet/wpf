@@ -11,6 +11,10 @@ Copyright (c) .NET Foundation. All rights reserved.
 -->
 <Project>
 
+  <PropertyGroup>
+    <_MicrosoftWindowsDesktopSdkImported>true</_MicrosoftWindowsDesktopSdkImported>
+  </PropertyGroup>
+
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
 
   <!-- The MicrosoftWindowsDesktopSdkPath is a hook so that you can redirect to a local version of the WPF SDK targets

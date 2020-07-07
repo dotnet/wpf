@@ -1,12 +1,12 @@
 # WPF for .NET 5 Roadmap
-WPF is a .NET Core UI framework for building Windows desktop applications. The ownership of WPF was recently transitioned to our team (Developer Ecosystem and Platform team under Windows).This transition enables investments across UI frameworks namely WINUI and WPF to stay aligned and remain future-proof as new technology trends & devices are introduced in the industry.
+WPF is a .NET Core UI framework for building Windows desktop applications. The ownership of WPF was recently transitioned to our team (Developer Ecosystem and Platform team under Windows). This transition enables investments across UI frameworks namely WINUI and WPF to stay aligned and remain future-proof as new technology trends & devices are introduced in the industry.
 
-The roadmap below communicates priorities for evolving and extending the scope of WPF for .NET Core through 2020 and into 2021. It will continue to evolve based on market changes and customer feedback, so please note that the plans outlined here are not exhaustive or guaranteed. We welcome your feedback on the roadmap: please feel free to contribute to existing issues or [file a new issue](https://github.com/dotnet/wpf/issues "file a new issue").
+The roadmap below communicates priorities for evolving and extending the scope of WPF for .NET Core through 2020 and into 2021. It will continue to evolve based on market changes and customer feedback, so please note that the plans outlined here are not exhaustive or guaranteed. We welcome your feedback on the roadmap: please feel free to contribute to existing issues or [file a new issue](https://github.com/dotnet/wpf/issues/new/choose "file a new issue").
 
 ### PROPOSED ROADMAP
 | #  | Milestone  |  Target Delivery |
 | :------------: | :------------: | :------------: |
-|1  |Incorpoating .NET Framework servicing fixes  into .NET Core 3.1 and .NET 5 |Ongoing|
+|1  |Incorporating .NET Framework servicing fixes into .NET Core 3.1 and .NET 5 |Ongoing|
 |2  |Ongoing integration with .NET 5 |20H2|
 |3  |Build out Test Infrastructure to add tests to validate and merge community PRs|20H2|
 |4  |Accessibility updates to .NET 5   |21H1|
@@ -18,7 +18,7 @@ We are committed to a 72 hour (3 working days) turn around on triaging and respo
 Additionally,  Issues filed prior to July 10th are also being triaged. Issues filed in 2020 will be triaged first based on number of reactions/comments, and we expect to complete doing so by the middle of 20H2. Issues filed before 2020 will be triaged after that based on number of reactions/comments.
 
 #### EVALUATING PULL REQUESTS
-In order to enable progress for the community on the WPF project, before the test infrastructure work is completed to enable broader community pull requests, we intend to pick 1-2 code pull requests from the community to manually integrate into the project each month. This is our team's commitment being until our resourcing for WPF ramps-up.
+We will begin merging contributions from the community on the WPF repo by picking 1-2 PRs from the community to manually test and integrate per month. When the test infrastructure work is completed we will enable broader community pull request merging. This is our team's commitment until our resourcing for WPF ramps-up.
 #### Code PRs considered at this time will be based on:
 •	Recency
 •	Extent of Reactions (Likes, comments)

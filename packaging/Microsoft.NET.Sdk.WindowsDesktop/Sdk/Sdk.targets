@@ -12,7 +12,6 @@ Copyright (c) .NET Foundation. All rights reserved.
 <Project>
 
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
-  
-  <Import Project="$(MicrosoftWindowsDesktopSdkPath)\Microsoft.NET.Sdk.WindowsDesktop.targets "/>
 
+  <!--Post 5.0, Microsoft.NET.Sdk.WindowsDesktop.targets will be imported by SDK conditionally-->
 </Project>

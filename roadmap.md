@@ -20,14 +20,14 @@ Additionally,  Issues filed prior to July 10th are also being triaged. Issues fi
 #### EVALUATING PULL REQUESTS
 We will begin merging contributions from the community on the WPF repo by picking 1-2 PRs from the community to manually test and integrate per month. When the test infrastructure work is completed we will enable broader community pull request merging. This is our team's commitment until our resourcing for WPF ramps-up.
 #### Code PRs considered at this time will be based on:
-•	Recency
-•	Extent of Reactions (Likes, comments)
-•	Fixes to existing issues prioritized over new features
-•	Complexity of the fix
-•	Breadth of impact of the fix
-•	Low potential for regression
-•	Has adequate test coverage
-•	Is not a new feature request
+-	Recency
+-	Extent of Reactions (Likes, comments)
+-	Fixes to existing issues prioritized over new features
+-	Complexity of the fix
+-	Breadth of impact of the fix
+-	Low potential for regression
+-	Has adequate test coverage
+-	Is not a new feature request
 
 #### About non-code PRs
 We are committed to a 72 hour (3 working days) turn around on triaging and responding to new non-code PRs filed on Github starting July 10th. These are PRs for documentations bugs, documentation enhancements or a general question not related to source code issues/bugs.

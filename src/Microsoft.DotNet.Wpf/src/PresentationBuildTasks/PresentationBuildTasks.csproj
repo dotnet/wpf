@@ -44,7 +44,6 @@
     content\targets\
   -->
   <ItemGroup>
-    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.props" SubFolder="root\targets" />
     <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
   </ItemGroup>
 

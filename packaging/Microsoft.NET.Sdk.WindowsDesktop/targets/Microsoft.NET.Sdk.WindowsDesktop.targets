@@ -52,11 +52,6 @@
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
 
-  <!-- Set 7.0 as the TargetPlatformVersion for windows. -->
-  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'windows' and '$(TargetPlatformVersion)' == ''" >
-    <TargetPlatformVersion>7.0</TargetPlatformVersion>
-  </PropertyGroup>
-
     <!-- PropertyGroup flags control if Itemgroups in Microsoft.NET.Sdk.WindowsDesktop.props file is being imported -->
   <PropertyGroup>
       <_EnableWindowsDesktopGlobbing Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And

@@ -121,7 +121,7 @@
     
     Detect these situations and skip updates to @(SupportedTargetFramework) etc. 
   --> 
-  <ItemGroup Condition=" '$(_EnableWindowsDesktopSupportUnsupportedTargetFramework)' == 'true' ">
+  <ItemGroup Condition=" '$(_RemoveUnsupportedTargetFrameworksForWindowsDesktop)' == 'true' ">
 
     <!-- 
         Windows Forms and WPF are supported only on .NET Core 3.0+

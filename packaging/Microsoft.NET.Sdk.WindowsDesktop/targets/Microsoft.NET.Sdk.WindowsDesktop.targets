@@ -65,9 +65,9 @@
                         ('$(TargetFrameworkIdentifier)' == '.NETFramework') And
                         ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopNETFrameworkImplicitReference>
-      <_EnableWindowsDesktopSupportUnsupportedTargetFramework Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And
+      <_RemoveUnsupportedTargetFrameworksForWindowsDesktop Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And
                         '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And
-                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">true</_EnableWindowsDesktopSupportUnsupportedTargetFramework>
+                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">true</_RemoveUnsupportedTargetFrameworksForWindowsDesktop>
   </PropertyGroup>
 
   

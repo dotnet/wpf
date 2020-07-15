@@ -79,15 +79,15 @@
     <_WpfCommonNetFxReference Include="PresentationCore" />
     <_WpfCommonNetFxReference Include="PresentationFramework" />
 
-    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'">
+    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </_WpfCommonNetFxReference>
-    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
-    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
 
-    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionValue)' >= '4.5'" />
+    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.5'" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(_EnableWindowsDesktopNETFrameworkImplicitReference)' == 'true' ">
@@ -121,9 +121,7 @@
     
     Detect these situations and skip updates to @(SupportedTargetFramework) etc. 
   --> 
-  <ItemGroup Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And 
-                        '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And 
-                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">
+  <ItemGroup Condition=" '$(_RemoveUnsupportedTargetFrameworksForWindowsDesktop)' == 'true' ">
 
     <!-- 
         Windows Forms and WPF are supported only on .NET Core 3.0+

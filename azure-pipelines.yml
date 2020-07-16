@@ -37,8 +37,8 @@ trigger:
     - master
     - release/3.*
     - release/5.*
+    - internal/release/5.*
     - experimental/*
-    # - arcade
   paths:
     exclude:
     - Documentation/*

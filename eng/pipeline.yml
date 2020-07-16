@@ -67,6 +67,8 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
+        - name: _InternalRuntimeDownloadArgs
+          value: ''
 
 
         # Override some values if we're building internally
@@ -109,6 +111,10 @@ jobs:
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
             value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+          - group: DotNet-MSRC-Storage
+          - name: _InternalRuntimeDownloadArgs
+            value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
       strategy:
         matrix:
@@ -136,6 +142,15 @@ jobs:
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
 
+      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
+        - task: PowerShell@2
+          displayName: Setup Private Feeds Credentials
+          inputs:
+            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
+            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
+          env:
+            Token: $(dn-bot-dnceng-artifact-feeds-rw)
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
           -configuration $(_BuildConfig) 
@@ -144,6 +159,7 @@ jobs:
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 

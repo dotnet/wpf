@@ -400,7 +400,7 @@ public class MultiBinding : BindingBase, IAddChild
         CopyValue(Feature.ValidationRules, clone);
         CopyValue(Feature.ExceptionFilterCallback, clone);
 
-        for (int i=0; i<=_bindingCollection.Count; ++i)
+        for (int i=0; i<_bindingCollection.Count; ++i)
         {
             clone._bindingCollection.Add(_bindingCollection[i].Clone(mode));
         }

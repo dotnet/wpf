@@ -4,9 +4,6 @@
 # 
 
 parameters:
-  # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
-  # Defaults to true
-  runAsPublic: true
   repoName: dotnet/wpf
 
 jobs:
@@ -16,7 +13,7 @@ jobs:
     enablePublishBuildArtifacts: true
     enablePublishTestResults: false # tests run in helix
     enablePublishBuildAssets: true
-    enablePublishUsingPipelines: $(_PublishUsingPipelines)
+    enablePublishUsingPipelines: true
     enableTelemetry: true
     helixRepo: $(repoName)
 
@@ -72,7 +69,7 @@ jobs:
 
 
         # Override some values if we're building internally
-        - ${{ if eq(parameters.runAsPublic, 'false') }}:
+        - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _PublishType
             value: blob
@@ -95,7 +92,7 @@ jobs:
             value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
               /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
               /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
-              /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
+              /p:DotNetPublishUsingPipelines=true
               /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
               /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
@@ -111,6 +108,7 @@ jobs:
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
             value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+        - ${{ if ne(variables['System.TeamProject'], 'public') }}:
           - group: DotNet-MSRC-Storage
           - name: _InternalRuntimeDownloadArgs
             value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
@@ -118,14 +116,14 @@ jobs:
 
       strategy:
         matrix:
-          ${{ if eq(parameters.runAsPublic, 'true') }}:
+          ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
             Build_Debug_x86:
               _BuildConfig: Debug
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
           Build_Release_x86:
             _BuildConfig: Release
-          ${{ if eq(parameters.runAsPublic, 'true') }}:
+          ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
             Build_Debug_x64:
               _BuildConfig: Debug
               # override some variables for debug

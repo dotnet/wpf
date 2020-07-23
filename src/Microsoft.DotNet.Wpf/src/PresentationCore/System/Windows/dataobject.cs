@@ -1768,7 +1768,10 @@ namespace System.Windows
 
                     formatter = new BinaryFormatter();
 
+#pragma warning disable MSLIB0003 // Type or member is obsolete
                     formatter.Serialize(stream, data);
+#pragma warning restore MSLIB0003 // Type or member is obsolete
+
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -3122,7 +3125,9 @@ namespace System.Windows
                     }
                     try
                     {
+#pragma warning disable MSLIB0003 // Type or member is obsolete
                         value = formatter.Deserialize(stream);
+#pragma warning restore MSLIB0003 // Type or member is obsolete
                     }
                     catch (RestrictedTypeDeserializationException)
                     {

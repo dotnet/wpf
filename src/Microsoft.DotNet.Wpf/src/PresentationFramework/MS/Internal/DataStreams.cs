@@ -126,7 +126,9 @@ namespace MS.Internal.AppModel
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
+#pragma warning disable MSLIB0003 // Type or member is obsolete
                             this.Formatter.Serialize(byteStream, currentValue);
+#pragma warning restore MSLIB0003 // Type or member is obsolete
                             
                             bytes = byteStream.ToArray();
                             // Dispose the stream
@@ -236,7 +238,9 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
+#pragma warning disable MSLIB0003 // Type or member is obsolete
                         newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
+#pragma warning restore MSLIB0003 // Type or member is obsolete
                     }
                     element.SetValue(dp, newValue);
                 }

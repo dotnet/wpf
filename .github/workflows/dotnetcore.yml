@@ -19,5 +19,5 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: WPF
-        path: ./artifacts/packages/Release/NonShipping
+        path: ./artifacts
 

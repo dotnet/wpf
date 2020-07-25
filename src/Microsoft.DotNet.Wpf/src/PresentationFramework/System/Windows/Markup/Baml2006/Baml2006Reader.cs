@@ -2065,7 +2065,7 @@ namespace System.Windows.Baml2006
 
         private string Logic_GetFullXmlns(string uriInput)
         {
-            int colonIdx = uriInput.IndexOf(":");
+            int colonIdx = uriInput.IndexOf(':');
             if (colonIdx != -1)
             {
                 string uriTypePrefix = uriInput.Substring(0, colonIdx);
@@ -2073,7 +2073,7 @@ namespace System.Windows.Baml2006
                 {
                     //We have a clr-namespace so do special processing
                     int clrNsStartIdx = colonIdx + 1;
-                    int semicolonIdx = uriInput.IndexOf(";");
+                    int semicolonIdx = uriInput.IndexOf(';');
                     if (-1 == semicolonIdx)
                     {
                         // We need to append local assembly
@@ -2085,7 +2085,7 @@ namespace System.Windows.Baml2006
                     else
                     {
                         int assemblyKeywordStartIdx = semicolonIdx + 1;
-                        int equalIdx = uriInput.IndexOf("=");
+                        int equalIdx = uriInput.IndexOf('=');
                         if (-1 == equalIdx)
                         {
                             throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));

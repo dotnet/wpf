@@ -33,7 +33,7 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(typeof(Button)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Button));
 
-            // WORKAROUND: the following if statement is a workaround to get the ButtonBase cctor to run before we
+            // WORKAROUND: the following if statement is a workaround to get the ButtonBase ctor to run before we
             // override metadata.
             if (ButtonBase.CommandProperty != null)
             {

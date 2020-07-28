@@ -1080,7 +1080,7 @@ namespace Microsoft.Build.Tasks.Windows
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(Path.DirectorySeparatorChar);
                 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = TaskHelper.GetRootRelativePath(newSourceDir, fullFilePath);

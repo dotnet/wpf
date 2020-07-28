@@ -487,7 +487,7 @@ namespace MS.Internal
                     }
                 }
 
-                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
                 string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
 
                 // Create if not already exists
@@ -711,7 +711,7 @@ namespace MS.Internal
 
                 if (sourceFileInfo.IsXamlFile)
                 {
-                    int fileExtIndex = file.Path.LastIndexOf(DOT, StringComparison.Ordinal);
+                    int fileExtIndex = file.Path.LastIndexOf(DOTCHAR);
                     
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
@@ -1415,7 +1415,7 @@ namespace MS.Internal
         internal void ValidateFullSubClassName(ref string subClassFullName)
         {
             bool isValid = false;
-            int index = subClassFullName.LastIndexOf(DOT, StringComparison.Ordinal);
+            int index = subClassFullName.LastIndexOf(DOTCHAR);
 
             if (index > 0)
             {
@@ -1444,7 +1444,7 @@ namespace MS.Internal
             if (className.Length > 0)
             {
                 // Split the Namespace
-                int index = className.LastIndexOf(DOT, StringComparison.Ordinal);
+                int index = className.LastIndexOf(DOTCHAR);
 
                 if (index > 0)
                 {
@@ -2273,7 +2273,7 @@ namespace MS.Internal
 
                     // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                     genericName = t.FullName;
-                    int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                    int bang = genericName.IndexOf(GENERIC_DELIMITER);
                     if (bang > 0)
                     {
                         genericName = genericName.Substring(0, bang);
@@ -2316,7 +2316,7 @@ namespace MS.Internal
 
                 // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                 string genericName = t.Namespace + DOT + t.Name;
-                int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                int bang = genericName.IndexOf(GENERIC_DELIMITER);
                 if (bang > 0)
                 {
                     genericName = genericName.Substring(0, bang);
@@ -3492,7 +3492,7 @@ namespace MS.Internal
         private const string            ANONYMOUS_ENTRYCLASS_PREFIX = "Generated";
         private const string            DEFINITION_PREFIX = "x";
         private const char              COMMA = ',';
-        private const string            GENERIC_DELIMITER = "`";
+        private const char              GENERIC_DELIMITER = '`';
         internal const char             DOTCHAR = '.';
         internal const string           DOT = ".";
         internal const string           CODETAG = "Code";

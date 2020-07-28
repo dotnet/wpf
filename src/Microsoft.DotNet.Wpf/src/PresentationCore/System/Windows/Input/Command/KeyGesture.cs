@@ -253,7 +253,7 @@ namespace System.Windows.Input
                 string keyDisplayString;
 
                 // break apart first gesture from the rest
-                int index = keyGestures.IndexOf(MULTIPLEGESTURE_DELIMITER, StringComparison.Ordinal);
+                int index = keyGestures.IndexOf(MULTIPLEGESTURE_DELIMITER);
                 if (index >= 0)
                 {   // multiple gestures exist
                     keyGestureToken  = keyGestures.Substring(0, index);
@@ -266,7 +266,7 @@ namespace System.Windows.Input
                 }
 
                 // similarly, break apart first display string from the rest
-                index = displayStrings.IndexOf(MULTIPLEGESTURE_DELIMITER, StringComparison.Ordinal);
+                index = displayStrings.IndexOf(MULTIPLEGESTURE_DELIMITER);
                 if (index >= 0)
                 {   // multiple display strings exist
                     keyDisplayString  = displayStrings.Substring(0, index);
@@ -310,7 +310,7 @@ namespace System.Windows.Input
         private ModifierKeys   _modifiers = ModifierKeys.None;
         private Key            _key = Key.None;
         private string         _displayString;
-        private const string MULTIPLEGESTURE_DELIMITER = ";";
+        private const char MULTIPLEGESTURE_DELIMITER = ';';
         private static TypeConverter _keyGestureConverter = new KeyGestureConverter();
         //private static bool    _classRegistered = false;
 #endregion Private Fields

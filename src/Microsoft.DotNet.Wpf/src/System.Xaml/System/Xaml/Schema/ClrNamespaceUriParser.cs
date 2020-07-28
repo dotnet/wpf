@@ -23,7 +23,7 @@ namespace System.Xaml.Schema
             // xmlns:bar="clr-namespace:MyAppsNs"
             // xmlns:spam="clr-namespace:MyAppsNs;assembly="  
 
-            int colonIdx = KS.IndexOf(uriInput, ":");
+            int colonIdx = KS.IndexOf(uriInput, ':');
             if (colonIdx == -1)
             {
                 return false;
@@ -36,7 +36,7 @@ namespace System.Xaml.Schema
             }
 
             int clrNsStartIdx = colonIdx + 1;
-            int semicolonIdx = KS.IndexOf(uriInput, ";");
+            int semicolonIdx = KS.IndexOf(uriInput, ';');
             if (semicolonIdx == -1)
             {
                 clrNs = uriInput.Substring(clrNsStartIdx);
@@ -50,7 +50,7 @@ namespace System.Xaml.Schema
             }
 
             int assemblyKeywordStartIdx = semicolonIdx+1;
-            int equalIdx = KS.IndexOf(uriInput, "=");
+            int equalIdx = KS.IndexOf(uriInput, '=');
             if (equalIdx == -1)
             {
                 return false;

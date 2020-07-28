@@ -2066,6 +2066,7 @@ namespace System.Windows.Baml2006
         private string Logic_GetFullXmlns(string uriInput)
         {
             const string clrNamespace = "clr-namespace:";
+            const string assembly = "assembly";
 
             if (uriInput.StartsWith(clrNamespace, StringComparison.Ordinal))
             {
@@ -2086,8 +2087,10 @@ namespace System.Windows.Baml2006
                     {
                         ThrowMissingTagInNamespace(uriInput);
                     }
-                    ReadOnlySpan<char> keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
-                    if (!keyword.SequenceEqual("assembly"))
+
+                    int assemblyTagLength = equalIdx - assemblyKeywordStartIdx;
+                    if (assemblyTagLength != assembly.Length ||
+                        string.CompareOrdinal(uriInput, assemblyKeywordStartIdx, assembly, 0, assembly.Length) != 0)
                     {
                         ThrowAssemblyTagMissing(uriInput);
                     }

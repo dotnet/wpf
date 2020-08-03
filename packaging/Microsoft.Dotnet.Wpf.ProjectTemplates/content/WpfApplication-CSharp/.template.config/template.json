@@ -44,6 +44,10 @@
       "replaces": "net5.0",
       "defaultValue": "net5.0"
     },
+    "UseWindowsDesktopSdk": {
+      "type": "computed",
+      "value": "(Framework == \"netcoreapp3.1\" || Framework == \"netcoreapp3.0\")"
+    },
     "langVersion": {
       "type": "parameter",
       "datatype": "text",

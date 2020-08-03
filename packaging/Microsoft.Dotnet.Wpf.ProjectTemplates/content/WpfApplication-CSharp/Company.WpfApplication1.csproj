@@ -1,9 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+﻿<!--#if (UseWindowsDesktopSdk) -->
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<!--#else -->
+<Project Sdk="Microsoft.NET.Sdk">
+<!--#endif -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <!--#if (UseWindowsDesktopSdk) -->
     <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">net5.0</TargetFramework>
     <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride</TargetFramework>
+    <!--#else -->
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">net5.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">$(TargetFrameworkOverride)-windows</TargetFramework>
+    <!--#endif -->
     <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Company.WpfApplication1</RootNamespace>
     <LangVersion Condition="'$(langVersion)' != ''">$(ProjectLanguageVersion)</LangVersion>
     <UseWPF>true</UseWPF>

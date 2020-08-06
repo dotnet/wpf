@@ -41,8 +41,12 @@
           "description": "Target net5.0"
         }
       ],
-      "replaces": "net5.0",
+      "replaces": "FrameworkParameter",
       "defaultValue": "net5.0"
+    },
+    "UseWindowsDesktopSdk": {
+      "type": "computed",
+      "value": "(Framework == \"netcoreapp3.1\" || Framework == \"netcoreapp3.0\")"
     },
     "langVersion": {
       "type": "parameter",
@@ -71,6 +75,27 @@
     {
         "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
         "path": "UserControl1.xaml"
+    }
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfControlLibrary.vbproj"
+          ],
+          "rename": {
+            "Company.WpfControlLibrary3x.vbproj": "Company.WpfControlLibrary.vbproj"
+          }
+        },
+        {
+          "condition": "(!UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfControlLibrary3x.vbproj"
+          ]
+        }
+      ]
     }
   ],
   "defaultName": "WpfControlLibrary1",

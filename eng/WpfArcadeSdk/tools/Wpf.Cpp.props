@@ -122,10 +122,6 @@
     <!-- Always use Static VC Runtime -->
     <UseStaticVCRT Condition="'$(UseStaticVCRT)'==''">true</UseStaticVCRT>
 
-    <!-- Set up Directories -->
-    <VcrtLibDir>$(VCToolsInstallDir)lib\$(Architecture)\</VcrtLibDir>
-    <UcrtLibDir>$(UniversalCRTSdkDir)Lib\$(WindowsTargetPlatformVersion)\UCRT\$(Architecture)\</UcrtLibDir>
-
     <LibSuffix Condition="'$(Configuration)'=='Debug'">d</LibSuffix>
 
     <!-- Always link to oldnames.lib and legacy_stdio_wide_specifiers.lib   -->
@@ -266,8 +262,6 @@
       <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">%(AdditionalOptions) /MACHINE:$(Architecture)</AdditionalOptions>
       <TargetMachine>Machine$(Architecture)</TargetMachine>
 
-
-      <AdditionalLibraryDirectories Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">$(VcrtLibDir);$(UcrtLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalDependencies);$(StandardLibrariesForNativeCpp)</AdditionalDependencies>
       <AdditionalOptions Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalOptions) $(NoDefaultLibClauseForRuntimeLibs) $(DisallowLibClause)</AdditionalOptions>
       <AdditionalOptions Condition="'$(DllRenameClause)'!=''">%(AdditionalOptions) $(DllRenameClause)</AdditionalOptions>

@@ -4,6 +4,15 @@
     <NativeVersionFileDirectory>$([System.IO.Path]::GetDirectoryName($(NativeVersionFile)))</NativeVersionFileDirectory>
     <NativeResourceFileWithVersionInformation Condition="'$(NativeResourceFileWithVersionInformation)' == ''">$(IntermediateOutputPath)ExtendedNativeVersion.rc</NativeResourceFileWithVersionInformation>
   </PropertyGroup>
+  
+  <PropertyGroup>
+      <!-- 
+           Set up Directories 
+           Must be done after importing Microsoft.Cpp.VCTools.props
+      -->
+    <VcrtLibDir>$(VCToolsInstallDir)lib\$(Architecture)\</VcrtLibDir>
+    <UcrtLibDir>$(UniversalCRTSdkDir)Lib\$(WindowsTargetPlatformVersion)\UCRT\$(Architecture)\</UcrtLibDir>
+  </PropertyGroup>
 
   <Import Project="Wpf.Cpp.PrivateTools.targets" Condition="Exists('Wpf.Cpp.PrivateTools.targets') And '$(UsePrivateCppTools)'=='true'"/>
   
@@ -27,6 +36,9 @@
                                          '$(ConfigurationType)' == '$(StaticLibrary)' and
                                          '$(RepositoryName)' == 'dotnet-wpf-int'">oldStyle</DebugInformationFormat>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories Condition="('$(ExplicitCrts)'=='true')">$(VcrtLibDir);$(UcrtLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(NativeVersionFileDirectory)</AdditionalIncludeDirectories>
     </ResourceCompile>

@@ -335,7 +335,7 @@ namespace MS.Internal.Data
             {
                 if ((culture != null) && (savedEx != null))
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.DefaultValueConverterFailedForCulture(
                             AvTrace.ToStringHelper(o),
                             AvTrace.TypeName(o),
@@ -345,7 +345,7 @@ namespace MS.Internal.Data
                 }
                 else if (needAssignment)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.DefaultValueConverterFailed(
                             AvTrace.ToStringHelper(o),
                             AvTrace.TypeName(o),

@@ -1,7 +1,4 @@
 <Project>
-  <PropertyGroup>
-    <DefaultXamlRuntime Condition="'$(DefaultXamlRuntime)'==''">Wpf</DefaultXamlRuntime>
-  </PropertyGroup>
   <ItemGroup Condition=" '$(_EnableWindowsDesktopGlobbing)' == 'true' ">
     <ApplicationDefinition Include="App.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">

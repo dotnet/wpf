@@ -3,6 +3,7 @@
     <ApplicationDefinition Include="App.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
       <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </ApplicationDefinition>
     <ApplicationDefinition Include="Application.xaml"
                            Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/Application.xaml') And '$(MSBuildProjectExtension)' == '.vbproj'">

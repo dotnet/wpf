@@ -22,7 +22,6 @@
     "strawberry-perl": "5.28.1.1-1",
     "net-framework-48-ref-assemblies": "0.0.0.1",
     "dotnet-api-docs_netcoreapp3.0": "0.0.0.2",
-    "msvcurt-c1xx": "0.0.1.2",
     "net-framework-472-iltools": "0.0.0.1"
   }
 }

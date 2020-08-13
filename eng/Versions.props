@@ -64,8 +64,8 @@
     <!-- 
         Also in global.json 
         Used in Wpf.Cpp.PrivateTools.props/targets 
-    -->
     <MsvcurtC1xxVersion>0.0.1.2</MsvcurtC1xxVersion>
+    -->
     <!--
     This is the version of the test infrastructure package is compiled against. This should be
     removed as part of https://github.com/dotnet/wpf/issues/816 

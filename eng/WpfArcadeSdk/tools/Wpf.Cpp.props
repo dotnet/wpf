@@ -105,7 +105,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">true</UsePrivateCppTools>
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">false</UsePrivateCppTools>
   </PropertyGroup>
   <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
   

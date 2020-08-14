@@ -109,7 +109,9 @@ namespace MS.Internal.AppModel
 
             try
             {
+                #pragma warning disable // Type or member is obsolete
                 entryLocation = new Uri(Application.ResourceAssembly.CodeBase);
+                #pragma warning restore // Type or member is obsolete
             }
             catch (Exception ex)
             {

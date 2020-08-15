@@ -291,6 +291,7 @@ namespace MS.Internal.Navigation
         /// Overridden InitializeLifetimeService method
         /// </summary>
         /// <returns></returns>
+        [ObsoleteAttribute("InitializeLifetimeService is obsolete.", false)]
         public override object InitializeLifetimeService()
         {
             return _stream.InitializeLifetimeService();

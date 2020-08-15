@@ -92,7 +92,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _pFactory = (IDWriteFactory*)factoryTemp;
     }
 
+    #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
     [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+    #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
     __declspec(noinline) bool Factory::ReleaseHandle()
     {
         if (_wpfFontCollectionLoader != nullptr)

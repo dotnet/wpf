@@ -105,7 +105,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">true</UsePrivateCppTools>
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">false</UsePrivateCppTools>
   </PropertyGroup>
   <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
   
@@ -121,10 +121,6 @@
 
     <!-- Always use Static VC Runtime -->
     <UseStaticVCRT Condition="'$(UseStaticVCRT)'==''">true</UseStaticVCRT>
-
-    <!-- Set up Directories -->
-    <VcrtLibDir>$(VCToolsInstallDir)lib\$(Architecture)\</VcrtLibDir>
-    <UcrtLibDir>$(UniversalCRTSdkDir)Lib\$(WindowsTargetPlatformVersion)\UCRT\$(Architecture)\</UcrtLibDir>
 
     <LibSuffix Condition="'$(Configuration)'=='Debug'">d</LibSuffix>
 
@@ -266,8 +262,6 @@
       <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">%(AdditionalOptions) /MACHINE:$(Architecture)</AdditionalOptions>
       <TargetMachine>Machine$(Architecture)</TargetMachine>
 
-
-      <AdditionalLibraryDirectories Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">$(VcrtLibDir);$(UcrtLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalDependencies);$(StandardLibrariesForNativeCpp)</AdditionalDependencies>
       <AdditionalOptions Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalOptions) $(NoDefaultLibClauseForRuntimeLibs) $(DisallowLibClause)</AdditionalOptions>
       <AdditionalOptions Condition="'$(DllRenameClause)'!=''">%(AdditionalOptions) $(DllRenameClause)</AdditionalOptions>

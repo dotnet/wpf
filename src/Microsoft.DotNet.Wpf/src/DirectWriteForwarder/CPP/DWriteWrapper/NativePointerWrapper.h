@@ -20,7 +20,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
 
             virtual property bool IsInvalid
             {
+                #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
                 [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+                #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
                 bool get() override;
             }
 
@@ -35,7 +37,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
+            #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+            #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             virtual bool ReleaseHandle() override;
 
         public:
@@ -47,7 +51,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
+            #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+            #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             virtual bool ReleaseHandle() override;
 
         public:

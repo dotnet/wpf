@@ -1,6 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+// Turn off CER warnings: The Constrained Execution Region (CER) feature is not supported.  
+#pragma warning (disable : 4950)
         
 #ifndef GDIEXPORTER
 

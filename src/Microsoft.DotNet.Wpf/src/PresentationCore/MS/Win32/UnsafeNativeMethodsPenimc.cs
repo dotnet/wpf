@@ -19,10 +19,10 @@ namespace MS.Win32.Penimc
 {
     internal static class UnsafeNativeMethods
     {
-        
+
         // The flags in this region are all in support of COM hardening to add resilience
         // to (OSGVSO:10779198).
-        // They are special arguments to COM calls that allow us to re-purpose them for 
+        // They are special arguments to COM calls that allow us to re-purpose them for
         // functions relating to this hardening.
         #region PenIMC Operations Flags
 
@@ -84,7 +84,7 @@ namespace MS.Win32.Penimc
         #endregion
 
         #region PenIMC
-        
+
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern IntPtr RegisterDllForSxSCOM();
 
@@ -92,7 +92,7 @@ namespace MS.Win32.Penimc
 
         /// <summary>
         /// Make sure we load penimc.dll from WPF's installed location to avoid two instances of it.
-        /// 
+        ///
         /// Add an activation context to the thread's stack to ensure the registration-free COM objects
         /// are available.
         /// </summary>
@@ -113,14 +113,6 @@ namespace MS.Win32.Penimc
                 if ((_pimcActCtxCookie = RegisterDllForSxSCOM()) == IntPtr.Zero)
                 {
                     throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
-                }
-
-                // Ensure PenIMC loaded from the correct location.
-                var uncheckedDlls = WpfDllVerifier.VerifyWpfDllSet(ExternDll.Penimc);
-
-                if (uncheckedDlls.Contains(ExternDll.Penimc))
-                {
-                    throw new DllNotFoundException(SR.Get(SRID.PenImcDllVerificationFailed, ExternDll.Penimc));
                 }
             }
         }
@@ -390,9 +382,9 @@ namespace MS.Win32.Penimc
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfCompressPropertyData(
                 [In] byte [] pbInput,
-                uint cbInput, 
-                ref byte pnAlgoByte, 
-                ref uint pcbOutput, 
+                uint cbInput,
+                ref byte pnAlgoByte,
+                ref uint pcbOutput,
                 [In, Out] byte [] pbOutput
             );
 
@@ -410,11 +402,11 @@ namespace MS.Win32.Penimc
         /// <returns>Status</returns>
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfDecompressPropertyData(
-                [In] byte [] pbCompressed,   
-                uint cbCompressed,   
-                ref uint pcbOutput,  
-                [In, Out] byte [] pbOutput, 
-                ref byte pnAlgoByte 
+                [In] byte [] pbCompressed,
+                uint cbCompressed,
+                ref uint pcbOutput,
+                [In, Out] byte [] pbOutput,
+                ref byte pnAlgoByte
             );
 
         /// <summary>
@@ -645,12 +637,12 @@ namespace MS.Win32.Penimc
 #if OLD_ISF
     internal class CompressorSafeHandle: SafeHandle
     {
-        private CompressorSafeHandle() 
+        private CompressorSafeHandle()
             : this(true)
         {
         }
 
-        private CompressorSafeHandle(bool ownHandle) 
+        private CompressorSafeHandle(bool ownHandle)
             : base(IntPtr.Zero, ownHandle)
         {
         }
@@ -670,15 +662,15 @@ namespace MS.Win32.Penimc
         override protected bool ReleaseHandle()
         {
             //
-            // return code from this is void. 
-            // internally it just calls delete on 
+            // return code from this is void.
+            // internally it just calls delete on
             // the compressor pointer
             //
             UnsafeNativeMethods.IsfReleaseCompressor(handle);
             handle = IntPtr.Zero;
             return true;
         }
-    
+
         public static CompressorSafeHandle Null
         {
             get

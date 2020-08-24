@@ -14,7 +14,7 @@
   <PropertyGroup>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
     <Compile Include="$(WpfCommonDir)src\System\LocalAppContext.cs">
@@ -67,7 +67,7 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OSVersionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OperatingSystemVersion.cs" />
-    
+
     <Compile Include="MS\Internal\AssemblyHelper.cs" />
     <Compile Include="MS\Internal\AvTrace.cs" />
     <Compile Include="MS\Internal\AvTraceDetails.cs" />
@@ -247,7 +247,6 @@
     <Compile Include="System\Windows\Vector.cs " />
     <Compile Include="System\Windows\WeakEventManager.cs" />
     <Compile Include="System\Windows\WeakEventManagerT.cs" />
-    <Compile Include="System\Windows\WpfDllVerifier.cs" />
     <Compile Include="System\Windows\Data\DataSourceProvider.cs " />
     <Compile Include="System\Windows\Markup\DateTimeConverter2.cs" />
     <Compile Include="System\Windows\Markup\DateTimeValueSerializerContext.cs" />
@@ -434,10 +433,10 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  
+
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
+       which is modified by the T4 targets, to be overwritten, so the TransformAll target
        doesn’t run before the Build target. -->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="$(WpfCodeGenDir)AvTrace\GenTraceSources.targets" />

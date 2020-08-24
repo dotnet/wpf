@@ -1025,7 +1025,7 @@ namespace System.Windows.Input.StylusWisp
                         if (!_inDragDrop && !rawStylusInputReport.PenContext.Contexts.IsWindowDisabled && !stylusDevice.IgnoreStroke)
                         {
                             Point position = stylusDevice.GetRawPosition(null);
-                            position = DeviceUnitsFromMeasureUnits(position); // change back to device coords.
+                            position = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, position); // change back to device coords.
                             IInputElement target = stylusDevice.FindTarget(stylusDevice.CriticalActiveSource, position);
                             SelectStylusDevice(stylusDevice, target, true);
                         }
@@ -1077,8 +1077,8 @@ namespace System.Windows.Input.StylusWisp
                         bBarrelPressed = true;
                     }
 
-                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(ptClient);
-                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.LastTapPoint);
+                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
+                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, stylusDevice.LastTapPoint);
 
                     // How long since the last click? (deals with tickcount wrapping too)
                     //  Here's some info on how this works...
@@ -2660,6 +2660,8 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = null;
                 }
 
+                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
+
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
                 if (targetPIC != null && rawStylusInputReport.RawStylusInput == null)
@@ -2668,7 +2670,7 @@ namespace System.Windows.Input.StylusWisp
                     //    The transformTabletToView matrix and plugincollection rects though can change based
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.StylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(targetPIC.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
 
@@ -2676,8 +2678,6 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = rawStylusInput;
                     sendRawStylusInput = true;
                 }
-
-                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
 
                 // Now fire the confirmed enter/leave events as necessary.
                 StylusPlugInCollection currentTarget = stylusDevice.CurrentVerifiedTarget;
@@ -2689,7 +2689,7 @@ namespace System.Windows.Input.StylusWisp
                         if (originalRSI == null)
                         {
                             GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                             transformTabletToView.Children.Add(currentTarget.ViewToElement); // Make it relative to the element.
                             transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
                             originalRSI = new RawStylusInput(rawStylusInputReport, transformTabletToView, currentTarget);
@@ -3109,16 +3109,7 @@ namespace System.Windows.Input.StylusWisp
         {
             HwndSource hwndSource = (HwndSource)inputSource;
 
-            // Query the transform from HwndTarget when the first window is created.
-            if (!_transformInitialized)
-            {
-                if (hwndSource != null && hwndSource.CompositionTarget != null)
-                {
-                    _transformToDevice = hwndSource.CompositionTarget.TransformToDevice;
-                    Debug.Assert(_transformToDevice.HasInverse);
-                    _transformInitialized = true;
-                }
-            }
+            GetAndCacheTransformToDeviceMatrix(hwndSource);
 
             // Keep track so we don't bother looking for changes if someone happened to query this before
             // an Avalon window was created where we get TabletAdd/Removed notification.
@@ -3563,14 +3554,14 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        internal Matrix GetTabletToViewTransform(TabletDevice tabletDevice)
+        internal Matrix GetTabletToViewTransform(PresentationSource source, TabletDevice tabletDevice)
         {
             // Inking is offset under 120 DPI
             // Changet the TabletToViewTransform matrix to take DPI into account. The default
             // value is 96 DPI in Avalon. The device DPI value is cached after the first call
             // to this function.
 
-            Matrix matrix = _transformToDevice;
+            Matrix matrix = GetAndCacheTransformToDeviceMatrix(source);
             matrix.Invert();
             return matrix * tabletDevice.As<TabletDeviceBase>().TabletToScreen;
         }
@@ -3580,9 +3571,9 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         /// <param name="measurePoint">The point to transform, in measure units</param>
         /// <returns>The point in device coordinates</returns>
-        internal override Point DeviceUnitsFromMeasureUnits(Point measurePoint)
+        internal override Point DeviceUnitsFromMeasureUnits(PresentationSource source, Point measurePoint)
         {
-            Point pt = measurePoint * _transformToDevice;
+            Point pt = measurePoint * GetAndCacheTransformToDeviceMatrix(source);
             pt.X = (int)Math.Round(pt.X); // Make sure we return whole numbers (pixels are whole numbers)
             pt.Y = (int)Math.Round(pt.Y);
             return pt;
@@ -3593,9 +3584,9 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         /// <param name="measurePoint">The point to transform, in measure units</param>
         /// <returns>The point in device coordinates</returns>
-        internal override Point MeasureUnitsFromDeviceUnits(Point measurePoint)
+        internal override Point MeasureUnitsFromDeviceUnits(PresentationSource source, Point measurePoint)
         {
-            Matrix matrix = _transformToDevice;
+            Matrix matrix = GetAndCacheTransformToDeviceMatrix(source);
             matrix.Invert();
             return measurePoint * matrix;
         }
@@ -3647,11 +3638,6 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private Matrix _transformToDevice = Matrix.Identity;
-        private bool _transformInitialized;
-
-        /////////////////////////////////////////////////////////////////////
-        
         private SecurityCriticalData<InputManager> _inputManager;
 
         DispatcherOperationCallback _dlgInputManagerProcessInput;

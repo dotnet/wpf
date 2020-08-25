@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-rc.1.20424.7">
+    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.0-rc.1.20424.8">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>89ea69469176d76b884429cb6dcdfddbb9ab30eb</Sha>
+      <Sha>e146233609c07daf3b153c7b2ae3a11a3339c641</Sha>
     </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="5.0.0-rc.1.20424.12" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

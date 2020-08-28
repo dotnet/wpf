@@ -20,6 +20,8 @@
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
     <MicrosoftNETCoreAppInternalVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCoreAppRefVersion>5.0.0-rc.1.20428.3</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>5.0.0-rc.1.20428.3</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>6.0.0-alpha.1.20428.2</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>6.0.0-alpha.1.20428.2</SystemDirectoryServicesVersion>

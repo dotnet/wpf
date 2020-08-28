@@ -13,12 +13,12 @@
                                 Condition="'$(ManagedCxx)'=='true'"/>
     
     <FrameworkReference Update="Microsoft.NETCore.App"
-                      Condition="'$(MicrosoftNETCoreAppInternalVersion)'!='' 
+                      Condition="'$(MicrosoftNETCoreAppRefVersion)'!='' 
                              And '$(NoTargets)'!='true' 
                              And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
                              And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
                              And '$(MSBuildProjectExtension)'!='.vcxproj'">
-      <TargetingPackVersion>$(MicrosoftNETCoreAppInternalVersion)</TargetingPackVersion>
+      <TargetingPackVersion>$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
     </FrameworkReference>
 
     <!-- 

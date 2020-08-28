@@ -12,8 +12,8 @@
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20426.1",
-    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20426.1"
+    "Microsoft.DotNet.Arcade.Sdk": "5.0.0-beta.20426.6",
+    "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20426.6"
   },
   "sdk": {
     "version": "5.0.100-preview.6.20323.1"

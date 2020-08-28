@@ -5,6 +5,10 @@
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>834e56e0445a4a2c4bbc92f3b9ec57747f27467f</Sha>
     </Dependency>
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.0-alpha.1.20427.2">
+      <Uri>https://github.com/dotnet/winforms</Uri>
+      <Sha>834e56e0445a4a2c4bbc92f3b9ec57747f27467f</Sha>
+    </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="6.0.0-alpha.1.20426.9" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>f1f6b3c01566c72b882cae42d5452942eb0d0e69</Sha>

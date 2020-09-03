@@ -16,7 +16,7 @@
     "Microsoft.DotNet.Helix.Sdk": "5.0.0-beta.20451.5"
   },
   "sdk": {
-    "version": "5.0.100-preview.6.20323.1"
+    "version": "5.0.100-preview.8.20362.3"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",
